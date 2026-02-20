@@ -60,7 +60,7 @@ namespace BasicTypeSpec
                     {
                         using (XmlWriter writer = XmlWriter.Create(stream, ModelSerializationExtensions.XmlWriterSettings))
                         {
-                            Write(writer, options, "Tree");
+                            WriteXml(writer, options, "Tree");
                         }
                         if (stream.Position > int.MaxValue)
                         {
@@ -101,7 +101,19 @@ namespace BasicTypeSpec
         internal RequestContent ToRequestContent(string format)
         {
             ModelReaderWriterOptions options = new ModelReaderWriterOptions(format);
-            return RequestContent.Create(this, options);
+            switch (format)
+            {
+                case "X":
+                    XmlWriterContent content = new XmlWriterContent();
+                    content.XmlWriter.WriteObjectValue(this, options, "Tree");
+                    return content;
+                case "J":
+                    Utf8JsonRequestContent jsonContent = new Utf8JsonRequestContent();
+                    jsonContent.JsonWriter.WriteObjectValue(this, options);
+                    return jsonContent;
+                default:
+                    return RequestContent.Create(this, options);
+            }
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="Tree"/> from. </param>
@@ -209,7 +221,7 @@ namespace BasicTypeSpec
         /// <param name="writer"> The XML writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         /// <param name="nameHint"> An optional name hint. </param>
-        private void Write(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
+        private void WriteXml(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
         {
             if (nameHint != null)
             {
@@ -284,6 +296,6 @@ namespace BasicTypeSpec
 
         /// <param name="writer"> The XML writer. </param>
         /// <param name="nameHint"> An optional name hint. </param>
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Write(writer, ModelSerializationExtensions.WireOptions, nameHint);
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteXml(writer, ModelSerializationExtensions.WireOptions, nameHint);
     }
 }

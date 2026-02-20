@@ -66,10 +66,9 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.AzurePowerShell
         protected override TokenCredential CreateBareCredential()
             => CreateConfiguredCredential();
 
-        // ConfigurableCredential wraps in DefaultAzureCredential (always chained),
-        // so the expected exception is always CredentialUnavailableException.
-        protected override Type GetExpectedExceptionType(bool isChained)
-            => typeof(CredentialUnavailableException);
+        // ConfigurableCredential with CredentialSource creates a single (non-chained) credential,
+        // so chained credential scenarios are not applicable.
+        protected override bool IsChainedCredentialSupported => false;
 
         protected override void CreateCredentialForTenantValidation(string tenantId)
             => _helper.CreateCredentialForTenantValidation(tenantId);

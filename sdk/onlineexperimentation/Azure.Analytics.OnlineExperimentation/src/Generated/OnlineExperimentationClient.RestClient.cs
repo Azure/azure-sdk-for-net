@@ -30,7 +30,10 @@ namespace Azure.Analytics.OnlineExperimentation
             uri.Reset(_endpoint);
             uri.AppendPath("/experiment-metrics/", false);
             uri.AppendPath(experimentMetricId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -49,7 +52,10 @@ namespace Azure.Analytics.OnlineExperimentation
             uri.Reset(_endpoint);
             uri.AppendPath("/experiment-metrics/", false);
             uri.AppendPath(experimentMetricId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
             Request request = message.Request;
             request.Uri = uri;
@@ -69,7 +75,10 @@ namespace Azure.Analytics.OnlineExperimentation
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/experiment-metrics:validate", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -86,7 +95,10 @@ namespace Azure.Analytics.OnlineExperimentation
             uri.Reset(_endpoint);
             uri.AppendPath("/experiment-metrics/", false);
             uri.AppendPath(experimentMetricId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
@@ -103,7 +115,10 @@ namespace Azure.Analytics.OnlineExperimentation
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/experiment-metrics", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (maxCount != null)
             {
                 uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
@@ -135,7 +150,10 @@ namespace Azure.Analytics.OnlineExperimentation
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             if (maxPageSize != null)
             {
                 uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));

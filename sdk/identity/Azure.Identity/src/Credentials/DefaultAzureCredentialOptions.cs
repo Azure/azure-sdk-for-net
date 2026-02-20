@@ -185,6 +185,7 @@ namespace Azure.Identity
 
         private static string ConvertCredentialSource(string value) => value switch
         {
+            null => throw new InvalidOperationException("CredentialSource is required when configuring credentials. Specify a valid CredentialSource in the configuration."),
             "VisualStudio" => Constants.VisualStudioCredential,
             "VisualStudioCode" => Constants.VisualStudioCodeCredential,
             "AzureCli" => Constants.AzureCliCredential,
@@ -196,7 +197,19 @@ namespace Azure.Identity
             "InteractiveBrowser" => Constants.InteractiveBrowserCredential,
             "Broker" => Constants.BrokerCredential,
             "ApiKey" => Constants.ApiKeyCredential,
-            _ => value,
+            // Accept already-converted values (e.g. from Clone)
+            Constants.VisualStudioCredential or
+            Constants.VisualStudioCodeCredential or
+            Constants.AzureCliCredential or
+            Constants.AzurePowerShellCredential or
+            Constants.AzureDeveloperCliCredential or
+            Constants.EnvironmentCredential or
+            Constants.WorkloadIdentityCredential or
+            Constants.ManagedIdentityCredential or
+            Constants.InteractiveBrowserCredential or
+            Constants.BrokerCredential or
+            Constants.ApiKeyCredential => value,
+            _ => throw new InvalidOperationException($"Unsupported CredentialSource found in configuration: {value}."),
         };
 
         /// <summary>
@@ -531,7 +544,10 @@ namespace Azure.Identity
                 dacClone.ExcludeAzurePowerShellCredential = ExcludeAzurePowerShellCredential;
                 dacClone.IsForceRefreshEnabled = IsForceRefreshEnabled;
                 dacClone.ExcludeBrokerCredential = ExcludeBrokerCredential;
-                dacClone.CredentialSource = CredentialSource;
+                if (CredentialSource is not null)
+                {
+                    dacClone.CredentialSource = CredentialSource;
+                }
                 dacClone.ApiKey = ApiKey;
                 if (!string.IsNullOrEmpty(Subscription))
                 {

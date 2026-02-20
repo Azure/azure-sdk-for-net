@@ -197,7 +197,7 @@ namespace Azure.AI.AnomalyDetector
             {
                 if (prop.NameEquals("dataSource"u8))
                 {
-                    dataSource = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    dataSource = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("dataSchema"u8))

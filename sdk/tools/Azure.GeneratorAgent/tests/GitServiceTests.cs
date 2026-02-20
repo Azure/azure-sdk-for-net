@@ -1,106 +1,117 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.GeneratorAgent.Services;
+using System.Net;
+using System.Text;
+using Azure.GeneratorAgent;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Moq;
+using Moq.Protected;
 using NUnit.Framework;
 
-namespace Azure.GeneratorAgent.Tests.Services;
+namespace Azure.GeneratorAgent.Tests;
 
 public class GitServiceTests
 {
-    [Test]
-    public void GetLatestCommitAsync_WithNonGitDirectory_ThrowsInvalidOperationException()
+    /// <summary>
+    /// Creates a mock AppSettings with default values for use in GitService tests.
+    /// </summary>
+    /// <returns>Mock AppSettings instance.</returns>
+    private static AppSettings CreateMockSettings()
     {
-        // Arrange
-        var loggerMock = new Mock<ILogger<GitService>>();
-        var gitService = new GitService(loggerMock.Object);
-        var tempPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
-        Directory.CreateDirectory(tempPath);
+        var mockConfig = new Mock<IConfiguration>();
+        mockConfig.Setup(x => x["Copilot:Model"]).Returns("claude-sonnet-4-20241022");
+        mockConfig.Setup(x => x["Copilot:LogLevel"]).Returns("warning");
+        mockConfig.Setup(x => x["Copilot:DefaultTimeoutMinutes"]).Returns("2");
+        mockConfig.Setup(x => x["GitHub:ApiUrl"]).Returns("https://api.github.com");
 
-        try
-        {
-            // Act & Assert
-            var ex = Assert.ThrowsAsync<InvalidOperationException>(() =>
-                gitService.GetLatestCommitAsync(tempPath));
-
-            Assert.That(ex!.Message, Does.Contain("Not within a git repository"));
-        }
-        finally
-        {
-            Directory.Delete(tempPath, true);
-        }
+        return new AppSettings(mockConfig.Object);
     }
 
     [Test]
-    public async Task GetLatestCommitAsync_WithValidGitRepo_ReturnsCommitSha()
+    public async Task TryGetCommitForPath_WithValidRepository_ReturnsCommitSha()
     {
-        // Arrange
         var loggerMock = new Mock<ILogger<GitService>>();
-        var gitService = new GitService(loggerMock.Object);
-        var currentDir = Directory.GetCurrentDirectory();
-        var repoRoot = FindGitRoot(currentDir);
-
-        if (repoRoot == null)
-        {
-            Assert.Ignore("Test must be run from within a git repository");
-            return;
-        }
-
-        if (!await IsGitAvailableAsync())
-        {
-            Assert.Ignore("Git is not available on the system");
-            return;
-        }
-
-        // Act
-        var commitSha = await gitService.GetLatestCommitAsync(repoRoot);
-
-        // Assert
-        Assert.That(commitSha, Is.Not.Null);
-        Assert.That(commitSha, Has.Length.EqualTo(40)); // Git SHA is 40 characters
-        Assert.That(commitSha, Does.Match("^[0-9a-f]{40}$")); // Hexadecimal
-    }
-
-    private static string? FindGitRoot(string path)
-    {
-        var dir = new DirectoryInfo(path);
-        while (dir != null)
-        {
-            if (Directory.Exists(Path.Combine(dir.FullName, ".git")))
-            {
-                return dir.FullName;
-            }
-            dir = dir.Parent;
-        }
-        return null;
-    }
-
-    private static async Task<bool> IsGitAvailableAsync()
-    {
-        try
-        {
-            using var process = new System.Diagnostics.Process
-            {
-                StartInfo = new System.Diagnostics.ProcessStartInfo
+        var httpClientMock = CreateMockHttpClient("""
+            [
                 {
-                    FileName = "git",
-                    Arguments = "--version",
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true,
-                    UseShellExecute = false,
-                    CreateNoWindow = true
+                    "sha": "abc123def456789012345678901234567890abcd",
+                    "commit": {
+                        "message": "Test commit"
+                    }
                 }
-            };
+            ]
+            """);
 
-            process.Start();
-            await process.WaitForExitAsync();
-            return process.ExitCode == 0;
-        }
-        catch
-        {
-            return false;
-        }
+        var gitService = new GitService(loggerMock.Object, httpClientMock, CreateMockSettings());
+
+        var result = await gitService.TryGetCommitForPath("owner", "repo", "some/path", CancellationToken.None);
+
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result, Is.EqualTo("abc123def456789012345678901234567890abcd"));
+    }
+
+    [Test]
+    public async Task TryGetCommitForPath_WithSpecificPath_ReturnsCommitSha()
+    {
+        var loggerMock = new Mock<ILogger<GitService>>();
+        var httpClientMock = CreateMockHttpClient("""
+            [
+                {
+                    "sha": "def456abc789012345678901234567890abcdef1",
+                    "commit": {
+                        "message": "Update specific path"
+                    }
+                }
+            ]
+            """);
+
+        var gitService = new GitService(loggerMock.Object, httpClientMock, CreateMockSettings());
+
+        var result = await gitService.TryGetCommitForPath("owner", "repo", "sdk/some-service", CancellationToken.None);
+
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result, Is.EqualTo("def456abc789012345678901234567890abcdef1"));
+    }
+
+    [Test]
+    public async Task TryGetCommitForPath_WithFailedRequest_ReturnsNull()
+    {
+        var loggerMock = new Mock<ILogger<GitService>>();
+        var httpClientMock = CreateMockHttpClient("", HttpStatusCode.NotFound);
+
+        var gitService = new GitService(loggerMock.Object, httpClientMock, CreateMockSettings());
+
+        var result = await gitService.TryGetCommitForPath("owner", "repo", "/test/project/path", CancellationToken.None);
+
+        Assert.That(result, Is.Null);
+    }
+
+    [Test]
+    public async Task TryGetCommitForPath_WithEmptyResponse_ReturnsNull()
+    {
+        var loggerMock = new Mock<ILogger<GitService>>();
+        var httpClientMock = CreateMockHttpClient("[]");
+
+        var gitService = new GitService(loggerMock.Object, httpClientMock, CreateMockSettings());
+
+        var result = await gitService.TryGetCommitForPath("owner", "repo", "/test/project/path", CancellationToken.None);
+
+        Assert.That(result, Is.Null);
+    }
+
+    private static HttpClient CreateMockHttpClient(string responseContent, HttpStatusCode statusCode = HttpStatusCode.OK)
+    {
+        var mockHandler = new Mock<HttpMessageHandler>();
+        mockHandler.Protected()
+            .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+            .ReturnsAsync(new HttpResponseMessage
+            {
+                StatusCode = statusCode,
+                Content = new StringContent(responseContent, Encoding.UTF8, "application/json")
+            });
+
+        return new HttpClient(mockHandler.Object);
     }
 }

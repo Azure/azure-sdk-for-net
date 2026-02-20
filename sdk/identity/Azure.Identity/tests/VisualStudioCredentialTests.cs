@@ -66,6 +66,8 @@ namespace Azure.Identity.Tests
             return InstrumentClient(new VisualStudioCredential(default, default, fileSystem, processService, options));
         }
 
+        protected virtual bool IsChainedCredentialSupported => true;
+
         [Test]
         public async Task AuthenticateWithVsCredential([Values(null, TenantIdHint)] string tenantId, [Values(true)] bool allowMultiTenantAuthentication)
         {
@@ -327,6 +329,10 @@ namespace Azure.Identity.Tests
         [Test]
         public void OperationCanceledException_throws_CredentialUnavailableException_WhenChained()
         {
+            if (!IsChainedCredentialSupported)
+            {
+                Assert.Ignore("ConfigurableCredential with CredentialSource does not support chained credential scenarios.");
+            }
             var testProcess = new TestProcess() { ExceptionOnStartHandler = p => throw new OperationCanceledException("Test exception") };
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudio();
             var credential = CreateCredentialWithChainedOption(new TestProcessService(testProcess), fileSystem, isChained: true);
