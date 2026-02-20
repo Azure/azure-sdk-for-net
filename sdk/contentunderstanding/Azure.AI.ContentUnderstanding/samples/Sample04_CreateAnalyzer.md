@@ -167,7 +167,7 @@ if (analyzeResult.Contents?.FirstOrDefault() is DocumentContent content)
     // Extract field (literal text extraction)
     if (content.Fields.TryGetValue("company_name", out var companyNameField))
     {
-        var companyName = companyNameField is StringField sf ? sf.ValueString : null;
+        var companyName = companyNameField is StringField sf ? sf.Value : null;
         Console.WriteLine($"Company Name (extract): {companyName ?? "(not found)"}");
         Console.WriteLine($"  Confidence: {companyNameField.Confidence?.ToString("F2") ?? "N/A"}");
         Console.WriteLine($"  Source: {companyNameField.Source ?? "N/A"}");
@@ -181,7 +181,7 @@ if (analyzeResult.Contents?.FirstOrDefault() is DocumentContent content)
     // Extract field (literal text extraction)
     if (content.Fields.TryGetValue("total_amount", out var totalAmountField))
     {
-        var totalAmount = totalAmountField is NumberField nf ? nf.ValueNumber : null;
+        var totalAmount = totalAmountField is NumberField nf ? nf.Value : null;
         Console.WriteLine($"Total Amount (extract): {totalAmount?.ToString("F2") ?? "(not found)"}");
         Console.WriteLine($"  Confidence: {totalAmountField.Confidence?.ToString("F2") ?? "N/A"}");
         Console.WriteLine($"  Source: {totalAmountField.Source ?? "N/A"}");
@@ -195,7 +195,7 @@ if (analyzeResult.Contents?.FirstOrDefault() is DocumentContent content)
     // Generate field (AI-generated value)
     if (content.Fields.TryGetValue("document_summary", out var summaryField))
     {
-        var summary = summaryField is StringField sf ? sf.ValueString : null;
+        var summary = summaryField is StringField sf ? sf.Value : null;
         Console.WriteLine($"Document Summary (generate): {summary ?? "(not found)"}");
         Console.WriteLine($"  Confidence: {summaryField.Confidence?.ToString("F2") ?? "N/A"}");
         // Note: Generated fields may not have source information
@@ -208,7 +208,7 @@ if (analyzeResult.Contents?.FirstOrDefault() is DocumentContent content)
     // Classify field (classification against predefined categories)
     if (content.Fields.TryGetValue("document_type", out var documentTypeField))
     {
-        var documentType = documentTypeField is StringField sf ? sf.ValueString : null;
+        var documentType = documentTypeField is StringField sf ? sf.Value : null;
         Console.WriteLine($"Document Type (classify): {documentType ?? "(not found)"}");
         Console.WriteLine($"  Confidence: {documentTypeField.Confidence?.ToString("F2") ?? "N/A"}");
         // Note: Classified fields may not have source information

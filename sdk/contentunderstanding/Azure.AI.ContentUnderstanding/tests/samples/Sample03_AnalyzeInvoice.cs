@@ -31,7 +31,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
                 WaitUntil.Completed,
                 "prebuilt-invoice",
-                inputs: new[] { new AnalyzeInput { Url = invoiceUrl } });
+                inputs: new[] { new AnalysisInput { Uri = invoiceUrl } });
 
             AnalyzeResult result = operation.Value;
             #endregion
@@ -92,8 +92,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // Extract object fields (nested structures)
             if (documentContent.Fields.GetFieldOrDefault("TotalAmount") is ObjectField totalAmountObj)
             {
-                var amount = totalAmountObj.ValueObject?.GetFieldOrDefault("Amount")?.Value as double?;
-                var currency = totalAmountObj.ValueObject?.GetFieldOrDefault("CurrencyCode")?.Value;
+                var amount = totalAmountObj.Value?.GetFieldOrDefault("Amount")?.Value as double?;
+                var currency = totalAmountObj.Value?.GetFieldOrDefault("CurrencyCode")?.Value;
                 Console.WriteLine($"Total: {currency ?? "$"}{amount?.ToString("F2") ?? "(None)"}");
                 Console.WriteLine($"  Confidence: {totalAmountObj.Confidence?.ToString("F2") ?? "N/A"}");
                 Console.WriteLine($"  Source: {totalAmountObj.Source ?? "N/A"}");
@@ -107,8 +107,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 {
                     if (lineItems[i] is ObjectField item)
                     {
-                        var description = item.ValueObject?.GetFieldOrDefault("Description")?.Value;
-                        var quantity = item.ValueObject?.GetFieldOrDefault("Quantity")?.Value as double?;
+                        var description = item.Value?.GetFieldOrDefault("Description")?.Value;
+                        var quantity = item.Value?.GetFieldOrDefault("Quantity")?.Value as double?;
                         Console.WriteLine($"  Item {i + 1}: {description ?? "N/A"} (Qty: {quantity?.ToString() ?? "N/A"})");
                         Console.WriteLine($"    Confidence: {item.Confidence?.ToString("F2") ?? "N/A"}");
                     }
@@ -205,8 +205,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
             }
 
             // Verify Amount sub-field - expected to exist
-            Assert.IsNotNull(totalAmountObjAssert.ValueObject, "TotalAmount.ValueObject should not be null");
-            var amountFieldAssert = totalAmountObjAssert.ValueObject["Amount"];
+            Assert.IsNotNull(totalAmountObjAssert.Value, "TotalAmount.Value should not be null");
+            var amountFieldAssert = totalAmountObjAssert.Value!["Amount"];
             Assert.IsNotNull(amountFieldAssert, "Amount field should exist");
             Assert.IsInstanceOf<NumberField>(amountFieldAssert, "Amount should be a NumberField");
             if (amountFieldAssert.Value is double amountValue)
@@ -215,7 +215,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             }
 
             // Verify CurrencyCode sub-field - expected to exist
-            var currencyFieldAssert = totalAmountObjAssert.ValueObject["CurrencyCode"];
+            var currencyFieldAssert = totalAmountObjAssert.Value["CurrencyCode"];
             Assert.IsNotNull(currencyFieldAssert, "CurrencyCode field should exist");
             if (currencyFieldAssert.Value != null)
             {
@@ -245,8 +245,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 }
 
                 // Verify Description field - expected to exist
-                Assert.IsNotNull(item.ValueObject, $"Line item {i + 1} ValueObject should not be null");
-                var descriptionField = item.ValueObject["Description"];
+                Assert.IsNotNull(item.Value, $"Line item {i + 1} Value should not be null");
+                var descriptionField = item.Value!["Description"];
                 Assert.IsNotNull(descriptionField, $"Line item {i + 1} Description field should exist");
                 if (descriptionField.Value != null)
                 {
@@ -255,7 +255,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 }
 
                 // Verify Quantity field - expected to exist
-                var quantityField = item.ValueObject["Quantity"];
+                var quantityField = item.Value["Quantity"];
                 Assert.IsNotNull(quantityField, $"Line item {i + 1} Quantity field should exist");
                 Assert.IsInstanceOf<NumberField>(quantityField, $"Line item {i + 1} Quantity should be a NumberField");
                 if (quantityField.Value is double quantity)
@@ -264,14 +264,14 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 }
 
                 // Verify UnitPrice field if exists (optional)
-                var unitPriceField = item.ValueObject?.GetFieldOrDefault("UnitPrice");
+                var unitPriceField = item.Value?.GetFieldOrDefault("UnitPrice");
                 if (unitPriceField?.Value is double unitPrice)
                 {
                     Assert.IsTrue(unitPrice >= 0, $"Line item {i + 1} unit price should be >= 0, but was {unitPrice}");
                 }
 
                 // Verify Amount field if exists (optional)
-                var itemAmountField = item.ValueObject?.GetFieldOrDefault("Amount");
+                var itemAmountField = item.Value?.GetFieldOrDefault("Amount");
                 if (itemAmountField?.Value is double itemAmount)
                 {
                     Assert.IsTrue(itemAmount >= 0, $"Line item {i + 1} amount should be >= 0, but was {itemAmount}");

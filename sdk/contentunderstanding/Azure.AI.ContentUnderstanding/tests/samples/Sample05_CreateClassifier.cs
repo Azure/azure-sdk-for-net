@@ -50,7 +50,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // Create analyzer configuration
             var config = new ContentAnalyzerConfig
             {
-                ReturnDetails = true,
+                ShouldReturnDetails = true,
                 EnableSegment = true // Enable automatic segmentation by category
             };
 
@@ -92,7 +92,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // Create analyzer configuration
             var config = new ContentAnalyzerConfig
             {
-                ReturnDetails = true,
+                ShouldReturnDetails = true,
                 EnableSegment = true // Enable automatic segmentation by category
             };
 
@@ -149,7 +149,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             // Verify classifier config
             Assert.IsNotNull(result.Config, "Classifier config should not be null");
-            Assert.IsTrue(result.Config.ReturnDetails, "ReturnDetails should be true");
+            Assert.IsTrue(result.Config.ShouldReturnDetails, "ReturnDetails should be true");
             Assert.IsTrue(result.Config.EnableSegment == true, "EnableSegment should be true");
             Console.WriteLine("Classifier config verified (ReturnDetails=true, EnableSegment=true)");
 
@@ -241,7 +241,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             string analyzerId = Recording.GetVariable("analyzerId_no_segment", defaultId) ?? defaultId;
             var config = new ContentAnalyzerConfig
             {
-                ReturnDetails = true,
+                ShouldReturnDetails = true,
                 EnableSegment = false // No automatic segmentation
             };
             config.ContentCategories.Add("Invoice", new ContentCategoryDefinition
@@ -438,7 +438,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             string analyzerId = Recording.GetVariable("analyzerId_with_segment", defaultId) ?? defaultId;
             var config = new ContentAnalyzerConfig
             {
-                ReturnDetails = true,
+                ShouldReturnDetails = true,
                 EnableSegment = true // Enable automatic segmentation
             };
             config.ContentCategories.Add("Invoice", new ContentCategoryDefinition

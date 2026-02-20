@@ -16,16 +16,16 @@ namespace Azure.AI.ContentUnderstanding
     public static partial class ContentUnderstandingModelFactory
     {
         /// <summary> Additional input to analyze. </summary>
-        /// <param name="url"> The URL of the input to analyze.  Only one of url or data should be specified. </param>
+        /// <param name="uri"> The URL of the input to analyze.  Only one of url or data should be specified. </param>
         /// <param name="data"> Raw image bytes. Provide bytes-like object; do not base64-encode. Only one of url or data should be specified. </param>
         /// <param name="name"> Name of the input. </param>
         /// <param name="mimeType"> The MIME type of the input content.  Ex. application/pdf, image/jpeg, etc. </param>
         /// <param name="inputRange"> Range of the input to analyze (ex. `1-3,5,9-`).  Document content uses 1-based page numbers, while audio visual content uses integer milliseconds. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.AnalyzeInput"/> instance for mocking. </returns>
-        public static AnalyzeInput AnalyzeInput(Uri url = default, BinaryData data = default, string name = default, string mimeType = default, string inputRange = default)
+        /// <returns> A new <see cref="ContentUnderstanding.AnalysisInput"/> instance for mocking. </returns>
+        public static AnalysisInput AnalysisInput(Uri uri = default, BinaryData data = default, string name = default, string mimeType = default, string inputRange = default)
         {
-            return new AnalyzeInput(
-                url,
+            return new AnalysisInput(
+                uri,
                 data,
                 name,
                 mimeType,
@@ -88,7 +88,7 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary>
         /// Field extracted from the content.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContentUnderstanding.StringField"/>, <see cref="ContentUnderstanding.DateField"/>, <see cref="ContentUnderstanding.TimeField"/>, <see cref="ContentUnderstanding.NumberField"/>, <see cref="ContentUnderstanding.IntegerField"/>, <see cref="ContentUnderstanding.BooleanField"/>, <see cref="ContentUnderstanding.ArrayField"/>, <see cref="ContentUnderstanding.ObjectField"/>, and <see cref="ContentUnderstanding.JsonField"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContentUnderstanding.StringField"/>, <see cref="ContentUnderstanding.DateTimeOffsetField"/>, <see cref="ContentUnderstanding.TimeField"/>, <see cref="ContentUnderstanding.NumberField"/>, <see cref="ContentUnderstanding.IntegerField"/>, <see cref="ContentUnderstanding.BooleanField"/>, <see cref="ContentUnderstanding.ArrayField"/>, <see cref="ContentUnderstanding.ObjectField"/>, and <see cref="ContentUnderstanding.JsonField"/>.
         /// </summary>
         /// <param name="type"> Semantic data type of the field value. </param>
         /// <param name="spans"> Span(s) associated with the field value in the markdown content. </param>
@@ -135,12 +135,12 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="confidence"> Confidence of predicting the field value. </param>
         /// <param name="source"> Encoded source that identifies the position of the field value in the content. </param>
         /// <param name="valueDate"> Date field value, in ISO 8601 (YYYY-MM-DD) format. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.DateField"/> instance for mocking. </returns>
-        public static DateField DateField(IEnumerable<ContentSpan> spans = default, float? confidence = default, string source = default, DateTimeOffset? valueDate = default)
+        /// <returns> A new <see cref="ContentUnderstanding.DateTimeOffsetField"/> instance for mocking. </returns>
+        public static DateTimeOffsetField DateTimeOffsetField(IEnumerable<ContentSpan> spans = default, float? confidence = default, string source = default, DateTimeOffset? valueDate = default)
         {
             spans ??= new ChangeTrackingList<ContentSpan>();
 
-            return new DateField(
+            return new DateTimeOffsetField(
                 ContentFieldType.Date,
                 spans.ToList(),
                 confidence,
@@ -824,7 +824,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="baseAnalyzerId"> The analyzer to incrementally train from. </param>
         /// <param name="config"> Analyzer configuration settings. </param>
         /// <param name="fieldSchema"> The schema of fields to extracted. </param>
-        /// <param name="dynamicFieldSchema"> Indicates whether the result may contain additional fields outside of the defined schema. </param>
+        /// <param name="hasDynamicFieldSchema"> Indicates whether the result may contain additional fields outside of the defined schema. </param>
         /// <param name="processingLocation"> The location where the data may be processed.  Defaults to global. </param>
         /// <param name="knowledgeSources"> Additional knowledge sources used to enhance the analyzer. </param>
         /// <param name="models">
@@ -833,7 +833,7 @@ namespace Azure.AI.ContentUnderstanding
         /// </param>
         /// <param name="supportedModels"> Chat completion and embedding models supported by the analyzer. </param>
         /// <returns> A new <see cref="ContentUnderstanding.ContentAnalyzer"/> instance for mocking. </returns>
-        public static ContentAnalyzer ContentAnalyzer(string analyzerId = default, string description = default, IDictionary<string, string> tags = default, ContentAnalyzerStatus status = default, DateTimeOffset createdAt = default, DateTimeOffset lastModifiedAt = default, IEnumerable<ResponseError> warnings = default, string baseAnalyzerId = default, ContentAnalyzerConfig config = default, ContentFieldSchema fieldSchema = default, bool? dynamicFieldSchema = default, ProcessingLocation? processingLocation = default, IEnumerable<KnowledgeSource> knowledgeSources = default, IDictionary<string, string> models = default, SupportedModels supportedModels = default)
+        public static ContentAnalyzer ContentAnalyzer(string analyzerId = default, string description = default, IDictionary<string, string> tags = default, ContentAnalyzerStatus status = default, DateTimeOffset createdAt = default, DateTimeOffset lastModifiedAt = default, IEnumerable<ResponseError> warnings = default, string baseAnalyzerId = default, ContentAnalyzerConfig config = default, ContentFieldSchema fieldSchema = default, bool? hasDynamicFieldSchema = default, ProcessingLocation? processingLocation = default, IEnumerable<KnowledgeSource> knowledgeSources = default, IDictionary<string, string> models = default, SupportedModels supportedModels = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             warnings ??= new ChangeTrackingList<ResponseError>();
@@ -851,7 +851,7 @@ namespace Azure.AI.ContentUnderstanding
                 baseAnalyzerId,
                 config,
                 fieldSchema,
-                dynamicFieldSchema,
+                hasDynamicFieldSchema,
                 processingLocation,
                 knowledgeSources.ToList(),
                 models,
@@ -860,7 +860,7 @@ namespace Azure.AI.ContentUnderstanding
         }
 
         /// <summary> Configuration settings for an analyzer. </summary>
-        /// <param name="returnDetails"> Return all content details. </param>
+        /// <param name="shouldReturnDetails"> Return all content details. </param>
         /// <param name="locales"> List of locale hints for speech transcription. </param>
         /// <param name="enableOcr"> Enable optical character recognition (OCR). </param>
         /// <param name="enableLayout"> Enable layout analysis. </param>
@@ -875,18 +875,18 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="contentCategories"> Map of categories to classify the input content(s) against. </param>
         /// <param name="enableSegment"> Enable segmentation of the input by contentCategories. </param>
         /// <param name="segmentPerPage"> Force segmentation of document content by page. </param>
-        /// <param name="omitContent">
+        /// <param name="shouldOmitContent">
         /// Omit the content for this analyzer from analyze result.
         /// Only return content(s) from additional analyzers specified in contentCategories, if any.
         /// </param>
         /// <returns> A new <see cref="ContentUnderstanding.ContentAnalyzerConfig"/> instance for mocking. </returns>
-        public static ContentAnalyzerConfig ContentAnalyzerConfig(bool? returnDetails = default, IEnumerable<string> locales = default, bool? enableOcr = default, bool? enableLayout = default, bool? enableFigureDescription = default, bool? enableFigureAnalysis = default, bool? enableFormula = default, TableFormat? tableFormat = default, ChartFormat? chartFormat = default, AnnotationFormat? annotationFormat = default, bool? disableFaceBlurring = default, bool? estimateFieldSourceAndConfidence = default, IDictionary<string, ContentCategoryDefinition> contentCategories = default, bool? enableSegment = default, bool? segmentPerPage = default, bool? omitContent = default)
+        public static ContentAnalyzerConfig ContentAnalyzerConfig(bool? shouldReturnDetails = default, IEnumerable<string> locales = default, bool? enableOcr = default, bool? enableLayout = default, bool? enableFigureDescription = default, bool? enableFigureAnalysis = default, bool? enableFormula = default, TableFormat? tableFormat = default, ChartFormat? chartFormat = default, AnnotationFormat? annotationFormat = default, bool? disableFaceBlurring = default, bool? estimateFieldSourceAndConfidence = default, IDictionary<string, ContentCategoryDefinition> contentCategories = default, bool? enableSegment = default, bool? segmentPerPage = default, bool? shouldOmitContent = default)
         {
             locales ??= new ChangeTrackingList<string>();
             contentCategories ??= new ChangeTrackingDictionary<string, ContentCategoryDefinition>();
 
             return new ContentAnalyzerConfig(
-                returnDetails,
+                shouldReturnDetails,
                 locales.ToList(),
                 enableOcr,
                 enableLayout,
@@ -901,7 +901,7 @@ namespace Azure.AI.ContentUnderstanding
                 contentCategories,
                 enableSegment,
                 segmentPerPage,
-                omitContent,
+                shouldOmitContent,
                 additionalBinaryDataProperties: null);
         }
 

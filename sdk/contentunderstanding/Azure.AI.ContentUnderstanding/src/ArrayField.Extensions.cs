@@ -15,7 +15,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <summary>
         /// Gets the number of items in the array.
         /// </summary>
-        public int Count => ValueArray?.Count ?? 0;
+        public int Count => Value?.Count ?? 0;
 
         /// <summary>
         /// Gets a field from the array by index.
@@ -27,11 +27,11 @@ namespace Azure.AI.ContentUnderstanding
         {
             get
             {
-                if (ValueArray == null || index < 0 || index >= ValueArray.Count)
+                if (Value == null || index < 0 || index >= Value.Count)
                 {
-                    throw new System.ArgumentOutOfRangeException(nameof(index), $"Index {index} is out of range. Array has {ValueArray?.Count ?? 0} elements.");
+                    throw new System.ArgumentOutOfRangeException(nameof(index), $"Index {index} is out of range. Array has {Value?.Count ?? 0} elements.");
                 }
-                return ValueArray[index];
+                return Value[index];
             }
         }
     }

@@ -19,8 +19,8 @@ namespace Azure.AI.ContentUnderstanding
     /// Partial class for ContentUnderstandingClient to customize generated methods.
     /// </summary>
     // Suppress convenience methods with stringEncoding parameter - we'll implement custom versions without it
-    [CodeGenSuppress("AnalyzeAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(IEnumerable<AnalyzeInput>), typeof(IDictionary<string, string>), typeof(ProcessingLocation?), typeof(CancellationToken))]
-    [CodeGenSuppress("Analyze", typeof(WaitUntil), typeof(string), typeof(string), typeof(IEnumerable<AnalyzeInput>), typeof(IDictionary<string, string>), typeof(ProcessingLocation?), typeof(CancellationToken))]
+    [CodeGenSuppress("AnalyzeAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(IEnumerable<AnalysisInput>), typeof(IDictionary<string, string>), typeof(ProcessingLocation?), typeof(CancellationToken))]
+    [CodeGenSuppress("Analyze", typeof(WaitUntil), typeof(string), typeof(string), typeof(IEnumerable<AnalysisInput>), typeof(IDictionary<string, string>), typeof(ProcessingLocation?), typeof(CancellationToken))]
     [CodeGenSuppress("AnalyzeBinaryAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(BinaryData), typeof(string), typeof(string), typeof(ProcessingLocation?), typeof(CancellationToken))]
     [CodeGenSuppress("AnalyzeBinary", typeof(WaitUntil), typeof(string), typeof(string), typeof(BinaryData), typeof(string), typeof(string), typeof(ProcessingLocation?), typeof(CancellationToken))]
     // Suppress protocol methods - we'll implement custom versions that wrap with OperationWithId
@@ -56,7 +56,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <exception cref="ArgumentNullException"> <paramref name="analyzerId"/> or <paramref name="inputs"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="analyzerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The <see cref="Operation{AnalyzeResult}"/> with operation ID accessible via the <c>Id</c> property. </returns>
-        public virtual async Task<Operation<AnalyzeResult>> AnalyzeAsync(WaitUntil waitUntil, string analyzerId, IEnumerable<AnalyzeInput> inputs, IDictionary<string, string>? modelDeployments = default, ProcessingLocation? processingLocation = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<AnalyzeResult>> AnalyzeAsync(WaitUntil waitUntil, string analyzerId, IEnumerable<AnalysisInput> inputs, IDictionary<string, string>? modelDeployments = default, ProcessingLocation? processingLocation = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
             Argument.AssertNotNull(inputs, nameof(inputs));
@@ -80,7 +80,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <exception cref="ArgumentNullException"> <paramref name="analyzerId"/> or <paramref name="inputs"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="analyzerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The <see cref="Operation{AnalyzeResult}"/> with operation ID accessible via the <c>Id</c> property. </returns>
-        public virtual Operation<AnalyzeResult> Analyze(WaitUntil waitUntil, string analyzerId, IEnumerable<AnalyzeInput> inputs, IDictionary<string, string>? modelDeployments = default, ProcessingLocation? processingLocation = default, CancellationToken cancellationToken = default)
+        public virtual Operation<AnalyzeResult> Analyze(WaitUntil waitUntil, string analyzerId, IEnumerable<AnalysisInput> inputs, IDictionary<string, string>? modelDeployments = default, ProcessingLocation? processingLocation = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
             Argument.AssertNotNull(inputs, nameof(inputs));

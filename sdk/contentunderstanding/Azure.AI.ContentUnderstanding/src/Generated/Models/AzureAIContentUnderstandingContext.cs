@@ -14,7 +14,7 @@ namespace Azure.AI.ContentUnderstanding
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(AnalyzeInput))]
+    [ModelReaderWriterBuildable(typeof(AnalysisInput))]
     [ModelReaderWriterBuildable(typeof(AnalyzeRequest1))]
     [ModelReaderWriterBuildable(typeof(AnalyzeResult))]
     [ModelReaderWriterBuildable(typeof(ArrayField))]
@@ -33,7 +33,7 @@ namespace Azure.AI.ContentUnderstanding
     [ModelReaderWriterBuildable(typeof(ContentUnderstandingDefaults))]
     [ModelReaderWriterBuildable(typeof(CopyAnalyzerRequest))]
     [ModelReaderWriterBuildable(typeof(CopyAuthorization))]
-    [ModelReaderWriterBuildable(typeof(DateField))]
+    [ModelReaderWriterBuildable(typeof(DateTimeOffsetField))]
     [ModelReaderWriterBuildable(typeof(DocumentAnnotation))]
     [ModelReaderWriterBuildable(typeof(DocumentAnnotationComment))]
     [ModelReaderWriterBuildable(typeof(DocumentBarcode))]
