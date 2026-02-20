@@ -23,7 +23,10 @@ namespace Azure.Analytics.PlanetaryComputer
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/sas/sign", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (href != null)
             {
                 uri.AppendQuery("href", TypeFormatters.ConvertToString(href), true);
@@ -46,7 +49,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.Reset(_endpoint);
             uri.AppendPath("/sas/token/", false);
             uri.AppendPath(collectionId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (durationInMinutes != null)
             {
                 uri.AppendQuery("duration", TypeFormatters.ConvertToString(durationInMinutes), true);
@@ -64,7 +70,10 @@ namespace Azure.Analytics.PlanetaryComputer
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/sas/token/revoke", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (durationInMinutes != null)
             {
                 uri.AppendQuery("duration", TypeFormatters.ConvertToString(durationInMinutes), true);

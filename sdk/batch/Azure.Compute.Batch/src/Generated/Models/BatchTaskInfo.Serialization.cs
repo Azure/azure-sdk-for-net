@@ -162,7 +162,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    taskUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    taskUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("jobId"u8))

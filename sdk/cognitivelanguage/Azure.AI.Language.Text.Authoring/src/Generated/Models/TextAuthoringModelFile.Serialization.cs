@@ -136,7 +136,7 @@ namespace Azure.AI.Language.Text.Authoring
                 }
                 if (prop.NameEquals("contentUri"u8))
                 {
-                    contentUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    contentUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")

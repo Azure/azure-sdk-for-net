@@ -33,7 +33,10 @@ namespace Azure.Compute.Batch
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/applications", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -67,7 +70,10 @@ namespace Azure.Compute.Batch
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -84,7 +90,10 @@ namespace Azure.Compute.Batch
             uri.Reset(_endpoint);
             uri.AppendPath("/applications/", false);
             uri.AppendPath(applicationId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -108,7 +117,10 @@ namespace Azure.Compute.Batch
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/poolusagemetrics", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -154,7 +166,10 @@ namespace Azure.Compute.Batch
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -170,7 +185,10 @@ namespace Azure.Compute.Batch
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/pools", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -195,7 +213,10 @@ namespace Azure.Compute.Batch
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/pools", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -241,7 +262,10 @@ namespace Azure.Compute.Batch
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -258,7 +282,10 @@ namespace Azure.Compute.Batch
             uri.Reset(_endpoint);
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -286,7 +313,10 @@ namespace Azure.Compute.Batch
             uri.Reset(_endpoint);
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -314,7 +344,10 @@ namespace Azure.Compute.Batch
             uri.Reset(_endpoint);
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -351,7 +384,10 @@ namespace Azure.Compute.Batch
             uri.Reset(_endpoint);
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -382,7 +418,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolId, true);
             uri.AppendPath("/disableautoscale", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -407,7 +446,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolId, true);
             uri.AppendPath("/enableautoscale", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -438,7 +480,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolId, true);
             uri.AppendPath("/evaluateautoscale", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -466,7 +511,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolId, true);
             uri.AppendPath("/resize", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -497,7 +545,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolId, true);
             uri.AppendPath("/stopresize", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -526,7 +577,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolId, true);
             uri.AppendPath("/updateproperties", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -553,7 +607,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolId, true);
             uri.AppendPath("/removenodes", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -582,7 +639,10 @@ namespace Azure.Compute.Batch
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/supportedimages", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -620,7 +680,10 @@ namespace Azure.Compute.Batch
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -636,7 +699,10 @@ namespace Azure.Compute.Batch
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/nodecounts", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -674,7 +740,10 @@ namespace Azure.Compute.Batch
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -691,7 +760,10 @@ namespace Azure.Compute.Batch
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -723,7 +795,10 @@ namespace Azure.Compute.Batch
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -760,7 +835,10 @@ namespace Azure.Compute.Batch
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -790,7 +868,10 @@ namespace Azure.Compute.Batch
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -821,7 +902,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendPath("/disable", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -852,7 +936,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendPath("/enable", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -881,7 +968,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendPath("/terminate", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -917,7 +1007,10 @@ namespace Azure.Compute.Batch
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -942,7 +1035,10 @@ namespace Azure.Compute.Batch
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -988,7 +1084,10 @@ namespace Azure.Compute.Batch
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -1006,7 +1105,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/jobschedules/", false);
             uri.AppendPath(jobScheduleId, true);
             uri.AppendPath("/jobs", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -1052,7 +1154,10 @@ namespace Azure.Compute.Batch
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -1070,7 +1175,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendPath("/jobpreparationandreleasetaskstatus", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -1112,7 +1220,10 @@ namespace Azure.Compute.Batch
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -1130,7 +1241,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendPath("/taskcounts", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -1155,7 +1269,10 @@ namespace Azure.Compute.Batch
             uri.Reset(_endpoint);
             uri.AppendPath("/jobschedules/", false);
             uri.AppendPath(jobScheduleId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -1183,7 +1300,10 @@ namespace Azure.Compute.Batch
             uri.Reset(_endpoint);
             uri.AppendPath("/jobschedules/", false);
             uri.AppendPath(jobScheduleId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -1215,7 +1335,10 @@ namespace Azure.Compute.Batch
             uri.Reset(_endpoint);
             uri.AppendPath("/jobschedules/", false);
             uri.AppendPath(jobScheduleId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -1252,7 +1375,10 @@ namespace Azure.Compute.Batch
             uri.Reset(_endpoint);
             uri.AppendPath("/jobschedules/", false);
             uri.AppendPath(jobScheduleId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -1282,7 +1408,10 @@ namespace Azure.Compute.Batch
             uri.Reset(_endpoint);
             uri.AppendPath("/jobschedules/", false);
             uri.AppendPath(jobScheduleId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -1313,7 +1442,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/jobschedules/", false);
             uri.AppendPath(jobScheduleId, true);
             uri.AppendPath("/disable", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -1342,7 +1474,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/jobschedules/", false);
             uri.AppendPath(jobScheduleId, true);
             uri.AppendPath("/enable", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -1371,7 +1506,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/jobschedules/", false);
             uri.AppendPath(jobScheduleId, true);
             uri.AppendPath("/terminate", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -1402,7 +1540,10 @@ namespace Azure.Compute.Batch
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobschedules", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -1427,7 +1568,10 @@ namespace Azure.Compute.Batch
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobschedules", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -1473,7 +1617,10 @@ namespace Azure.Compute.Batch
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -1491,7 +1638,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendPath("/tasks", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -1518,7 +1668,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendPath("/tasks", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -1564,7 +1717,10 @@ namespace Azure.Compute.Batch
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -1582,7 +1738,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendPath("/addtaskcollection", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -1611,7 +1770,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath(jobId, true);
             uri.AppendPath("/tasks/", false);
             uri.AppendPath(taskId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -1641,7 +1803,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath(jobId, true);
             uri.AppendPath("/tasks/", false);
             uri.AppendPath(taskId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -1680,7 +1845,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath(jobId, true);
             uri.AppendPath("/tasks/", false);
             uri.AppendPath(taskId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -1713,7 +1881,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/tasks/", false);
             uri.AppendPath(taskId, true);
             uri.AppendPath("/subtasksinfo", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -1747,7 +1918,10 @@ namespace Azure.Compute.Batch
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -1767,7 +1941,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/tasks/", false);
             uri.AppendPath(taskId, true);
             uri.AppendPath("/terminate", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -1798,7 +1975,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/tasks/", false);
             uri.AppendPath(taskId, true);
             uri.AppendPath("/reactivate", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -1830,7 +2010,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath(taskId, true);
             uri.AppendPath("/files/", false);
             uri.AppendPath(filePath, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -1862,7 +2045,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath(taskId, true);
             uri.AppendPath("/files/", false);
             uri.AppendPath(filePath, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -1899,7 +2085,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath(taskId, true);
             uri.AppendPath("/files/", false);
             uri.AppendPath(filePath, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -1930,7 +2119,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/tasks/", false);
             uri.AppendPath(taskId, true);
             uri.AppendPath("/files", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -1972,7 +2164,10 @@ namespace Azure.Compute.Batch
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -1992,7 +2187,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/nodes/", false);
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/users", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -2022,7 +2220,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/users/", false);
             uri.AppendPath(userName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -2050,7 +2251,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/users/", false);
             uri.AppendPath(userName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -2078,7 +2282,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath(poolId, true);
             uri.AppendPath("/nodes/", false);
             uri.AppendPath(nodeId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -2110,7 +2317,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/nodes/", false);
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/reboot", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -2142,7 +2352,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/nodes/", false);
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/start", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -2169,7 +2382,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/nodes/", false);
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/reimage", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -2201,7 +2417,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/nodes/", false);
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/deallocate", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -2233,7 +2452,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/nodes/", false);
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/disablescheduling", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -2265,7 +2487,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/nodes/", false);
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/enablescheduling", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -2292,7 +2517,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/nodes/", false);
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/remoteloginsettings", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -2320,7 +2548,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/nodes/", false);
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/uploadbatchservicelogs", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -2348,7 +2579,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolId, true);
             uri.AppendPath("/nodes", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -2390,7 +2624,10 @@ namespace Azure.Compute.Batch
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -2411,7 +2648,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/extensions/", false);
             uri.AppendPath(extensionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -2443,7 +2683,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/nodes/", false);
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/extensions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -2481,7 +2724,10 @@ namespace Azure.Compute.Batch
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -2502,7 +2748,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/files/", false);
             uri.AppendPath(filePath, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -2534,7 +2783,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/files/", false);
             uri.AppendPath(filePath, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -2571,7 +2823,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/files/", false);
             uri.AppendPath(filePath, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -2602,7 +2857,10 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/nodes/", false);
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/files", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
@@ -2644,7 +2902,10 @@ namespace Azure.Compute.Batch
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
