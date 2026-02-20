@@ -7,7 +7,7 @@ This document provides guidelines for AI agents (e.g., GitHub Copilot, MCP-based
 ### Purpose and Scope
 
 The Azure SDK for .NET repository contains:
-- **Data plane Client Libraries**: SDKs for interacting with Azure services at application runtime
+- **Data plane client Libraries**: SDKs for interacting with Azure services at application runtime
 - **Management plane Libraries**: SDKs for provisioning and managing Azure resources
 - **Code Generators**: Tools that generate Azure Data Plane and Management Plane SDKs
 - **Build Infrastructure**: Common engineering systems and tooling for SDK development
@@ -195,7 +195,7 @@ ReleasePackage -PackageName <package-name> -Language dotnet
 
 ### Required Tools
 
-- **.NET 9.0.102 SDK** (or higher within 9.0.* band)
+- **.NET 10.0.103 SDK** (or higher within 10.0.* band)
 - **PowerShell 7+** for scripts and code generation
 - **Node.js 22.x.x** for TypeSpec and code generation
 - **Git** with proper line ending configuration (see Configuration section below)
@@ -215,7 +215,7 @@ Clone to short paths (e.g., `C:\git`) to avoid 260-character path limit. Paths i
 
 - **Client Libraries**: `Azure.<NamespaceGroup>.<ServiceName>` (e.g., `Azure.Storage.Blobs`. See [the guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-namespace-naming) for approved group names)
 - **Management Libraries**: `Azure.ResourceManager.<ResourceProvider>` (e.g., `Azure.ResourceManager.Compute`)
-- **Legacy Libraries**: `Microsoft.Azure.*` (previous generation)
+- **Legacy Libraries**: `Microsoft.Azure.*` (previous generation; also includes current bridge/integration packages and libraries with unusual dependencies)
 
 ### Target Frameworks
 
@@ -232,9 +232,11 @@ Package versions are centrally managed in `eng/Packages.Data.props`. When adding
 ### Testing Standards
 
 - **Unit Tests**: Required for all code changes
-- **Live Tests**: Should be recorded using [Azure.Core.TestFramework](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/README.md)
+- **Live Tests**: Should be recorded using [Azure.Core.TestFramework](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/README.md). Note: Newer libraries based on System.ClientModel use the unbranded generator and [Microsoft.ClientModel.TestFramework](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Microsoft.ClientModel.TestFramework/README.md) instead.
 - **Test Categories**: Use `TestCategory!=Live` filter to skip live tests
 - **Code Coverage**: Run with `/p:CollectCoverage=true`
+
+> **Note**: The AutoRest/TypeSpec code generation workflow described in this document applies primarily to HTTP/REST-based client libraries. AMQP or MQTT-based libraries (e.g., Event Hubs, Service Bus, SignalR) do not use this generation process and have different development patterns.
 
 ## SDK-Specific Automation
 
@@ -331,4 +333,4 @@ This repository is licensed under the MIT License. See [LICENSE.txt](https://git
 
 ---
 
-**Note**: This document follows the [AGENTS.md](https://agents.md) standards for AI agent documentation in open source repositories.
+**Note**: This document follows the AGENTS.md standards for AI agent documentation in open source repositories.
