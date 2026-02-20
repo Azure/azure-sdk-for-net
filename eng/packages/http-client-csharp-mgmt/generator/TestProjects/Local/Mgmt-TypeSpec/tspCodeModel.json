@@ -19462,7 +19462,7 @@
                       },
                       "value": "2024-05-01"
                     },
-                    "optional": false,
+                    "optional": true,
                     "scope": "Method",
                     "crossLanguageDefinitionId": "MgmtTypeSpec.previewActions.apiVersion",
                     "readOnly": false,
