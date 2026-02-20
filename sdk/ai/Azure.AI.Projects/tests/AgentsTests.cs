@@ -1129,7 +1129,7 @@ public class AgentsTests : AgentsTestBase
         // If the files are not in the foundry (used only for file upload),uncomment the code below and
         // set the serializedScreenshots value to COMPUTER_SCREENSHOTS environment variable;
         // comment out these lines and run the test again.
-        // string serializedScreenshots = await UploadScreenshots(openAIClient);
+        // string serializedScreenshots = await UploadScreenshots(projectClient.OpenAI);
         // Console.WriteLine(serializedScreenshots);
         // End of file upload code.
         Dictionary<string, string> screenshots = useFileUpload ? JsonSerializer.Deserialize<Dictionary<string, string>>(TestEnvironment.COMPUTER_SCREENSHOTS) : [];
@@ -1159,7 +1159,6 @@ public class AgentsTests : AgentsTestBase
         do
         {
             response = await responseClient.CreateResponseAsync(responseOptions);
-            response = await WaitForRun(responseClient, response);
             responseOptions.InputItems.Clear();
             responseOptions.PreviousResponseId = response.Id;
             computerUseCalled = false;

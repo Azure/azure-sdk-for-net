@@ -82,7 +82,7 @@ public class Sample_MemoryStore : SamplesBase
         };
         MemoryStoreSearchResponse resp = await projectClient.MemoryStores.SearchMemoriesAsync(
             memoryStoreName: memoryStore.Name,
-            options: new(scope)
+            options: opts
         );
         Console.WriteLine("==The output from memory tool.==");
         foreach (Azure.AI.Projects.MemorySearchItem item in resp.Memories)
@@ -172,7 +172,7 @@ public class Sample_MemoryStore : SamplesBase
         };
         MemoryStoreSearchResponse resp = projectClient.MemoryStores.SearchMemories(
             memoryStoreName: memoryStore.Name,
-            options: new(scope)
+            options: opts
         );
         Console.WriteLine("==The output from memory tool.==");
         foreach (Azure.AI.Projects.MemorySearchItem item in resp.Memories)
