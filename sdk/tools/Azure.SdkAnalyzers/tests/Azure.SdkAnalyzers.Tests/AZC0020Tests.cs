@@ -684,5 +684,60 @@ namespace Azure
 
             await Verifier.VerifyAnalyzerAsync(code);
         }
+
+        [Test]
+        public async Task AZC0020ProducedForMicrosoftAzureNamespace()
+        {
+            const string code = @"
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
+
+namespace Microsoft.Azure.Sample
+{
+    public class SampleClient
+    {
+        public async Task<Response> UpdateAsync(BinaryData content, RequestContext context = null)
+        {
+            return null;
+        }
+    }
+}
+
+namespace MyApp
+{
+    using Microsoft.Azure.Sample;
+
+    public class MyService
+    {
+        private SampleClient _client = new SampleClient();
+
+        public async Task UpdateAsync(CancellationToken cancellationToken)
+        {
+            await _client.UpdateAsync(
+                BinaryData.FromString(""test""),
+                {|AZC0020:new RequestContext()|});
+        }
+    }
+}
+
+namespace Azure
+{
+    public class RequestContext
+    {
+        public CancellationToken CancellationToken { get; set; }
+    }
+
+    public class Response { }
+
+    public class BinaryData
+    {
+        public static BinaryData FromString(string s) => new BinaryData();
+    }
+}
+";
+
+            await Verifier.VerifyAnalyzerAsync(code);
+        }
     }
 }

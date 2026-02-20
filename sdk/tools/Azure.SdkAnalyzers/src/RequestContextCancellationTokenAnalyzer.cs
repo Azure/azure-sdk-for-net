@@ -72,7 +72,7 @@ namespace Azure.SdkAnalyzers
                 return false;
             }
 
-            // Check if the method is in an Azure namespace
+            // Check if the method is in an Azure or Microsoft.Azure namespace
             var containingNamespace = method.ContainingNamespace;
             while (containingNamespace != null && !containingNamespace.IsGlobalNamespace)
             {
@@ -80,6 +80,15 @@ namespace Azure.SdkAnalyzers
                 {
                     return true;
                 }
+
+                // Check for Microsoft.Azure (e.g., bridge packages, extensions)
+                if (containingNamespace.Name == "Azure" &&
+                    containingNamespace.ContainingNamespace != null &&
+                    containingNamespace.ContainingNamespace.Name == "Microsoft")
+                {
+                    return true;
+                }
+
                 containingNamespace = containingNamespace.ContainingNamespace;
             }
 
