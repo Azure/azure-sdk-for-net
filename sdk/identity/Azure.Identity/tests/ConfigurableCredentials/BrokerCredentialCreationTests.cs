@@ -441,9 +441,20 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.Broker
             {
                 IConfiguration config = Helper.GetConfiguration();
 
+                string expectedRedirectUrl = "http://localhost";
+#if !IDENTITY_TESTS
+                // When the broker package is available, the Broker DBO sets a
+                // platform-specific redirect URI on macOS.
+                if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(
+                    System.Runtime.InteropServices.OSPlatform.OSX))
+                {
+                    expectedRedirectUrl = Constants.MacBrokerRedirectUri;
+                }
+#endif
+
                 var broker = GetUnderlying(CreateFromConfig(config));
                 var client = ReadProperty<MsalPublicClient>(broker, "Client");
-                Assert.AreEqual("http://localhost", ReadProperty<string>(client, "RedirectUrl"));
+                Assert.AreEqual(expectedRedirectUrl, ReadProperty<string>(client, "RedirectUrl"));
             }
         }
 
