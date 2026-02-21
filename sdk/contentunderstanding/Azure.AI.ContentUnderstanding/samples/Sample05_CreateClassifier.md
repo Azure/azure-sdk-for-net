@@ -84,7 +84,7 @@ var categories = new Dictionary<string, ContentCategoryDefinition>
 // Create analyzer configuration
 var config = new ContentAnalyzerConfig
 {
-    ReturnDetails = true,
+    ShouldReturnDetails = true,
     EnableSegment = true // Enable automatic segmentation by category
 };
 

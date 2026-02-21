@@ -6,7 +6,7 @@ Another great value of Content Understanding is its rich set of prebuilt analyze
 
 Content Understanding supports both local binary inputs (see [Sample01_AnalyzeBinary][sample01-analyze-binary]) and URL inputs across all modalities. This sample focuses on prebuilt RAG analyzers (the `prebuilt-*Search` analyzers, such as `prebuilt-documentSearch`) with URL inputs.
 
-**Important**: For URL inputs, use `AnalyzeAsync()` with `AnalyzeInput` objects that wrap the URL. For binary data (local files), use `AnalyzeBinaryAsync()` instead. This sample demonstrates `AnalyzeAsync()` with URL inputs.
+**Important**: For URL inputs, use `AnalyzeAsync()` with `AnalysisInput` objects that wrap the URL. For binary data (local files), use `AnalyzeBinaryAsync()` instead. This sample demonstrates `AnalyzeAsync()` with URL inputs.
 
 Documents, HTML, and images with text are returned as `DocumentContent` (derived from `MediaContent`), while audio and video are returned as `AudioVisualContent` (also derived from `MediaContent`). These prebuilt RAG analyzers return markdown and a one-paragraph `Summary` for each content item; `prebuilt-videoSearch` can return multiple segments, so iterate over all contents rather than just the first.
 
@@ -34,13 +34,13 @@ var client = new ContentUnderstandingClient(new Uri(endpoint), new AzureKeyCrede
 
 ## Document from a URL
 
-Use the `prebuilt-documentSearch` analyzer with a public document URL. Note that for URL inputs, use `AnalyzeAsync()` with `AnalyzeInput` objects (as shown below). For binary data from local files, use `AnalyzeBinaryAsync()` instead (see [Sample01_AnalyzeBinary][sample01-analyze-binary]).
+Use the `prebuilt-documentSearch` analyzer with a public document URL. Note that for URL inputs, use `AnalyzeAsync()` with `AnalysisInput` objects (as shown below). For binary data from local files, use `AnalyzeBinaryAsync()` instead (see [Sample01_AnalyzeBinary][sample01-analyze-binary]).
 
 > Content Understanding operations are long-running; the SDK handles polling when using `WaitUntil.Completed`.
 
 For a list of supported document types for `prebuilt-documentSearch`, see [Service limits][cu-service-limits].
 
-Use `AnalyzeAsync()` with `AnalyzeInput` objects that wrap the URL. The result contains `MediaContent` items that expose markdown and detailed properties. For documents, cast to `DocumentContent` to access document-specific properties such as pages and tables.
+Use `AnalyzeAsync()` with `AnalysisInput` objects that wrap the URL. The result contains `MediaContent` items that expose markdown and detailed properties. For documents, cast to `DocumentContent` to access document-specific properties such as pages and tables.
 
 ```C# Snippet:ContentUnderstandingAnalyzeUrlAsync
 // You can replace this URL with your own publicly accessible document URL.
@@ -49,7 +49,7 @@ Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-a
 Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
     WaitUntil.Completed,
     "prebuilt-documentSearch",
-    inputs: new[] { new AnalyzeInput { Url = uriSource } });
+    inputs: new[] { new AnalysisInput { Uri = uriSource } });
 
 AnalyzeResult result = operation.Value;
 MediaContent content = result.Contents!.First();
@@ -85,7 +85,7 @@ Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-a
 Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
     WaitUntil.Completed,
     "prebuilt-videoSearch",
-    inputs: new[] { new AnalyzeInput { Url = uriSource } });
+    inputs: new[] { new AnalysisInput { Uri = uriSource } });
 
 AnalyzeResult result = operation.Value;
 
@@ -123,7 +123,7 @@ Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-a
 Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
     WaitUntil.Completed,
     "prebuilt-audioSearch",
-    inputs: new[] { new AnalyzeInput { Url = uriSource } });
+    inputs: new[] { new AnalysisInput { Uri = uriSource } });
 
 AnalyzeResult result = operation.Value;
 
@@ -159,7 +159,7 @@ Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-a
 Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
     WaitUntil.Completed,
     "prebuilt-imageSearch",
-    inputs: new[] { new AnalyzeInput { Url = uriSource } });
+    inputs: new[] { new AnalysisInput { Uri = uriSource } });
 
 AnalyzeResult result = operation.Value;
 

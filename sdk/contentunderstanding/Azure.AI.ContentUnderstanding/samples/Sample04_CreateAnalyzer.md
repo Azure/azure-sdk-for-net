@@ -119,7 +119,7 @@ var config = new ContentAnalyzerConfig
     EnableLayout = true,
     EnableOcr = true,
     EstimateFieldSourceAndConfidence = true,
-    ReturnDetails = true
+    ShouldReturnDetails = true
 };
 
 // Create the custom analyzer
@@ -156,7 +156,7 @@ var documentUrl = new Uri("<document_url>");
 var analyzeOperation = await client.AnalyzeAsync(
     WaitUntil.Completed,
     analyzerId,
-    inputs: new[] { new AnalyzeInput { Url = documentUrl } });
+    inputs: new[] { new AnalysisInput { Uri = documentUrl } });
 
 var analyzeResult = analyzeOperation.Value;
 
