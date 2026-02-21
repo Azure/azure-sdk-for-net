@@ -177,10 +177,13 @@ namespace Azure.Identity
                     throw new CredentialUnavailableException(AzdCliNotInstalled);
                 }
 
+                // Detect the specific azd "not logged in" error pattern (not just any message mentioning "azd auth login")
                 bool isAADSTSError = errorText.Contains("AADSTS");
-                bool isLoginError = errorText.IndexOf("azd auth login", StringComparison.OrdinalIgnoreCase) != -1;
+                bool isAzdNotLoggedInError = errorText.IndexOf("Please run", StringComparison.OrdinalIgnoreCase) != -1 &&
+                                             errorText.IndexOf("azd auth login", StringComparison.OrdinalIgnoreCase) != -1 &&
+                                             errorText.IndexOf("command prompt", StringComparison.OrdinalIgnoreCase) != -1;
 
-                if (isLoginError && !isAADSTSError)
+                if (isAzdNotLoggedInError && !isAADSTSError)
                 {
                     throw new CredentialUnavailableException(AzdNotLogIn);
                 }
