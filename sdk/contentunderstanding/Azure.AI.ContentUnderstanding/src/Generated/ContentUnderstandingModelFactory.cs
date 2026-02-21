@@ -43,13 +43,13 @@ namespace Azure.AI.ContentUnderstanding
         ///   Possible values are 'codePoint', 'utf16', and `utf8`.  Default is `codePoint`.")
         /// </param>
         /// <param name="contents"> The extracted content. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.AnalyzeResult"/> instance for mocking. </returns>
-        public static AnalyzeResult AnalyzeResult(string analyzerId = default, string apiVersion = default, DateTimeOffset? createdAt = default, IEnumerable<ResponseError> warnings = default, string stringEncoding = default, IEnumerable<MediaContent> contents = default)
+        /// <returns> A new <see cref="ContentUnderstanding.AnalysisResult"/> instance for mocking. </returns>
+        public static AnalysisResult AnalysisResult(string analyzerId = default, string apiVersion = default, DateTimeOffset? createdAt = default, IEnumerable<ResponseError> warnings = default, string stringEncoding = default, IEnumerable<MediaContent> contents = default)
         {
             warnings ??= new ChangeTrackingList<ResponseError>();
             contents ??= new ChangeTrackingList<MediaContent>();
 
-            return new AnalyzeResult(
+            return new AnalysisResult(
                 analyzerId,
                 apiVersion,
                 createdAt,

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 
 namespace Azure.AI.ContentUnderstanding
 {
@@ -30,6 +29,5 @@ namespace Azure.AI.ContentUnderstanding
         {
             ValueJson = valueJson;
         }
-
     }
 }

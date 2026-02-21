@@ -52,7 +52,7 @@ var analyzeOperation = await client.AnalyzeAsync(
 // Get the operation ID - this is needed to delete the result later
 string operationId = analyzeOperation.Id;
 Console.WriteLine($"Operation ID: {operationId}");
-AnalyzeResult result = analyzeOperation.Value;
+AnalysisResult result = analyzeOperation.Value;
 Console.WriteLine("Analysis completed successfully!");
 
 // Display some sample results

@@ -38,7 +38,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // Get the operation ID - this is needed to retrieve result files later
             string operationId = analyzeOperation.Id;
             Console.WriteLine($"Operation ID: {operationId}");
-            AnalyzeResult result = analyzeOperation.Value;
+            AnalysisResult result = analyzeOperation.Value;
             #endregion
 
             #region Assertion:ContentUnderstandingAnalyzeVideoForResultFiles
