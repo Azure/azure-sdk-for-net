@@ -9,6 +9,9 @@ namespace Azure.AI.ContentUnderstanding
 {
     public partial class DateTimeOffsetField
     {
+        /// <summary> Date field value, in ISO 8601 (YYYY-MM-DD) format. </summary>
+        internal DateTimeOffset? ValueDate { get; }
+
         /// <summary> Date field value. </summary>
         public new DateTimeOffset? Value => ValueDate;
     }

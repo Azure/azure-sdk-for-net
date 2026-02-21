@@ -29,8 +29,5 @@ namespace Azure.AI.ContentUnderstanding
         {
             ValueDate = valueDate;
         }
-
-        /// <summary> Date field value, in ISO 8601 (YYYY-MM-DD) format. </summary>
-        public DateTimeOffset? ValueDate { get; }
     }
 }

@@ -30,8 +30,5 @@ namespace Azure.AI.ContentUnderstanding
         {
             ValueArray = valueArray;
         }
-
-        /// <summary> Array field value. </summary>
-        public IList<ContentField> ValueArray { get; }
     }
 }

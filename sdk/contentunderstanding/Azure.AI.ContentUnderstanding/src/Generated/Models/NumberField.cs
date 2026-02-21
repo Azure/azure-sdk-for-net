@@ -29,8 +29,5 @@ namespace Azure.AI.ContentUnderstanding
         {
             ValueNumber = valueNumber;
         }
-
-        /// <summary> Number field value. </summary>
-        public double? ValueNumber { get; }
     }
 }

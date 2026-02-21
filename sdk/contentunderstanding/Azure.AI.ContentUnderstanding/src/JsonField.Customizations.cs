@@ -10,6 +10,9 @@ namespace Azure.AI.ContentUnderstanding
     public partial class JsonField
     {
         /// <summary> JSON field value. </summary>
+        internal BinaryData? ValueJson { get; }
+
+        /// <summary> JSON field value. </summary>
         public new BinaryData? Value => ValueJson;
     }
 }
