@@ -13,20 +13,20 @@ using Azure;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary> Analyze operation result. </summary>
-    public partial class AnalyzeResult
+    public partial class AnalysisResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalysisResult"/>. </summary>
         /// <param name="contents"> The extracted content. </param>
-        internal AnalyzeResult(IEnumerable<MediaContent> contents)
+        internal AnalysisResult(IEnumerable<MediaContent> contents)
         {
             Warnings = new ChangeTrackingList<ResponseError>();
             Contents = contents.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalysisResult"/>. </summary>
         /// <param name="analyzerId"> The unique identifier of the analyzer. </param>
         /// <param name="apiVersion"> The version of the API used to analyze the document. </param>
         /// <param name="createdAt"> The date and time when the result was created. </param>
@@ -37,7 +37,7 @@ namespace Azure.AI.ContentUnderstanding
         /// </param>
         /// <param name="contents"> The extracted content. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeResult(string analyzerId, string apiVersion, DateTimeOffset? createdAt, IList<ResponseError> warnings, string stringEncoding, IList<MediaContent> contents, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalysisResult(string analyzerId, string apiVersion, DateTimeOffset? createdAt, IList<ResponseError> warnings, string stringEncoding, IList<MediaContent> contents, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AnalyzerId = analyzerId;
             ApiVersion = apiVersion;

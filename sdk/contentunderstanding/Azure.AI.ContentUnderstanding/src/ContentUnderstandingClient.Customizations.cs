@@ -55,8 +55,8 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analyzerId"/> or <paramref name="inputs"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="analyzerId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> The <see cref="Operation{AnalyzeResult}"/> with operation ID accessible via the <c>Id</c> property. </returns>
-        public virtual async Task<Operation<AnalyzeResult>> AnalyzeAsync(WaitUntil waitUntil, string analyzerId, IEnumerable<AnalysisInput> inputs, IDictionary<string, string>? modelDeployments = default, ProcessingLocation? processingLocation = default, CancellationToken cancellationToken = default)
+        /// <returns> The <see cref="Operation{AnalysisResult}"/> with operation ID accessible via the <c>Id</c> property. </returns>
+        public virtual async Task<Operation<AnalysisResult>> AnalyzeAsync(WaitUntil waitUntil, string analyzerId, IEnumerable<AnalysisInput> inputs, IDictionary<string, string>? modelDeployments = default, ProcessingLocation? processingLocation = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
             Argument.AssertNotNull(inputs, nameof(inputs));
@@ -64,7 +64,7 @@ namespace Azure.AI.ContentUnderstanding
             AnalyzeRequest1 spreadModel = new AnalyzeRequest1(inputs.ToList(), modelDeployments ?? new ChangeTrackingDictionary<string, string>(), new ChangeTrackingDictionary<string, BinaryData>());
             // SDK-EXT: Use DefaultStringEncoding to hide the stringEncoding parameter from the public API (defaults to 'utf16' for .NET)
             Operation<BinaryData> result = await AnalyzeAsync(waitUntil, analyzerId, spreadModel, DefaultStringEncoding, processingLocation?.ToString()!, clientRequestId: default, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => AnalyzeResult.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.AnalyzeAsync");
+            return ProtocolOperationHelpers.Convert(result, response => AnalysisResult.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.AnalyzeAsync");
         }
 
         /// <summary> Extract content and fields from input. </summary>
@@ -79,8 +79,8 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analyzerId"/> or <paramref name="inputs"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="analyzerId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> The <see cref="Operation{AnalyzeResult}"/> with operation ID accessible via the <c>Id</c> property. </returns>
-        public virtual Operation<AnalyzeResult> Analyze(WaitUntil waitUntil, string analyzerId, IEnumerable<AnalysisInput> inputs, IDictionary<string, string>? modelDeployments = default, ProcessingLocation? processingLocation = default, CancellationToken cancellationToken = default)
+        /// <returns> The <see cref="Operation{AnalysisResult}"/> with operation ID accessible via the <c>Id</c> property. </returns>
+        public virtual Operation<AnalysisResult> Analyze(WaitUntil waitUntil, string analyzerId, IEnumerable<AnalysisInput> inputs, IDictionary<string, string>? modelDeployments = default, ProcessingLocation? processingLocation = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
             Argument.AssertNotNull(inputs, nameof(inputs));
@@ -88,7 +88,7 @@ namespace Azure.AI.ContentUnderstanding
             AnalyzeRequest1 spreadModel = new AnalyzeRequest1(inputs.ToList(), modelDeployments ?? new ChangeTrackingDictionary<string, string>(), new ChangeTrackingDictionary<string, BinaryData>());
             // SDK-EXT: Use DefaultStringEncoding to hide the stringEncoding parameter from the public API (defaults to 'utf16' for .NET)
             Operation<BinaryData> result = Analyze(waitUntil, analyzerId, spreadModel, DefaultStringEncoding, processingLocation?.ToString()!, clientRequestId: default, cancellationToken.ToRequestContext());
-            return ProtocolOperationHelpers.Convert(result, response => AnalyzeResult.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.Analyze");
+            return ProtocolOperationHelpers.Convert(result, response => AnalysisResult.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.Analyze");
         }
 
         /// <summary> Extract content and fields from binary input. </summary>
@@ -101,8 +101,8 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analyzerId"/> or <paramref name="binaryInput"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="analyzerId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> The <see cref="Operation{AnalyzeResult}"/> with operation ID accessible via the <c>Id</c> property. </returns>
-        public virtual async Task<Operation<AnalyzeResult>> AnalyzeBinaryAsync(WaitUntil waitUntil, string analyzerId, BinaryData binaryInput, string? inputRange = default, string? contentType = default, ProcessingLocation? processingLocation = default, CancellationToken cancellationToken = default)
+        /// <returns> The <see cref="Operation{AnalysisResult}"/> with operation ID accessible via the <c>Id</c> property. </returns>
+        public virtual async Task<Operation<AnalysisResult>> AnalyzeBinaryAsync(WaitUntil waitUntil, string analyzerId, BinaryData binaryInput, string? inputRange = default, string? contentType = default, ProcessingLocation? processingLocation = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
             Argument.AssertNotNull(binaryInput, nameof(binaryInput));
@@ -113,7 +113,7 @@ namespace Azure.AI.ContentUnderstanding
 
             // SDK-EXT: Use DefaultStringEncoding to hide the stringEncoding parameter from the public API (defaults to 'utf16' for .NET)
             Operation<BinaryData> result = await AnalyzeBinaryAsync(waitUntil, analyzerId, effectiveContentType, RequestContent.Create(binaryInput), DefaultStringEncoding, processingLocation?.ToString()!, inputRange!, clientRequestId: default, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => AnalyzeResult.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.AnalyzeBinaryAsync");
+            return ProtocolOperationHelpers.Convert(result, response => AnalysisResult.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.AnalyzeBinaryAsync");
         }
 
         /// <summary> Extract content and fields from binary input. </summary>
@@ -126,8 +126,8 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analyzerId"/> or <paramref name="binaryInput"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="analyzerId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> The <see cref="Operation{AnalyzeResult}"/> with operation ID accessible via the <c>Id</c> property. </returns>
-        public virtual Operation<AnalyzeResult> AnalyzeBinary(WaitUntil waitUntil, string analyzerId, BinaryData binaryInput, string? inputRange = default, string? contentType = default, ProcessingLocation? processingLocation = default, CancellationToken cancellationToken = default)
+        /// <returns> The <see cref="Operation{AnalysisResult}"/> with operation ID accessible via the <c>Id</c> property. </returns>
+        public virtual Operation<AnalysisResult> AnalyzeBinary(WaitUntil waitUntil, string analyzerId, BinaryData binaryInput, string? inputRange = default, string? contentType = default, ProcessingLocation? processingLocation = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
             Argument.AssertNotNull(binaryInput, nameof(binaryInput));
@@ -138,7 +138,7 @@ namespace Azure.AI.ContentUnderstanding
 
             // SDK-EXT: Use DefaultStringEncoding to hide the stringEncoding parameter from the public API (defaults to 'utf16' for .NET)
             Operation<BinaryData> result = AnalyzeBinary(waitUntil, analyzerId, effectiveContentType, RequestContent.Create(binaryInput), DefaultStringEncoding, processingLocation?.ToString()!, inputRange!, clientRequestId: default, cancellationToken.ToRequestContext());
-            return ProtocolOperationHelpers.Convert(result, response => AnalyzeResult.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.AnalyzeBinary");
+            return ProtocolOperationHelpers.Convert(result, response => AnalysisResult.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.AnalyzeBinary");
         }
 
         #endregion

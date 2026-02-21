@@ -28,12 +28,12 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #region Snippet:ContentUnderstandingAnalyzeInvoice
             // You can replace this URL with your own invoice file URL
             Uri invoiceUrl = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-dotnet/main/ContentUnderstanding.Common/data/invoice.pdf");
-            Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
+            Operation<AnalysisResult> operation = await client.AnalyzeAsync(
                 WaitUntil.Completed,
                 "prebuilt-invoice",
                 inputs: new[] { new AnalysisInput { Uri = invoiceUrl } });
 
-            AnalyzeResult result = operation.Value;
+            AnalysisResult result = operation.Value;
             #endregion
 
             #region Assertion:ContentUnderstandingAnalyzeInvoice

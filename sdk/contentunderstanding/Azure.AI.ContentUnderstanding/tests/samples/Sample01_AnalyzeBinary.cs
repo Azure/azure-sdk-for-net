@@ -37,12 +37,12 @@ namespace Azure.AI.ContentUnderstanding.Samples
             byte[] fileBytes = File.ReadAllBytes(filePath);
             BinaryData binaryData = BinaryData.FromBytes(fileBytes);
 
-            Operation<AnalyzeResult> operation = await client.AnalyzeBinaryAsync(
+            Operation<AnalysisResult> operation = await client.AnalyzeBinaryAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
                 binaryData);
 
-            AnalyzeResult result = operation.Value;
+            AnalysisResult result = operation.Value;
             #endregion
 
             #region Assertion:ContentUnderstandingAnalyzeBinaryAsync
