@@ -102,7 +102,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analyzerId"/>, <paramref name="stringEncoding"/>, <paramref name="contentType"/> or <paramref name="input"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="analyzerId"/>, <paramref name="stringEncoding"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Operation<AnalyzeResult> AnalyzeBinary(WaitUntil waitUntil, string analyzerId, string stringEncoding, string contentType, BinaryData input, string range = default, ProcessingLocation? processingLocation = default, CancellationToken cancellationToken = default)
+        public virtual Operation<AnalysisResult> AnalyzeBinary(WaitUntil waitUntil, string analyzerId, string stringEncoding, string contentType, BinaryData input, string range = default, ProcessingLocation? processingLocation = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
             Argument.AssertNotNullOrEmpty(stringEncoding, nameof(stringEncoding));
@@ -110,7 +110,7 @@ namespace Azure.AI.ContentUnderstanding
             Argument.AssertNotNull(input, nameof(input));
 
             Operation<BinaryData> result = AnalyzeBinary(waitUntil, analyzerId, contentType, RequestContent.Create(input), stringEncoding, processingLocation?.ToString(), context: cancellationToken.ToRequestContext());
-            return ProtocolOperationHelpers.Convert(result, response => AnalyzeResult.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.AnalyzeBinary");
+            return ProtocolOperationHelpers.Convert(result, response => AnalysisResult.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.AnalyzeBinary");
         }
 
         /// <summary> Extract content and fields from input. </summary>
@@ -124,7 +124,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analyzerId"/>, <paramref name="stringEncoding"/>, <paramref name="contentType"/> or <paramref name="input"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="analyzerId"/>, <paramref name="stringEncoding"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Operation<AnalyzeResult>> AnalyzeBinaryAsync(WaitUntil waitUntil, string analyzerId, string stringEncoding, string contentType, BinaryData input, string range = default, ProcessingLocation? processingLocation = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<AnalysisResult>> AnalyzeBinaryAsync(WaitUntil waitUntil, string analyzerId, string stringEncoding, string contentType, BinaryData input, string range = default, ProcessingLocation? processingLocation = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
             Argument.AssertNotNullOrEmpty(stringEncoding, nameof(stringEncoding));
@@ -132,7 +132,7 @@ namespace Azure.AI.ContentUnderstanding
             Argument.AssertNotNull(input, nameof(input));
 
             Operation<BinaryData> result = await AnalyzeBinaryAsync(waitUntil, analyzerId, contentType, RequestContent.Create(input), stringEncoding, processingLocation?.ToString(), context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => AnalyzeResult.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.AnalyzeBinaryAsync");
+            return ProtocolOperationHelpers.Convert(result, response => AnalysisResult.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.AnalyzeBinaryAsync");
         }
 
         /// <summary> Create a copy of the source analyzer to the current location. </summary>

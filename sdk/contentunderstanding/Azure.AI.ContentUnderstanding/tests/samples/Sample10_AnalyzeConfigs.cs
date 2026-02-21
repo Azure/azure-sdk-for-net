@@ -39,12 +39,12 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             // Analyze with prebuilt-documentSearch which has formulas, layout, and OCR enabled
             // These configs enable extraction of charts, annotations, hyperlinks, and formulas
-            Operation<AnalyzeResult> operation = await client.AnalyzeBinaryAsync(
+            Operation<AnalysisResult> operation = await client.AnalyzeBinaryAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
                 binaryData);
 
-            AnalyzeResult result = operation.Value;
+            AnalysisResult result = operation.Value;
             #endregion
 
             #region Assertion:ContentUnderstandingAnalyzeWithConfigs

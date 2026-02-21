@@ -15,8 +15,8 @@ namespace Azure.AI.ContentUnderstanding
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AnalysisInput))]
+    [ModelReaderWriterBuildable(typeof(AnalysisResult))]
     [ModelReaderWriterBuildable(typeof(AnalyzeRequest1))]
-    [ModelReaderWriterBuildable(typeof(AnalyzeResult))]
     [ModelReaderWriterBuildable(typeof(ArrayField))]
     [ModelReaderWriterBuildable(typeof(AudioVisualContent))]
     [ModelReaderWriterBuildable(typeof(AudioVisualContentSegment))]

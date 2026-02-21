@@ -216,7 +216,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.IsNotNull(binaryData, "Binary data should not be null");
 
             // Analyze the document
-            Operation<AnalyzeResult> operation = await client.AnalyzeBinaryAsync(
+            Operation<AnalysisResult> operation = await client.AnalyzeBinaryAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
                 binaryData);
@@ -229,7 +229,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 $"Response status should be successful, but was {operation.GetRawResponse().Status}");
 
             // Verify result
-            AnalyzeResult result = operation.Value;
+            AnalysisResult result = operation.Value;
             Assert.IsNotNull(result, "Analysis result should not be null");
             Assert.IsNotNull(result.Contents, "Result contents should not be null");
             Assert.IsTrue(result.Contents.Count > 0, "Result should contain at least one content element");
@@ -252,12 +252,12 @@ namespace Azure.AI.ContentUnderstanding.Tests
             BinaryData binaryData = BinaryData.FromBytes(fileBytes);
 
             // Analyze the document
-            Operation<AnalyzeResult> operation = await client.AnalyzeBinaryAsync(
+            Operation<AnalysisResult> operation = await client.AnalyzeBinaryAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
                 binaryData);
 
-            AnalyzeResult result = operation.Value;
+            AnalysisResult result = operation.Value;
 
             // Verify contents exist
             Assert.IsNotNull(result.Contents, "Result should contain contents");
@@ -295,12 +295,12 @@ namespace Azure.AI.ContentUnderstanding.Tests
             BinaryData binaryData = BinaryData.FromBytes(fileBytes);
 
             // Analyze the document
-            Operation<AnalyzeResult> operation = await client.AnalyzeBinaryAsync(
+            Operation<AnalysisResult> operation = await client.AnalyzeBinaryAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
                 binaryData);
 
-            AnalyzeResult result = operation.Value;
+            AnalysisResult result = operation.Value;
 
             // Verify contents exist
             Assert.IsNotNull(result.Contents, "Result should contain contents");
@@ -419,7 +419,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.IsTrue(uriSource.IsAbsoluteUri, "URI should be absolute");
 
             // Analyze the document from URL
-            Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
+            Operation<AnalysisResult> operation = await client.AnalyzeAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
                 inputs: new[] { new AnalysisInput { Uri = uriSource } });
@@ -433,7 +433,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 $"Response status should be successful, but was {operation.GetRawResponse().Status}");
 
             // Verify result
-            AnalyzeResult result = operation.Value;
+            AnalysisResult result = operation.Value;
             Assert.IsNotNull(result, "Analysis result should not be null");
             Assert.IsNotNull(result.Contents, "Result contents should not be null");
             Assert.IsTrue(result.Contents.Count > 0, "Result should contain at least one content element");
@@ -466,7 +466,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.IsTrue(invoiceUrl.IsAbsoluteUri, "Invoice URL should be absolute");
 
             // Analyze the invoice
-            Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
+            Operation<AnalysisResult> operation = await client.AnalyzeAsync(
                 WaitUntil.Completed,
                 "prebuilt-invoice",
                 inputs: new[] { new AnalysisInput { Uri = invoiceUrl } });
@@ -480,7 +480,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 $"Response status should be successful, but was {operation.GetRawResponse().Status}");
 
             // Verify result
-            AnalyzeResult result = operation.Value;
+            AnalysisResult result = operation.Value;
             Assert.IsNotNull(result, "Analysis result should not be null");
             Assert.IsNotNull(result.Contents, "Result should contain contents");
             Assert.IsTrue(result.Contents!.Count > 0, "Result should have at least one content");
@@ -911,7 +911,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 BinaryData binaryData = BinaryData.FromBytes(fileBytes);
 
                 // Analyze the document using the classifier
-                Operation<AnalyzeResult> analyzeOperation = await client.AnalyzeBinaryAsync(
+                Operation<AnalysisResult> analyzeOperation = await client.AnalyzeBinaryAsync(
                     WaitUntil.Completed,
                     analyzerId,
                     binaryData);
@@ -925,7 +925,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                     $"Response status should be successful, but was {analyzeOperation.GetRawResponse().Status}");
 
                 // Verify analysis result
-                AnalyzeResult analyzeResult = analyzeOperation.Value;
+                AnalysisResult analyzeResult = analyzeOperation.Value;
                 Assert.IsNotNull(analyzeResult, "Analysis result should not be null");
                 Assert.IsNotNull(analyzeResult.Contents, "Result should contain contents");
                 Assert.IsTrue(analyzeResult.Contents.Count > 0, "Result should have at least one content");
@@ -1274,7 +1274,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             BinaryData binaryData = BinaryData.FromBytes(fileBytes);
 
             // Analyze with prebuilt-documentSearch which has formulas, layout, and OCR enabled
-            Operation<AnalyzeResult> operation = await client.AnalyzeBinaryAsync(
+            Operation<AnalysisResult> operation = await client.AnalyzeBinaryAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
                 binaryData);
@@ -1288,7 +1288,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 $"Response status should be successful, but was {operation.GetRawResponse().Status}");
 
             // Verify result
-            AnalyzeResult result = operation.Value;
+            AnalysisResult result = operation.Value;
             Assert.IsNotNull(result, "Analysis result should not be null");
             Assert.IsNotNull(result.Contents, "Result should contain contents");
             Assert.IsTrue(result.Contents.Count > 0, "Result should have at least one content");
@@ -1371,7 +1371,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
             // Wait for completion
             await analyzeOperation.WaitForCompletionAsync();
-            AnalyzeResult result = analyzeOperation.Value;
+            AnalysisResult result = analyzeOperation.Value;
 
             // Verify analysis completed successfully
             Assert.IsNotNull(result, "Analysis result should not be null");
@@ -1414,7 +1414,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
             // Wait for completion
             await analyzeOperation.WaitForCompletionAsync();
-            AnalyzeResult result = analyzeOperation.Value;
+            AnalysisResult result = analyzeOperation.Value;
 
             // Verify analysis completed successfully
             Assert.IsNotNull(result, "Analysis result should not be null");

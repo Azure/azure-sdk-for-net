@@ -46,12 +46,12 @@ Use `AnalyzeAsync()` with `AnalysisInput` objects that wrap the URL. The result 
 // You can replace this URL with your own publicly accessible document URL.
 Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/document/invoice.pdf");
 
-Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
+Operation<AnalysisResult> operation = await client.AnalyzeAsync(
     WaitUntil.Completed,
     "prebuilt-documentSearch",
     inputs: new[] { new AnalysisInput { Uri = uriSource } });
 
-AnalyzeResult result = operation.Value;
+AnalysisResult result = operation.Value;
 MediaContent content = result.Contents!.First();
 Console.WriteLine("Markdown:");
 Console.WriteLine(content.Markdown);
@@ -82,12 +82,12 @@ For video content, cast `MediaContent` to `AudioVisualContent` to access video-s
 
 ```C# Snippet:ContentUnderstandingAnalyzeVideoUrlAsync
 Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/videos/sdk_samples/FlightSimulator.mp4");
-Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
+Operation<AnalysisResult> operation = await client.AnalyzeAsync(
     WaitUntil.Completed,
     "prebuilt-videoSearch",
     inputs: new[] { new AnalysisInput { Uri = uriSource } });
 
-AnalyzeResult result = operation.Value;
+AnalysisResult result = operation.Value;
 
 // prebuilt-videoSearch can detect video segments, so we should iterate through all segments
 int segmentIndex = 1;
@@ -120,12 +120,12 @@ For audio content, cast `MediaContent` to `AudioVisualContent` to access audio-s
 
 ```C# Snippet:ContentUnderstandingAnalyzeAudioUrlAsync
 Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/audio/callCenterRecording.mp3");
-Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
+Operation<AnalysisResult> operation = await client.AnalyzeAsync(
     WaitUntil.Completed,
     "prebuilt-audioSearch",
     inputs: new[] { new AnalysisInput { Uri = uriSource } });
 
-AnalyzeResult result = operation.Value;
+AnalysisResult result = operation.Value;
 
 // Cast MediaContent to AudioVisualContent to access audio/visual-specific properties
 // AudioVisualContent derives from MediaContent and provides additional properties
@@ -156,12 +156,12 @@ Access the `Summary` field from the `Fields` dictionary to get the image descrip
 
 ```C# Snippet:ContentUnderstandingAnalyzeImageUrlAsync
 Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/image/pieChart.jpg");
-Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
+Operation<AnalysisResult> operation = await client.AnalyzeAsync(
     WaitUntil.Completed,
     "prebuilt-imageSearch",
     inputs: new[] { new AnalysisInput { Uri = uriSource } });
 
-AnalyzeResult result = operation.Value;
+AnalysisResult result = operation.Value;
 
 MediaContent content = result.Contents!.First();
 Console.WriteLine("Markdown:");

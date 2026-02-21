@@ -4,7 +4,7 @@ This sample demonstrates how to access the raw JSON response from analysis opera
 
 ## About returning raw JSON
 
-The Content Understanding SDK provides a convenient object model approach (shown in [Sample 03][sample03]) that returns `AnalyzeResult` objects with deeper navigation through the object model. However, sometimes you may need access to the raw JSON response for:
+The Content Understanding SDK provides a convenient object model approach (shown in [Sample 03][sample03]) that returns `AnalysisResult` objects with deeper navigation through the object model. However, sometimes you may need access to the raw JSON response for:
 
 - **Easy inspection**: View the complete response structure in the exact format returned by the service, making it easier to understand the full data model and discover available fields
 - **Debugging**: Inspect the raw response to troubleshoot issues, verify service behavior, or understand unexpected results
