@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 
 using OpenTelemetry.Logs;
 
@@ -160,13 +161,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Tags[ContextTagKeys.AiApplicationVer.ToString()] = resource?.ServiceVersion_Truncated;
             Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.s_sdkVersion.Truncate(SchemaConstants.Tags_AiInternalSdkVersion_MaxLength);
 
-            var roleName = s_cloudRoleNameOverride ?? (s_cloudRoleNameOverride = Environment.GetEnvironmentVariable("MICROSOFT_APPLICATIONINSIGHTS_CLOUD_ROLE_NAME") ?? string.Empty);
+            var roleName = s_cloudRoleNameOverride ?? (s_cloudRoleNameOverride = Environment.GetEnvironmentVariable(EnvironmentVariableConstants.APPLICATIONINSIGHTS_CLOUD_ROLE_NAME) ?? string.Empty);
             if (roleName.Length > 0)
             {
                 Tags[ContextTagKeys.AiCloudRole.ToString()] = roleName.Truncate(SchemaConstants.Tags_AiCloudRole_MaxLength);
             }
 
-            var roleInstance = s_cloudRoleInstanceOverride ?? (s_cloudRoleInstanceOverride = Environment.GetEnvironmentVariable("MICROSOFT_APPLICATIONINSIGHTS_CLOUD_ROLE_INSTANCE") ?? string.Empty);
+            var roleInstance = s_cloudRoleInstanceOverride ?? (s_cloudRoleInstanceOverride = Environment.GetEnvironmentVariable(EnvironmentVariableConstants.APPLICATIONINSIGHTS_CLOUD_ROLE_INSTANCE) ?? string.Empty);
             if (roleInstance.Length > 0)
             {
                 Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = roleInstance.Truncate(SchemaConstants.Tags_AiCloudRoleInstance_MaxLength);

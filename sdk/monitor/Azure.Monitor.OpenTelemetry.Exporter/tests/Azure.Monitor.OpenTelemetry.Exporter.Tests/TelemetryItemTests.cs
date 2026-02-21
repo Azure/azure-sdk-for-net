@@ -659,11 +659,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void CloudRoleNameOverriddenByEnvironmentVariable()
         {
+            var priorRoleName = Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CLOUD_ROLE_NAME");
+            var priorRoleInstance = Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CLOUD_ROLE_INSTANCE");
             TelemetryItem.ResetEnvironmentVariableOverrides();
             try
             {
-                Environment.SetEnvironmentVariable("MICROSOFT_APPLICATIONINSIGHTS_CLOUD_ROLE_NAME", "EnvOverrideRole");
-                Environment.SetEnvironmentVariable("MICROSOFT_APPLICATIONINSIGHTS_CLOUD_ROLE_INSTANCE", "EnvOverrideInstance");
+                Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_CLOUD_ROLE_NAME", "EnvOverrideRole");
+                Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_CLOUD_ROLE_INSTANCE", "EnvOverrideInstance");
 
                 using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
                 using var activity = activitySource.StartActivity(
@@ -683,8 +685,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             }
             finally
             {
-                Environment.SetEnvironmentVariable("MICROSOFT_APPLICATIONINSIGHTS_CLOUD_ROLE_NAME", null);
-                Environment.SetEnvironmentVariable("MICROSOFT_APPLICATIONINSIGHTS_CLOUD_ROLE_INSTANCE", null);
+                Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_CLOUD_ROLE_NAME", priorRoleName);
+                Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_CLOUD_ROLE_INSTANCE", priorRoleInstance);
                 TelemetryItem.ResetEnvironmentVariableOverrides();
             }
         }
