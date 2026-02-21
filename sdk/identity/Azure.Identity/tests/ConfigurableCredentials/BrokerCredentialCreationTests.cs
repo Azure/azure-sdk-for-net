@@ -448,7 +448,7 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.Broker
                 if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(
                     System.Runtime.InteropServices.OSPlatform.OSX))
                 {
-                    expectedRedirectUrl = Constants.MacBrokerRedirectUri;
+                    expectedRedirectUrl = new Uri(Constants.MacBrokerRedirectUri).ToString();
                 }
 #endif
 
