@@ -48,7 +48,7 @@ Uri videoUrl = new Uri("https://github.com/Azure-Samples/azure-ai-content-unders
 var analyzeOperation = await client.AnalyzeAsync(
     WaitUntil.Completed,
     "prebuilt-videoSearch",
-    inputs: new[] { new AnalyzeInput { Url = videoUrl } });
+    inputs: new[] { new AnalysisInput { Uri = videoUrl } });
 
 // Get the operation ID - this is needed to retrieve result files later
 string operationId = analyzeOperation.Id;

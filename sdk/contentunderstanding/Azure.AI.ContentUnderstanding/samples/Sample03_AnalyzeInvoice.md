@@ -62,7 +62,7 @@ Uri invoiceUrl = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-
 Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
     WaitUntil.Completed,
     "prebuilt-invoice",
-    inputs: new[] { new AnalyzeInput { Url = invoiceUrl } });
+    inputs: new[] { new AnalysisInput { Uri = invoiceUrl } });
 
 AnalyzeResult result = operation.Value;
 ```

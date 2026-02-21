@@ -5,7 +5,7 @@ This sample demonstrates how to extract additional features from documents such 
 ## About analysis configs
 
 The `prebuilt-documentSearch` analyzer has the following configurations enabled by default:
-- **ReturnDetails**: `true` - Returns detailed information about document elements
+- **ShouldReturnDetails**: `true` - Returns detailed information about document elements
 - **EnableOcr**: `true` - Performs OCR on documents
 - **EnableLayout**: `true` - Extracts layout information (tables, figures, hyperlinks, annotations)
 - **EnableFormula**: `true` - Extracts mathematical formulas from documents
