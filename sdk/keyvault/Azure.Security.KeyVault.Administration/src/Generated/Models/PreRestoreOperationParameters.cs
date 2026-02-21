@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Security.KeyVault.Administration.Models;
 
-namespace Azure.Security.KeyVault.Administration.Models
+namespace Azure.Security.KeyVault.Administration.Models.Models
 {
     internal partial class PreRestoreOperationParameters
     {

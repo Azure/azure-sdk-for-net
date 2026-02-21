@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Security.KeyVault.Administration.Models;
+using Azure.Security.KeyVault.Administration.Models.Models;
 
 namespace Azure.Security.KeyVault.Administration
 {

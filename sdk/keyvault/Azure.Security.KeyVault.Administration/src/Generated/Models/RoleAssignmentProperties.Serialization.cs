@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Security.KeyVault.Administration;
 
-namespace Azure.Security.KeyVault.Administration.Models
+namespace Azure.Security.KeyVault.Administration.Models.Models
 {
     internal partial class RoleAssignmentProperties : IJsonModel<RoleAssignmentProperties>
     {

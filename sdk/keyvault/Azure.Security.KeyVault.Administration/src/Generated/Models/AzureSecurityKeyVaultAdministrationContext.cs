@@ -7,6 +7,7 @@
 
 using System.ClientModel.Primitives;
 using Azure.Security.KeyVault.Administration.Models;
+using Azure.Security.KeyVault.Administration.Models.Models;
 
 namespace Azure.Security.KeyVault.Administration
 {
@@ -35,7 +36,6 @@ namespace Azure.Security.KeyVault.Administration
     [ModelReaderWriterBuildable(typeof(SASTokenParameter))]
     [ModelReaderWriterBuildable(typeof(SelectiveKeyRestoreDetailsInternal))]
     [ModelReaderWriterBuildable(typeof(SelectiveKeyRestoreOperationParameters))]
-    [ModelReaderWriterBuildable(typeof(UpdateSettingRequest))]
     public partial class AzureSecurityKeyVaultAdministrationContext : ModelReaderWriterContext
     {
     }

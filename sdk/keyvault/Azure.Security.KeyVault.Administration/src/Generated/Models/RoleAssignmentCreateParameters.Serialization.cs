@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Security.KeyVault.Administration;
+using Azure.Security.KeyVault.Administration.Models.Models;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {

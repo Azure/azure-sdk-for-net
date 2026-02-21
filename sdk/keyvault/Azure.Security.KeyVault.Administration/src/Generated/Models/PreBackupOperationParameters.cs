@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Security.KeyVault.Administration.Models
+namespace Azure.Security.KeyVault.Administration.Models.Models
 {
     internal partial class PreBackupOperationParameters
     {
