@@ -177,6 +177,14 @@ namespace Azure.Identity
                     throw new CredentialUnavailableException(AzdCliNotInstalled);
                 }
 
+                bool isAADSTSError = errorText.Contains("AADSTS");
+                bool isLoginError = errorText.IndexOf("azd auth login", StringComparison.OrdinalIgnoreCase) != -1;
+
+                if (isLoginError && !isAADSTSError)
+                {
+                    throw new CredentialUnavailableException(AzdNotLogIn);
+                }
+
                 bool isRefreshTokenFailedError = errorText.IndexOf(AzdCliFailedError, StringComparison.OrdinalIgnoreCase) != -1 &&
                                                  errorText.IndexOf(RefreshTokeExpired, StringComparison.OrdinalIgnoreCase) != -1 ||
                                                  errorText.IndexOf("CLIInternalError", StringComparison.OrdinalIgnoreCase) != -1;
