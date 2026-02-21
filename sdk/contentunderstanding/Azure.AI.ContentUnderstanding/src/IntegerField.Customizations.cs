@@ -8,6 +8,9 @@ namespace Azure.AI.ContentUnderstanding
     public partial class IntegerField
     {
         /// <summary> Integer field value. </summary>
+        internal long? ValueInteger { get; }
+
+        /// <summary> Integer field value. </summary>
         public new long? Value => ValueInteger;
     }
 }

@@ -8,6 +8,9 @@ namespace Azure.AI.ContentUnderstanding
     public partial class StringField
     {
         /// <summary> String field value. </summary>
+        internal string? ValueString { get; }
+
+        /// <summary> String field value. </summary>
         public new string? Value => ValueString;
     }
 }

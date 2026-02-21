@@ -29,8 +29,5 @@ namespace Azure.AI.ContentUnderstanding
         {
             ValueTime = valueTime;
         }
-
-        /// <summary> Time field value, in ISO 8601 (hh:mm:ss) format. </summary>
-        public TimeSpan? ValueTime { get; }
     }
 }

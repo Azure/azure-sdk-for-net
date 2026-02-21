@@ -8,6 +8,9 @@ namespace Azure.AI.ContentUnderstanding
     public partial class BooleanField
     {
         /// <summary> Boolean field value. </summary>
+        internal bool? ValueBoolean { get; }
+
+        /// <summary> Boolean field value. </summary>
         public new bool? Value => ValueBoolean;
     }
 }
