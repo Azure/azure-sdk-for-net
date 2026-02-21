@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Developer.DevCenter.Models;
 
-namespace Azure.Developer.DevCenter.Models
+namespace Azure.Developer.DevCenter.Models.Models
 {
     /// <summary> A pool of Dev Boxes. </summary>
     public partial class DevBoxPool
@@ -47,7 +48,7 @@ namespace Azure.Developer.DevCenter.Models
         /// available to create Dev Boxes.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevBoxPool(string name, AzureLocation location, DevBoxOSType? osType, DevBoxHardwareProfile hardwareProfile, HibernateSupport? hibernateSupport, DevBoxStorageProfile storageProfile, DevBoxImageReference imageReference, LocalAdministratorStatus? localAdministratorStatus, StopOnDisconnectConfiguration stopOnDisconnect, PoolHealthStatus healthStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevBoxPool(string name, AzureLocation location, DevBoxOSType? osType, DevCenter.Models.DevBoxHardwareProfile hardwareProfile, HibernateSupport? hibernateSupport, DevCenter.Models.DevBoxStorageProfile storageProfile, DevCenter.Models.DevBoxImageReference imageReference, LocalAdministratorStatus? localAdministratorStatus, DevCenter.Models.StopOnDisconnectConfiguration stopOnDisconnect, PoolHealthStatus healthStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Location = location;
@@ -72,16 +73,16 @@ namespace Azure.Developer.DevCenter.Models
         public DevBoxOSType? OSType { get; }
 
         /// <summary> Hardware settings for the Dev Boxes created in this pool. </summary>
-        public DevBoxHardwareProfile HardwareProfile { get; }
+        public DevCenter.Models.DevBoxHardwareProfile HardwareProfile { get; }
 
         /// <summary> Indicates whether hibernate is enabled/disabled or unknown. </summary>
         public HibernateSupport? HibernateSupport { get; }
 
         /// <summary> Storage settings for Dev Box created in this pool. </summary>
-        public DevBoxStorageProfile StorageProfile { get; }
+        public DevCenter.Models.DevBoxStorageProfile StorageProfile { get; }
 
         /// <summary> Image settings for Dev Boxes create in this pool. </summary>
-        public DevBoxImageReference ImageReference { get; }
+        public DevCenter.Models.DevBoxImageReference ImageReference { get; }
 
         /// <summary>
         /// Indicates whether owners of Dev Boxes in this pool are local administrators on
@@ -90,7 +91,7 @@ namespace Azure.Developer.DevCenter.Models
         public LocalAdministratorStatus? LocalAdministratorStatus { get; }
 
         /// <summary> Stop on disconnect configuration settings for Dev Boxes created in this pool. </summary>
-        public StopOnDisconnectConfiguration StopOnDisconnect { get; }
+        public DevCenter.Models.StopOnDisconnectConfiguration StopOnDisconnect { get; }
 
         /// <summary>
         /// Overall health status of the Pool. Indicates whether or not the Pool is

@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Developer.DevCenter.Models
+namespace Azure.Developer.DevCenter.Models.Models
 {
     /// <summary> Paged collection of Pool items. </summary>
     internal partial class PagedPool

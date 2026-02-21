@@ -12,7 +12,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Developer.DevCenter;
 
-namespace Azure.Developer.DevCenter.Models
+namespace Azure.Developer.DevCenter.Models.Models
 {
     /// <summary> Provides remote connection information for a Dev Box. </summary>
     public partial class RemoteConnection : IJsonModel<RemoteConnection>

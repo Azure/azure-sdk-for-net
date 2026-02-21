@@ -11,8 +11,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Developer.DevCenter;
+using Azure.Developer.DevCenter.Models;
 
-namespace Azure.Developer.DevCenter.Models
+namespace Azure.Developer.DevCenter.Models.Models
 {
     /// <summary> Paged collection of Environment items. </summary>
     internal partial class PagedEnvironment : IJsonModel<PagedEnvironment>

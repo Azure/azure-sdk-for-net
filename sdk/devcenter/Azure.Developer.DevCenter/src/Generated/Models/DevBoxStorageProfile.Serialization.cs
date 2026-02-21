@@ -10,11 +10,12 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Developer.DevCenter;
+using Azure.Developer.DevCenter.Models;
 
-namespace Azure.Developer.DevCenter.Models
+namespace Azure.Developer.DevCenter.Models.Models
 {
     /// <summary> Storage settings for the Dev Box's disks. </summary>
-    public partial class DevBoxStorageProfile : IJsonModel<DevBoxStorageProfile>
+    internal partial class DevBoxStorageProfile : IJsonModel<DevBoxStorageProfile>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -77,7 +78,7 @@ namespace Azure.Developer.DevCenter.Models
             if (Optional.IsDefined(OSDisk))
             {
                 writer.WritePropertyName("osDisk"u8);
-                writer.WriteObjectValue(OSDisk, options);
+                writer.WriteObjectValue<DevCenter.Models.OSDisk>(OSDisk, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +122,7 @@ namespace Azure.Developer.DevCenter.Models
             {
                 return null;
             }
-            OSDisk osDisk = default;
+            DevCenter.Models.OSDisk osDisk = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +132,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    osDisk = OSDisk.DeserializeOSDisk(prop.Value, options);
+                    osDisk = Models.OSDisk.DeserializeOSDisk(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

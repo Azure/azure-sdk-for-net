@@ -12,7 +12,7 @@ using Azure.Developer.DevCenter;
 namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> The type of data a parameter accepts. </summary>
-    public readonly partial struct EnvironmentDefinitionParameterType : IEquatable<EnvironmentDefinitionParameterType>
+    internal readonly partial struct EnvironmentDefinitionParameterType : IEquatable<EnvironmentDefinitionParameterType>
     {
         private readonly string _value;
         /// <summary> The parameter accepts an array of values. </summary>

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Developer.DevCenter.Models;
 
-namespace Azure.Developer.DevCenter.Models
+namespace Azure.Developer.DevCenter.Models.Models
 {
     /// <summary> An action which will take place on a Dev Box. </summary>
     public partial class DevBoxAction
@@ -32,7 +33,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="suspendedUntil"> The earliest time that the action could occur (UTC), in RFC3339 format. </param>
         /// <param name="nextAction"> Details about the next run of this action. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevBoxAction(string name, DevBoxActionType actionType, string sourceId, DateTimeOffset? suspendedUntil, DevBoxNextAction nextAction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevBoxAction(string name, DevBoxActionType actionType, string sourceId, DateTimeOffset? suspendedUntil, DevCenter.Models.DevBoxNextAction nextAction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             ActionType = actionType;
@@ -55,6 +56,6 @@ namespace Azure.Developer.DevCenter.Models
         public DateTimeOffset? SuspendedUntil { get; }
 
         /// <summary> Details about the next run of this action. </summary>
-        public DevBoxNextAction NextAction { get; }
+        public DevCenter.Models.DevBoxNextAction NextAction { get; }
     }
 }

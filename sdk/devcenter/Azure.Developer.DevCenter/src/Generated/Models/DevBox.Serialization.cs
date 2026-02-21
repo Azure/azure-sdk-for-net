@@ -13,6 +13,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.Developer.DevCenter;
+using Azure.Developer.DevCenter.Models.Models;
 
 namespace Azure.Developer.DevCenter.Models
 {
@@ -149,17 +150,17 @@ namespace Azure.Developer.DevCenter.Models
             if (options.Format != "W" && Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue(HardwareProfile, options);
+                writer.WriteObjectValue<DevCenter.Models.DevBoxHardwareProfile>(HardwareProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile, options);
+                writer.WriteObjectValue<DevCenter.Models.DevBoxStorageProfile>(StorageProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference"u8);
-                writer.WriteObjectValue(ImageReference, options);
+                writer.WriteObjectValue<DevCenter.Models.DevBoxImageReference>(ImageReference, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedTime))
             {
@@ -225,9 +226,9 @@ namespace Azure.Developer.DevCenter.Models
             AzureLocation? location = default;
             DevBoxOSType? osType = default;
             Guid? userId = default;
-            DevBoxHardwareProfile hardwareProfile = default;
-            DevBoxStorageProfile storageProfile = default;
-            DevBoxImageReference imageReference = default;
+            DevCenter.Models.DevBoxHardwareProfile hardwareProfile = default;
+            DevCenter.Models.DevBoxStorageProfile storageProfile = default;
+            DevCenter.Models.DevBoxImageReference imageReference = default;
             DateTimeOffset? createdTime = default;
             LocalAdministratorStatus? localAdministratorStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();

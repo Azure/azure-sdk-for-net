@@ -12,8 +12,9 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Developer.DevCenter;
+using Azure.Developer.DevCenter.Models;
 
-namespace Azure.Developer.DevCenter.Models
+namespace Azure.Developer.DevCenter.Models.Models
 {
     /// <summary> The action delay result. </summary>
     public partial class DevBoxActionDelayResult : IJsonModel<DevBoxActionDelayResult>
@@ -88,7 +89,7 @@ namespace Azure.Developer.DevCenter.Models
             if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
-                writer.WriteObjectValue(Action, options);
+                writer.WriteObjectValue<DevCenter.Models.DevBoxAction>(Action, options);
             }
             if (Optional.IsDefined(Error))
             {
@@ -139,7 +140,7 @@ namespace Azure.Developer.DevCenter.Models
             }
             string actionName = default;
             DevBoxActionDelayStatus delayStatus = default;
-            DevBoxAction action = default;
+            DevCenter.Models.DevBoxAction action = default;
             ResponseError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())

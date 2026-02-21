@@ -11,6 +11,7 @@ using System.Linq;
 using Azure;
 using Azure.Core;
 using Azure.Developer.DevCenter;
+using Azure.Developer.DevCenter.Models.Models;
 
 namespace Azure.Developer.DevCenter.Models
 {
@@ -49,7 +50,7 @@ namespace Azure.Developer.DevCenter.Models
         /// available to create Dev Boxes.
         /// </param>
         /// <returns> A new <see cref="Models.DevBoxPool"/> instance for mocking. </returns>
-        public static DevBoxPool DevBoxPool(string name = default, AzureLocation location = default, DevBoxOSType? osType = default, DevBoxHardwareProfile hardwareProfile = default, HibernateSupport? hibernateSupport = default, DevBoxStorageProfile storageProfile = default, DevBoxImageReference imageReference = default, LocalAdministratorStatus? localAdministratorStatus = default, StopOnDisconnectConfiguration stopOnDisconnect = default, PoolHealthStatus healthStatus = default)
+        public static DevBoxPool DevBoxPool(string name = default, AzureLocation location = default, DevBoxOSType? osType = default, DevCenter.Models.DevBoxHardwareProfile hardwareProfile = default, HibernateSupport? hibernateSupport = default, DevCenter.Models.DevBoxStorageProfile storageProfile = default, DevCenter.Models.DevBoxImageReference imageReference = default, LocalAdministratorStatus? localAdministratorStatus = default, DevCenter.Models.StopOnDisconnectConfiguration stopOnDisconnect = default, PoolHealthStatus healthStatus = default)
         {
             return new DevBoxPool(
                 name,
@@ -63,65 +64,6 @@ namespace Azure.Developer.DevCenter.Models
                 stopOnDisconnect,
                 healthStatus,
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Hardware specifications for the Dev Box. </summary>
-        /// <param name="skuName"> The name of the SKU. </param>
-        /// <param name="vcpUs"> The number of vCPUs available for the Dev Box. </param>
-        /// <param name="memoryGB"> The amount of memory available for the Dev Box. </param>
-        /// <returns> A new <see cref="Models.DevBoxHardwareProfile"/> instance for mocking. </returns>
-        public static DevBoxHardwareProfile DevBoxHardwareProfile(SkuName? skuName = default, int? vcpUs = default, int? memoryGB = default)
-        {
-            return new DevBoxHardwareProfile(skuName, vcpUs, memoryGB, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Storage settings for the Dev Box's disks. </summary>
-        /// <param name="osDisk"> Settings for the operating system disk. </param>
-        /// <returns> A new <see cref="Models.DevBoxStorageProfile"/> instance for mocking. </returns>
-        public static DevBoxStorageProfile DevBoxStorageProfile(OSDisk osDisk = default)
-        {
-            return new DevBoxStorageProfile(osDisk, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Settings for the operating system disk. </summary>
-        /// <param name="diskSizeGB"> The size of the OS Disk in gigabytes. </param>
-        /// <returns> A new <see cref="Models.OSDisk"/> instance for mocking. </returns>
-        public static OSDisk OSDisk(int? diskSizeGB = default)
-        {
-            return new OSDisk(diskSizeGB, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Specifies information about the image used. </summary>
-        /// <param name="name"> The name of the image used. </param>
-        /// <param name="version"> The version of the image. </param>
-        /// <param name="operatingSystem"> The operating system of the image. </param>
-        /// <param name="osBuildNumber"> The operating system build number of the image. </param>
-        /// <param name="publishedDate"> The datetime that the backing image version was published, in RFC3339 format. </param>
-        /// <returns> A new <see cref="Models.DevBoxImageReference"/> instance for mocking. </returns>
-        public static DevBoxImageReference DevBoxImageReference(string name = default, string version = default, string operatingSystem = default, string osBuildNumber = default, DateTimeOffset? publishedDate = default)
-        {
-            return new DevBoxImageReference(
-                name,
-                version,
-                operatingSystem,
-                osBuildNumber,
-                publishedDate,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Stop on disconnect configuration settings for Dev Boxes created in this pool. </summary>
-        /// <param name="status">
-        /// Indicates whether the feature to stop the devbox on disconnect once the grace
-        /// period has lapsed is enabled.
-        /// </param>
-        /// <param name="gracePeriodMinutes">
-        /// The specified time in minutes to wait before stopping a Dev Box once disconnect
-        /// is detected.
-        /// </param>
-        /// <returns> A new <see cref="Models.StopOnDisconnectConfiguration"/> instance for mocking. </returns>
-        public static StopOnDisconnectConfiguration StopOnDisconnectConfiguration(StopOnDisconnectStatus status = default, int? gracePeriodMinutes = default)
-        {
-            return new StopOnDisconnectConfiguration(status, gracePeriodMinutes, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A Schedule to execute action. </summary>
@@ -169,8 +111,8 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="imageReference"> Information about the image used for this Dev Box. </param>
         /// <param name="createdTime"> Creation time of this Dev Box, in RFC3339 format. </param>
         /// <param name="localAdministratorStatus"> Indicates whether the owner of the Dev Box is a local administrator. </param>
-        /// <returns> A new <see cref="Models.DevBox"/> instance for mocking. </returns>
-        public static DevBox DevBox(string name = default, string projectName = default, string poolName = default, HibernateSupport? hibernateSupport = default, DevBoxProvisioningState? provisioningState = default, string actionState = default, PowerState? powerState = default, Guid? uniqueId = default, ResponseError error = default, AzureLocation? location = default, DevBoxOSType? osType = default, Guid? userId = default, DevBoxHardwareProfile hardwareProfile = default, DevBoxStorageProfile storageProfile = default, DevBoxImageReference imageReference = default, DateTimeOffset? createdTime = default, LocalAdministratorStatus? localAdministratorStatus = default)
+        /// <returns> A new <see cref="DevCenter.Models.DevBox"/> instance for mocking. </returns>
+        public static DevBox DevBox(string name = default, string projectName = default, string poolName = default, HibernateSupport? hibernateSupport = default, DevBoxProvisioningState? provisioningState = default, string actionState = default, PowerState? powerState = default, Guid? uniqueId = default, ResponseError error = default, AzureLocation? location = default, DevBoxOSType? osType = default, Guid? userId = default, DevCenter.Models.DevBoxHardwareProfile hardwareProfile = default, DevCenter.Models.DevBoxStorageProfile storageProfile = default, DevCenter.Models.DevBoxImageReference imageReference = default, DateTimeOffset? createdTime = default, LocalAdministratorStatus? localAdministratorStatus = default)
         {
             return new DevBox(
                 name,
@@ -209,7 +151,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="suspendedUntil"> The earliest time that the action could occur (UTC), in RFC3339 format. </param>
         /// <param name="nextAction"> Details about the next run of this action. </param>
         /// <returns> A new <see cref="Models.DevBoxAction"/> instance for mocking. </returns>
-        public static DevBoxAction DevBoxAction(string name = default, DevBoxActionType actionType = default, string sourceId = default, DateTimeOffset? suspendedUntil = default, DevBoxNextAction nextAction = default)
+        public static DevBoxAction DevBoxAction(string name = default, DevBoxActionType actionType = default, string sourceId = default, DateTimeOffset? suspendedUntil = default, DevCenter.Models.DevBoxNextAction nextAction = default)
         {
             return new DevBoxAction(
                 name,
@@ -220,21 +162,13 @@ namespace Azure.Developer.DevCenter.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Details about the next run of an action. </summary>
-        /// <param name="scheduledTime"> The time the action will be triggered (UTC), in RFC3339 format. </param>
-        /// <returns> A new <see cref="Models.DevBoxNextAction"/> instance for mocking. </returns>
-        public static DevBoxNextAction DevBoxNextAction(DateTimeOffset scheduledTime = default)
-        {
-            return new DevBoxNextAction(scheduledTime, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> The action delay result. </summary>
         /// <param name="actionName"> The name of the action. </param>
         /// <param name="delayStatus"> The result of the delay operation on this action. </param>
         /// <param name="action"> The delayed action. </param>
         /// <param name="error"> Information about the error that occurred. Only populated on error. </param>
         /// <returns> A new <see cref="Models.DevBoxActionDelayResult"/> instance for mocking. </returns>
-        public static DevBoxActionDelayResult DevBoxActionDelayResult(string actionName = default, DevBoxActionDelayStatus delayStatus = default, DevBoxAction action = default, ResponseError error = default)
+        public static DevBoxActionDelayResult DevBoxActionDelayResult(string actionName = default, DevBoxActionDelayStatus delayStatus = default, DevCenter.Models.DevBoxAction action = default, ResponseError error = default)
         {
             return new DevBoxActionDelayResult(actionName, delayStatus, action, error, additionalBinaryDataProperties: null);
         }
@@ -249,7 +183,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="catalogName"> Name of the catalog. </param>
         /// <param name="environmentDefinitionName"> Name of the environment definition. </param>
         /// <param name="error"> Provisioning error details. Populated only for error states. </param>
-        /// <returns> A new <see cref="Models.DevCenterEnvironment"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DevCenter.Models.DevCenterEnvironment"/> instance for mocking. </returns>
         public static DevCenterEnvironment DevCenterEnvironment(IDictionary<string, BinaryData> parameters = default, string name = default, string environmentTypeName = default, Guid? userId = default, EnvironmentProvisioningState? provisioningState = default, ResourceIdentifier resourceGroupId = default, string catalogName = default, string environmentDefinitionName = default, ResponseError error = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, BinaryData>();
@@ -284,9 +218,9 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="parametersSchema"> JSON schema defining the parameters object passed to an environment. </param>
         /// <param name="templatePath"> Path to the Environment Definition entrypoint file. </param>
         /// <returns> A new <see cref="Models.EnvironmentDefinition"/> instance for mocking. </returns>
-        public static EnvironmentDefinition EnvironmentDefinition(string id = default, string name = default, string catalogName = default, string description = default, IEnumerable<EnvironmentDefinitionParameter> parameters = default, string parametersSchema = default, string templatePath = default)
+        public static EnvironmentDefinition EnvironmentDefinition(string id = default, string name = default, string catalogName = default, string description = default, IEnumerable<DevCenter.Models.EnvironmentDefinitionParameter> parameters = default, string parametersSchema = default, string templatePath = default)
         {
-            parameters ??= new ChangeTrackingList<EnvironmentDefinitionParameter>();
+            parameters ??= new ChangeTrackingList<DevCenter.Models.EnvironmentDefinitionParameter>();
 
             return new EnvironmentDefinition(
                 id,
@@ -299,38 +233,6 @@ namespace Azure.Developer.DevCenter.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Properties of an Environment Definition parameter. </summary>
-        /// <param name="id"> Unique ID of the parameter. </param>
-        /// <param name="name"> Display name of the parameter. </param>
-        /// <param name="description"> Description of the parameter. </param>
-        /// <param name="defaultValue"> Default value of the parameter. </param>
-        /// <param name="parameterType">
-        /// A string of one of the basic JSON types (number, integer, array, object,
-        /// boolean, string).
-        /// </param>
-        /// <param name="readOnly">
-        /// Whether or not this parameter is read-only.  If true, default should have a
-        /// value.
-        /// </param>
-        /// <param name="required"> Whether or not this parameter is required. </param>
-        /// <param name="allowed"> An array of allowed values. </param>
-        /// <returns> A new <see cref="Models.EnvironmentDefinitionParameter"/> instance for mocking. </returns>
-        public static EnvironmentDefinitionParameter EnvironmentDefinitionParameter(string id = default, string name = default, string description = default, string defaultValue = default, EnvironmentDefinitionParameterType parameterType = default, bool? readOnly = default, bool @required = default, IEnumerable<string> allowed = default)
-        {
-            allowed ??= new ChangeTrackingList<string>();
-
-            return new EnvironmentDefinitionParameter(
-                id,
-                name,
-                description,
-                defaultValue,
-                parameterType,
-                readOnly,
-                @required,
-                allowed.ToList(),
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Properties of an environment type. </summary>
         /// <param name="name"> Name of the environment type. </param>
         /// <param name="deploymentTargetId">
@@ -339,7 +241,7 @@ namespace Azure.Developer.DevCenter.Models
         /// or management group.
         /// </param>
         /// <param name="status"> Indicates whether this environment type is enabled for use in this project. </param>
-        /// <returns> A new <see cref="Models.DevCenterEnvironmentType"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DevCenter.Models.DevCenterEnvironmentType"/> instance for mocking. </returns>
         public static DevCenterEnvironmentType DevCenterEnvironmentType(string name = default, ResourceIdentifier deploymentTargetId = default, EnvironmentTypeStatus status = default)
         {
             return new DevCenterEnvironmentType(name, deploymentTargetId, status, additionalBinaryDataProperties: null);

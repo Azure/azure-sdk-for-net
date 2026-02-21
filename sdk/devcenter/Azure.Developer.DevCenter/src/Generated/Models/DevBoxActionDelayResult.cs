@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using Azure;
+using Azure.Developer.DevCenter.Models;
 
-namespace Azure.Developer.DevCenter.Models
+namespace Azure.Developer.DevCenter.Models.Models
 {
     /// <summary> The action delay result. </summary>
     public partial class DevBoxActionDelayResult
@@ -32,7 +33,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="action"> The delayed action. </param>
         /// <param name="error"> Information about the error that occurred. Only populated on error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevBoxActionDelayResult(string actionName, DevBoxActionDelayStatus delayStatus, DevBoxAction action, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevBoxActionDelayResult(string actionName, DevBoxActionDelayStatus delayStatus, DevCenter.Models.DevBoxAction action, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActionName = actionName;
             DelayStatus = delayStatus;
@@ -48,7 +49,7 @@ namespace Azure.Developer.DevCenter.Models
         public DevBoxActionDelayStatus DelayStatus { get; }
 
         /// <summary> The delayed action. </summary>
-        public DevBoxAction Action { get; }
+        public DevCenter.Models.DevBoxAction Action { get; }
 
         /// <summary> Information about the error that occurred. Only populated on error. </summary>
         public ResponseError Error { get; }

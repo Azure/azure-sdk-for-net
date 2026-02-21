@@ -12,7 +12,7 @@ using Azure.Developer.DevCenter;
 namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Indicates the Dev Box compute. </summary>
-    public readonly partial struct SkuName : IEquatable<SkuName>
+    internal readonly partial struct SkuName : IEquatable<SkuName>
     {
         private readonly string _value;
         /// <summary> Intel, 8 vCPU, 32 GB RAM, 256 GB Storage. </summary>

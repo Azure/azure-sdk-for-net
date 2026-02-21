@@ -10,11 +10,12 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Developer.DevCenter;
+using Azure.Developer.DevCenter.Models;
 
-namespace Azure.Developer.DevCenter.Models
+namespace Azure.Developer.DevCenter.Models.Models
 {
     /// <summary> Hardware specifications for the Dev Box. </summary>
-    public partial class DevBoxHardwareProfile : IJsonModel<DevBoxHardwareProfile>
+    internal partial class DevBoxHardwareProfile : IJsonModel<DevBoxHardwareProfile>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

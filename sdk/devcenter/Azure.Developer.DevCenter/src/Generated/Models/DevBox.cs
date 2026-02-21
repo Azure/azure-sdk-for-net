@@ -46,7 +46,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="createdTime"> Creation time of this Dev Box, in RFC3339 format. </param>
         /// <param name="localAdministratorStatus"> Indicates whether the owner of the Dev Box is a local administrator. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevBox(string name, string projectName, string poolName, HibernateSupport? hibernateSupport, DevBoxProvisioningState? provisioningState, string actionState, PowerState? powerState, Guid? uniqueId, ResponseError error, AzureLocation? location, DevBoxOSType? osType, Guid? userId, DevBoxHardwareProfile hardwareProfile, DevBoxStorageProfile storageProfile, DevBoxImageReference imageReference, DateTimeOffset? createdTime, LocalAdministratorStatus? localAdministratorStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevBox(string name, string projectName, string poolName, HibernateSupport? hibernateSupport, DevBoxProvisioningState? provisioningState, string actionState, PowerState? powerState, Guid? uniqueId, ResponseError error, AzureLocation? location, DevBoxOSType? osType, Guid? userId, DevCenter.Models.DevBoxHardwareProfile hardwareProfile, DevCenter.Models.DevBoxStorageProfile storageProfile, DevCenter.Models.DevBoxImageReference imageReference, DateTimeOffset? createdTime, LocalAdministratorStatus? localAdministratorStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             ProjectName = projectName;
@@ -114,13 +114,13 @@ namespace Azure.Developer.DevCenter.Models
         public Guid? UserId { get; }
 
         /// <summary> Information about the Dev Box's hardware resources. </summary>
-        public DevBoxHardwareProfile HardwareProfile { get; }
+        public DevCenter.Models.DevBoxHardwareProfile HardwareProfile { get; }
 
         /// <summary> Storage settings for this Dev Box. </summary>
-        public DevBoxStorageProfile StorageProfile { get; }
+        public DevCenter.Models.DevBoxStorageProfile StorageProfile { get; }
 
         /// <summary> Information about the image used for this Dev Box. </summary>
-        public DevBoxImageReference ImageReference { get; }
+        public DevCenter.Models.DevBoxImageReference ImageReference { get; }
 
         /// <summary> Creation time of this Dev Box, in RFC3339 format. </summary>
         public DateTimeOffset? CreatedTime { get; }

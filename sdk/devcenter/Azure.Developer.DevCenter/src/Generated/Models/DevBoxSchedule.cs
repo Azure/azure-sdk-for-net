@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Developer.DevCenter.Models;
 
-namespace Azure.Developer.DevCenter.Models
+namespace Azure.Developer.DevCenter.Models.Models
 {
     /// <summary> A Schedule to execute action. </summary>
     public partial class DevBoxSchedule

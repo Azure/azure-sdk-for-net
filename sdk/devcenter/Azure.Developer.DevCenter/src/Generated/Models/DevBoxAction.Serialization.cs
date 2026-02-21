@@ -11,8 +11,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Developer.DevCenter;
+using Azure.Developer.DevCenter.Models;
 
-namespace Azure.Developer.DevCenter.Models
+namespace Azure.Developer.DevCenter.Models.Models
 {
     /// <summary> An action which will take place on a Dev Box. </summary>
     public partial class DevBoxAction : IJsonModel<DevBoxAction>
@@ -104,7 +105,7 @@ namespace Azure.Developer.DevCenter.Models
             if (Optional.IsDefined(NextAction))
             {
                 writer.WritePropertyName("next"u8);
-                writer.WriteObjectValue(NextAction, options);
+                writer.WriteObjectValue<DevCenter.Models.DevBoxNextAction>(NextAction, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -152,7 +153,7 @@ namespace Azure.Developer.DevCenter.Models
             DevBoxActionType actionType = default;
             string sourceId = default;
             DateTimeOffset? suspendedUntil = default;
-            DevBoxNextAction nextAction = default;
+            DevCenter.Models.DevBoxNextAction nextAction = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

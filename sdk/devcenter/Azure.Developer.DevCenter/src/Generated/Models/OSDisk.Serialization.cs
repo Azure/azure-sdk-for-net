@@ -11,10 +11,10 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Developer.DevCenter;
 
-namespace Azure.Developer.DevCenter.Models
+namespace Azure.Developer.DevCenter.Models.Models
 {
     /// <summary> Settings for the operating system disk. </summary>
-    public partial class OSDisk : IJsonModel<OSDisk>
+    internal partial class OSDisk : IJsonModel<OSDisk>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

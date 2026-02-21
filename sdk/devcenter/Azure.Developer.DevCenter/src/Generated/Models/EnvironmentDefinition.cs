@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using Azure.Developer.DevCenter;
+using Azure.Developer.DevCenter.Models;
 
-namespace Azure.Developer.DevCenter.Models
+namespace Azure.Developer.DevCenter.Models.Models
 {
     /// <summary> An environment definition. </summary>
     public partial class EnvironmentDefinition
@@ -24,7 +25,7 @@ namespace Azure.Developer.DevCenter.Models
         {
             Id = id;
             CatalogName = catalogName;
-            Parameters = new ChangeTrackingList<EnvironmentDefinitionParameter>();
+            Parameters = new ChangeTrackingList<DevCenter.Models.EnvironmentDefinitionParameter>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EnvironmentDefinition"/>. </summary>
@@ -36,7 +37,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="parametersSchema"> JSON schema defining the parameters object passed to an environment. </param>
         /// <param name="templatePath"> Path to the Environment Definition entrypoint file. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EnvironmentDefinition(string id, string name, string catalogName, string description, IReadOnlyList<EnvironmentDefinitionParameter> parameters, string parametersSchema, string templatePath, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EnvironmentDefinition(string id, string name, string catalogName, string description, IReadOnlyList<DevCenter.Models.EnvironmentDefinitionParameter> parameters, string parametersSchema, string templatePath, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -61,7 +62,7 @@ namespace Azure.Developer.DevCenter.Models
         public string Description { get; }
 
         /// <summary> Input parameters passed to an environment. </summary>
-        public IReadOnlyList<EnvironmentDefinitionParameter> Parameters { get; }
+        public IReadOnlyList<DevCenter.Models.EnvironmentDefinitionParameter> Parameters { get; }
 
         /// <summary> JSON schema defining the parameters object passed to an environment. </summary>
         public string ParametersSchema { get; }

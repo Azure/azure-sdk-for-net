@@ -11,10 +11,10 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Developer.DevCenter;
 
-namespace Azure.Developer.DevCenter.Models
+namespace Azure.Developer.DevCenter.Models.Models
 {
     /// <summary> Specifies information about the image used. </summary>
-    public partial class DevBoxImageReference : IJsonModel<DevBoxImageReference>
+    internal partial class DevBoxImageReference : IJsonModel<DevBoxImageReference>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

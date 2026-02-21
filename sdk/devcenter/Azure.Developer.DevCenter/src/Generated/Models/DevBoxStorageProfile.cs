@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Developer.DevCenter.Models;
 
-namespace Azure.Developer.DevCenter.Models
+namespace Azure.Developer.DevCenter.Models.Models
 {
     /// <summary> Storage settings for the Dev Box's disks. </summary>
-    public partial class DevBoxStorageProfile
+    internal partial class DevBoxStorageProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -24,13 +25,13 @@ namespace Azure.Developer.DevCenter.Models
         /// <summary> Initializes a new instance of <see cref="DevBoxStorageProfile"/>. </summary>
         /// <param name="osDisk"> Settings for the operating system disk. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevBoxStorageProfile(OSDisk osDisk, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevBoxStorageProfile(DevCenter.Models.OSDisk osDisk, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OSDisk = osDisk;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Settings for the operating system disk. </summary>
-        public OSDisk OSDisk { get; set; }
+        public DevCenter.Models.OSDisk OSDisk { get; set; }
     }
 }

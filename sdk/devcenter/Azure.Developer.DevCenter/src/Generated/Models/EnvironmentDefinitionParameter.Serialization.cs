@@ -10,11 +10,12 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Developer.DevCenter;
+using Azure.Developer.DevCenter.Models;
 
-namespace Azure.Developer.DevCenter.Models
+namespace Azure.Developer.DevCenter.Models.Models
 {
     /// <summary> Properties of an Environment Definition parameter. </summary>
-    public partial class EnvironmentDefinitionParameter : IJsonModel<EnvironmentDefinitionParameter>
+    internal partial class EnvironmentDefinitionParameter : IJsonModel<EnvironmentDefinitionParameter>
     {
         /// <summary> Initializes a new instance of <see cref="EnvironmentDefinitionParameter"/> for deserialization. </summary>
         internal EnvironmentDefinitionParameter()

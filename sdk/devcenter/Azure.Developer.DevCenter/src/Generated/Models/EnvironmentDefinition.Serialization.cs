@@ -11,8 +11,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Developer.DevCenter;
+using Azure.Developer.DevCenter.Models;
 
-namespace Azure.Developer.DevCenter.Models
+namespace Azure.Developer.DevCenter.Models.Models
 {
     /// <summary> An environment definition. </summary>
     public partial class EnvironmentDefinition : IJsonModel<EnvironmentDefinition>
@@ -105,9 +106,9 @@ namespace Azure.Developer.DevCenter.Models
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
-                foreach (EnvironmentDefinitionParameter item in Parameters)
+                foreach (DevCenter.Models.EnvironmentDefinitionParameter item in Parameters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<DevCenter.Models.EnvironmentDefinitionParameter>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -167,7 +168,7 @@ namespace Azure.Developer.DevCenter.Models
             string name = default;
             string catalogName = default;
             string description = default;
-            IReadOnlyList<EnvironmentDefinitionParameter> parameters = default;
+            IReadOnlyList<DevCenter.Models.EnvironmentDefinitionParameter> parameters = default;
             string parametersSchema = default;
             string templatePath = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -199,7 +200,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    List<EnvironmentDefinitionParameter> array = new List<EnvironmentDefinitionParameter>();
+                    List<DevCenter.Models.EnvironmentDefinitionParameter> array = new List<DevCenter.Models.EnvironmentDefinitionParameter>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(EnvironmentDefinitionParameter.DeserializeEnvironmentDefinitionParameter(item, options));
@@ -227,7 +228,7 @@ namespace Azure.Developer.DevCenter.Models
                 name,
                 catalogName,
                 description,
-                parameters ?? new ChangeTrackingList<EnvironmentDefinitionParameter>(),
+                parameters ?? new ChangeTrackingList<DevCenter.Models.EnvironmentDefinitionParameter>(),
                 parametersSchema,
                 templatePath,
                 additionalBinaryDataProperties);

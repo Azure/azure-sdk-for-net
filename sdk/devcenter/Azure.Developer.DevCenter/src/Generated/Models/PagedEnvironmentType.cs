@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Developer.DevCenter.Models;
 
-namespace Azure.Developer.DevCenter.Models
+namespace Azure.Developer.DevCenter.Models.Models
 {
     /// <summary> Paged collection of EnvironmentType items. </summary>
     internal partial class PagedEnvironmentType

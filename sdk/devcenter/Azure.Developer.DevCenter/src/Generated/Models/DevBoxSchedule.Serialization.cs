@@ -11,8 +11,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Developer.DevCenter;
+using Azure.Developer.DevCenter.Models;
 
-namespace Azure.Developer.DevCenter.Models
+namespace Azure.Developer.DevCenter.Models.Models
 {
     /// <summary> A Schedule to execute action. </summary>
     public partial class DevBoxSchedule : IJsonModel<DevBoxSchedule>

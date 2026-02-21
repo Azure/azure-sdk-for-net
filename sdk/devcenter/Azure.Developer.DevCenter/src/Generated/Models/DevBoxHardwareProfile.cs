@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Developer.DevCenter.Models;
 
-namespace Azure.Developer.DevCenter.Models
+namespace Azure.Developer.DevCenter.Models.Models
 {
     /// <summary> Hardware specifications for the Dev Box. </summary>
-    public partial class DevBoxHardwareProfile
+    internal partial class DevBoxHardwareProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

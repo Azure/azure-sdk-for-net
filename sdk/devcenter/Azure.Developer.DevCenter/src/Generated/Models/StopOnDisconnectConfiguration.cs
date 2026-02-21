@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Developer.DevCenter.Models;
 
-namespace Azure.Developer.DevCenter.Models
+namespace Azure.Developer.DevCenter.Models.Models
 {
     /// <summary> Stop on disconnect configuration settings for Dev Boxes created in this pool. </summary>
-    public partial class StopOnDisconnectConfiguration
+    internal partial class StopOnDisconnectConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

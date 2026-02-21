@@ -12,7 +12,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Developer.DevCenter;
 
-namespace Azure.Developer.DevCenter.Models
+namespace Azure.Developer.DevCenter.Models.Models
 {
     /// <summary> Paged collection of Schedule items. </summary>
     internal partial class PagedSchedule : IJsonModel<PagedSchedule>

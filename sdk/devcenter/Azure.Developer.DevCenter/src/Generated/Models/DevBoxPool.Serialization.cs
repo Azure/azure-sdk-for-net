@@ -12,8 +12,9 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.Developer.DevCenter;
+using Azure.Developer.DevCenter.Models;
 
-namespace Azure.Developer.DevCenter.Models
+namespace Azure.Developer.DevCenter.Models.Models
 {
     /// <summary> A pool of Dev Boxes. </summary>
     public partial class DevBoxPool : IJsonModel<DevBoxPool>
@@ -103,7 +104,7 @@ namespace Azure.Developer.DevCenter.Models
             if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue(HardwareProfile, options);
+                writer.WriteObjectValue<DevCenter.Models.DevBoxHardwareProfile>(HardwareProfile, options);
             }
             if (Optional.IsDefined(HibernateSupport))
             {
@@ -113,12 +114,12 @@ namespace Azure.Developer.DevCenter.Models
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile, options);
+                writer.WriteObjectValue<DevCenter.Models.DevBoxStorageProfile>(StorageProfile, options);
             }
             if (Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference"u8);
-                writer.WriteObjectValue(ImageReference, options);
+                writer.WriteObjectValue<DevCenter.Models.DevBoxImageReference>(ImageReference, options);
             }
             if (Optional.IsDefined(LocalAdministratorStatus))
             {
@@ -128,7 +129,7 @@ namespace Azure.Developer.DevCenter.Models
             if (Optional.IsDefined(StopOnDisconnect))
             {
                 writer.WritePropertyName("stopOnDisconnect"u8);
-                writer.WriteObjectValue(StopOnDisconnect, options);
+                writer.WriteObjectValue<DevCenter.Models.StopOnDisconnectConfiguration>(StopOnDisconnect, options);
             }
             writer.WritePropertyName("healthStatus"u8);
             writer.WriteStringValue(HealthStatus.ToString());
@@ -177,12 +178,12 @@ namespace Azure.Developer.DevCenter.Models
             string name = default;
             AzureLocation location = default;
             DevBoxOSType? osType = default;
-            DevBoxHardwareProfile hardwareProfile = default;
+            DevCenter.Models.DevBoxHardwareProfile hardwareProfile = default;
             HibernateSupport? hibernateSupport = default;
-            DevBoxStorageProfile storageProfile = default;
-            DevBoxImageReference imageReference = default;
+            DevCenter.Models.DevBoxStorageProfile storageProfile = default;
+            DevCenter.Models.DevBoxImageReference imageReference = default;
             LocalAdministratorStatus? localAdministratorStatus = default;
-            StopOnDisconnectConfiguration stopOnDisconnect = default;
+            DevCenter.Models.StopOnDisconnectConfiguration stopOnDisconnect = default;
             PoolHealthStatus healthStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())

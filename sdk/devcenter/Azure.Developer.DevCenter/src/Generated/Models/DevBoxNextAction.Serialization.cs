@@ -11,10 +11,10 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Developer.DevCenter;
 
-namespace Azure.Developer.DevCenter.Models
+namespace Azure.Developer.DevCenter.Models.Models
 {
     /// <summary> Details about the next run of an action. </summary>
-    public partial class DevBoxNextAction : IJsonModel<DevBoxNextAction>
+    internal partial class DevBoxNextAction : IJsonModel<DevBoxNextAction>
     {
         /// <summary> Initializes a new instance of <see cref="DevBoxNextAction"/> for deserialization. </summary>
         internal DevBoxNextAction()

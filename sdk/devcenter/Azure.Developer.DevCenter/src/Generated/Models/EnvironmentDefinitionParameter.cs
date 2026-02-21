@@ -8,11 +8,12 @@
 using System;
 using System.Collections.Generic;
 using Azure.Developer.DevCenter;
+using Azure.Developer.DevCenter.Models;
 
-namespace Azure.Developer.DevCenter.Models
+namespace Azure.Developer.DevCenter.Models.Models
 {
     /// <summary> Properties of an Environment Definition parameter. </summary>
-    public partial class EnvironmentDefinitionParameter
+    internal partial class EnvironmentDefinitionParameter
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
