@@ -10,6 +10,9 @@ namespace Azure.AI.ContentUnderstanding
     public partial class ArrayField
     {
         /// <summary> Array field value. </summary>
+        internal IList<ContentField>? ValueArray { get; }
+
+        /// <summary> Array field value. </summary>
         public new IList<ContentField>? Value => ValueArray;
     }
 }

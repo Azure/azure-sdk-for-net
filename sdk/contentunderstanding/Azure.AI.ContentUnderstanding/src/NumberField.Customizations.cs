@@ -8,6 +8,9 @@ namespace Azure.AI.ContentUnderstanding
     public partial class NumberField
     {
         /// <summary> Number field value. </summary>
+        internal double? ValueNumber { get; }
+
+        /// <summary> Number field value. </summary>
         public new double? Value => ValueNumber;
     }
 }

@@ -29,8 +29,5 @@ namespace Azure.AI.ContentUnderstanding
         {
             ValueBoolean = valueBoolean;
         }
-
-        /// <summary> Boolean field value. </summary>
-        public bool? ValueBoolean { get; }
     }
 }

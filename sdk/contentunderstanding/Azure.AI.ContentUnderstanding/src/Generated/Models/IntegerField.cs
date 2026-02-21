@@ -29,8 +29,5 @@ namespace Azure.AI.ContentUnderstanding
         {
             ValueInteger = valueInteger;
         }
-
-        /// <summary> Integer field value. </summary>
-        public long? ValueInteger { get; }
     }
 }

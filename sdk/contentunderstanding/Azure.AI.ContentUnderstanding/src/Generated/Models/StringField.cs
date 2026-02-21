@@ -29,8 +29,5 @@ namespace Azure.AI.ContentUnderstanding
         {
             ValueString = valueString;
         }
-
-        /// <summary> String field value. </summary>
-        public string ValueString { get; }
     }
 }

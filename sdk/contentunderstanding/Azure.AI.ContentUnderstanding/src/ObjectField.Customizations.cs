@@ -10,6 +10,9 @@ namespace Azure.AI.ContentUnderstanding
     public partial class ObjectField
     {
         /// <summary> Object field value. </summary>
+        internal IDictionary<string, ContentField>? ValueObject { get; }
+
+        /// <summary> Object field value. </summary>
         public new IDictionary<string, ContentField>? Value => ValueObject;
     }
 }

@@ -30,8 +30,5 @@ namespace Azure.AI.ContentUnderstanding
         {
             ValueObject = valueObject;
         }
-
-        /// <summary> Object field value. </summary>
-        public IDictionary<string, ContentField> ValueObject { get; }
     }
 }
