@@ -502,8 +502,9 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
                     if (summaryFieldAssert is StringField dsf && !string.IsNullOrWhiteSpace(dsf.Value))
                     {
-                        Assert.IsTrue(dsf.Value.Length > 0, "document_summary should not be empty when present");
-                        Console.WriteLine($"  Value: {dsf.Value.Substring(0, Math.Min(100, dsf.Value.Length))}...");
+                        string dsfValue = dsf.Value!;
+                        Assert.IsTrue(dsfValue.Length > 0, "document_summary should not be empty when present");
+                        Console.WriteLine($"  Value: {dsfValue.Substring(0, Math.Min(100, dsfValue.Length))}...");
                     }
 
                     if (summaryFieldAssert.Confidence.HasValue)
