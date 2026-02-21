@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.Language.Conversations;
+using Azure.AI.Language.Conversations.Models;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> Additional properties for supporting transcript conversation. </summary>
     public partial class TranscriptConversationItem
@@ -56,7 +57,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="wordLevelTimings"> List of word-level audio timing information. </param>
         /// <param name="conversationItemLevelTiming"> Audio timing at the conversation item level. This still can help with AI quality if word-level audio timings are not available. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TranscriptConversationItem(string id, string participantId, string language, InputModality? modality, ParticipantRole? role, string inverseTextNormalized, string maskedInverseTextNormalized, string text, string lexical, IList<WordLevelTiming> wordLevelTimings, ConversationItemLevelTiming conversationItemLevelTiming, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TranscriptConversationItem(string id, string participantId, string language, InputModality? modality, ParticipantRole? role, string inverseTextNormalized, string maskedInverseTextNormalized, string text, string lexical, IList<WordLevelTiming> wordLevelTimings, Conversations.Models.ConversationItemLevelTiming conversationItemLevelTiming, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             ParticipantId = participantId;
@@ -103,6 +104,6 @@ namespace Azure.AI.Language.Conversations.Models
         public IList<WordLevelTiming> WordLevelTimings { get; }
 
         /// <summary> Audio timing at the conversation item level. This still can help with AI quality if word-level audio timings are not available. </summary>
-        public ConversationItemLevelTiming ConversationItemLevelTiming { get; set; }
+        public Conversations.Models.ConversationItemLevelTiming ConversationItemLevelTiming { get; set; }
     }
 }

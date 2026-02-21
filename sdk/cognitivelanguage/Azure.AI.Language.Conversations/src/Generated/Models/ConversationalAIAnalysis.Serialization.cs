@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Language.Conversations;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> Multiple multi-turn conversations analyzed. </summary>
     public partial class ConversationalAIAnalysis : IJsonModel<ConversationalAIAnalysis>

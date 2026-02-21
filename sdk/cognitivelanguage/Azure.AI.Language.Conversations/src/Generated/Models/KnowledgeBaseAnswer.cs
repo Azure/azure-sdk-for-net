@@ -8,11 +8,12 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.Language.Conversations;
+using Azure.AI.Language.Conversations.Models;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> Represents knowledge base answer. </summary>
-    public partial class KnowledgeBaseAnswer
+    internal partial class KnowledgeBaseAnswer
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -34,7 +35,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="dialog"> Dialog associated with Answer. </param>
         /// <param name="shortAnswer"> Answer span object of QnA with respect to user's question. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeBaseAnswer(IList<string> questions, string answer, double? confidence, int? qnaId, string source, IDictionary<string, string> metadata, KnowledgeBaseAnswerDialog dialog, AnswerSpan shortAnswer, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeBaseAnswer(IList<string> questions, string answer, double? confidence, int? qnaId, string source, IDictionary<string, string> metadata, Conversations.Models.KnowledgeBaseAnswerDialog dialog, Conversations.Models.AnswerSpan shortAnswer, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Questions = questions;
             Answer = answer;
@@ -66,9 +67,9 @@ namespace Azure.AI.Language.Conversations.Models
         public IDictionary<string, string> Metadata { get; }
 
         /// <summary> Dialog associated with Answer. </summary>
-        public KnowledgeBaseAnswerDialog Dialog { get; }
+        public Conversations.Models.KnowledgeBaseAnswerDialog Dialog { get; }
 
         /// <summary> Answer span object of QnA with respect to user's question. </summary>
-        public AnswerSpan ShortAnswer { get; }
+        public Conversations.Models.AnswerSpan ShortAnswer { get; }
     }
 }

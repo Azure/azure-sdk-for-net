@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.Language.Conversations;
+using Azure.AI.Language.Conversations.Models;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> The error object. </summary>
     public partial class ConversationError
@@ -34,7 +35,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
         /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationError(ConversationErrorCode code, string message, string target, IList<ConversationError> details, InnerErrorModel innererror, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationError(ConversationErrorCode code, string message, string target, IList<ConversationError> details, Conversations.Models.InnerErrorModel innererror, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;
@@ -57,6 +58,6 @@ namespace Azure.AI.Language.Conversations.Models
         public IList<ConversationError> Details { get; }
 
         /// <summary> An object containing more specific information than the current object about the error. </summary>
-        public InnerErrorModel Innererror { get; }
+        public Conversations.Models.InnerErrorModel Innererror { get; }
     }
 }

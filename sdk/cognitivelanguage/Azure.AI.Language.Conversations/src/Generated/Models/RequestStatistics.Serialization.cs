@@ -11,10 +11,10 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Language.Conversations;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> if showStats=true was specified in the request this field will contain information about the request payload. </summary>
-    public partial class RequestStatistics : IJsonModel<RequestStatistics>
+    internal partial class RequestStatistics : IJsonModel<RequestStatistics>
     {
         /// <summary> Initializes a new instance of <see cref="RequestStatistics"/> for deserialization. </summary>
         internal RequestStatistics()

@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.Language.Conversations.Models;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> Conversation PII result item. </summary>
     public partial class ConversationalPiiResult
@@ -34,7 +35,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="statistics"> If showStats=true was specified in the request this field will contain information about the conversation payload. </param>
         /// <param name="conversationItems"> List of conversationItems. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationalPiiResult(string id, IList<InputWarning> warnings, ConversationStatistics statistics, IList<ConversationPiiItemResult> conversationItems, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationalPiiResult(string id, IList<InputWarning> warnings, Conversations.Models.ConversationStatistics statistics, IList<ConversationPiiItemResult> conversationItems, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Warnings = warnings;
@@ -50,7 +51,7 @@ namespace Azure.AI.Language.Conversations.Models
         public IList<InputWarning> Warnings { get; }
 
         /// <summary> If showStats=true was specified in the request this field will contain information about the conversation payload. </summary>
-        public ConversationStatistics Statistics { get; }
+        public Conversations.Models.ConversationStatistics Statistics { get; }
 
         /// <summary> List of conversationItems. </summary>
         public IList<ConversationPiiItemResult> ConversationItems { get; }

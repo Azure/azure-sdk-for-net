@@ -10,55 +10,57 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Language.Conversations;
+using Azure.AI.Language.Conversations.Models;
+using Azure.AI.Language.Conversations.Models.Models;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models.Models
 {
     /// <summary> Task definition for conversational summarization. </summary>
-    public partial class SummarizationOperationAction : AnalyzeConversationOperationAction, IJsonModel<SummarizationOperationAction>
+    public partial class SummarizationOperationAction : AnalyzeConversationOperationAction, IJsonModel<Conversations.Models.Models.SummarizationOperationAction>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AnalyzeConversationOperationAction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SummarizationOperationAction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<Conversations.Models.Models.SummarizationOperationAction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSummarizationOperationAction(document.RootElement, options);
+                        return Conversations.Models.Models.SummarizationOperationAction.DeserializeSummarizationOperationAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SummarizationOperationAction)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Conversations.Models.Models.SummarizationOperationAction)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SummarizationOperationAction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<Conversations.Models.Models.SummarizationOperationAction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAILanguageConversationsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SummarizationOperationAction)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Conversations.Models.Models.SummarizationOperationAction)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SummarizationOperationAction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<Conversations.Models.Models.SummarizationOperationAction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SummarizationOperationAction IPersistableModel<SummarizationOperationAction>.Create(BinaryData data, ModelReaderWriterOptions options) => (SummarizationOperationAction)PersistableModelCreateCore(data, options);
+        Conversations.Models.Models.SummarizationOperationAction IPersistableModel<Conversations.Models.Models.SummarizationOperationAction>.Create(BinaryData data, ModelReaderWriterOptions options) => (Conversations.Models.Models.SummarizationOperationAction)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SummarizationOperationAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<Conversations.Models.Models.SummarizationOperationAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SummarizationOperationAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<Conversations.Models.Models.SummarizationOperationAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,39 +71,39 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SummarizationOperationAction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<Conversations.Models.Models.SummarizationOperationAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SummarizationOperationAction)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(Conversations.Models.Models.SummarizationOperationAction)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(ActionContent))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(ActionContent, options);
+                writer.WriteObjectValue<Conversations.Models.ConversationSummarizationActionContent>(ActionContent, options);
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SummarizationOperationAction IJsonModel<SummarizationOperationAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SummarizationOperationAction)JsonModelCreateCore(ref reader, options);
+        Conversations.Models.Models.SummarizationOperationAction IJsonModel<Conversations.Models.Models.SummarizationOperationAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (Conversations.Models.Models.SummarizationOperationAction)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AnalyzeConversationOperationAction JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SummarizationOperationAction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<Conversations.Models.Models.SummarizationOperationAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SummarizationOperationAction)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(Conversations.Models.Models.SummarizationOperationAction)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSummarizationOperationAction(document.RootElement, options);
+            return Conversations.Models.Models.SummarizationOperationAction.DeserializeSummarizationOperationAction(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SummarizationOperationAction DeserializeSummarizationOperationAction(JsonElement element, ModelReaderWriterOptions options)
+        internal static Conversations.Models.Models.SummarizationOperationAction DeserializeSummarizationOperationAction(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -110,7 +112,7 @@ namespace Azure.AI.Language.Conversations.Models
             string name = default;
             AnalyzeConversationOperationActionKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ConversationSummarizationActionContent actionContent = default;
+            Conversations.Models.ConversationSummarizationActionContent actionContent = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("taskName"u8))
@@ -129,7 +131,7 @@ namespace Azure.AI.Language.Conversations.Models
                     {
                         continue;
                     }
-                    actionContent = ConversationSummarizationActionContent.DeserializeConversationSummarizationActionContent(prop.Value, options);
+                    actionContent = Conversations.Models.Models.ConversationSummarizationActionContent.DeserializeConversationSummarizationActionContent(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -137,7 +139,7 @@ namespace Azure.AI.Language.Conversations.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SummarizationOperationAction(name, kind, additionalBinaryDataProperties, actionContent);
+            return new Conversations.Models.Models.SummarizationOperationAction(name, kind, additionalBinaryDataProperties, actionContent);
         }
     }
 }

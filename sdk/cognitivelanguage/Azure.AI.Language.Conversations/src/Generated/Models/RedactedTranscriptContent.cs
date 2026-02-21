@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.AI.Language.Conversations;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> Transcript content response that the service generates, with all necessary personally identifiable information redacted. </summary>
     public partial class RedactedTranscriptContent

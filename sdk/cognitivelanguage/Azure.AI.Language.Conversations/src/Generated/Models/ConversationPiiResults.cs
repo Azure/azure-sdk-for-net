@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.Language.Conversations.Models;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> The result from PII detection and redaction operation for each conversation. </summary>
     public partial class ConversationPiiResults
@@ -34,7 +35,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="conversations"> array of conversations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationPiiResults(IList<DocumentError> errors, RequestStatistics statistics, string modelVersion, IList<ConversationalPiiResult> conversations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationPiiResults(IList<DocumentError> errors, Conversations.Models.RequestStatistics statistics, string modelVersion, IList<ConversationalPiiResult> conversations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Errors = errors;
             Statistics = statistics;
@@ -47,7 +48,7 @@ namespace Azure.AI.Language.Conversations.Models
         public IList<DocumentError> Errors { get; }
 
         /// <summary> statistics. </summary>
-        public RequestStatistics Statistics { get; }
+        public Conversations.Models.RequestStatistics Statistics { get; }
 
         /// <summary> This field indicates which model is used for scoring. </summary>
         public string ModelVersion { get; }

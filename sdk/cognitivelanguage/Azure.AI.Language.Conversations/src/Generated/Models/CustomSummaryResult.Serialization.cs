@@ -10,8 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Language.Conversations;
+using Azure.AI.Language.Conversations.Models;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> Custom Summary Results. </summary>
     public partial class CustomSummaryResult : IJsonModel<CustomSummaryResult>
@@ -96,7 +97,7 @@ namespace Azure.AI.Language.Conversations.Models
             if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics, options);
+                writer.WriteObjectValue<Conversations.Models.RequestStatistics>(Statistics, options);
             }
             writer.WritePropertyName("projectName"u8);
             writer.WriteStringValue(ProjectName);
@@ -146,7 +147,7 @@ namespace Azure.AI.Language.Conversations.Models
             }
             IList<ConversationsSummaryResult> conversations = default;
             IList<DocumentError> errors = default;
-            RequestStatistics statistics = default;
+            Conversations.Models.RequestStatistics statistics = default;
             string projectName = default;
             string deploymentName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();

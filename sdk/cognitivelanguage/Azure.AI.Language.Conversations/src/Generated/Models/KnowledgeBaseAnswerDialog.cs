@@ -9,10 +9,10 @@ using System;
 using System.Collections.Generic;
 using Azure.AI.Language.Conversations;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> Dialog associated with Answer. </summary>
-    public partial class KnowledgeBaseAnswerDialog
+    internal partial class KnowledgeBaseAnswerDialog
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.AI.Language.Conversations;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> Contains the state for the tasks that are being executed as part of the submitted job for analyzing a conversation. </summary>
     public partial class ConversationActions

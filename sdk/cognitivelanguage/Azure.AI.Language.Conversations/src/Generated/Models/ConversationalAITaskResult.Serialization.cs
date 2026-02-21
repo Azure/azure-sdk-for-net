@@ -10,8 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Language.Conversations;
+using Azure.AI.Language.Conversations.Models;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> The results of a ConversationalAI task. </summary>
     public partial class ConversationalAITaskResult : AnalyzeConversationActionResult, IJsonModel<ConversationalAITaskResult>

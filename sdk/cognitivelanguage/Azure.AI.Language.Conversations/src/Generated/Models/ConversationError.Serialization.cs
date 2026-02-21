@@ -10,8 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Language.Conversations;
+using Azure.AI.Language.Conversations.Models;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> The error object. </summary>
     public partial class ConversationError : IJsonModel<ConversationError>
@@ -101,7 +102,7 @@ namespace Azure.AI.Language.Conversations.Models
             if (Optional.IsDefined(Innererror))
             {
                 writer.WritePropertyName("innererror"u8);
-                writer.WriteObjectValue(Innererror, options);
+                writer.WriteObjectValue<Conversations.Models.InnerErrorModel>(Innererror, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -149,7 +150,7 @@ namespace Azure.AI.Language.Conversations.Models
             string message = default;
             string target = default;
             IList<ConversationError> details = default;
-            InnerErrorModel innererror = default;
+            Conversations.Models.InnerErrorModel innererror = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

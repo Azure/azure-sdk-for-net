@@ -12,7 +12,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Human-readable error code. </summary>
-    public readonly partial struct InnerErrorCode : IEquatable<InnerErrorCode>
+    internal readonly partial struct InnerErrorCode : IEquatable<InnerErrorCode>
     {
         private readonly string _value;
         /// <summary> Invalid request error. </summary>

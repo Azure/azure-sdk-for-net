@@ -10,8 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Language.Conversations;
+using Azure.AI.Language.Conversations.Models;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> It is a wrap up a Question Answering KB response. </summary>
     public partial class QuestionAnsweringTargetIntentResult : TargetIntentResult, IJsonModel<QuestionAnsweringTargetIntentResult>
@@ -83,7 +84,7 @@ namespace Azure.AI.Language.Conversations.Models
             if (Optional.IsDefined(Result))
             {
                 writer.WritePropertyName("result"u8);
-                writer.WriteObjectValue(Result, options);
+                writer.WriteObjectValue<Conversations.Models.AnswersResult>(Result, options);
             }
         }
 
@@ -116,7 +117,7 @@ namespace Azure.AI.Language.Conversations.Models
             string apiVersion = default;
             double confidence = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            AnswersResult result = default;
+            Conversations.Models.AnswersResult result = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("targetProjectKind"u8))

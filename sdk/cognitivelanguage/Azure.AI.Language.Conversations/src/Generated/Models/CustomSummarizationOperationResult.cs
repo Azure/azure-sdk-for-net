@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Language.Conversations.Models;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> Result for the custom summarization task on the conversation. </summary>
     public partial class CustomSummarizationOperationResult : AnalyzeConversationOperationResult

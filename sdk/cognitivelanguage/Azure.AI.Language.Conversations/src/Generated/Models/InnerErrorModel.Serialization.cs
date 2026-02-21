@@ -10,11 +10,12 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Language.Conversations;
+using Azure.AI.Language.Conversations.Models;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> An object containing more specific information about the error. As per Microsoft One API guidelines - https://github.com/Microsoft/api-guidelines/blob/vNext/Guidelines.md#7102-error-condition-responses. </summary>
-    public partial class InnerErrorModel : IJsonModel<InnerErrorModel>
+    internal partial class InnerErrorModel : IJsonModel<InnerErrorModel>
     {
         /// <summary> Initializes a new instance of <see cref="InnerErrorModel"/> for deserialization. </summary>
         internal InnerErrorModel()
@@ -107,7 +108,7 @@ namespace Azure.AI.Language.Conversations.Models
             if (Optional.IsDefined(Innererror))
             {
                 writer.WritePropertyName("innererror"u8);
-                writer.WriteObjectValue(Innererror, options);
+                writer.WriteObjectValue<Conversations.Models.InnerErrorModel>(Innererror, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -155,7 +156,7 @@ namespace Azure.AI.Language.Conversations.Models
             string message = default;
             IDictionary<string, string> details = default;
             string target = default;
-            InnerErrorModel innererror = default;
+            Conversations.Models.InnerErrorModel innererror = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Language.Conversations.Models;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> A resolution for numeric entity instances. </summary>
     public partial class NumberResolution : ResolutionBase

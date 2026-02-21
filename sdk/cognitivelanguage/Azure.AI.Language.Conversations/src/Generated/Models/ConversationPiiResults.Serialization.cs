@@ -10,8 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Language.Conversations;
+using Azure.AI.Language.Conversations.Models;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> The result from PII detection and redaction operation for each conversation. </summary>
     public partial class ConversationPiiResults : IJsonModel<ConversationPiiResults>
@@ -89,7 +90,7 @@ namespace Azure.AI.Language.Conversations.Models
             if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics, options);
+                writer.WriteObjectValue<Conversations.Models.RequestStatistics>(Statistics, options);
             }
             writer.WritePropertyName("modelVersion"u8);
             writer.WriteStringValue(ModelVersion);
@@ -143,7 +144,7 @@ namespace Azure.AI.Language.Conversations.Models
                 return null;
             }
             IList<DocumentError> errors = default;
-            RequestStatistics statistics = default;
+            Conversations.Models.RequestStatistics statistics = default;
             string modelVersion = default;
             IList<ConversationalPiiResult> conversations = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();

@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.AI.Language.Conversations;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> The entity associated with this intent. </summary>
     public partial class ConversationalAIEntity

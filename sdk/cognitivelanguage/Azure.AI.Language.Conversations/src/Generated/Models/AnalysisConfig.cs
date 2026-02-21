@@ -7,12 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Language.Conversations.Models;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary>
     /// This is the parameter set of either the Orchestration project itself or one of the target services.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LuisConfig"/>, <see cref="QuestionAnsweringConfig"/>, and <see cref="ConversationConfig"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Conversations.Models.LuisConfig"/>, <see cref="Conversations.Models.QuestionAnsweringConfig"/>, and <see cref="Conversations.Models.ConversationConfig"/>.
     /// </summary>
     public abstract partial class AnalysisConfig
     {

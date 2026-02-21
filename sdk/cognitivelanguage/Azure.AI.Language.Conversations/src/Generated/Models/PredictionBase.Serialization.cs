@@ -10,11 +10,11 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.AI.Language.Conversations;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary>
     /// This is the base class of prediction
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ConversationPrediction"/> and <see cref="OrchestrationPrediction"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Conversations.Models.ConversationPrediction"/> and <see cref="Conversations.Models.OrchestrationPrediction"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownPredictionBase))]
     public abstract partial class PredictionBase : IJsonModel<PredictionBase>

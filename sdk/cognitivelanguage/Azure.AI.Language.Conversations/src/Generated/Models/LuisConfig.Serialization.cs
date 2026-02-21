@@ -10,55 +10,57 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Language.Conversations;
+using Azure.AI.Language.Conversations.Models;
+using Azure.AI.Language.Conversations.Models.Models;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models.Models
 {
     /// <summary> This is a set of request parameters for LUIS Generally Available projects. </summary>
-    public partial class LuisConfig : AnalysisConfig, IJsonModel<LuisConfig>
+    public partial class LuisConfig : AnalysisConfig, IJsonModel<Conversations.Models.Models.LuisConfig>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AnalysisConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LuisConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<Conversations.Models.Models.LuisConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeLuisConfig(document.RootElement, options);
+                        return Conversations.Models.Models.LuisConfig.DeserializeLuisConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LuisConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Conversations.Models.Models.LuisConfig)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LuisConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<Conversations.Models.Models.LuisConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAILanguageConversationsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LuisConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Conversations.Models.Models.LuisConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LuisConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<Conversations.Models.Models.LuisConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LuisConfig IPersistableModel<LuisConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => (LuisConfig)PersistableModelCreateCore(data, options);
+        Conversations.Models.Models.LuisConfig IPersistableModel<Conversations.Models.Models.LuisConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => (Conversations.Models.Models.LuisConfig)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LuisConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<Conversations.Models.Models.LuisConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LuisConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<Conversations.Models.Models.LuisConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +71,10 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LuisConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<Conversations.Models.Models.LuisConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LuisConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(Conversations.Models.Models.LuisConfig)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Query))
@@ -83,30 +85,30 @@ namespace Azure.AI.Language.Conversations.Models
             if (Optional.IsDefined(CallingOptions))
             {
                 writer.WritePropertyName("callingOptions"u8);
-                writer.WriteObjectValue(CallingOptions, options);
+                writer.WriteObjectValue<Conversations.Models.LuisCallingConfig>(CallingOptions, options);
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LuisConfig IJsonModel<LuisConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (LuisConfig)JsonModelCreateCore(ref reader, options);
+        Conversations.Models.Models.LuisConfig IJsonModel<Conversations.Models.Models.LuisConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (Conversations.Models.Models.LuisConfig)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AnalysisConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LuisConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<Conversations.Models.Models.LuisConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LuisConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(Conversations.Models.Models.LuisConfig)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLuisConfig(document.RootElement, options);
+            return Conversations.Models.Models.LuisConfig.DeserializeLuisConfig(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static LuisConfig DeserializeLuisConfig(JsonElement element, ModelReaderWriterOptions options)
+        internal static Conversations.Models.Models.LuisConfig DeserializeLuisConfig(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -116,7 +118,7 @@ namespace Azure.AI.Language.Conversations.Models
             string apiVersion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string query = default;
-            LuisCallingConfig callingOptions = default;
+            Conversations.Models.LuisCallingConfig callingOptions = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("targetProjectKind"u8))
@@ -140,7 +142,7 @@ namespace Azure.AI.Language.Conversations.Models
                     {
                         continue;
                     }
-                    callingOptions = LuisCallingConfig.DeserializeLuisCallingConfig(prop.Value, options);
+                    callingOptions = Conversations.Models.Models.LuisCallingConfig.DeserializeLuisCallingConfig(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -148,7 +150,7 @@ namespace Azure.AI.Language.Conversations.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LuisConfig(targetProjectKind, apiVersion, additionalBinaryDataProperties, query, callingOptions);
+            return new Conversations.Models.Models.LuisConfig(targetProjectKind, apiVersion, additionalBinaryDataProperties, query, callingOptions);
         }
     }
 }

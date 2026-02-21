@@ -12,7 +12,7 @@ using System.Text.Json;
 using Azure.AI.Language.Conversations;
 using Azure.Core;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> It is a wrap up a Question Answering KB response. </summary>
     public partial class AnalyzeConversationOperationInput : IJsonModel<AnalyzeConversationOperationInput>

@@ -10,8 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Language.Conversations;
+using Azure.AI.Language.Conversations.Models;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> Additional properties for supporting transcript conversation. </summary>
     public partial class TranscriptConversationItem : IJsonModel<TranscriptConversationItem>
@@ -119,7 +120,7 @@ namespace Azure.AI.Language.Conversations.Models
             if (Optional.IsDefined(ConversationItemLevelTiming))
             {
                 writer.WritePropertyName("conversationItemLevelTiming"u8);
-                writer.WriteObjectValue(ConversationItemLevelTiming, options);
+                writer.WriteObjectValue<Conversations.Models.ConversationItemLevelTiming>(ConversationItemLevelTiming, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -173,7 +174,7 @@ namespace Azure.AI.Language.Conversations.Models
             string text = default;
             string lexical = default;
             IList<WordLevelTiming> wordLevelTimings = default;
-            ConversationItemLevelTiming conversationItemLevelTiming = default;
+            Conversations.Models.ConversationItemLevelTiming conversationItemLevelTiming = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -250,7 +251,7 @@ namespace Azure.AI.Language.Conversations.Models
                     {
                         continue;
                     }
-                    conversationItemLevelTiming = ConversationItemLevelTiming.DeserializeConversationItemLevelTiming(prop.Value, options);
+                    conversationItemLevelTiming = Conversations.Models.Models.ConversationItemLevelTiming.DeserializeConversationItemLevelTiming(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

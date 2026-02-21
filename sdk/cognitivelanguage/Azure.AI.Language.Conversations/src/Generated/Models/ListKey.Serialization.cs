@@ -10,55 +10,57 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Language.Conversations;
+using Azure.AI.Language.Conversations.Models;
+using Azure.AI.Language.Conversations.Models.Models;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models.Models
 {
     /// <summary> The list key extra data kind. </summary>
-    public partial class ListKey : ConversationEntityExtraInformation, IJsonModel<ListKey>
+    public partial class ListKey : ConversationEntityExtraInformation, IJsonModel<Conversations.Models.Models.ListKey>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ConversationEntityExtraInformation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListKey>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<Conversations.Models.Models.ListKey>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeListKey(document.RootElement, options);
+                        return Conversations.Models.Models.ListKey.DeserializeListKey(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ListKey)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Conversations.Models.Models.ListKey)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListKey>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<Conversations.Models.Models.ListKey>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAILanguageConversationsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ListKey)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Conversations.Models.Models.ListKey)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ListKey>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<Conversations.Models.Models.ListKey>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ListKey IPersistableModel<ListKey>.Create(BinaryData data, ModelReaderWriterOptions options) => (ListKey)PersistableModelCreateCore(data, options);
+        Conversations.Models.Models.ListKey IPersistableModel<Conversations.Models.Models.ListKey>.Create(BinaryData data, ModelReaderWriterOptions options) => (Conversations.Models.Models.ListKey)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ListKey>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<Conversations.Models.Models.ListKey>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ListKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<Conversations.Models.Models.ListKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +71,10 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListKey>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<Conversations.Models.Models.ListKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ListKey)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(Conversations.Models.Models.ListKey)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Key))
@@ -84,24 +86,24 @@ namespace Azure.AI.Language.Conversations.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ListKey IJsonModel<ListKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ListKey)JsonModelCreateCore(ref reader, options);
+        Conversations.Models.Models.ListKey IJsonModel<Conversations.Models.Models.ListKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (Conversations.Models.Models.ListKey)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ConversationEntityExtraInformation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListKey>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<Conversations.Models.Models.ListKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ListKey)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(Conversations.Models.Models.ListKey)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeListKey(document.RootElement, options);
+            return Conversations.Models.Models.ListKey.DeserializeListKey(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ListKey DeserializeListKey(JsonElement element, ModelReaderWriterOptions options)
+        internal static Conversations.Models.Models.ListKey DeserializeListKey(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -127,7 +129,7 @@ namespace Azure.AI.Language.Conversations.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ListKey(extraInformationKind, additionalBinaryDataProperties, key);
+            return new Conversations.Models.Models.ListKey(extraInformationKind, additionalBinaryDataProperties, key);
         }
     }
 }

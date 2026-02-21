@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Language.Conversations.Models;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> This is a set of request parameters for Customized Conversation projects. </summary>
     public partial class ConversationConfig : AnalysisConfig
@@ -23,12 +24,12 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="apiVersion"> The API version to use when call a specific target service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="callingOptions"> The option to set to call a Conversation project. </param>
-        internal ConversationConfig(TargetProjectKind targetProjectKind, string apiVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties, ConversationCallingConfig callingOptions) : base(targetProjectKind, apiVersion, additionalBinaryDataProperties)
+        internal ConversationConfig(TargetProjectKind targetProjectKind, string apiVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties, Conversations.Models.ConversationCallingConfig callingOptions) : base(targetProjectKind, apiVersion, additionalBinaryDataProperties)
         {
             CallingOptions = callingOptions;
         }
 
         /// <summary> The option to set to call a Conversation project. </summary>
-        public ConversationCallingConfig CallingOptions { get; set; }
+        public Conversations.Models.ConversationCallingConfig CallingOptions { get; set; }
     }
 }

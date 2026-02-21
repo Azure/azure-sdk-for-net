@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.AI.Language.Conversations.Models;
+using Azure.AI.Language.Conversations.Models.Models;
 
 namespace Azure.AI.Language.Conversations
 {
@@ -20,7 +21,7 @@ namespace Azure.AI.Language.Conversations
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ConversationalAITask"/> and <see cref="Models.ConversationLanguageUnderstandingInput"/>.
         /// </summary>
         /// <param name="kind"> The base class of a conversation input task. </param>
-        /// <returns> A new <see cref="Models.AnalyzeConversationInput"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.AnalyzeConversationInput"/> instance for mocking. </returns>
         public static AnalyzeConversationInput AnalyzeConversationInput(string kind = default)
         {
             return new UnknownAnalyzeConversationInput(new AnalyzeConversationInputKind(kind), additionalBinaryDataProperties: null);
@@ -29,7 +30,7 @@ namespace Azure.AI.Language.Conversations
         /// <summary> A conversational AI task. </summary>
         /// <param name="analysisInput"> The input ConversationItem and its optional parameters. </param>
         /// <param name="parameters"> Input parameters necessary for a Conversation language understanding task. </param>
-        /// <returns> A new <see cref="Models.ConversationalAITask"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.ConversationalAITask"/> instance for mocking. </returns>
         public static ConversationalAITask ConversationalAITask(ConversationalAIAnalysisInput analysisInput = default, AIConversationLanguageUnderstandingActionContent parameters = default)
         {
             return new ConversationalAITask(AnalyzeConversationInputKind.ConversationalAI, additionalBinaryDataProperties: null, analysisInput, parameters);
@@ -37,7 +38,7 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary> The input ConversationItem and its optional parameters. </summary>
         /// <param name="conversations"> List of multiple conversations. </param>
-        /// <returns> A new <see cref="Models.ConversationalAIAnalysisInput"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.ConversationalAIAnalysisInput"/> instance for mocking. </returns>
         public static ConversationalAIAnalysisInput ConversationalAIAnalysisInput(IEnumerable<TextConversation> conversations = default)
         {
             conversations ??= new ChangeTrackingList<TextConversation>();
@@ -50,7 +51,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="language"> Language of the conversation item in BCP-47 format. </param>
         /// <param name="domain"> domain. </param>
         /// <param name="conversationItems"> Ordered list of text conversation items in the conversation. </param>
-        /// <returns> A new <see cref="Models.TextConversation"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.TextConversation"/> instance for mocking. </returns>
         public static TextConversation TextConversation(string id = default, string language = default, ConversationDomain? domain = default, IEnumerable<TextConversationItem> conversationItems = default)
         {
             conversationItems ??= new ChangeTrackingList<TextConversationItem>();
@@ -71,7 +72,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="modality"> Enumeration of supported conversational modalities. </param>
         /// <param name="role"> Role of the participant. </param>
         /// <param name="text"> The text input. </param>
-        /// <returns> A new <see cref="Models.TextConversationItem"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.TextConversationItem"/> instance for mocking. </returns>
         public static TextConversationItem TextConversationItem(string id = default, string participantId = default, string language = default, InputModality? modality = default, ParticipantRole? role = default, string text = default)
         {
             return new TextConversationItem(
@@ -92,7 +93,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="language"> Language of the conversation item in BCP-47 format. </param>
         /// <param name="modality"> modality. </param>
         /// <param name="domain"> domain. </param>
-        /// <returns> A new <see cref="Models.ConversationInput"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.ConversationInput"/> instance for mocking. </returns>
         public static ConversationInput ConversationInput(string id = default, string language = default, string modality = default, ConversationDomain? domain = default)
         {
             return new UnknownConversationInput(id, language, new InputModality(modality), domain, additionalBinaryDataProperties: null);
@@ -103,7 +104,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="language"> Language of the conversation item in BCP-47 format. </param>
         /// <param name="domain"> domain. </param>
         /// <param name="conversationItems"> Ordered list of transcript conversation items in the conversation. </param>
-        /// <returns> A new <see cref="Models.TranscriptConversation"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.TranscriptConversation"/> instance for mocking. </returns>
         public static TranscriptConversation TranscriptConversation(string id = default, string language = default, ConversationDomain? domain = default, IEnumerable<TranscriptConversationItem> conversationItems = default)
         {
             conversationItems ??= new ChangeTrackingList<TranscriptConversationItem>();
@@ -129,8 +130,8 @@ namespace Azure.AI.Language.Conversations
         /// <param name="lexical"> Lexical form of the recognized text from the speech-to-text API, with the actual words recognized. </param>
         /// <param name="wordLevelTimings"> List of word-level audio timing information. </param>
         /// <param name="conversationItemLevelTiming"> Audio timing at the conversation item level. This still can help with AI quality if word-level audio timings are not available. </param>
-        /// <returns> A new <see cref="Models.TranscriptConversationItem"/> instance for mocking. </returns>
-        public static TranscriptConversationItem TranscriptConversationItem(string id = default, string participantId = default, string language = default, InputModality? modality = default, ParticipantRole? role = default, string inverseTextNormalized = default, string maskedInverseTextNormalized = default, string text = default, string lexical = default, IEnumerable<WordLevelTiming> wordLevelTimings = default, ConversationItemLevelTiming conversationItemLevelTiming = default)
+        /// <returns> A new <see cref="Models.Models.TranscriptConversationItem"/> instance for mocking. </returns>
+        public static TranscriptConversationItem TranscriptConversationItem(string id = default, string participantId = default, string language = default, InputModality? modality = default, ParticipantRole? role = default, string inverseTextNormalized = default, string maskedInverseTextNormalized = default, string text = default, string lexical = default, IEnumerable<WordLevelTiming> wordLevelTimings = default, Models.ConversationItemLevelTiming conversationItemLevelTiming = default)
         {
             wordLevelTimings ??= new ChangeTrackingList<WordLevelTiming>();
 
@@ -153,26 +154,17 @@ namespace Azure.AI.Language.Conversations
         /// <param name="offset"> Offset from the start of speech audio, in ticks. 1 tick = 100 nanoseconds. </param>
         /// <param name="duration"> Duration of word articulation, in ticks. 1 tick = 100 nanoseconds. </param>
         /// <param name="word"> Recognized word. </param>
-        /// <returns> A new <see cref="Models.WordLevelTiming"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.WordLevelTiming"/> instance for mocking. </returns>
         public static WordLevelTiming WordLevelTiming(long? offset = default, long? duration = default, string word = default)
         {
             return new WordLevelTiming(offset, duration, word, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Audio timing at the conversation item level. </summary>
-        /// <param name="offset"> Offset from the start of speech audio, in ticks. 1 tick = 100 nanoseconds. </param>
-        /// <param name="duration"> Duration of word articulation, in ticks. 1 tick = 100 nanoseconds. </param>
-        /// <returns> A new <see cref="Models.ConversationItemLevelTiming"/> instance for mocking. </returns>
-        public static ConversationItemLevelTiming ConversationItemLevelTiming(long? offset = default, long? duration = default)
-        {
-            return new ConversationItemLevelTiming(offset, duration, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Input parameters base for a Conversation task. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the deployment to use. </param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
-        /// <returns> A new <see cref="Models.AIConversationLanguageUnderstandingActionContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.AIConversationLanguageUnderstandingActionContent"/> instance for mocking. </returns>
         public static AIConversationLanguageUnderstandingActionContent AIConversationLanguageUnderstandingActionContent(string projectName = default, string deploymentName = default, StringIndexType? stringIndexType = default)
         {
             return new AIConversationLanguageUnderstandingActionContent(projectName, deploymentName, stringIndexType, additionalBinaryDataProperties: null);
@@ -181,7 +173,7 @@ namespace Azure.AI.Language.Conversations
         /// <summary> The input for a conversation language understanding task. </summary>
         /// <param name="conversationInput"> The input ConversationItem and its optional parameters. </param>
         /// <param name="actionContent"> Input parameters necessary for a Conversation language understanding task. </param>
-        /// <returns> A new <see cref="Models.ConversationLanguageUnderstandingInput"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.ConversationLanguageUnderstandingInput"/> instance for mocking. </returns>
         public static ConversationLanguageUnderstandingInput ConversationLanguageUnderstandingInput(ConversationAnalysisInput conversationInput = default, ConversationLanguageUnderstandingActionContent actionContent = default)
         {
             return new ConversationLanguageUnderstandingInput(AnalyzeConversationInputKind.Conversation, additionalBinaryDataProperties: null, conversationInput, actionContent);
@@ -189,7 +181,7 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary> The input ConversationItem and its optional parameters. </summary>
         /// <param name="conversationItem"> The abstract base for a user input formatted conversation (e.g., Text, Transcript). </param>
-        /// <returns> A new <see cref="Models.ConversationAnalysisInput"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.ConversationAnalysisInput"/> instance for mocking. </returns>
         public static ConversationAnalysisInput ConversationAnalysisInput(TextConversationItem conversationItem = default)
         {
             return new ConversationAnalysisInput(conversationItem, additionalBinaryDataProperties: null);
@@ -203,7 +195,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="directTarget"> The name of a target project to forward the request to. </param>
         /// <param name="targetProjectParameters"> A dictionary representing the parameters for each target project. </param>
-        /// <returns> A new <see cref="Models.ConversationLanguageUnderstandingActionContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.ConversationLanguageUnderstandingActionContent"/> instance for mocking. </returns>
         public static ConversationLanguageUnderstandingActionContent ConversationLanguageUnderstandingActionContent(string projectName = default, string deploymentName = default, bool? verbose = default, bool? isLoggingEnabled = default, StringIndexType? stringIndexType = default, string directTarget = default, IDictionary<string, AnalysisConfig> targetProjectParameters = default)
         {
             targetProjectParameters ??= new ChangeTrackingDictionary<string, AnalysisConfig>();
@@ -225,7 +217,7 @@ namespace Azure.AI.Language.Conversations
         /// </summary>
         /// <param name="targetProjectKind"> The type of a target service. </param>
         /// <param name="apiVersion"> The API version to use when call a specific target service. </param>
-        /// <returns> A new <see cref="Models.AnalysisConfig"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.AnalysisConfig"/> instance for mocking. </returns>
         public static AnalysisConfig AnalysisConfig(string targetProjectKind = default, string apiVersion = default)
         {
             return new UnknownAnalysisConfig(new TargetProjectKind(targetProjectKind), apiVersion, additionalBinaryDataProperties: null);
@@ -235,137 +227,28 @@ namespace Azure.AI.Language.Conversations
         /// <param name="apiVersion"> The API version to use when call a specific target service. </param>
         /// <param name="query"> The utterance to predict. </param>
         /// <param name="callingOptions"> This customizes how the service calls LUIS Generally Available projects. </param>
-        /// <returns> A new <see cref="Models.LuisConfig"/> instance for mocking. </returns>
-        public static LuisConfig LuisConfig(string apiVersion = default, string query = default, LuisCallingConfig callingOptions = default)
+        /// <returns> A new <see cref="Models.Models.LuisConfig"/> instance for mocking. </returns>
+        public static LuisConfig LuisConfig(string apiVersion = default, string query = default, Models.LuisCallingConfig callingOptions = default)
         {
             return new LuisConfig(TargetProjectKind.Luis, apiVersion, additionalBinaryDataProperties: null, query, callingOptions);
-        }
-
-        /// <summary> This customizes how the service calls LUIS Generally Available projects. </summary>
-        /// <param name="verbose"> Enable verbose response. </param>
-        /// <param name="log"> Save log to add in training utterances later. </param>
-        /// <param name="showAllIntents"> Set true to show all intents. </param>
-        /// <param name="timezoneOffset"> The timezone offset for the location of the request. </param>
-        /// <param name="spellCheck"> Enable spell checking. </param>
-        /// <param name="bingSpellCheckSubscriptionKey"> The subscription key to use when enabling Bing spell check. </param>
-        /// <returns> A new <see cref="Models.LuisCallingConfig"/> instance for mocking. </returns>
-        public static LuisCallingConfig LuisCallingConfig(bool? verbose = default, bool? log = default, bool? showAllIntents = default, int? timezoneOffset = default, bool? spellCheck = default, string bingSpellCheckSubscriptionKey = default)
-        {
-            return new LuisCallingConfig(
-                verbose,
-                log,
-                showAllIntents,
-                timezoneOffset,
-                spellCheck,
-                bingSpellCheckSubscriptionKey,
-                additionalBinaryDataProperties: null);
         }
 
         /// <summary> This is a set of request parameters for Question Answering knowledge bases. </summary>
         /// <param name="apiVersion"> The API version to use when call a specific target service. </param>
         /// <param name="callingOptions"> The options sent to a Question Answering KB. </param>
-        /// <returns> A new <see cref="Models.QuestionAnsweringConfig"/> instance for mocking. </returns>
-        public static QuestionAnsweringConfig QuestionAnsweringConfig(string apiVersion = default, QuestionAnswersConfig callingOptions = default)
+        /// <returns> A new <see cref="Models.Models.QuestionAnsweringConfig"/> instance for mocking. </returns>
+        public static QuestionAnsweringConfig QuestionAnsweringConfig(string apiVersion = default, Models.QuestionAnswersConfig callingOptions = default)
         {
             return new QuestionAnsweringConfig(TargetProjectKind.QuestionAnswering, apiVersion, additionalBinaryDataProperties: null, callingOptions);
-        }
-
-        /// <summary> Parameters to query a knowledge base. </summary>
-        /// <param name="qnaId"> Exact QnA ID to fetch from the knowledge base, this field takes priority over question. </param>
-        /// <param name="question"> User question to query against the knowledge base. </param>
-        /// <param name="top"> Max number of answers to be returned for the question. </param>
-        /// <param name="userId"> Unique identifier for the user. </param>
-        /// <param name="confidenceThreshold"> Minimum threshold score for answers, value ranges from 0 to 1. </param>
-        /// <param name="answerContext"> Context object with previous QnA's information. </param>
-        /// <param name="rankerKind"> Type of ranker to be used. </param>
-        /// <param name="filters"> Filter QnAs based on given metadata list and knowledge base sources. </param>
-        /// <param name="shortAnswerOptions"> To configure Answer span prediction feature. </param>
-        /// <param name="includeUnstructuredSources"> (Optional) Flag to enable Query over Unstructured Sources. </param>
-        /// <returns> A new <see cref="Models.QuestionAnswersConfig"/> instance for mocking. </returns>
-        public static QuestionAnswersConfig QuestionAnswersConfig(int? qnaId = default, string question = default, int? top = default, string userId = default, double? confidenceThreshold = default, KnowledgeBaseAnswerContext answerContext = default, RankerKind? rankerKind = default, QueryFilters filters = default, ShortAnswerConfig shortAnswerOptions = default, bool? includeUnstructuredSources = default)
-        {
-            return new QuestionAnswersConfig(
-                qnaId,
-                question,
-                top,
-                userId,
-                confidenceThreshold,
-                answerContext,
-                rankerKind,
-                filters,
-                shortAnswerOptions,
-                includeUnstructuredSources,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Context object with previous QnA's information. </summary>
-        /// <param name="previousQnaId"> Previous turn top answer result QnA ID. </param>
-        /// <param name="previousQuestion"> Previous user query. </param>
-        /// <returns> A new <see cref="Models.KnowledgeBaseAnswerContext"/> instance for mocking. </returns>
-        public static KnowledgeBaseAnswerContext KnowledgeBaseAnswerContext(int previousQnaId = default, string previousQuestion = default)
-        {
-            return new KnowledgeBaseAnswerContext(previousQnaId, previousQuestion, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> filters over knowledge base. </summary>
-        /// <param name="metadataFilter"> filters over knowledge base. </param>
-        /// <param name="sourceFilter"> filters over knowledge base. </param>
-        /// <param name="logicalOperation"> Logical operation used to join metadata filter with source filter. </param>
-        /// <returns> A new <see cref="Models.QueryFilters"/> instance for mocking. </returns>
-        public static QueryFilters QueryFilters(MetadataFilter metadataFilter = default, IEnumerable<string> sourceFilter = default, LogicalOperationKind? logicalOperation = default)
-        {
-            sourceFilter ??= new ChangeTrackingList<string>();
-
-            return new QueryFilters(metadataFilter, sourceFilter.ToList(), logicalOperation, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Find QnAs that are associated with the given list of metadata. </summary>
-        /// <param name="metadata"> List of metadata. </param>
-        /// <param name="logicalOperation"> Operation used to join metadata filters. </param>
-        /// <returns> A new <see cref="Models.MetadataFilter"/> instance for mocking. </returns>
-        public static MetadataFilter MetadataFilter(IEnumerable<MetadataRecord> metadata = default, LogicalOperationKind? logicalOperation = default)
-        {
-            metadata ??= new ChangeTrackingList<MetadataRecord>();
-
-            return new MetadataFilter(metadata.ToList(), logicalOperation, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Object to provide the key value pair for each metadata. </summary>
-        /// <param name="key"> Metadata Key from Metadata dictionary used in the QnA. </param>
-        /// <param name="value"> Metadata Value from Metadata dictionary used in the QnA. </param>
-        /// <returns> A new <see cref="Models.MetadataRecord"/> instance for mocking. </returns>
-        public static MetadataRecord MetadataRecord(string key = default, string value = default)
-        {
-            return new MetadataRecord(key, value, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> To configure Answer span prediction feature. </summary>
-        /// <param name="enable"> Enable or disable Answer Span prediction. </param>
-        /// <param name="confidenceThreshold"> Minimum threshold score required to include an answer span, value ranges from 0 to 1. </param>
-        /// <param name="top"> Number of Top answers to be considered for span prediction from 1 to 10. </param>
-        /// <returns> A new <see cref="Models.ShortAnswerConfig"/> instance for mocking. </returns>
-        public static ShortAnswerConfig ShortAnswerConfig(bool? enable = default, double? confidenceThreshold = default, int? top = default)
-        {
-            return new ShortAnswerConfig(enable, confidenceThreshold, top, additionalBinaryDataProperties: null);
         }
 
         /// <summary> This is a set of request parameters for Customized Conversation projects. </summary>
         /// <param name="apiVersion"> The API version to use when call a specific target service. </param>
         /// <param name="callingOptions"> The option to set to call a Conversation project. </param>
-        /// <returns> A new <see cref="Models.ConversationConfig"/> instance for mocking. </returns>
-        public static ConversationConfig ConversationConfig(string apiVersion = default, ConversationCallingConfig callingOptions = default)
+        /// <returns> A new <see cref="Models.Models.ConversationConfig"/> instance for mocking. </returns>
+        public static ConversationConfig ConversationConfig(string apiVersion = default, Models.ConversationCallingConfig callingOptions = default)
         {
             return new ConversationConfig(TargetProjectKind.Conversation, apiVersion, additionalBinaryDataProperties: null, callingOptions);
-        }
-
-        /// <summary> The option to set to call a Conversation project. </summary>
-        /// <param name="language"> The language of the query in BCP 47 language representation. </param>
-        /// <param name="verbose"> If true, the service will return more detailed information. </param>
-        /// <param name="isLoggingEnabled"> If true, the query will be saved for customers to further review in authoring, to improve the model quality. </param>
-        /// <returns> A new <see cref="Models.ConversationCallingConfig"/> instance for mocking. </returns>
-        public static ConversationCallingConfig ConversationCallingConfig(string language = default, bool? verbose = default, bool? isLoggingEnabled = default)
-        {
-            return new ConversationCallingConfig(language, verbose, isLoggingEnabled, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -373,7 +256,7 @@ namespace Azure.AI.Language.Conversations
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ConversationalAITaskResult"/> and <see cref="Models.ConversationActionResult"/>.
         /// </summary>
         /// <param name="kind"> The base class of a conversation input task result. </param>
-        /// <returns> A new <see cref="Models.AnalyzeConversationActionResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.AnalyzeConversationActionResult"/> instance for mocking. </returns>
         public static AnalyzeConversationActionResult AnalyzeConversationActionResult(string kind = default)
         {
             return new UnknownAnalyzeConversationActionResult(new AnalyzeConversationResultKind(kind), additionalBinaryDataProperties: null);
@@ -381,7 +264,7 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary> The results of a ConversationalAI task. </summary>
         /// <param name="result"> Represents the conversational analysis response. </param>
-        /// <returns> A new <see cref="Models.ConversationalAITaskResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.ConversationalAITaskResult"/> instance for mocking. </returns>
         public static ConversationalAITaskResult ConversationalAITaskResult(ConversationalAIResult result = default)
         {
             return new ConversationalAITaskResult(AnalyzeConversationResultKind.ConversationalAIResult, additionalBinaryDataProperties: null, result);
@@ -390,7 +273,7 @@ namespace Azure.AI.Language.Conversations
         /// <summary> Represents the conversational analysis response. </summary>
         /// <param name="conversations"> Multiple multi-turn conversations analyzed. </param>
         /// <param name="warnings"> Any warnings encountered during processing. </param>
-        /// <returns> A new <see cref="Models.ConversationalAIResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.ConversationalAIResult"/> instance for mocking. </returns>
         public static ConversationalAIResult ConversationalAIResult(IEnumerable<ConversationalAIAnalysis> conversations = default, IEnumerable<string> warnings = default)
         {
             conversations ??= new ChangeTrackingList<ConversationalAIAnalysis>();
@@ -403,7 +286,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="id"> The ID of the conversation. </param>
         /// <param name="intents"> The intent classification results for this conversation. </param>
         /// <param name="entities"> Global entities that are matched but not associated with any specific intent. </param>
-        /// <returns> A new <see cref="Models.ConversationalAIAnalysis"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.ConversationalAIAnalysis"/> instance for mocking. </returns>
         public static ConversationalAIAnalysis ConversationalAIAnalysis(string id = default, IEnumerable<ConversationalAIIntent> intents = default, IEnumerable<ConversationalAIEntity> entities = default)
         {
             intents ??= new ChangeTrackingList<ConversationalAIIntent>();
@@ -417,7 +300,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="type"> The type of intent, either "action" or "question". </param>
         /// <param name="conversationItemRanges"> The ranges of conversation items where this intent was identified. </param>
         /// <param name="entities"> The entities associated with this intent. </param>
-        /// <returns> A new <see cref="Models.ConversationalAIIntent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.ConversationalAIIntent"/> instance for mocking. </returns>
         public static ConversationalAIIntent ConversationalAIIntent(string name = default, string @type = default, IEnumerable<ConversationItemRange> conversationItemRanges = default, IEnumerable<ConversationalAIEntity> entities = default)
         {
             conversationItemRanges ??= new ChangeTrackingList<ConversationItemRange>();
@@ -429,7 +312,7 @@ namespace Azure.AI.Language.Conversations
         /// <summary> The ranges of conversation items where this intent was identified. </summary>
         /// <param name="offset"> The starting index of the intent occurrence within the conversation. </param>
         /// <param name="count"> The number of continuous conversation items for this intent. </param>
-        /// <returns> A new <see cref="Models.ConversationItemRange"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.ConversationItemRange"/> instance for mocking. </returns>
         public static ConversationItemRange ConversationItemRange(int offset = default, int count = default)
         {
             return new ConversationItemRange(offset, count, additionalBinaryDataProperties: null);
@@ -445,7 +328,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="conversationItemIndex"> The index of the conversation item where the entity appears. </param>
         /// <param name="resolutions"> Entity resolution details, if available. </param>
         /// <param name="extraInformation"> Additional entity metadata. </param>
-        /// <returns> A new <see cref="Models.ConversationalAIEntity"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.ConversationalAIEntity"/> instance for mocking. </returns>
         public static ConversationalAIEntity ConversationalAIEntity(string name = default, string text = default, float confidenceScore = default, int offset = default, int length = default, string conversationItemId = default, int? conversationItemIndex = default, IEnumerable<ResolutionBase> resolutions = default, IEnumerable<ConversationEntityExtraInformation> extraInformation = default)
         {
             resolutions ??= new ChangeTrackingList<ResolutionBase>();
@@ -469,7 +352,7 @@ namespace Azure.AI.Language.Conversations
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AgeResolution"/>, <see cref="Models.VolumeResolution"/>, <see cref="Models.SpeedResolution"/>, <see cref="Models.AreaResolution"/>, <see cref="Models.LengthResolution"/>, <see cref="Models.InformationResolution"/>, <see cref="Models.TemperatureResolution"/>, <see cref="Models.WeightResolution"/>, <see cref="Models.CurrencyResolution"/>, <see cref="Models.BooleanResolution"/>, <see cref="Models.DateTimeResolution"/>, <see cref="Models.NumberResolution"/>, <see cref="Models.OrdinalResolution"/>, <see cref="Models.TemporalSpanResolution"/>, and <see cref="Models.NumericRangeResolution"/>.
         /// </summary>
         /// <param name="resolutionKind"> The entity resolution object kind. </param>
-        /// <returns> A new <see cref="Models.ResolutionBase"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.ResolutionBase"/> instance for mocking. </returns>
         public static ResolutionBase ResolutionBase(string resolutionKind = default)
         {
             return new UnknownResolutionBase(new ResolutionKind(resolutionKind), additionalBinaryDataProperties: null);
@@ -478,7 +361,7 @@ namespace Azure.AI.Language.Conversations
         /// <summary> Represents the Age entity resolution model. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> The Age Unit of measurement. </param>
-        /// <returns> A new <see cref="Models.AgeResolution"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.AgeResolution"/> instance for mocking. </returns>
         public static AgeResolution AgeResolution(double value = default, AgeUnit unit = default)
         {
             return new AgeResolution(ResolutionKind.AgeResolution, additionalBinaryDataProperties: null, value, unit);
@@ -487,7 +370,7 @@ namespace Azure.AI.Language.Conversations
         /// <summary> Represents the volume entity resolution model. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> The Volume Unit of measurement. </param>
-        /// <returns> A new <see cref="Models.VolumeResolution"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.VolumeResolution"/> instance for mocking. </returns>
         public static VolumeResolution VolumeResolution(double value = default, VolumeUnit unit = default)
         {
             return new VolumeResolution(ResolutionKind.VolumeResolution, additionalBinaryDataProperties: null, value, unit);
@@ -496,7 +379,7 @@ namespace Azure.AI.Language.Conversations
         /// <summary> Represents the speed entity resolution model. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> The speed Unit of measurement. </param>
-        /// <returns> A new <see cref="Models.SpeedResolution"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.SpeedResolution"/> instance for mocking. </returns>
         public static SpeedResolution SpeedResolution(double value = default, SpeedUnit unit = default)
         {
             return new SpeedResolution(ResolutionKind.SpeedResolution, additionalBinaryDataProperties: null, value, unit);
@@ -505,7 +388,7 @@ namespace Azure.AI.Language.Conversations
         /// <summary> Represents the area entity resolution model. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> The area Unit of measurement. </param>
-        /// <returns> A new <see cref="Models.AreaResolution"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.AreaResolution"/> instance for mocking. </returns>
         public static AreaResolution AreaResolution(double value = default, AreaUnit unit = default)
         {
             return new AreaResolution(ResolutionKind.AreaResolution, additionalBinaryDataProperties: null, value, unit);
@@ -514,7 +397,7 @@ namespace Azure.AI.Language.Conversations
         /// <summary> Represents the length entity resolution model. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> The length Unit of measurement. </param>
-        /// <returns> A new <see cref="Models.LengthResolution"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.LengthResolution"/> instance for mocking. </returns>
         public static LengthResolution LengthResolution(double value = default, LengthUnit unit = default)
         {
             return new LengthResolution(ResolutionKind.LengthResolution, additionalBinaryDataProperties: null, value, unit);
@@ -523,7 +406,7 @@ namespace Azure.AI.Language.Conversations
         /// <summary> Represents the information (data) entity resolution model. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> The information (data) Unit of measurement. </param>
-        /// <returns> A new <see cref="Models.InformationResolution"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.InformationResolution"/> instance for mocking. </returns>
         public static InformationResolution InformationResolution(double value = default, InformationUnit unit = default)
         {
             return new InformationResolution(ResolutionKind.InformationResolution, additionalBinaryDataProperties: null, value, unit);
@@ -532,7 +415,7 @@ namespace Azure.AI.Language.Conversations
         /// <summary> Represents the temperature entity resolution model. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> The temperature Unit of measurement. </param>
-        /// <returns> A new <see cref="Models.TemperatureResolution"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.TemperatureResolution"/> instance for mocking. </returns>
         public static TemperatureResolution TemperatureResolution(double value = default, TemperatureUnit unit = default)
         {
             return new TemperatureResolution(ResolutionKind.TemperatureResolution, additionalBinaryDataProperties: null, value, unit);
@@ -541,7 +424,7 @@ namespace Azure.AI.Language.Conversations
         /// <summary> Represents the weight entity resolution model. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> The weight Unit of measurement. </param>
-        /// <returns> A new <see cref="Models.WeightResolution"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.WeightResolution"/> instance for mocking. </returns>
         public static WeightResolution WeightResolution(double value = default, WeightUnit unit = default)
         {
             return new WeightResolution(ResolutionKind.WeightResolution, additionalBinaryDataProperties: null, value, unit);
@@ -551,7 +434,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="iso4217"> The alphabetic code based on another ISO standard, ISO 3166, which lists the codes for country names. The first two letters of the ISO 4217 three-letter code are the same as the code for the country name, and, where possible, the third letter corresponds to the first letter of the currency name. </param>
         /// <param name="value"> The money amount captured in the extracted entity. </param>
         /// <param name="unit"> The unit of the amount captured in the extracted entity. </param>
-        /// <returns> A new <see cref="Models.CurrencyResolution"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.CurrencyResolution"/> instance for mocking. </returns>
         public static CurrencyResolution CurrencyResolution(string iso4217 = default, double value = default, string unit = default)
         {
             return new CurrencyResolution(ResolutionKind.CurrencyResolution, additionalBinaryDataProperties: null, iso4217, value, unit);
@@ -559,7 +442,7 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary> A resolution for boolean expressions. </summary>
         /// <param name="value"> A resolution for boolean expressions. </param>
-        /// <returns> A new <see cref="Models.BooleanResolution"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.BooleanResolution"/> instance for mocking. </returns>
         public static BooleanResolution BooleanResolution(bool value = default)
         {
             return new BooleanResolution(ResolutionKind.BooleanResolution, additionalBinaryDataProperties: null, value);
@@ -570,7 +453,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="dateTimeSubKind"> The DateTime SubKind. </param>
         /// <param name="value"> The actual time that the extracted text denote. </param>
         /// <param name="modifier"> An optional modifier of a date/time instance. </param>
-        /// <returns> A new <see cref="Models.DateTimeResolution"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.DateTimeResolution"/> instance for mocking. </returns>
         public static DateTimeResolution DateTimeResolution(string timex = default, DateTimeSubKind dateTimeSubKind = default, string value = default, TemporalModifier? modifier = default)
         {
             return new DateTimeResolution(
@@ -585,7 +468,7 @@ namespace Azure.AI.Language.Conversations
         /// <summary> A resolution for numeric entity instances. </summary>
         /// <param name="numberKind"> The type of the extracted number entity. </param>
         /// <param name="value"> A numeric representation of what the extracted text denotes. </param>
-        /// <returns> A new <see cref="Models.NumberResolution"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.NumberResolution"/> instance for mocking. </returns>
         public static NumberResolution NumberResolution(NumberKind numberKind = default, double value = default)
         {
             return new NumberResolution(ResolutionKind.NumberResolution, additionalBinaryDataProperties: null, numberKind, value);
@@ -595,7 +478,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="offset"> The offset with respect to the reference (e.g., offset = -1 indicates the second to last). </param>
         /// <param name="relativeTo"> The reference point that the ordinal number denotes. </param>
         /// <param name="value"> A simple arithmetic expression that the ordinal denotes. </param>
-        /// <returns> A new <see cref="Models.OrdinalResolution"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.OrdinalResolution"/> instance for mocking. </returns>
         public static OrdinalResolution OrdinalResolution(string offset = default, RelativeTo relativeTo = default, string value = default)
         {
             return new OrdinalResolution(ResolutionKind.OrdinalResolution, additionalBinaryDataProperties: null, offset, relativeTo, value);
@@ -607,7 +490,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="duration"> An optional duration value formatted based on the ISO 8601 (https://en.wikipedia.org/wiki/ISO_8601#Durations). </param>
         /// <param name="modifier"> An optional modifier of a date/time instance. </param>
         /// <param name="timex"> An optional triplet containing the beginning, the end, and the duration all stated as ISO 8601 formatted strings. </param>
-        /// <returns> A new <see cref="Models.TemporalSpanResolution"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.TemporalSpanResolution"/> instance for mocking. </returns>
         public static TemporalSpanResolution TemporalSpanResolution(string begin = default, string end = default, string duration = default, TemporalModifier? modifier = default, string timex = default)
         {
             return new TemporalSpanResolution(
@@ -624,7 +507,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="rangeKind"> The kind of range that the resolution object represents. </param>
         /// <param name="minimum"> The beginning value of  the interval. </param>
         /// <param name="maximum"> The ending value of the interval. </param>
-        /// <returns> A new <see cref="Models.NumericRangeResolution"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.NumericRangeResolution"/> instance for mocking. </returns>
         public static NumericRangeResolution NumericRangeResolution(RangeKind rangeKind = default, double minimum = default, double maximum = default)
         {
             return new NumericRangeResolution(ResolutionKind.NumericRangeResolution, additionalBinaryDataProperties: null, rangeKind, minimum, maximum);
@@ -635,7 +518,7 @@ namespace Azure.AI.Language.Conversations
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.EntitySubtype"/>, <see cref="Models.ListKey"/>, and <see cref="Models.RegexKey"/>.
         /// </summary>
         /// <param name="extraInformationKind"> The extra information object kind. </param>
-        /// <returns> A new <see cref="Models.ConversationEntityExtraInformation"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.ConversationEntityExtraInformation"/> instance for mocking. </returns>
         public static ConversationEntityExtraInformation ConversationEntityExtraInformation(string extraInformationKind = default)
         {
             return new UnknownConversationEntityExtraInformation(new ExtraInformationKind(extraInformationKind), additionalBinaryDataProperties: null);
@@ -644,7 +527,7 @@ namespace Azure.AI.Language.Conversations
         /// <summary> The concrete entity Subtype model of extra information. </summary>
         /// <param name="value"> The Subtype of an extracted entity type. </param>
         /// <param name="tags"> List of entity tags. Tags express similarities between entity categories for the extracted entity type. </param>
-        /// <returns> A new <see cref="Models.EntitySubtype"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.EntitySubtype"/> instance for mocking. </returns>
         public static EntitySubtype EntitySubtype(string value = default, IEnumerable<EntityTag> tags = default)
         {
             tags ??= new ChangeTrackingList<EntityTag>();
@@ -655,7 +538,7 @@ namespace Azure.AI.Language.Conversations
         /// <summary> Tags express similarities between entity categories for the extracted entity type. </summary>
         /// <param name="name"> The name of the tag. </param>
         /// <param name="confidenceScore"> The confidence score of the tag for the extracted entity between 0.0 and 1.0. </param>
-        /// <returns> A new <see cref="Models.EntityTag"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.EntityTag"/> instance for mocking. </returns>
         public static EntityTag EntityTag(string name = default, double? confidenceScore = default)
         {
             return new EntityTag(name, confidenceScore, additionalBinaryDataProperties: null);
@@ -663,7 +546,7 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary> The list key extra data kind. </summary>
         /// <param name="key"> The canonical form of the extracted entity. </param>
-        /// <returns> A new <see cref="Models.ListKey"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.ListKey"/> instance for mocking. </returns>
         public static ListKey ListKey(string key = default)
         {
             return new ListKey(ExtraInformationKind.ListKey, additionalBinaryDataProperties: null, key);
@@ -672,7 +555,7 @@ namespace Azure.AI.Language.Conversations
         /// <summary> The regex key extra data kind. </summary>
         /// <param name="key"> The key of the regex pattern used in extracting the entity. </param>
         /// <param name="regexPattern"> The .NET regex pattern used in extracting the entity. Please visit https://learn.microsoft.com/dotnet/standard/base-types/regular-expressions for more information about .NET regular expressions. </param>
-        /// <returns> A new <see cref="Models.RegexKey"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.RegexKey"/> instance for mocking. </returns>
         public static RegexKey RegexKey(string key = default, string regexPattern = default)
         {
             return new RegexKey(ExtraInformationKind.RegexKey, additionalBinaryDataProperties: null, key, regexPattern);
@@ -680,7 +563,7 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary> The results of a Conversation task. </summary>
         /// <param name="result"> Represents a conversation analysis response. </param>
-        /// <returns> A new <see cref="Models.ConversationActionResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.ConversationActionResult"/> instance for mocking. </returns>
         public static ConversationActionResult ConversationActionResult(AnalyzeConversationResult result = default)
         {
             return new ConversationActionResult(AnalyzeConversationResultKind.ConversationResult, additionalBinaryDataProperties: null, result);
@@ -690,7 +573,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="query"> The conversation utterance given by the caller. </param>
         /// <param name="detectedLanguage"> The system detected language for the query in BCP 47 language representation.. </param>
         /// <param name="prediction"> The prediction result of a conversation project. </param>
-        /// <returns> A new <see cref="Models.AnalyzeConversationResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.AnalyzeConversationResult"/> instance for mocking. </returns>
         public static AnalyzeConversationResult AnalyzeConversationResult(string query = default, string detectedLanguage = default, PredictionBase prediction = default)
         {
             return new AnalyzeConversationResult(query, detectedLanguage, prediction, additionalBinaryDataProperties: null);
@@ -702,7 +585,7 @@ namespace Azure.AI.Language.Conversations
         /// </summary>
         /// <param name="projectKind"> The type of the project. </param>
         /// <param name="topIntent"> The intent with the highest score. </param>
-        /// <returns> A new <see cref="Models.PredictionBase"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.PredictionBase"/> instance for mocking. </returns>
         public static PredictionBase PredictionBase(string projectKind = default, string topIntent = default)
         {
             return new UnknownPredictionBase(new ProjectKind(projectKind), topIntent, additionalBinaryDataProperties: null);
@@ -712,7 +595,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="topIntent"> The intent with the highest score. </param>
         /// <param name="intents"> The intent classification results. </param>
         /// <param name="entities"> The entity extraction results. </param>
-        /// <returns> A new <see cref="Models.ConversationPrediction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.ConversationPrediction"/> instance for mocking. </returns>
         public static ConversationPrediction ConversationPrediction(string topIntent = default, IEnumerable<ConversationIntent> intents = default, IEnumerable<ConversationEntity> entities = default)
         {
             intents ??= new ChangeTrackingList<ConversationIntent>();
@@ -724,7 +607,7 @@ namespace Azure.AI.Language.Conversations
         /// <summary> The intent classification result of a Conversation project. </summary>
         /// <param name="category"> A predicted class. </param>
         /// <param name="confidence"> The confidence score of the class from 0.0 to 1.0. </param>
-        /// <returns> A new <see cref="Models.ConversationIntent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.ConversationIntent"/> instance for mocking. </returns>
         public static ConversationIntent ConversationIntent(string category = default, float confidence = default)
         {
             return new ConversationIntent(category, confidence, additionalBinaryDataProperties: null);
@@ -738,7 +621,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="confidence"> The entity confidence score. </param>
         /// <param name="resolutions"> The collection of entity resolution objects. </param>
         /// <param name="extraInformation"> The collection of entity extra information objects. </param>
-        /// <returns> A new <see cref="Models.ConversationEntity"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.ConversationEntity"/> instance for mocking. </returns>
         public static ConversationEntity ConversationEntity(string category = default, string text = default, int offset = default, int length = default, float confidence = default, IEnumerable<ResolutionBase> resolutions = default, IEnumerable<ConversationEntityExtraInformation> extraInformation = default)
         {
             resolutions ??= new ChangeTrackingList<ResolutionBase>();
@@ -758,7 +641,7 @@ namespace Azure.AI.Language.Conversations
         /// <summary> This represents the prediction result of an Orchestration project. </summary>
         /// <param name="topIntent"> The intent with the highest score. </param>
         /// <param name="intents"> A dictionary that contains all intents. A key is an intent name and a value is its confidence score and target type. The top intent's value also contains the actual response from the target project. </param>
-        /// <returns> A new <see cref="Models.OrchestrationPrediction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.OrchestrationPrediction"/> instance for mocking. </returns>
         public static OrchestrationPrediction OrchestrationPrediction(string topIntent = default, IDictionary<string, TargetIntentResult> intents = default)
         {
             intents ??= new ChangeTrackingDictionary<string, TargetIntentResult>();
@@ -773,7 +656,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="targetProjectKind"> This is the base class of an intent prediction. </param>
         /// <param name="apiVersion"> The API version used to call a target service. </param>
         /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
-        /// <returns> A new <see cref="Models.TargetIntentResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.TargetIntentResult"/> instance for mocking. </returns>
         public static TargetIntentResult TargetIntentResult(string targetProjectKind = default, string apiVersion = default, double confidence = default)
         {
             return new UnknownTargetIntentResult(new TargetProjectKind(targetProjectKind), apiVersion, confidence, additionalBinaryDataProperties: null);
@@ -783,127 +666,38 @@ namespace Azure.AI.Language.Conversations
         /// <param name="apiVersion"> The API version used to call a target service. </param>
         /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
         /// <param name="result"> The actual response from a LUIS Generally Available application. </param>
-        /// <returns> A new <see cref="Models.LuisTargetIntentResult"/> instance for mocking. </returns>
-        public static LuisTargetIntentResult LuisTargetIntentResult(string apiVersion = default, double confidence = default, LuisResult result = default)
+        /// <returns> A new <see cref="Models.Models.LuisTargetIntentResult"/> instance for mocking. </returns>
+        public static LuisTargetIntentResult LuisTargetIntentResult(string apiVersion = default, double confidence = default, Models.LuisResult result = default)
         {
             return new LuisTargetIntentResult(TargetProjectKind.Luis, apiVersion, confidence, additionalBinaryDataProperties: null, result);
-        }
-
-        /// <summary> It is the response from a LUIS Generally Available application. </summary>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="Models.LuisResult"/> instance for mocking. </returns>
-        public static LuisResult LuisResult(IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new LuisResult(additionalProperties);
         }
 
         /// <summary> It is a wrap up a Question Answering KB response. </summary>
         /// <param name="apiVersion"> The API version used to call a target service. </param>
         /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
         /// <param name="result"> The generated answer by a Question Answering KB. </param>
-        /// <returns> A new <see cref="Models.QuestionAnsweringTargetIntentResult"/> instance for mocking. </returns>
-        public static QuestionAnsweringTargetIntentResult QuestionAnsweringTargetIntentResult(string apiVersion = default, double confidence = default, AnswersResult result = default)
+        /// <returns> A new <see cref="Models.Models.QuestionAnsweringTargetIntentResult"/> instance for mocking. </returns>
+        public static QuestionAnsweringTargetIntentResult QuestionAnsweringTargetIntentResult(string apiVersion = default, double confidence = default, Models.AnswersResult result = default)
         {
             return new QuestionAnsweringTargetIntentResult(TargetProjectKind.QuestionAnswering, apiVersion, confidence, additionalBinaryDataProperties: null, result);
-        }
-
-        /// <summary> Represents List of Question Answers. </summary>
-        /// <param name="answers"> Represents Answer Result list. </param>
-        /// <returns> A new <see cref="Models.AnswersResult"/> instance for mocking. </returns>
-        public static AnswersResult AnswersResult(IEnumerable<KnowledgeBaseAnswer> answers = default)
-        {
-            answers ??= new ChangeTrackingList<KnowledgeBaseAnswer>();
-
-            return new AnswersResult(answers.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Represents knowledge base answer. </summary>
-        /// <param name="questions"> List of questions associated with the answer. </param>
-        /// <param name="answer"> Answer text. </param>
-        /// <param name="confidence"> Answer confidence score, value ranges from 0 to 1. </param>
-        /// <param name="qnaId"> ID of the QnA result. </param>
-        /// <param name="source"> Source of QnA result. </param>
-        /// <param name="metadata"> Metadata associated with the answer, useful to categorize or filter question answers. </param>
-        /// <param name="dialog"> Dialog associated with Answer. </param>
-        /// <param name="shortAnswer"> Answer span object of QnA with respect to user's question. </param>
-        /// <returns> A new <see cref="Models.KnowledgeBaseAnswer"/> instance for mocking. </returns>
-        public static KnowledgeBaseAnswer KnowledgeBaseAnswer(IEnumerable<string> questions = default, string answer = default, double? confidence = default, int? qnaId = default, string source = default, IDictionary<string, string> metadata = default, KnowledgeBaseAnswerDialog dialog = default, AnswerSpan shortAnswer = default)
-        {
-            questions ??= new ChangeTrackingList<string>();
-            metadata ??= new ChangeTrackingDictionary<string, string>();
-
-            return new KnowledgeBaseAnswer(
-                questions.ToList(),
-                answer,
-                confidence,
-                qnaId,
-                source,
-                metadata,
-                dialog,
-                shortAnswer,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Dialog associated with Answer. </summary>
-        /// <param name="isContextOnly"> To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as search result for queries without context; otherwise, if false, ignores context and includes this QnA in search result. </param>
-        /// <param name="prompts"> List of prompts associated with the answer. </param>
-        /// <returns> A new <see cref="Models.KnowledgeBaseAnswerDialog"/> instance for mocking. </returns>
-        public static KnowledgeBaseAnswerDialog KnowledgeBaseAnswerDialog(bool? isContextOnly = default, IEnumerable<KnowledgeBaseAnswerPrompt> prompts = default)
-        {
-            prompts ??= new ChangeTrackingList<KnowledgeBaseAnswerPrompt>();
-
-            return new KnowledgeBaseAnswerDialog(isContextOnly, prompts.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Prompt for an answer. </summary>
-        /// <param name="displayOrder"> Index of the prompt - used in ordering of the prompts. </param>
-        /// <param name="qnaId"> QnA ID corresponding to the prompt. </param>
-        /// <param name="displayText"> Text displayed to represent a follow up question prompt. </param>
-        /// <returns> A new <see cref="Models.KnowledgeBaseAnswerPrompt"/> instance for mocking. </returns>
-        public static KnowledgeBaseAnswerPrompt KnowledgeBaseAnswerPrompt(int? displayOrder = default, int? qnaId = default, string displayText = default)
-        {
-            return new KnowledgeBaseAnswerPrompt(displayOrder, qnaId, displayText, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Answer span object of QnA. </summary>
-        /// <param name="text"> Predicted text of answer span. </param>
-        /// <param name="confidenceScore"> Predicted score of answer span, value ranges from 0 to 1. </param>
-        /// <param name="offset"> The answer span offset from the start of answer. </param>
-        /// <param name="length"> The length of the answer span. </param>
-        /// <returns> A new <see cref="Models.AnswerSpan"/> instance for mocking. </returns>
-        public static AnswerSpan AnswerSpan(string text = default, double? confidenceScore = default, int? offset = default, int? length = default)
-        {
-            return new AnswerSpan(text, confidenceScore, offset, length, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A wrap up of non-linked intent response. </summary>
         /// <param name="apiVersion"> The API version used to call a target service. </param>
         /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
         /// <param name="result"> The actual response from a Conversation project. </param>
-        /// <returns> A new <see cref="Models.NoneLinkedTargetIntentResult"/> instance for mocking. </returns>
-        public static NoneLinkedTargetIntentResult NoneLinkedTargetIntentResult(string apiVersion = default, double confidence = default, ConversationResult result = default)
+        /// <returns> A new <see cref="Models.Models.NoneLinkedTargetIntentResult"/> instance for mocking. </returns>
+        public static NoneLinkedTargetIntentResult NoneLinkedTargetIntentResult(string apiVersion = default, double confidence = default, Models.ConversationResult result = default)
         {
             return new NoneLinkedTargetIntentResult(TargetProjectKind.NonLinked, apiVersion, confidence, additionalBinaryDataProperties: null, result);
-        }
-
-        /// <summary> The response returned by a Conversation project. </summary>
-        /// <param name="query"> The same query given in request. </param>
-        /// <param name="detectedLanguage"> The detected language from the query in BCP 47 language representation. </param>
-        /// <param name="prediction"> The predicted result for the query. </param>
-        /// <returns> A new <see cref="Models.ConversationResult"/> instance for mocking. </returns>
-        public static ConversationResult ConversationResult(string query = default, string detectedLanguage = default, ConversationPrediction prediction = default)
-        {
-            return new ConversationResult(query, detectedLanguage, prediction, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A wrap up of Conversation project response. </summary>
         /// <param name="apiVersion"> The API version used to call a target service. </param>
         /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
         /// <param name="result"> The actual response from a Conversation project. </param>
-        /// <returns> A new <see cref="Models.ConversationTargetIntentResult"/> instance for mocking. </returns>
-        public static ConversationTargetIntentResult ConversationTargetIntentResult(string apiVersion = default, double confidence = default, ConversationResult result = default)
+        /// <returns> A new <see cref="Models.Models.ConversationTargetIntentResult"/> instance for mocking. </returns>
+        public static ConversationTargetIntentResult ConversationTargetIntentResult(string apiVersion = default, double confidence = default, Models.ConversationResult result = default)
         {
             return new ConversationTargetIntentResult(TargetProjectKind.Conversation, apiVersion, confidence, additionalBinaryDataProperties: null, result);
         }
@@ -914,8 +708,8 @@ namespace Azure.AI.Language.Conversations
         /// <param name="target"> The target of the error. </param>
         /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
         /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
-        /// <returns> A new <see cref="Models.ConversationError"/> instance for mocking. </returns>
-        public static ConversationError ConversationError(ConversationErrorCode code = default, string message = default, string target = default, IEnumerable<ConversationError> details = default, InnerErrorModel innererror = default)
+        /// <returns> A new <see cref="Models.Models.ConversationError"/> instance for mocking. </returns>
+        public static ConversationError ConversationError(ConversationErrorCode code = default, string message = default, string target = default, IEnumerable<ConversationError> details = default, Models.InnerErrorModel innererror = default)
         {
             details ??= new ChangeTrackingList<ConversationError>();
 
@@ -924,26 +718,6 @@ namespace Azure.AI.Language.Conversations
                 message,
                 target,
                 details.ToList(),
-                innererror,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> An object containing more specific information about the error. As per Microsoft One API guidelines - https://github.com/Microsoft/api-guidelines/blob/vNext/Guidelines.md#7102-error-condition-responses. </summary>
-        /// <param name="code"> One of a server-defined set of error codes. </param>
-        /// <param name="message"> Error message. </param>
-        /// <param name="details"> Error details. </param>
-        /// <param name="target"> Error target. </param>
-        /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
-        /// <returns> A new <see cref="Models.InnerErrorModel"/> instance for mocking. </returns>
-        public static InnerErrorModel InnerErrorModel(InnerErrorCode code = default, string message = default, IDictionary<string, string> details = default, string target = default, InnerErrorModel innererror = default)
-        {
-            details ??= new ChangeTrackingDictionary<string, string>();
-
-            return new InnerErrorModel(
-                code,
-                message,
-                details,
-                target,
                 innererror,
                 additionalBinaryDataProperties: null);
         }
@@ -959,8 +733,8 @@ namespace Azure.AI.Language.Conversations
         /// <param name="nextLink"> next link. </param>
         /// <param name="actions"> Contains the state for the tasks that are being executed as part of the submitted job for analyzing a conversation. </param>
         /// <param name="statistics"> Contains the statistics for the submitted job. </param>
-        /// <returns> A new <see cref="Models.AnalyzeConversationOperationState"/> instance for mocking. </returns>
-        public static AnalyzeConversationOperationState AnalyzeConversationOperationState(string displayName = default, DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = default, Guid jobId = default, DateTimeOffset lastUpdatedDateTime = default, ConversationActionState status = default, IEnumerable<ConversationError> errors = default, string nextLink = default, ConversationActions actions = default, ConversationRequestStatistics statistics = default)
+        /// <returns> A new <see cref="Models.Models.AnalyzeConversationOperationState"/> instance for mocking. </returns>
+        public static AnalyzeConversationOperationState AnalyzeConversationOperationState(string displayName = default, DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = default, Guid jobId = default, DateTimeOffset lastUpdatedDateTime = default, ConversationActionState status = default, IEnumerable<ConversationError> errors = default, string nextLink = default, ConversationActions actions = default, Models.ConversationRequestStatistics statistics = default)
         {
             errors ??= new ChangeTrackingList<ConversationError>();
 
@@ -984,7 +758,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="inProgress"> Count of tasks that are currently in progress. </param>
         /// <param name="total"> Total count of tasks submitted as part of the job. </param>
         /// <param name="items"> List of results from tasks (if available). </param>
-        /// <returns> A new <see cref="Models.ConversationActions"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.ConversationActions"/> instance for mocking. </returns>
         public static ConversationActions ConversationActions(int completed = default, int failed = default, int inProgress = default, int total = default, IEnumerable<AnalyzeConversationOperationResult> items = default)
         {
             items ??= new ChangeTrackingList<AnalyzeConversationOperationResult>();
@@ -1006,7 +780,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="name"> task name. </param>
         /// <param name="kind"> discriminator kind. </param>
-        /// <returns> A new <see cref="Models.AnalyzeConversationOperationResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.AnalyzeConversationOperationResult"/> instance for mocking. </returns>
         public static AnalyzeConversationOperationResult AnalyzeConversationOperationResult(DateTimeOffset lastUpdateDateTime = default, ConversationActionState status = default, string name = default, string kind = default)
         {
             return new UnknownAnalyzeConversationOperationResult(lastUpdateDateTime, status, name, new AnalyzeConversationOperationResultsKind(kind), additionalBinaryDataProperties: null);
@@ -1017,7 +791,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="name"> task name. </param>
         /// <param name="results"> results. </param>
-        /// <returns> A new <see cref="Models.SummarizationOperationResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.SummarizationOperationResult"/> instance for mocking. </returns>
         public static SummarizationOperationResult SummarizationOperationResult(DateTimeOffset lastUpdateDateTime = default, ConversationActionState status = default, string name = default, SummaryResult results = default)
         {
             return new SummarizationOperationResult(
@@ -1034,8 +808,8 @@ namespace Azure.AI.Language.Conversations
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> statistics. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
-        /// <returns> A new <see cref="Models.SummaryResult"/> instance for mocking. </returns>
-        public static SummaryResult SummaryResult(IEnumerable<ConversationsSummaryResult> conversations = default, IEnumerable<DocumentError> errors = default, RequestStatistics statistics = default, string modelVersion = default)
+        /// <returns> A new <see cref="Models.Models.SummaryResult"/> instance for mocking. </returns>
+        public static SummaryResult SummaryResult(IEnumerable<ConversationsSummaryResult> conversations = default, IEnumerable<DocumentError> errors = default, Models.RequestStatistics statistics = default, string modelVersion = default)
         {
             conversations ??= new ChangeTrackingList<ConversationsSummaryResult>();
             errors ??= new ChangeTrackingList<DocumentError>();
@@ -1048,8 +822,8 @@ namespace Azure.AI.Language.Conversations
         /// <param name="warnings"> Warnings encountered in processing the document. </param>
         /// <param name="statistics"> If showStats=true was specified in the request this field will contain information about the conversation payload. </param>
         /// <param name="summaries"> array of summaries. </param>
-        /// <returns> A new <see cref="Models.ConversationsSummaryResult"/> instance for mocking. </returns>
-        public static ConversationsSummaryResult ConversationsSummaryResult(string id = default, IEnumerable<InputWarning> warnings = default, ConversationStatistics statistics = default, IEnumerable<SummaryResultItem> summaries = default)
+        /// <returns> A new <see cref="Models.Models.ConversationsSummaryResult"/> instance for mocking. </returns>
+        public static ConversationsSummaryResult ConversationsSummaryResult(string id = default, IEnumerable<InputWarning> warnings = default, Models.ConversationStatistics statistics = default, IEnumerable<SummaryResultItem> summaries = default)
         {
             warnings ??= new ChangeTrackingList<InputWarning>();
             summaries ??= new ChangeTrackingList<SummaryResultItem>();
@@ -1061,25 +835,17 @@ namespace Azure.AI.Language.Conversations
         /// <param name="code"> Warning code. </param>
         /// <param name="message"> Warning message. </param>
         /// <param name="targetRef"> A JSON pointer reference indicating the target object. </param>
-        /// <returns> A new <see cref="Models.InputWarning"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.InputWarning"/> instance for mocking. </returns>
         public static InputWarning InputWarning(string code = default, string message = default, string targetRef = default)
         {
             return new InputWarning(code, message, targetRef, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> If showStats=true was specified in the request, this field contains information about the conversation payload. </summary>
-        /// <param name="transactionsCount"> Number of text units for the request. </param>
-        /// <returns> A new <see cref="Models.ConversationStatistics"/> instance for mocking. </returns>
-        public static ConversationStatistics ConversationStatistics(int transactionsCount = default)
-        {
-            return new ConversationStatistics(transactionsCount, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Summary Result Item. </summary>
         /// <param name="aspect"> aspect. </param>
         /// <param name="text"> text. </param>
         /// <param name="contexts"> Context list of the summary. </param>
-        /// <returns> A new <see cref="Models.SummaryResultItem"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.SummaryResultItem"/> instance for mocking. </returns>
         public static SummaryResultItem SummaryResultItem(string aspect = default, string text = default, IEnumerable<ItemizedSummaryContext> contexts = default)
         {
             contexts ??= new ChangeTrackingList<ItemizedSummaryContext>();
@@ -1091,7 +857,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="offset"> Start position for the context. Use of different 'stringIndexType' values can affect the offset returned. </param>
         /// <param name="length"> The length of the context. Use of different 'stringIndexType' values can affect the length returned. </param>
         /// <param name="conversationItemId"> Reference to the ID of ConversationItem. </param>
-        /// <returns> A new <see cref="Models.ItemizedSummaryContext"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.ItemizedSummaryContext"/> instance for mocking. </returns>
         public static ItemizedSummaryContext ItemizedSummaryContext(int offset = default, int length = default, string conversationItemId = default)
         {
             return new ItemizedSummaryContext(offset, length, conversationItemId, additionalBinaryDataProperties: null);
@@ -1100,21 +866,10 @@ namespace Azure.AI.Language.Conversations
         /// <summary> Contains details of errors encountered during a job execution. </summary>
         /// <param name="id"> The ID of the input document. </param>
         /// <param name="error"> Error encountered. </param>
-        /// <returns> A new <see cref="Models.DocumentError"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.DocumentError"/> instance for mocking. </returns>
         public static DocumentError DocumentError(string id = default, ConversationError error = default)
         {
             return new DocumentError(id, error, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> if showStats=true was specified in the request this field will contain information about the request payload. </summary>
-        /// <param name="documentsCount"> Number of documents submitted in the request. </param>
-        /// <param name="validDocumentsCount"> Number of valid documents. This excludes empty, over-size limit or non-supported languages documents. </param>
-        /// <param name="erroneousDocumentsCount"> Number of invalid documents. This includes empty, over-size limit or non-supported languages documents. </param>
-        /// <param name="transactionsCount"> Number of transactions for the request. </param>
-        /// <returns> A new <see cref="Models.RequestStatistics"/> instance for mocking. </returns>
-        public static RequestStatistics RequestStatistics(int documentsCount = default, int validDocumentsCount = default, int erroneousDocumentsCount = default, long transactionsCount = default)
-        {
-            return new RequestStatistics(documentsCount, validDocumentsCount, erroneousDocumentsCount, transactionsCount, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Result for the custom summarization task on the conversation. </summary>
@@ -1122,7 +877,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="name"> task name. </param>
         /// <param name="results"> Custom Summary Result. </param>
-        /// <returns> A new <see cref="Models.CustomSummarizationOperationResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.CustomSummarizationOperationResult"/> instance for mocking. </returns>
         public static CustomSummarizationOperationResult CustomSummarizationOperationResult(DateTimeOffset lastUpdateDateTime = default, ConversationActionState status = default, string name = default, CustomSummaryResult results = default)
         {
             return new CustomSummarizationOperationResult(
@@ -1140,8 +895,8 @@ namespace Azure.AI.Language.Conversations
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
-        /// <returns> A new <see cref="Models.CustomSummaryResult"/> instance for mocking. </returns>
-        public static CustomSummaryResult CustomSummaryResult(IEnumerable<ConversationsSummaryResult> conversations = default, IEnumerable<DocumentError> errors = default, RequestStatistics statistics = default, string projectName = default, string deploymentName = default)
+        /// <returns> A new <see cref="Models.Models.CustomSummaryResult"/> instance for mocking. </returns>
+        public static CustomSummaryResult CustomSummaryResult(IEnumerable<ConversationsSummaryResult> conversations = default, IEnumerable<DocumentError> errors = default, Models.RequestStatistics statistics = default, string projectName = default, string deploymentName = default)
         {
             conversations ??= new ChangeTrackingList<ConversationsSummaryResult>();
             errors ??= new ChangeTrackingList<DocumentError>();
@@ -1160,7 +915,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="name"> task name. </param>
         /// <param name="results"> results. </param>
-        /// <returns> A new <see cref="Models.ConversationPiiOperationResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.ConversationPiiOperationResult"/> instance for mocking. </returns>
         public static ConversationPiiOperationResult ConversationPiiOperationResult(DateTimeOffset lastUpdateDateTime = default, ConversationActionState status = default, string name = default, ConversationPiiResults results = default)
         {
             return new ConversationPiiOperationResult(
@@ -1177,8 +932,8 @@ namespace Azure.AI.Language.Conversations
         /// <param name="statistics"> statistics. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="conversations"> array of conversations. </param>
-        /// <returns> A new <see cref="Models.ConversationPiiResults"/> instance for mocking. </returns>
-        public static ConversationPiiResults ConversationPiiResults(IEnumerable<DocumentError> errors = default, RequestStatistics statistics = default, string modelVersion = default, IEnumerable<ConversationalPiiResult> conversations = default)
+        /// <returns> A new <see cref="Models.Models.ConversationPiiResults"/> instance for mocking. </returns>
+        public static ConversationPiiResults ConversationPiiResults(IEnumerable<DocumentError> errors = default, Models.RequestStatistics statistics = default, string modelVersion = default, IEnumerable<ConversationalPiiResult> conversations = default)
         {
             errors ??= new ChangeTrackingList<DocumentError>();
             conversations ??= new ChangeTrackingList<ConversationalPiiResult>();
@@ -1191,8 +946,8 @@ namespace Azure.AI.Language.Conversations
         /// <param name="warnings"> Warnings encountered in processing the document. </param>
         /// <param name="statistics"> If showStats=true was specified in the request this field will contain information about the conversation payload. </param>
         /// <param name="conversationItems"> List of conversationItems. </param>
-        /// <returns> A new <see cref="Models.ConversationalPiiResult"/> instance for mocking. </returns>
-        public static ConversationalPiiResult ConversationalPiiResult(string id = default, IEnumerable<InputWarning> warnings = default, ConversationStatistics statistics = default, IEnumerable<ConversationPiiItemResult> conversationItems = default)
+        /// <returns> A new <see cref="Models.Models.ConversationalPiiResult"/> instance for mocking. </returns>
+        public static ConversationalPiiResult ConversationalPiiResult(string id = default, IEnumerable<InputWarning> warnings = default, Models.ConversationStatistics statistics = default, IEnumerable<ConversationPiiItemResult> conversationItems = default)
         {
             warnings ??= new ChangeTrackingList<InputWarning>();
             conversationItems ??= new ChangeTrackingList<ConversationPiiItemResult>();
@@ -1204,7 +959,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="id"> Id of the result. </param>
         /// <param name="redactedContent"> Transcript content response that the service generates, with all necessary personally identifiable information redacted. </param>
         /// <param name="entities"> Array of Entities. </param>
-        /// <returns> A new <see cref="Models.ConversationPiiItemResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.ConversationPiiItemResult"/> instance for mocking. </returns>
         public static ConversationPiiItemResult ConversationPiiItemResult(string id = default, RedactedTranscriptContent redactedContent = default, IEnumerable<NamedEntity> entities = default)
         {
             entities ??= new ChangeTrackingList<NamedEntity>();
@@ -1218,7 +973,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="text"> Redacted output for input in text (Microsoft's speech-to-text 'display') format. </param>
         /// <param name="lexical"> Redacted output for input in lexical format. </param>
         /// <param name="audioTimings"> List of redacted audio segments. </param>
-        /// <returns> A new <see cref="Models.RedactedTranscriptContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.RedactedTranscriptContent"/> instance for mocking. </returns>
         public static RedactedTranscriptContent RedactedTranscriptContent(string inverseTextNormalized = default, string maskedInverseTextNormalized = default, string text = default, string lexical = default, IEnumerable<AudioTiming> audioTimings = default)
         {
             audioTimings ??= new ChangeTrackingList<AudioTiming>();
@@ -1235,7 +990,7 @@ namespace Azure.AI.Language.Conversations
         /// <summary> Audio timing information. </summary>
         /// <param name="offset"> Offset from the start of speech audio, in ticks. 1 tick = 100 nanoseconds. </param>
         /// <param name="duration"> Duration of word articulation, in ticks. 1 tick = 100 nanoseconds. </param>
-        /// <returns> A new <see cref="Models.AudioTiming"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.AudioTiming"/> instance for mocking. </returns>
         public static AudioTiming AudioTiming(long? offset = default, long? duration = default)
         {
             return new AudioTiming(offset, duration, additionalBinaryDataProperties: null);
@@ -1251,7 +1006,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="mask"> Exact mask text to mask the PII entity. </param>
         /// <param name="maskOffset"> Offset of the mask text. </param>
         /// <param name="maskLength"> Length of the mask text. </param>
-        /// <returns> A new <see cref="Models.NamedEntity"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.NamedEntity"/> instance for mocking. </returns>
         public static NamedEntity NamedEntity(string text = default, string category = default, string subcategory = default, int offset = default, int length = default, double confidenceScore = default, string mask = default, int? maskOffset = default, int? maskLength = default)
         {
             return new NamedEntity(
@@ -1267,34 +1022,12 @@ namespace Azure.AI.Language.Conversations
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> if showStats=true was specified in the request, this field contains information about the request payload. </summary>
-        /// <param name="documentsCount"> Number of documents submitted in the request. </param>
-        /// <param name="validDocumentsCount"> Number of valid documents. This excludes empty, over-size limit or non-supported languages documents. </param>
-        /// <param name="erroneousDocumentsCount"> Number of invalid documents. This includes empty, over-size limit or non-supported languages documents. </param>
-        /// <param name="transactionsCount"> Number of transactions for the request. </param>
-        /// <param name="conversationsCount"> Number of conversations submitted in the request. </param>
-        /// <param name="validConversationsCount"> Number of conversation documents. This excludes documents that are empty, over the size limit, or in unsupported languages. </param>
-        /// <param name="erroneousConversationsCount"> Number of invalid documents. This includes documents that are empty, over the size limit, or in unsupported languages. </param>
-        /// <returns> A new <see cref="Models.ConversationRequestStatistics"/> instance for mocking. </returns>
-        public static ConversationRequestStatistics ConversationRequestStatistics(int documentsCount = default, int validDocumentsCount = default, int erroneousDocumentsCount = default, long transactionsCount = default, int conversationsCount = default, int validConversationsCount = default, int erroneousConversationsCount = default)
-        {
-            return new ConversationRequestStatistics(
-                documentsCount,
-                validDocumentsCount,
-                erroneousDocumentsCount,
-                transactionsCount,
-                conversationsCount,
-                validConversationsCount,
-                erroneousConversationsCount,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> It is a wrap up a Question Answering KB response. </summary>
         /// <param name="displayName"> Display name for the analysis job. </param>
         /// <param name="conversationInput"> Analysis Input. </param>
         /// <param name="actions"> Set of tasks to execute on the input conversation. </param>
         /// <param name="cancelAfter"> Optional duration in seconds after which the job will be canceled if not completed. </param>
-        /// <returns> A new <see cref="Models.AnalyzeConversationOperationInput"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.AnalyzeConversationOperationInput"/> instance for mocking. </returns>
         public static AnalyzeConversationOperationInput AnalyzeConversationOperationInput(string displayName = default, MultiLanguageConversationInput conversationInput = default, IEnumerable<AnalyzeConversationOperationAction> actions = default, float? cancelAfter = default)
         {
             actions ??= new ChangeTrackingList<AnalyzeConversationOperationAction>();
@@ -1304,7 +1037,7 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary> Multi Language Conversation Analysis Input. </summary>
         /// <param name="conversations"> Array of conversation items. </param>
-        /// <returns> A new <see cref="Models.MultiLanguageConversationInput"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.MultiLanguageConversationInput"/> instance for mocking. </returns>
         public static MultiLanguageConversationInput MultiLanguageConversationInput(IEnumerable<ConversationInput> conversations = default)
         {
             conversations ??= new ChangeTrackingList<ConversationInput>();
@@ -1318,7 +1051,7 @@ namespace Azure.AI.Language.Conversations
         /// </summary>
         /// <param name="name"> task name. </param>
         /// <param name="kind"> Enumeration of supported analysis tasks on a collection of conversations. </param>
-        /// <returns> A new <see cref="Models.AnalyzeConversationOperationAction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Models.AnalyzeConversationOperationAction"/> instance for mocking. </returns>
         public static AnalyzeConversationOperationAction AnalyzeConversationOperationAction(string name = default, string kind = default)
         {
             return new UnknownAnalyzeConversationOperationAction(name, new AnalyzeConversationOperationActionKind(kind), additionalBinaryDataProperties: null);
@@ -1327,136 +1060,28 @@ namespace Azure.AI.Language.Conversations
         /// <summary> Task definition for custom conversational summarization. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="actionContent"> parameters. </param>
-        /// <returns> A new <see cref="Models.CustomSummarizationOperationAction"/> instance for mocking. </returns>
-        public static CustomSummarizationOperationAction CustomSummarizationOperationAction(string name = default, CustomConversationSummarizationActionContent actionContent = default)
+        /// <returns> A new <see cref="Models.Models.CustomSummarizationOperationAction"/> instance for mocking. </returns>
+        public static CustomSummarizationOperationAction CustomSummarizationOperationAction(string name = default, Models.CustomConversationSummarizationActionContent actionContent = default)
         {
             return new CustomSummarizationOperationAction(name, AnalyzeConversationOperationActionKind.CustomConversationalSummarizationTask, additionalBinaryDataProperties: null, actionContent);
-        }
-
-        /// <summary> Supported parameters for a custom conversation summarization task. </summary>
-        /// <param name="loggingOptOut"> logging opt out. </param>
-        /// <param name="projectName"> This field indicates the project name for the model. </param>
-        /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
-        /// <param name="sentenceCount"> It controls the approximate number of sentences in the output summaries. </param>
-        /// <param name="stringIndexType"> String index type. </param>
-        /// <param name="summaryLength"> Controls the approximate length of the output summaries. Recommended to use summaryLength over sentenceCount. </param>
-        /// <param name="summaryAspects"> Array of Summary Aspects. </param>
-        /// <returns> A new <see cref="Models.CustomConversationSummarizationActionContent"/> instance for mocking. </returns>
-        public static CustomConversationSummarizationActionContent CustomConversationSummarizationActionContent(bool? loggingOptOut = default, string projectName = default, string deploymentName = default, int? sentenceCount = default, StringIndexType? stringIndexType = default, SummaryLengthBucket? summaryLength = default, IEnumerable<SummaryAspect> summaryAspects = default)
-        {
-            summaryAspects ??= new ChangeTrackingList<SummaryAspect>();
-
-            return new CustomConversationSummarizationActionContent(
-                loggingOptOut,
-                projectName,
-                deploymentName,
-                sentenceCount,
-                stringIndexType,
-                summaryLength,
-                summaryAspects.ToList(),
-                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Task definition for conversational summarization. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="actionContent"> parameters. </param>
-        /// <returns> A new <see cref="Models.SummarizationOperationAction"/> instance for mocking. </returns>
-        public static SummarizationOperationAction SummarizationOperationAction(string name = default, ConversationSummarizationActionContent actionContent = default)
+        /// <returns> A new <see cref="Models.Models.SummarizationOperationAction"/> instance for mocking. </returns>
+        public static SummarizationOperationAction SummarizationOperationAction(string name = default, Models.ConversationSummarizationActionContent actionContent = default)
         {
             return new SummarizationOperationAction(name, AnalyzeConversationOperationActionKind.ConversationalSummarizationTask, additionalBinaryDataProperties: null, actionContent);
-        }
-
-        /// <summary> Supported parameters for pre-build conversational summarization task. </summary>
-        /// <param name="loggingOptOut"> logging opt out. </param>
-        /// <param name="modelVersion"> model version. </param>
-        /// <param name="sentenceCount"> It controls the approximate number of sentences in the output summaries. </param>
-        /// <param name="stringIndexType"> String index type. </param>
-        /// <param name="summaryLength"> (NOTE: Recommended to use summaryLength over sentenceCount) Controls the approximate length of the output summaries. </param>
-        /// <param name="summaryAspects"> Array of Summary Aspects. </param>
-        /// <param name="instruction"> a text field to allow customers to use natural language to describe their needs for summarization. </param>
-        /// <returns> A new <see cref="Models.ConversationSummarizationActionContent"/> instance for mocking. </returns>
-        public static ConversationSummarizationActionContent ConversationSummarizationActionContent(bool? loggingOptOut = default, string modelVersion = default, int? sentenceCount = default, StringIndexType? stringIndexType = default, SummaryLengthBucket? summaryLength = default, IEnumerable<SummaryAspect> summaryAspects = default, string instruction = default)
-        {
-            summaryAspects ??= new ChangeTrackingList<SummaryAspect>();
-
-            return new ConversationSummarizationActionContent(
-                loggingOptOut,
-                modelVersion,
-                sentenceCount,
-                stringIndexType,
-                summaryLength,
-                summaryAspects.ToList(),
-                instruction,
-                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Task definition for a PII redaction in conversations. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="actionContent"> parameters. </param>
-        /// <returns> A new <see cref="Models.PiiOperationAction"/> instance for mocking. </returns>
-        public static PiiOperationAction PiiOperationAction(string name = default, ConversationPiiActionContent actionContent = default)
+        /// <returns> A new <see cref="Models.Models.PiiOperationAction"/> instance for mocking. </returns>
+        public static PiiOperationAction PiiOperationAction(string name = default, Models.ConversationPiiActionContent actionContent = default)
         {
             return new PiiOperationAction(name, AnalyzeConversationOperationActionKind.ConversationalPIITask, additionalBinaryDataProperties: null, actionContent);
-        }
-
-        /// <summary> Supported parameters for a conversational pii task. </summary>
-        /// <param name="loggingOptOut"> logging opt out. </param>
-        /// <param name="modelVersion"> model version. </param>
-        /// <param name="piiCategories"> Array of ConversationPIICategories. </param>
-        /// <param name="redactAudioTiming"> Flag to indicate if response should include audio stream offset and duration for any detected entities to be redacted. By default, audio timing of redacted entities are not included. </param>
-        /// <param name="redactionSource"> For transcript conversations, this parameter provides information regarding which content type (ITN, Text, Lexical, Masked ITN) should be used for entity detection. The details of the entities detected - like the offset, length and the text itself - will correspond to the text type selected here. </param>
-        /// <param name="redactionCharacter"> Optional parameter to use a Custom Character to be used for redaction in PII responses. Default character will be * as before. We allow specific ascii characters for redaction. </param>
-        /// <param name="excludePiiCategories"> List of categories that need to be excluded instead of included. </param>
-        /// <param name="redactionPolicy"> Optional parameter determine what type of redaction to use. </param>
-        /// <returns> A new <see cref="Models.ConversationPiiActionContent"/> instance for mocking. </returns>
-        public static ConversationPiiActionContent ConversationPiiActionContent(bool? loggingOptOut = default, string modelVersion = default, IEnumerable<ConversationPiiCategories> piiCategories = default, bool? redactAudioTiming = default, TranscriptContentType? redactionSource = default, RedactionCharacter? redactionCharacter = default, IEnumerable<ConversationPiiCategoryExclusions> excludePiiCategories = default, BaseRedactionPolicy redactionPolicy = default)
-        {
-            piiCategories ??= new ChangeTrackingList<ConversationPiiCategories>();
-            excludePiiCategories ??= new ChangeTrackingList<ConversationPiiCategoryExclusions>();
-
-            return new ConversationPiiActionContent(
-                loggingOptOut,
-                modelVersion,
-                piiCategories.ToList(),
-                redactAudioTiming,
-                redactionSource,
-                redactionCharacter,
-                excludePiiCategories.ToList(),
-                redactionPolicy,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// The abstract base class for RedactionPolicy.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CharacterMaskPolicyType"/>, <see cref="Models.NoMaskPolicyType"/>, and <see cref="Models.EntityMaskTypePolicyType"/>.
-        /// </summary>
-        /// <param name="policyKind"> The entity RedactionPolicy object kind. </param>
-        /// <returns> A new <see cref="Models.BaseRedactionPolicy"/> instance for mocking. </returns>
-        public static BaseRedactionPolicy BaseRedactionPolicy(string policyKind = default)
-        {
-            return new UnknownBaseRedactionPolicy(new RedactionPolicyKind(policyKind), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Represents the policy of masking with a redaction character. </summary>
-        /// <param name="redactionCharacter"> Optional parameter to use a Custom Character to be used for redaction in PII responses. Default character will be * as before. We allow specific ascii characters for redaction. </param>
-        /// <returns> A new <see cref="Models.CharacterMaskPolicyType"/> instance for mocking. </returns>
-        public static CharacterMaskPolicyType CharacterMaskPolicyType(RedactionCharacter? redactionCharacter = default)
-        {
-            return new CharacterMaskPolicyType(RedactionPolicyKind.CharacterMask, additionalBinaryDataProperties: null, redactionCharacter);
-        }
-
-        /// <summary> Represents the policy of not masking found PII. </summary>
-        /// <returns> A new <see cref="Models.NoMaskPolicyType"/> instance for mocking. </returns>
-        public static NoMaskPolicyType NoMaskPolicyType()
-        {
-            return new NoMaskPolicyType(RedactionPolicyKind.NoMask, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Represents the policy of masking PII with the entity type. </summary>
-        /// <returns> A new <see cref="Models.EntityMaskTypePolicyType"/> instance for mocking. </returns>
-        public static EntityMaskTypePolicyType EntityMaskTypePolicyType()
-        {
-            return new EntityMaskTypePolicyType(RedactionPolicyKind.EntityMask, additionalBinaryDataProperties: null);
         }
     }
 }

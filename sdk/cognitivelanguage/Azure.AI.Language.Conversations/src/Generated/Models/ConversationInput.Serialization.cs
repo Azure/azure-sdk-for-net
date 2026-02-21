@@ -10,11 +10,11 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.AI.Language.Conversations;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary>
     /// Complete ordered set of utterances (spoken or written) by one or more speakers to be used for analysis.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TextConversation"/> and <see cref="TranscriptConversation"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Conversations.Models.TextConversation"/> and <see cref="Conversations.Models.TranscriptConversation"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownConversationInput))]
     public abstract partial class ConversationInput : IJsonModel<ConversationInput>

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Language.Conversations.Models;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> Task definition for a PII redaction in conversations. </summary>
     public partial class PiiOperationAction : AnalyzeConversationOperationAction
@@ -23,12 +24,12 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="kind"> Enumeration of supported analysis tasks on a collection of conversations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="actionContent"> parameters. </param>
-        internal PiiOperationAction(string name, AnalyzeConversationOperationActionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ConversationPiiActionContent actionContent) : base(name, kind, additionalBinaryDataProperties)
+        internal PiiOperationAction(string name, AnalyzeConversationOperationActionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, Conversations.Models.ConversationPiiActionContent actionContent) : base(name, kind, additionalBinaryDataProperties)
         {
             ActionContent = actionContent;
         }
 
         /// <summary> parameters. </summary>
-        public ConversationPiiActionContent ActionContent { get; set; }
+        public Conversations.Models.ConversationPiiActionContent ActionContent { get; set; }
     }
 }

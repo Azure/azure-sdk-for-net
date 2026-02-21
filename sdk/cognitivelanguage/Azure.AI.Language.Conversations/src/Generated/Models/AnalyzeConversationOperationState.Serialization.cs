@@ -11,8 +11,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.AI.Language.Conversations;
+using Azure.AI.Language.Conversations.Models;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> Contains the status of the submitted job for analyzing a conversation, along with related statistics. </summary>
     public partial class AnalyzeConversationOperationState : IJsonModel<AnalyzeConversationOperationState>
@@ -128,7 +129,7 @@ namespace Azure.AI.Language.Conversations.Models
             if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics, options);
+                writer.WriteObjectValue<Conversations.Models.ConversationRequestStatistics>(Statistics, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -181,7 +182,7 @@ namespace Azure.AI.Language.Conversations.Models
             IList<ConversationError> errors = default;
             string nextLink = default;
             ConversationActions actions = default;
-            ConversationRequestStatistics statistics = default;
+            Conversations.Models.ConversationRequestStatistics statistics = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

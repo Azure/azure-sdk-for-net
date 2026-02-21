@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.Language.Conversations;
+using Azure.AI.Language.Conversations.Models;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> Input parameters necessary for a Conversation task. </summary>
     public partial class ConversationLanguageUnderstandingActionContent

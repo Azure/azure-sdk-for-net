@@ -10,11 +10,11 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.AI.Language.Conversations;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary>
     /// This is the base class of an intent prediction
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LuisTargetIntentResult"/>, <see cref="QuestionAnsweringTargetIntentResult"/>, <see cref="NoneLinkedTargetIntentResult"/>, and <see cref="ConversationTargetIntentResult"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Conversations.Models.LuisTargetIntentResult"/>, <see cref="Conversations.Models.QuestionAnsweringTargetIntentResult"/>, <see cref="Conversations.Models.NoneLinkedTargetIntentResult"/>, and <see cref="Conversations.Models.ConversationTargetIntentResult"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownTargetIntentResult))]
     public abstract partial class TargetIntentResult : IJsonModel<TargetIntentResult>

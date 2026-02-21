@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.Language.Conversations;
+using Azure.AI.Language.Conversations.Models;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> Contains the status of the submitted job for analyzing a conversation, along with related statistics. </summary>
     public partial class AnalyzeConversationOperationState
@@ -43,7 +44,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="actions"> Contains the state for the tasks that are being executed as part of the submitted job for analyzing a conversation. </param>
         /// <param name="statistics"> Contains the statistics for the submitted job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeConversationOperationState(string displayName, DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, Guid jobId, DateTimeOffset lastUpdatedDateTime, ConversationActionState status, IList<ConversationError> errors, string nextLink, ConversationActions actions, ConversationRequestStatistics statistics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeConversationOperationState(string displayName, DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, Guid jobId, DateTimeOffset lastUpdatedDateTime, ConversationActionState status, IList<ConversationError> errors, string nextLink, ConversationActions actions, Conversations.Models.ConversationRequestStatistics statistics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             CreatedDateTime = createdDateTime;
@@ -86,6 +87,6 @@ namespace Azure.AI.Language.Conversations.Models
         public ConversationActions Actions { get; }
 
         /// <summary> Contains the statistics for the submitted job. </summary>
-        public ConversationRequestStatistics Statistics { get; }
+        public Conversations.Models.ConversationRequestStatistics Statistics { get; }
     }
 }

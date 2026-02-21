@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.AI.Language.Conversations;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> Multi Language Conversation Analysis Input. </summary>
     public partial class MultiLanguageConversationInput

@@ -10,11 +10,12 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Language.Conversations;
+using Azure.AI.Language.Conversations.Models;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> Represents knowledge base answer. </summary>
-    public partial class KnowledgeBaseAnswer : IJsonModel<KnowledgeBaseAnswer>
+    internal partial class KnowledgeBaseAnswer : IJsonModel<KnowledgeBaseAnswer>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -128,12 +129,12 @@ namespace Azure.AI.Language.Conversations.Models
             if (Optional.IsDefined(Dialog))
             {
                 writer.WritePropertyName("dialog"u8);
-                writer.WriteObjectValue(Dialog, options);
+                writer.WriteObjectValue<Conversations.Models.KnowledgeBaseAnswerDialog>(Dialog, options);
             }
             if (Optional.IsDefined(ShortAnswer))
             {
                 writer.WritePropertyName("answerSpan"u8);
-                writer.WriteObjectValue(ShortAnswer, options);
+                writer.WriteObjectValue<Conversations.Models.AnswerSpan>(ShortAnswer, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -183,8 +184,8 @@ namespace Azure.AI.Language.Conversations.Models
             int? qnaId = default;
             string source = default;
             IDictionary<string, string> metadata = default;
-            KnowledgeBaseAnswerDialog dialog = default;
-            AnswerSpan shortAnswer = default;
+            Conversations.Models.KnowledgeBaseAnswerDialog dialog = default;
+            Conversations.Models.AnswerSpan shortAnswer = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

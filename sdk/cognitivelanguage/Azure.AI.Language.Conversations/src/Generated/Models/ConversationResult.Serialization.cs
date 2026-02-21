@@ -10,11 +10,12 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Language.Conversations;
+using Azure.AI.Language.Conversations.Models;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> The response returned by a Conversation project. </summary>
-    public partial class ConversationResult : IJsonModel<ConversationResult>
+    internal partial class ConversationResult : IJsonModel<ConversationResult>
     {
         /// <summary> Initializes a new instance of <see cref="ConversationResult"/> for deserialization. </summary>
         internal ConversationResult()
@@ -89,7 +90,7 @@ namespace Azure.AI.Language.Conversations.Models
             if (Optional.IsDefined(Prediction))
             {
                 writer.WritePropertyName("prediction"u8);
-                writer.WriteObjectValue(Prediction, options);
+                writer.WriteObjectValue<Conversations.Models.ConversationPrediction>(Prediction, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -135,7 +136,7 @@ namespace Azure.AI.Language.Conversations.Models
             }
             string query = default;
             string detectedLanguage = default;
-            ConversationPrediction prediction = default;
+            Conversations.Models.ConversationPrediction prediction = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

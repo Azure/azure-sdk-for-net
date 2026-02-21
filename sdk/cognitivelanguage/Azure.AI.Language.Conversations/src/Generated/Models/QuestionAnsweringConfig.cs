@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Language.Conversations.Models;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> This is a set of request parameters for Question Answering knowledge bases. </summary>
     public partial class QuestionAnsweringConfig : AnalysisConfig
@@ -23,12 +24,12 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="apiVersion"> The API version to use when call a specific target service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="callingOptions"> The options sent to a Question Answering KB. </param>
-        internal QuestionAnsweringConfig(TargetProjectKind targetProjectKind, string apiVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties, QuestionAnswersConfig callingOptions) : base(targetProjectKind, apiVersion, additionalBinaryDataProperties)
+        internal QuestionAnsweringConfig(TargetProjectKind targetProjectKind, string apiVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties, Conversations.Models.QuestionAnswersConfig callingOptions) : base(targetProjectKind, apiVersion, additionalBinaryDataProperties)
         {
             CallingOptions = callingOptions;
         }
 
         /// <summary> The options sent to a Question Answering KB. </summary>
-        public QuestionAnswersConfig CallingOptions { get; set; }
+        public Conversations.Models.QuestionAnswersConfig CallingOptions { get; set; }
     }
 }

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> Text that has been categorized into pre-defined classes or types such as: person, location, event, product, and organization. </summary>
     public partial class NamedEntity

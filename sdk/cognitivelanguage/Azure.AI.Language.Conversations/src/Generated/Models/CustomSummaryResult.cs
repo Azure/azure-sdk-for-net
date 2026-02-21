@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.Language.Conversations.Models;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> Custom Summary Results. </summary>
     public partial class CustomSummaryResult
@@ -37,7 +38,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomSummaryResult(IList<ConversationsSummaryResult> conversations, IList<DocumentError> errors, RequestStatistics statistics, string projectName, string deploymentName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomSummaryResult(IList<ConversationsSummaryResult> conversations, IList<DocumentError> errors, Conversations.Models.RequestStatistics statistics, string projectName, string deploymentName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Conversations = conversations;
             Errors = errors;
@@ -54,7 +55,7 @@ namespace Azure.AI.Language.Conversations.Models
         public IList<DocumentError> Errors { get; }
 
         /// <summary> if showStats=true was specified in the request this field will contain information about the request payload. </summary>
-        public RequestStatistics Statistics { get; }
+        public Conversations.Models.RequestStatistics Statistics { get; }
 
         /// <summary> This field indicates the project name for the model. </summary>
         public string ProjectName { get; }

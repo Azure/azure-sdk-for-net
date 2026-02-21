@@ -11,10 +11,10 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Language.Conversations;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> Audio timing at the conversation item level. </summary>
-    public partial class ConversationItemLevelTiming : IJsonModel<ConversationItemLevelTiming>
+    internal partial class ConversationItemLevelTiming : IJsonModel<ConversationItemLevelTiming>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

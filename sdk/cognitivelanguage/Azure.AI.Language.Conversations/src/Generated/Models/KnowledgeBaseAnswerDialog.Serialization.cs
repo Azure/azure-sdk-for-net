@@ -11,10 +11,10 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Language.Conversations;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> Dialog associated with Answer. </summary>
-    public partial class KnowledgeBaseAnswerDialog : IJsonModel<KnowledgeBaseAnswerDialog>
+    internal partial class KnowledgeBaseAnswerDialog : IJsonModel<KnowledgeBaseAnswerDialog>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

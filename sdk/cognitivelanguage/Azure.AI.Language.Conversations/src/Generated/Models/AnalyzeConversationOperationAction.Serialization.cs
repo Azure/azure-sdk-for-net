@@ -10,11 +10,11 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.AI.Language.Conversations;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary>
     /// Base class for a long-running conversation input task.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CustomSummarizationOperationAction"/>, <see cref="SummarizationOperationAction"/>, and <see cref="PiiOperationAction"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Conversations.Models.CustomSummarizationOperationAction"/>, <see cref="Conversations.Models.SummarizationOperationAction"/>, and <see cref="Conversations.Models.PiiOperationAction"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAnalyzeConversationOperationAction))]
     public abstract partial class AnalyzeConversationOperationAction : IJsonModel<AnalyzeConversationOperationAction>

@@ -8,11 +8,12 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.Language.Conversations;
+using Azure.AI.Language.Conversations.Models;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> An object containing more specific information about the error. As per Microsoft One API guidelines - https://github.com/Microsoft/api-guidelines/blob/vNext/Guidelines.md#7102-error-condition-responses. </summary>
-    public partial class InnerErrorModel
+    internal partial class InnerErrorModel
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -34,7 +35,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="target"> Error target. </param>
         /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InnerErrorModel(InnerErrorCode code, string message, IDictionary<string, string> details, string target, InnerErrorModel innererror, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InnerErrorModel(InnerErrorCode code, string message, IDictionary<string, string> details, string target, Conversations.Models.InnerErrorModel innererror, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;
@@ -57,6 +58,6 @@ namespace Azure.AI.Language.Conversations.Models
         public string Target { get; }
 
         /// <summary> An object containing more specific information than the current object about the error. </summary>
-        public InnerErrorModel Innererror { get; }
+        public Conversations.Models.InnerErrorModel Innererror { get; }
     }
 }

@@ -7,12 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Language.Conversations.Models;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary>
     /// The base class of a conversation input task.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ConversationalAITask"/> and <see cref="ConversationLanguageUnderstandingInput"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Conversations.Models.ConversationalAITask"/> and <see cref="Conversations.Models.ConversationLanguageUnderstandingInput"/>.
     /// </summary>
     public abstract partial class AnalyzeConversationInput
     {

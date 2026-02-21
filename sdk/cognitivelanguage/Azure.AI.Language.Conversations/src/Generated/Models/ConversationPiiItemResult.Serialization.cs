@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Language.Conversations;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> The result from PII detection and redaction operation for each conversation. </summary>
     public partial class ConversationPiiItemResult : IJsonModel<ConversationPiiItemResult>

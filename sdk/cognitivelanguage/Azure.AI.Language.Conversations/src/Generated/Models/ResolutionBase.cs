@@ -7,12 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Language.Conversations.Models;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary>
     /// The abstract base class for entity resolutions.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgeResolution"/>, <see cref="VolumeResolution"/>, <see cref="SpeedResolution"/>, <see cref="AreaResolution"/>, <see cref="LengthResolution"/>, <see cref="InformationResolution"/>, <see cref="TemperatureResolution"/>, <see cref="WeightResolution"/>, <see cref="CurrencyResolution"/>, <see cref="BooleanResolution"/>, <see cref="DateTimeResolution"/>, <see cref="NumberResolution"/>, <see cref="OrdinalResolution"/>, <see cref="TemporalSpanResolution"/>, and <see cref="NumericRangeResolution"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Conversations.Models.AgeResolution"/>, <see cref="Conversations.Models.VolumeResolution"/>, <see cref="Conversations.Models.SpeedResolution"/>, <see cref="Conversations.Models.AreaResolution"/>, <see cref="Conversations.Models.LengthResolution"/>, <see cref="Conversations.Models.InformationResolution"/>, <see cref="Conversations.Models.TemperatureResolution"/>, <see cref="Conversations.Models.WeightResolution"/>, <see cref="Conversations.Models.CurrencyResolution"/>, <see cref="Conversations.Models.BooleanResolution"/>, <see cref="Conversations.Models.DateTimeResolution"/>, <see cref="Conversations.Models.NumberResolution"/>, <see cref="Conversations.Models.OrdinalResolution"/>, <see cref="Conversations.Models.TemporalSpanResolution"/>, and <see cref="Conversations.Models.NumericRangeResolution"/>.
     /// </summary>
     public abstract partial class ResolutionBase
     {

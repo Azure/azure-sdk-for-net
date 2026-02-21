@@ -10,8 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Language.Conversations;
+using Azure.AI.Language.Conversations.Models;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> Result from the personally identifiable information detection and redaction operation performed on a list of conversations. </summary>
     public partial class ConversationPiiOperationResult : AnalyzeConversationOperationResult, IJsonModel<ConversationPiiOperationResult>

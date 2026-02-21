@@ -11,11 +11,11 @@ using System.Text.Json;
 using Azure.AI.Language.Conversations;
 using Azure.Core;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary>
     /// The base class of a conversation input task.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ConversationalAITask"/> and <see cref="ConversationLanguageUnderstandingInput"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Conversations.Models.ConversationalAITask"/> and <see cref="Conversations.Models.ConversationLanguageUnderstandingInput"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAnalyzeConversationInput))]
     public abstract partial class AnalyzeConversationInput : IJsonModel<AnalyzeConversationInput>

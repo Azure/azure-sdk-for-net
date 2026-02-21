@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Language.Conversations.Models;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> A wrap up of non-linked intent response. </summary>
     public partial class NoneLinkedTargetIntentResult : TargetIntentResult
@@ -25,12 +26,12 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="result"> The actual response from a Conversation project. </param>
-        internal NoneLinkedTargetIntentResult(TargetProjectKind targetProjectKind, string apiVersion, double confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties, ConversationResult result) : base(targetProjectKind, apiVersion, confidence, additionalBinaryDataProperties)
+        internal NoneLinkedTargetIntentResult(TargetProjectKind targetProjectKind, string apiVersion, double confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties, Conversations.Models.ConversationResult result) : base(targetProjectKind, apiVersion, confidence, additionalBinaryDataProperties)
         {
             Result = result;
         }
 
         /// <summary> The actual response from a Conversation project. </summary>
-        public ConversationResult Result { get; }
+        public Conversations.Models.ConversationResult Result { get; }
     }
 }

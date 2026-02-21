@@ -10,8 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Language.Conversations;
+using Azure.AI.Language.Conversations.Models;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> A wrap up of non-linked intent response. </summary>
     public partial class NoneLinkedTargetIntentResult : TargetIntentResult, IJsonModel<NoneLinkedTargetIntentResult>
@@ -83,7 +84,7 @@ namespace Azure.AI.Language.Conversations.Models
             if (Optional.IsDefined(Result))
             {
                 writer.WritePropertyName("result"u8);
-                writer.WriteObjectValue(Result, options);
+                writer.WriteObjectValue<Conversations.Models.ConversationResult>(Result, options);
             }
         }
 
@@ -116,7 +117,7 @@ namespace Azure.AI.Language.Conversations.Models
             string apiVersion = default;
             double confidence = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ConversationResult result = default;
+            Conversations.Models.ConversationResult result = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("targetProjectKind"u8))

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.AI.Language.Conversations;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> The input ConversationItem and its optional parameters. </summary>
     public partial class ConversationalAIAnalysisInput

@@ -10,11 +10,11 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.AI.Language.Conversations;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary>
     /// The abstract base object for entity extra information.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EntitySubtype"/>, <see cref="ListKey"/>, and <see cref="RegexKey"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Conversations.Models.EntitySubtype"/>, <see cref="Conversations.Models.ListKey"/>, and <see cref="Conversations.Models.RegexKey"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownConversationEntityExtraInformation))]
     public abstract partial class ConversationEntityExtraInformation : IJsonModel<ConversationEntityExtraInformation>

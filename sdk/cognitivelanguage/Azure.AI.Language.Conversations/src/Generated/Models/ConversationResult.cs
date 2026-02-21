@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Language.Conversations.Models;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations.Models.Models
 {
     /// <summary> The response returned by a Conversation project. </summary>
-    public partial class ConversationResult
+    internal partial class ConversationResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -28,7 +29,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="detectedLanguage"> The detected language from the query in BCP 47 language representation. </param>
         /// <param name="prediction"> The predicted result for the query. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationResult(string query, string detectedLanguage, ConversationPrediction prediction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationResult(string query, string detectedLanguage, Conversations.Models.ConversationPrediction prediction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Query = query;
             DetectedLanguage = detectedLanguage;
@@ -43,6 +44,6 @@ namespace Azure.AI.Language.Conversations.Models
         public string DetectedLanguage { get; }
 
         /// <summary> The predicted result for the query. </summary>
-        public ConversationPrediction Prediction { get; }
+        public Conversations.Models.ConversationPrediction Prediction { get; }
     }
 }
