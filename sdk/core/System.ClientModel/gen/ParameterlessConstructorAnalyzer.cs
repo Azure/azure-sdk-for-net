@@ -50,7 +50,7 @@ public sealed class ParameterlessConstructorAnalyzer : DiagnosticAnalyzer
                 return;
 
             // For each [ModelReaderWriterBuildable(typeof(T))] attribute, check T
-            foreach (var attr in namedType.GetAttributes().Where(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass, buildableAttrType)))
+            foreach (var attr in namedType.GetAttributes().Where(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass?.OriginalDefinition, buildableAttrType)))
             {
                 if (attr.ConstructorArguments.Length == 1 &&
                     attr.ConstructorArguments[0].Kind == TypedConstantKind.Type &&
@@ -66,7 +66,7 @@ public sealed class ParameterlessConstructorAnalyzer : DiagnosticAnalyzer
                         if (!SymbolEqualityComparer.Default.Equals(modelType.ContainingAssembly, symbolContext.Compilation.Assembly))
                             return;
 
-                        var proxyAttr = modelType.GetAttributes().FirstOrDefault(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass, proxyAttrType));
+                        var proxyAttr = modelType.GetAttributes().FirstOrDefault(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass?.OriginalDefinition, proxyAttrType));
                         if (proxyAttr is not null &&
                             proxyAttr.ConstructorArguments.Length == 1 &&
                             proxyAttr.ConstructorArguments[0].Kind == TypedConstantKind.Type &&

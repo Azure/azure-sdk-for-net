@@ -47,7 +47,7 @@ public sealed class MustImplementIPersistableModelAnalyzer : DiagnosticAnalyzer
                 return;
 
             // For each [ModelReaderWriterBuildable(typeof(T))] attribute, check T
-            foreach (var attr in namedType.GetAttributes().Where(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass, buildableAttrType)))
+            foreach (var attr in namedType.GetAttributes().Where(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass?.OriginalDefinition, buildableAttrType)))
             {
                 if (attr.ConstructorArguments.Length == 1 &&
                     attr.ConstructorArguments[0] is { Kind: TypedConstantKind.Type, Value: ITypeSymbol outerModel })
@@ -65,7 +65,7 @@ public sealed class MustImplementIPersistableModelAnalyzer : DiagnosticAnalyzer
 
                     // Check if modelType implements IPersistableModel<T>
                     bool implements = modelType.AllInterfaces.Any(i =>
-                        i.OriginalDefinition.Equals(iPersistableModelType, SymbolEqualityComparer.Default));
+                        SymbolEqualityComparer.Default.Equals(i.OriginalDefinition, iPersistableModelType));
 
                     if (!implements)
                     {

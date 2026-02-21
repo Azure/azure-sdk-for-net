@@ -43,8 +43,7 @@ public sealed class MultipleContextAnalyzer : DiagnosticAnalyzer
         {
             var namedType = (INamedTypeSymbol)symbolContext.Symbol;
             if (namedType.TypeKind == TypeKind.Class &&
-                namedType.BaseType != null &&
-                SymbolEqualityComparer.Default.Equals(namedType.BaseType, contextType))
+                namedType.InheritsFrom(contextType))
             {
                 found.Add(namedType);
             }

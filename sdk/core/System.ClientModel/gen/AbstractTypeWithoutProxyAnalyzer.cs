@@ -51,7 +51,7 @@ public sealed class AbstractTypeWithoutProxyAnalyzer : DiagnosticAnalyzer
                 return;
 
             // For each [ModelReaderWriterBuildable(typeof(T))] attribute, check T
-            foreach (var attr in namedType.GetAttributes().Where(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass, buildableAttrType)))
+            foreach (var attr in namedType.GetAttributes().Where(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass?.OriginalDefinition, buildableAttrType)))
             {
                 if (attr.ConstructorArguments.Length == 1 &&
                     attr.ConstructorArguments[0] is
@@ -68,7 +68,7 @@ public sealed class AbstractTypeWithoutProxyAnalyzer : DiagnosticAnalyzer
                 {
                     // Check for [PersistableModelProxy] on the model type
                     bool hasProxy = modelType.GetAttributes().Any(a =>
-                        SymbolEqualityComparer.Default.Equals(a.AttributeClass, proxyAttrType));
+                        SymbolEqualityComparer.Default.Equals(a.AttributeClass?.OriginalDefinition, proxyAttrType));
                     if (!hasProxy)
                     {
                         var diagnostic = Diagnostic.Create(

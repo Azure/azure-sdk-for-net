@@ -42,7 +42,7 @@ public sealed class BuildableAttributeUsageAnalyzer : DiagnosticAnalyzer
                 return;
 
             // Look for ModelReaderWriterBuildableAttribute
-            var hasBuildableAttribute = namedType.GetAttributes().Any(attr => SymbolEqualityComparer.Default.Equals(attr.AttributeClass, buildableAttrType));
+            var hasBuildableAttribute = namedType.GetAttributes().Any(attr => SymbolEqualityComparer.Default.Equals(attr.AttributeClass?.OriginalDefinition, buildableAttrType));
 
             if (!hasBuildableAttribute)
                 return;
