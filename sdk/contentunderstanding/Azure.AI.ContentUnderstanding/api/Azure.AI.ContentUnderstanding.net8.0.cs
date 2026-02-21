@@ -325,6 +325,26 @@ namespace Azure.AI.ContentUnderstanding
         public static bool operator !=(Azure.AI.ContentUnderstanding.ContentFieldType left, Azure.AI.ContentUnderstanding.ContentFieldType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ContentRange : System.IEquatable<Azure.AI.ContentUnderstanding.ContentRange>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ContentRange(string value) { throw null; }
+        public static Azure.AI.ContentUnderstanding.ContentRange Combine(params Azure.AI.ContentUnderstanding.ContentRange[] ranges) { throw null; }
+        public bool Equals(Azure.AI.ContentUnderstanding.ContentRange other) { throw null; }
+        public override bool Equals(object? obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.ContentUnderstanding.ContentRange left, Azure.AI.ContentUnderstanding.ContentRange right) { throw null; }
+        public static implicit operator string (Azure.AI.ContentUnderstanding.ContentRange value) { throw null; }
+        public static bool operator !=(Azure.AI.ContentUnderstanding.ContentRange left, Azure.AI.ContentUnderstanding.ContentRange right) { throw null; }
+        public static Azure.AI.ContentUnderstanding.ContentRange Page(int pageNumber) { throw null; }
+        public static Azure.AI.ContentUnderstanding.ContentRange Pages(int start, int end) { throw null; }
+        public static Azure.AI.ContentUnderstanding.ContentRange PagesFrom(int startPage) { throw null; }
+        public static Azure.AI.ContentUnderstanding.ContentRange TimeRange(long startMs, long endMs) { throw null; }
+        public static Azure.AI.ContentUnderstanding.ContentRange TimeRangeFrom(long startMs) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ContentSpan : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentUnderstanding.ContentSpan>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.ContentSpan>
     {
         internal ContentSpan() { }
@@ -352,9 +372,11 @@ namespace Azure.AI.ContentUnderstanding
         public virtual Azure.Operation<Azure.AI.ContentUnderstanding.AnalysisResult> Analyze(Azure.WaitUntil waitUntil, string analyzerId, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.AnalysisInput> inputs, System.Collections.Generic.IDictionary<string, string>? modelDeployments = null, Azure.AI.ContentUnderstanding.ProcessingLocation? processingLocation = default(Azure.AI.ContentUnderstanding.ProcessingLocation?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> AnalyzeAsync(Azure.WaitUntil waitUntil, string analyzerId, Azure.Core.RequestContent content, string stringEncoding = null, string processingLocation = null, System.Guid? clientRequestId = default(System.Guid?), Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.ContentUnderstanding.AnalysisResult>> AnalyzeAsync(Azure.WaitUntil waitUntil, string analyzerId, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.AnalysisInput> inputs, System.Collections.Generic.IDictionary<string, string>? modelDeployments = null, Azure.AI.ContentUnderstanding.ProcessingLocation? processingLocation = default(Azure.AI.ContentUnderstanding.ProcessingLocation?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation<Azure.AI.ContentUnderstanding.AnalysisResult> AnalyzeBinary(Azure.WaitUntil waitUntil, string analyzerId, System.BinaryData binaryInput, Azure.AI.ContentUnderstanding.ContentRange inputRange, string? contentType = null, Azure.AI.ContentUnderstanding.ProcessingLocation? processingLocation = default(Azure.AI.ContentUnderstanding.ProcessingLocation?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation<Azure.AI.ContentUnderstanding.AnalysisResult> AnalyzeBinary(Azure.WaitUntil waitUntil, string analyzerId, System.BinaryData binaryInput, string? inputRange = null, string? contentType = null, Azure.AI.ContentUnderstanding.ProcessingLocation? processingLocation = default(Azure.AI.ContentUnderstanding.ProcessingLocation?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation<System.BinaryData> AnalyzeBinary(Azure.WaitUntil waitUntil, string analyzerId, string contentType, Azure.Core.RequestContent content, string stringEncoding = null, string processingLocation = null, string inputRange = null, System.Guid? clientRequestId = default(System.Guid?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Operation<Azure.AI.ContentUnderstanding.AnalysisResult> AnalyzeBinary(Azure.WaitUntil waitUntil, string analyzerId, string stringEncoding, string contentType, System.BinaryData input, string range = null, Azure.AI.ContentUnderstanding.ProcessingLocation? processingLocation = default(Azure.AI.ContentUnderstanding.ProcessingLocation?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.ContentUnderstanding.AnalysisResult>> AnalyzeBinaryAsync(Azure.WaitUntil waitUntil, string analyzerId, System.BinaryData binaryInput, Azure.AI.ContentUnderstanding.ContentRange inputRange, string? contentType = null, Azure.AI.ContentUnderstanding.ProcessingLocation? processingLocation = default(Azure.AI.ContentUnderstanding.ProcessingLocation?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.ContentUnderstanding.AnalysisResult>> AnalyzeBinaryAsync(Azure.WaitUntil waitUntil, string analyzerId, System.BinaryData binaryInput, string? inputRange = null, string? contentType = null, Azure.AI.ContentUnderstanding.ProcessingLocation? processingLocation = default(Azure.AI.ContentUnderstanding.ProcessingLocation?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> AnalyzeBinaryAsync(Azure.WaitUntil waitUntil, string analyzerId, string contentType, Azure.Core.RequestContent content, string stringEncoding = null, string processingLocation = null, string inputRange = null, System.Guid? clientRequestId = default(System.Guid?), Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.ContentUnderstanding.AnalysisResult>> AnalyzeBinaryAsync(Azure.WaitUntil waitUntil, string analyzerId, string stringEncoding, string contentType, System.BinaryData input, string range = null, Azure.AI.ContentUnderstanding.ProcessingLocation? processingLocation = default(Azure.AI.ContentUnderstanding.ProcessingLocation?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
