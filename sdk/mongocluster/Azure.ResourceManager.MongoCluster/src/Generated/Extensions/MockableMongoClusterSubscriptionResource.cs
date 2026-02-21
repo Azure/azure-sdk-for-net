@@ -8,88 +8,80 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.MongoCluster;
 using Azure.ResourceManager.MongoCluster.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MongoCluster.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableMongoClusterSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _mongoClusterClientDiagnostics;
-        private MongoClustersRestOperations _mongoClusterRestClient;
+        private ClientDiagnostics _mongoClustersClientDiagnostics;
+        private MongoClusters _mongoClustersRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableMongoClusterSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableMongoClusterSubscriptionResource for mocking. </summary>
         protected MockableMongoClusterSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableMongoClusterSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableMongoClusterSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableMongoClusterSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics MongoClusterClientDiagnostics => _mongoClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MongoCluster", MongoClusterResource.ResourceType.Namespace, Diagnostics);
-        private MongoClustersRestOperations MongoClusterRestClient => _mongoClusterRestClient ??= new MongoClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MongoClusterResource.ResourceType));
+        private ClientDiagnostics MongoClustersClientDiagnostics => _mongoClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MongoCluster.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private MongoClusters MongoClustersRestClient => _mongoClustersRestClient ??= new MongoClusters(MongoClustersClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
 
         /// <summary>
         /// List all the mongo clusters in a given subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/mongoClusters</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/mongoClusters. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MongoCluster_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> MongoClusters_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MongoClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MongoClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MongoClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MongoClusterResource> GetMongoClustersAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MongoClusterRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MongoClusterRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MongoClusterResource(Client, MongoClusterData.DeserializeMongoClusterData(e)), MongoClusterClientDiagnostics, Pipeline, "MockableMongoClusterSubscriptionResource.GetMongoClusters", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<MongoClusterData, MongoClusterResource>(new MongoClustersGetAllAsyncCollectionResultOfT(MongoClustersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new MongoClusterResource(Client, data));
         }
 
         /// <summary>
         /// List all the mongo clusters in a given subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/mongoClusters</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/mongoClusters. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MongoCluster_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> MongoClusters_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MongoClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,29 +89,27 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
         /// <returns> A collection of <see cref="MongoClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MongoClusterResource> GetMongoClusters(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MongoClusterRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MongoClusterRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MongoClusterResource(Client, MongoClusterData.DeserializeMongoClusterData(e)), MongoClusterClientDiagnostics, Pipeline, "MockableMongoClusterSubscriptionResource.GetMongoClusters", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<MongoClusterData, MongoClusterResource>(new MongoClustersGetAllCollectionResultOfT(MongoClustersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new MongoClusterResource(Client, data));
         }
 
         /// <summary>
         /// Check if mongo cluster name is available for use.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/checkMongoClusterNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/checkMongoClusterNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MongoClusters_CheckMongoClusterNameAvailability</description>
+        /// <term> Operation Id. </term>
+        /// <description> MongoClusters_CheckNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MongoClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -131,11 +121,21 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = MongoClusterClientDiagnostics.CreateScope("MockableMongoClusterSubscriptionResource.CheckMongoClusterNameAvailability");
+            using DiagnosticScope scope = MongoClustersClientDiagnostics.CreateScope("MockableMongoClusterSubscriptionResource.CheckMongoClusterNameAvailability");
             scope.Start();
             try
             {
-                var response = await MongoClusterRestClient.CheckMongoClusterNameAvailabilityAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = MongoClustersRestClient.CreateCheckMongoClusterNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, MongoClusterNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MongoClusterNameAvailabilityResult> response = Response.FromValue(MongoClusterNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -149,20 +149,16 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
         /// Check if mongo cluster name is available for use.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/checkMongoClusterNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/checkMongoClusterNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MongoClusters_CheckMongoClusterNameAvailability</description>
+        /// <term> Operation Id. </term>
+        /// <description> MongoClusters_CheckNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MongoClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -174,11 +170,21 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = MongoClusterClientDiagnostics.CreateScope("MockableMongoClusterSubscriptionResource.CheckMongoClusterNameAvailability");
+            using DiagnosticScope scope = MongoClustersClientDiagnostics.CreateScope("MockableMongoClusterSubscriptionResource.CheckMongoClusterNameAvailability");
             scope.Start();
             try
             {
-                var response = MongoClusterRestClient.CheckMongoClusterNameAvailability(Id.SubscriptionId, location, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = MongoClustersRestClient.CreateCheckMongoClusterNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, MongoClusterNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MongoClusterNameAvailabilityResult> response = Response.FromValue(MongoClusterNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)

@@ -37,12 +37,16 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> The number of samples to consider for load balancing decisions. </summary>
+        [WirePath("properties.sampleSize")]
         public int? SampleSize { get; set; }
         /// <summary> The number of samples within the sample period that must succeed. </summary>
+        [WirePath("properties.successfulSamplesRequired")]
         public int? SuccessfulSamplesRequired { get; set; }
         /// <summary> The additional latency in milliseconds for probes to fall into the lowest latency bucket. </summary>
+        [WirePath("properties.additionalLatencyMilliseconds")]
         public int? AdditionalLatencyMilliseconds { get; set; }
         /// <summary> Resource status. </summary>
+        [WirePath("properties.resourceState")]
         public FrontDoorResourceState? ResourceState { get; }
     }
 }

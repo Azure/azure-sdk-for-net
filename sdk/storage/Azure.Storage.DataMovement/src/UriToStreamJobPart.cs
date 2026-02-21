@@ -3,9 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.Common;
 

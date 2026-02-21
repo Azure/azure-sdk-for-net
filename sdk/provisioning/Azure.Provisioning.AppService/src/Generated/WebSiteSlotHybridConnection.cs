@@ -136,7 +136,7 @@ public partial class WebSiteSlotHybridConnection : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the WebSiteSlotHybridConnection.</param>
     public WebSiteSlotHybridConnection(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Web/sites/slots/hybridconnection", resourceVersion ?? "2024-11-01")
+        : base(bicepIdentifier, "Microsoft.Web/sites/slots/hybridconnection", resourceVersion ?? "2025-03-01")
     {
     }
 
@@ -145,6 +145,7 @@ public partial class WebSiteSlotHybridConnection : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _biztalkUri = DefineProperty<Uri>("BiztalkUri", ["properties", "biztalkUri"]);
         _entityConnectionString = DefineProperty<string>("EntityConnectionString", ["properties", "entityConnectionString"]);
@@ -163,6 +164,11 @@ public partial class WebSiteSlotHybridConnection : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-03-01.
+        /// </summary>
+        public static readonly string V2025_03_01 = "2025-03-01";
+
         /// <summary>
         /// 2024-11-01.
         /// </summary>

@@ -4,8 +4,8 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Azure.Monitor.Query;
-using Azure.Monitor.Query.Models;
+using Azure.Monitor.Query.Logs;
+using Azure.Monitor.Query.Logs.Models;
 using NUnit.Framework;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
@@ -29,7 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                 Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
                     workspaceId,
                     query,
-                    new QueryTimeRange(TimeSpan.FromMinutes(30)));
+                    new LogsQueryTimeRange(TimeSpan.FromMinutes(30)));
 
                 if (response.Value.Table.Rows.Count > 0)
                 {

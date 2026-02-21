@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj" />
+    <ProjectReference Include="..\src\Azure.Provisioning.PrivateDns.csproj" />
+    <ProjectReference Include="..\..\Azure.Provisioning.Network\src\Azure.Provisioning.Network.csproj" />
+    <ProjectReference Include="..\..\Azure.Provisioning.Deployment\src\Azure.Provisioning.Deployment.csproj" />
+  </ItemGroup>
+</Project>

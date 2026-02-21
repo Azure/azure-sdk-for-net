@@ -746,5 +746,78 @@ namespace Azure.Identity.Tests
             var exception = Assert.Throws<CredentialUnavailableException>(() => credential.GetToken(new TokenRequestContext(new[] { "scope" })));
             Assert.AreEqual($"The {nameof(BrokerCredential)} requires the Azure.Identity.Broker package to be referenced. See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/brokercredential/troubleshoot", exception.Message);
         }
+
+        [Test]
+        [TestCaseSource(nameof(CredSelection))]
+        public void ValidateCredentialSelectionWithTurkishCulture(string credSelection, Type expectedType)
+        {
+            var currentCulture = System.Globalization.CultureInfo.CurrentCulture;
+            var currentUICulture = System.Globalization.CultureInfo.CurrentUICulture;
+            try
+            {
+                // Set Turkish culture to test culture-independent string operations
+                System.Globalization.CultureInfo.CurrentCulture = new System.Globalization.CultureInfo("tr-TR");
+                System.Globalization.CultureInfo.CurrentUICulture = new System.Globalization.CultureInfo("tr-TR");
+
+                using (new TestEnvVar(new Dictionary<string, string>
+                {
+                    { "AZURE_CLIENT_ID", null },
+                    { "AZURE_USERNAME", null },
+                    { "AZURE_TENANT_ID", null },
+                    // Use uppercase to test case conversion with Turkish culture
+                    { "AZURE_TOKEN_CREDENTIALS", credSelection?.ToUpperInvariant() }
+                }))
+                {
+                    var factory = new DefaultAzureCredentialFactory(null);
+                    var chain = factory.CreateCredentialChain();
+
+                    // Verify that credential selection works correctly with Turkish culture
+                    if (credSelection == Constants.DevCredentials)
+                    {
+                        Assert.IsFalse(chain.Any(cred => cred is EnvironmentCredential));
+                        Assert.IsFalse(chain.Any(cred => cred is WorkloadIdentityCredential));
+                        Assert.IsFalse(chain.Any(cred => cred is ManagedIdentityCredential));
+                        Assert.IsTrue(chain.Any(cred => cred is AzureCliCredential));
+                        Assert.IsTrue(chain.Any(cred => cred is AzurePowerShellCredential));
+                        Assert.IsTrue(chain.Any(cred => cred is VisualStudioCredential));
+                        Assert.IsTrue(chain.Any(cred => cred is AzureDeveloperCliCredential));
+                        Assert.IsTrue(chain.Any(cred => cred is VisualStudioCodeCredential));
+                        Assert.IsTrue(chain.Any(cred => cred is BrokerCredential));
+                    }
+                    else if (credSelection == Constants.ProdCredentials)
+                    {
+                        Assert.IsTrue(chain.Any(cred => cred is EnvironmentCredential));
+                        Assert.IsTrue(chain.Any(cred => cred is WorkloadIdentityCredential));
+                        Assert.IsTrue(chain.Any(cred => cred is ManagedIdentityCredential));
+                        Assert.IsFalse(chain.Any(cred => cred is AzureCliCredential));
+                        Assert.IsFalse(chain.Any(cred => cred is AzurePowerShellCredential));
+                        Assert.IsFalse(chain.Any(cred => cred is VisualStudioCredential));
+                        Assert.IsFalse(chain.Any(cred => cred is AzureDeveloperCliCredential));
+                        Assert.IsFalse(chain.Any(cred => cred is VisualStudioCodeCredential));
+                    }
+                    else if (credSelection == null)
+                    {
+                        Assert.IsTrue(chain.Any(cred => cred is EnvironmentCredential));
+                        Assert.IsTrue(chain.Any(cred => cred is WorkloadIdentityCredential));
+                        Assert.IsTrue(chain.Any(cred => cred is ManagedIdentityCredential));
+                        Assert.IsTrue(chain.Any(cred => cred is AzureCliCredential));
+                        Assert.IsTrue(chain.Any(cred => cred is AzurePowerShellCredential));
+                        Assert.IsTrue(chain.Any(cred => cred is VisualStudioCredential));
+                        Assert.IsTrue(chain.Any(cred => cred is AzureDeveloperCliCredential));
+                        Assert.IsTrue(chain.Any(cred => cred is VisualStudioCodeCredential));
+                    }
+                    else
+                    {
+                        ValidateSingleCredSelection(expectedType, chain);
+                    }
+                }
+            }
+            finally
+            {
+                // Restore original culture
+                System.Globalization.CultureInfo.CurrentCulture = currentCulture;
+                System.Globalization.CultureInfo.CurrentUICulture = currentUICulture;
+            }
+        }
     }
 }

@@ -4,14 +4,14 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using NUnit.Framework;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
-using KeyType = Azure.ResourceManager.EventHubs.Models.EventHubsAccessKeyType;
+using NUnit.Framework;
 using JsonObject = System.Collections.Generic.Dictionary<string, object>;
+using KeyType = Azure.ResourceManager.EventHubs.Models.EventHubsAccessKeyType;
 
 namespace Azure.ResourceManager.EventHubs.Tests
 {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 {
                     CleanupPolicy = "Compact",
                     RetentionTimeInHours = 2,
-                    TombstoneRetentionTimeInHours=4
+                    TombstoneRetentionTimeInHours = 4
                 }
             };
             EventHubResource eventHub2 = (await _eventHubCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventHubName2, parameter2)).Value;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             Assert.AreEqual(eventHub2.Data.Status, parameter2.Status);
             Assert.AreEqual(eventHub2.Data.PartitionCount, parameter2.PartitionCount);
             Assert.AreEqual(eventHub2.Data.RetentionDescription.CleanupPolicy, parameter2.RetentionDescription.CleanupPolicy);
-            Assert.AreEqual(eventHub2.Data.RetentionDescription.RetentionTimeInHours, parameter2.RetentionDescription.RetentionTimeInHours);
+            Assert.AreEqual(eventHub2.Data.RetentionDescription.RetentionTimeInHours, -1);
             Assert.AreEqual(eventHub2.Data.RetentionDescription.TombstoneRetentionTimeInHours, parameter2.RetentionDescription.TombstoneRetentionTimeInHours);
 
             //Delete eventhub

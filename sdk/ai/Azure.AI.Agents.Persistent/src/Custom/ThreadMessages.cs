@@ -317,7 +317,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Gets a list of messages that exist on a thread. </summary>
         /// <param name="threadId"> Identifier of the thread. </param>
         /// <param name="runId"> Filter messages by the run ID that generated them. </param>
-        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="limit"> A limit on the number of objects to be returned on one page. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
         /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
@@ -357,7 +357,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Gets a list of messages that exist on a thread. </summary>
         /// <param name="threadId"> Identifier of the thread. </param>
         /// <param name="runId"> Filter messages by the run ID that generated them. </param>
-        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="limit"> A limit on the number of objects to be returned on one page. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
         /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
@@ -433,7 +433,7 @@ namespace Azure.AI.Agents.Persistent
                 order: order,
                 after: after,
                 before: before,
-                context:context);
+                context: context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ThreadMessagesClient.GetMessages", "data", null, context);
         }
 
@@ -495,7 +495,7 @@ namespace Azure.AI.Agents.Persistent
             scope.Start();
             Response<MessageDeletionStatus> baseResponse
                 = InternalDeleteMessage(
-                    threadId:threadId,
+                    threadId: threadId,
                     messageId: messageId,
                     cancellationToken: cancellationToken);
             bool simplifiedValue =

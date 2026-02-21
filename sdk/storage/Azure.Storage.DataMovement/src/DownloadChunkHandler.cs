@@ -136,7 +136,21 @@ namespace Azure.Storage.DataMovement
                 if (_isChunkHandlerRunning)
                 {
                     // This will trigger the job part to call Dispose on this object
-                    _ = Task.Run(() => _invokeFailedEventHandler(ex));
+                    _ = Task.Run(async () =>
+                    {
+                        try
+                        {
+                            await _invokeFailedEventHandler(ex).ConfigureAwait(false);
+                        }
+                        catch
+                        {
+                            // Log and swallow any exceptions to prevent crashing the process
+                            DataMovementEventSource.Singleton
+                                .UnexpectedTransferFailed(
+                                    nameof(CommitChunkHandler),
+                                    ex.ToString());
+                        }
+                    });
                 }
             }
         }

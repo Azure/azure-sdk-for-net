@@ -18,7 +18,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests.Samples
 {
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2025_08_01_Preview), ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_08_01_Preview)]
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2025_11_01_Preview), ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_11_01_Preview)]
     public partial class HelloWorld : SearchTestBase
     {
         public HelloWorld(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -345,7 +345,7 @@ namespace Azure.Search.Documents.Tests.Samples
                     skillsetName,
                     new SearchIndexerSkill[] { translationSkill, conditionalSkill })
                 {
-                    CognitiveServicesAccount =  new CognitiveServicesAccountKey(
+                    CognitiveServicesAccount = new CognitiveServicesAccountKey(
                         Environment.GetEnvironmentVariable("COGNITIVE_SERVICES_KEY")),
                     KnowledgeStore = new KnowledgeStore(
                         Environment.GetEnvironmentVariable("STORAGE_CONNECTION_STRING"),
@@ -420,7 +420,8 @@ namespace Azure.Search.Documents.Tests.Samples
                 {
                     Hotel hotel = result.Document;
 #if !SNIPPET
-                    if (hotel.HotelId == "6") { Assert.IsNotNull(hotel.DescriptionFr); found = true; }
+                    if (hotel.HotelId == "6")
+                    { Assert.IsNotNull(hotel.DescriptionFr); found = true; }
 #endif
 
                     Console.WriteLine($"{hotel.HotelName} ({hotel.HotelId})");

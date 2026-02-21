@@ -70,14 +70,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> A list of header actions to apply from the request from AFD to the origin. </summary>
+        [WirePath("requestHeaderActions")]
         public IList<RulesEngineHeaderAction> RequestHeaderActions { get; }
         /// <summary> A list of header actions to apply from the response from AFD to the client. </summary>
+        [WirePath("responseHeaderActions")]
         public IList<RulesEngineHeaderAction> ResponseHeaderActions { get; }
         /// <summary>
         /// Override the route configuration.
         /// Please note <see cref="RouteConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ForwardingConfiguration"/> and <see cref="RedirectConfiguration"/>.
         /// </summary>
+        [WirePath("routeConfigurationOverride")]
         public RouteConfiguration RouteConfigurationOverride { get; set; }
     }
 }

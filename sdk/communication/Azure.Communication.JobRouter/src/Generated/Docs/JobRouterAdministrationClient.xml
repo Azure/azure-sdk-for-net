@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetDistributionPolicyAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetDistributionPolicyAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint, credential);
+
+Response<DistributionPolicy> response = await client.GetDistributionPolicyAsync("MainDistributionPolicy");
+]]></code></example>
+    </member>
+    <member name="GetDistributionPolicy(string,CancellationToken)">
+      <example>
+This sample shows how to call GetDistributionPolicy.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint, credential);
+
+Response<DistributionPolicy> response = client.GetDistributionPolicy("MainDistributionPolicy");
+]]></code></example>
+    </member>
+    <member name="GetDistributionPolicyAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetDistributionPolicyAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint, credential);
+
+Response response = await client.GetDistributionPolicyAsync("MainDistributionPolicy", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code></example>
+    </member>
+    <member name="GetDistributionPolicy(string,RequestContext)">
+      <example>
+This sample shows how to call GetDistributionPolicy and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint, credential);
+
+Response response = client.GetDistributionPolicy("MainDistributionPolicy", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteDistributionPolicyAsync(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteDistributionPolicyAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint, credential);
+
+Response response = await client.DeleteDistributionPolicyAsync("MainDistributionPolicy");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeleteDistributionPolicy(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteDistributionPolicy.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint, credential);
+
+Response response = client.DeleteDistributionPolicy("MainDistributionPolicy");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetClassificationPolicyAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetClassificationPolicyAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint, credential);
+
+Response<ClassificationPolicy> response = await client.GetClassificationPolicyAsync("MainClassificationPolicy");
+]]></code></example>
+    </member>
+    <member name="GetClassificationPolicy(string,CancellationToken)">
+      <example>
+This sample shows how to call GetClassificationPolicy.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint, credential);
+
+Response<ClassificationPolicy> response = client.GetClassificationPolicy("MainClassificationPolicy");
+]]></code></example>
+    </member>
+    <member name="GetClassificationPolicyAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetClassificationPolicyAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint, credential);
+
+Response response = await client.GetClassificationPolicyAsync("MainClassificationPolicy", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code></example>
+    </member>
+    <member name="GetClassificationPolicy(string,RequestContext)">
+      <example>
+This sample shows how to call GetClassificationPolicy and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint, credential);
+
+Response response = client.GetClassificationPolicy("MainClassificationPolicy", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteClassificationPolicyAsync(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteClassificationPolicyAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint, credential);
+
+Response response = await client.DeleteClassificationPolicyAsync("MainClassificationPolicy");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeleteClassificationPolicy(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteClassificationPolicy.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint, credential);
+
+Response response = client.DeleteClassificationPolicy("MainClassificationPolicy");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetExceptionPolicyAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetExceptionPolicyAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint, credential);
+
+Response<ExceptionPolicy> response = await client.GetExceptionPolicyAsync("MainExceptionPolicy");
+]]></code></example>
+    </member>
+    <member name="GetExceptionPolicy(string,CancellationToken)">
+      <example>
+This sample shows how to call GetExceptionPolicy.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint, credential);
+
+Response<ExceptionPolicy> response = client.GetExceptionPolicy("MainExceptionPolicy");
+]]></code></example>
+    </member>
+    <member name="GetExceptionPolicyAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetExceptionPolicyAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint, credential);
+
+Response response = await client.GetExceptionPolicyAsync("MainExceptionPolicy", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code></example>
+    </member>
+    <member name="GetExceptionPolicy(string,RequestContext)">
+      <example>
+This sample shows how to call GetExceptionPolicy and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint, credential);
+
+Response response = client.GetExceptionPolicy("MainExceptionPolicy", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteExceptionPolicyAsync(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteExceptionPolicyAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint, credential);
+
+Response response = await client.DeleteExceptionPolicyAsync("MainExceptionPolicy");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeleteExceptionPolicy(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteExceptionPolicy.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint, credential);
+
+Response response = client.DeleteExceptionPolicy("MainExceptionPolicy");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetQueueAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetQueueAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint, credential);
+
+Response<RouterQueue> response = await client.GetQueueAsync("MainQueue");
+]]></code></example>
+    </member>
+    <member name="GetQueue(string,CancellationToken)">
+      <example>
+This sample shows how to call GetQueue.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint, credential);
+
+Response<RouterQueue> response = client.GetQueue("MainQueue");
+]]></code></example>
+    </member>
+    <member name="GetQueueAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetQueueAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint, credential);
+
+Response response = await client.GetQueueAsync("MainQueue", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code></example>
+    </member>
+    <member name="GetQueue(string,RequestContext)">
+      <example>
+This sample shows how to call GetQueue and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint, credential);
+
+Response response = client.GetQueue("MainQueue", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteQueueAsync(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteQueueAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint, credential);
+
+Response response = await client.DeleteQueueAsync("MainQueue");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeleteQueue(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteQueue.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint, credential);
+
+Response response = client.DeleteQueue("MainQueue");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+  </members>
+</doc>

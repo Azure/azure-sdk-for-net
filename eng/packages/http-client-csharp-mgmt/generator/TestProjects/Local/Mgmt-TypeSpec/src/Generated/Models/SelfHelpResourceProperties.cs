@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The SelfHelpResourceProperties. </summary>
     internal partial class SelfHelpResourceProperties
@@ -33,6 +34,7 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> Gets the SelfHelpId. </summary>
+        [WirePath("selfHelpId")]
         public string SelfHelpId { get; }
     }
 }

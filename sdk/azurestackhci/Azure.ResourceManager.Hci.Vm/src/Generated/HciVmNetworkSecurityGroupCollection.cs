@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Hci.Vm
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.Hci.Vm
     /// </summary>
     public partial class HciVmNetworkSecurityGroupCollection : ArmCollection, IEnumerable<HciVmNetworkSecurityGroupResource>, IAsyncEnumerable<HciVmNetworkSecurityGroupResource>
     {
-        private readonly ClientDiagnostics _hciVmNetworkSecurityGroupNetworkSecurityGroupsClientDiagnostics;
-        private readonly NetworkSecurityGroupsRestOperations _hciVmNetworkSecurityGroupNetworkSecurityGroupsRestClient;
+        private readonly ClientDiagnostics _networkSecurityGroupsClientDiagnostics;
+        private readonly NetworkSecurityGroups _networkSecurityGroupsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="HciVmNetworkSecurityGroupCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of HciVmNetworkSecurityGroupCollection for mocking. </summary>
         protected HciVmNetworkSecurityGroupCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HciVmNetworkSecurityGroupCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciVmNetworkSecurityGroupCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HciVmNetworkSecurityGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _hciVmNetworkSecurityGroupNetworkSecurityGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmNetworkSecurityGroupResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(HciVmNetworkSecurityGroupResource.ResourceType, out string hciVmNetworkSecurityGroupNetworkSecurityGroupsApiVersion);
-            _hciVmNetworkSecurityGroupNetworkSecurityGroupsRestClient = new NetworkSecurityGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmNetworkSecurityGroupNetworkSecurityGroupsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(HciVmNetworkSecurityGroupResource.ResourceType, out string hciVmNetworkSecurityGroupApiVersion);
+            _networkSecurityGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmNetworkSecurityGroupResource.ResourceType.Namespace, Diagnostics);
+            _networkSecurityGroupsRestClient = new NetworkSecurityGroups(_networkSecurityGroupsClientDiagnostics, Pipeline, Endpoint, hciVmNetworkSecurityGroupApiVersion ?? "2025-09-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Creates or updates a network security group in the specified resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkSecurityGroups/{networkSecurityGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkSecurityGroups/{networkSecurityGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityGroup_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityGroups_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmNetworkSecurityGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="networkSecurityGroupName"> Name of the network security group. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityGroupName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<HciVmNetworkSecurityGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string networkSecurityGroupName, HciVmNetworkSecurityGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkSecurityGroupName, nameof(networkSecurityGroupName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hciVmNetworkSecurityGroupNetworkSecurityGroupsClientDiagnostics.CreateScope("HciVmNetworkSecurityGroupCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _networkSecurityGroupsClientDiagnostics.CreateScope("HciVmNetworkSecurityGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _hciVmNetworkSecurityGroupNetworkSecurityGroupsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, networkSecurityGroupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new VmArmOperation<HciVmNetworkSecurityGroupResource>(new HciVmNetworkSecurityGroupOperationSource(Client), _hciVmNetworkSecurityGroupNetworkSecurityGroupsClientDiagnostics, Pipeline, _hciVmNetworkSecurityGroupNetworkSecurityGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkSecurityGroupName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkSecurityGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, HciVmNetworkSecurityGroupData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                VmArmOperation<HciVmNetworkSecurityGroupResource> operation = new VmArmOperation<HciVmNetworkSecurityGroupResource>(
+                    new HciVmNetworkSecurityGroupOperationSource(Client),
+                    _networkSecurityGroupsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.Hci.Vm
         /// Creates or updates a network security group in the specified resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkSecurityGroups/{networkSecurityGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkSecurityGroups/{networkSecurityGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityGroup_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityGroups_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmNetworkSecurityGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="networkSecurityGroupName"> Name of the network security group. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityGroupName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<HciVmNetworkSecurityGroupResource> CreateOrUpdate(WaitUntil waitUntil, string networkSecurityGroupName, HciVmNetworkSecurityGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkSecurityGroupName, nameof(networkSecurityGroupName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hciVmNetworkSecurityGroupNetworkSecurityGroupsClientDiagnostics.CreateScope("HciVmNetworkSecurityGroupCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _networkSecurityGroupsClientDiagnostics.CreateScope("HciVmNetworkSecurityGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _hciVmNetworkSecurityGroupNetworkSecurityGroupsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, networkSecurityGroupName, data, cancellationToken);
-                var operation = new VmArmOperation<HciVmNetworkSecurityGroupResource>(new HciVmNetworkSecurityGroupOperationSource(Client), _hciVmNetworkSecurityGroupNetworkSecurityGroupsClientDiagnostics, Pipeline, _hciVmNetworkSecurityGroupNetworkSecurityGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkSecurityGroupName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkSecurityGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, HciVmNetworkSecurityGroupData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                VmArmOperation<HciVmNetworkSecurityGroupResource> operation = new VmArmOperation<HciVmNetworkSecurityGroupResource>(
+                    new HciVmNetworkSecurityGroupOperationSource(Client),
+                    _networkSecurityGroupsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.Hci.Vm
         /// Gets the specified network security group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkSecurityGroups/{networkSecurityGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkSecurityGroups/{networkSecurityGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityGroup_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmNetworkSecurityGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkSecurityGroupName"> Name of the network security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<HciVmNetworkSecurityGroupResource>> GetAsync(string networkSecurityGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkSecurityGroupName, nameof(networkSecurityGroupName));
 
-            using var scope = _hciVmNetworkSecurityGroupNetworkSecurityGroupsClientDiagnostics.CreateScope("HciVmNetworkSecurityGroupCollection.Get");
+            using DiagnosticScope scope = _networkSecurityGroupsClientDiagnostics.CreateScope("HciVmNetworkSecurityGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = await _hciVmNetworkSecurityGroupNetworkSecurityGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkSecurityGroupName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkSecurityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HciVmNetworkSecurityGroupData> response = Response.FromValue(HciVmNetworkSecurityGroupData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HciVmNetworkSecurityGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.Hci.Vm
         /// Gets the specified network security group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkSecurityGroups/{networkSecurityGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkSecurityGroups/{networkSecurityGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityGroup_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmNetworkSecurityGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkSecurityGroupName"> Name of the network security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<HciVmNetworkSecurityGroupResource> Get(string networkSecurityGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkSecurityGroupName, nameof(networkSecurityGroupName));
 
-            using var scope = _hciVmNetworkSecurityGroupNetworkSecurityGroupsClientDiagnostics.CreateScope("HciVmNetworkSecurityGroupCollection.Get");
+            using DiagnosticScope scope = _networkSecurityGroupsClientDiagnostics.CreateScope("HciVmNetworkSecurityGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = _hciVmNetworkSecurityGroupNetworkSecurityGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkSecurityGroupName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkSecurityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HciVmNetworkSecurityGroupData> response = Response.FromValue(HciVmNetworkSecurityGroupData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HciVmNetworkSecurityGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +273,44 @@ namespace Azure.ResourceManager.Hci.Vm
         /// Gets all network security groups in a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkSecurityGroups</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkSecurityGroups. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityGroup_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityGroups_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmNetworkSecurityGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HciVmNetworkSecurityGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HciVmNetworkSecurityGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HciVmNetworkSecurityGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _hciVmNetworkSecurityGroupNetworkSecurityGroupsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hciVmNetworkSecurityGroupNetworkSecurityGroupsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciVmNetworkSecurityGroupResource(Client, HciVmNetworkSecurityGroupData.DeserializeHciVmNetworkSecurityGroupData(e)), _hciVmNetworkSecurityGroupNetworkSecurityGroupsClientDiagnostics, Pipeline, "HciVmNetworkSecurityGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<HciVmNetworkSecurityGroupData, HciVmNetworkSecurityGroupResource>(new NetworkSecurityGroupsGetByResourceGroupAsyncCollectionResultOfT(_networkSecurityGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HciVmNetworkSecurityGroupResource(Client, data));
         }
 
         /// <summary>
         /// Gets all network security groups in a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkSecurityGroups</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkSecurityGroups. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityGroup_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityGroups_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmNetworkSecurityGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +318,61 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <returns> A collection of <see cref="HciVmNetworkSecurityGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HciVmNetworkSecurityGroupResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _hciVmNetworkSecurityGroupNetworkSecurityGroupsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hciVmNetworkSecurityGroupNetworkSecurityGroupsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciVmNetworkSecurityGroupResource(Client, HciVmNetworkSecurityGroupData.DeserializeHciVmNetworkSecurityGroupData(e)), _hciVmNetworkSecurityGroupNetworkSecurityGroupsClientDiagnostics, Pipeline, "HciVmNetworkSecurityGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<HciVmNetworkSecurityGroupData, HciVmNetworkSecurityGroupResource>(new NetworkSecurityGroupsGetByResourceGroupCollectionResultOfT(_networkSecurityGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HciVmNetworkSecurityGroupResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkSecurityGroups/{networkSecurityGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkSecurityGroups/{networkSecurityGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityGroup_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmNetworkSecurityGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkSecurityGroupName"> Name of the network security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string networkSecurityGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkSecurityGroupName, nameof(networkSecurityGroupName));
 
-            using var scope = _hciVmNetworkSecurityGroupNetworkSecurityGroupsClientDiagnostics.CreateScope("HciVmNetworkSecurityGroupCollection.Exists");
+            using DiagnosticScope scope = _networkSecurityGroupsClientDiagnostics.CreateScope("HciVmNetworkSecurityGroupCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _hciVmNetworkSecurityGroupNetworkSecurityGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkSecurityGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkSecurityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<HciVmNetworkSecurityGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HciVmNetworkSecurityGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HciVmNetworkSecurityGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +386,50 @@ namespace Azure.ResourceManager.Hci.Vm
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkSecurityGroups/{networkSecurityGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkSecurityGroups/{networkSecurityGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityGroup_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmNetworkSecurityGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkSecurityGroupName"> Name of the network security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string networkSecurityGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkSecurityGroupName, nameof(networkSecurityGroupName));
 
-            using var scope = _hciVmNetworkSecurityGroupNetworkSecurityGroupsClientDiagnostics.CreateScope("HciVmNetworkSecurityGroupCollection.Exists");
+            using DiagnosticScope scope = _networkSecurityGroupsClientDiagnostics.CreateScope("HciVmNetworkSecurityGroupCollection.Exists");
             scope.Start();
             try
             {
-                var response = _hciVmNetworkSecurityGroupNetworkSecurityGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkSecurityGroupName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkSecurityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<HciVmNetworkSecurityGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HciVmNetworkSecurityGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HciVmNetworkSecurityGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +443,54 @@ namespace Azure.ResourceManager.Hci.Vm
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkSecurityGroups/{networkSecurityGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkSecurityGroups/{networkSecurityGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityGroup_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmNetworkSecurityGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkSecurityGroupName"> Name of the network security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<HciVmNetworkSecurityGroupResource>> GetIfExistsAsync(string networkSecurityGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkSecurityGroupName, nameof(networkSecurityGroupName));
 
-            using var scope = _hciVmNetworkSecurityGroupNetworkSecurityGroupsClientDiagnostics.CreateScope("HciVmNetworkSecurityGroupCollection.GetIfExists");
+            using DiagnosticScope scope = _networkSecurityGroupsClientDiagnostics.CreateScope("HciVmNetworkSecurityGroupCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _hciVmNetworkSecurityGroupNetworkSecurityGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkSecurityGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkSecurityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<HciVmNetworkSecurityGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HciVmNetworkSecurityGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HciVmNetworkSecurityGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<HciVmNetworkSecurityGroupResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new HciVmNetworkSecurityGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +504,54 @@ namespace Azure.ResourceManager.Hci.Vm
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkSecurityGroups/{networkSecurityGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkSecurityGroups/{networkSecurityGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityGroup_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmNetworkSecurityGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkSecurityGroupName"> Name of the network security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<HciVmNetworkSecurityGroupResource> GetIfExists(string networkSecurityGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkSecurityGroupName, nameof(networkSecurityGroupName));
 
-            using var scope = _hciVmNetworkSecurityGroupNetworkSecurityGroupsClientDiagnostics.CreateScope("HciVmNetworkSecurityGroupCollection.GetIfExists");
+            using DiagnosticScope scope = _networkSecurityGroupsClientDiagnostics.CreateScope("HciVmNetworkSecurityGroupCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _hciVmNetworkSecurityGroupNetworkSecurityGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkSecurityGroupName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkSecurityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<HciVmNetworkSecurityGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HciVmNetworkSecurityGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HciVmNetworkSecurityGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<HciVmNetworkSecurityGroupResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new HciVmNetworkSecurityGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +571,7 @@ namespace Azure.ResourceManager.Hci.Vm
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<HciVmNetworkSecurityGroupResource> IAsyncEnumerable<HciVmNetworkSecurityGroupResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

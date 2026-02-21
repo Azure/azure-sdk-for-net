@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- This library is fixed to netstandard2.0. For context, please see:
+    https://github.com/Azure/azure-sdk-tools/pull/5048
+    -->
+    <Version>1.0.0-beta.1</Version>
+    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+    <NoPackageAnalysis>true</NoPackageAnalysis>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <!-- Prevent Azure.ClientSdk.Analyzers from running on this analyzer project -->
+    <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
+    <IsPackable>true</IsPackable>
+    <!-- Include build output in lib/ folder so types can be referenced directly -->
+    <IncludeBuildOutput>true</IncludeBuildOutput>
+    <!-- Mark as development dependency for analyzer usage -->
+    <DevelopmentDependency>true</DevelopmentDependency>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" PrivateAssets="All" />
+    <PackageReference Update="NETStandard.Library" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Package the analyzer assembly in the analyzers/dotnet/cs directory -->
+    <None Include="$(OutputPath)netstandard2.0\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+  </ItemGroup>
+
+</Project>

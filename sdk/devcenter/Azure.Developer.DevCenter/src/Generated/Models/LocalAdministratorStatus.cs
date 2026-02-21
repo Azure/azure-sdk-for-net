@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Developer.DevCenter;
 
 namespace Azure.Developer.DevCenter.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.Developer.DevCenter.Models
     public readonly partial struct LocalAdministratorStatus : IEquatable<LocalAdministratorStatus>
     {
         private readonly string _value;
+        /// <summary> Owners of Dev Boxes in the pool are local administrators on the Dev Boxes. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Owners of Dev Boxes in the pool are not local administrators on the Dev Boxes. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="LocalAdministratorStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LocalAdministratorStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
+            _value = value;
+        }
 
         /// <summary> Owners of Dev Boxes in the pool are local administrators on the Dev Boxes. </summary>
         public static LocalAdministratorStatus Enabled { get; } = new LocalAdministratorStatus(EnabledValue);
+
         /// <summary> Owners of Dev Boxes in the pool are not local administrators on the Dev Boxes. </summary>
         public static LocalAdministratorStatus Disabled { get; } = new LocalAdministratorStatus(DisabledValue);
+
         /// <summary> Determines if two <see cref="LocalAdministratorStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LocalAdministratorStatus left, LocalAdministratorStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LocalAdministratorStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LocalAdministratorStatus left, LocalAdministratorStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LocalAdministratorStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LocalAdministratorStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LocalAdministratorStatus(string value) => new LocalAdministratorStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LocalAdministratorStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LocalAdministratorStatus?(string value) => value == null ? null : new LocalAdministratorStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LocalAdministratorStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LocalAdministratorStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

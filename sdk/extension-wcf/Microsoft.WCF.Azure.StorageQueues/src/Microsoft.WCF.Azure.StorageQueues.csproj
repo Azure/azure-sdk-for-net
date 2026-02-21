@@ -2,10 +2,13 @@
 
   <PropertyGroup>
     <PackageIcon>Icon.png</PackageIcon>
-    <RequiredTargetFrameworks>net8.0</RequiredTargetFrameworks>
-    <TargetFrameworks>net8.0</TargetFrameworks>
+    <RequiredTargetFrameworks>$(RequiredRunnableTargetFrameworks)</RequiredTargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <SupportsNetStandard20>false</SupportsNetStandard20>
     <GenerateErrorForMissingTargetingPacks>false</GenerateErrorForMissingTargetingPacks>
     <Version>1.0.0-beta.1</Version>
+    <AotCompatOptOut>true</AotCompatOptOut>
+    <NoWarn>$(NoWarn);NU1510</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,14 +1,44 @@
 # Release History
 
-## 1.8.0-beta.1 (Unreleased)
+## 1.10.0-beta.1 (Unreleased)
 
 ### Features Added
 
-### Breaking Changes
+- Added `CollectionResult<T>.FromPages` and `AsyncCollectionResult<T>.FromPages` static factory methods that create collection result instances from pre-existing pages of values for testing. 
 
 ### Bugs Fixed
 
+- Fixed implicit conversion operator for `ClientResult<T>` to not throw exceptions on null inputs per Framework Design Guidelines. Null inputs now return `default`.
+
 ### Other Changes
+
+### Breaking Changes
+
+- Added nullability annotation to the `ClientResult<T>` implicit conversion operator parameter to indicate that null is a valid input. This change was made because throwing exceptions from implicit conversions violates the [Framework Design Guidelines](https://learn.microsoft.com/dotnet/standard/design-guidelines/operator-overloads).
+
+## 1.9.0 (2026-01-27)
+
+### Features Added
+
+- Added core support for Microsoft.Extensions.Configuration and Microsoft.Extensions.DependencyInjection.
+- Added `JsonModel<T>` abstract base class that provides a simplified way to implement `IJsonModel<T>` for JSON serialization and deserialization.
+
+### Bugs Fixed
+
+- Fixed an issue with `ClientRetryPolicy` where delays were being calculated using the retry count instead of the attempt count, causing the initial retry to occur without delay and subsequent retries to be performed more quickly than intended.
+
+## 1.8.1 (2025-11-10)
+
+### Bugs Fixed
+
+- Fixed an issue with JsonPatch.TryGetValue throwing instead of returning false in some cases.
+- Fixed an issue with JsonPatch decoding special characters in json when using GetString.
+
+## 1.8.0 (2025-10-31)
+
+### Features Added
+
+- Added `ClientRequestId` property to `PipelineRequest` which exposes the value that is used in logging and distributed tracing.
 
 ## 1.7.0 (2025-09-22)
 

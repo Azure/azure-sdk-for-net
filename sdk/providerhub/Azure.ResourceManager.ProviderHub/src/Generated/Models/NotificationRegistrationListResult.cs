@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NotificationRegistrationListResult"/>. </summary>
-        /// <param name="value"></param>
+        /// <param name="value"> The value. </param>
         /// <param name="nextLink"> The URL to get to the next set of results, if there are any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NotificationRegistrationListResult(IReadOnlyList<NotificationRegistrationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the value. </summary>
+        /// <summary> The value. </summary>
         public IReadOnlyList<NotificationRegistrationData> Value { get; }
         /// <summary> The URL to get to the next set of results, if there are any. </summary>
         public string NextLink { get; }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct ConnectionTlsAuthenticationType : IEquatable<ConnectionTlsAuthenticationType>
     {
         private readonly string _value;
+        /// <summary> Server authentication. </summary>
+        private const string ServerValue = "Server";
+        /// <summary> Mutual TLS. </summary>
+        private const string MutualValue = "Mutual";
 
         /// <summary> Initializes a new instance of <see cref="ConnectionTlsAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConnectionTlsAuthenticationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ServerValue = "Server";
-        private const string MutualValue = "Mutual";
+            _value = value;
+        }
 
         /// <summary> Server authentication. </summary>
         public static ConnectionTlsAuthenticationType Server { get; } = new ConnectionTlsAuthenticationType(ServerValue);
+
         /// <summary> Mutual TLS. </summary>
         public static ConnectionTlsAuthenticationType Mutual { get; } = new ConnectionTlsAuthenticationType(MutualValue);
+
         /// <summary> Determines if two <see cref="ConnectionTlsAuthenticationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConnectionTlsAuthenticationType left, ConnectionTlsAuthenticationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConnectionTlsAuthenticationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConnectionTlsAuthenticationType left, ConnectionTlsAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectionTlsAuthenticationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConnectionTlsAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConnectionTlsAuthenticationType(string value) => new ConnectionTlsAuthenticationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConnectionTlsAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConnectionTlsAuthenticationType?(string value) => value == null ? null : new ConnectionTlsAuthenticationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConnectionTlsAuthenticationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConnectionTlsAuthenticationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

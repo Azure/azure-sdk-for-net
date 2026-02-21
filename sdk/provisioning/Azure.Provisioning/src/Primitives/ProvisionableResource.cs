@@ -30,6 +30,11 @@ public abstract class ProvisionableResource(string bicepIdentifier, ResourceType
     public string? ResourceVersion { get; set; } = resourceVersion;
 
     /// <summary>
+    /// Gets the Bicep metadata for this resource, including decorators and conditions.
+    /// </summary>
+    public BicepMetadata BicepMetadata { get; } = new BicepMetadata();
+
+    /// <summary>
     /// Gets whether this is referencing an existing resource or we're defining
     /// a new resource.
     /// </summary>
@@ -45,7 +50,8 @@ public abstract class ProvisionableResource(string bicepIdentifier, ResourceType
                 foreach (IBicepValue property in ProvisionableProperties.Values)
                 {
                     // Name is the only property that's still settable
-                    if (property.Self?.PropertyName == "Name") { continue; }
+                    if (property.Self?.PropertyName == "Name")
+                    { continue; }
                     property.SetReadOnly();
                 }
             }
@@ -152,6 +158,20 @@ public abstract class ProvisionableResource(string bicepIdentifier, ResourceType
         if (IsExistingResource)
         {
             resource.Existing = true;
+        }
+
+        // Apply Bicep metadata decorators
+        if (BicepMetadata.OnlyIfNotExists)
+        {
+            resource = resource.Decorate("onlyIfNotExists");
+        }
+        if (BicepMetadata.Description is not null)
+        {
+            resource = resource.Decorate("description", BicepSyntax.Value(BicepMetadata.Description));
+        }
+        if (BicepMetadata.BatchSize.HasValue)
+        {
+            resource = resource.Decorate("batchSize", BicepSyntax.Value(BicepMetadata.BatchSize.Value));
         }
 
         yield return resource;

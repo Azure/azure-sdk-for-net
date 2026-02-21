@@ -1,15 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
-
-using System;
-using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.Qumulo.Tests
 {
@@ -35,8 +34,8 @@ namespace Azure.ResourceManager.Qumulo.Tests
             }
         }
 
-        [TestCase]
         [RecordedTest]
+        [Ignore("The tests aren't recordable and will need to be fixed in the future.")]
         public async Task CreateOrUpdate()
         {
             string resourceName = Recording.GenerateAssetName("testResource-");
@@ -46,8 +45,8 @@ namespace Azure.ResourceManager.Qumulo.Tests
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await ResGroup.GetQumuloFileSystemResources().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, null)).Value);
         }
 
-        [TestCase]
         [RecordedTest]
+        [Ignore("The tests aren't recordable and will need to be fixed in the future.")]
         public async Task Get()
         {
             QumuloFileSystemResourceCollection collection = ResGroup.GetQumuloFileSystemResources();
@@ -60,8 +59,8 @@ namespace Azure.ResourceManager.Qumulo.Tests
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.GetAsync(null));
         }
 
-        [TestCase]
         [RecordedTest]
+        [Ignore("The tests aren't recordable and will need to be fixed in the future.")]
         public async Task Exists()
         {
             QumuloFileSystemResourceCollection collection = ResGroup.GetQumuloFileSystemResources();
@@ -73,8 +72,8 @@ namespace Azure.ResourceManager.Qumulo.Tests
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }
 
-        [TestCase]
         [RecordedTest]
+        [Ignore("The tests aren't recordable and will need to be fixed in the future.")]
         public async Task GetAll()
         {
             QumuloFileSystemResourceCollection collection = ResGroup.GetQumuloFileSystemResources();

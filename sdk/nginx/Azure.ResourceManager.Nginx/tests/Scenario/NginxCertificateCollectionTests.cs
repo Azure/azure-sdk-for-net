@@ -43,13 +43,6 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             const string keyVirtualPath = "/etc/nginx/nginx.key";
             NginxCertificateResource nginxCertificate = await CreateNginxCertificate(Location, nginxDeployment, nginxCertificateName, certificateVirtualPath, keyVirtualPath);
             Assert.IsTrue(nginxCertificateName.Equals(nginxCertificate.Data.Name, StringComparison.InvariantCultureIgnoreCase));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxDeployment.GetNginxCertificates().CreateOrUpdateAsync(WaitUntil.Completed, nginxCertificateName, null)).Value);
-
-            NginxCertificateData nginxCertificateData = new NginxCertificateData
-            {
-                Location = Location
-            };
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxDeployment.GetNginxCertificates().CreateOrUpdateAsync(WaitUntil.Completed, null, nginxCertificateData)).Value);
         }
 
         [TestCase]

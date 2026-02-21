@@ -19,7 +19,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.PostgreSql.Tests
 {
-    public class PostgreSqlFlexibleServerTests: PostgreSqlManagementTestBase
+    public class PostgreSqlFlexibleServerTests : PostgreSqlManagementTestBase
     {
         public PostgreSqlFlexibleServerTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
                 Version = "13",
-                Storage = new PostgreSqlFlexibleServerStorage() {StorageSizeInGB = 128},
+                Storage = new PostgreSqlFlexibleServerStorage() { StorageSizeInGB = 128 },
                 CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
                 Backup = new PostgreSqlFlexibleServerBackupProperties()
                 {
-                   BackupRetentionDays = 7
+                    BackupRetentionDays = 7
                 },
                 Network = new PostgreSqlFlexibleServerNetwork(),
                 HighAvailability = new PostgreSqlFlexibleServerHighAvailability() { Mode = PostgreSqlFlexibleServerHighAvailabilityMode.Disabled },
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             // Update
             lro = await server.UpdateAsync(WaitUntil.Completed, new PostgreSqlFlexibleServerPatch()
             {
-                Tags = {{"key", "value"}}
+                Tags = { { "key", "value" } }
             });
             PostgreSqlFlexibleServerResource serverFromUpdate = lro.Value;
             Assert.AreEqual(serverName, serverFromUpdate.Data.Name);
@@ -942,7 +942,8 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             Assert.IsTrue(restore.Data.Identity.UserAssignedIdentities.ContainsKey(identity.Id));
         }
 
-        [TestCase]
+        // Update to Microsoft Entra TODO
+        /* [TestCase]
         [LiveOnly(alwaysRunLocally: false)]
         public async Task AAD()
         {
@@ -1266,7 +1267,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             // Delete targhet geo-restored server
             await targetPublicServer.DeleteAsync(WaitUntil.Completed);
             #endregion
-        }
+        } */
 
         /// <summary>
         /// - Create resource groups for source server and target server in geo-paired locations

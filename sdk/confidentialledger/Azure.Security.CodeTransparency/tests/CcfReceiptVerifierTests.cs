@@ -70,7 +70,7 @@ namespace Azure.Security.CodeTransparency.Tests
 
             Response<JwksDocument> key = client.GetPublicKeys();
 
-            var exception = Assert.Throws<InvalidOperationException>(() =>  CcfReceiptVerifier.VerifyTransparentStatementReceipt(key.Value.Keys[0], receiptBytes,inputSignedPayloadBytes));
+            var exception = Assert.Throws<InvalidOperationException>(() => CcfReceiptVerifier.VerifyTransparentStatementReceipt(key.Value.Keys[0], receiptBytes, inputSignedPayloadBytes));
             StringAssert.Contains(expected: "KID mismatch", exception.Message);
 #endif
         }

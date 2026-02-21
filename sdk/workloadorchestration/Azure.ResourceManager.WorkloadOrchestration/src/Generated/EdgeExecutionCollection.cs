@@ -8,67 +8,66 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.WorkloadOrchestration
 {
     /// <summary>
     /// A class representing a collection of <see cref="EdgeExecutionResource"/> and their operations.
     /// Each <see cref="EdgeExecutionResource"/> in the collection will belong to the same instance of <see cref="EdgeWorkflowVersionResource"/>.
-    /// To get an <see cref="EdgeExecutionCollection"/> instance call the GetEdgeExecutions method from an instance of <see cref="EdgeWorkflowVersionResource"/>.
+    /// To get a <see cref="EdgeExecutionCollection"/> instance call the GetEdgeExecutions method from an instance of <see cref="EdgeWorkflowVersionResource"/>.
     /// </summary>
     public partial class EdgeExecutionCollection : ArmCollection, IEnumerable<EdgeExecutionResource>, IAsyncEnumerable<EdgeExecutionResource>
     {
-        private readonly ClientDiagnostics _edgeExecutionExecutionsClientDiagnostics;
-        private readonly ExecutionsRestOperations _edgeExecutionExecutionsRestClient;
+        private readonly ClientDiagnostics _executionsClientDiagnostics;
+        private readonly Executions _executionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeExecutionCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of EdgeExecutionCollection for mocking. </summary>
         protected EdgeExecutionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeExecutionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeExecutionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EdgeExecutionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _edgeExecutionExecutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeExecutionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(EdgeExecutionResource.ResourceType, out string edgeExecutionExecutionsApiVersion);
-            _edgeExecutionExecutionsRestClient = new ExecutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, edgeExecutionExecutionsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(EdgeExecutionResource.ResourceType, out string edgeExecutionApiVersion);
+            _executionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeExecutionResource.ResourceType.Namespace, Diagnostics);
+            _executionsRestClient = new Executions(_executionsClientDiagnostics, Pipeline, Endpoint, edgeExecutionApiVersion ?? "2025-06-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != EdgeWorkflowVersionResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, EdgeWorkflowVersionResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EdgeWorkflowVersionResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create or update Execution Resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}/versions/{versionName}/executions/{executionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}/versions/{versionName}/executions/{executionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Execution_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Executions_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeExecutionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="executionName"> The name of the Execution. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="executionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="executionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="executionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<EdgeExecutionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string executionName, EdgeExecutionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(executionName, nameof(executionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _edgeExecutionExecutionsClientDiagnostics.CreateScope("EdgeExecutionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _executionsClientDiagnostics.CreateScope("EdgeExecutionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _edgeExecutionExecutionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, executionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeExecutionResource>(new EdgeExecutionOperationSource(Client), _edgeExecutionExecutionsClientDiagnostics, Pipeline, _edgeExecutionExecutionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, executionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _executionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, executionName, EdgeExecutionData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                WorkloadOrchestrationArmOperation<EdgeExecutionResource> operation = new WorkloadOrchestrationArmOperation<EdgeExecutionResource>(
+                    new EdgeExecutionOperationSource(Client),
+                    _executionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Create or update Execution Resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}/versions/{versionName}/executions/{executionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}/versions/{versionName}/executions/{executionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Execution_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Executions_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeExecutionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="executionName"> The name of the Execution. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="executionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="executionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="executionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<EdgeExecutionResource> CreateOrUpdate(WaitUntil waitUntil, string executionName, EdgeExecutionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(executionName, nameof(executionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _edgeExecutionExecutionsClientDiagnostics.CreateScope("EdgeExecutionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _executionsClientDiagnostics.CreateScope("EdgeExecutionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _edgeExecutionExecutionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, executionName, data, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeExecutionResource>(new EdgeExecutionOperationSource(Client), _edgeExecutionExecutionsClientDiagnostics, Pipeline, _edgeExecutionExecutionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, executionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _executionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, executionName, EdgeExecutionData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                WorkloadOrchestrationArmOperation<EdgeExecutionResource> operation = new WorkloadOrchestrationArmOperation<EdgeExecutionResource>(
+                    new EdgeExecutionOperationSource(Client),
+                    _executionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Get Execution Resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}/versions/{versionName}/executions/{executionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}/versions/{versionName}/executions/{executionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Execution_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Executions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeExecutionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="executionName"> The name of the Execution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="executionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="executionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="executionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<EdgeExecutionResource>> GetAsync(string executionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(executionName, nameof(executionName));
 
-            using var scope = _edgeExecutionExecutionsClientDiagnostics.CreateScope("EdgeExecutionCollection.Get");
+            using DiagnosticScope scope = _executionsClientDiagnostics.CreateScope("EdgeExecutionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _edgeExecutionExecutionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, executionName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _executionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, executionName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<EdgeExecutionData> response = Response.FromValue(EdgeExecutionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeExecutionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Get Execution Resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}/versions/{versionName}/executions/{executionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}/versions/{versionName}/executions/{executionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Execution_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Executions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeExecutionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="executionName"> The name of the Execution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="executionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="executionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="executionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<EdgeExecutionResource> Get(string executionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(executionName, nameof(executionName));
 
-            using var scope = _edgeExecutionExecutionsClientDiagnostics.CreateScope("EdgeExecutionCollection.Get");
+            using DiagnosticScope scope = _executionsClientDiagnostics.CreateScope("EdgeExecutionCollection.Get");
             scope.Start();
             try
             {
-                var response = _edgeExecutionExecutionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, executionName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _executionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, executionName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<EdgeExecutionData> response = Response.FromValue(EdgeExecutionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeExecutionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,51 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// List Execution Resources
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}/versions/{versionName}/executions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}/versions/{versionName}/executions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Execution_ListByWorkflowVersion</description>
+        /// <term> Operation Id. </term>
+        /// <description> Executions_ListByWorkflowVersion. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeExecutionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EdgeExecutionResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EdgeExecutionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EdgeExecutionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeExecutionExecutionsRestClient.CreateListByWorkflowVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeExecutionExecutionsRestClient.CreateListByWorkflowVersionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeExecutionResource(Client, EdgeExecutionData.DeserializeEdgeExecutionData(e)), _edgeExecutionExecutionsClientDiagnostics, Pipeline, "EdgeExecutionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<EdgeExecutionData, EdgeExecutionResource>(new ExecutionsGetByWorkflowVersionAsyncCollectionResultOfT(
+                _executionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                context), data => new EdgeExecutionResource(Client, data));
         }
 
         /// <summary>
         /// List Execution Resources
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}/versions/{versionName}/executions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}/versions/{versionName}/executions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Execution_ListByWorkflowVersion</description>
+        /// <term> Operation Id. </term>
+        /// <description> Executions_ListByWorkflowVersion. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeExecutionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +324,68 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <returns> A collection of <see cref="EdgeExecutionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EdgeExecutionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeExecutionExecutionsRestClient.CreateListByWorkflowVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeExecutionExecutionsRestClient.CreateListByWorkflowVersionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeExecutionResource(Client, EdgeExecutionData.DeserializeEdgeExecutionData(e)), _edgeExecutionExecutionsClientDiagnostics, Pipeline, "EdgeExecutionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<EdgeExecutionData, EdgeExecutionResource>(new ExecutionsGetByWorkflowVersionCollectionResultOfT(
+                _executionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                context), data => new EdgeExecutionResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}/versions/{versionName}/executions/{executionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}/versions/{versionName}/executions/{executionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Execution_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Executions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeExecutionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="executionName"> The name of the Execution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="executionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="executionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="executionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string executionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(executionName, nameof(executionName));
 
-            using var scope = _edgeExecutionExecutionsClientDiagnostics.CreateScope("EdgeExecutionCollection.Exists");
+            using DiagnosticScope scope = _executionsClientDiagnostics.CreateScope("EdgeExecutionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _edgeExecutionExecutionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, executionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _executionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, executionName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<EdgeExecutionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeExecutionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeExecutionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +399,50 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}/versions/{versionName}/executions/{executionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}/versions/{versionName}/executions/{executionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Execution_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Executions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeExecutionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="executionName"> The name of the Execution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="executionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="executionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="executionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string executionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(executionName, nameof(executionName));
 
-            using var scope = _edgeExecutionExecutionsClientDiagnostics.CreateScope("EdgeExecutionCollection.Exists");
+            using DiagnosticScope scope = _executionsClientDiagnostics.CreateScope("EdgeExecutionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _edgeExecutionExecutionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, executionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _executionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, executionName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<EdgeExecutionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeExecutionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeExecutionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +456,54 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}/versions/{versionName}/executions/{executionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}/versions/{versionName}/executions/{executionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Execution_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Executions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeExecutionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="executionName"> The name of the Execution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="executionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="executionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="executionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<EdgeExecutionResource>> GetIfExistsAsync(string executionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(executionName, nameof(executionName));
 
-            using var scope = _edgeExecutionExecutionsClientDiagnostics.CreateScope("EdgeExecutionCollection.GetIfExists");
+            using DiagnosticScope scope = _executionsClientDiagnostics.CreateScope("EdgeExecutionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _edgeExecutionExecutionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, executionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _executionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, executionName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<EdgeExecutionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeExecutionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeExecutionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<EdgeExecutionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeExecutionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +517,54 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}/versions/{versionName}/executions/{executionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}/versions/{versionName}/executions/{executionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Execution_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Executions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeExecutionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="executionName"> The name of the Execution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="executionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="executionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="executionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<EdgeExecutionResource> GetIfExists(string executionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(executionName, nameof(executionName));
 
-            using var scope = _edgeExecutionExecutionsClientDiagnostics.CreateScope("EdgeExecutionCollection.GetIfExists");
+            using DiagnosticScope scope = _executionsClientDiagnostics.CreateScope("EdgeExecutionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _edgeExecutionExecutionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, executionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _executionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, executionName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<EdgeExecutionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeExecutionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeExecutionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<EdgeExecutionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeExecutionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +584,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<EdgeExecutionResource> IAsyncEnumerable<EdgeExecutionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

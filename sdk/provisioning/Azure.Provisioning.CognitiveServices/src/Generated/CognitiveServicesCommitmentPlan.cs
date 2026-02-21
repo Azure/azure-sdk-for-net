@@ -118,7 +118,7 @@ public partial class CognitiveServicesCommitmentPlan : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the CognitiveServicesCommitmentPlan.</param>
     public CognitiveServicesCommitmentPlan(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.CognitiveServices/commitmentPlans", resourceVersion ?? "2024-10-01")
+        : base(bicepIdentifier, "Microsoft.CognitiveServices/commitmentPlans", resourceVersion ?? "2025-09-01")
     {
     }
 
@@ -128,6 +128,7 @@ public partial class CognitiveServicesCommitmentPlan : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _kind = DefineProperty<string>("Kind", ["kind"]);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
@@ -144,6 +145,16 @@ public partial class CognitiveServicesCommitmentPlan : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-09-01.
+        /// </summary>
+        public static readonly string V2025_09_01 = "2025-09-01";
+
+        /// <summary>
+        /// 2025-06-01.
+        /// </summary>
+        public static readonly string V2025_06_01 = "2025-06-01";
+
         /// <summary>
         /// 2024-10-01.
         /// </summary>

@@ -1,3 +1,9 @@
+
+parameters:
+  - name: TokenTimeoutInHours
+    type: number
+    default: 1
+
 steps:
   - pwsh: |
       Write-Host "Setting vcpkg cache variables for read only access to vcpkg binary and asset caches"
@@ -12,6 +18,7 @@ steps:
         azureSubscription: 'Azure SDK Artifacts'
         ScriptType: FilePath
         ScriptPath: eng/common/scripts/Set-VcpkgWriteModeCache.ps1
+        ScriptArguments: -TokenTimeoutInHours ${{ parameters.TokenTimeoutInHours }}
         azurePowerShellVersion: LatestVersion
         pwsh: true
       # This step is idempotent and can be run multiple times in cases of

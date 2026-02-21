@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceMovePolicy"/>. </summary>
-        /// <param name="isValidationRequired"></param>
-        /// <param name="isCrossResourceGroupMoveEnabled"></param>
-        /// <param name="isCrossSubscriptionMoveEnabled"></param>
+        /// <param name="isValidationRequired"> Whether validation is required. </param>
+        /// <param name="isCrossResourceGroupMoveEnabled"> Whether cross resource group move is enabled. </param>
+        /// <param name="isCrossSubscriptionMoveEnabled"> Whether cross subscription move is enabled. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourceMovePolicy(bool? isValidationRequired, bool? isCrossResourceGroupMoveEnabled, bool? isCrossSubscriptionMoveEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the is validation required. </summary>
+        /// <summary> Whether validation is required. </summary>
         public bool? IsValidationRequired { get; set; }
-        /// <summary> Gets or sets the is cross resource group move enabled. </summary>
+        /// <summary> Whether cross resource group move is enabled. </summary>
         public bool? IsCrossResourceGroupMoveEnabled { get; set; }
-        /// <summary> Gets or sets the is cross subscription move enabled. </summary>
+        /// <summary> Whether cross subscription move is enabled. </summary>
         public bool? IsCrossSubscriptionMoveEnabled { get; set; }
     }
 }

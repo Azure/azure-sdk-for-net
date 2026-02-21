@@ -86,6 +86,7 @@ namespace Azure.ResourceManager.Compute.Samples
 {
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/disk123"),
 }},
+                InstantAccessDurationMinutes = 120,
             };
             ArmOperation<RestorePointResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, restorePointName, data);
             RestorePointResource result = lro.Value;

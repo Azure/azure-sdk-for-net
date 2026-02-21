@@ -67,6 +67,7 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         public static readonly System.TimeSpan StandardTimeout = System.TimeSpan.FromSeconds(30);
         public static readonly System.TimeSpan ExtendedTimeout = System.TimeSpan.FromMinutes(2);
         public static readonly System.TimeSpan AnimationTimeout = System.TimeSpan.FromSeconds(10);
+        public static readonly System.TimeSpan McpTimeout = System.TimeSpan.FromSeconds(90);
 
         // ===== Audio Sample Rates =====
         public const int SampleRate16kHz = 16000;
@@ -86,5 +87,15 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         public const string StatusIncomplete = "incomplete";
         public const string StatusFailed = "failed";
         public const string StatusCancelled = "cancelled";
+
+        // ===== MCP Server Configuration =====
+        public const string MicrosoftLearnMcpServerUrl = "https://learn.microsoft.com/api/mcp";
+        public const string MicrosoftLearnMcpServerLabel = "microsoft-learn";
+
+        // ===== Agent Session Configuration =====
+        public const string TestAgentName = "VoiceLiveIntegrationTestAgentV2";
+        public const string TestAgentVersion = "1";
+        public const string TestAgentProjectName = "test-project";
+        public const string TestAgentDescription = "You are a helpful math assistant. When asked a math question, solve it step by step and provide the answer.";
     }
 }

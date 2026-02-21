@@ -93,6 +93,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("match"u8);
                 writer.WriteObjectValue(Match, options);
             }
+            if (Optional.IsDefined(IsProbeProxyProtocolHeaderEnabled))
+            {
+                writer.WritePropertyName("enableProbeProxyProtocolHeader"u8);
+                writer.WriteBooleanValue(IsProbeProxyProtocolHeaderEnabled.Value);
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -140,6 +145,7 @@ namespace Azure.ResourceManager.Network.Models
             bool? pickHostNameFromBackendSettings = default;
             int? minServers = default;
             ApplicationGatewayProbeHealthResponseMatch match = default;
+            bool? enableProbeProxyProtocolHeader = default;
             NetworkProvisioningState? provisioningState = default;
             int? port = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -269,6 +275,15 @@ namespace Azure.ResourceManager.Network.Models
                             match = ApplicationGatewayProbeHealthResponseMatch.DeserializeApplicationGatewayProbeHealthResponseMatch(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("enableProbeProxyProtocolHeader"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableProbeProxyProtocolHeader = property0.Value.GetBoolean();
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -312,6 +327,7 @@ namespace Azure.ResourceManager.Network.Models
                 pickHostNameFromBackendSettings,
                 minServers,
                 match,
+                enableProbeProxyProtocolHeader,
                 provisioningState,
                 port);
         }
@@ -547,6 +563,22 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     builder.Append("    match: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Match, options, 4, false, "    match: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsProbeProxyProtocolHeaderEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    enableProbeProxyProtocolHeader: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsProbeProxyProtocolHeaderEnabled))
+                {
+                    builder.Append("    enableProbeProxyProtocolHeader: ");
+                    var boolValue = IsProbeProxyProtocolHeaderEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 

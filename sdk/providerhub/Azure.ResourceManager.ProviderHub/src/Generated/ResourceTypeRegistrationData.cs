@@ -59,14 +59,18 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"></param>
+        /// <param name="kind"> Resource type registration kind. This Metadata is also used by portal/tooling/etc to render different UX experiences for resources of the same type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceTypeRegistrationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceTypeRegistrationProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ResourceTypeRegistrationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceTypeRegistrationProperties properties, ResourceTypeRegistrationKind? kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the properties. </summary>
         public ResourceTypeRegistrationProperties Properties { get; set; }
+        /// <summary> Resource type registration kind. This Metadata is also used by portal/tooling/etc to render different UX experiences for resources of the same type. </summary>
+        public ResourceTypeRegistrationKind? Kind { get; set; }
     }
 }

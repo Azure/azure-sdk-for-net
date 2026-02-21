@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary></summary>
     public partial class FooResource : IJsonModel<FooData>
@@ -27,11 +27,11 @@ namespace MgmtTypeSpec
         FooData IJsonModel<FooData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FooData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FooData>(Data, options, MgmtTypeSpecContext.Default);
+        BinaryData IPersistableModel<FooData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FooData>(Data, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FooData IPersistableModel<FooData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FooData>(data, options, MgmtTypeSpecContext.Default);
+        FooData IPersistableModel<FooData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FooData>(data, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FooData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

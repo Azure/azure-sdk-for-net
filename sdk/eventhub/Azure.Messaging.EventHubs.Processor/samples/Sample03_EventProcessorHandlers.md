@@ -138,9 +138,9 @@ Task processErrorHandler(ProcessErrorEventArgs args)
         }
 
         Debug.WriteLine("Error in the EventProcessorClient");
-        Debug.WriteLine($"\tOperation: { args.Operation ?? "Unknown" }");
-        Debug.WriteLine($"\tPartition: { args.PartitionId ?? "None" }");
-        Debug.WriteLine($"\tException: { args.Exception }");
+        Debug.WriteLine($"\tOperation: {args.Operation ?? "Unknown"}");
+        Debug.WriteLine($"\tPartition: {args.PartitionId ?? "None"}");
+        Debug.WriteLine($"\tException: {args.Exception}");
         Debug.WriteLine("");
     }
     catch
@@ -237,9 +237,9 @@ async Task processErrorHandler(ProcessErrorEventArgs args)
         // Always log the exception.
 
         Debug.WriteLine("Error in the EventProcessorClient");
-        Debug.WriteLine($"\tOperation: { args.Operation ?? "Unknown" }");
-        Debug.WriteLine($"\tPartition: { args.PartitionId ?? "None" }");
-        Debug.WriteLine($"\tException: { args.Exception }");
+        Debug.WriteLine($"\tOperation: {args.Operation ?? "Unknown"}");
+        Debug.WriteLine($"\tPartition: {args.PartitionId ?? "None"}");
+        Debug.WriteLine($"\tException: {args.Exception}");
         Debug.WriteLine("");
 
         // If cancellation was requested, assume that
@@ -343,7 +343,7 @@ Task initializeEventHandler(PartitionInitializingEventArgs args)
             return Task.CompletedTask;
         }
 
-        Debug.WriteLine($"Initialize partition: { args.PartitionId }");
+        Debug.WriteLine($"Initialize partition: {args.PartitionId}");
 
         // If no checkpoint was found, start processing
         // events enqueued now or in the future.
@@ -430,8 +430,8 @@ Task closeEventHandler(PartitionClosingEventArgs args)
             _ => args.Reason.ToString()
         };
 
-        Debug.WriteLine($"Closing partition: { args.PartitionId }");
-        Debug.WriteLine($"\tReason: { description }");
+        Debug.WriteLine($"Closing partition: {args.PartitionId}");
+        Debug.WriteLine($"\tReason: {description}");
     }
     catch
     {

@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary></summary>
     public partial class EndpointResource : IJsonModel<EndpointResourceData>
@@ -27,11 +27,11 @@ namespace MgmtTypeSpec
         EndpointResourceData IJsonModel<EndpointResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EndpointResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EndpointResourceData>(Data, options, MgmtTypeSpecContext.Default);
+        BinaryData IPersistableModel<EndpointResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EndpointResourceData>(Data, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EndpointResourceData IPersistableModel<EndpointResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EndpointResourceData>(data, options, MgmtTypeSpecContext.Default);
+        EndpointResourceData IPersistableModel<EndpointResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EndpointResourceData>(data, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<EndpointResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

@@ -5,7 +5,6 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,7 +28,7 @@ public class TestProxyProcess
     private static readonly object _lock = new();
     private static TestProxyProcess? _shared;
     private readonly StringBuilder _output = new();
-    private static readonly bool s_enableDebugProxyLogging;
+    private static readonly int s_toolRestoreTimeoutMs = 6000;
 
     internal virtual TestProxyAdminClient AdminClient { get; }
     internal virtual TestProxyClient ProxyClient { get; }
@@ -37,7 +36,6 @@ public class TestProxyProcess
     /// <summary>
     /// The IP address used for the test proxy. Uses 127.0.0.1 instead of localhost to avoid SSL callback slowness.
     /// </summary>
-    // for some reason using localhost instead of the ip address causes slowness when combined with SSL callback being specified
     public const string IpAddress = "127.0.0.1";
 
     /// <summary>
@@ -57,22 +55,7 @@ public class TestProxyProcess
     /// <exception cref="InvalidOperationException">Thrown when the .NET installation directory is not found.</exception>
     static TestProxyProcess()
     {
-        string? installDir = Environment.GetEnvironmentVariable("DOTNET_INSTALL_DIR");
-        var dotNetExeName = "dotnet" + (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? ".exe" : "");
-        if (!HasDotNetExe(installDir))
-        {
-            installDir = Environment.GetEnvironmentVariable("PATH")?.Split(Path.PathSeparator).FirstOrDefault(HasDotNetExe);
-        }
-
-        if (installDir == null)
-        {
-            throw new InvalidOperationException("DOTNET install directory was not found");
-        }
-
-        s_dotNetExe = Path.Combine(installDir, dotNetExeName);
-
-        bool HasDotNetExe(string? dotnetDir) => dotnetDir != null && File.Exists(Path.Combine(dotnetDir, dotNetExeName));
-        s_enableDebugProxyLogging = TestEnvironment.EnableTestProxyDebugLogs;
+        s_dotNetExe = TryGetDotnetExePath();
     }
 
     // For mocking
@@ -89,6 +72,14 @@ public class TestProxyProcess
     /// <param name="debugMode">If true, uses predefined ports 5000 and 5001 for debugging.</param>
     private TestProxyProcess(string? proxyPath, bool debugMode = false)
     {
+        // DevCertPath is optional - if null, the test proxy will run without HTTPS support
+        var devCertPath = TestEnvironment.DevCertPath;
+
+        if (devCertPath != null && !File.Exists(devCertPath))
+        {
+            Console.WriteLine($"Warning: Dev certificate not found at {devCertPath}. HTTPS tests may not work.");
+        }
+
         bool.TryParse(Environment.GetEnvironmentVariable("PROXY_DEBUG_MODE"), out bool environmentDebugMode);
 
         debugMode |= environmentDebugMode;
@@ -110,17 +101,18 @@ public class TestProxyProcess
                 $"tool run test-proxy start -u --storage-location=\"{TestEnvironment.RepositoryRoot}\"");
         }
 
+        testProxyProcessInfo.WorkingDirectory = TestEnvironment.RepositoryRoot;
         testProxyProcessInfo.UseShellExecute = false;
         testProxyProcessInfo.RedirectStandardOutput = true;
         testProxyProcessInfo.RedirectStandardError = true;
 
         // Set environment variables
         testProxyProcessInfo.EnvironmentVariables["ASPNETCORE_URLS"] = $"http://{IpAddress}:0;https://{IpAddress}:0";
-        testProxyProcessInfo.EnvironmentVariables["Logging__LogLevel__Azure.Sdk.Tools.TestProxy"] = s_enableDebugProxyLogging ? "Debug" : "Error";
+        testProxyProcessInfo.EnvironmentVariables["Logging__LogLevel__Azure.Sdk.Tools.TestProxy"] = TestEnvironment.EnableTestProxyDebugLogs ? "Debug" : "Error";
         testProxyProcessInfo.EnvironmentVariables["Logging__LogLevel__Default"] = "Error";
-        testProxyProcessInfo.EnvironmentVariables["Logging__LogLevel__Microsoft.AspNetCore"] = s_enableDebugProxyLogging ? "Information" : "Error";
+        testProxyProcessInfo.EnvironmentVariables["Logging__LogLevel__Microsoft.AspNetCore"] = TestEnvironment.EnableTestProxyDebugLogs ? "Information" : "Error";
         testProxyProcessInfo.EnvironmentVariables["Logging__LogLevel__Microsoft.Hosting.Lifetime"] = "Information";
-        testProxyProcessInfo.EnvironmentVariables["ASPNETCORE_Kestrel__Certificates__Default__Path"] = TestEnvironment.DevCertPath;
+        testProxyProcessInfo.EnvironmentVariables["ASPNETCORE_Kestrel__Certificates__Default__Path"] = devCertPath;
         testProxyProcessInfo.EnvironmentVariables["ASPNETCORE_Kestrel__Certificates__Default__Password"] = TestEnvironment.DevCertPassword;
 
         _testProxyProcess = Process.Start(testProxyProcessInfo);
@@ -200,69 +192,6 @@ public class TestProxyProcess
             });
     }
 
-    private static bool TryParsePort(string? output, string scheme, out int? port)
-    {
-        if (output == null)
-        {
-            TestContext.Progress.WriteLine("output was null");
-            port = null;
-            return false;
-        }
-        string nowListeningOn = "Now listening on: ";
-        int nowListeningOnLength = nowListeningOn.Length;
-        var index = output.IndexOf($"{nowListeningOn}{scheme}:", StringComparison.CurrentCultureIgnoreCase);
-        if (index > -1)
-        {
-            var start = index + nowListeningOnLength;
-            var uri = output.Substring(start, output.Length - start).Trim();
-            port = new Uri(uri).Port;
-            return true;
-        }
-
-        port = null;
-        return false;
-    }
-
-    private static void TryRestoreLocalTools()
-    {
-        try
-        {
-            var currentDir = Directory.GetCurrentDirectory();
-            while (currentDir != null)
-            {
-                var toolsJsonPath = Path.Combine(currentDir, ".config", "dotnet-tools.json");
-                if (File.Exists(toolsJsonPath))
-                {
-                    // Found a tools manifest, try to restore
-                    var processInfo = new ProcessStartInfo
-                    {
-                        FileName = s_dotNetExe,
-                        Arguments = "tool restore",
-                        WorkingDirectory = currentDir,
-                        UseShellExecute = false,
-                        RedirectStandardOutput = true,
-                        RedirectStandardError = true,
-                        CreateNoWindow = true
-                    };
-
-                    using var process = Process.Start(processInfo);
-                    if (process != null)
-                    {
-                        process.WaitForExit(30000);
-                    }
-                    break;
-                }
-
-                var parentDir = Directory.GetParent(currentDir);
-                currentDir = parentDir?.FullName;
-            }
-        }
-        catch
-        {
-            // If restore fails, silently continue - the dotnet test-proxy command will handle it
-        }
-    }
-
     /// <summary>
     /// Starts the test proxy
     /// </summary>
@@ -295,18 +224,6 @@ public class TestProxyProcess
         }
     }
 
-    private static string? GetTestProxyPath()
-    {
-        // Look for environment variable override
-        var envPath = Environment.GetEnvironmentVariable("TEST_PROXY_EXE_PATH");
-        if (!string.IsNullOrEmpty(envPath))
-        {
-            return envPath;
-        }
-
-        return null;
-    }
-
     /// <summary>
     /// Checks the test proxy output for any logged information and errors.
     /// If debug logging is enabled, outputs the collected logs and clears the buffer.
@@ -314,7 +231,7 @@ public class TestProxyProcess
     /// <returns>A task representing the asynchronous operation.</returns>
     public virtual async Task CheckProxyOutputAsync()
     {
-        if (s_enableDebugProxyLogging)
+        if (TestEnvironment.EnableTestProxyDebugLogs)
         {
             // add a small delay to allow the log output for the just finished test to be collected into the _output StringBuilder
             await Task.Delay(20).ConfigureAwait(false);
@@ -333,5 +250,113 @@ public class TestProxyProcess
             _errorBuffer.Clear();
             throw new InvalidOperationException($"An error occurred in the test proxy: {error}");
         }
+    }
+
+    // This method is internal to allow unit tests to access and verify port parsing logic.
+    // It should not be used outside of testing scenarios. Do not make this public.
+    internal static bool TryParsePort(string? output, string scheme, out int? port)
+    {
+        if (output == null)
+        {
+            TestContext.Progress.WriteLine("output was null");
+            port = null;
+            return false;
+        }
+        string nowListeningOn = "Now listening on: ";
+        int nowListeningOnLength = nowListeningOn.Length;
+        var index = output.IndexOf($"{nowListeningOn}{scheme}:", StringComparison.CurrentCultureIgnoreCase);
+        if (index > -1)
+        {
+            var start = index + nowListeningOnLength;
+            var uri = output.Substring(start, output.Length - start).Trim();
+            port = new Uri(uri).Port;
+            return true;
+        }
+
+        port = null;
+        return false;
+    }
+
+    // This method is internal to allow access from test code. It would otherwise be private,
+    // but is exposed specifically for testing purposes.
+    internal static void TryRestoreLocalTools()
+    {
+        try
+        {
+            var processInfo = new ProcessStartInfo
+            {
+                FileName = s_dotNetExe,
+                Arguments = "tool restore",
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                CreateNoWindow = true,
+                WorkingDirectory = TestEnvironment.RepositoryRoot
+            };
+
+            using var process = Process.Start(processInfo);
+            if (process != null)
+            {
+                var completed = process.WaitForExit(s_toolRestoreTimeoutMs);
+
+                if (!completed)
+                {
+                    try
+                    { process.Kill(); }
+                    catch (Exception ex)
+                    {
+                        TestContext.Progress.WriteLine($"Exception during process cleanup (Kill): {ex.Message}");
+                    }
+                }
+                else if (process.ExitCode != 0)
+                {
+                    var errorOutput = process.StandardError.ReadToEnd();
+                    var standardOutput = process.StandardOutput.ReadToEnd();
+
+                    if (!string.IsNullOrEmpty(errorOutput) || !string.IsNullOrEmpty(standardOutput))
+                    {
+                        TestContext.Progress.WriteLine($"dotnet tool restore failed (exit code {process.ExitCode}):");
+                        if (!string.IsNullOrEmpty(standardOutput))
+                            TestContext.Progress.WriteLine($"stdout: {standardOutput}");
+                        if (!string.IsNullOrEmpty(errorOutput))
+                            TestContext.Progress.WriteLine($"stderr: {errorOutput}");
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            TestContext.Progress.WriteLine($"Error trying to run dotnet tool restore: {ex.Message}");
+        }
+    }
+
+    private static string? GetTestProxyPath()
+    {
+        // Look for environment variable override
+        var envPath = Environment.GetEnvironmentVariable("TEST_PROXY_EXE_PATH");
+        if (!string.IsNullOrEmpty(envPath))
+        {
+            return envPath;
+        }
+
+        return null;
+    }
+
+    private static string TryGetDotnetExePath()
+    {
+        string? installDir = Environment.GetEnvironmentVariable("DOTNET_INSTALL_DIR");
+        var dotNetExeName = "dotnet" + (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? ".exe" : "");
+        if (!HasDotNetExe(installDir))
+        {
+            installDir = Environment.GetEnvironmentVariable("PATH")?.Split(Path.PathSeparator).FirstOrDefault(HasDotNetExe);
+        }
+
+        if (installDir == null)
+        {
+            throw new InvalidOperationException("DOTNET install directory was not found");
+        }
+
+        bool HasDotNetExe(string? dotnetDir) => dotnetDir != null && File.Exists(Path.Combine(dotnetDir, dotNetExeName));
+        return Path.Combine(installDir, dotNetExeName);
     }
 }

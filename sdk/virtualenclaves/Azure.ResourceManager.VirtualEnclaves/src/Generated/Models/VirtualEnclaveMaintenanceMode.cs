@@ -7,54 +7,75 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.VirtualEnclaves;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
-    /// <summary> The MaintenanceModeConfigurationModelMode. </summary>
+    /// <summary></summary>
     public readonly partial struct VirtualEnclaveMaintenanceMode : IEquatable<VirtualEnclaveMaintenanceMode>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="VirtualEnclaveMaintenanceMode"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public VirtualEnclaveMaintenanceMode(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string OnValue = "On";
         private const string CanNotDeleteValue = "CanNotDelete";
         private const string OffValue = "Off";
         private const string GeneralValue = "General";
         private const string AdvancedValue = "Advanced";
 
-        /// <summary> On. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualEnclaveMaintenanceMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public VirtualEnclaveMaintenanceMode(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the On. </summary>
         public static VirtualEnclaveMaintenanceMode On { get; } = new VirtualEnclaveMaintenanceMode(OnValue);
-        /// <summary> CanNotDelete. </summary>
+
+        /// <summary> Gets the CanNotDelete. </summary>
         public static VirtualEnclaveMaintenanceMode CanNotDelete { get; } = new VirtualEnclaveMaintenanceMode(CanNotDeleteValue);
-        /// <summary> Off. </summary>
+
+        /// <summary> Gets the Off. </summary>
         public static VirtualEnclaveMaintenanceMode Off { get; } = new VirtualEnclaveMaintenanceMode(OffValue);
-        /// <summary> General. </summary>
+
+        /// <summary> Gets the General. </summary>
         public static VirtualEnclaveMaintenanceMode General { get; } = new VirtualEnclaveMaintenanceMode(GeneralValue);
-        /// <summary> Advanced. </summary>
+
+        /// <summary> Gets the Advanced. </summary>
         public static VirtualEnclaveMaintenanceMode Advanced { get; } = new VirtualEnclaveMaintenanceMode(AdvancedValue);
+
         /// <summary> Determines if two <see cref="VirtualEnclaveMaintenanceMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VirtualEnclaveMaintenanceMode left, VirtualEnclaveMaintenanceMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VirtualEnclaveMaintenanceMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VirtualEnclaveMaintenanceMode left, VirtualEnclaveMaintenanceMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualEnclaveMaintenanceMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VirtualEnclaveMaintenanceMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VirtualEnclaveMaintenanceMode(string value) => new VirtualEnclaveMaintenanceMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VirtualEnclaveMaintenanceMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VirtualEnclaveMaintenanceMode?(string value) => value == null ? null : new VirtualEnclaveMaintenanceMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VirtualEnclaveMaintenanceMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VirtualEnclaveMaintenanceMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -22,7 +22,7 @@ namespace Azure.Analytics.OnlineExperimentation
                   definition: null,
                   eTag: default,
                   lastModifiedAt: default,
-                  serializedAdditionalRawData: null)
+                  additionalBinaryDataProperties: null)
         {
         }
 

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
 
@@ -20,6 +21,7 @@ public class BasicContainerRegistryTests
                 ContainerRegistryService registry =
                     new(nameof(registry), ContainerRegistryService.ResourceVersions.V2023_07_01)
                     {
+                        Name = BicepFunction.Take(BicepFunction.Interpolate($"registry{BicepFunction.GetUniqueString(BicepFunction.GetResourceGroup().Id)}"), 50),
                         Sku = new ContainerRegistrySku { Name = ContainerRegistrySkuName.Standard },
                         IsAdminUserEnabled = false,
                         Tags = { { "displayName", "ContainerRegistry" } }

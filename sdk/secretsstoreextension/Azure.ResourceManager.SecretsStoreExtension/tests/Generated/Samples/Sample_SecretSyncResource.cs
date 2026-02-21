@@ -103,7 +103,6 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Samples
                 {
                     SecretProviderClassName = "jttlpenhtpxfrrlxdsmqqvmvtmgqrficvqngkggjwciilrexenlstxncyvkqcydxrivkioujssncoaiysdklfouukczzdbxniipbyiqsarqaespuqrbbydwtdaulllostoomntkadklihemfpeffvuyvyilequiqewzspaootvkibrynbqrsbiptjdhywynvydaadprdc",
                     ServiceAccountName = "fcldqfdfpktndlntuoxicsftelhefevovmlycflfwzckvamiqjnjugandqaqqeccsbzztfmmeunvhsafgerbcsdbnmsyqivygornebbkusuvphwghgouxvcbvmbydqjzoxextnyowsnyymadniwdrrxtogeveldpejixmsrzzfqkquaxdpzwvecevqwasxgxxchrfa",
-                    KubernetesSecretType = KubernetesSecretType.Opaque,
                     ForceSynchronization = "arbitrarystring",
                     ObjectSecretMapping = { new KubernetesSecretObjectMapping("ssrzmbvdiomkvzrdsyilwlfzicfydnbjwjsnohrppkukjddrunfslkrnexunuckmghixdssposvndpiqchpqrkjuqbapoisvqdvgstvdonsmlpsmticfvuhqlofpaxfdg", "lojegeqiqfjxyblfxhxloccqzwgpgcelrwqwsbsltcjvjvceejgdrmxhenokxrylhynkltvqntjcvujjrppzvcxyivxeksgmzhifrcklizbpntdepzdl") },
                 },

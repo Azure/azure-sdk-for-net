@@ -1,6 +1,6 @@
 # Release History
 
-## 1.6.0-beta.1 (Unreleased)
+## 1.7.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,14 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.6.0 (2025-10-24)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2025-01' to 'package-2025-06'. Tag details available at https://github.com/Azure/azure-rest-api-specs/blob/1e7684349abdacee94cbf89200f319cd49e323f2/specification/storage/resource-manager/readme.md.
+    - Supported new property GeoPriorityReplicationStatus.IsBlobEnabled on Storage accounts.
+    - Supported new ObjectReplicationPolicy Properties: PriorityReplication.Enabled.
 
 ## 1.5.0 (2025-09-26)
 
@@ -339,21 +347,21 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Storage.Models;
 ```
 ```C# Snippet:Create_Storage_Account
-string accountName = "myaccount";
-string resourceGroupName = "myResourceGroup";
-ArmClient client = new ArmClient(new DefaultAzureCredential());
-ResourceGroupResource resourceGroup = client.GetDefaultSubscription().GetResourceGroups().Get(resourceGroupName);
-StorageAccountCollection storageAccountCollection = resourceGroup.GetStorageAccounts();
-StorageSku sku = new StorageSku(StorageSkuName.PremiumLrs);
-StorageAccountCreateOrUpdateContent parameters = new StorageAccountCreateOrUpdateContent(sku, StorageKind.Storage, AzureLocation.WestUS)
+        string accountName = "myaccount";
+        string resourceGroupName = "myResourceGroup";
+        ArmClient client = new ArmClient(new DefaultAzureCredential());
+        ResourceGroupResource resourceGroup = client.GetDefaultSubscription().GetResourceGroups().Get(resourceGroupName);
+        StorageAccountCollection storageAccountCollection = resourceGroup.GetStorageAccounts();
+        StorageSku sku = new StorageSku(StorageSkuName.PremiumLrs);
+        StorageAccountCreateOrUpdateContent parameters = new StorageAccountCreateOrUpdateContent(sku, StorageKind.Storage, AzureLocation.WestUS)
+        {
+            Tags =
 {
-    Tags =
-    {
-        ["key1"] = "value1",
-        ["key2"] = "value2"
-    }
-};
-StorageAccountResource account = storageAccountCollection.CreateOrUpdate(WaitUntil.Completed, accountName, parameters).Value;
+    ["key1"] = "value1",
+    ["key2"] = "value2"
+}
+        };
+        StorageAccountResource account = storageAccountCollection.CreateOrUpdate(WaitUntil.Completed, accountName, parameters).Value;
 ```
 
 #### Object Model Changes

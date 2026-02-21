@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.ManagedServiceIdentities</PackageId>
     <Description>Microsoft Azure management client SDK for Azure resource provider Microsoft.ManagedIdentity.</Description>
     <PackageTags>azure;management;arm;resource manager;managedserviceidentities;managedserviceidentity;msi;managed service identity; managed identity</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

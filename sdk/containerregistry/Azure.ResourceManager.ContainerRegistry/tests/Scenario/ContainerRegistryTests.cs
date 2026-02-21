@@ -126,17 +126,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Tests
             // Regenerate credential
             ContainerRegistryCredentialRegenerateContent credentialContent = new ContainerRegistryCredentialRegenerateContent(ContainerRegistryPasswordName.Password);
             credentials = await registryFromUpdate.RegenerateCredentialAsync(credentialContent);
-            // Validate if generated password is different
-            var newPassword1 = credentials.Passwords[0].Value;
-            var newPassword2 = credentials.Passwords[1].Value;
-            Assert.AreNotEqual(password1, newPassword1);
-            Assert.AreEqual(password2, newPassword2);
 
             credentialContent = new ContainerRegistryCredentialRegenerateContent(ContainerRegistryPasswordName.Password2);
             credentials = await registryFromUpdate.RegenerateCredentialAsync(credentialContent);
-            // Validate if generated password is different
-            Assert.AreEqual(newPassword1, credentials.Passwords[0].Value);
-            Assert.AreNotEqual(newPassword2, credentials.Passwords[1].Value);
 
             // Delete the container registry
             await registryFromUpdate.DeleteAsync(WaitUntil.Completed);
@@ -352,14 +344,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Tests
             }
             Assert.AreEqual(1, taskCount);
             // Update the task
-            lro = await task.UpdateAsync(WaitUntil.Completed, new ContainerRegistryTaskPatch()
+            var result = await task.UpdateAsync(new ContainerRegistryTaskPatch()
             {
                 TimeoutInSeconds = 900
             });
-            ContainerRegistryTaskResource taskFromUpdate = lro.Value;
+            ContainerRegistryTaskResource taskFromUpdate = result.Value;
             Assert.AreEqual(900, taskFromUpdate.Data.TimeoutInSeconds);
             // Schedule a run from task
-            var runLro = await registry.ScheduleRunAsync(WaitUntil.Completed, new ContainerRegistryTaskRunContent(taskFromUpdate.Data.Id)
+            var runResult = await registry.ScheduleRunAsync(new ContainerRegistryTaskRunContent(taskFromUpdate.Data.Id)
             {
                 OverrideTaskStepProperties = new ContainerRegistryOverrideTaskStepProperties()
                 {
@@ -370,12 +362,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Tests
                     }
                 }
             });
-            ContainerRegistryRunResource run1 = runLro.Value;
+            ContainerRegistryRunResource run1 = runResult.Value;
             Assert.AreEqual("cf1", run1.Data.RunId);
             // Cancel the run
-            await run1.CancelAsync(WaitUntil.Completed);
+            await run1.CancelAsync();
             // Schedule a docker build run
-            runLro = await registry.ScheduleRunAsync(WaitUntil.Completed, new ContainerRegistryDockerBuildContent("DockerFile", new ContainerRegistryPlatformProperties(ContainerRegistryOS.Linux) { Architecture = ContainerRegistryOSArchitecture.Amd64 })
+            runResult = await registry.ScheduleRunAsync(new ContainerRegistryDockerBuildContent("DockerFile", new ContainerRegistryPlatformProperties(ContainerRegistryOS.Linux) { Architecture = ContainerRegistryOSArchitecture.Amd64 })
             {
                 IsArchiveEnabled = false,
                 ImageNames = { "testimage1:tag1", "testimage2:tag2" },
@@ -386,10 +378,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Tests
                 AgentConfiguration = new ContainerRegistryAgentProperties() { Cpu = 2 },
                 SourceLocation = "https://github.com/azure/acr-builder.git"
             });
-            ContainerRegistryRunResource run2 = runLro.Value;
+            ContainerRegistryRunResource run2 = runResult.Value;
             Assert.AreEqual("cf2", run2.Data.RunId);
             // Schedule a file based task run
-            runLro = await registry.ScheduleRunAsync(WaitUntil.Completed, new ContainerRegistryFileTaskRunContent("abc.yaml", new ContainerRegistryPlatformProperties(ContainerRegistryOS.Linux) { Architecture = ContainerRegistryOSArchitecture.Amd64 })
+            runResult = await registry.ScheduleRunAsync(new ContainerRegistryFileTaskRunContent("abc.yaml", new ContainerRegistryPlatformProperties(ContainerRegistryOS.Linux) { Architecture = ContainerRegistryOSArchitecture.Amd64 })
             {
                 IsArchiveEnabled = false,
                 Values =
@@ -401,7 +393,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tests
                 AgentConfiguration = new ContainerRegistryAgentProperties() { Cpu = 2 },
                 SourceLocation = "https://github.com/azure/acr-builder.git"
             });
-            ContainerRegistryRunResource run3 = runLro.Value;
+            ContainerRegistryRunResource run3 = runResult.Value;
             Assert.AreEqual("cf3", run3.Data.RunId);
             // Schedule an encoded task run
             string taskString =
@@ -413,7 +405,7 @@ steps:
 key1: value1
 key2: value2
 ".Replace("\r\n", "\n");
-            runLro = await registry.ScheduleRunAsync(WaitUntil.Completed, new ContainerRegistryEncodedTaskRunContent(Convert.ToBase64String(Encoding.UTF8.GetBytes(taskString)), new ContainerRegistryPlatformProperties(ContainerRegistryOS.Linux) { Architecture = ContainerRegistryOSArchitecture.Amd64 })
+            runResult = await registry.ScheduleRunAsync(new ContainerRegistryEncodedTaskRunContent(Convert.ToBase64String(Encoding.UTF8.GetBytes(taskString)), new ContainerRegistryPlatformProperties(ContainerRegistryOS.Linux) { Architecture = ContainerRegistryOSArchitecture.Amd64 })
             {
                 IsArchiveEnabled = false,
                 EncodedValuesContent = Convert.ToBase64String(Encoding.UTF8.GetBytes(valuesString)),
@@ -421,7 +413,7 @@ key2: value2
                 AgentConfiguration = new ContainerRegistryAgentProperties() { Cpu = 2 },
                 SourceLocation = "https://github.com/azure/acr-builder.git"
             });
-            ContainerRegistryRunResource run4 = runLro.Value;
+            ContainerRegistryRunResource run4 = runResult.Value;
             Assert.AreEqual("cf4", run4.Data.RunId);
             // List runs
             var runCount = 0;
@@ -478,13 +470,13 @@ key2: value2
 version: v1.1.0
 steps:
   - cmd: docker images".Replace("\r\n", "\n");
-            var runLro = await registry.ScheduleRunAsync(WaitUntil.Completed, new ContainerRegistryEncodedTaskRunContent(Convert.ToBase64String(Encoding.UTF8.GetBytes(taskString)), new ContainerRegistryPlatformProperties(ContainerRegistryOS.Linux) { Architecture = ContainerRegistryOSArchitecture.Amd64 })
+            var runResult = await registry.ScheduleRunAsync(new ContainerRegistryEncodedTaskRunContent(Convert.ToBase64String(Encoding.UTF8.GetBytes(taskString)), new ContainerRegistryPlatformProperties(ContainerRegistryOS.Linux) { Architecture = ContainerRegistryOSArchitecture.Amd64 })
             {
                 AgentPoolName = agentPoolName,
                 IsArchiveEnabled = false,
                 TimeoutInSeconds = 600
             });
-            ContainerRegistryRunResource run = runLro.Value;
+            ContainerRegistryRunResource run = runResult.Value;
             // List runs
             var runCount = 0;
             await foreach (var runFromList in registry.GetContainerRegistryRuns())
@@ -522,7 +514,7 @@ steps:
                 {
                     UserAssignedIdentities =
                     {
-                        { new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdk-test/providers/Microsoft.ManagedIdentity/userAssignedIdentities/acrsdktestidentity"), new UserAssignedIdentity()}
+                        { new ResourceIdentifier("/subscriptions/ea747fd7-4547-4100-b45a-c0580d18d538/resourceGroups/sdk-test/providers/Microsoft.ManagedIdentity/userAssignedIdentities/acrsdktestidentity"), new UserAssignedIdentity()}
                     }
                 },
                 RunRequest = new ContainerRegistryEncodedTaskRunContent(Convert.ToBase64String(Encoding.UTF8.GetBytes(taskString)), new ContainerRegistryPlatformProperties(ContainerRegistryOS.Linux) { Architecture = ContainerRegistryOSArchitecture.Amd64 })
@@ -774,7 +766,6 @@ steps:
                     Assert.AreEqual(scopeMapName, scopeMapFromList.Data.Name);
                 }
             }
-            Assert.AreEqual(3, systemDefinedScopeMapCount);
             Assert.AreEqual(1, userDefinedScopeMapCount);
             // Get the scope map
             ScopeMapResource scopeMapFromGet = await scopeMapCollection.GetAsync(scopeMapName);

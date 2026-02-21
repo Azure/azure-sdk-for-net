@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.WorkloadOrchestration
@@ -21,55 +22,53 @@ namespace Azure.ResourceManager.WorkloadOrchestration
     /// <summary>
     /// A class representing a collection of <see cref="EdgeConfigTemplateResource"/> and their operations.
     /// Each <see cref="EdgeConfigTemplateResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get an <see cref="EdgeConfigTemplateCollection"/> instance call the GetEdgeConfigTemplates method from an instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="EdgeConfigTemplateCollection"/> instance call the GetEdgeConfigTemplates method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class EdgeConfigTemplateCollection : ArmCollection, IEnumerable<EdgeConfigTemplateResource>, IAsyncEnumerable<EdgeConfigTemplateResource>
     {
-        private readonly ClientDiagnostics _edgeConfigTemplateConfigTemplatesClientDiagnostics;
-        private readonly ConfigTemplatesRestOperations _edgeConfigTemplateConfigTemplatesRestClient;
+        private readonly ClientDiagnostics _configTemplatesClientDiagnostics;
+        private readonly ConfigTemplates _configTemplatesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeConfigTemplateCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of EdgeConfigTemplateCollection for mocking. </summary>
         protected EdgeConfigTemplateCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeConfigTemplateCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeConfigTemplateCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EdgeConfigTemplateCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _edgeConfigTemplateConfigTemplatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeConfigTemplateResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(EdgeConfigTemplateResource.ResourceType, out string edgeConfigTemplateConfigTemplatesApiVersion);
-            _edgeConfigTemplateConfigTemplatesRestClient = new ConfigTemplatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, edgeConfigTemplateConfigTemplatesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(EdgeConfigTemplateResource.ResourceType, out string edgeConfigTemplateApiVersion);
+            _configTemplatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeConfigTemplateResource.ResourceType.Namespace, Diagnostics);
+            _configTemplatesRestClient = new ConfigTemplates(_configTemplatesClientDiagnostics, Pipeline, Endpoint, edgeConfigTemplateApiVersion ?? "2025-06-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create or update a Config Template Resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigTemplate_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConfigTemplates_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeConfigTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="configTemplateName"> The name of the ConfigTemplate. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configTemplateName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<EdgeConfigTemplateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string configTemplateName, EdgeConfigTemplateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configTemplateName, nameof(configTemplateName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _edgeConfigTemplateConfigTemplatesClientDiagnostics.CreateScope("EdgeConfigTemplateCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _configTemplatesClientDiagnostics.CreateScope("EdgeConfigTemplateCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _edgeConfigTemplateConfigTemplatesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, configTemplateName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeConfigTemplateResource>(new EdgeConfigTemplateOperationSource(Client), _edgeConfigTemplateConfigTemplatesClientDiagnostics, Pipeline, _edgeConfigTemplateConfigTemplatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, configTemplateName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _configTemplatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configTemplateName, EdgeConfigTemplateData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                WorkloadOrchestrationArmOperation<EdgeConfigTemplateResource> operation = new WorkloadOrchestrationArmOperation<EdgeConfigTemplateResource>(
+                    new EdgeConfigTemplateOperationSource(Client),
+                    _configTemplatesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Create or update a Config Template Resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigTemplate_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConfigTemplates_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeConfigTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="configTemplateName"> The name of the ConfigTemplate. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configTemplateName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<EdgeConfigTemplateResource> CreateOrUpdate(WaitUntil waitUntil, string configTemplateName, EdgeConfigTemplateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configTemplateName, nameof(configTemplateName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _edgeConfigTemplateConfigTemplatesClientDiagnostics.CreateScope("EdgeConfigTemplateCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _configTemplatesClientDiagnostics.CreateScope("EdgeConfigTemplateCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _edgeConfigTemplateConfigTemplatesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, configTemplateName, data, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeConfigTemplateResource>(new EdgeConfigTemplateOperationSource(Client), _edgeConfigTemplateConfigTemplatesClientDiagnostics, Pipeline, _edgeConfigTemplateConfigTemplatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, configTemplateName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _configTemplatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configTemplateName, EdgeConfigTemplateData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                WorkloadOrchestrationArmOperation<EdgeConfigTemplateResource> operation = new WorkloadOrchestrationArmOperation<EdgeConfigTemplateResource>(
+                    new EdgeConfigTemplateOperationSource(Client),
+                    _configTemplatesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Get a Config Template Resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigTemplate_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConfigTemplates_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeConfigTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="configTemplateName"> The name of the ConfigTemplate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configTemplateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<EdgeConfigTemplateResource>> GetAsync(string configTemplateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configTemplateName, nameof(configTemplateName));
 
-            using var scope = _edgeConfigTemplateConfigTemplatesClientDiagnostics.CreateScope("EdgeConfigTemplateCollection.Get");
+            using DiagnosticScope scope = _configTemplatesClientDiagnostics.CreateScope("EdgeConfigTemplateCollection.Get");
             scope.Start();
             try
             {
-                var response = await _edgeConfigTemplateConfigTemplatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, configTemplateName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _configTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configTemplateName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<EdgeConfigTemplateData> response = Response.FromValue(EdgeConfigTemplateData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeConfigTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Get a Config Template Resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigTemplate_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConfigTemplates_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeConfigTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="configTemplateName"> The name of the ConfigTemplate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configTemplateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<EdgeConfigTemplateResource> Get(string configTemplateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configTemplateName, nameof(configTemplateName));
 
-            using var scope = _edgeConfigTemplateConfigTemplatesClientDiagnostics.CreateScope("EdgeConfigTemplateCollection.Get");
+            using DiagnosticScope scope = _configTemplatesClientDiagnostics.CreateScope("EdgeConfigTemplateCollection.Get");
             scope.Start();
             try
             {
-                var response = _edgeConfigTemplateConfigTemplatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, configTemplateName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _configTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configTemplateName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<EdgeConfigTemplateData> response = Response.FromValue(EdgeConfigTemplateData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeConfigTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +273,44 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// List by specified resource group
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigTemplate_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConfigTemplates_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeConfigTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EdgeConfigTemplateResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EdgeConfigTemplateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EdgeConfigTemplateResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeConfigTemplateConfigTemplatesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeConfigTemplateConfigTemplatesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeConfigTemplateResource(Client, EdgeConfigTemplateData.DeserializeEdgeConfigTemplateData(e)), _edgeConfigTemplateConfigTemplatesClientDiagnostics, Pipeline, "EdgeConfigTemplateCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<EdgeConfigTemplateData, EdgeConfigTemplateResource>(new ConfigTemplatesGetByResourceGroupAsyncCollectionResultOfT(_configTemplatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new EdgeConfigTemplateResource(Client, data));
         }
 
         /// <summary>
         /// List by specified resource group
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigTemplate_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConfigTemplates_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeConfigTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +318,61 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <returns> A collection of <see cref="EdgeConfigTemplateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EdgeConfigTemplateResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeConfigTemplateConfigTemplatesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeConfigTemplateConfigTemplatesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeConfigTemplateResource(Client, EdgeConfigTemplateData.DeserializeEdgeConfigTemplateData(e)), _edgeConfigTemplateConfigTemplatesClientDiagnostics, Pipeline, "EdgeConfigTemplateCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<EdgeConfigTemplateData, EdgeConfigTemplateResource>(new ConfigTemplatesGetByResourceGroupCollectionResultOfT(_configTemplatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new EdgeConfigTemplateResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigTemplate_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConfigTemplates_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeConfigTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="configTemplateName"> The name of the ConfigTemplate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configTemplateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string configTemplateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configTemplateName, nameof(configTemplateName));
 
-            using var scope = _edgeConfigTemplateConfigTemplatesClientDiagnostics.CreateScope("EdgeConfigTemplateCollection.Exists");
+            using DiagnosticScope scope = _configTemplatesClientDiagnostics.CreateScope("EdgeConfigTemplateCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _edgeConfigTemplateConfigTemplatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, configTemplateName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _configTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configTemplateName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<EdgeConfigTemplateData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeConfigTemplateData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeConfigTemplateData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +386,50 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigTemplate_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConfigTemplates_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeConfigTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="configTemplateName"> The name of the ConfigTemplate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configTemplateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string configTemplateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configTemplateName, nameof(configTemplateName));
 
-            using var scope = _edgeConfigTemplateConfigTemplatesClientDiagnostics.CreateScope("EdgeConfigTemplateCollection.Exists");
+            using DiagnosticScope scope = _configTemplatesClientDiagnostics.CreateScope("EdgeConfigTemplateCollection.Exists");
             scope.Start();
             try
             {
-                var response = _edgeConfigTemplateConfigTemplatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, configTemplateName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _configTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configTemplateName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<EdgeConfigTemplateData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeConfigTemplateData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeConfigTemplateData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +443,54 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigTemplate_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConfigTemplates_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeConfigTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="configTemplateName"> The name of the ConfigTemplate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configTemplateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<EdgeConfigTemplateResource>> GetIfExistsAsync(string configTemplateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configTemplateName, nameof(configTemplateName));
 
-            using var scope = _edgeConfigTemplateConfigTemplatesClientDiagnostics.CreateScope("EdgeConfigTemplateCollection.GetIfExists");
+            using DiagnosticScope scope = _configTemplatesClientDiagnostics.CreateScope("EdgeConfigTemplateCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _edgeConfigTemplateConfigTemplatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, configTemplateName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _configTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configTemplateName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<EdgeConfigTemplateData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeConfigTemplateData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeConfigTemplateData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<EdgeConfigTemplateResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeConfigTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +504,54 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigTemplate_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConfigTemplates_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeConfigTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="configTemplateName"> The name of the ConfigTemplate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configTemplateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<EdgeConfigTemplateResource> GetIfExists(string configTemplateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configTemplateName, nameof(configTemplateName));
 
-            using var scope = _edgeConfigTemplateConfigTemplatesClientDiagnostics.CreateScope("EdgeConfigTemplateCollection.GetIfExists");
+            using DiagnosticScope scope = _configTemplatesClientDiagnostics.CreateScope("EdgeConfigTemplateCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _edgeConfigTemplateConfigTemplatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, configTemplateName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _configTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configTemplateName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<EdgeConfigTemplateData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeConfigTemplateData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeConfigTemplateData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<EdgeConfigTemplateResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeConfigTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +571,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<EdgeConfigTemplateResource> IAsyncEnumerable<EdgeConfigTemplateResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceTypeRegistrationRegionality. </summary>
+    /// <summary> The regionality. </summary>
     public readonly partial struct ResourceTypeRegistrationRegionality : IEquatable<ResourceTypeRegistrationRegionality>
     {
         private readonly string _value;

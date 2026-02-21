@@ -7,9 +7,9 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.AI.Translation.Document;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using Azure.Core;
 
 namespace Azure.AI.Translation.Document.Tests
 {

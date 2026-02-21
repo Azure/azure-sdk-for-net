@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.ContainerService
     /// <summary>
     /// A class representing the AgentPoolUpgradeProfile data model.
     /// The list of available upgrades for an agent pool.
+    /// Serialized Name: AgentPoolUpgradeProfile
     /// </summary>
     public partial class AgentPoolUpgradeProfileData : ResourceData
     {
@@ -52,8 +53,14 @@ namespace Azure.ResourceManager.ContainerService
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AgentPoolUpgradeProfileData"/>. </summary>
-        /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
-        /// <param name="osType"> The operating system type. The default is Linux. </param>
+        /// <param name="kubernetesVersion">
+        /// The Kubernetes version (major.minor.patch).
+        /// Serialized Name: AgentPoolUpgradeProfile.properties.kubernetesVersion
+        /// </param>
+        /// <param name="osType">
+        /// The operating system type. The default is Linux.
+        /// Serialized Name: AgentPoolUpgradeProfile.properties.osType
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kubernetesVersion"/> is null. </exception>
         internal AgentPoolUpgradeProfileData(string kubernetesVersion, ContainerServiceOSType osType)
         {
@@ -69,10 +76,22 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
-        /// <param name="osType"> The operating system type. The default is Linux. </param>
-        /// <param name="upgrades"> List of orchestrator types and versions available for upgrade. </param>
-        /// <param name="latestNodeImageVersion"> The latest AKS supported node image version. </param>
+        /// <param name="kubernetesVersion">
+        /// The Kubernetes version (major.minor.patch).
+        /// Serialized Name: AgentPoolUpgradeProfile.properties.kubernetesVersion
+        /// </param>
+        /// <param name="osType">
+        /// The operating system type. The default is Linux.
+        /// Serialized Name: AgentPoolUpgradeProfile.properties.osType
+        /// </param>
+        /// <param name="upgrades">
+        /// List of orchestrator types and versions available for upgrade.
+        /// Serialized Name: AgentPoolUpgradeProfile.properties.upgrades
+        /// </param>
+        /// <param name="latestNodeImageVersion">
+        /// The latest AKS supported node image version.
+        /// Serialized Name: AgentPoolUpgradeProfile.properties.latestNodeImageVersion
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AgentPoolUpgradeProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kubernetesVersion, ContainerServiceOSType osType, IReadOnlyList<AgentPoolUpgradeProfilePropertiesUpgradesItem> upgrades, string latestNodeImageVersion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -88,16 +107,28 @@ namespace Azure.ResourceManager.ContainerService
         {
         }
 
-        /// <summary> The Kubernetes version (major.minor.patch). </summary>
+        /// <summary>
+        /// The Kubernetes version (major.minor.patch).
+        /// Serialized Name: AgentPoolUpgradeProfile.properties.kubernetesVersion
+        /// </summary>
         [WirePath("properties.kubernetesVersion")]
         public string KubernetesVersion { get; }
-        /// <summary> The operating system type. The default is Linux. </summary>
+        /// <summary>
+        /// The operating system type. The default is Linux.
+        /// Serialized Name: AgentPoolUpgradeProfile.properties.osType
+        /// </summary>
         [WirePath("properties.osType")]
         public ContainerServiceOSType OSType { get; }
-        /// <summary> List of orchestrator types and versions available for upgrade. </summary>
+        /// <summary>
+        /// List of orchestrator types and versions available for upgrade.
+        /// Serialized Name: AgentPoolUpgradeProfile.properties.upgrades
+        /// </summary>
         [WirePath("properties.upgrades")]
         public IReadOnlyList<AgentPoolUpgradeProfilePropertiesUpgradesItem> Upgrades { get; }
-        /// <summary> The latest AKS supported node image version. </summary>
+        /// <summary>
+        /// The latest AKS supported node image version.
+        /// Serialized Name: AgentPoolUpgradeProfile.properties.latestNodeImageVersion
+        /// </summary>
         [WirePath("properties.latestNodeImageVersion")]
         public string LatestNodeImageVersion { get; }
     }

@@ -874,7 +874,10 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(TransferState.Completed, transfer.Status.State);
             Assert.AreEqual(true, transfer.Status.HasFailedItems);
-            Assert.IsTrue(testEventsRaised.FailedEvents.First().Exception.Message.Contains(_expectedOverwriteExceptionMessage));
+            if (!testEventsRaised.FailedEvents.First().Exception.Message.Contains(_expectedOverwriteExceptionMessage))
+            {
+                Assert.Fail($"Did not throw the expected exception. Actual exception thrown: {testEventsRaised.FailedEvents.First().Exception}");
+            }
             await testEventsRaised.AssertContainerCompletedWithFailedCheck(1);
         }
         #endregion
@@ -946,10 +949,10 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
-        [TestCase((int) TransferPropertiesTestType.Default)]
-        [TestCase((int) TransferPropertiesTestType.Preserve)]
-        [TestCase((int) TransferPropertiesTestType.NoPreserve)]
-        [TestCase((int) TransferPropertiesTestType.NewProperties)]
+        [TestCase((int)TransferPropertiesTestType.Default)]
+        [TestCase((int)TransferPropertiesTestType.Preserve)]
+        [TestCase((int)TransferPropertiesTestType.NoPreserve)]
+        [TestCase((int)TransferPropertiesTestType.NewProperties)]
         public async Task CopyRemoteObjects_VerifyProperties(int propertiesType)
         {
             // Arrange
@@ -960,7 +963,7 @@ namespace Azure.Storage.DataMovement.Tests
             await CopyRemoteObjects_VerifyProperties(
                 source.Container,
                 destination.Container,
-                (TransferPropertiesTestType) propertiesType).ConfigureAwait(false);
+                (TransferPropertiesTestType)propertiesType).ConfigureAwait(false);
         }
         #endregion Properties
     }

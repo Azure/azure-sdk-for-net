@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Defender.Easm.Tests
 {
-    public class EasmClientTest: RecordedTestBase<EasmClientTestEnvironment>
+    public class EasmClientTest : RecordedTestBase<EasmClientTestEnvironment>
     {
         protected Regex UUID_REGEX = new Regex(@"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}");
         protected EasmClient client { get; private set; }
@@ -25,7 +25,8 @@ namespace Azure.Analytics.Defender.Easm.Tests
         public void SetUp()
         {
             client = InstrumentClient(new EasmClient(new System.Uri(TestEnvironment.Endpoint),
-                TestEnvironment.Credential, InstrumentClientOptions(new EasmClientOptions())));
+                // TODO https://github.com/Azure/azure-sdk-for-net/issues/53199
+                TestEnvironment.Credential, InstrumentClientOptions(new EasmClientOptions(EasmClientOptions.ServiceVersion.V2023_03_01_Preview))));
         }
         /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/TemplateClientLiveTests.cs to write tests. */
 

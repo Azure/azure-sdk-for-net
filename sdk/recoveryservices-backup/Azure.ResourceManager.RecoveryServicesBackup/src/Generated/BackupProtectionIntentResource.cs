@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="intentObjectName"> The intentObjectName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string intentObjectName)
         {
-            var resourceId = $"/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>

@@ -26,68 +26,13 @@
             "$ref": "2"
           },
           "enumType": {
-            "$id": "4",
-            "kind": "enum",
-            "decorators": [],
-            "name": "RepeatabilityResult",
-            "isGeneratedName": false,
-            "namespace": "Azure.Core",
-            "doc": "Repeatability Result header options",
-            "valueType": {
-              "$id": "5",
-              "kind": "string",
-              "decorators": [],
-              "name": "string",
-              "doc": "A sequence of textual characters.",
-              "crossLanguageDefinitionId": "TypeSpec.string"
-            },
-            "values": [
-              {
-                "$id": "6",
-                "kind": "enumvalue",
-                "decorators": [],
-                "name": "accepted",
-                "doc": "If the request was accepted and the server guarantees that the server state reflects a single execution of the operation.",
-                "value": "accepted",
-                "valueType": {
-                  "$ref": "5"
-                },
-                "enumType": {
-                  "$ref": "4"
-                }
-              },
-              {
-                "$id": "7",
-                "kind": "enumvalue",
-                "decorators": [],
-                "name": "rejected",
-                "doc": "If the request was rejected because the combination of Repeatability-First-Sent and Repeatability-Request-ID were invalid\nor because the Repeatability-First-Sent value was outside the range of values held by the server.",
-                "value": "rejected",
-                "valueType": {
-                  "$ref": "5"
-                },
-                "enumType": {
-                  "$ref": "4"
-                }
-              }
-            ],
-            "isFixed": true,
-            "isFlags": false,
-            "usage": "Output",
-            "access": "public",
-            "crossLanguageDefinitionId": "Azure.Core.RepeatabilityResult",
-            "apiVersions": [
-              "1.0-preview.1",
-              "1.0-preview.2"
-            ],
-            "isUnionAsEnum": true,
-            "__accessSet": true
+            "$ref": "1"
           },
           "doc": "If the request was accepted and the server guarantees that the server state reflects a single execution of the operation.",
           "decorators": []
         },
         {
-          "$id": "8",
+          "$id": "4",
           "kind": "enumvalue",
           "name": "rejected",
           "value": "rejected",
@@ -95,7 +40,7 @@
             "$ref": "2"
           },
           "enumType": {
-            "$ref": "4"
+            "$ref": "1"
           },
           "doc": "If the request was rejected because the combination of Repeatability-First-Sent and Repeatability-Request-ID were invalid\nor because the Repeatability-First-Sent value was outside the range of values held by the server.",
           "decorators": []
@@ -109,12 +54,12 @@
       "decorators": []
     },
     {
-      "$id": "9",
+      "$id": "5",
       "kind": "enum",
       "name": "Versions",
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.Versions",
       "valueType": {
-        "$id": "10",
+        "$id": "6",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -122,55 +67,15 @@
       },
       "values": [
         {
-          "$id": "11",
+          "$id": "7",
           "kind": "enumvalue",
           "name": "v2022_12_01_preview",
           "value": "2022-12-01-preview",
           "valueType": {
-            "$ref": "10"
+            "$ref": "6"
           },
           "enumType": {
-            "$id": "12",
-            "kind": "enum",
-            "decorators": [],
-            "name": "Versions",
-            "isGeneratedName": false,
-            "namespace": "_Specs_.Azure.Core.Traits",
-            "doc": "Service versions",
-            "valueType": {
-              "$id": "13",
-              "kind": "string",
-              "decorators": [],
-              "name": "string",
-              "doc": "A sequence of textual characters.",
-              "crossLanguageDefinitionId": "TypeSpec.string"
-            },
-            "values": [
-              {
-                "$id": "14",
-                "kind": "enumvalue",
-                "decorators": [],
-                "name": "v2022_12_01_preview",
-                "value": "2022-12-01-preview",
-                "doc": "2022-12-01-preview",
-                "enumType": {
-                  "$ref": "12"
-                },
-                "valueType": {
-                  "$ref": "13"
-                }
-              }
-            ],
-            "isFixed": true,
-            "isFlags": false,
-            "usage": "ApiVersionEnum",
-            "access": "public",
-            "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.Versions",
-            "apiVersions": [
-              "2022-12-01-preview"
-            ],
-            "isUnionAsEnum": false,
-            "__accessSet": true
+            "$ref": "5"
           },
           "doc": "2022-12-01-preview",
           "decorators": []
@@ -186,13 +91,13 @@
   ],
   "constants": [
     {
-      "$id": "15",
+      "$id": "8",
       "kind": "constant",
       "name": "smokeTestContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
-        "$id": "16",
+        "$id": "9",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -202,13 +107,13 @@
       "decorators": []
     },
     {
-      "$id": "17",
+      "$id": "10",
       "kind": "constant",
       "name": "repeatableActionContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
-        "$id": "18",
+        "$id": "11",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -218,13 +123,13 @@
       "decorators": []
     },
     {
-      "$id": "19",
+      "$id": "12",
       "kind": "constant",
       "name": "repeatableActionContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
-        "$id": "20",
+        "$id": "13",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -236,7 +141,7 @@
   ],
   "models": [
     {
-      "$id": "21",
+      "$id": "14",
       "kind": "model",
       "name": "User",
       "namespace": "_Specs_.Azure.Core.Traits",
@@ -244,15 +149,20 @@
       "usage": "Output,Json",
       "doc": "Sample Model",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "User"
+        }
+      },
       "properties": [
         {
-          "$id": "22",
+          "$id": "15",
           "kind": "property",
           "name": "id",
           "serializedName": "id",
           "doc": "The user's id.",
           "type": {
-            "$id": "23",
+            "$id": "16",
             "kind": "int32",
             "name": "int32",
             "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -272,13 +182,13 @@
           "isHttpMetadata": false
         },
         {
-          "$id": "24",
+          "$id": "17",
           "kind": "property",
           "name": "name",
           "serializedName": "name",
           "doc": "The user's name.",
           "type": {
-            "$id": "25",
+            "$id": "18",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -300,7 +210,7 @@
       ]
     },
     {
-      "$id": "26",
+      "$id": "19",
       "kind": "model",
       "name": "ErrorResponse",
       "namespace": "Azure.Core.Foundations",
@@ -308,15 +218,20 @@
       "usage": "Json,Exception",
       "doc": "A response containing error details.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ErrorResponse"
+        }
+      },
       "properties": [
         {
-          "$id": "27",
+          "$id": "20",
           "kind": "property",
           "name": "error",
           "serializedName": "error",
           "doc": "The error object.",
           "type": {
-            "$id": "28",
+            "$id": "21",
             "kind": "model",
             "name": "Error",
             "namespace": "Azure.Core.Foundations",
@@ -324,15 +239,20 @@
             "usage": "Json,Exception",
             "doc": "The error object.",
             "decorators": [],
+            "serializationOptions": {
+              "json": {
+                "name": "Error"
+              }
+            },
             "properties": [
               {
-                "$id": "29",
+                "$id": "22",
                 "kind": "property",
                 "name": "code",
                 "serializedName": "code",
                 "doc": "One of a server-defined set of error codes.",
                 "type": {
-                  "$id": "30",
+                  "$id": "23",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -352,13 +272,13 @@
                 "isHttpMetadata": false
               },
               {
-                "$id": "31",
+                "$id": "24",
                 "kind": "property",
                 "name": "message",
                 "serializedName": "message",
                 "doc": "A human-readable representation of the error.",
                 "type": {
-                  "$id": "32",
+                  "$id": "25",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -378,13 +298,13 @@
                 "isHttpMetadata": false
               },
               {
-                "$id": "33",
+                "$id": "26",
                 "kind": "property",
                 "name": "target",
                 "serializedName": "target",
                 "doc": "The target of the error.",
                 "type": {
-                  "$id": "34",
+                  "$id": "27",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -404,17 +324,17 @@
                 "isHttpMetadata": false
               },
               {
-                "$id": "35",
+                "$id": "28",
                 "kind": "property",
                 "name": "details",
                 "serializedName": "details",
                 "doc": "An array of details about specific errors that led to this reported error.",
                 "type": {
-                  "$id": "36",
+                  "$id": "29",
                   "kind": "array",
                   "name": "ArrayError",
                   "valueType": {
-                    "$ref": "28"
+                    "$ref": "21"
                   },
                   "crossLanguageDefinitionId": "TypeSpec.Array",
                   "decorators": []
@@ -433,13 +353,13 @@
                 "isHttpMetadata": false
               },
               {
-                "$id": "37",
+                "$id": "30",
                 "kind": "property",
                 "name": "innererror",
                 "serializedName": "innererror",
                 "doc": "An object containing more specific information than the current object about the error.",
                 "type": {
-                  "$id": "38",
+                  "$id": "31",
                   "kind": "model",
                   "name": "InnerError",
                   "namespace": "Azure.Core.Foundations",
@@ -447,15 +367,20 @@
                   "usage": "Json,Exception",
                   "doc": "An object containing more specific information about the error. As per Azure REST API guidelines - https://aka.ms/AzureRestApiGuidelines#handling-errors.",
                   "decorators": [],
+                  "serializationOptions": {
+                    "json": {
+                      "name": "InnerError"
+                    }
+                  },
                   "properties": [
                     {
-                      "$id": "39",
+                      "$id": "32",
                       "kind": "property",
                       "name": "code",
                       "serializedName": "code",
                       "doc": "One of a server-defined set of error codes.",
                       "type": {
-                        "$id": "40",
+                        "$id": "33",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -475,13 +400,13 @@
                       "isHttpMetadata": false
                     },
                     {
-                      "$id": "41",
+                      "$id": "34",
                       "kind": "property",
                       "name": "innererror",
                       "serializedName": "innererror",
                       "doc": "Inner error.",
                       "type": {
-                        "$ref": "38"
+                        "$ref": "31"
                       },
                       "optional": true,
                       "readOnly": false,
@@ -527,13 +452,13 @@
           "isHttpMetadata": false
         },
         {
-          "$id": "42",
+          "$id": "35",
           "kind": "property",
           "name": "errorCode",
           "serializedName": "errorCode",
           "doc": "String error code indicating what went wrong.",
           "type": {
-            "$id": "43",
+            "$id": "36",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -555,13 +480,13 @@
       ]
     },
     {
-      "$ref": "28"
+      "$ref": "21"
     },
     {
-      "$ref": "38"
+      "$ref": "31"
     },
     {
-      "$id": "44",
+      "$id": "37",
       "kind": "model",
       "name": "UserActionParam",
       "namespace": "_Specs_.Azure.Core.Traits",
@@ -569,15 +494,20 @@
       "usage": "Input,Json",
       "doc": "User action param",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "UserActionParam"
+        }
+      },
       "properties": [
         {
-          "$id": "45",
+          "$id": "38",
           "kind": "property",
           "name": "userActionValue",
           "serializedName": "userActionValue",
           "doc": "User action value.",
           "type": {
-            "$id": "46",
+            "$id": "39",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -599,7 +529,7 @@
       ]
     },
     {
-      "$id": "47",
+      "$id": "40",
       "kind": "model",
       "name": "UserActionResponse",
       "namespace": "_Specs_.Azure.Core.Traits",
@@ -607,15 +537,20 @@
       "usage": "Output,Json",
       "doc": "User action response",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "UserActionResponse"
+        }
+      },
       "properties": [
         {
-          "$id": "48",
+          "$id": "41",
           "kind": "property",
           "name": "userActionResult",
           "serializedName": "userActionResult",
           "doc": "User action result.",
           "type": {
-            "$id": "49",
+            "$id": "42",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -639,14 +574,14 @@
   ],
   "clients": [
     {
-      "$id": "50",
+      "$id": "43",
       "kind": "client",
       "name": "TraitsClient",
       "namespace": "_Specs_.Azure.Core.Traits",
       "doc": "Illustrates Azure Core operation customizations by traits",
       "methods": [
         {
-          "$id": "51",
+          "$id": "44",
           "kind": "basic",
           "name": "smokeTest",
           "accessibility": "public",
@@ -655,20 +590,20 @@
           ],
           "doc": "Get a resource, sending and receiving headers.",
           "operation": {
-            "$id": "52",
+            "$id": "45",
             "name": "smokeTest",
             "resourceName": "User",
             "doc": "Get a resource, sending and receiving headers.",
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "53",
+                "$id": "46",
                 "kind": "query",
                 "name": "apiVersion",
                 "serializedName": "api-version",
                 "doc": "The API version to use for this operation.",
                 "type": {
-                  "$id": "54",
+                  "$id": "47",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -678,7 +613,7 @@
                 "explode": false,
                 "defaultValue": {
                   "type": {
-                    "$id": "55",
+                    "$id": "48",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string"
@@ -689,16 +624,49 @@
                 "scope": "Client",
                 "decorators": [],
                 "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.apiVersion",
-                "readOnly": false
+                "readOnly": false,
+                "methodParameterSegments": [
+                  {
+                    "$id": "49",
+                    "kind": "method",
+                    "name": "apiVersion",
+                    "serializedName": "apiVersion",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "50",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "location": "",
+                    "isApiVersion": true,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "51",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "2022-12-01-preview"
+                    },
+                    "optional": true,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.apiVersion",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": []
+                  }
+                ]
               },
               {
-                "$id": "56",
+                "$id": "52",
                 "kind": "path",
                 "name": "id",
                 "serializedName": "id",
                 "doc": "The user's id.",
                 "type": {
-                  "$id": "57",
+                  "$id": "53",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -713,16 +681,40 @@
                 "scope": "Method",
                 "decorators": [],
                 "readOnly": false,
-                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.id"
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.id",
+                "methodParameterSegments": [
+                  {
+                    "$id": "54",
+                    "kind": "method",
+                    "name": "id",
+                    "serializedName": "id",
+                    "doc": "The user's id.",
+                    "type": {
+                      "$id": "55",
+                      "kind": "int32",
+                      "name": "int32",
+                      "crossLanguageDefinitionId": "TypeSpec.int32",
+                      "decorators": []
+                    },
+                    "location": "Path",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.id",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": []
+                  }
+                ]
               },
               {
-                "$id": "58",
+                "$id": "56",
                 "kind": "header",
                 "name": "foo",
                 "serializedName": "foo",
                 "doc": "header in request",
                 "type": {
-                  "$id": "59",
+                  "$id": "57",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -734,7 +726,31 @@
                 "scope": "Method",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.foo"
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.foo",
+                "methodParameterSegments": [
+                  {
+                    "$id": "58",
+                    "kind": "method",
+                    "name": "foo",
+                    "serializedName": "foo",
+                    "doc": "header in request",
+                    "type": {
+                      "$id": "59",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.foo",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": []
+                  }
+                ]
               },
               {
                 "$id": "60",
@@ -755,16 +771,40 @@
                 "scope": "Method",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.ifMatch"
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.ifMatch",
+                "methodParameterSegments": [
+                  {
+                    "$id": "62",
+                    "kind": "method",
+                    "name": "ifMatch",
+                    "serializedName": "If-Match",
+                    "doc": "The request should only proceed if an entity matches this string.",
+                    "type": {
+                      "$id": "63",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": true,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.ifMatch",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": []
+                  }
+                ]
               },
               {
-                "$id": "62",
+                "$id": "64",
                 "kind": "header",
                 "name": "ifNoneMatch",
                 "serializedName": "If-None-Match",
                 "doc": "The request should only proceed if no entity matches this string.",
                 "type": {
-                  "$id": "63",
+                  "$id": "65",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -776,21 +816,45 @@
                 "scope": "Method",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.ifNoneMatch"
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.ifNoneMatch",
+                "methodParameterSegments": [
+                  {
+                    "$id": "66",
+                    "kind": "method",
+                    "name": "ifNoneMatch",
+                    "serializedName": "If-None-Match",
+                    "doc": "The request should only proceed if no entity matches this string.",
+                    "type": {
+                      "$id": "67",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": true,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.ifNoneMatch",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": []
+                  }
+                ]
               },
               {
-                "$id": "64",
+                "$id": "68",
                 "kind": "header",
                 "name": "ifUnmodifiedSince",
                 "serializedName": "If-Unmodified-Since",
                 "doc": "The request should only proceed if the entity was not modified after this time.",
                 "type": {
-                  "$id": "65",
+                  "$id": "69",
                   "kind": "utcDateTime",
                   "name": "utcDateTime",
                   "encode": "rfc7231",
                   "wireType": {
-                    "$id": "66",
+                    "$id": "70",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -805,21 +869,53 @@
                 "scope": "Method",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.ifUnmodifiedSince"
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.ifUnmodifiedSince",
+                "methodParameterSegments": [
+                  {
+                    "$id": "71",
+                    "kind": "method",
+                    "name": "ifUnmodifiedSince",
+                    "serializedName": "If-Unmodified-Since",
+                    "doc": "The request should only proceed if the entity was not modified after this time.",
+                    "type": {
+                      "$id": "72",
+                      "kind": "utcDateTime",
+                      "name": "utcDateTime",
+                      "encode": "rfc7231",
+                      "wireType": {
+                        "$id": "73",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+                      "decorators": []
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": true,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.ifUnmodifiedSince",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": []
+                  }
+                ]
               },
               {
-                "$id": "67",
+                "$id": "74",
                 "kind": "header",
                 "name": "ifModifiedSince",
                 "serializedName": "If-Modified-Since",
                 "doc": "The request should only proceed if the entity was modified after this time.",
                 "type": {
-                  "$id": "68",
+                  "$id": "75",
                   "kind": "utcDateTime",
                   "name": "utcDateTime",
                   "encode": "rfc7231",
                   "wireType": {
-                    "$id": "69",
+                    "$id": "76",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -834,21 +930,53 @@
                 "scope": "Method",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.ifModifiedSince"
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.ifModifiedSince",
+                "methodParameterSegments": [
+                  {
+                    "$id": "77",
+                    "kind": "method",
+                    "name": "ifModifiedSince",
+                    "serializedName": "If-Modified-Since",
+                    "doc": "The request should only proceed if the entity was modified after this time.",
+                    "type": {
+                      "$id": "78",
+                      "kind": "utcDateTime",
+                      "name": "utcDateTime",
+                      "encode": "rfc7231",
+                      "wireType": {
+                        "$id": "79",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+                      "decorators": []
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": true,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.ifModifiedSince",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": []
+                  }
+                ]
               },
               {
-                "$id": "70",
+                "$id": "80",
                 "kind": "header",
                 "name": "clientRequestId",
                 "serializedName": "x-ms-client-request-id",
                 "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
                 "type": {
-                  "$id": "71",
+                  "$id": "81",
                   "kind": "string",
                   "name": "uuid",
                   "crossLanguageDefinitionId": "Azure.Core.uuid",
                   "baseType": {
-                    "$id": "72",
+                    "$id": "82",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -862,15 +990,46 @@
                 "scope": "Method",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.clientRequestId"
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.clientRequestId",
+                "methodParameterSegments": [
+                  {
+                    "$id": "83",
+                    "kind": "method",
+                    "name": "clientRequestId",
+                    "serializedName": "x-ms-client-request-id",
+                    "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+                    "type": {
+                      "$id": "84",
+                      "kind": "string",
+                      "name": "uuid",
+                      "crossLanguageDefinitionId": "Azure.Core.uuid",
+                      "baseType": {
+                        "$id": "85",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "decorators": []
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": true,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.clientRequestId",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": []
+                  }
+                ]
               },
               {
-                "$id": "73",
+                "$id": "86",
                 "kind": "header",
                 "name": "accept",
                 "serializedName": "Accept",
                 "type": {
-                  "$ref": "15"
+                  "$ref": "8"
                 },
                 "isApiVersion": false,
                 "optional": false,
@@ -878,7 +1037,26 @@
                 "scope": "Constant",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.accept"
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.accept",
+                "methodParameterSegments": [
+                  {
+                    "$id": "87",
+                    "kind": "method",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "8"
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Constant",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.accept",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": []
+                  }
+                ]
               }
             ],
             "responses": [
@@ -887,14 +1065,14 @@
                   200
                 ],
                 "bodyType": {
-                  "$ref": "21"
+                  "$ref": "14"
                 },
                 "headers": [
                   {
                     "name": "bar",
                     "nameInResponse": "bar",
                     "type": {
-                      "$id": "74",
+                      "$id": "88",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -906,7 +1084,7 @@
                     "nameInResponse": "ETag",
                     "doc": "The entity tag for the response.",
                     "type": {
-                      "$id": "75",
+                      "$id": "89",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -918,12 +1096,12 @@
                     "nameInResponse": "x-ms-client-request-id",
                     "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
                     "type": {
-                      "$id": "76",
+                      "$id": "90",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "77",
+                        "$id": "91",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -946,207 +1124,38 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Core.Traits"
           },
           "parameters": [
             {
-              "$id": "78",
-              "kind": "method",
-              "name": "id",
-              "serializedName": "id",
-              "doc": "The user's id.",
-              "type": {
-                "$id": "79",
-                "kind": "int32",
-                "name": "int32",
-                "crossLanguageDefinitionId": "TypeSpec.int32",
-                "decorators": []
-              },
-              "location": "Path",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Method",
-              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.id",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "54"
             },
             {
-              "$id": "80",
-              "kind": "method",
-              "name": "foo",
-              "serializedName": "foo",
-              "doc": "header in request",
-              "type": {
-                "$id": "81",
-                "kind": "string",
-                "name": "string",
-                "crossLanguageDefinitionId": "TypeSpec.string",
-                "decorators": []
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Method",
-              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.foo",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "58"
             },
             {
-              "$id": "82",
-              "kind": "method",
-              "name": "ifMatch",
-              "serializedName": "If-Match",
-              "doc": "The request should only proceed if an entity matches this string.",
-              "type": {
-                "$id": "83",
-                "kind": "string",
-                "name": "string",
-                "crossLanguageDefinitionId": "TypeSpec.string",
-                "decorators": []
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "optional": true,
-              "scope": "Method",
-              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.ifMatch",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "62"
             },
             {
-              "$id": "84",
-              "kind": "method",
-              "name": "ifNoneMatch",
-              "serializedName": "If-None-Match",
-              "doc": "The request should only proceed if no entity matches this string.",
-              "type": {
-                "$id": "85",
-                "kind": "string",
-                "name": "string",
-                "crossLanguageDefinitionId": "TypeSpec.string",
-                "decorators": []
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "optional": true,
-              "scope": "Method",
-              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.ifNoneMatch",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "66"
             },
             {
-              "$id": "86",
-              "kind": "method",
-              "name": "ifUnmodifiedSince",
-              "serializedName": "If-Unmodified-Since",
-              "doc": "The request should only proceed if the entity was not modified after this time.",
-              "type": {
-                "$id": "87",
-                "kind": "utcDateTime",
-                "name": "utcDateTime",
-                "encode": "rfc7231",
-                "wireType": {
-                  "$id": "88",
-                  "kind": "string",
-                  "name": "string",
-                  "crossLanguageDefinitionId": "TypeSpec.string",
-                  "decorators": []
-                },
-                "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
-                "decorators": []
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "optional": true,
-              "scope": "Method",
-              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.ifUnmodifiedSince",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "71"
             },
             {
-              "$id": "89",
-              "kind": "method",
-              "name": "ifModifiedSince",
-              "serializedName": "If-Modified-Since",
-              "doc": "The request should only proceed if the entity was modified after this time.",
-              "type": {
-                "$id": "90",
-                "kind": "utcDateTime",
-                "name": "utcDateTime",
-                "encode": "rfc7231",
-                "wireType": {
-                  "$id": "91",
-                  "kind": "string",
-                  "name": "string",
-                  "crossLanguageDefinitionId": "TypeSpec.string",
-                  "decorators": []
-                },
-                "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
-                "decorators": []
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "optional": true,
-              "scope": "Method",
-              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.ifModifiedSince",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "77"
             },
             {
-              "$id": "92",
-              "kind": "method",
-              "name": "clientRequestId",
-              "serializedName": "x-ms-client-request-id",
-              "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
-              "type": {
-                "$id": "93",
-                "kind": "string",
-                "name": "uuid",
-                "crossLanguageDefinitionId": "Azure.Core.uuid",
-                "baseType": {
-                  "$id": "94",
-                  "kind": "string",
-                  "name": "string",
-                  "crossLanguageDefinitionId": "TypeSpec.string",
-                  "decorators": []
-                },
-                "decorators": []
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "optional": true,
-              "scope": "Method",
-              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.clientRequestId",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "83"
             },
             {
-              "$id": "95",
-              "kind": "method",
-              "name": "accept",
-              "serializedName": "Accept",
-              "type": {
-                "$ref": "15"
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Constant",
-              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.accept",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "87"
             }
           ],
           "response": {
             "type": {
-              "$ref": "21"
+              "$ref": "14"
             }
           },
           "isOverride": false,
@@ -1155,7 +1164,7 @@
           "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest"
         },
         {
-          "$id": "96",
+          "$id": "92",
           "kind": "basic",
           "name": "repeatableAction",
           "accessibility": "public",
@@ -1164,20 +1173,20 @@
           ],
           "doc": "Test for repeatable requests",
           "operation": {
-            "$id": "97",
+            "$id": "93",
             "name": "repeatableAction",
             "resourceName": "Traits",
             "doc": "Test for repeatable requests",
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "98",
+                "$id": "94",
                 "kind": "query",
                 "name": "apiVersion",
                 "serializedName": "api-version",
                 "doc": "The API version to use for this operation.",
                 "type": {
-                  "$id": "99",
+                  "$id": "95",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1187,7 +1196,7 @@
                 "explode": false,
                 "defaultValue": {
                   "type": {
-                    "$id": "100",
+                    "$id": "96",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1198,16 +1207,21 @@
                 "scope": "Client",
                 "decorators": [],
                 "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction.apiVersion",
-                "readOnly": false
+                "readOnly": false,
+                "methodParameterSegments": [
+                  {
+                    "$ref": "49"
+                  }
+                ]
               },
               {
-                "$id": "101",
+                "$id": "97",
                 "kind": "path",
                 "name": "id",
                 "serializedName": "id",
                 "doc": "The user's id.",
                 "type": {
-                  "$id": "102",
+                  "$id": "98",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -1222,16 +1236,40 @@
                 "scope": "Method",
                 "decorators": [],
                 "readOnly": false,
-                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction.id"
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction.id",
+                "methodParameterSegments": [
+                  {
+                    "$id": "99",
+                    "kind": "method",
+                    "name": "id",
+                    "serializedName": "id",
+                    "doc": "The user's id.",
+                    "type": {
+                      "$id": "100",
+                      "kind": "int32",
+                      "name": "int32",
+                      "crossLanguageDefinitionId": "TypeSpec.int32",
+                      "decorators": []
+                    },
+                    "location": "Path",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction.id",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": []
+                  }
+                ]
               },
               {
-                "$id": "103",
+                "$id": "101",
                 "kind": "header",
                 "name": "repeatabilityRequestId",
                 "serializedName": "Repeatability-Request-ID",
                 "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
                 "type": {
-                  "$id": "104",
+                  "$id": "102",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1243,7 +1281,31 @@
                 "scope": "Method",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction.repeatabilityRequestId"
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction.repeatabilityRequestId",
+                "methodParameterSegments": [
+                  {
+                    "$id": "103",
+                    "kind": "method",
+                    "name": "repeatabilityRequestId",
+                    "serializedName": "Repeatability-Request-ID",
+                    "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+                    "type": {
+                      "$id": "104",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": true,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction.repeatabilityRequestId",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": []
+                  }
+                ]
               },
               {
                 "$id": "105",
@@ -1272,16 +1334,48 @@
                 "scope": "Method",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction.repeatabilityFirstSent"
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction.repeatabilityFirstSent",
+                "methodParameterSegments": [
+                  {
+                    "$id": "108",
+                    "kind": "method",
+                    "name": "repeatabilityFirstSent",
+                    "serializedName": "Repeatability-First-Sent",
+                    "doc": "Specifies the date and time at which the request was first created.",
+                    "type": {
+                      "$id": "109",
+                      "kind": "utcDateTime",
+                      "name": "utcDateTime",
+                      "encode": "rfc7231",
+                      "wireType": {
+                        "$id": "110",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+                      "decorators": []
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": true,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction.repeatabilityFirstSent",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": []
+                  }
+                ]
               },
               {
-                "$id": "108",
+                "$id": "111",
                 "kind": "header",
                 "name": "contentType",
                 "serializedName": "Content-Type",
                 "doc": "Body parameter's content type. Known values are application/json",
                 "type": {
-                  "$ref": "17"
+                  "$ref": "10"
                 },
                 "isApiVersion": false,
                 "optional": false,
@@ -1289,15 +1383,35 @@
                 "scope": "Constant",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction.contentType"
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction.contentType",
+                "methodParameterSegments": [
+                  {
+                    "$id": "112",
+                    "kind": "method",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "10"
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Constant",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction.contentType",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": []
+                  }
+                ]
               },
               {
-                "$id": "109",
+                "$id": "113",
                 "kind": "header",
                 "name": "accept",
                 "serializedName": "Accept",
                 "type": {
-                  "$ref": "19"
+                  "$ref": "12"
                 },
                 "isApiVersion": false,
                 "optional": false,
@@ -1305,16 +1419,35 @@
                 "scope": "Constant",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction.accept"
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction.accept",
+                "methodParameterSegments": [
+                  {
+                    "$id": "114",
+                    "kind": "method",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "12"
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Constant",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction.accept",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": []
+                  }
+                ]
               },
               {
-                "$id": "110",
+                "$id": "115",
                 "kind": "body",
                 "name": "body",
                 "serializedName": "body",
                 "doc": "The body parameter.",
                 "type": {
-                  "$ref": "44"
+                  "$ref": "37"
                 },
                 "isApiVersion": false,
                 "contentTypes": [
@@ -1325,7 +1458,27 @@
                 "scope": "Method",
                 "decorators": [],
                 "readOnly": false,
-                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction.body"
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction.body",
+                "methodParameterSegments": [
+                  {
+                    "$id": "116",
+                    "kind": "method",
+                    "name": "body",
+                    "serializedName": "body",
+                    "doc": "The body parameter.",
+                    "type": {
+                      "$ref": "37"
+                    },
+                    "location": "Body",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction.body",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": []
+                  }
+                ]
               }
             ],
             "responses": [
@@ -1334,7 +1487,7 @@
                   200
                 ],
                 "bodyType": {
-                  "$ref": "47"
+                  "$ref": "40"
                 },
                 "headers": [
                   {
@@ -1362,140 +1515,32 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Core.Traits"
           },
           "parameters": [
             {
-              "$id": "111",
-              "kind": "method",
-              "name": "id",
-              "serializedName": "id",
-              "doc": "The user's id.",
-              "type": {
-                "$id": "112",
-                "kind": "int32",
-                "name": "int32",
-                "crossLanguageDefinitionId": "TypeSpec.int32",
-                "decorators": []
-              },
-              "location": "Path",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Method",
-              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction.id",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "99"
             },
             {
-              "$id": "113",
-              "kind": "method",
-              "name": "body",
-              "serializedName": "body",
-              "doc": "The body parameter.",
-              "type": {
-                "$ref": "44"
-              },
-              "location": "Body",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Method",
-              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction.body",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "116"
             },
             {
-              "$id": "114",
-              "kind": "method",
-              "name": "repeatabilityRequestId",
-              "serializedName": "Repeatability-Request-ID",
-              "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
-              "type": {
-                "$id": "115",
-                "kind": "string",
-                "name": "string",
-                "crossLanguageDefinitionId": "TypeSpec.string",
-                "decorators": []
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "optional": true,
-              "scope": "Method",
-              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction.repeatabilityRequestId",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "103"
             },
             {
-              "$id": "116",
-              "kind": "method",
-              "name": "repeatabilityFirstSent",
-              "serializedName": "Repeatability-First-Sent",
-              "doc": "Specifies the date and time at which the request was first created.",
-              "type": {
-                "$id": "117",
-                "kind": "utcDateTime",
-                "name": "utcDateTime",
-                "encode": "rfc7231",
-                "wireType": {
-                  "$id": "118",
-                  "kind": "string",
-                  "name": "string",
-                  "crossLanguageDefinitionId": "TypeSpec.string",
-                  "decorators": []
-                },
-                "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
-                "decorators": []
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "optional": true,
-              "scope": "Method",
-              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction.repeatabilityFirstSent",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "108"
             },
             {
-              "$id": "119",
-              "kind": "method",
-              "name": "contentType",
-              "serializedName": "Content-Type",
-              "doc": "Body parameter's content type. Known values are application/json",
-              "type": {
-                "$ref": "17"
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Constant",
-              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction.contentType",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "112"
             },
             {
-              "$id": "120",
-              "kind": "method",
-              "name": "accept",
-              "serializedName": "Accept",
-              "type": {
-                "$ref": "19"
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Constant",
-              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction.accept",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "114"
             }
           ],
           "response": {
             "type": {
-              "$ref": "47"
+              "$ref": "40"
             }
           },
           "isOverride": false,
@@ -1506,13 +1551,13 @@
       ],
       "parameters": [
         {
-          "$id": "121",
+          "$id": "117",
           "kind": "endpoint",
           "name": "endpoint",
           "serializedName": "endpoint",
           "doc": "Service host",
           "type": {
-            "$id": "122",
+            "$id": "118",
             "kind": "url",
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
@@ -1523,7 +1568,7 @@
           "isEndpoint": true,
           "defaultValue": {
             "type": {
-              "$id": "123",
+              "$id": "119",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1534,13 +1579,18 @@
           "skipUrlEncoding": false,
           "readOnly": false,
           "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.endpoint"
+        },
+        {
+          "$ref": "49"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits",
       "apiVersions": [
         "2022-12-01-preview"
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

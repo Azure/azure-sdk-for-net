@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Management.InputTransformation;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Providers.Abstraction;
@@ -51,24 +50,23 @@ namespace Azure.Generator.Management
 
         /// <inheritdoc/>
         protected override IReadOnlyList<CSharpProjectWriter.CSProjDependencyPackage> AzureDependencyPackages =>
-            [
-                new("Azure.Core"),
-                new("Azure.ResourceManager"),
-                new("System.ClientModel"),
-                new("System.Text.Json")
-            ];
+            [];
 
         /// <inheritdoc/>
         protected override ClientProvider? CreateClientCore(InputClient inputClient)
         {
-            var transformedClient = InputClientTransformer.TransformInputClient(inputClient);
-            return transformedClient is null ? null : base.CreateClientCore(transformedClient);
+            return base.CreateClientCore(inputClient);
         }
 
         /// <inheritdoc/>
         protected override CSharpType? CreateCSharpTypeCore(InputType inputType)
         {
             if (inputType is InputModelType model && KnownManagementTypes.TryGetSystemType(model.CrossLanguageDefinitionId, out var replacedType))
+            {
+                return replacedType;
+            }
+
+            if (inputType is InputEnumType enumType && KnownManagementTypes.TryGetSystemType(enumType.CrossLanguageDefinitionId, out replacedType))
             {
                 return replacedType;
             }
@@ -95,16 +93,26 @@ namespace Azure.Generator.Management
         }
 
         /// <inheritdoc/>
-        public override MethodBodyStatement SerializeJsonValue(Type valueType, ValueExpression value, ScopedApi<Utf8JsonWriter> utf8JsonWriter, ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter, SerializationFormat serializationFormat)
+        protected override EnumProvider? CreateEnumCore(InputEnumType enumType, TypeProvider? declaringType)
         {
+            if (KnownManagementTypes.TryGetSystemType(enumType.CrossLanguageDefinitionId, out _))
+            {
+                return null;
+            }
+            return base.CreateEnumCore(enumType, declaringType);
+        }
+
+        /// <inheritdoc/>
+        public override MethodBodyStatement SerializeJsonValue(CSharpType valueType, ValueExpression value, ScopedApi<Utf8JsonWriter> utf8JsonWriter, ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter, SerializationFormat serializationFormat)
+        {
+            if (KnownManagementTypes.TryGetJsonSerializationExpression(valueType, out var serializationExpression))
+            {
+                return serializationExpression(valueType, value, utf8JsonWriter, mrwOptionsParameter, serializationFormat);
+            }
+
             if (KnownManagementTypes.IsKnownManagementType(valueType))
             {
                 return value.CastTo(new CSharpType(typeof(IJsonModel<>), valueType)).Invoke(nameof(IJsonModel<object>.Write), [utf8JsonWriter, mrwOptionsParameter]).Terminate();
-            }
-
-            if (KnownManagementTypes.TryGetJsonSerializationExpression(valueType, out var serializationExpression))
-            {
-                return serializationExpression(value, utf8JsonWriter, mrwOptionsParameter, serializationFormat);
             }
 
             return base.SerializeJsonValue(valueType, value, utf8JsonWriter, mrwOptionsParameter, serializationFormat);
@@ -113,13 +121,18 @@ namespace Azure.Generator.Management
         /// <inheritdoc/>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
         public override ValueExpression DeserializeJsonValue(
-            Type valueType,
+            CSharpType valueType,
             ScopedApi<JsonElement> element,
             ScopedApi<BinaryData> data,
             ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter,
             SerializationFormat format)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
+            if (KnownManagementTypes.TryGetJsonDeserializationExpression(valueType, out var deserializationExpression))
+            {
+                return deserializationExpression(valueType, element, format);
+            }
+
             if (KnownManagementTypes.IsKnownManagementType(valueType))
             {
                 IReadOnlyList<ValueExpression> readBody =
@@ -139,11 +152,6 @@ namespace Azure.Generator.Management
                     nameof(ModelReaderWriter.Read),
                     [.. readBody, ModelReaderWriterContextSnippets.Default],
                     typeArgs: [valueType]);
-            }
-
-            if (KnownManagementTypes.TryGetJsonDeserializationExpression(valueType, out var deserializationExpression))
-            {
-                return deserializationExpression(valueType, element, format);
             }
 
             return base.DeserializeJsonValue(valueType, element, data, mrwOptionsParameter, format);

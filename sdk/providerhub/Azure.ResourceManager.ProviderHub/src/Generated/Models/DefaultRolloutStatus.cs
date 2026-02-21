@@ -20,24 +20,28 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefaultRolloutStatus"/>. </summary>
-        /// <param name="completedRegions"></param>
-        /// <param name="failedOrSkippedRegions"> Dictionary of &lt;ExtendedErrorInfo&gt;. </param>
+        /// <param name="completedRegions"> The completed regions. </param>
+        /// <param name="failedOrSkippedRegions"> The failed or skipped regions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="nextTrafficRegion"></param>
-        /// <param name="nextTrafficRegionScheduledOn"></param>
-        /// <param name="subscriptionReregistrationResult"></param>
-        internal DefaultRolloutStatus(IList<AzureLocation> completedRegions, IDictionary<string, ExtendedErrorInfo> failedOrSkippedRegions, IDictionary<string, BinaryData> serializedAdditionalRawData, TrafficRegionCategory? nextTrafficRegion, DateTimeOffset? nextTrafficRegionScheduledOn, SubscriptionReregistrationResult? subscriptionReregistrationResult) : base(completedRegions, failedOrSkippedRegions, serializedAdditionalRawData)
+        /// <param name="nextTrafficRegion"> The next traffic region. </param>
+        /// <param name="nextTrafficRegionScheduledOn"> The next traffic region scheduled time. </param>
+        /// <param name="subscriptionReregistrationResult"> The subscription reregistration result. </param>
+        /// <param name="manifestCheckinStatus"> The manifest checkin status. </param>
+        internal DefaultRolloutStatus(IList<AzureLocation> completedRegions, IDictionary<string, ExtendedErrorInfo> failedOrSkippedRegions, IDictionary<string, BinaryData> serializedAdditionalRawData, TrafficRegionCategory? nextTrafficRegion, DateTimeOffset? nextTrafficRegionScheduledOn, SubscriptionReregistrationResult? subscriptionReregistrationResult, CheckinManifestInfo manifestCheckinStatus) : base(completedRegions, failedOrSkippedRegions, serializedAdditionalRawData)
         {
             NextTrafficRegion = nextTrafficRegion;
             NextTrafficRegionScheduledOn = nextTrafficRegionScheduledOn;
             SubscriptionReregistrationResult = subscriptionReregistrationResult;
+            ManifestCheckinStatus = manifestCheckinStatus;
         }
 
-        /// <summary> Gets or sets the next traffic region. </summary>
+        /// <summary> The next traffic region. </summary>
         public TrafficRegionCategory? NextTrafficRegion { get; set; }
-        /// <summary> Gets or sets the next traffic region scheduled on. </summary>
+        /// <summary> The next traffic region scheduled time. </summary>
         public DateTimeOffset? NextTrafficRegionScheduledOn { get; set; }
-        /// <summary> Gets or sets the subscription reregistration result. </summary>
+        /// <summary> The subscription reregistration result. </summary>
         public SubscriptionReregistrationResult? SubscriptionReregistrationResult { get; set; }
+        /// <summary> The manifest checkin status. </summary>
+        public CheckinManifestInfo ManifestCheckinStatus { get; set; }
     }
 }

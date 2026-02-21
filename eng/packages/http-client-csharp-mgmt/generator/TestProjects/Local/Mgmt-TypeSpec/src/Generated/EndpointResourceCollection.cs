@@ -6,7 +6,8 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -14,14 +15,14 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// A class representing a collection of <see cref="EndpointResource"/> and their operations.
-    /// Each <see cref="EndpointResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="EndpointResourceCollection"/> instance call the GetEndpointResources method from an instance of the parent resource.
+    /// Each <see cref="EndpointResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="EndpointResourceCollection"/> instance call the GetEndpointResources method from an instance of <see cref="ArmResource"/>.
     /// </summary>
-    public partial class EndpointResourceCollection : ArmCollection
+    public partial class EndpointResourceCollection : ArmCollection, IEnumerable<EndpointResource>, IAsyncEnumerable<EndpointResource>
     {
         private readonly ClientDiagnostics _endpointResourcesClientDiagnostics;
         private readonly EndpointResources _endpointResourcesRestClient;
@@ -37,22 +38,27 @@ namespace MgmtTypeSpec
         internal EndpointResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(EndpointResource.ResourceType, out string endpointResourceApiVersion);
-            _endpointResourcesClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", EndpointResource.ResourceType.Namespace, Diagnostics);
+            _endpointResourcesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", EndpointResource.ResourceType.Namespace, Diagnostics);
             _endpointResourcesRestClient = new EndpointResources(_endpointResourcesClientDiagnostics, Pipeline, Endpoint, endpointResourceApiVersion ?? "2024-05-01");
-            ValidateResourceId(id);
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
-        internal static void ValidateResourceId(ResourceIdentifier id)
-        {
-            if (id.ResourceType != EndpointResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EndpointResource.ResourceType), id);
-            }
-        }
-
-        /// <summary> Create or update the endpoint to the target resource. </summary>
+        /// <summary>
+        /// Create or update the endpoint to the target resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/MgmtTypeSpec/endpoints/{endpointName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EndpointResources_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="endpointName"> The name of the EndpointResource. </param>
         /// <param name="data"> Resource create parameters. </param>
@@ -77,7 +83,7 @@ namespace MgmtTypeSpec
                 Response<EndpointResourceData> response = Response.FromValue(EndpointResourceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MgmtTypeSpecArmOperation<EndpointResource> operation = new MgmtTypeSpecArmOperation<EndpointResource>(Response.FromValue(new EndpointResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                TestsArmOperation<EndpointResource> operation = new TestsArmOperation<EndpointResource>(Response.FromValue(new EndpointResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -91,7 +97,23 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> Create or update the endpoint to the target resource. </summary>
+        /// <summary>
+        /// Create or update the endpoint to the target resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/MgmtTypeSpec/endpoints/{endpointName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EndpointResources_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="endpointName"> The name of the EndpointResource. </param>
         /// <param name="data"> Resource create parameters. </param>
@@ -116,7 +138,7 @@ namespace MgmtTypeSpec
                 Response<EndpointResourceData> response = Response.FromValue(EndpointResourceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MgmtTypeSpecArmOperation<EndpointResource> operation = new MgmtTypeSpecArmOperation<EndpointResource>(Response.FromValue(new EndpointResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                TestsArmOperation<EndpointResource> operation = new TestsArmOperation<EndpointResource>(Response.FromValue(new EndpointResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -130,7 +152,23 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> Gets the endpoint to the resource. </summary>
+        /// <summary>
+        /// Gets the endpoint to the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/MgmtTypeSpec/endpoints/{endpointName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EndpointResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="endpointName"> The name of the EndpointResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
@@ -163,7 +201,23 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> Gets the endpoint to the resource. </summary>
+        /// <summary>
+        /// Gets the endpoint to the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/MgmtTypeSpec/endpoints/{endpointName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EndpointResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="endpointName"> The name of the EndpointResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
@@ -196,7 +250,79 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// List EndpointResource resources by parent
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/MgmtTypeSpec/endpoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EndpointResources_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EndpointResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EndpointResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<EndpointResourceData, EndpointResource>(new EndpointResourcesGetAllAsyncCollectionResultOfT(_endpointResourcesRestClient, Id, context), data => new EndpointResource(Client, data));
+        }
+
+        /// <summary>
+        /// List EndpointResource resources by parent
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/MgmtTypeSpec/endpoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EndpointResources_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EndpointResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EndpointResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<EndpointResourceData, EndpointResource>(new EndpointResourcesGetAllCollectionResultOfT(_endpointResourcesRestClient, Id, context), data => new EndpointResource(Client, data));
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/MgmtTypeSpec/endpoints/{endpointName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EndpointResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="endpointName"> The name of the EndpointResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
@@ -237,7 +363,23 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/MgmtTypeSpec/endpoints/{endpointName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EndpointResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="endpointName"> The name of the EndpointResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
@@ -278,7 +420,23 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/MgmtTypeSpec/endpoints/{endpointName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EndpointResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="endpointName"> The name of the EndpointResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
@@ -323,7 +481,23 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/MgmtTypeSpec/endpoints/{endpointName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EndpointResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="endpointName"> The name of the EndpointResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
@@ -366,6 +540,22 @@ namespace MgmtTypeSpec
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<EndpointResource> IEnumerable<EndpointResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<EndpointResource> IAsyncEnumerable<EndpointResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

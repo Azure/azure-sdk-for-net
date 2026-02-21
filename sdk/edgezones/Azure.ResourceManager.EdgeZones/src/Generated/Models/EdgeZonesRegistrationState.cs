@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EdgeZones;
 
 namespace Azure.ResourceManager.EdgeZones.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.EdgeZones.Models
     public readonly partial struct EdgeZonesRegistrationState : IEquatable<EdgeZonesRegistrationState>
     {
         private readonly string _value;
+        /// <summary> Subscription not registered for the Azure Extended Zone. </summary>
+        private const string NotRegisteredValue = "NotRegistered";
+        /// <summary> Subscription pending registration for the Azure Extended Zone. </summary>
+        private const string PendingRegisterValue = "PendingRegister";
+        /// <summary> Subscription is registered for the Azure Extended Zone. </summary>
+        private const string RegisteredValue = "Registered";
+        /// <summary> Subscription is pending unregistering for the Azure Extended Zone. </summary>
+        private const string PendingUnregisterValue = "PendingUnregister";
 
         /// <summary> Initializes a new instance of <see cref="EdgeZonesRegistrationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EdgeZonesRegistrationState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotRegisteredValue = "NotRegistered";
-        private const string PendingRegisterValue = "PendingRegister";
-        private const string RegisteredValue = "Registered";
-        private const string PendingUnregisterValue = "PendingUnregister";
+            _value = value;
+        }
 
         /// <summary> Subscription not registered for the Azure Extended Zone. </summary>
         public static EdgeZonesRegistrationState NotRegistered { get; } = new EdgeZonesRegistrationState(NotRegisteredValue);
+
         /// <summary> Subscription pending registration for the Azure Extended Zone. </summary>
         public static EdgeZonesRegistrationState PendingRegister { get; } = new EdgeZonesRegistrationState(PendingRegisterValue);
+
         /// <summary> Subscription is registered for the Azure Extended Zone. </summary>
         public static EdgeZonesRegistrationState Registered { get; } = new EdgeZonesRegistrationState(RegisteredValue);
+
         /// <summary> Subscription is pending unregistering for the Azure Extended Zone. </summary>
         public static EdgeZonesRegistrationState PendingUnregister { get; } = new EdgeZonesRegistrationState(PendingUnregisterValue);
+
         /// <summary> Determines if two <see cref="EdgeZonesRegistrationState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EdgeZonesRegistrationState left, EdgeZonesRegistrationState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EdgeZonesRegistrationState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EdgeZonesRegistrationState left, EdgeZonesRegistrationState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EdgeZonesRegistrationState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EdgeZonesRegistrationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EdgeZonesRegistrationState(string value) => new EdgeZonesRegistrationState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EdgeZonesRegistrationState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EdgeZonesRegistrationState?(string value) => value == null ? null : new EdgeZonesRegistrationState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EdgeZonesRegistrationState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EdgeZonesRegistrationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

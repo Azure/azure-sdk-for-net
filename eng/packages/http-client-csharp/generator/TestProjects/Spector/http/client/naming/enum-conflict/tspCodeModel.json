@@ -24,65 +24,13 @@
             "$ref": "2"
           },
           "enumType": {
-            "$id": "4",
-            "kind": "enum",
-            "decorators": [],
-            "name": "Status",
-            "isGeneratedName": false,
-            "namespace": "Client.Naming.EnumConflict.FirstNamespace",
-            "doc": "Status enum in first namespace",
-            "valueType": {
-              "$id": "5",
-              "kind": "string",
-              "decorators": [],
-              "name": "string",
-              "doc": "A sequence of textual characters.",
-              "crossLanguageDefinitionId": "TypeSpec.string"
-            },
-            "values": [
-              {
-                "$id": "6",
-                "kind": "enumvalue",
-                "decorators": [],
-                "name": "Active",
-                "value": "active",
-                "doc": "Active status",
-                "enumType": {
-                  "$ref": "4"
-                },
-                "valueType": {
-                  "$ref": "5"
-                }
-              },
-              {
-                "$id": "7",
-                "kind": "enumvalue",
-                "decorators": [],
-                "name": "Inactive",
-                "value": "inactive",
-                "doc": "Inactive status",
-                "enumType": {
-                  "$ref": "4"
-                },
-                "valueType": {
-                  "$ref": "5"
-                }
-              }
-            ],
-            "isFixed": true,
-            "isFlags": false,
-            "usage": "Input,Output,Json",
-            "access": "public",
-            "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstNamespace.Status",
-            "apiVersions": [],
-            "isUnionAsEnum": false,
-            "__accessSet": true
+            "$ref": "1"
           },
           "doc": "Active status",
           "decorators": []
         },
         {
-          "$id": "8",
+          "$id": "4",
           "kind": "enumvalue",
           "name": "Inactive",
           "value": "inactive",
@@ -90,7 +38,7 @@
             "$ref": "2"
           },
           "enumType": {
-            "$ref": "4"
+            "$ref": "1"
           },
           "doc": "Inactive status",
           "decorators": []
@@ -104,12 +52,12 @@
       "decorators": []
     },
     {
-      "$id": "9",
+      "$id": "5",
       "kind": "enum",
       "name": "SecondStatus",
       "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondNamespace.Status",
       "valueType": {
-        "$id": "10",
+        "$id": "6",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -117,81 +65,29 @@
       },
       "values": [
         {
-          "$id": "11",
+          "$id": "7",
           "kind": "enumvalue",
           "name": "Running",
           "value": "running",
           "valueType": {
-            "$ref": "10"
+            "$ref": "6"
           },
           "enumType": {
-            "$id": "12",
-            "kind": "enum",
-            "decorators": [],
-            "name": "SecondStatus",
-            "isGeneratedName": false,
-            "namespace": "Client.Naming.EnumConflict.SecondNamespace",
-            "doc": "Status enum in second namespace",
-            "valueType": {
-              "$id": "13",
-              "kind": "string",
-              "decorators": [],
-              "name": "string",
-              "doc": "A sequence of textual characters.",
-              "crossLanguageDefinitionId": "TypeSpec.string"
-            },
-            "values": [
-              {
-                "$id": "14",
-                "kind": "enumvalue",
-                "decorators": [],
-                "name": "Running",
-                "value": "running",
-                "doc": "Running status",
-                "enumType": {
-                  "$ref": "12"
-                },
-                "valueType": {
-                  "$ref": "13"
-                }
-              },
-              {
-                "$id": "15",
-                "kind": "enumvalue",
-                "decorators": [],
-                "name": "Stopped",
-                "value": "stopped",
-                "doc": "Stopped status",
-                "enumType": {
-                  "$ref": "12"
-                },
-                "valueType": {
-                  "$ref": "13"
-                }
-              }
-            ],
-            "isFixed": true,
-            "isFlags": false,
-            "usage": "Input,Output,Json",
-            "access": "public",
-            "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondNamespace.Status",
-            "apiVersions": [],
-            "isUnionAsEnum": false,
-            "__accessSet": true
+            "$ref": "5"
           },
           "doc": "Running status",
           "decorators": []
         },
         {
-          "$id": "16",
+          "$id": "8",
           "kind": "enumvalue",
           "name": "Stopped",
           "value": "stopped",
           "valueType": {
-            "$ref": "10"
+            "$ref": "6"
           },
           "enumType": {
-            "$ref": "12"
+            "$ref": "5"
           },
           "doc": "Stopped status",
           "decorators": []
@@ -207,13 +103,13 @@
   ],
   "constants": [
     {
-      "$id": "17",
+      "$id": "9",
       "kind": "constant",
       "name": "firstContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
-        "$id": "18",
+        "$id": "10",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -223,13 +119,13 @@
       "decorators": []
     },
     {
-      "$id": "19",
+      "$id": "11",
       "kind": "constant",
       "name": "firstContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
-        "$id": "20",
+        "$id": "12",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -239,13 +135,13 @@
       "decorators": []
     },
     {
-      "$id": "21",
+      "$id": "13",
       "kind": "constant",
       "name": "secondContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
-        "$id": "22",
+        "$id": "14",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -255,13 +151,13 @@
       "decorators": []
     },
     {
-      "$id": "23",
+      "$id": "15",
       "kind": "constant",
       "name": "secondContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
-        "$id": "24",
+        "$id": "16",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -273,16 +169,21 @@
   ],
   "models": [
     {
-      "$id": "25",
+      "$id": "17",
       "kind": "model",
       "name": "FirstModel",
       "namespace": "Client.Naming.EnumConflict.FirstNamespace",
       "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstNamespace.FirstModel",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "FirstModel"
+        }
+      },
       "properties": [
         {
-          "$id": "26",
+          "$id": "18",
           "kind": "property",
           "name": "status",
           "serializedName": "status",
@@ -304,13 +205,13 @@
           "isHttpMetadata": false
         },
         {
-          "$id": "27",
+          "$id": "19",
           "kind": "property",
           "name": "name",
           "serializedName": "name",
           "doc": "Name of the item",
           "type": {
-            "$id": "28",
+            "$id": "20",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -332,22 +233,27 @@
       ]
     },
     {
-      "$id": "29",
+      "$id": "21",
       "kind": "model",
       "name": "SecondModel",
       "namespace": "Client.Naming.EnumConflict.SecondNamespace",
       "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondNamespace.SecondModel",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "SecondModel"
+        }
+      },
       "properties": [
         {
-          "$id": "30",
+          "$id": "22",
           "kind": "property",
           "name": "status",
           "serializedName": "status",
           "doc": "Status from second namespace",
           "type": {
-            "$ref": "9"
+            "$ref": "5"
           },
           "optional": false,
           "readOnly": false,
@@ -363,13 +269,13 @@
           "isHttpMetadata": false
         },
         {
-          "$id": "31",
+          "$id": "23",
           "kind": "property",
           "name": "description",
           "serializedName": "description",
           "doc": "Description of the item",
           "type": {
-            "$id": "32",
+            "$id": "24",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -393,7 +299,7 @@
   ],
   "clients": [
     {
-      "$id": "33",
+      "$id": "25",
       "kind": "client",
       "name": "EnumConflictClient",
       "namespace": "Client.Naming.EnumConflict",
@@ -401,13 +307,13 @@
       "methods": [],
       "parameters": [
         {
-          "$id": "34",
+          "$id": "26",
           "kind": "endpoint",
           "name": "endpoint",
           "serializedName": "endpoint",
           "doc": "Service host",
           "type": {
-            "$id": "35",
+            "$id": "27",
             "kind": "url",
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
@@ -418,7 +324,7 @@
           "isEndpoint": true,
           "defaultValue": {
             "type": {
-              "$id": "36",
+              "$id": "28",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string"
@@ -431,38 +337,39 @@
           "crossLanguageDefinitionId": "Client.Naming.EnumConflict.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Client.Naming.EnumConflict",
       "apiVersions": [],
       "children": [
         {
-          "$id": "37",
+          "$id": "29",
           "kind": "client",
           "name": "FirstOperations",
           "namespace": "Client.Naming.EnumConflict",
           "methods": [
             {
-              "$id": "38",
+              "$id": "30",
               "kind": "basic",
               "name": "first",
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Operation using first namespace Status enum",
               "operation": {
-                "$id": "39",
+                "$id": "31",
                 "name": "first",
                 "resourceName": "FirstOperations",
                 "doc": "Operation using first namespace Status enum",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "40",
+                    "$id": "32",
                     "kind": "header",
                     "name": "contentType",
                     "serializedName": "Content-Type",
                     "doc": "Body parameter's content type. Known values are application/json",
                     "type": {
-                      "$ref": "17"
+                      "$ref": "9"
                     },
                     "isApiVersion": false,
                     "optional": false,
@@ -470,15 +377,35 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstOperations.first.contentType"
+                    "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstOperations.first.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "33",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "9"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstOperations.first.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "41",
+                    "$id": "34",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
                     "type": {
-                      "$ref": "19"
+                      "$ref": "11"
                     },
                     "isApiVersion": false,
                     "optional": false,
@@ -486,15 +413,34 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstOperations.first.accept"
+                    "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstOperations.first.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "35",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "11"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstOperations.first.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "42",
+                    "$id": "36",
                     "kind": "body",
                     "name": "body",
                     "serializedName": "body",
                     "type": {
-                      "$ref": "25"
+                      "$ref": "17"
                     },
                     "isApiVersion": false,
                     "contentTypes": [
@@ -505,7 +451,26 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstOperations.first.body"
+                    "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstOperations.first.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "37",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "17"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstOperations.first.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -514,7 +479,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "25"
+                      "$ref": "17"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -533,65 +498,23 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstOperations.first",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Client.Naming.EnumConflict"
               },
               "parameters": [
                 {
-                  "$id": "43",
-                  "kind": "method",
-                  "name": "body",
-                  "serializedName": "body",
-                  "type": {
-                    "$ref": "25"
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstOperations.first.body",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "37"
                 },
                 {
-                  "$id": "44",
-                  "kind": "method",
-                  "name": "contentType",
-                  "serializedName": "Content-Type",
-                  "doc": "Body parameter's content type. Known values are application/json",
-                  "type": {
-                    "$ref": "17"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstOperations.first.contentType",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "33"
                 },
                 {
-                  "$id": "45",
-                  "kind": "method",
-                  "name": "accept",
-                  "serializedName": "Accept",
-                  "type": {
-                    "$ref": "19"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstOperations.first.accept",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "35"
                 }
               ],
               "response": {
                 "type": {
-                  "$ref": "25"
+                  "$ref": "17"
                 }
               },
               "isOverride": false,
@@ -602,13 +525,13 @@
           ],
           "parameters": [
             {
-              "$id": "46",
+              "$id": "38",
               "kind": "endpoint",
               "name": "endpoint",
               "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "47",
+                "$id": "39",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -619,7 +542,7 @@
               "isEndpoint": true,
               "defaultValue": {
                 "type": {
-                  "$id": "48",
+                  "$id": "40",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -629,44 +552,46 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Naming.EnumConflict.endpoint"
+              "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstOperations.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstOperations",
           "apiVersions": [],
           "parent": {
-            "$ref": "33"
-          }
+            "$ref": "25"
+          },
+          "isMultiServiceClient": false
         },
         {
-          "$id": "49",
+          "$id": "41",
           "kind": "client",
           "name": "SecondOperations",
           "namespace": "Client.Naming.EnumConflict",
           "methods": [
             {
-              "$id": "50",
+              "$id": "42",
               "kind": "basic",
               "name": "second",
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Operation using second namespace Status enum",
               "operation": {
-                "$id": "51",
+                "$id": "43",
                 "name": "second",
                 "resourceName": "SecondOperations",
                 "doc": "Operation using second namespace Status enum",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "52",
+                    "$id": "44",
                     "kind": "header",
                     "name": "contentType",
                     "serializedName": "Content-Type",
                     "doc": "Body parameter's content type. Known values are application/json",
                     "type": {
-                      "$ref": "21"
+                      "$ref": "13"
                     },
                     "isApiVersion": false,
                     "optional": false,
@@ -674,15 +599,35 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondOperations.second.contentType"
+                    "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondOperations.second.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "45",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "13"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondOperations.second.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "53",
+                    "$id": "46",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
                     "type": {
-                      "$ref": "23"
+                      "$ref": "15"
                     },
                     "isApiVersion": false,
                     "optional": false,
@@ -690,15 +635,34 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondOperations.second.accept"
+                    "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondOperations.second.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "47",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "15"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondOperations.second.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "54",
+                    "$id": "48",
                     "kind": "body",
                     "name": "body",
                     "serializedName": "body",
                     "type": {
-                      "$ref": "29"
+                      "$ref": "21"
                     },
                     "isApiVersion": false,
                     "contentTypes": [
@@ -709,7 +673,26 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondOperations.second.body"
+                    "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondOperations.second.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "49",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "21"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondOperations.second.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -718,7 +701,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "29"
+                      "$ref": "21"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -737,65 +720,23 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondOperations.second",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Client.Naming.EnumConflict"
               },
               "parameters": [
                 {
-                  "$id": "55",
-                  "kind": "method",
-                  "name": "body",
-                  "serializedName": "body",
-                  "type": {
-                    "$ref": "29"
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondOperations.second.body",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "49"
                 },
                 {
-                  "$id": "56",
-                  "kind": "method",
-                  "name": "contentType",
-                  "serializedName": "Content-Type",
-                  "doc": "Body parameter's content type. Known values are application/json",
-                  "type": {
-                    "$ref": "21"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondOperations.second.contentType",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "45"
                 },
                 {
-                  "$id": "57",
-                  "kind": "method",
-                  "name": "accept",
-                  "serializedName": "Accept",
-                  "type": {
-                    "$ref": "23"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondOperations.second.accept",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "47"
                 }
               ],
               "response": {
                 "type": {
-                  "$ref": "29"
+                  "$ref": "21"
                 }
               },
               "isOverride": false,
@@ -806,13 +747,13 @@
           ],
           "parameters": [
             {
-              "$id": "58",
+              "$id": "50",
               "kind": "endpoint",
               "name": "endpoint",
               "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "59",
+                "$id": "51",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -823,7 +764,7 @@
               "isEndpoint": true,
               "defaultValue": {
                 "type": {
-                  "$id": "60",
+                  "$id": "52",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -833,17 +774,20 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Naming.EnumConflict.endpoint"
+              "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondOperations.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondOperations",
           "apiVersions": [],
           "parent": {
-            "$ref": "33"
-          }
+            "$ref": "25"
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

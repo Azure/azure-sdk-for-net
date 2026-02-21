@@ -1,10 +1,23 @@
 # Release History
 
-## 1.3.0 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
+
+### Features Added
+
+- Upgraded to API version 2025-08-01.
+
+### Breaking Changes
+
+### Bugs Fixed
 
 ### Other Changes
 
+## 1.3.0 (2025-10-09)
+
+### Features Added
+
 - Upgraded to API version 2025-07-01.
+    - Added new endpoint type `AzureStorageNFSFileShare` for NFS V3 Support.
 
 ## 1.2.1 (2025-03-11)
 

@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Identity
@@ -50,7 +50,8 @@ namespace Azure.Identity
         /// <param name="sources">The ordered chain of <see cref="TokenCredential"/> implementations to tried when calling <see cref="GetToken"/> or <see cref="GetTokenAsync"/></param>
         public ChainedTokenCredential(params TokenCredential[] sources)
         {
-            if (sources is null) throw new ArgumentNullException(nameof(sources));
+            if (sources is null)
+                throw new ArgumentNullException(nameof(sources));
 
             if (sources.Length == 0)
             {

@@ -12,7 +12,6 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// The json object containing secret parameters
-    /// Serialized Name: SecretParameters
     /// Please note <see cref="FrontDoorSecretProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureFirstPartyManagedCertificateProperties"/>, <see cref="CustomerCertificateProperties"/>, <see cref="ManagedCertificateProperties"/> and <see cref="UriSigningKeyProperties"/>.
     /// </summary>
@@ -56,10 +55,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorSecretProperties"/>. </summary>
-        /// <param name="secretType">
-        /// The type of the secret resource.
-        /// Serialized Name: SecretParameters.type
-        /// </param>
+        /// <param name="secretType"> The type of the secret resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FrontDoorSecretProperties(SecretType secretType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,10 +63,7 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The type of the secret resource.
-        /// Serialized Name: SecretParameters.type
-        /// </summary>
+        /// <summary> The type of the secret resource. </summary>
         internal SecretType SecretType { get; set; }
     }
 }

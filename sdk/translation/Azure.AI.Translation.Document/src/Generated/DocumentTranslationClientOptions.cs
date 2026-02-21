@@ -13,13 +13,15 @@ namespace Azure.AI.Translation.Document
     /// <summary> Client options for Azure.AI.Translation.Document library clients. </summary>
     public partial class DocumentTranslationClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2024_05_01;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2024_11_01_Preview;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
             /// <summary> Service version "2024-05-01". </summary>
             V2024_05_01 = 1,
+            /// <summary> Service version "2024-11-01-preview". </summary>
+            V2024_11_01_Preview = 2,
         }
 
         internal string Version { get; }

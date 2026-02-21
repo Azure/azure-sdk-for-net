@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.PrivateDns
             TryGetApiVersion(PrivateDnsMXRecordResource.ResourceType, out string mxRecordRecordSetsApiVersion);
             _mxRecordRecordSetsRestClient = new PrivateDnsMXRecordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mxRecordRecordSetsApiVersion);
 #if DEBUG
-			ValidateResourceId(Id);
+            ValidateResourceId(Id);
 #endif
         }
 

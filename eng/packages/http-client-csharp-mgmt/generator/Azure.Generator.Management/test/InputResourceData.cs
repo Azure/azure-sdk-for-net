@@ -14,7 +14,6 @@ namespace Azure.Generator.Management.Tests.Common
         {
             const string TestClientName = "TestClient";
             const string ResourceModelName = "ResponseType";
-            var decorators = new List<InputDecoratorInfo>() { };
             var responseModel = InputFactory.Model(ResourceModelName,
                         usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
                         properties:
@@ -24,7 +23,7 @@ namespace Azure.Generator.Management.Tests.Common
                             InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
                             InputFactory.Property("tags", new InputDictionaryType("dict", InputPrimitiveType.String, InputPrimitiveType.String), isReadOnly: false),
                         ],
-                        decorators: decorators);
+                        decorators: []);
             var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: responseModel);
             var uuidType = new InputPrimitiveType(InputPrimitiveTypeKind.String, "uuid", "Azure.Core.uuid");
             // the http operation parameters
@@ -38,25 +37,29 @@ namespace Azure.Generator.Management.Tests.Common
             // the method parameters
             var subscriptionIdParameter = InputFactory.MethodParameter("subscriptionId", uuidType, location: InputRequestLocation.Path);
             var resourceGroupParameter = InputFactory.MethodParameter("resourceGroupName", InputPrimitiveType.String, location: InputRequestLocation.Path);
-            var testNameParameter = InputFactory.MethodParameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path);
-            var dataParameter = InputFactory.MethodParameter("data", responseModel, location: InputRequestLocation.Body);
+            var testNameParameter = InputFactory.MethodParameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true);
+            var dataParameter = InputFactory.MethodParameter("data", responseModel, location: InputRequestLocation.Body, isRequired: true);
             var getMethod = InputFactory.BasicServiceMethod("get", getOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
             var createMethod = InputFactory.BasicServiceMethod("createTest", createOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
             var updateMethod = InputFactory.BasicServiceMethod("update", updateOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
+
+            var resourceIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}";
+            var armProviderDecorator = BuildArmProviderSchema(responseModel, [
+                new ResourceMethod(ResourceOperationKind.Read, getMethod, getMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!),
+                new ResourceMethod(ResourceOperationKind.Create, createMethod, createMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!),
+                new ResourceMethod(ResourceOperationKind.Update, updateMethod, updateMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!)
+            ], resourceIdPattern, "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, "ResponseType");
+
             var client = InputFactory.Client(
                 TestClientName,
                 methods: [getMethod, createMethod, updateMethod],
+                decorators: [armProviderDecorator],
                 crossLanguageDefinitionId: $"Test.{TestClientName}");
-            var resourceIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}";
-            decorators.Add(BuildResourceMetadata(responseModel, client, resourceIdPattern, "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, [
-                new ResourceMethod(ResourceOperationKind.Get, getMethod, getMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, client),
-                new ResourceMethod(ResourceOperationKind.Create, createMethod, createMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, client),
-                new ResourceMethod(ResourceOperationKind.Update, updateMethod, updateMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, client)
-            ], "ResponseType"));
+
             return (client, [responseModel]);
         }
 
-        private static InputDecoratorInfo BuildResourceMetadata(InputModelType resourceModel, InputClient resourceClient, string resourceIdPattern, string resourceType, string? singletonResourceName, ResourceScope resourceScope, IReadOnlyList<ResourceMethod> methods, string? resourceName)
+        private static InputDecoratorInfo BuildArmProviderSchema(InputModelType resourceModel, IReadOnlyList<ResourceMethod> methods, string resourceIdPattern, string resourceType, string? singletonResourceName, ResourceScope resourceScope, string? resourceName)
         {
             var options = new JsonSerializerOptions
             {
@@ -64,20 +67,24 @@ namespace Azure.Generator.Management.Tests.Common
                 Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
             };
 
-            var arguments = new Dictionary<string, BinaryData>
+            var resourceSchema = new Dictionary<string, object?>
             {
-                ["resourceIdPattern"] = FromLiteralString(resourceIdPattern),
-                ["resourceType"] = FromLiteralString(resourceType),
-                ["resourceScope"] = FromLiteralString(resourceScope.ToString()),
-                ["methods"] = BinaryData.FromObjectAsJson(methods.Select(SerializeResourceMethod), options),
-                ["singletonResourceName"] = BinaryData.FromObjectAsJson(singletonResourceName, options),
-                ["resourceName"] = BinaryData.FromObjectAsJson(resourceName, options),
+                ["resourceModelId"] = resourceModel.CrossLanguageDefinitionId,
+                ["resourceIdPattern"] = resourceIdPattern,
+                ["resourceType"] = resourceType,
+                ["resourceScope"] = resourceScope.ToString(),
+                ["methods"] = methods.Select(SerializeResourceMethod).ToList(),
+                ["singletonResourceName"] = singletonResourceName,
+                ["resourceName"] = resourceName,
             };
 
-            return new InputDecoratorInfo("Azure.ClientGenerator.Core.@resourceSchema", arguments);
+            var arguments = new Dictionary<string, BinaryData>
+            {
+                ["resources"] = BinaryData.FromObjectAsJson(new[] { resourceSchema }, options),
+                ["nonResourceMethods"] = BinaryData.FromObjectAsJson(Array.Empty<object>(), options)
+            };
 
-            static BinaryData FromLiteralString(string literal)
-                => BinaryData.FromString($"\"{literal}\"");
+            return new InputDecoratorInfo("Azure.ClientGenerator.Core.@armProviderSchema", arguments);
 
             static Dictionary<string, string> SerializeResourceMethod(ResourceMethod m)
             {

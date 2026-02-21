@@ -39,7 +39,11 @@ public partial struct JsonPatch
         {
             if (TryGetParentMatch(jsonPath, true, out _, out encodedValue))
             {
-                value = new(encodedValue.Kind, encodedValue.Value.GetJson(jsonPath));
+                if (!encodedValue.Value.TryGetJson(jsonPath, out var jsonValue))
+                {
+                    return false;
+                }
+                value = new(encodedValue.Kind, jsonValue);
                 return true;
             }
             return false;
@@ -58,12 +62,21 @@ public partial struct JsonPatch
             !parentValue.Kind.HasFlag(ValueKind.ArrayItemAppend))
         {
             GetSubPath(directParent, jsonPath, ref childPath);
-            value = new(parentValue.Kind, parentValue.Value.GetJson(childPath));
+            if (!parentValue.Value.TryGetJson(childPath, out var childJson))
+            {
+                return false;
+            }
+            value = new(parentValue.Kind, childJson);
             return true;
         }
 
         if (TryGetParentMatch(jsonPath, true, out var parentPath, out encodedValue))
         {
+            if (parentPath.IsArrayIndex() && encodedValue.Kind == ValueKind.Removed)
+            {
+                return false;
+            }
+
             // normalize jsonPath once to avoid multiple Normalize calls in GetMaxSibling
             Span<byte> normalizedJsonPathBuffer = stackalloc byte[jsonPath.Length];
             JsonPathComparer.Default.Normalize(jsonPath, normalizedJsonPathBuffer, out var bytesWritten);
@@ -73,13 +86,6 @@ public partial struct JsonPatch
             JsonPathReader reader = new(normalizedJsonPath);
             reader.Advance(parentPath);
             ReadOnlySpan<byte> normalizedArrayPath = reader.GetNextArray();
-            if (normalizedArrayPath.IsEmpty)
-            {
-                // no array in sub path
-                GetSubPath(parentPath, normalizedJsonPath, ref childPath);
-                value = new(encodedValue.Kind, encodedValue.Value.GetJson(childPath));
-                return true;
-            }
 
             // see if the requested index exist in root first
             // collect and adjust indexes in a new path as I go
@@ -93,8 +99,18 @@ public partial struct JsonPatch
                 if (TryGetArrayItemFromRoot(normalizedArrayPath, reader, out var indexRequested, out var length, out var arrayItem))
                 {
                     GetSubPath(normalizedArrayPath, jsonPath, ref childPath);
-                    value = new(ValueKind.Json, GetCombinedArray(jsonPath, arrayItem.GetJson(childPath), EncodedValue.Empty));
+                    if (!arrayItem.TryGetJson(childPath, out var childJson))
+                    {
+                        return false;
+                    }
+                    value = new(ValueKind.Json, GetCombinedArray(jsonPath, childJson, EncodedValue.Empty));
                     return true;
+                }
+
+                if (parentPath.IsRoot() && (!_properties.TryGetValue(normalizedArrayPath.GetParent(), out parentValue) || !parentValue.Kind.HasFlag(ValueKind.ArrayItemAppend)))
+                {
+                    // if ancestor array doesn't exist in properties or is not an append we should stop adjusting index path
+                    break;
                 }
 
                 AdjustJsonPath(
@@ -108,7 +124,11 @@ public partial struct JsonPatch
             }
 
             GetSubPath(parentPath, adjustedJsonPath.Slice(0, adjustedLength), ref childPath);
-            value = new(encodedValue.Kind, encodedValue.Value.GetJson(childPath));
+            if (!encodedValue.Value.TryGetJson(childPath, out var jsonValue))
+            {
+                return false;
+            }
+            value = new(encodedValue.Kind, jsonValue);
             return true;
         }
 

@@ -14,8 +14,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 {
     public class CloudServicesNetworksTests : NetworkCloudManagementTestBase
     {
-        public CloudServicesNetworksTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) {}
-        public CloudServicesNetworksTests(bool isAsync) : base(isAsync) {}
+        public CloudServicesNetworksTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) { }
+        public CloudServicesNetworksTests(bool isAsync) : base(isAsync) { }
 
         [Test]
         [RecordedTest]
@@ -28,7 +28,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             var cloudServicesNetwork = Client.GetNetworkCloudCloudServicesNetworkResource(cloudServicesNetworkId);
 
             // Create
-            var data = new NetworkCloudCloudServicesNetworkData(new AzureLocation(TestEnvironment.Location), new ExtendedLocation(TestEnvironment.ClusterExtendedLocation, "CustomLocation")) {
+            var data = new NetworkCloudCloudServicesNetworkData(new AzureLocation(TestEnvironment.Location), new ExtendedLocation(TestEnvironment.ClusterExtendedLocation, "CustomLocation"))
+            {
                 AdditionalEgressEndpoints = {
                     new EgressEndpoint("azure-resource-management", new EndpointDependency[]{
                         new EndpointDependency("storageaccountex.blob.core.windows.net")
@@ -57,14 +58,16 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 
             // List by Resource Group
             var cloudServicesNetworkListByResourceGroup = new List<NetworkCloudCloudServicesNetworkResource>();
-            await foreach (NetworkCloudCloudServicesNetworkResource item in cloudServicesNetworkCollection.GetAllAsync()) {
+            await foreach (NetworkCloudCloudServicesNetworkResource item in cloudServicesNetworkCollection.GetAllAsync())
+            {
                 cloudServicesNetworkListByResourceGroup.Add(item);
             }
             Assert.IsNotEmpty(cloudServicesNetworkListByResourceGroup);
 
             // List by Subscription
             var cloudServicesNetworkListBySubscription = new List<NetworkCloudCloudServicesNetworkResource>();
-            await foreach (NetworkCloudCloudServicesNetworkResource item in SubscriptionResource.GetNetworkCloudCloudServicesNetworksAsync()) {
+            await foreach (NetworkCloudCloudServicesNetworkResource item in SubscriptionResource.GetNetworkCloudCloudServicesNetworksAsync())
+            {
                 cloudServicesNetworkListBySubscription.Add(item);
             }
             Assert.IsNotEmpty(cloudServicesNetworkListBySubscription);

@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Hci.Vm
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.Hci.Vm
     /// </summary>
     public partial class HciVmGalleryImageCollection : ArmCollection, IEnumerable<HciVmGalleryImageResource>, IAsyncEnumerable<HciVmGalleryImageResource>
     {
-        private readonly ClientDiagnostics _hciVmGalleryImageGalleryImagesClientDiagnostics;
-        private readonly GalleryImagesRestOperations _hciVmGalleryImageGalleryImagesRestClient;
+        private readonly ClientDiagnostics _galleryImagesClientDiagnostics;
+        private readonly GalleryImages _galleryImagesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="HciVmGalleryImageCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of HciVmGalleryImageCollection for mocking. </summary>
         protected HciVmGalleryImageCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HciVmGalleryImageCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciVmGalleryImageCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HciVmGalleryImageCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _hciVmGalleryImageGalleryImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmGalleryImageResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(HciVmGalleryImageResource.ResourceType, out string hciVmGalleryImageGalleryImagesApiVersion);
-            _hciVmGalleryImageGalleryImagesRestClient = new GalleryImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmGalleryImageGalleryImagesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(HciVmGalleryImageResource.ResourceType, out string hciVmGalleryImageApiVersion);
+            _galleryImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmGalleryImageResource.ResourceType.Namespace, Diagnostics);
+            _galleryImagesRestClient = new GalleryImages(_galleryImagesClientDiagnostics, Pipeline, Endpoint, hciVmGalleryImageApiVersion ?? "2025-09-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// The operation to create or update a gallery image. Please note some properties can be set only during gallery image creation.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/galleryImages/{galleryImageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/galleryImages/{galleryImageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryImage_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> GalleryImages_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmGalleryImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="galleryImageName"> Name of the gallery image. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<HciVmGalleryImageResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string galleryImageName, HciVmGalleryImageData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hciVmGalleryImageGalleryImagesClientDiagnostics.CreateScope("HciVmGalleryImageCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _galleryImagesClientDiagnostics.CreateScope("HciVmGalleryImageCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _hciVmGalleryImageGalleryImagesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, galleryImageName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new VmArmOperation<HciVmGalleryImageResource>(new HciVmGalleryImageOperationSource(Client), _hciVmGalleryImageGalleryImagesClientDiagnostics, Pipeline, _hciVmGalleryImageGalleryImagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, galleryImageName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _galleryImagesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, galleryImageName, HciVmGalleryImageData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                VmArmOperation<HciVmGalleryImageResource> operation = new VmArmOperation<HciVmGalleryImageResource>(
+                    new HciVmGalleryImageOperationSource(Client),
+                    _galleryImagesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.Hci.Vm
         /// The operation to create or update a gallery image. Please note some properties can be set only during gallery image creation.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/galleryImages/{galleryImageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/galleryImages/{galleryImageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryImage_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> GalleryImages_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmGalleryImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="galleryImageName"> Name of the gallery image. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<HciVmGalleryImageResource> CreateOrUpdate(WaitUntil waitUntil, string galleryImageName, HciVmGalleryImageData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hciVmGalleryImageGalleryImagesClientDiagnostics.CreateScope("HciVmGalleryImageCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _galleryImagesClientDiagnostics.CreateScope("HciVmGalleryImageCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _hciVmGalleryImageGalleryImagesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, galleryImageName, data, cancellationToken);
-                var operation = new VmArmOperation<HciVmGalleryImageResource>(new HciVmGalleryImageOperationSource(Client), _hciVmGalleryImageGalleryImagesClientDiagnostics, Pipeline, _hciVmGalleryImageGalleryImagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, galleryImageName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _galleryImagesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, galleryImageName, HciVmGalleryImageData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                VmArmOperation<HciVmGalleryImageResource> operation = new VmArmOperation<HciVmGalleryImageResource>(
+                    new HciVmGalleryImageOperationSource(Client),
+                    _galleryImagesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.Hci.Vm
         /// Gets a gallery image
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/galleryImages/{galleryImageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/galleryImages/{galleryImageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryImage_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GalleryImages_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmGalleryImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="galleryImageName"> Name of the gallery image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<HciVmGalleryImageResource>> GetAsync(string galleryImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
 
-            using var scope = _hciVmGalleryImageGalleryImagesClientDiagnostics.CreateScope("HciVmGalleryImageCollection.Get");
+            using DiagnosticScope scope = _galleryImagesClientDiagnostics.CreateScope("HciVmGalleryImageCollection.Get");
             scope.Start();
             try
             {
-                var response = await _hciVmGalleryImageGalleryImagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, galleryImageName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _galleryImagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, galleryImageName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HciVmGalleryImageData> response = Response.FromValue(HciVmGalleryImageData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HciVmGalleryImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.Hci.Vm
         /// Gets a gallery image
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/galleryImages/{galleryImageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/galleryImages/{galleryImageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryImage_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GalleryImages_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmGalleryImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="galleryImageName"> Name of the gallery image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<HciVmGalleryImageResource> Get(string galleryImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
 
-            using var scope = _hciVmGalleryImageGalleryImagesClientDiagnostics.CreateScope("HciVmGalleryImageCollection.Get");
+            using DiagnosticScope scope = _galleryImagesClientDiagnostics.CreateScope("HciVmGalleryImageCollection.Get");
             scope.Start();
             try
             {
-                var response = _hciVmGalleryImageGalleryImagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, galleryImageName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _galleryImagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, galleryImageName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HciVmGalleryImageData> response = Response.FromValue(HciVmGalleryImageData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HciVmGalleryImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +273,44 @@ namespace Azure.ResourceManager.Hci.Vm
         /// Lists all of the gallery images in the specified resource group. Use the nextLink property in the response to get the next page of gallery images.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/galleryImages</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/galleryImages. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryImage_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> GalleryImages_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmGalleryImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HciVmGalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HciVmGalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HciVmGalleryImageResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _hciVmGalleryImageGalleryImagesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hciVmGalleryImageGalleryImagesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciVmGalleryImageResource(Client, HciVmGalleryImageData.DeserializeHciVmGalleryImageData(e)), _hciVmGalleryImageGalleryImagesClientDiagnostics, Pipeline, "HciVmGalleryImageCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<HciVmGalleryImageData, HciVmGalleryImageResource>(new GalleryImagesGetByResourceGroupAsyncCollectionResultOfT(_galleryImagesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HciVmGalleryImageResource(Client, data));
         }
 
         /// <summary>
         /// Lists all of the gallery images in the specified resource group. Use the nextLink property in the response to get the next page of gallery images.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/galleryImages</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/galleryImages. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryImage_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> GalleryImages_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmGalleryImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +318,61 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <returns> A collection of <see cref="HciVmGalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HciVmGalleryImageResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _hciVmGalleryImageGalleryImagesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hciVmGalleryImageGalleryImagesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciVmGalleryImageResource(Client, HciVmGalleryImageData.DeserializeHciVmGalleryImageData(e)), _hciVmGalleryImageGalleryImagesClientDiagnostics, Pipeline, "HciVmGalleryImageCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<HciVmGalleryImageData, HciVmGalleryImageResource>(new GalleryImagesGetByResourceGroupCollectionResultOfT(_galleryImagesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HciVmGalleryImageResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/galleryImages/{galleryImageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/galleryImages/{galleryImageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryImage_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GalleryImages_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmGalleryImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="galleryImageName"> Name of the gallery image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string galleryImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
 
-            using var scope = _hciVmGalleryImageGalleryImagesClientDiagnostics.CreateScope("HciVmGalleryImageCollection.Exists");
+            using DiagnosticScope scope = _galleryImagesClientDiagnostics.CreateScope("HciVmGalleryImageCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _hciVmGalleryImageGalleryImagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, galleryImageName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _galleryImagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, galleryImageName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<HciVmGalleryImageData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HciVmGalleryImageData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HciVmGalleryImageData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +386,50 @@ namespace Azure.ResourceManager.Hci.Vm
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/galleryImages/{galleryImageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/galleryImages/{galleryImageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryImage_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GalleryImages_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmGalleryImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="galleryImageName"> Name of the gallery image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string galleryImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
 
-            using var scope = _hciVmGalleryImageGalleryImagesClientDiagnostics.CreateScope("HciVmGalleryImageCollection.Exists");
+            using DiagnosticScope scope = _galleryImagesClientDiagnostics.CreateScope("HciVmGalleryImageCollection.Exists");
             scope.Start();
             try
             {
-                var response = _hciVmGalleryImageGalleryImagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, galleryImageName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _galleryImagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, galleryImageName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<HciVmGalleryImageData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HciVmGalleryImageData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HciVmGalleryImageData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +443,54 @@ namespace Azure.ResourceManager.Hci.Vm
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/galleryImages/{galleryImageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/galleryImages/{galleryImageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryImage_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GalleryImages_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmGalleryImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="galleryImageName"> Name of the gallery image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<HciVmGalleryImageResource>> GetIfExistsAsync(string galleryImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
 
-            using var scope = _hciVmGalleryImageGalleryImagesClientDiagnostics.CreateScope("HciVmGalleryImageCollection.GetIfExists");
+            using DiagnosticScope scope = _galleryImagesClientDiagnostics.CreateScope("HciVmGalleryImageCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _hciVmGalleryImageGalleryImagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, galleryImageName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _galleryImagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, galleryImageName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<HciVmGalleryImageData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HciVmGalleryImageData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HciVmGalleryImageData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<HciVmGalleryImageResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new HciVmGalleryImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +504,54 @@ namespace Azure.ResourceManager.Hci.Vm
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/galleryImages/{galleryImageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/galleryImages/{galleryImageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryImage_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GalleryImages_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmGalleryImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="galleryImageName"> Name of the gallery image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<HciVmGalleryImageResource> GetIfExists(string galleryImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
 
-            using var scope = _hciVmGalleryImageGalleryImagesClientDiagnostics.CreateScope("HciVmGalleryImageCollection.GetIfExists");
+            using DiagnosticScope scope = _galleryImagesClientDiagnostics.CreateScope("HciVmGalleryImageCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _hciVmGalleryImageGalleryImagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, galleryImageName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _galleryImagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, galleryImageName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<HciVmGalleryImageData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HciVmGalleryImageData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HciVmGalleryImageData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<HciVmGalleryImageResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new HciVmGalleryImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +571,7 @@ namespace Azure.ResourceManager.Hci.Vm
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<HciVmGalleryImageResource> IAsyncEnumerable<HciVmGalleryImageResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

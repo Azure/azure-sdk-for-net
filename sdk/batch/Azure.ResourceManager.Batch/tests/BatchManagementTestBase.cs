@@ -4,10 +4,10 @@
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Batch.Tests.Helpers;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.TestFramework;
-using Azure.ResourceManager.Batch.Tests.Helpers;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Batch.Tests

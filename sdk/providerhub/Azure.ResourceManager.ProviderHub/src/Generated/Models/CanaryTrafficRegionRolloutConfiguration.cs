@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CanaryTrafficRegionRolloutConfiguration"/>. </summary>
-        /// <param name="skipRegions"></param>
-        /// <param name="regions"></param>
+        /// <param name="skipRegions"> The skip regions. </param>
+        /// <param name="regions"> The regions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CanaryTrafficRegionRolloutConfiguration(IList<AzureLocation> skipRegions, IList<AzureLocation> regions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,9 +64,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the skip regions. </summary>
+        /// <summary> The skip regions. </summary>
         public IList<AzureLocation> SkipRegions { get; }
-        /// <summary> Gets the regions. </summary>
+        /// <summary> The regions. </summary>
         public IList<AzureLocation> Regions { get; }
     }
 }

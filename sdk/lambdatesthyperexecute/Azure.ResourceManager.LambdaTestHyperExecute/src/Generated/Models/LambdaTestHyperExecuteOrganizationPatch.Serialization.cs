@@ -19,6 +19,23 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
     /// <summary> The type used for update operations of the Organization Resource. </summary>
     public partial class LambdaTestHyperExecuteOrganizationPatch : IJsonModel<LambdaTestHyperExecuteOrganizationPatch>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual LambdaTestHyperExecuteOrganizationPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LambdaTestHyperExecuteOrganizationPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeLambdaTestHyperExecuteOrganizationPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LambdaTestHyperExecuteOrganizationPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LambdaTestHyperExecuteOrganizationPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -163,35 +180,18 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         LambdaTestHyperExecuteOrganizationPatch IPersistableModel<LambdaTestHyperExecuteOrganizationPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LambdaTestHyperExecuteOrganizationPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LambdaTestHyperExecuteOrganizationPatch>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
-                    {
-                        return DeserializeLambdaTestHyperExecuteOrganizationPatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(LambdaTestHyperExecuteOrganizationPatch)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<LambdaTestHyperExecuteOrganizationPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="patch"> The <see cref="LambdaTestHyperExecuteOrganizationPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(LambdaTestHyperExecuteOrganizationPatch patch)
+        /// <param name="lambdaTestHyperExecuteOrganizationPatch"> The <see cref="LambdaTestHyperExecuteOrganizationPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(LambdaTestHyperExecuteOrganizationPatch lambdaTestHyperExecuteOrganizationPatch)
         {
-            if (patch == null)
+            if (lambdaTestHyperExecuteOrganizationPatch == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(lambdaTestHyperExecuteOrganizationPatch, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

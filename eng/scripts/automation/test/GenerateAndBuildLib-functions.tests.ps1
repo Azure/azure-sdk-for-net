@@ -274,4 +274,159 @@ options: {}
         
         {GetSDKProjectFolder -typespecConfigurationFile $testTspConfigFileNoEmitter -sdkRepoRoot "/test"} | Should -Throw "*namespace*"
     }
+
+    it("should resolve emitter-output-dir placeholders") {
+        $testTspEmitterConfig = Join-Path $testTspConfigDir "tspconfig-emitter-output.yaml"
+        $testConfigEmitterOutput = @"
+parameters:
+    service-dir:
+        default: testservice
+options:
+    "@azure-tools/typespec-csharp":
+        namespace: Azure.TestService.Client
+        service-dir: sdk/testservice2
+        emitter-output-dir: "{output-dir}/{service-dir}/{namespace}"
+"@
+                $testConfigEmitterOutput | Out-File -FilePath $testTspEmitterConfig -Encoding UTF8
+
+                $testSdkRoot = "/test/sdk/root"
+                $result = GetSDKProjectFolder -typespecConfigurationFile $testTspEmitterConfig -sdkRepoRoot $testSdkRoot
+                $expected = Join-Path $testSdkRoot "sdk" "testservice2" "Azure.TestService.Client"
+                $result | Should -Be $expected
+    }
+
+    it("should resolve emitter-output-dir without placeholders") {
+        $testTspEmitterConfigNoPlaceholder = Join-Path $testTspConfigDir "tspconfig-emitter-output-static.yaml"
+        $testConfigEmitterOutputStatic = @"
+parameters:
+    service-dir:
+        default: testservice
+options:
+    "@azure-tools/typespec-csharp":
+        namespace: Azure.TestService2.Client
+        service-dir: sdk/testservice2
+        emitter-output-dir: "{output-dir}/sdk/testservice/Azure.TestService.Client"
+"@
+                $testConfigEmitterOutputStatic | Out-File -FilePath $testTspEmitterConfigNoPlaceholder -Encoding UTF8
+
+                $testSdkRoot = "/test/sdk/root"
+                $result = GetSDKProjectFolder -typespecConfigurationFile $testTspEmitterConfigNoPlaceholder -sdkRepoRoot $testSdkRoot
+                $expected = Join-Path $testSdkRoot "sdk" "testservice" "Azure.TestService.Client"
+                $result | Should -Be $expected
+    }
+
+    it("should throw when emitter-output-dir uses service-dir placeholder without definition") {
+        $testTspEmitterMissingService = Join-Path $testTspConfigDir "tspconfig-emitter-output-missing-service.yaml"
+        $testConfigEmitterMissingService = @"
+options:
+    "@azure-tools/typespec-csharp":
+        namespace: Azure.TestService.Client
+        emitter-output-dir: "{output-dir}/{service-dir}/{namespace}"
+"@
+        $testConfigEmitterMissingService | Out-File -FilePath $testTspEmitterMissingService -Encoding UTF8
+
+        { GetSDKProjectFolder -typespecConfigurationFile $testTspEmitterMissingService -sdkRepoRoot "/test/sdk/root" } | Should -Throw "*'service-dir'*"
+    }
+
+    it("should throw when emitter-output-dir uses namespace placeholder without definition") {
+        $testTspEmitterMissingNamespace = Join-Path $testTspConfigDir "tspconfig-emitter-output-missing-namespace.yaml"
+        $testConfigEmitterMissingNamespace = @"
+parameters:
+    service-dir:
+        default: testservice
+options:
+    "@azure-tools/typespec-csharp":
+        emitter-output-dir: "{output-dir}/{service-dir}/{namespace}"
+"@
+        $testConfigEmitterMissingNamespace | Out-File -FilePath $testTspEmitterMissingNamespace -Encoding UTF8
+
+        { GetSDKProjectFolder -typespecConfigurationFile $testTspEmitterMissingNamespace -sdkRepoRoot "/test/sdk/root" } | Should -Throw "*'namespace'*"
+    }
+}
+
+Describe "New-ChangeLogIfNotExists function" -Tag "UnitTest" {
+    BeforeAll {
+        $script:testProjectDir = Join-Path $PSScriptRoot "test-changelog"
+        
+        if (!(Test-Path $script:testProjectDir)) {
+            New-Item -ItemType Directory -Path $script:testProjectDir | Out-Null
+        }
+    }
+    
+    AfterAll {
+        if (Test-Path $script:testProjectDir) {
+            Remove-Item -Recurse -Force $script:testProjectDir
+        }
+    }
+    
+    BeforeEach {
+        # Clean up any existing CHANGELOG.md before each test
+        $changelogPath = Join-Path $script:testProjectDir "CHANGELOG.md"
+        if (Test-Path $changelogPath) {
+            Remove-Item $changelogPath
+        }
+    }
+    
+    it("should create CHANGELOG.md when it doesn't exist") {
+        $version = "1.0.0-beta.1"
+        
+        New-ChangeLogIfNotExists -projectFolder $script:testProjectDir -version $version
+        
+        $changelogPath = Join-Path $script:testProjectDir "CHANGELOG.md"
+        Test-Path $changelogPath | Should -Be $true
+    }
+    
+    it("should create CHANGELOG.md with correct version") {
+        $version = "1.0.0-beta.1"
+        
+        New-ChangeLogIfNotExists -projectFolder $script:testProjectDir -version $version
+        
+        $changelogPath = Join-Path $script:testProjectDir "CHANGELOG.md"
+        $content = Get-Content $changelogPath -Raw
+        $content | Should -Match "1\.0\.0-beta\.1"
+    }
+    
+    it("should create CHANGELOG.md with Release History header") {
+        $version = "1.0.0-beta.1"
+        
+        New-ChangeLogIfNotExists -projectFolder $script:testProjectDir -version $version
+        
+        $changelogPath = Join-Path $script:testProjectDir "CHANGELOG.md"
+        $content = Get-Content $changelogPath -Raw
+        $content | Should -Match "# Release History"
+    }
+    
+    it("should create CHANGELOG.md with Unreleased status") {
+        $version = "1.0.0-beta.1"
+        
+        New-ChangeLogIfNotExists -projectFolder $script:testProjectDir -version $version
+        
+        $changelogPath = Join-Path $script:testProjectDir "CHANGELOG.md"
+        $content = Get-Content $changelogPath -Raw
+        $content | Should -Match "\(Unreleased\)"
+    }
+    
+    it("should not overwrite existing CHANGELOG.md") {
+        $version = "1.0.0-beta.1"
+        
+        $changelogPath = Join-Path $script:testProjectDir "CHANGELOG.md"
+        $existingContent = "# Existing Content"
+        Set-Content -Path $changelogPath -Value $existingContent
+        
+        New-ChangeLogIfNotExists -projectFolder $script:testProjectDir -version $version
+        
+        $content = Get-Content $changelogPath -Raw
+        # Should contain the existing content (ignoring line ending differences)
+        $content.Trim() | Should -Be $existingContent.Trim()
+    }
+    
+    it("should handle different version formats") {
+        $version = "2.0.0"
+        
+        New-ChangeLogIfNotExists -projectFolder $script:testProjectDir -version $version
+        
+        $changelogPath = Join-Path $script:testProjectDir "CHANGELOG.md"
+        $content = Get-Content $changelogPath -Raw
+        $content | Should -Match "2\.0\.0"
+    }
 }

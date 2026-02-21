@@ -18,5 +18,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+    <PackageReference Include="Microsoft.CognitiveServices.Speech"/>
+    <PackageReference Include="Azure.AI.Agents.Persistent" />
   </ItemGroup>
 </Project>

@@ -40,6 +40,16 @@ namespace Azure.AI.Language.Text
                 writer.WritePropertyName("redactionCharacter"u8);
                 writer.WriteStringValue(RedactionCharacter.Value.ToString());
             }
+            if (Optional.IsDefined(UnmaskLength))
+            {
+                writer.WritePropertyName("unmaskLength"u8);
+                writer.WriteNumberValue(UnmaskLength.Value);
+            }
+            if (Optional.IsDefined(UnmaskFromEnd))
+            {
+                writer.WritePropertyName("unmaskFromEnd"u8);
+                writer.WriteBooleanValue(UnmaskFromEnd.Value);
+            }
         }
 
         CharacterMaskPolicyType IJsonModel<CharacterMaskPolicyType>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -63,7 +73,12 @@ namespace Azure.AI.Language.Text
                 return null;
             }
             RedactionCharacter? redactionCharacter = default;
+            int? unmaskLength = default;
+            bool? unmaskFromEnd = default;
             RedactionPolicyKind policyKind = default;
+            IList<PiiCategoriesExclude> entityTypes = default;
+            string policyName = default;
+            bool? isDefault = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -77,9 +92,55 @@ namespace Azure.AI.Language.Text
                     redactionCharacter = new RedactionCharacter(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("unmaskLength"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    unmaskLength = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("unmaskFromEnd"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    unmaskFromEnd = property.Value.GetBoolean();
+                    continue;
+                }
                 if (property.NameEquals("policyKind"u8))
                 {
                     policyKind = new RedactionPolicyKind(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("entityTypes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<PiiCategoriesExclude> array = new List<PiiCategoriesExclude>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new PiiCategoriesExclude(item.GetString()));
+                    }
+                    entityTypes = array;
+                    continue;
+                }
+                if (property.NameEquals("policyName"u8))
+                {
+                    policyName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("isDefault"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isDefault = property.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -88,7 +149,15 @@ namespace Azure.AI.Language.Text
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CharacterMaskPolicyType(policyKind, serializedAdditionalRawData, redactionCharacter);
+            return new CharacterMaskPolicyType(
+                policyKind,
+                entityTypes ?? new ChangeTrackingList<PiiCategoriesExclude>(),
+                policyName,
+                isDefault,
+                serializedAdditionalRawData,
+                redactionCharacter,
+                unmaskLength,
+                unmaskFromEnd);
         }
 
         BinaryData IPersistableModel<CharacterMaskPolicyType>.Write(ModelReaderWriterOptions options)

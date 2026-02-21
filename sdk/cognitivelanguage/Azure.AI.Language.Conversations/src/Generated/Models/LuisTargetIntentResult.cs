@@ -15,25 +15,19 @@ namespace Azure.AI.Language.Conversations.Models
     {
         /// <summary> Initializes a new instance of <see cref="LuisTargetIntentResult"/>. </summary>
         /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
-        internal LuisTargetIntentResult(double confidence) : base(confidence)
+        internal LuisTargetIntentResult(double confidence) : base(TargetProjectKind.Luis, confidence)
         {
-            TargetProjectKind = TargetProjectKind.Luis;
         }
 
         /// <summary> Initializes a new instance of <see cref="LuisTargetIntentResult"/>. </summary>
         /// <param name="targetProjectKind"> This is the base class of an intent prediction. </param>
         /// <param name="apiVersion"> The API version used to call a target service. </param>
         /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="result"> The actual response from a LUIS Generally Available application. </param>
-        internal LuisTargetIntentResult(TargetProjectKind targetProjectKind, string apiVersion, double confidence, IDictionary<string, BinaryData> serializedAdditionalRawData, LuisResult result) : base(targetProjectKind, apiVersion, confidence, serializedAdditionalRawData)
+        internal LuisTargetIntentResult(TargetProjectKind targetProjectKind, string apiVersion, double confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties, LuisResult result) : base(targetProjectKind, apiVersion, confidence, additionalBinaryDataProperties)
         {
             Result = result;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="LuisTargetIntentResult"/> for deserialization. </summary>
-        internal LuisTargetIntentResult()
-        {
         }
 
         /// <summary> The actual response from a LUIS Generally Available application. </summary>

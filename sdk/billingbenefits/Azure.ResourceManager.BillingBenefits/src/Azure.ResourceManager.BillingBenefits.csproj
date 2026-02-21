@@ -5,5 +5,6 @@
     <Description>Azure Resource Manager client SDK for Azure resource provider BillingBenefits</Description>
     <PackageTags>azure;management;arm;resource manager;billingbenefits</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

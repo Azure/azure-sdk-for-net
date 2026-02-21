@@ -16,6 +16,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+enable-bicep-serialization: true
 use-model-reader-writer: true
 deserialize-null-collection-as-null-value: true
 

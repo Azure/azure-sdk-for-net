@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageDiscoveryWorkspacePatch(IDictionary<string, string> tags, StorageDiscoveryWorkspacePropertiesUpdate properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageDiscoveryWorkspacePatch(IDictionary<string, string> tags, StorageDiscoveryWorkspacePatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Properties = properties;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public StorageDiscoveryWorkspacePropertiesUpdate Properties { get; set; }
+        public StorageDiscoveryWorkspacePatchProperties Properties { get; set; }
     }
 }

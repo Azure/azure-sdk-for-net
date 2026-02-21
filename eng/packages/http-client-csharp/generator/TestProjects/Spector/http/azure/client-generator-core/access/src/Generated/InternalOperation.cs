@@ -7,7 +7,7 @@
 
 using Azure.Core.Pipeline;
 
-namespace _Specs_.Azure.ClientGenerator.Core.Access._InternalOperation
+namespace Specs.Azure.ClientGenerator.Core.Access._InternalOperation
 {
     public partial class InternalOperation
     {

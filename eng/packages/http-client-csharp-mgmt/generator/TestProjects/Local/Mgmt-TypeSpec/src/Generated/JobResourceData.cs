@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager.Models;
-using MgmtTypeSpec.Models;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
     public partial class JobResourceData : TrackedResourceData
@@ -21,10 +21,13 @@ namespace MgmtTypeSpec
 
         /// <summary> Initializes a new instance of <see cref="JobResourceData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        internal JobResourceData(AzureLocation location, JobProperties properties) : base(location)
+        /// <param name="jobName"> Gets or sets the JobName. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        public JobResourceData(AzureLocation location, string jobName) : base(location)
         {
-            Properties = properties;
+            Argument.AssertNotNull(jobName, nameof(jobName));
+
+            Properties = new JobProperties(jobName);
         }
 
         /// <summary> Initializes a new instance of <see cref="JobResourceData"/>. </summary>
@@ -43,14 +46,20 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        internal JobProperties Properties { get; }
+        [WirePath("properties")]
+        internal JobProperties Properties { get; set; }
 
         /// <summary> Gets or sets the JobName. </summary>
+        [WirePath("properties.jobName")]
         public string JobName
         {
             get
             {
-                return Properties.JobName;
+                return Properties is null ? default : Properties.JobName;
+            }
+            set
+            {
+                Properties = new JobProperties(value);
             }
         }
     }

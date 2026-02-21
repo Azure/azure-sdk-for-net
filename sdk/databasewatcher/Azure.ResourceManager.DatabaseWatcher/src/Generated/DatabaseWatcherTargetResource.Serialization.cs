@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DatabaseWatcher
 {
+    /// <summary></summary>
     public partial class DatabaseWatcherTargetResource : IJsonModel<DatabaseWatcherTargetData>
     {
-        private static DatabaseWatcherTargetData s_dataDeserializationInstance;
-        private static DatabaseWatcherTargetData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DatabaseWatcherTargetData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DatabaseWatcherTargetData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DatabaseWatcherTargetData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DatabaseWatcherTargetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DatabaseWatcherTargetData>)Data).Write(writer, options);
 
-        DatabaseWatcherTargetData IJsonModel<DatabaseWatcherTargetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DatabaseWatcherTargetData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DatabaseWatcherTargetData IJsonModel<DatabaseWatcherTargetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DatabaseWatcherTargetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DatabaseWatcherTargetData>(Data, options, AzureResourceManagerDatabaseWatcherContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DatabaseWatcherTargetData IPersistableModel<DatabaseWatcherTargetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DatabaseWatcherTargetData>(data, options, AzureResourceManagerDatabaseWatcherContext.Default);
 
-        string IPersistableModel<DatabaseWatcherTargetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DatabaseWatcherTargetData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DatabaseWatcherTargetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

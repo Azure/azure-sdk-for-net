@@ -91,22 +91,31 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> The unique identifier of the Latency Scorecard. </summary>
+        [WirePath("properties.id")]
         public string LatencyScorecardId { get; }
         /// <summary> The name of the Latency Scorecard. </summary>
+        [WirePath("properties.name")]
         public string LatencyScorecardName { get; }
         /// <summary> The description of the Latency Scorecard. </summary>
+        [WirePath("properties.description")]
         public string Description { get; }
         /// <summary> The A endpoint in the scorecard. </summary>
+        [WirePath("properties.endpointA")]
         public Uri ScorecardEndpointA { get; }
         /// <summary> The B endpoint in the scorecard. </summary>
+        [WirePath("properties.endpointB")]
         public Uri ScorecardEndpointB { get; }
         /// <summary> The start time of the Latency Scorecard in UTC. </summary>
+        [WirePath("properties.startDateTimeUTC")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> The end time of the Latency Scorecard in UTC. </summary>
+        [WirePath("properties.endDateTimeUTC")]
         public DateTimeOffset? EndOn { get; }
         /// <summary> The country associated with the Latency Scorecard. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </summary>
+        [WirePath("properties.country")]
         public string Country { get; }
         /// <summary> The latency metrics of the Latency Scorecard. </summary>
+        [WirePath("properties.latencyMetrics")]
         public IList<LatencyMetric> LatencyMetrics { get; }
     }
 }

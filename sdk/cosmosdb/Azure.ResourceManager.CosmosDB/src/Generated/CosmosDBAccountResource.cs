@@ -135,144 +135,6 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of CosmosDBChaosFaultResources in the CosmosDBAccount. </summary>
-        /// <returns> An object representing collection of CosmosDBChaosFaultResources and their operations over a CosmosDBChaosFaultResource. </returns>
-        public virtual CosmosDBChaosFaultResourceCollection GetCosmosDBChaosFaultResources()
-        {
-            return GetCachedClient(client => new CosmosDBChaosFaultResourceCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get Chaos Fault for a CosmosdB account for a particular Chaos Fault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/chaosFaults/{chaosFault}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ChaosFault_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBChaosFaultResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="chaosFault"> The name of the ChaosFault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="chaosFault"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="chaosFault"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CosmosDBChaosFaultResource>> GetCosmosDBChaosFaultResourceAsync(string chaosFault, CancellationToken cancellationToken = default)
-        {
-            return await GetCosmosDBChaosFaultResources().GetAsync(chaosFault, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get Chaos Fault for a CosmosdB account for a particular Chaos Fault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/chaosFaults/{chaosFault}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ChaosFault_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBChaosFaultResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="chaosFault"> The name of the ChaosFault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="chaosFault"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="chaosFault"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CosmosDBChaosFaultResource> GetCosmosDBChaosFaultResource(string chaosFault, CancellationToken cancellationToken = default)
-        {
-            return GetCosmosDBChaosFaultResources().Get(chaosFault, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of GraphResourceGetResultResources in the CosmosDBAccount. </summary>
-        /// <returns> An object representing collection of GraphResourceGetResultResources and their operations over a GraphResourceGetResultResource. </returns>
-        public virtual GraphResourceGetResultCollection GetGraphResourceGetResults()
-        {
-            return GetCachedClient(client => new GraphResourceGetResultCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the Graph resource under an existing Azure Cosmos DB database account with the provided name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/graphs/{graphName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GraphResources_GetGraph</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GraphResourceGetResultResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="graphName"> Cosmos DB graph resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="graphName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<GraphResourceGetResultResource>> GetGraphResourceGetResultAsync(string graphName, CancellationToken cancellationToken = default)
-        {
-            return await GetGraphResourceGetResults().GetAsync(graphName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the Graph resource under an existing Azure Cosmos DB database account with the provided name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/graphs/{graphName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GraphResources_GetGraph</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GraphResourceGetResultResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="graphName"> Cosmos DB graph resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="graphName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<GraphResourceGetResultResource> GetGraphResourceGetResult(string graphName, CancellationToken cancellationToken = default)
-        {
-            return GetGraphResourceGetResults().Get(graphName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of CosmosDBSqlDatabaseResources in the CosmosDBAccount. </summary>
         /// <returns> An object representing collection of CosmosDBSqlDatabaseResources and their operations over a CosmosDBSqlDatabaseResource. </returns>
         public virtual CosmosDBSqlDatabaseCollection GetCosmosDBSqlDatabases()
@@ -293,7 +155,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -324,7 +186,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -362,7 +224,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -393,7 +255,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -431,7 +293,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -462,7 +324,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -500,7 +362,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -531,7 +393,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -569,7 +431,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -600,7 +462,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -638,7 +500,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -669,7 +531,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -707,7 +569,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -738,7 +600,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -754,144 +616,6 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Response<CosmosDBTableResource> GetCosmosDBTable(string tableName, CancellationToken cancellationToken = default)
         {
             return GetCosmosDBTables().Get(tableName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of CosmosDBTableRoleDefinitionResources in the CosmosDBAccount. </summary>
-        /// <returns> An object representing collection of CosmosDBTableRoleDefinitionResources and their operations over a CosmosDBTableRoleDefinitionResource. </returns>
-        public virtual CosmosDBTableRoleDefinitionCollection GetCosmosDBTableRoleDefinitions()
-        {
-            return GetCachedClient(client => new CosmosDBTableRoleDefinitionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieves the properties of an existing Azure Cosmos DB Table Role Definition with the given Id.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/tableRoleDefinitions/{roleDefinitionId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TableResources_GetTableRoleDefinition</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBTableRoleDefinitionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="roleDefinitionId"> The GUID for the Role Definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CosmosDBTableRoleDefinitionResource>> GetCosmosDBTableRoleDefinitionAsync(string roleDefinitionId, CancellationToken cancellationToken = default)
-        {
-            return await GetCosmosDBTableRoleDefinitions().GetAsync(roleDefinitionId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieves the properties of an existing Azure Cosmos DB Table Role Definition with the given Id.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/tableRoleDefinitions/{roleDefinitionId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TableResources_GetTableRoleDefinition</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBTableRoleDefinitionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="roleDefinitionId"> The GUID for the Role Definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CosmosDBTableRoleDefinitionResource> GetCosmosDBTableRoleDefinition(string roleDefinitionId, CancellationToken cancellationToken = default)
-        {
-            return GetCosmosDBTableRoleDefinitions().Get(roleDefinitionId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of CosmosDBTableRoleAssignmentResources in the CosmosDBAccount. </summary>
-        /// <returns> An object representing collection of CosmosDBTableRoleAssignmentResources and their operations over a CosmosDBTableRoleAssignmentResource. </returns>
-        public virtual CosmosDBTableRoleAssignmentCollection GetCosmosDBTableRoleAssignments()
-        {
-            return GetCachedClient(client => new CosmosDBTableRoleAssignmentCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieves the properties of an existing Azure Cosmos DB Table Role Assignment with the given Id.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/tableRoleAssignments/{roleAssignmentId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TableResources_GetTableRoleAssignment</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBTableRoleAssignmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="roleAssignmentId"> The GUID for the Role Assignment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CosmosDBTableRoleAssignmentResource>> GetCosmosDBTableRoleAssignmentAsync(string roleAssignmentId, CancellationToken cancellationToken = default)
-        {
-            return await GetCosmosDBTableRoleAssignments().GetAsync(roleAssignmentId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieves the properties of an existing Azure Cosmos DB Table Role Assignment with the given Id.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/tableRoleAssignments/{roleAssignmentId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TableResources_GetTableRoleAssignment</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBTableRoleAssignmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="roleAssignmentId"> The GUID for the Role Assignment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CosmosDBTableRoleAssignmentResource> GetCosmosDBTableRoleAssignment(string roleAssignmentId, CancellationToken cancellationToken = default)
-        {
-            return GetCosmosDBTableRoleAssignments().Get(roleAssignmentId, cancellationToken);
         }
 
         /// <summary> Gets a collection of CassandraKeyspaceResources in the CosmosDBAccount. </summary>
@@ -914,7 +638,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -945,7 +669,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -983,7 +707,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1014,7 +738,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1030,144 +754,6 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Response<GremlinDatabaseResource> GetGremlinDatabase(string databaseName, CancellationToken cancellationToken = default)
         {
             return GetGremlinDatabases().Get(databaseName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of DataTransferJobGetResultResources in the CosmosDBAccount. </summary>
-        /// <returns> An object representing collection of DataTransferJobGetResultResources and their operations over a DataTransferJobGetResultResource. </returns>
-        public virtual DataTransferJobGetResultCollection GetDataTransferJobGetResults()
-        {
-            return GetCachedClient(client => new DataTransferJobGetResultCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a Data Transfer Job.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/dataTransferJobs/{jobName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataTransferJobs_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataTransferJobGetResultResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="jobName"> Name of the Data Transfer Job. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DataTransferJobGetResultResource>> GetDataTransferJobGetResultAsync(string jobName, CancellationToken cancellationToken = default)
-        {
-            return await GetDataTransferJobGetResults().GetAsync(jobName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a Data Transfer Job.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/dataTransferJobs/{jobName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataTransferJobs_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataTransferJobGetResultResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="jobName"> Name of the Data Transfer Job. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DataTransferJobGetResultResource> GetDataTransferJobGetResult(string jobName, CancellationToken cancellationToken = default)
-        {
-            return GetDataTransferJobGetResults().Get(jobName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of NetworkSecurityPerimeterConfigurationResources in the CosmosDBAccount. </summary>
-        /// <returns> An object representing collection of NetworkSecurityPerimeterConfigurationResources and their operations over a NetworkSecurityPerimeterConfigurationResource. </returns>
-        public virtual NetworkSecurityPerimeterConfigurationCollection GetNetworkSecurityPerimeterConfigurations()
-        {
-            return GetCachedClient(client => new NetworkSecurityPerimeterConfigurationCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets effective Network Security Perimeter Configuration for association
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/networkSecurityPerimeterConfigurations/{networkSecurityPerimeterConfigurationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterConfigurations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="networkSecurityPerimeterConfigurationName"> The name for Network Security Perimeter configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<NetworkSecurityPerimeterConfigurationResource>> GetNetworkSecurityPerimeterConfigurationAsync(string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
-        {
-            return await GetNetworkSecurityPerimeterConfigurations().GetAsync(networkSecurityPerimeterConfigurationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets effective Network Security Perimeter Configuration for association
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/networkSecurityPerimeterConfigurations/{networkSecurityPerimeterConfigurationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterConfigurations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="networkSecurityPerimeterConfigurationName"> The name for Network Security Perimeter configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<NetworkSecurityPerimeterConfigurationResource> GetNetworkSecurityPerimeterConfiguration(string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
-        {
-            return GetNetworkSecurityPerimeterConfigurations().Get(networkSecurityPerimeterConfigurationName, cancellationToken);
         }
 
         /// <summary> Gets a collection of CosmosDBPrivateEndpointConnectionResources in the CosmosDBAccount. </summary>
@@ -1190,7 +776,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1221,7 +807,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1259,7 +845,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1290,7 +876,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1328,7 +914,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1359,7 +945,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1390,7 +976,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1430,7 +1016,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1470,7 +1056,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1512,7 +1098,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1554,7 +1140,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1600,7 +1186,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1646,7 +1232,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1692,7 +1278,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1738,7 +1324,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1776,7 +1362,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1814,7 +1400,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1843,7 +1429,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1872,7 +1458,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1918,7 +1504,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1964,7 +1550,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2010,7 +1596,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2056,7 +1642,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2094,7 +1680,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2132,7 +1718,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2178,7 +1764,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2224,7 +1810,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2257,7 +1843,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2290,7 +1876,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2320,7 +1906,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2350,7 +1936,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2379,7 +1965,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2408,7 +1994,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2440,7 +2026,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2472,7 +2058,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2503,7 +2089,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2534,7 +2120,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2564,7 +2150,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2594,7 +2180,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2628,7 +2214,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2662,7 +2248,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2695,7 +2281,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2728,7 +2314,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2760,7 +2346,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2792,7 +2378,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2828,7 +2414,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2864,7 +2450,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2896,7 +2482,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2928,7 +2514,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2962,7 +2548,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2996,7 +2582,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3028,7 +2614,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3060,7 +2646,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3089,7 +2675,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3118,7 +2704,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3154,7 +2740,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3190,7 +2776,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3224,7 +2810,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3258,7 +2844,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3291,7 +2877,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3324,7 +2910,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3360,7 +2946,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3396,7 +2982,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3434,7 +3020,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3472,7 +3058,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3534,7 +3120,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3596,7 +3182,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3653,7 +3239,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3710,7 +3296,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3770,7 +3356,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

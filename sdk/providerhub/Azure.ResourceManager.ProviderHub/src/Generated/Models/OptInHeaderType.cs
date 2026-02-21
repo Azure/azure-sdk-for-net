@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The OptInHeaderType. </summary>
+    /// <summary> The opt in headers. </summary>
     public readonly partial struct OptInHeaderType : IEquatable<OptInHeaderType>
     {
         private readonly string _value;
@@ -27,6 +27,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string ClientGroupMembershipValue = "ClientGroupMembership";
         private const string SignedAuxiliaryTokensValue = "SignedAuxiliaryTokens";
         private const string UnboundedClientGroupMembershipValue = "UnboundedClientGroupMembership";
+        private const string PrivateLinkIdValue = "PrivateLinkId";
+        private const string PrivateLinkResourceIdValue = "PrivateLinkResourceId";
+        private const string ManagementGroupAncestorsEncodedValue = "ManagementGroupAncestorsEncoded";
+        private const string PrivateLinkVnetTrafficTagValue = "PrivateLinkVnetTrafficTag";
+        private const string ResourceGroupLocationValue = "ResourceGroupLocation";
+        private const string ClientPrincipalNameEncodedValue = "ClientPrincipalNameEncoded";
+        private const string MSIResourceIdEncodedValue = "MSIResourceIdEncoded";
 
         /// <summary> NotSpecified. </summary>
         public static OptInHeaderType NotSpecified { get; } = new OptInHeaderType(NotSpecifiedValue);
@@ -38,6 +45,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static OptInHeaderType SignedAuxiliaryTokens { get; } = new OptInHeaderType(SignedAuxiliaryTokensValue);
         /// <summary> UnboundedClientGroupMembership. </summary>
         public static OptInHeaderType UnboundedClientGroupMembership { get; } = new OptInHeaderType(UnboundedClientGroupMembershipValue);
+        /// <summary> PrivateLinkId. </summary>
+        public static OptInHeaderType PrivateLinkId { get; } = new OptInHeaderType(PrivateLinkIdValue);
+        /// <summary> PrivateLinkResourceId. </summary>
+        public static OptInHeaderType PrivateLinkResourceId { get; } = new OptInHeaderType(PrivateLinkResourceIdValue);
+        /// <summary> ManagementGroupAncestorsEncoded. </summary>
+        public static OptInHeaderType ManagementGroupAncestorsEncoded { get; } = new OptInHeaderType(ManagementGroupAncestorsEncodedValue);
+        /// <summary> PrivateLinkVnetTrafficTag. </summary>
+        public static OptInHeaderType PrivateLinkVnetTrafficTag { get; } = new OptInHeaderType(PrivateLinkVnetTrafficTagValue);
+        /// <summary> ResourceGroupLocation. </summary>
+        public static OptInHeaderType ResourceGroupLocation { get; } = new OptInHeaderType(ResourceGroupLocationValue);
+        /// <summary> ClientPrincipalNameEncoded. </summary>
+        public static OptInHeaderType ClientPrincipalNameEncoded { get; } = new OptInHeaderType(ClientPrincipalNameEncodedValue);
+        /// <summary> MSIResourceIdEncoded. </summary>
+        public static OptInHeaderType MSIResourceIdEncoded { get; } = new OptInHeaderType(MSIResourceIdEncodedValue);
         /// <summary> Determines if two <see cref="OptInHeaderType"/> values are the same. </summary>
         public static bool operator ==(OptInHeaderType left, OptInHeaderType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OptInHeaderType"/> values are not the same. </summary>

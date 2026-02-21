@@ -3,7 +3,6 @@
 
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Generator.Management.Extensions;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Providers.OperationMethodProviders;
 using Azure.Generator.Management.Providers.TagMethodProviders;
@@ -55,15 +54,17 @@ namespace Azure.Generator.Management.Providers
 
         private readonly ResourceMetadata _resourceMetadata;
 
-        private readonly RequestPathPattern _contextualPath;
+        private readonly OperationContext _operationContext;
 
         // Support for multiple rest clients
         private readonly Dictionary<InputClient, RestClientInfo> _clientInfos;
 
+        private readonly ResourceMethod _readMethod;
+
         private ResourceClientProvider(string resourceName, InputModelType model, IReadOnlyList<ResourceMethod> resourceMethods, ResourceMetadata resourceMetadata)
         {
             _resourceMetadata = resourceMetadata;
-            _contextualPath = new RequestPathPattern(resourceMetadata.ResourceIdPattern);
+            _operationContext = OperationContext.Create(new RequestPathPattern(resourceMetadata.ResourceIdPattern));
             _inputModel = model;
 
             _resourceTypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(ResourceTypeValue));
@@ -71,6 +72,7 @@ namespace Azure.Generator.Management.Providers
             ResourceName = resourceName;
 
             _resourceServiceMethods = resourceMethods;
+            _readMethod = resourceMethods.First(m => m.Kind == ResourceOperationKind.Read)!;
             ResourceData = ManagementClientGenerator.Instance.TypeFactory.CreateModel(model)!;
 
             // Initialize client info dictionary using extension method
@@ -86,14 +88,9 @@ namespace Azure.Generator.Management.Providers
 
         internal ResourceCollectionClientProvider? ResourceCollection { get; private set; }
 
-        public RequestPathPattern ContextualPath => _contextualPath;
-
         protected override string BuildName() => ResourceName.EndsWith("Resource") ? ResourceName : $"{ResourceName}Resource";
 
         protected override FormattableString BuildDescription() => $"A class representing a {ResourceName} along with the instance operations that can be performed on it.\nIf you have a {typeof(ResourceIdentifier):C} you can construct a {Type:C} from an instance of {typeof(ArmClient):C} using the GetResource method.\nOtherwise you can get one from its parent resource {TypeOfParentResource:C} using the {FactoryMethodSignature.Name} method.";
-
-        private OperationSourceProvider? _source;
-        internal OperationSourceProvider Source => _source ??= new OperationSourceProvider(this);
 
         internal ModelProvider ResourceData { get; }
         internal string ResourceName { get; }
@@ -135,7 +132,7 @@ namespace Azure.Generator.Management.Providers
         {
             if (_resourceMetadata.ResourceScope == ResourceScope.Extension)
             {
-                return typeof(Azure.ResourceManager.ArmResource);
+                return typeof(ArmResource);
             }
 
             // if the resource has a parent resource id, we can find it in the output library
@@ -155,14 +152,18 @@ namespace Azure.Generator.Management.Providers
             if (ResourceCollection != null)
             {
                 // we have the collection, we are not a singleton resource
-                var pluralOfResourceName = ResourceName.Pluralize();
+                var methodName = ResourceName.GetCollectionMethodName();
+                // Use inputIsKnownToBeSingular: false because some words like "Quota" and "Metadata"
+                // are treated by Humanizer as already plural (from Latin), and we want to preserve
+                // them unchanged rather than incorrectly pluralizing them.
+                var pluralOfResourceName = ResourceName.PluralizeLastWord(inputIsKnownToBeSingular: false);
                 return new MethodSignature(
-                    $"Get{pluralOfResourceName}",
+                    methodName,
                     $"Gets a collection of {pluralOfResourceName} in the {TypeOfParentResource:C}",
                     MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
                     ResourceCollection.Type,
                     $"An object representing collection of {pluralOfResourceName} and their operations over a {Name}.",
-                    []
+                    [.. ResourceCollection.PathParameters]
                     );
             }
             else
@@ -303,51 +304,13 @@ namespace Azure.Generator.Management.Providers
             return new ConstructorProvider(signature, bodyStatements.ToArray(), this);
         }
 
-        // TODO -- this is temporary. We should change this to find the corresponding parameters in ContextualParameters after it is refactored to consume parent resources.
-        public CSharpType GetPathParameterType(string parameterName)
-        {
-            foreach (var resourceMethod in _resourceServiceMethods)
-            {
-                if (!resourceMethod.Kind.IsCrudKind())
-                {
-                    continue; // Skip non-CRUD operations
-                }
-                // iterate through all parameters in this method to find a matching parameter
-                foreach (var parameter in resourceMethod.InputMethod.Operation.Parameters)
-                {
-                    if (parameter is not InputPathParameter)
-                    {
-                        continue; // Skip parameters that are not in the path
-                    }
-                    if (parameter.Name == parameterName)
-                    {
-                        var csharpType = ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(parameter.Type) ?? typeof(string);
-                        return parameterName switch
-                        {
-                            "subscriptionId" when csharpType.Equals(typeof(Guid)) => typeof(string),
-                            // Cases will be added later
-                            _ => csharpType
-                        };
-                    }
-                }
-            }
-
-            // what if we did not find the parameter in any method?
-            ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
-                "general-warning",
-                $"Cannot find parameter {parameterName} in any registered operations in resource {ResourceName}."
-                );
-
-            return typeof(string); // Default to string if not found
-        }
-
         private MethodProvider BuildCreateResourceIdentifierMethod()
         {
             var parameters = new List<ParameterProvider>();
             var formatBuilder = new StringBuilder();
             var refCount = 0;
 
-            foreach (var segment in _contextualPath)
+            foreach (var segment in _operationContext.ContextualPath)
             {
                 if (segment.IsConstant)
                 {
@@ -360,7 +323,7 @@ namespace Azure.Generator.Management.Providers
                         formatBuilder.Append('/');
                     }
                     var variableName = segment.VariableName;
-                    var parameter = new ParameterProvider(variableName, $"The {variableName}", GetPathParameterType(variableName));
+                    var parameter = new ParameterProvider(variableName, $"The {variableName}", ResourceHelpers.GetRequestPathParameterType(variableName, _readMethod.InputMethod));
                     parameters.Add(parameter);
                     formatBuilder.Append($"{{{refCount++}}}");
                 }
@@ -397,11 +360,6 @@ namespace Azure.Generator.Management.Providers
                 var methodKind = resourceMethod.Kind;
                 var method = resourceMethod.InputMethod;
                 var inputClient = resourceMethod.InputClient;
-                // exclude the List operations for resource and Create operations for non-singleton resources (they will be in ResourceCollection)
-                if (methodKind == ResourceOperationKind.List || (!IsSingleton && methodKind == ResourceOperationKind.Create))
-                {
-                    continue;
-                }
 
                 var isFakeLro = ResourceHelpers.ShouldMakeLro(methodKind);
 
@@ -414,8 +372,8 @@ namespace Azure.Generator.Management.Providers
                 if (method is InputPagingServiceMethod pagingMethod)
                 {
                     // Use PageableOperationMethodProvider for InputPagingServiceMethod
-                    operationMethods.Add(new PageableOperationMethodProvider(this, _contextualPath, restClientInfo, pagingMethod, true, methodName: ResourceHelpers.GetOperationMethodName(methodKind, true)));
-                    operationMethods.Add(new PageableOperationMethodProvider(this, _contextualPath, restClientInfo, pagingMethod, false, methodName: ResourceHelpers.GetOperationMethodName(methodKind, false)));
+                    operationMethods.Add(new PageableOperationMethodProvider(this, _operationContext, restClientInfo, pagingMethod, true, methodName: ResourceHelpers.GetOperationMethodName(methodKind, true, false)));
+                    operationMethods.Add(new PageableOperationMethodProvider(this, _operationContext, restClientInfo, pagingMethod, false, methodName: ResourceHelpers.GetOperationMethodName(methodKind, false, false)));
 
                     continue;
                 }
@@ -425,18 +383,18 @@ namespace Azure.Generator.Management.Providers
 
                 if (isUpdateOperation)
                 {
-                    var updateAsyncMethodProvider = new UpdateOperationMethodProvider(this, _contextualPath, restClientInfo, method, true);
+                    var updateAsyncMethodProvider = new UpdateOperationMethodProvider(this, _operationContext, restClientInfo, method, true, methodKind, isFakeLro);
                     operationMethods.Add(updateAsyncMethodProvider);
 
-                    updateMethodProvider = new UpdateOperationMethodProvider(this, _contextualPath, restClientInfo, method, false);
+                    updateMethodProvider = new UpdateOperationMethodProvider(this, _operationContext, restClientInfo, method, false, methodKind, isFakeLro);
                     operationMethods.Add(updateMethodProvider);
                 }
                 else
                 {
-                    var asyncMethodName = ResourceHelpers.GetOperationMethodName(methodKind, true);
-                    operationMethods.Add(new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, method, true, asyncMethodName, forceLro: isFakeLro));
-                    var methodName = ResourceHelpers.GetOperationMethodName(methodKind, false);
-                    operationMethods.Add(new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, method, false, methodName, forceLro: isFakeLro));
+                    var asyncMethodName = ResourceHelpers.GetOperationMethodName(methodKind, true, false);
+                    operationMethods.Add(BuildResourceOperationMethod(method, restClientInfo, true, asyncMethodName, isFakeLro));
+                    var methodName = ResourceHelpers.GetOperationMethodName(methodKind, false, false);
+                    operationMethods.Add(BuildResourceOperationMethod(method, restClientInfo, false, methodName, isFakeLro));
                 }
             }
 
@@ -446,40 +404,46 @@ namespace Azure.Generator.Management.Providers
                 ResourceMethodSnippets.BuildValidateResourceIdMethod(this, _resourceTypeField)
             };
             methods.AddRange(operationMethods);
-            var getMethod = _resourceServiceMethods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Get)?.InputMethod;
 
             // Only generate tag methods if the resource model has tag properties, has get and update methods
-            if (HasTags() && getMethod is not null && updateMethodProvider is not null)
+            if (HasTags() && _readMethod is not null && updateMethodProvider is not null)
             {
-                (bool isPatch, InputClient? updateClient) = PopulateUpdateClient();
-                var getClient = PopulateGetClient();
-                if (updateClient is not null && getClient is not null)
+                (bool isPatch, InputClient? inputUpdateClient) = PopulateUpdateClient();
+                var inputReadMethod = _readMethod.InputMethod;
+                var inputReadClient = _readMethod.InputClient;
+                if (inputUpdateClient is not null && inputReadClient is not null)
                 {
-                    var updateRestClientInfo = _clientInfos[updateClient];
-                    var getRestClientInfo = _clientInfos[getClient];
+                    var updateRestClientInfo = _clientInfos[inputUpdateClient];
+                    var getRestClientInfo = _clientInfos[inputReadClient];
 
                     methods.AddRange([
-                        new AddTagMethodProvider(this, _contextualPath, updateMethodProvider, getMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
-                        new AddTagMethodProvider(this, _contextualPath, updateMethodProvider, getMethod, updateRestClientInfo, getRestClientInfo, isPatch, false),
-                        new SetTagsMethodProvider(this, _contextualPath, updateMethodProvider, getMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
-                        new SetTagsMethodProvider(this, _contextualPath, updateMethodProvider, getMethod, updateRestClientInfo, getRestClientInfo, isPatch, false),
-                        new RemoveTagMethodProvider(this, _contextualPath, updateMethodProvider, getMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
-                        new RemoveTagMethodProvider(this, _contextualPath, updateMethodProvider, getMethod, updateRestClientInfo, getRestClientInfo, isPatch, false)
+                        new AddTagMethodProvider(this, _operationContext, updateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
+                        new AddTagMethodProvider(this, _operationContext, updateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, false),
+                        new SetTagsMethodProvider(this, _operationContext, updateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
+                        new SetTagsMethodProvider(this, _operationContext, updateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, false),
+                        new RemoveTagMethodProvider(this, _operationContext, updateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
+                        new RemoveTagMethodProvider(this, _operationContext, updateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, false)
                     ]);
                 }
             }
 
             // add method to get the child resource collection from the current resource.
-            foreach (var childResource in ChildResources)
-            {
-                methods.Add(BuildGetChildResourceMethod(childResource));
-            }
+            methods.AddRange(BuildGetChildResourceMethods());
 
             return [.. methods];
         }
 
-        private InputClient? PopulateGetClient()
-            => _resourceMetadata.Methods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Get)?.InputClient;
+        private MethodProvider BuildResourceOperationMethod(InputServiceMethod method, RestClientInfo restClientInfo, bool isAsync, string? methodName, bool isFakeLro)
+        {
+            // Check if the response body type is a list - if so, wrap it in a single-page pageable
+            var responseBodyType = method.GetResponseBodyType();
+            if (responseBodyType != null && responseBodyType.IsList)
+            {
+                return new ArrayResponseOperationMethodProvider(this, _operationContext, restClientInfo, method, isAsync, methodName);
+            }
+
+            return new ResourceOperationMethodProvider(this, _operationContext, restClientInfo, method, isAsync, methodName, forceLro: isFakeLro);
+        }
 
         private (bool IsPatch, InputClient? UpdateClient) PopulateUpdateClient()
         {
@@ -495,23 +459,62 @@ namespace Azure.Generator.Management.Providers
             return (false, putClient);
         }
 
-        private MethodProvider BuildGetChildResourceMethod(ResourceClientProvider childResource)
+        private List<MethodProvider> BuildGetChildResourceMethods()
         {
-            var thisResource = This.As<ArmResource>();
-            if (childResource.IsSingleton)
+            var methods = new List<MethodProvider>();
+
+            foreach (var childResource in ChildResources)
             {
-                var signature = childResource.FactoryMethodSignature;
-                var lastSegment = childResource.ResourceTypeValue.Split('/')[^1];
-                var bodyStatement = Return(New.Instance(childResource.Type, thisResource.Client(), thisResource.Id().AppendChildResource(Literal(lastSegment), Literal(childResource.SingletonResourceName!))));
-                return new MethodProvider(signature, bodyStatement, this);
+                var thisResource = This.As<ArmResource>();
+                if (childResource.IsSingleton)
+                {
+                    var signature = childResource.FactoryMethodSignature;
+                    var lastSegment = childResource.ResourceTypeValue.Split('/')[^1];
+                    var bodyStatement = Return(New.Instance(childResource.Type, thisResource.Client(), thisResource.Id().AppendChildResource(Literal(lastSegment), Literal(childResource.SingletonResourceName!))));
+                    methods.Add(new MethodProvider(signature, bodyStatement, this));
+                }
+                else
+                {
+                    Debug.Assert(childResource.ResourceCollection is not null, "Child resource collection should not be null for non-singleton resources.");
+                    var signature = childResource.FactoryMethodSignature;
+                    var bodyStatement = Return(thisResource.GetCachedClient(new CodeWriterDeclaration("client"), client => New.Instance(childResource.ResourceCollection.Type, client, thisResource.Id())));
+                    methods.Add(new MethodProvider(signature, bodyStatement, this));
+                    // Add Get methods backed by collection's Get and GetAsync methods
+                    if (childResource.ResourceCollection.GetSyncMethodProvider is not null && childResource.ResourceCollection.GetAsyncMethodProvider is not null)
+                    {
+                        // Create both async and sync Get methods
+                        var methodProviders = new[]
+                        {
+                            (childResource.ResourceCollection.GetAsyncMethodProvider, true, "Async"),
+                            (childResource.ResourceCollection.GetSyncMethodProvider, false, "")
+                        };
+
+                        foreach (var (collectionMethodProvider, isAsync, suffix) in methodProviders)
+                        {
+                            var collectionSignature = collectionMethodProvider.Signature;
+                            var getMethodName = $"Get{childResource.ResourceName}{suffix}";
+
+                            var getSignature = new MethodSignature(
+                                getMethodName,
+                                collectionSignature.Description,
+                                collectionSignature.Modifiers,
+                                collectionSignature.ReturnType,
+                                collectionSignature.ReturnDescription,
+                                collectionSignature.Parameters,
+                                [new AttributeStatement(typeof(ForwardsClientCallsAttribute))],
+                                collectionSignature.GenericArguments);
+
+                            var getBodyStatement = Return(
+                                thisResource.Invoke(signature.Name)
+                                    .Invoke(collectionSignature.Name, collectionSignature.Parameters.Select(p => p.AsArgument()).ToArray(), null, isAsync));
+
+                            methods.Add(new MethodProvider(getSignature, getBodyStatement, this));
+                        }
+                    }
+                }
             }
-            else
-            {
-                Debug.Assert(childResource.ResourceCollection is not null, "Child resource collection should not be null for non-singleton resources.");
-                var signature = childResource.FactoryMethodSignature;
-                var bodyStatement = Return(thisResource.GetCachedClient(new CodeWriterDeclaration("client"), client => New.Instance(childResource.ResourceCollection.Type, client, thisResource.Id())));
-                return new MethodProvider(signature, bodyStatement, this);
-            }
+
+            return methods;
         }
 
         private bool HasTags()

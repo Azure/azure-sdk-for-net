@@ -7,7 +7,6 @@ using System;
 
 namespace Azure.Security.KeyVault.Storage
 {
-    [CodeGenClient("AzureSecurityKeyVaultStorageRestClient")]
     internal partial class ManagedStorageRestClient
     {
         /// <summary>

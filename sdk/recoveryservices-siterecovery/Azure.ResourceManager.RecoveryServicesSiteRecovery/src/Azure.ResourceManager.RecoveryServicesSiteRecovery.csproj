@@ -7,5 +7,6 @@
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.RecoveryServices SiteRecovery.</Description>
     <PackageTags>azure;management;arm;resource manager;recoveryservicessiterecovery</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

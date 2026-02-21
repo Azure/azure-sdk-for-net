@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using NUnit.Framework;
-using Azure.ResourceManager.Resources.Bicep.Models;
-using Azure.Core;
 using System.Linq;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.Resources.Bicep.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Resources.Bicep.Tests
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Resources.Bicep.Tests
         {
             var subscription = await Client.GetDefaultSubscriptionAsync();
 
-            var response = await subscription.BicepDecompileOperationGroupAsync(new DecompileOperationContent("""
+            var response = await subscription.BicepDecompileAsync(new DecompileOperationContent("""
             {
               "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
               "contentVersion": "1.0.0.0",

@@ -7,12 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using MgmtTypeSpec;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The NestedFooModel. </summary>
-    public partial class NestedFooModel
+    internal partial class NestedFooModel
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -37,6 +37,7 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> Gets or sets the Properties. </summary>
+        [WirePath("properties")]
         public FooProperties Properties { get; set; }
     }
 }

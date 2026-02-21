@@ -46,7 +46,7 @@ namespace Azure.Core.TestFramework
                 return;
             }
 
-            if (type is {IsGenericType: true} genericType &&
+            if (type is { IsGenericType: true } genericType &&
                 genericType.GetGenericTypeDefinition() == typeof(AsyncPageable<>))
             {
                 invocation.Proceed();
@@ -64,7 +64,7 @@ namespace Azure.Core.TestFramework
         {
             Type genericArgument = typeof(object);
             Type awaitableType = invocation.Method.ReturnType;
-            if (invocation.Method.ReturnType is {IsGenericType: true, GenericTypeArguments: {Length: 1} genericTypeArguments})
+            if (invocation.Method.ReturnType is { IsGenericType: true, GenericTypeArguments: { Length: 1 } genericTypeArguments })
             {
                 genericArgument = genericTypeArguments[0];
                 awaitableType = invocation.Method.ReturnType.GetGenericTypeDefinition();
@@ -331,12 +331,13 @@ namespace Azure.Core.TestFramework
 
             public DiagnosticScopeValidatingAsyncEnumerable(AsyncPageable<T> pageable, MethodInfo methodInfo)
             {
-                if (pageable == null) throw new ArgumentNullException(nameof(pageable), "Operations returning [Async]Pageable should never return null.");
+                if (pageable == null)
+                    throw new ArgumentNullException(nameof(pageable), "Operations returning [Async]Pageable should never return null.");
 
                 // If AsyncPageable overrides GetAsyncEnumerator we have to pass the call through to it
                 // this would effectively disable the validation so avoid doing it as much as possible
                 var getAsyncEnumeratorMethod = pageable.GetType().GetMethod("GetAsyncEnumerator", BindingFlags.Public | BindingFlags.Instance);
-                _overridesGetAsyncEnumerator = getAsyncEnumeratorMethod.DeclaringType is {IsGenericType: true} genericType &&
+                _overridesGetAsyncEnumerator = getAsyncEnumeratorMethod.DeclaringType is { IsGenericType: true } genericType &&
                     genericType.GetGenericTypeDefinition() != typeof(AsyncPageable<>);
 
                 _pageable = pageable;

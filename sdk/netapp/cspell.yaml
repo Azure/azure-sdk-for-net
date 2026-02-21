@@ -1,0 +1,12 @@
+import:
+  - ../../.vscode/cspell.json
+words:
+  - vserver
+  - Vserver
+
+# Optional overrides example for words in a specific file
+# overrides:
+#   - filename: '**/sdk/contosowidgetmanager/somefile.yaml'
+#     words:
+#      - aardwolf
+#      - zoo

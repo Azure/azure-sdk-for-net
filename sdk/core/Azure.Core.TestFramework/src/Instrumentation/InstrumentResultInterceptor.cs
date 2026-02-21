@@ -31,10 +31,7 @@ namespace Azure.Core.TestFramework
             var type = invocation.Method.ReturnType;
 
             // We don't want to instrument generated rest clients.
-            if ((type.Name.EndsWith("Client") && !type.Name.EndsWith("RestClient") && !type.Name.EndsWith("ExtensionClient")) ||
-                // Generated ARM clients will have a property containing the sub-client that ends with Operations.
-                //TODO: remove after all track2 .net mgmt libraries are updated to the new generation
-                (invocation.Method.Name.StartsWith("get_") && type.Name.EndsWith("Operations")))
+            if (IsInstrumentableClientType(invocation))
             {
                 if (IsNullResult(invocation))
                     return;
@@ -57,7 +54,7 @@ namespace Azure.Core.TestFramework
                 return;
             }
 
-            if (type is {IsGenericType: true, GenericTypeArguments: {} arguments } &&
+            if (type is { IsGenericType: true, GenericTypeArguments: { } arguments } &&
                 type.GetGenericTypeDefinition() == typeof(Task<>) &&
                 typeof(Operation).IsAssignableFrom(arguments[0]))
             {
@@ -100,9 +97,41 @@ namespace Azure.Core.TestFramework
             invocation.Proceed();
         }
 
+        private static bool IsInstrumentableClientType(IInvocation invocation)
+        {
+            var type = invocation.Method.ReturnType;
+
+            // Skip system types
+            if (type.Namespace?.StartsWith("System.") == true)
+            {
+                return false;
+            }
+
+            // We don't want to instrument generated rest clients or extension clients
+            if (type.Name.EndsWith("RestClient") || type.Name.EndsWith("ExtensionClient"))
+            {
+                return false;
+            }
+
+            if (type.Name.EndsWith("Client"))
+            {
+                return true;
+            }
+
+            //TODO: remove after all track2 .net mgmt libraries are updated to the new generation
+            if (invocation.Method.Name.StartsWith("get_") && type.Name.EndsWith("Operations"))
+            {
+                return true;
+            }
+
+            // Some libraries have subclients that do not end with Client. Instrument any public type that has a Pipeline property.
+            // This is the most expensive check so we do it last.
+            return type.IsPublic && type.GetProperty("Pipeline") != null;
+        }
+
         internal async ValueTask<T> InstrumentOperationInterceptor<T>(IInvocation invocation, Func<ValueTask<T>> innerTask)
         {
-            return (T) _testBase.InstrumentOperation(typeof(T), await innerTask());
+            return (T)_testBase.InstrumentOperation(typeof(T), await innerTask());
         }
 
         private bool IsNullResult(IInvocation invocation)

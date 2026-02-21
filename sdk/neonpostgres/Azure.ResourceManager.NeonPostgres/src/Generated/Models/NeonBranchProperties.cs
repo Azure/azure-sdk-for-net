@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NeonPostgres;
 
 namespace Azure.ResourceManager.NeonPostgres.Models
 {
     /// <summary> Properties specific to Branch. </summary>
     public partial class NeonBranchProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NeonBranchProperties"/>. </summary>
         public NeonBranchProperties()
@@ -67,8 +39,15 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="roles"> Roles associated with the branch. </param>
         /// <param name="databases"> Neon Databases associated with the branch. </param>
         /// <param name="endpoints"> Endpoints associated with the branch. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NeonBranchProperties(string entityId, string entityName, string createdAt, NeonResourceProvisioningState? provisioningState, IList<Attributes> attributes, string projectId, string parentId, string roleName, string databaseName, IList<NeonRoleProperties> roles, IList<NeonDatabaseProperties> databases, IList<NeonEndpointProperties> endpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="branchId"> Unique identifier for the branch. </param>
+        /// <param name="branch"> Name of the branch. </param>
+        /// <param name="dataSize"> Total data size in MB for the branch. </param>
+        /// <param name="lastActive"> Last active compute for the branch. </param>
+        /// <param name="computeHours"> Compute hours for the branch. </param>
+        /// <param name="isProtected"> Branch protected status. </param>
+        /// <param name="isDefault"> Branch default status. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NeonBranchProperties(string entityId, string entityName, string createdAt, NeonResourceProvisioningState? provisioningState, IList<Attributes> attributes, string projectId, string parentId, string roleName, string databaseName, IList<NeonRoleProperties> roles, IList<NeonDatabaseProperties> databases, IList<NeonEndpointProperties> endpoints, string branchId, string branch, string dataSize, string lastActive, string computeHours, bool? isProtected, bool? isDefault, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EntityId = entityId;
             EntityName = entityName;
@@ -82,32 +61,71 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             Roles = roles;
             Databases = databases;
             Endpoints = endpoints;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            BranchId = branchId;
+            Branch = branch;
+            DataSize = dataSize;
+            LastActive = lastActive;
+            ComputeHours = computeHours;
+            IsProtected = isProtected;
+            IsDefault = isDefault;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Unique identifier for the entity. </summary>
         public string EntityId { get; }
+
         /// <summary> Name of the resource. </summary>
         public string EntityName { get; set; }
+
         /// <summary> Timestamp indicating when the entity was created. </summary>
         public string CreatedAt { get; }
+
         /// <summary> Provisioning state of the resource. </summary>
         public NeonResourceProvisioningState? ProvisioningState { get; }
+
         /// <summary> Additional attributes for the entity. </summary>
         public IList<Attributes> Attributes { get; }
+
         /// <summary> The ID of the project this branch belongs to. </summary>
         public string ProjectId { get; set; }
+
         /// <summary> The ID of the parent branch. </summary>
         public string ParentId { get; set; }
+
         /// <summary> Role name associated with the branch. </summary>
         public string RoleName { get; set; }
+
         /// <summary> Database name associated with the branch. </summary>
         public string DatabaseName { get; set; }
+
         /// <summary> Roles associated with the branch. </summary>
         public IList<NeonRoleProperties> Roles { get; }
+
         /// <summary> Neon Databases associated with the branch. </summary>
         public IList<NeonDatabaseProperties> Databases { get; }
+
         /// <summary> Endpoints associated with the branch. </summary>
         public IList<NeonEndpointProperties> Endpoints { get; }
+
+        /// <summary> Unique identifier for the branch. </summary>
+        public string BranchId { get; set; }
+
+        /// <summary> Name of the branch. </summary>
+        public string Branch { get; set; }
+
+        /// <summary> Total data size in MB for the branch. </summary>
+        public string DataSize { get; }
+
+        /// <summary> Last active compute for the branch. </summary>
+        public string LastActive { get; }
+
+        /// <summary> Compute hours for the branch. </summary>
+        public string ComputeHours { get; }
+
+        /// <summary> Branch protected status. </summary>
+        public bool? IsProtected { get; }
+
+        /// <summary> Branch default status. </summary>
+        public bool? IsDefault { get; }
     }
 }

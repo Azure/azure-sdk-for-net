@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Hci.Vm;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     public readonly partial struct HciVmStatusLevelType : IEquatable<HciVmStatusLevelType>
     {
         private readonly string _value;
+        /// <summary> Informational status level. </summary>
+        private const string InfoValue = "Info";
+        /// <summary> Warning status level. </summary>
+        private const string WarningValue = "Warning";
+        /// <summary> Error status level. </summary>
+        private const string ErrorValue = "Error";
 
         /// <summary> Initializes a new instance of <see cref="HciVmStatusLevelType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HciVmStatusLevelType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InfoValue = "Info";
-        private const string WarningValue = "Warning";
-        private const string ErrorValue = "Error";
+            _value = value;
+        }
 
         /// <summary> Informational status level. </summary>
         public static HciVmStatusLevelType Info { get; } = new HciVmStatusLevelType(InfoValue);
+
         /// <summary> Warning status level. </summary>
         public static HciVmStatusLevelType Warning { get; } = new HciVmStatusLevelType(WarningValue);
+
         /// <summary> Error status level. </summary>
         public static HciVmStatusLevelType Error { get; } = new HciVmStatusLevelType(ErrorValue);
+
         /// <summary> Determines if two <see cref="HciVmStatusLevelType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HciVmStatusLevelType left, HciVmStatusLevelType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HciVmStatusLevelType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HciVmStatusLevelType left, HciVmStatusLevelType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HciVmStatusLevelType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HciVmStatusLevelType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HciVmStatusLevelType(string value) => new HciVmStatusLevelType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HciVmStatusLevelType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HciVmStatusLevelType?(string value) => value == null ? null : new HciVmStatusLevelType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HciVmStatusLevelType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HciVmStatusLevelType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

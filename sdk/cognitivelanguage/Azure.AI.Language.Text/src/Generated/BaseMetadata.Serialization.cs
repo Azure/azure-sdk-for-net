@@ -77,6 +77,7 @@ namespace Azure.AI.Language.Text
             {
                 switch (discriminator.GetString())
                 {
+                    case "AddressMetadata": return AddressMetadata.DeserializeAddressMetadata(element, options);
                     case "AgeMetadata": return AgeMetadata.DeserializeAgeMetadata(element, options);
                     case "AreaMetadata": return AreaMetadata.DeserializeAreaMetadata(element, options);
                     case "CurrencyMetadata": return CurrencyMetadata.DeserializeCurrencyMetadata(element, options);

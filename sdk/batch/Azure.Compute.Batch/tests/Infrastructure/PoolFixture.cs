@@ -7,8 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using Azure.Compute.Batch;
+using Azure.Core.TestFramework;
 
 namespace Azure.Compute.Batch.Tests.Infrastructure
 {
@@ -66,7 +66,7 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
             DateTime allocationWaitStartTime = DateTime.UtcNow;
             DateTime timeoutAfterThisTimeUtc = allocationWaitStartTime.Add(computeNodeSteadyTimeout);
 
-            List<BatchNode> computeNodes=  await client.GetNodesAsync(poolId).ToEnumerableAsync();
+            List<BatchNode> computeNodes = await client.GetNodesAsync(poolId).ToEnumerableAsync();
 
             while (computeNodes.Any(computeNode => computeNode.State != BatchNodeState.Idle))
             {

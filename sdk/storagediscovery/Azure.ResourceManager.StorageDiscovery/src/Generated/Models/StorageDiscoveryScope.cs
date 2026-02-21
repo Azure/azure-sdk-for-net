@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         /// <param name="displayName"> Display name of the collection. </param>
         /// <param name="resourceTypes"> Resource types for the collection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> or <paramref name="resourceTypes"/> is null. </exception>
-        public StorageDiscoveryScope(string displayName, IEnumerable<StorageDiscoveryResourceType> resourceTypes)
+        public StorageDiscoveryScope(string displayName, IEnumerable<StorageDiscoveryResourceKind> resourceTypes)
         {
             Argument.AssertNotNull(displayName, nameof(displayName));
             Argument.AssertNotNull(resourceTypes, nameof(resourceTypes));
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         /// <param name="tagKeysOnly"> The storage account tags keys to filter. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageDiscoveryScope(string displayName, IList<StorageDiscoveryResourceType> resourceTypes, IList<string> tagKeysOnly, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageDiscoveryScope(string displayName, IList<StorageDiscoveryResourceKind> resourceTypes, IList<string> tagKeysOnly, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             ResourceTypes = resourceTypes;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         public string DisplayName { get; set; }
 
         /// <summary> Resource types for the collection. </summary>
-        public IList<StorageDiscoveryResourceType> ResourceTypes { get; }
+        public IList<StorageDiscoveryResourceKind> ResourceTypes { get; }
 
         /// <summary> The storage account tags keys to filter. </summary>
         public IList<string> TagKeysOnly { get; }

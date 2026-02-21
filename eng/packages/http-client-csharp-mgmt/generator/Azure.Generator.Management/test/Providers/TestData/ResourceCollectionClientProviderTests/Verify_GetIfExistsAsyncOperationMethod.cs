@@ -11,14 +11,14 @@ try
     global::Azure.Core.HttpMessage message = _testClientRestClient.CreateGetRequest(global::System.Guid.Parse(this.Id.SubscriptionId), this.Id.ResourceGroupName, testName, context);
     await this.Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
     global::Azure.Response result = message.Response;
-    global::Azure.Response<global::Samples.Models.ResponseTypeData> response = default;
+    global::Azure.Response<global::Samples.ResponseTypeData> response = default;
     switch (result.Status)
     {
         case 200:
-            response = global::Azure.Response.FromValue(global::Samples.Models.ResponseTypeData.FromResponse(result), result);
+            response = global::Azure.Response.FromValue(global::Samples.ResponseTypeData.FromResponse(result), result);
             break;
         case 404:
-            response = global::Azure.Response.FromValue(((global::Samples.Models.ResponseTypeData)null), result);
+            response = global::Azure.Response.FromValue(((global::Samples.ResponseTypeData)null), result);
             break;
         default:
             throw new global::Azure.RequestFailedException(result);

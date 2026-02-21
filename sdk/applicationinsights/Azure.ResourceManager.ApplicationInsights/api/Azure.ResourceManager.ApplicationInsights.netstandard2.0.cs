@@ -463,9 +463,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static Azure.ResourceManager.ApplicationInsights.Models.AnalyticsItemScopePath AnalyticsItems { get { throw null; } }
         public static Azure.ResourceManager.ApplicationInsights.Models.AnalyticsItemScopePath MyAnalyticsItems { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApplicationInsights.Models.AnalyticsItemScopePath other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApplicationInsights.Models.AnalyticsItemScopePath left, Azure.ResourceManager.ApplicationInsights.Models.AnalyticsItemScopePath right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApplicationInsights.Models.AnalyticsItemScopePath (string value) { throw null; }
@@ -484,9 +482,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static Azure.ResourceManager.ApplicationInsights.Models.AnalyticsItemTypeContent Query { get { throw null; } }
         public static Azure.ResourceManager.ApplicationInsights.Models.AnalyticsItemTypeContent Recent { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApplicationInsights.Models.AnalyticsItemTypeContent other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApplicationInsights.Models.AnalyticsItemTypeContent left, Azure.ResourceManager.ApplicationInsights.Models.AnalyticsItemTypeContent right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApplicationInsights.Models.AnalyticsItemTypeContent (string value) { throw null; }
@@ -531,9 +527,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsApplicationType Other { get { throw null; } }
         public static Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsApplicationType Web { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsApplicationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsApplicationType left, Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsApplicationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsApplicationType (string value) { throw null; }
@@ -812,9 +806,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsPublicNetworkAccessType Disabled { get { throw null; } }
         public static Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsPublicNetworkAccessType Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsPublicNetworkAccessType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsPublicNetworkAccessType left, Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsPublicNetworkAccessType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsPublicNetworkAccessType (string value) { throw null; }
@@ -891,9 +883,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public ComponentFlowType(string value) { throw null; }
         public static Azure.ResourceManager.ApplicationInsights.Models.ComponentFlowType Bluefield { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApplicationInsights.Models.ComponentFlowType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApplicationInsights.Models.ComponentFlowType left, Azure.ResourceManager.ApplicationInsights.Models.ComponentFlowType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApplicationInsights.Models.ComponentFlowType (string value) { throw null; }
@@ -910,9 +900,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static Azure.ResourceManager.ApplicationInsights.Models.ComponentIngestionMode ApplicationInsightsWithDiagnosticSettings { get { throw null; } }
         public static Azure.ResourceManager.ApplicationInsights.Models.ComponentIngestionMode LogAnalytics { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApplicationInsights.Models.ComponentIngestionMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApplicationInsights.Models.ComponentIngestionMode left, Azure.ResourceManager.ApplicationInsights.Models.ComponentIngestionMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApplicationInsights.Models.ComponentIngestionMode (string value) { throw null; }
@@ -928,9 +916,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static Azure.ResourceManager.ApplicationInsights.Models.ComponentItemScope Shared { get { throw null; } }
         public static Azure.ResourceManager.ApplicationInsights.Models.ComponentItemScope User { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApplicationInsights.Models.ComponentItemScope other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApplicationInsights.Models.ComponentItemScope left, Azure.ResourceManager.ApplicationInsights.Models.ComponentItemScope right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApplicationInsights.Models.ComponentItemScope (string value) { throw null; }
@@ -948,9 +934,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static Azure.ResourceManager.ApplicationInsights.Models.ComponentItemType Query { get { throw null; } }
         public static Azure.ResourceManager.ApplicationInsights.Models.ComponentItemType Recent { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApplicationInsights.Models.ComponentItemType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApplicationInsights.Models.ComponentItemType left, Azure.ResourceManager.ApplicationInsights.Models.ComponentItemType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApplicationInsights.Models.ComponentItemType (string value) { throw null; }
@@ -1003,9 +987,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeState Completed { get { throw null; } }
         public static Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeState Pending { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeState left, Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeState (string value) { throw null; }
@@ -1031,9 +1013,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public ComponentRequestSource(string value) { throw null; }
         public static Azure.ResourceManager.ApplicationInsights.Models.ComponentRequestSource Rest { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApplicationInsights.Models.ComponentRequestSource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApplicationInsights.Models.ComponentRequestSource left, Azure.ResourceManager.ApplicationInsights.Models.ComponentRequestSource right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApplicationInsights.Models.ComponentRequestSource (string value) { throw null; }
@@ -1055,9 +1035,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static Azure.ResourceManager.ApplicationInsights.Models.FavoriteSourceType Sessions { get { throw null; } }
         public static Azure.ResourceManager.ApplicationInsights.Models.FavoriteSourceType Userflows { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApplicationInsights.Models.FavoriteSourceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApplicationInsights.Models.FavoriteSourceType left, Azure.ResourceManager.ApplicationInsights.Models.FavoriteSourceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApplicationInsights.Models.FavoriteSourceType (string value) { throw null; }
@@ -1182,9 +1160,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static Azure.ResourceManager.ApplicationInsights.Models.WorkbookCategoryType Tsg { get { throw null; } }
         public static Azure.ResourceManager.ApplicationInsights.Models.WorkbookCategoryType Workbook { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApplicationInsights.Models.WorkbookCategoryType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApplicationInsights.Models.WorkbookCategoryType left, Azure.ResourceManager.ApplicationInsights.Models.WorkbookCategoryType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApplicationInsights.Models.WorkbookCategoryType (string value) { throw null; }
@@ -1199,9 +1175,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public WorkbookSharedTypeKind(string value) { throw null; }
         public static Azure.ResourceManager.ApplicationInsights.Models.WorkbookSharedTypeKind Shared { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApplicationInsights.Models.WorkbookSharedTypeKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApplicationInsights.Models.WorkbookSharedTypeKind left, Azure.ResourceManager.ApplicationInsights.Models.WorkbookSharedTypeKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApplicationInsights.Models.WorkbookSharedTypeKind (string value) { throw null; }
@@ -1243,9 +1217,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public WorkbookUpdateSharedTypeKind(string value) { throw null; }
         public static Azure.ResourceManager.ApplicationInsights.Models.WorkbookUpdateSharedTypeKind Shared { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApplicationInsights.Models.WorkbookUpdateSharedTypeKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApplicationInsights.Models.WorkbookUpdateSharedTypeKind left, Azure.ResourceManager.ApplicationInsights.Models.WorkbookUpdateSharedTypeKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApplicationInsights.Models.WorkbookUpdateSharedTypeKind (string value) { throw null; }

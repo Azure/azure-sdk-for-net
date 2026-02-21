@@ -13,7 +13,7 @@ namespace Azure.Storage.Files.Shares.Models
     /// </summary>
     public class ShareFileSymbolicLinkInfo
     {
-        internal ShareFileSymbolicLinkInfo() {}
+        internal ShareFileSymbolicLinkInfo() { }
 
         /// <summary>
         /// The ETag contains a value which represents the version of the file, in quotes.

@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.NewRelicObservability
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ActivateSaaSParameterContent))]
     [ModelReaderWriterBuildable(typeof(ConnectedPartnerResourcesListResponse))]
     [ModelReaderWriterBuildable(typeof(LinkedResourceListResponse))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
@@ -46,9 +47,12 @@ namespace Azure.ResourceManager.NewRelicObservability
     [ModelReaderWriterBuildable(typeof(NewRelicObservabilityAccountInfo))]
     [ModelReaderWriterBuildable(typeof(NewRelicObservabilityAppServiceInfo))]
     [ModelReaderWriterBuildable(typeof(NewRelicObservabilityFilteringTag))]
+    [ModelReaderWriterBuildable(typeof(NewRelicObservabilityLatestLinkedSaaSResult))]
     [ModelReaderWriterBuildable(typeof(NewRelicObservabilityLogRules))]
     [ModelReaderWriterBuildable(typeof(NewRelicObservabilityMetricRules))]
     [ModelReaderWriterBuildable(typeof(NewRelicObservabilityOrganizationInfo))]
+    [ModelReaderWriterBuildable(typeof(NewRelicObservabilitySaaSContent))]
+    [ModelReaderWriterBuildable(typeof(NewRelicObservabilitySaaSResourceDetailsResult))]
     [ModelReaderWriterBuildable(typeof(NewRelicObservabilityTagRuleData))]
     [ModelReaderWriterBuildable(typeof(NewRelicObservabilityTagRuleListResult))]
     [ModelReaderWriterBuildable(typeof(NewRelicObservabilityTagRulePatch))]
@@ -67,6 +71,7 @@ namespace Azure.ResourceManager.NewRelicObservability
     [ModelReaderWriterBuildable(typeof(NewRelicSwitchBillingContent))]
     [ModelReaderWriterBuildable(typeof(PartnerBillingEntity))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(ResubscribeProperties))]
     [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]

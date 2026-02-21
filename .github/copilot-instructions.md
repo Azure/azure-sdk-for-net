@@ -1,13 +1,13 @@
 # Project Overview
 
-This repo contains Azure SDKs for various Azure services and tools that generate them.
+> **Note**: For general AI agent guidelines and repository overview, see [AGENTS.md](https://github.com/Azure/azure-sdk-for-net/blob/main/AGENTS.md) at the repository root.
 
-> **Note**: For comprehensive AI agent guidelines including supported workflows, safety boundaries, and development patterns, see [AGENTS.md](https://github.com/Azure/azure-sdk-for-net/blob/main/AGENTS.md) in the repository root.
+This repo contains Azure SDKs for various Azure services and tools that generate them.
 
 ## Prerequisites
 - To use MCP tool calls, PowerShell must be installed. Provide [PowerShell installation instructions](https://learn.microsoft.com/powershell/scripting/install/installing-powershell) if not installed, and recommend restarting the IDE to use the MCP server.
 - When using Copilot from Visual Studio or VS Code (not applicable when using Coding Agent on Github.com):
-  - **Always run** the [`azsdk_verify_setup`](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/common/instructions/azsdk-tools/verify-setup.instructions.md) tool first to validate the user's development environment for SDK MCP tools.
+  - **Always run** the [`azsdk_verify_setup`](../eng/common/instructions/azsdk-tools/verify-setup.instructions.md) tool first to validate the user's development environment for SDK MCP tools.
   - **Do not proceed** with any other tool execution until this step is complete.
   - **Skip this check only** for queries that do not require tool execution.
 

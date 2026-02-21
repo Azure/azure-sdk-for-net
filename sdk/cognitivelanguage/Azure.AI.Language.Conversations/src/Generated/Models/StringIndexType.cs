@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.AI.Language.Conversations.Models
     public readonly partial struct StringIndexType : IEquatable<StringIndexType>
     {
         private readonly string _value;
+        /// <summary> Returned offset and length values will correspond to TextElements (Graphemes and Grapheme clusters) confirming to the Unicode 8.0.0 standard. Use this option if your application is written in .Net Framework or .Net Core and you will be using StringInfo. </summary>
+        private const string TextElementsV8Value = "TextElements_v8";
+        /// <summary> Returned offset and length values will correspond to Unicode code points. Use this option if your application is written in a language that support Unicode, for example Python. </summary>
+        private const string UnicodeCodePointValue = "UnicodeCodePoint";
+        /// <summary> Returned offset and length values will correspond to UTF-16 code units. Use this option if your application is written in a language that support Unicode, for example Java, JavaScript. </summary>
+        private const string Utf16CodeUnitValue = "Utf16CodeUnit";
 
         /// <summary> Initializes a new instance of <see cref="StringIndexType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StringIndexType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TextElementsV8Value = "TextElements_v8";
-        private const string UnicodeCodePointValue = "UnicodeCodePoint";
-        private const string Utf16CodeUnitValue = "Utf16CodeUnit";
+            _value = value;
+        }
 
         /// <summary> Returned offset and length values will correspond to TextElements (Graphemes and Grapheme clusters) confirming to the Unicode 8.0.0 standard. Use this option if your application is written in .Net Framework or .Net Core and you will be using StringInfo. </summary>
         public static StringIndexType TextElementsV8 { get; } = new StringIndexType(TextElementsV8Value);
+
         /// <summary> Returned offset and length values will correspond to Unicode code points. Use this option if your application is written in a language that support Unicode, for example Python. </summary>
         public static StringIndexType UnicodeCodePoint { get; } = new StringIndexType(UnicodeCodePointValue);
+
         /// <summary> Returned offset and length values will correspond to UTF-16 code units. Use this option if your application is written in a language that support Unicode, for example Java, JavaScript. </summary>
         public static StringIndexType Utf16CodeUnit { get; } = new StringIndexType(Utf16CodeUnitValue);
+
         /// <summary> Determines if two <see cref="StringIndexType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StringIndexType left, StringIndexType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StringIndexType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StringIndexType left, StringIndexType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StringIndexType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StringIndexType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StringIndexType(string value) => new StringIndexType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StringIndexType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StringIndexType?(string value) => value == null ? null : new StringIndexType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StringIndexType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StringIndexType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

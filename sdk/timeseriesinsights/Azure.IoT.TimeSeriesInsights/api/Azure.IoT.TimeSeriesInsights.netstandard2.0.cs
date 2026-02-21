@@ -33,9 +33,7 @@ namespace Azure.IoT.TimeSeriesInsights
         public static Azure.IoT.TimeSeriesInsights.InterpolationKind Linear { get { throw null; } }
         public static Azure.IoT.TimeSeriesInsights.InterpolationKind Step { get { throw null; } }
         public bool Equals(Azure.IoT.TimeSeriesInsights.InterpolationKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.IoT.TimeSeriesInsights.InterpolationKind left, Azure.IoT.TimeSeriesInsights.InterpolationKind right) { throw null; }
         public static implicit operator Azure.IoT.TimeSeriesInsights.InterpolationKind (string value) { throw null; }
@@ -139,7 +137,6 @@ namespace Azure.IoT.TimeSeriesInsights
         public TimeSeriesId(string key1, string key2) { throw null; }
         public TimeSeriesId(string key1, string key2, string key3) { throw null; }
         public bool Equals(Azure.IoT.TimeSeriesInsights.TimeSeriesId other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
         public override string ToString() { throw null; }
@@ -160,9 +157,7 @@ namespace Azure.IoT.TimeSeriesInsights
         public TimeSeriesIdPropertyType(string value) { throw null; }
         public static Azure.IoT.TimeSeriesInsights.TimeSeriesIdPropertyType String { get { throw null; } }
         public bool Equals(Azure.IoT.TimeSeriesInsights.TimeSeriesIdPropertyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.IoT.TimeSeriesInsights.TimeSeriesIdPropertyType left, Azure.IoT.TimeSeriesInsights.TimeSeriesIdPropertyType right) { throw null; }
         public static implicit operator Azure.IoT.TimeSeriesInsights.TimeSeriesIdPropertyType (string value) { throw null; }
@@ -346,9 +341,7 @@ namespace Azure.IoT.TimeSeriesInsights
         public static Azure.IoT.TimeSeriesInsights.TimeSeriesPropertyType String { get { throw null; } }
         public static Azure.IoT.TimeSeriesInsights.TimeSeriesPropertyType TimeSpan { get { throw null; } }
         public bool Equals(Azure.IoT.TimeSeriesInsights.TimeSeriesPropertyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.IoT.TimeSeriesInsights.TimeSeriesPropertyType left, Azure.IoT.TimeSeriesInsights.TimeSeriesPropertyType right) { throw null; }
         public static implicit operator Azure.IoT.TimeSeriesInsights.TimeSeriesPropertyType (string value) { throw null; }

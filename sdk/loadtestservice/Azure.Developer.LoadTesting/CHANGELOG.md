@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Regenerated with V2025_03_01_Preview
+
 ### Breaking Changes
 
 ### Bugs Fixed
@@ -70,7 +72,7 @@
 - Changed from single client and 2 subclients pattern to two clients pattern
 
 ### Other Changes
-- README Updated 
+- README Updated
 
 ## 1.0.0-beta.1 (2022-10-25)
 

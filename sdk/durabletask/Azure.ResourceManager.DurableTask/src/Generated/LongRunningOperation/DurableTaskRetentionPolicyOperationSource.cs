@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DurableTask
 {
-    internal class DurableTaskRetentionPolicyOperationSource : IOperationSource<DurableTaskRetentionPolicyResource>
+    /// <summary></summary>
+    internal partial class DurableTaskRetentionPolicyOperationSource : IOperationSource<DurableTaskRetentionPolicyResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal DurableTaskRetentionPolicyOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         DurableTaskRetentionPolicyResource IOperationSource<DurableTaskRetentionPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DurableTaskRetentionPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDurableTaskContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            DurableTaskRetentionPolicyData data = DurableTaskRetentionPolicyData.DeserializeDurableTaskRetentionPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DurableTaskRetentionPolicyResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<DurableTaskRetentionPolicyResource> IOperationSource<DurableTaskRetentionPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DurableTaskRetentionPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDurableTaskContext.Default);
-            return await Task.FromResult(new DurableTaskRetentionPolicyResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            DurableTaskRetentionPolicyData data = DurableTaskRetentionPolicyData.DeserializeDurableTaskRetentionPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DurableTaskRetentionPolicyResource(_client, data);
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ComputeSchedule;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     public readonly partial struct ResourceOperationType : IEquatable<ResourceOperationType>
     {
         private readonly string _value;
+        /// <summary> The default value for this enum type. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> Start operations on the resources. </summary>
+        private const string StartValue = "Start";
+        /// <summary> Deallocate operations on the resources. </summary>
+        private const string DeallocateValue = "Deallocate";
+        /// <summary> Hibernate operations on the resources. </summary>
+        private const string HibernateValue = "Hibernate";
 
         /// <summary> Initializes a new instance of <see cref="ResourceOperationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ResourceOperationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnknownValue = "Unknown";
-        private const string StartValue = "Start";
-        private const string DeallocateValue = "Deallocate";
-        private const string HibernateValue = "Hibernate";
+            _value = value;
+        }
 
         /// <summary> The default value for this enum type. </summary>
         public static ResourceOperationType Unknown { get; } = new ResourceOperationType(UnknownValue);
+
         /// <summary> Start operations on the resources. </summary>
         public static ResourceOperationType Start { get; } = new ResourceOperationType(StartValue);
+
         /// <summary> Deallocate operations on the resources. </summary>
         public static ResourceOperationType Deallocate { get; } = new ResourceOperationType(DeallocateValue);
+
         /// <summary> Hibernate operations on the resources. </summary>
         public static ResourceOperationType Hibernate { get; } = new ResourceOperationType(HibernateValue);
+
         /// <summary> Determines if two <see cref="ResourceOperationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResourceOperationType left, ResourceOperationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ResourceOperationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResourceOperationType left, ResourceOperationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceOperationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ResourceOperationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ResourceOperationType(string value) => new ResourceOperationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ResourceOperationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResourceOperationType?(string value) => value == null ? null : new ResourceOperationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ResourceOperationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ResourceOperationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

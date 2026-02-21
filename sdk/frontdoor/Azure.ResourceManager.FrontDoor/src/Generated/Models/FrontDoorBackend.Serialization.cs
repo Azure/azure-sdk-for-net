@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -285,6 +286,233 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Address), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  address: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Address))
+                {
+                    builder.Append("  address: ");
+                    if (Address.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Address}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Address}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateLinkAlias), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  privateLinkAlias: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrivateLinkAlias))
+                {
+                    builder.Append("  privateLinkAlias: ");
+                    if (PrivateLinkAlias.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PrivateLinkAlias}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PrivateLinkAlias}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateLinkResourceId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  privateLinkResourceId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrivateLinkResourceId))
+                {
+                    builder.Append("  privateLinkResourceId: ");
+                    builder.AppendLine($"'{PrivateLinkResourceId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateLinkLocation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  privateLinkLocation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrivateLinkLocation))
+                {
+                    builder.Append("  privateLinkLocation: ");
+                    builder.AppendLine($"'{PrivateLinkLocation.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateEndpointStatus), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  privateEndpointStatus: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrivateEndpointStatus))
+                {
+                    builder.Append("  privateEndpointStatus: ");
+                    builder.AppendLine($"'{PrivateEndpointStatus.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateLinkApprovalMessage), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  privateLinkApprovalMessage: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrivateLinkApprovalMessage))
+                {
+                    builder.Append("  privateLinkApprovalMessage: ");
+                    if (PrivateLinkApprovalMessage.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PrivateLinkApprovalMessage}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PrivateLinkApprovalMessage}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HttpPort), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  httpPort: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HttpPort))
+                {
+                    builder.Append("  httpPort: ");
+                    builder.AppendLine($"{HttpPort.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HttpsPort), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  httpsPort: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HttpsPort))
+                {
+                    builder.Append("  httpsPort: ");
+                    builder.AppendLine($"{HttpsPort.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnabledState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enabledState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnabledState))
+                {
+                    builder.Append("  enabledState: ");
+                    builder.AppendLine($"'{EnabledState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Priority), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  priority: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Priority))
+                {
+                    builder.Append("  priority: ");
+                    builder.AppendLine($"{Priority.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Weight), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  weight: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Weight))
+                {
+                    builder.Append("  weight: ");
+                    builder.AppendLine($"{Weight.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackendHostHeader), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  backendHostHeader: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BackendHostHeader))
+                {
+                    builder.Append("  backendHostHeader: ");
+                    if (BackendHostHeader.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{BackendHostHeader}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{BackendHostHeader}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<FrontDoorBackend>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorBackend>)this).GetFormatFromOptions(options) : options.Format;
@@ -293,6 +521,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerFrontDoorContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FrontDoorBackend)} does not support writing '{options.Format}' format.");
             }

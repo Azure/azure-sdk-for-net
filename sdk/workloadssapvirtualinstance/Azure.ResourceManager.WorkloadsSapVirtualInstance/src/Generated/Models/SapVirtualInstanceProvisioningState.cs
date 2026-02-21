@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.WorkloadsSapVirtualInstance;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     public readonly partial struct SapVirtualInstanceProvisioningState : IEquatable<SapVirtualInstanceProvisioningState>
     {
         private readonly string _value;
+        /// <summary> ACSS succeeded provisioning state. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> ACSS updating provisioning state. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> ACSS Creating provisioning state. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> ACSS Failed provisioning state. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> ACSS Deleting provisioning state. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> ACSS Canceled provisioning state. </summary>
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Initializes a new instance of <see cref="SapVirtualInstanceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SapVirtualInstanceProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string UpdatingValue = "Updating";
-        private const string CreatingValue = "Creating";
-        private const string FailedValue = "Failed";
-        private const string DeletingValue = "Deleting";
-        private const string CanceledValue = "Canceled";
+            _value = value;
+        }
 
         /// <summary> ACSS succeeded provisioning state. </summary>
         public static SapVirtualInstanceProvisioningState Succeeded { get; } = new SapVirtualInstanceProvisioningState(SucceededValue);
+
         /// <summary> ACSS updating provisioning state. </summary>
         public static SapVirtualInstanceProvisioningState Updating { get; } = new SapVirtualInstanceProvisioningState(UpdatingValue);
+
         /// <summary> ACSS Creating provisioning state. </summary>
         public static SapVirtualInstanceProvisioningState Creating { get; } = new SapVirtualInstanceProvisioningState(CreatingValue);
+
         /// <summary> ACSS Failed provisioning state. </summary>
         public static SapVirtualInstanceProvisioningState Failed { get; } = new SapVirtualInstanceProvisioningState(FailedValue);
+
         /// <summary> ACSS Deleting provisioning state. </summary>
         public static SapVirtualInstanceProvisioningState Deleting { get; } = new SapVirtualInstanceProvisioningState(DeletingValue);
+
         /// <summary> ACSS Canceled provisioning state. </summary>
         public static SapVirtualInstanceProvisioningState Canceled { get; } = new SapVirtualInstanceProvisioningState(CanceledValue);
+
         /// <summary> Determines if two <see cref="SapVirtualInstanceProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SapVirtualInstanceProvisioningState left, SapVirtualInstanceProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SapVirtualInstanceProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SapVirtualInstanceProvisioningState left, SapVirtualInstanceProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SapVirtualInstanceProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SapVirtualInstanceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SapVirtualInstanceProvisioningState(string value) => new SapVirtualInstanceProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SapVirtualInstanceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SapVirtualInstanceProvisioningState?(string value) => value == null ? null : new SapVirtualInstanceProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SapVirtualInstanceProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SapVirtualInstanceProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

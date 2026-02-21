@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
 
-namespace _Specs_.Azure.ClientGenerator.Core.Access._SharedModelInOperation
+namespace Specs.Azure.ClientGenerator.Core.Access._SharedModelInOperation
 {
     public partial class SharedModelInOperation
     {

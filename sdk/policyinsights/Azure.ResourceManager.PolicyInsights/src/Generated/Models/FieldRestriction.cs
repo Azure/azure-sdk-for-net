@@ -56,13 +56,17 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="defaultValue"> The value that policy will set for the field if the user does not provide a value. </param>
         /// <param name="values"> The values that policy either requires or denies for the field. </param>
         /// <param name="policy"> The details of the policy that is causing the field restriction. </param>
+        /// <param name="policyEffect"> The effect of the policy that is causing the field restriction. http://aka.ms/policyeffects. </param>
+        /// <param name="reason"> The reason for the restriction. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FieldRestriction(FieldRestrictionResult? result, string defaultValue, IReadOnlyList<string> values, PolicyReference policy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FieldRestriction(FieldRestrictionResult? result, string defaultValue, IReadOnlyList<string> values, PolicyReference policy, string policyEffect, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Result = result;
             DefaultValue = defaultValue;
             Values = values;
             Policy = policy;
+            PolicyEffect = policyEffect;
+            Reason = reason;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -74,5 +78,9 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public IReadOnlyList<string> Values { get; }
         /// <summary> The details of the policy that is causing the field restriction. </summary>
         public PolicyReference Policy { get; }
+        /// <summary> The effect of the policy that is causing the field restriction. http://aka.ms/policyeffects. </summary>
+        public string PolicyEffect { get; }
+        /// <summary> The reason for the restriction. </summary>
+        public string Reason { get; }
     }
 }

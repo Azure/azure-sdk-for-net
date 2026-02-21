@@ -2,16 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using System.Net.Http;
-using Azure.Core.Pipeline;
 using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.IoT.DeviceUpdate.Tests
 {
-    public class DeviceManagementClientTest: RecordedTestBase<DeviceUpdateClientTestEnvironment>
+    public class DeviceManagementClientTest : RecordedTestBase<DeviceUpdateClientTestEnvironment>
     {
         public DeviceManagementClientTest(bool isAsync) : base(isAsync)
         {

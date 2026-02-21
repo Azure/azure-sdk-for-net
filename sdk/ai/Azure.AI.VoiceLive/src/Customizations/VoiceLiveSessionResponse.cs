@@ -7,6 +7,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.VoiceLive
 {
@@ -24,7 +25,7 @@ namespace Azure.AI.VoiceLive
         /// <summary>
         /// Gets or sets the maximum number of tokens to generate in the response.
         /// </summary>
-        public MaxResponseOutputTokensOption MaxResponseOutputTokens { get;}
+        public MaxResponseOutputTokensOption MaxResponseOutputTokens { get; }
 
         /// <summary>
         /// Gets or sets the tool choice strategy for response generation.

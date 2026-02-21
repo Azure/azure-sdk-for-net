@@ -206,7 +206,7 @@ namespace Azure.Search.Documents.Tests.Models
             searchOptions.SemanticSearch = new SemanticSearchOptions();
 
             // We can set `QueryAnswer` to one of the known values, using either a string or a pre-defined value.
-            searchOptions.SemanticSearch.QueryAnswer = new QueryAnswer("none") { Count = 3, Threshold = 0.9, MaxCharLength = 300  };
+            searchOptions.SemanticSearch.QueryAnswer = new QueryAnswer("none") { Count = 3, Threshold = 0.9, MaxCharLength = 300 };
             Assert.AreEqual($"{QueryAnswerType.None}|count-{searchOptions.SemanticSearch.QueryAnswer.Count},threshold-{searchOptions.SemanticSearch.QueryAnswer.Threshold},maxcharlength-{searchOptions.SemanticSearch.QueryAnswer.MaxCharLength}", searchOptions.SemanticSearch.QueryAnswer.QueryAnswerRaw);
 
             searchOptions.SemanticSearch.QueryAnswer = new QueryAnswer(QueryAnswerType.None) { Count = 3, Threshold = 0.9, MaxCharLength = 300 };
@@ -380,7 +380,7 @@ namespace Azure.Search.Documents.Tests.Models
             Assert.AreEqual($"{QueryRewritesType.None}|count-{searchOptions.SemanticSearch.QueryRewrites.Count}",
                 searchOptions.SemanticSearch.QueryRewrites.QueryRewritesRaw);
 
-            searchOptions.SemanticSearch.QueryRewrites = new QueryRewrites("generative") { Count = 5};
+            searchOptions.SemanticSearch.QueryRewrites = new QueryRewrites("generative") { Count = 5 };
             Assert.AreEqual($"{QueryRewritesType.Generative}|count-{searchOptions.SemanticSearch.QueryRewrites.Count}",
                 searchOptions.SemanticSearch.QueryRewrites.QueryRewritesRaw);
 
@@ -411,8 +411,8 @@ namespace Azure.Search.Documents.Tests.Models
                 SemanticSearch = new()
                 {
                     SemanticConfigurationName = "my-semantic-config",
-                    QueryCaption = new(QueryCaptionType.Extractive) { MaxCharLength = 300},
-                    QueryAnswer = new(QueryAnswerType.Extractive){ Count = 5, Threshold = 0.8, MaxCharLength = 300 },
+                    QueryCaption = new(QueryCaptionType.Extractive) { MaxCharLength = 300 },
+                    QueryAnswer = new(QueryAnswerType.Extractive) { Count = 5, Threshold = 0.8, MaxCharLength = 300 },
                     QueryRewrites = new(QueryRewritesType.Generative) { Count = 3 }
                 },
             };

@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> Name of the managed rule group. </summary>
+        [WirePath("ruleGroupName")]
         public string RuleGroupName { get; }
         /// <summary> Description of the managed rule group. </summary>
+        [WirePath("description")]
         public string Description { get; }
         /// <summary> List of rules within the managed rule group. </summary>
+        [WirePath("rules")]
         public IReadOnlyList<ManagedRuleDefinition> Rules { get; }
     }
 }
