@@ -1,8 +1,18 @@
 # Release History
 
-## 1.18.0-beta.3 (Unreleased)
+## 1.18.0-beta.4 (Unreleased)
 
 ### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+- `AzureDeveloperCliCredential` now parses JSON error output from `azd auth token` to extract clean error messages instead of including raw JSON in exceptions. Error messages like `{"type":"consoleMessage","data":{"message":"ERROR: fetching token: ..."}}` are now displayed as `ERROR: fetching token: ...`.
+
+## 1.18.0-beta.3 (2026-02-20)
 
 ### Breaking Changes
 
@@ -10,10 +20,10 @@
 
 ### Bugs Fixed
 
-- `AzureDeveloperCliCredential` now parses JSON error output from `azd auth token` to extract clean error messages instead of including raw JSON in exceptions. Error messages like `{"type":"consoleMessage","data":{"message":"ERROR: fetching token: ..."}}` are now displayed as `ERROR: fetching token: ...`.
 - Disabled MSAL's internal retry logic for `ConfidentialClientApplication` and `PublicClientApplication` to prevent double retries when combined with Azure SDK's retry policy. Only the configured Azure SDK retry policy is applied, avoiding unexpected additional retry attempts.
+- Fixed a NullReferenceException that occurred during X509Chain validation on Linux when using the Identity Bindings feature.
 
-### Other Changes
+- Disabled MSAL's internal retry logic for `ConfidentialClientApplication` and `PublicClientApplication` to prevent double retries when combined with Azure SDK's retry policy. Only the configured Azure SDK retry policy is applied, avoiding unexpected additional retry attempts.
 
 ## 1.18.0-beta.2 (2025-11-19)
 

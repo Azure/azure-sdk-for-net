@@ -51,6 +51,28 @@ namespace Azure.AI.AnomalyDetector
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<UnivariateChangePointDetectionOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        UnivariateChangePointDetectionOptions IPersistableModel<UnivariateChangePointDetectionOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<UnivariateChangePointDetectionOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="univariateChangePointDetectionOptions"> The <see cref="UnivariateChangePointDetectionOptions"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(UnivariateChangePointDetectionOptions univariateChangePointDetectionOptions)
+        {
+            if (univariateChangePointDetectionOptions == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(univariateChangePointDetectionOptions, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<UnivariateChangePointDetectionOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -213,28 +235,6 @@ namespace Azure.AI.AnomalyDetector
                 stableTrendWindow,
                 threshold,
                 additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<UnivariateChangePointDetectionOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        UnivariateChangePointDetectionOptions IPersistableModel<UnivariateChangePointDetectionOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<UnivariateChangePointDetectionOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="univariateChangePointDetectionOptions"> The <see cref="UnivariateChangePointDetectionOptions"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(UnivariateChangePointDetectionOptions univariateChangePointDetectionOptions)
-        {
-            if (univariateChangePointDetectionOptions == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(univariateChangePointDetectionOptions, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

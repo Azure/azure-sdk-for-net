@@ -1,5 +1,9 @@
 # Sample web search with agent in Azure.AI.Projects.OpenAI.
 
+## Warning
+Web Search tool uses Grounding with Bing, which has additional costs and terms: [terms of use](https://www.microsoft.com/bing/apis/grounding-legal-enterprise) and [privacy statement](https://go.microsoft.com/fwlink/?LinkId=521839&clcid=0x409). Customer data will flow outside the Azure compliance boundary. Learn more [here](https://learn.microsoft.com/azure/ai-foundry/agents/how-to/tools/web-search).
+
+## Sample
 In this example we will use the Agent to perform the web search in given location.
 
 1. First, we need to create project client and read the environment variables, which will be used in the next steps.

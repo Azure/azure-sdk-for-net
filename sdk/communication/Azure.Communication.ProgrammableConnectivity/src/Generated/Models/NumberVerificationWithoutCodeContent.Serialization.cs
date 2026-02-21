@@ -171,7 +171,7 @@ namespace Azure.Communication.ProgrammableConnectivity
                 }
                 if (prop.NameEquals("redirectUri"u8))
                 {
-                    redirectUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    redirectUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")

@@ -136,7 +136,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 if (prop.NameEquals("url"u8))
                 {
-                    url = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    url = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")

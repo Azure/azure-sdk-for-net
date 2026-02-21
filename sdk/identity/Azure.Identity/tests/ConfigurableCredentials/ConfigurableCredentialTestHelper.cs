@@ -47,6 +47,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
             return InstrumentCredential(credential);
         }
 
+#if IDENTITY_TESTS
         public TokenCredential GetTokenCredential<TCredOptions>(
             CredentialTestBase<TCredOptions>.CommonCredentialTestConfig config)
             where TCredOptions : TokenCredentialOptions
@@ -55,18 +56,23 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
             ConfigurableCredential credential = GetCredentialFromConfig(configuration);
             return InstrumentCredential(credential);
         }
+#endif
 
         public ConfigurableCredential InstrumentCredential(ConfigurableCredential credential, IProcessService processService = null, IFileSystemService fileSystem = null)
         {
             TCred underlyingCredential = GetUnderlyingCredential(credential);
 
-            underlyingCredential
+            var pipelineField = underlyingCredential
                 .GetType()
                 .GetField("_pipeline", BindingFlags.NonPublic | BindingFlags.Instance)
-                .SetValue(underlyingCredential, CredentialPipeline.GetInstance(null));
+                ?? underlyingCredential
+                .GetType()
+                .GetField("<Pipeline>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance);
+            pipelineField?.SetValue(underlyingCredential, CredentialPipeline.GetInstance(null));
 
             if (processService != null || _processOutput != null)
             {
+#if IDENTITY_TESTS
                 // Create a fresh TestProcess each time since TestProcess is single-use
                 IProcessService testProcessService = processService ?? new TestProcessService(new TestProcess { Output = _processOutput }, true);
 
@@ -74,6 +80,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
                     .GetType()
                     .GetField("_processService", BindingFlags.NonPublic | BindingFlags.Instance)
                     .SetValue(underlyingCredential, testProcessService);
+#endif
             }
 
             IFileSystemService testFileSystem = fileSystem ?? _defaultFileSystem;
@@ -136,6 +143,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
             GetCredentialFromConfig(config);
         }
 
+#if IDENTITY_TESTS
         public IConfiguration GetConfigurationFromCommonCredentialTestConfig<TCredOptions>(
             CredentialTestBase<TCredOptions>.CommonCredentialTestConfig config)
             where TCredOptions : TokenCredentialOptions
@@ -187,5 +195,6 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
 
             return configuration;
         }
+#endif
     }
 }

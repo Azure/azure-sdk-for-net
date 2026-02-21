@@ -81,7 +81,7 @@ namespace Azure.Analytics.PlanetaryComputer
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("coordinates"u8);
             writer.WriteStartArray();
-            foreach (IList<IList<float>> item in Coordinates)
+            foreach (IList<IList<IList<float>>> item in Coordinates)
             {
                 if (item == null)
                 {
@@ -89,7 +89,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     continue;
                 }
                 writer.WriteStartArray();
-                foreach (IList<float> item0 in item)
+                foreach (IList<IList<float>> item0 in item)
                 {
                     if (item0 == null)
                     {
@@ -97,9 +97,19 @@ namespace Azure.Analytics.PlanetaryComputer
                         continue;
                     }
                     writer.WriteStartArray();
-                    foreach (float item1 in item0)
+                    foreach (IList<float> item1 in item0)
                     {
-                        writer.WriteNumberValue(item1);
+                        if (item1 == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStartArray();
+                        foreach (float item2 in item1)
+                        {
+                            writer.WriteNumberValue(item2);
+                        }
+                        writer.WriteEndArray();
                     }
                     writer.WriteEndArray();
                 }
@@ -136,7 +146,7 @@ namespace Azure.Analytics.PlanetaryComputer
             GeometryType @type = default;
             IList<float> boundingBox = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<IList<IList<float>>> coordinates = default;
+            IList<IList<IList<IList<float>>>> coordinates = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -160,7 +170,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("coordinates"u8))
                 {
-                    List<IList<IList<float>>> array = new List<IList<IList<float>>>();
+                    List<IList<IList<IList<float>>>> array = new List<IList<IList<IList<float>>>>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -169,7 +179,7 @@ namespace Azure.Analytics.PlanetaryComputer
                         }
                         else
                         {
-                            List<IList<float>> array0 = new List<IList<float>>();
+                            List<IList<IList<float>>> array0 = new List<IList<IList<float>>>();
                             foreach (var item0 in item.EnumerateArray())
                             {
                                 if (item0.ValueKind == JsonValueKind.Null)
@@ -178,10 +188,22 @@ namespace Azure.Analytics.PlanetaryComputer
                                 }
                                 else
                                 {
-                                    List<float> array1 = new List<float>();
+                                    List<IList<float>> array1 = new List<IList<float>>();
                                     foreach (var item1 in item0.EnumerateArray())
                                     {
-                                        array1.Add(item1.GetSingle());
+                                        if (item1.ValueKind == JsonValueKind.Null)
+                                        {
+                                            array1.Add(null);
+                                        }
+                                        else
+                                        {
+                                            List<float> array2 = new List<float>();
+                                            foreach (var item2 in item1.EnumerateArray())
+                                            {
+                                                array2.Add(item2.GetSingle());
+                                            }
+                                            array1.Add(array2);
+                                        }
                                     }
                                     array0.Add(array1);
                                 }

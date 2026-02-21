@@ -34,7 +34,10 @@ namespace Azure.Developer.LoadTesting
             uri.Reset(_endpoint);
             uri.AppendPath("/test-runs/", false);
             uri.AppendPath(testRunId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (oldTestRunId != null)
             {
                 uri.AppendQuery("oldTestRunId", oldTestRunId, true);
@@ -56,7 +59,10 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath("/test-runs/", false);
             uri.AppendPath(testRunId, true);
             uri.AppendPath("/app-components", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +80,10 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath("/test-runs/", false);
             uri.AppendPath(testRunId, true);
             uri.AppendPath("/server-metrics-config", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
             Request request = message.Request;
             request.Uri = uri;
@@ -91,7 +100,10 @@ namespace Azure.Developer.LoadTesting
             uri.Reset(_endpoint);
             uri.AppendPath("/test-runs/", false);
             uri.AppendPath(testRunId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
@@ -106,7 +118,10 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath("/test-runs/", false);
             uri.AppendPath(testRunId, true);
             uri.AppendPath("/app-components", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -122,7 +137,10 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath("/test-runs/", false);
             uri.AppendPath(testRunId, true);
             uri.AppendPath("/server-metrics-config", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -137,7 +155,10 @@ namespace Azure.Developer.LoadTesting
             uri.Reset(_endpoint);
             uri.AppendPath("/test-runs/", false);
             uri.AppendPath(testRunId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -154,7 +175,10 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath(testRunId, true);
             uri.AppendPath("/files/", false);
             uri.AppendPath(fileName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -172,7 +196,10 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath("/metric-dimensions/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/values", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             uri.AppendQuery("metricname", metricname, true);
             if (interval != null)
             {
@@ -199,7 +226,10 @@ namespace Azure.Developer.LoadTesting
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -215,7 +245,10 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath("/test-runs/", false);
             uri.AppendPath(testRunId, true);
             uri.AppendPath("/metric-definitions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             uri.AppendQuery("metricNamespace", metricNamespace, true);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -232,7 +265,10 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath("/test-runs/", false);
             uri.AppendPath(testRunId, true);
             uri.AppendPath("/metric-namespaces", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -248,7 +284,10 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath("/test-runs/", false);
             uri.AppendPath(testRunId, true);
             uri.AppendPath("/metrics", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (aggregation != null)
             {
                 uri.AppendQuery("aggregation", aggregation, true);
@@ -284,7 +323,10 @@ namespace Azure.Developer.LoadTesting
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -302,7 +344,10 @@ namespace Azure.Developer.LoadTesting
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/test-runs", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (@orderby != null)
             {
                 uri.AppendQuery("orderby", @orderby, true);
@@ -358,7 +403,10 @@ namespace Azure.Developer.LoadTesting
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             if (maxPageSize != null)
             {
                 uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
@@ -378,7 +426,10 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath("/test-runs/", false);
             uri.AppendPath(testRunId, true);
             uri.AppendPath(":stop", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -393,7 +444,10 @@ namespace Azure.Developer.LoadTesting
             uri.Reset(_endpoint);
             uri.AppendPath("/test-profile-runs/", false);
             uri.AppendPath(testProfileRunId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
             Request request = message.Request;
             request.Uri = uri;
@@ -410,7 +464,10 @@ namespace Azure.Developer.LoadTesting
             uri.Reset(_endpoint);
             uri.AppendPath("/test-profile-runs/", false);
             uri.AppendPath(testProfileRunId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
@@ -424,7 +481,10 @@ namespace Azure.Developer.LoadTesting
             uri.Reset(_endpoint);
             uri.AppendPath("/test-profile-runs/", false);
             uri.AppendPath(testProfileRunId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -438,7 +498,10 @@ namespace Azure.Developer.LoadTesting
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/test-profile-runs", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (maxpagesize != null)
             {
                 uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
@@ -498,7 +561,10 @@ namespace Azure.Developer.LoadTesting
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -514,7 +580,10 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath("/test-profile-runs/", false);
             uri.AppendPath(testProfileRunId, true);
             uri.AppendPath(":stop", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -530,7 +599,10 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath("/test-runs/", false);
             uri.AppendPath(testRunId, true);
             uri.AppendPath("/insights/latest", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -546,7 +618,10 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath("/test-runs/", false);
             uri.AppendPath(testRunId, true);
             uri.AppendPath("/insights:generate", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;

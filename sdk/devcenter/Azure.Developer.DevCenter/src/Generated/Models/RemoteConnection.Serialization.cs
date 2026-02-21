@@ -145,7 +145,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    webUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    webUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("rdpConnectionUrl"u8))
@@ -154,7 +154,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    rdpConnectionUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    rdpConnectionUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")

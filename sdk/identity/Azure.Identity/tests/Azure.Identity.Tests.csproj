@@ -25,7 +25,7 @@
   </ItemGroup>
 <!-- Remove before shipping GA -->
   <PropertyGroup>
-        <DefineConstants>PREVIEW_FEATURE_FLAG</DefineConstants>
+        <DefineConstants>PREVIEW_FEATURE_FLAG;IDENTITY_TESTS</DefineConstants>
   </PropertyGroup>
 <!-- End remove before shipping GA -->
   <ItemGroup>

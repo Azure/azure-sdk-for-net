@@ -129,7 +129,7 @@ namespace Azure.Analytics.PlanetaryComputer
             if (Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("_msft:ts"u8);
-                writer.WriteStringValue(Timestamp);
+                writer.WriteStringValue(Timestamp.Value, "O");
             }
             if (Optional.IsDefined(ETag))
             {
@@ -166,8 +166,8 @@ namespace Azure.Analytics.PlanetaryComputer
             StacModelType @type = default;
             string stacVersion = default;
             IList<StacLink> links = default;
-            string createdOn = default;
-            string updatedOn = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? updatedOn = default;
             string shortDescription = default;
             IList<string> stacExtensions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -177,7 +177,7 @@ namespace Azure.Analytics.PlanetaryComputer
             IList<float> boundingBox = default;
             StacItemProperties properties = default;
             IDictionary<string, StacAsset> assets = default;
-            string timestamp = default;
+            DateTimeOffset? timestamp = default;
             string eTag = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -207,12 +207,20 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("msft:_created"u8))
                 {
-                    createdOn = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("msft:_updated"u8))
                 {
-                    updatedOn = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    updatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("msft:short_description"u8))
@@ -283,7 +291,11 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("_msft:ts"u8))
                 {
-                    timestamp = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    timestamp = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("_msft:etag"u8))

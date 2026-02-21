@@ -2549,7 +2549,8 @@
                   },
                   "enumType": {
                     "$ref": "232"
-                  }
+                  },
+                  "crossLanguageDefinitionId": "Type.Property.ValueTypes.ExtendedEnum.EnumValue2"
                 }
               ],
               "isFixed": false,

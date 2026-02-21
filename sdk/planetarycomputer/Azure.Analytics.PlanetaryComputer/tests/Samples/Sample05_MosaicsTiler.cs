@@ -293,7 +293,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             string collectionId = "naip";
 
             // Get assets that intersect with a specific tile
-            Response<IReadOnlyList<BinaryData>> response = await dataClient.GetMosaicsAssetsForTileAsync(
+            Response<IReadOnlyList<TilerAssetGeoJson>> response = await dataClient.GetMosaicsAssetsForTileAsync(
                 searchId: searchId,
                 tileMatrixSetId: "WebMercatorQuad",
                 z: 13,
@@ -302,7 +302,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
                 collectionId: collectionId
             );
 
-            IReadOnlyList<BinaryData> assets = response.Value;
+            IReadOnlyList<TilerAssetGeoJson> assets = response.Value;
             Console.WriteLine($"Found {assets.Count} assets for tile z=13, x=2174, y=3282");
             #endregion
         }
