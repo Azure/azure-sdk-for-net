@@ -35,25 +35,25 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DateField>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DateTimeOffsetField>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIContentUnderstandingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DateField)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DateTimeOffsetField)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DateField>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DateTimeOffsetField>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DateField IPersistableModel<DateField>.Create(BinaryData data, ModelReaderWriterOptions options) => (DateField)PersistableModelCreateCore(data, options);
+        DateTimeOffsetField IPersistableModel<DateTimeOffsetField>.Create(BinaryData data, ModelReaderWriterOptions options) => (DateTimeOffsetField)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DateField>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DateTimeOffsetField>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -169,28 +169,5 @@ namespace Azure.AI.ContentUnderstanding
                 additionalBinaryDataProperties,
                 valueDate);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DateTimeOffsetField>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DateTimeOffsetField>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIContentUnderstandingContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DateTimeOffsetField)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DateTimeOffsetField IPersistableModel<DateTimeOffsetField>.Create(BinaryData data, ModelReaderWriterOptions options) => (DateTimeOffsetField)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DateTimeOffsetField>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
