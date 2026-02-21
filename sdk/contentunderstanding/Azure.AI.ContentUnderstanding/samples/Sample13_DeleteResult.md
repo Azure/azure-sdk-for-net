@@ -47,7 +47,7 @@ Uri documentUrl = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure
 var analyzeOperation = await client.AnalyzeAsync(
     WaitUntil.Completed,
     "prebuilt-invoice",
-    inputs: new[] { new AnalyzeInput { Url = documentUrl } });
+    inputs: new[] { new AnalysisInput { Uri = documentUrl } });
 
 // Get the operation ID - this is needed to delete the result later
 string operationId = analyzeOperation.Id;
