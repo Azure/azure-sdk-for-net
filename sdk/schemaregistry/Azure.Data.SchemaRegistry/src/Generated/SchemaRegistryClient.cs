@@ -365,7 +365,7 @@ namespace Azure.Data.SchemaRegistry
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response GetSchemaPropertiesByContent(string groupName, string schemaName, SchemaContentTypeValues contentType, BinaryData schemaContent, CancellationToken cancellationToken = default)
         {
-            return GetSchemaPropertiesByContent(groupName, schemaName, contentType.ToSerialString(), RequestContent.Create(schemaContent), cancellationToken.ToRequestContext());
+            return this.GetSchemaPropertiesByContent(groupName, schemaName, contentType.ToSerialString(), RequestContent.Create(schemaContent), cancellationToken.ToRequestContext());
         }
 
         /// <summary> Gets the properties referencing an existing schema within the specified schema group, as matched by schema content comparison. </summary>
@@ -377,7 +377,7 @@ namespace Azure.Data.SchemaRegistry
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response> GetSchemaPropertiesByContentAsync(string groupName, string schemaName, SchemaContentTypeValues contentType, BinaryData schemaContent, CancellationToken cancellationToken = default)
         {
-            return await GetSchemaPropertiesByContentAsync(groupName, schemaName, contentType.ToSerialString(), RequestContent.Create(schemaContent), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.GetSchemaPropertiesByContentAsync(groupName, schemaName, contentType.ToSerialString(), RequestContent.Create(schemaContent), cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -451,7 +451,7 @@ namespace Azure.Data.SchemaRegistry
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response RegisterSchema(string groupName, string schemaName, SchemaContentTypeValues contentType, BinaryData schemaContent, CancellationToken cancellationToken = default)
         {
-            return RegisterSchema(groupName, schemaName, contentType.ToSerialString(), RequestContent.Create(schemaContent), cancellationToken.ToRequestContext());
+            return this.RegisterSchema(groupName, schemaName, contentType.ToSerialString(), RequestContent.Create(schemaContent), cancellationToken.ToRequestContext());
         }
 
         /// <summary> Register new schema. If schema of specified name does not exist in specified group, schema is created at version 1. If schema of specified name exists already in specified group, schema is created at latest version + 1. </summary>
@@ -463,7 +463,7 @@ namespace Azure.Data.SchemaRegistry
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response> RegisterSchemaAsync(string groupName, string schemaName, SchemaContentTypeValues contentType, BinaryData schemaContent, CancellationToken cancellationToken = default)
         {
-            return await RegisterSchemaAsync(groupName, schemaName, contentType.ToSerialString(), RequestContent.Create(schemaContent), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.RegisterSchemaAsync(groupName, schemaName, contentType.ToSerialString(), RequestContent.Create(schemaContent), cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
     }
 }

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Data.SchemaRegistry.Models;
+using Azure.Data.SchemaRegistry.Models.Models;
 
 namespace Azure.Data.SchemaRegistry
 {

@@ -12,7 +12,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Data.SchemaRegistry;
 
-namespace Azure.Data.SchemaRegistry.Models
+namespace Azure.Data.SchemaRegistry.Models.Models
 {
     /// <summary> The list of schema group names with server paging support. </summary>
     internal partial class SchemaGroups : IJsonModel<SchemaGroups>

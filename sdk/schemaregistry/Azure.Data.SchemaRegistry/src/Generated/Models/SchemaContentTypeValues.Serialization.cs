@@ -6,8 +6,9 @@
 #nullable disable
 
 using System;
+using Azure.Data.SchemaRegistry.Models;
 
-namespace Azure.Data.SchemaRegistry.Models
+namespace Azure.Data.SchemaRegistry.Models.Models
 {
     internal static partial class SchemaContentTypeValuesExtensions
     {

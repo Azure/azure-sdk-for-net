@@ -7,7 +7,7 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.Data.SchemaRegistry.Models;
+using Azure.Data.SchemaRegistry.Models.Models;
 
 namespace Azure.Data.SchemaRegistry
 {
