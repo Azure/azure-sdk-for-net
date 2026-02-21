@@ -9,8 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Monitor.Query.Logs;
+using Azure.Monitor.Query.Logs.Models;
 
-namespace Azure.Monitor.Query.Logs.Models
+namespace Azure.Monitor.Query.Logs.Models.Models
 {
     /// <summary> An array of requests. </summary>
     internal partial class BatchRequest

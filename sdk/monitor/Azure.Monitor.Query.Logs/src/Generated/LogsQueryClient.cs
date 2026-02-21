@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Monitor.Query.Logs.Models;
+using Azure.Monitor.Query.Logs.Models.Models;
 
 namespace Azure.Monitor.Query.Logs
 {

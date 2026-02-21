@@ -12,7 +12,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Monitor.Query.Logs;
 
-namespace Azure.Monitor.Query.Logs.Models
+namespace Azure.Monitor.Query.Logs.Models.Models
 {
     /// <summary> Response to a batch query. </summary>
     internal partial class BatchResponse : IJsonModel<BatchResponse>

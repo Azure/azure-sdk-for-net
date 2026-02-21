@@ -9,21 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Monitor.Query.Metrics;
+using Azure.Monitor.Query.Metrics.Models.Models;
 
 namespace Azure.Monitor.Query.Metrics.Models
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class MetricsQueryModelFactory
     {
-        /// <summary> The metrics result for a resource. </summary>
-        /// <param name="values"> The collection of metric data responses per resource, per metric. </param>
-        /// <returns> A new <see cref="Models.MetricsQueryResourcesResult"/> instance for mocking. </returns>
-        public static MetricsQueryResourcesResult MetricsQueryResourcesResult(IEnumerable<MetricsQueryResult> values = default)
-        {
-            values ??= new ChangeTrackingList<MetricsQueryResult>();
-
-            return new MetricsQueryResourcesResult(values.ToList(), additionalBinaryDataProperties: null);
-        }
 
         /// <summary> The metric data response for a resource. </summary>
         /// <param name="startTime"> The start time, in datetime format, for which the data was retrieved. </param>
@@ -39,7 +31,7 @@ namespace Azure.Monitor.Query.Metrics.Models
         /// <param name="resourceRegion"> The region of the resource been queried for metrics. </param>
         /// <param name="resourceId"> The resource that has been queried for metrics. </param>
         /// <param name="metrics"> The value of the collection. </param>
-        /// <returns> A new <see cref="Models.MetricsQueryResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Metrics.Models.MetricsQueryResult"/> instance for mocking. </returns>
         public static MetricsQueryResult MetricsQueryResult(string startTime = default, string endTime = default, string granularity = default, string @namespace = default, string resourceRegion = default, string resourceId = default, IEnumerable<MetricResult> metrics = default)
         {
             metrics ??= new ChangeTrackingList<MetricResult>();

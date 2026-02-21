@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Monitor.Query.Metrics;
+using Azure.Monitor.Query.Metrics.Models.Models;
 
 namespace Azure.Monitor.Query.Metrics.Models
 {
@@ -84,7 +85,7 @@ namespace Azure.Monitor.Query.Metrics.Models
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             writer.WritePropertyName("name"u8);
-            writer.WriteObjectValue(LocalizedName, options);
+            writer.WriteObjectValue<LocalizableString>(LocalizedName, options);
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("displayDescription"u8);

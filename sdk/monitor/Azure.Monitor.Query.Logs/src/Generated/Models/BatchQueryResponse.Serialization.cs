@@ -10,8 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Monitor.Query.Logs;
+using Azure.Monitor.Query.Logs.Models;
 
-namespace Azure.Monitor.Query.Logs.Models
+namespace Azure.Monitor.Query.Logs.Models.Models
 {
     /// <summary> Contains the batch query response and the headers, id, and status of the request. </summary>
     internal partial class BatchQueryResponse : IJsonModel<BatchQueryResponse>

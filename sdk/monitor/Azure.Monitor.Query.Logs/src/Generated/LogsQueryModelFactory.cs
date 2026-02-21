@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Monitor.Query.Logs;
+using Azure.Monitor.Query.Logs.Models.Models;
 
 namespace Azure.Monitor.Query.Logs.Models
 {
@@ -18,7 +19,7 @@ namespace Azure.Monitor.Query.Logs.Models
         /// <summary> A column in a table. </summary>
         /// <param name="name"> The name of this column. </param>
         /// <param name="type"> The data type of this column. </param>
-        /// <returns> A new <see cref="Models.LogsTableColumn"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Logs.Models.LogsTableColumn"/> instance for mocking. </returns>
         public static LogsTableColumn LogsTableColumn(string name = default, LogsColumnType @type = default)
         {
             return new LogsTableColumn(name, @type, additionalBinaryDataProperties: null);

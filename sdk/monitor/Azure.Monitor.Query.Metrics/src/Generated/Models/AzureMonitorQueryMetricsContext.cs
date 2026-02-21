@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.Monitor.Query.Metrics.Models;
+using Azure.Monitor.Query.Metrics.Models.Models;
 
 namespace Azure.Monitor.Query.Metrics
 {

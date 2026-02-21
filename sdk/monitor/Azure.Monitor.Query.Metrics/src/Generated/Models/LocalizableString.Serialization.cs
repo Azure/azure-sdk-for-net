@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Monitor.Query.Metrics;
 
-namespace Azure.Monitor.Query.Metrics.Models
+namespace Azure.Monitor.Query.Metrics.Models.Models
 {
     /// <summary> The localizable string class. </summary>
     internal partial class LocalizableString : IJsonModel<LocalizableString>

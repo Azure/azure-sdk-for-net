@@ -10,8 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Monitor.Query.Metrics;
+using Azure.Monitor.Query.Metrics.Models;
 
-namespace Azure.Monitor.Query.Metrics.Models
+namespace Azure.Monitor.Query.Metrics.Models.Models
 {
     /// <summary> Represents a metric metadata value. </summary>
     internal partial class MetadataValue : IJsonModel<MetadataValue>
@@ -77,7 +78,7 @@ namespace Azure.Monitor.Query.Metrics.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name, options);
+                writer.WriteObjectValue<Metrics.Models.LocalizableString>(Name, options);
             }
             if (Optional.IsDefined(Value))
             {
@@ -126,7 +127,7 @@ namespace Azure.Monitor.Query.Metrics.Models
             {
                 return null;
             }
-            LocalizableString name = default;
+            Metrics.Models.LocalizableString name = default;
             string value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())

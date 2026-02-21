@@ -11,11 +11,12 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Monitor.Query.Metrics;
+using Azure.Monitor.Query.Metrics.Models;
 
-namespace Azure.Monitor.Query.Metrics.Models
+namespace Azure.Monitor.Query.Metrics.Models.Models
 {
     /// <summary> The metrics result for a resource. </summary>
-    public partial class MetricsQueryResourcesResult : IJsonModel<MetricsQueryResourcesResult>
+    internal partial class MetricsQueryResourcesResult : IJsonModel<MetricsQueryResourcesResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

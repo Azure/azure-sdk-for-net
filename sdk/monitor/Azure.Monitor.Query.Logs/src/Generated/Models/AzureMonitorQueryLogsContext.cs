@@ -7,6 +7,7 @@
 
 using System.ClientModel.Primitives;
 using Azure.Monitor.Query.Logs.Models;
+using Azure.Monitor.Query.Logs.Models.Models;
 
 namespace Azure.Monitor.Query.Logs
 {

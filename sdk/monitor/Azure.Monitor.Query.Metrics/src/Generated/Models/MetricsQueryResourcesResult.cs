@@ -8,11 +8,12 @@
 using System;
 using System.Collections.Generic;
 using Azure.Monitor.Query.Metrics;
+using Azure.Monitor.Query.Metrics.Models;
 
-namespace Azure.Monitor.Query.Metrics.Models
+namespace Azure.Monitor.Query.Metrics.Models.Models
 {
     /// <summary> The metrics result for a resource. </summary>
-    public partial class MetricsQueryResourcesResult
+    internal partial class MetricsQueryResourcesResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

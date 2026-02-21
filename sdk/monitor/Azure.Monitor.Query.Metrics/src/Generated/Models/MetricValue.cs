@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Monitor.Query.Metrics.Models
+namespace Azure.Monitor.Query.Metrics.Models.Models
 {
     /// <summary> Represents a metric value. </summary>
     public partial class MetricValue

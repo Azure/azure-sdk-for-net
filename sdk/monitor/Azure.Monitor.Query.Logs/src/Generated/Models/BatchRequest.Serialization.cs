@@ -11,8 +11,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Monitor.Query.Logs;
+using Azure.Monitor.Query.Logs.Models;
 
-namespace Azure.Monitor.Query.Logs.Models
+namespace Azure.Monitor.Query.Logs.Models.Models
 {
     /// <summary> An array of requests. </summary>
     internal partial class BatchRequest : IJsonModel<BatchRequest>

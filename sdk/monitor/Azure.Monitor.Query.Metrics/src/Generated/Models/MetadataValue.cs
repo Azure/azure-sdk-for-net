@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Monitor.Query.Metrics.Models;
 
-namespace Azure.Monitor.Query.Metrics.Models
+namespace Azure.Monitor.Query.Metrics.Models.Models
 {
     /// <summary> Represents a metric metadata value. </summary>
     internal partial class MetadataValue
@@ -25,7 +26,7 @@ namespace Azure.Monitor.Query.Metrics.Models
         /// <param name="name"> The name of the metadata. </param>
         /// <param name="value"> The value of the metadata. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetadataValue(LocalizableString name, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MetadataValue(Metrics.Models.LocalizableString name, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Value = value;
@@ -33,7 +34,7 @@ namespace Azure.Monitor.Query.Metrics.Models
         }
 
         /// <summary> The name of the metadata. </summary>
-        public LocalizableString Name { get; }
+        public Metrics.Models.LocalizableString Name { get; }
 
         /// <summary> The value of the metadata. </summary>
         public string Value { get; }
