@@ -64,5 +64,34 @@ namespace TestProject
 
             Assert.AreEqual(0, diagnostics.Length);
         }
+
+        [Test]
+        public async Task MultipleContextsDifferentNamespacesShouldFail()
+        {
+            string source =
+$$"""
+using System.ClientModel.Primitives;
+
+namespace TestProject.A
+{
+    [ModelReaderWriterBuildable(typeof(int))]
+    public partial class LocalContext1 : ModelReaderWriterContext { }
+}
+
+namespace TestProject.B
+{
+    [ModelReaderWriterBuildable(typeof(int))]
+    public partial class LocalContext2 : ModelReaderWriterContext { }
+}
+""";
+
+            Compilation compilation = CompilationHelper.CreateCompilation(source);
+            var analyzer = new MultipleContextAnalyzer();
+            var diagnostics = await CompilationHelper.GetAnalyzerDiagnosticsAsync(compilation, analyzer);
+
+            Assert.AreEqual(2, diagnostics.Length);
+            Assert.AreEqual(ModelReaderWriterContextGenerator.DiagnosticDescriptors.MultipleContextsNotSupported.Id, diagnostics[0].Id);
+            Assert.AreEqual(ModelReaderWriterContextGenerator.DiagnosticDescriptors.MultipleContextsNotSupported.Id, diagnostics[1].Id);
+        }
     }
 }

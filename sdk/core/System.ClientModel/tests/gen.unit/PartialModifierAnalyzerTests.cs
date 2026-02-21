@@ -87,5 +87,29 @@ namespace TestProject
 
             Assert.AreEqual(0, diagnostics.Length);
         }
+
+        [Test]
+        public async Task IndirectInheritanceShouldRequirePartial()
+        {
+            string source =
+$$"""
+using System.ClientModel.Primitives;
+namespace TestProject
+{
+    public partial class IntermediateContext : ModelReaderWriterContext { }
+
+    [ModelReaderWriterBuildable(typeof(int))]
+    public class LocalContext : IntermediateContext { }
+}
+""";
+            Compilation compilation = CompilationHelper.CreateCompilation(source);
+            var analyzer = new PartialModifierAnalyzer();
+            var diagnostics = await CompilationHelper.GetAnalyzerDiagnosticsAsync(compilation, analyzer);
+
+            Assert.AreEqual(1, diagnostics.Length);
+            Assert.AreEqual(
+                ModelReaderWriterContextGenerator.DiagnosticDescriptors.ContextMustBePartial.Id,
+                diagnostics[0].Id);
+        }
     }
 }

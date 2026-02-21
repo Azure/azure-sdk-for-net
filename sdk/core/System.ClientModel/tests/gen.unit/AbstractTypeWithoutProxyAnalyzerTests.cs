@@ -75,5 +75,71 @@ namespace TestProject
 
             Assert.AreEqual(0, diagnostics.Length);
         }
+
+        [Test]
+        public async Task UnboundGenericTypeShouldNotReport()
+        {
+            string source =
+$$"""
+using System.ClientModel.Primitives;
+namespace TestProject
+{
+    [ModelReaderWriterBuildable(typeof(Foo<>))]
+    public partial class LocalContext : ModelReaderWriterContext { }
+
+    public abstract class Foo<T> { }
+}
+""";
+            Compilation compilation = CompilationHelper.CreateCompilation(source);
+            var analyzer = new AbstractTypeWithoutProxyAnalyzer();
+            var diagnostics = await CompilationHelper.GetAnalyzerDiagnosticsAsync(compilation, analyzer);
+
+            Assert.AreEqual(0, diagnostics.Length);
+        }
+
+        [Test]
+        public async Task AbstractClosedGenericWithoutProxyShouldFail()
+        {
+            string source =
+$$"""
+using System.ClientModel.Primitives;
+namespace TestProject
+{
+    [ModelReaderWriterBuildable(typeof(Foo<int>))]
+    public partial class LocalContext : ModelReaderWriterContext { }
+
+    public abstract class Foo<T> { }
+}
+""";
+            Compilation compilation = CompilationHelper.CreateCompilation(source);
+            var analyzer = new AbstractTypeWithoutProxyAnalyzer();
+            var diagnostics = await CompilationHelper.GetAnalyzerDiagnosticsAsync(compilation, analyzer);
+
+            Assert.AreEqual(1, diagnostics.Length);
+            Assert.AreEqual(
+                ModelReaderWriterContextGenerator.DiagnosticDescriptors.AbstractTypeWithoutProxy.Id,
+                diagnostics[0].Id);
+        }
+
+        [Test]
+        public async Task InterfaceTypeShouldNotReport()
+        {
+            string source =
+$$"""
+using System.ClientModel.Primitives;
+namespace TestProject
+{
+    [ModelReaderWriterBuildable(typeof(IMyInterface))]
+    public partial class LocalContext : ModelReaderWriterContext { }
+
+    public interface IMyInterface { }
+}
+""";
+            Compilation compilation = CompilationHelper.CreateCompilation(source);
+            var analyzer = new AbstractTypeWithoutProxyAnalyzer();
+            var diagnostics = await CompilationHelper.GetAnalyzerDiagnosticsAsync(compilation, analyzer);
+
+            Assert.AreEqual(0, diagnostics.Length);
+        }
     }
 }

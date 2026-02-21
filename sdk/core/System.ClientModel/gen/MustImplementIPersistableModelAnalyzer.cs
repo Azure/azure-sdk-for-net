@@ -52,6 +52,10 @@ public sealed class MustImplementIPersistableModelAnalyzer : DiagnosticAnalyzer
                 if (attr.ConstructorArguments.Length == 1 &&
                     attr.ConstructorArguments[0] is { Kind: TypedConstantKind.Type, Value: ITypeSymbol outerModel })
                 {
+                    // Skip unbound generic types like typeof(DataFactoryElement<>)
+                    if (outerModel is INamedTypeSymbol { IsUnboundGenericType: true })
+                        continue;
+
                     var modelType = GetModelType(outerModel);
                     if (modelType is null)
                     {
@@ -114,6 +118,8 @@ public sealed class MustImplementIPersistableModelAnalyzer : DiagnosticAnalyzer
             {
                 return GetInnermostElementType(namedType.TypeArguments[index]);
             }
+
+            return namedType;
         }
 
         return null;

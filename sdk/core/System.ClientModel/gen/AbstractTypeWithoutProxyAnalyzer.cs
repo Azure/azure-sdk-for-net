@@ -60,7 +60,8 @@ public sealed class AbstractTypeWithoutProxyAnalyzer : DiagnosticAnalyzer
                         Value: INamedTypeSymbol
                         {
                             TypeKind: TypeKind.Class,
-                            IsAbstract: true
+                            IsAbstract: true,
+                            IsUnboundGenericType: false
                         }
                         modelType
                     })

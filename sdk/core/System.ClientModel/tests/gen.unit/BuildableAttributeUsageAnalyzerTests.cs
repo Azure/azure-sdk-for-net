@@ -67,5 +67,26 @@ namespace TestProject
 
             Assert.AreEqual(0, diagnostics.Length);
         }
+
+        [Test]
+        public async Task AttributeOnIndirectSubclassShouldPass()
+        {
+            string source =
+$$"""
+using System.ClientModel.Primitives;
+namespace TestProject
+{
+    public partial class IntermediateContext : ModelReaderWriterContext { }
+
+    [ModelReaderWriterBuildable(typeof(int))]
+    public partial class LocalContext : IntermediateContext { }
+}
+""";
+            Compilation compilation = CompilationHelper.CreateCompilation(source);
+            var analyzer = new BuildableAttributeUsageAnalyzer();
+            var diagnostics = await CompilationHelper.GetAnalyzerDiagnosticsAsync(compilation, analyzer);
+
+            Assert.AreEqual(0, diagnostics.Length);
+        }
     }
 }

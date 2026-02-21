@@ -641,5 +641,132 @@ namespace TestProject
 
             Assert.AreEqual(0, diagnostics.Length);
         }
+
+        [Test]
+        public async Task UnboundGenericTypeShouldNotReport()
+        {
+            string source =
+$$"""
+using System.ClientModel.Primitives;
+namespace TestProject
+{
+    [ModelReaderWriterBuildable(typeof(Foo<>))]
+    public partial class LocalContext : ModelReaderWriterContext { }
+
+    public class Foo<T> { }
+}
+""";
+            Compilation compilation = CompilationHelper.CreateCompilation(source);
+            var analyzer = new MustImplementIPersistableModelAnalyzer();
+            var diagnostics = await CompilationHelper.GetAnalyzerDiagnosticsAsync(compilation, analyzer);
+
+            Assert.AreEqual(0, diagnostics.Length);
+        }
+
+        [Test]
+        public async Task ClosedGenericNonPersistableShouldReport()
+        {
+            string source =
+$$"""
+using System.ClientModel.Primitives;
+namespace TestProject
+{
+    [ModelReaderWriterBuildable(typeof(Foo<int>))]
+    public partial class LocalContext : ModelReaderWriterContext { }
+
+    public class Foo<T> { }
+}
+""";
+            Compilation compilation = CompilationHelper.CreateCompilation(source);
+            var analyzer = new MustImplementIPersistableModelAnalyzer();
+            var diagnostics = await CompilationHelper.GetAnalyzerDiagnosticsAsync(compilation, analyzer);
+
+            Assert.AreEqual(1, diagnostics.Length);
+            Assert.AreEqual(
+                ModelReaderWriterContextGenerator.DiagnosticDescriptors.MustImplementIPersistableModel.Id,
+                diagnostics[0].Id);
+        }
+
+        [Test]
+        public async Task ClosedGenericPersistableShouldNotReport()
+        {
+            string source =
+$$"""
+using System;
+using System.ClientModel.Primitives;
+namespace TestProject
+{
+    [ModelReaderWriterBuildable(typeof(Foo<int>))]
+    public partial class LocalContext : ModelReaderWriterContext { }
+
+    public class Foo<T> : IPersistableModel<Foo<T>>
+    {
+        public Foo<T> Create(BinaryData data, ModelReaderWriterOptions options) => default!;
+        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
+}
+""";
+            Compilation compilation = CompilationHelper.CreateCompilation(source);
+            var analyzer = new MustImplementIPersistableModelAnalyzer();
+            var diagnostics = await CompilationHelper.GetAnalyzerDiagnosticsAsync(compilation, analyzer);
+
+            Assert.AreEqual(0, diagnostics.Length);
+        }
+
+        [Test]
+        public async Task StructWithoutIPersistableModelShouldReport()
+        {
+            string source =
+$$"""
+using System.ClientModel.Primitives;
+namespace TestProject
+{
+    [ModelReaderWriterBuildable(typeof(MyStruct))]
+    public partial class LocalContext : ModelReaderWriterContext { }
+
+    public struct MyStruct { }
+}
+""";
+            Compilation compilation = CompilationHelper.CreateCompilation(source);
+            var analyzer = new MustImplementIPersistableModelAnalyzer();
+            var diagnostics = await CompilationHelper.GetAnalyzerDiagnosticsAsync(compilation, analyzer);
+
+            Assert.AreEqual(1, diagnostics.Length);
+            Assert.AreEqual(
+                ModelReaderWriterContextGenerator.DiagnosticDescriptors.MustImplementIPersistableModel.Id,
+                diagnostics[0].Id);
+        }
+
+        [Test]
+        public async Task MultipleAttributesMixedShouldReportOnlyBadOnes()
+        {
+            string source =
+$$"""
+using System;
+using System.ClientModel.Primitives;
+namespace TestProject
+{
+    [ModelReaderWriterBuildable(typeof(GoodModel))]
+    [ModelReaderWriterBuildable(typeof(BadModel))]
+    public partial class LocalContext : ModelReaderWriterContext { }
+
+    public class GoodModel : IPersistableModel<GoodModel>
+    {
+        public GoodModel Create(BinaryData data, ModelReaderWriterOptions options) => new GoodModel();
+        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
+
+    public class BadModel { }
+}
+""";
+            Compilation compilation = CompilationHelper.CreateCompilation(source);
+            var analyzer = new MustImplementIPersistableModelAnalyzer();
+            var diagnostics = await CompilationHelper.GetAnalyzerDiagnosticsAsync(compilation, analyzer);
+
+            Assert.AreEqual(1, diagnostics.Length);
+            Assert.IsTrue(diagnostics[0].GetMessage().Contains("BadModel"));
+        }
     }
 }

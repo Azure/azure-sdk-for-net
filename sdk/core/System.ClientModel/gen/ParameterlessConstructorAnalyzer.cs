@@ -56,6 +56,10 @@ public sealed class ParameterlessConstructorAnalyzer : DiagnosticAnalyzer
                     attr.ConstructorArguments[0].Kind == TypedConstantKind.Type &&
                     attr.ConstructorArguments[0].Value is INamedTypeSymbol modelType)
                 {
+                    // Skip unbound generic types like typeof(DataFactoryElement<>)
+                    if (modelType.IsUnboundGenericType)
+                        continue;
+
                     if (modelType.TypeKind == TypeKind.Class)
                     {
                         // Only report for types from the current compilation
