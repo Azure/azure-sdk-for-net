@@ -178,7 +178,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var numberField = ContentUnderstandingModelFactory.NumberField(value: 123.45);
             var booleanField = ContentUnderstandingModelFactory.BooleanField(value: true);
             var dateField = ContentUnderstandingModelFactory.DateTimeOffsetField(value: DateTimeOffset.Now);
-            var timeField = ContentUnderstandingModelFactory.TimeField(valueTime: TimeSpan.FromHours(14));
+            var timeField = ContentUnderstandingModelFactory.TimeField(value: TimeSpan.FromHours(14));
             var valueObject = new Dictionary<string, ContentField>
             {
                 ["StringField"] = stringField,
