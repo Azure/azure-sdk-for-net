@@ -136,13 +136,9 @@ public sealed class CopilotService : IAsyncDisposable
 
                             if (!absoluteFilePath.StartsWith(normalizedProjectPath, StringComparison.Ordinal))
                             {
-                                logger.LogWarning("Denying {ToolName} - path outside project: {FilePath}",
-                                    input.ToolName, filePath);
-                                return new PreToolUseHookOutput
-                                {
-                                    PermissionDecision = "deny",
-                                    AdditionalContext = $"Access denied: {filePath} is outside project directory"
-                                };
+                                logger.LogError("Copilot attempted to access a file at {filePath} outside the allowed project directory. ", filePath);
+                                throw new InvalidOperationException(
+                                    $"Security violation: {input.ToolName} attempted to access '{filePath}' which is outside the project directory '{normalizedProjectPath}'. Aborting execution.");
                             }
                         }
                         catch (Exception)
