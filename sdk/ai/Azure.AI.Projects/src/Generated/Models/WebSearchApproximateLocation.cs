@@ -19,24 +19,21 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Initializes a new instance of <see cref="WebSearchApproximateLocation"/>. </summary>
-        /// <param name="type"> The type of location approximation. Always `approximate`. </param>
         /// <param name="country"></param>
         /// <param name="region"></param>
         /// <param name="city"></param>
         /// <param name="timezone"></param>
+        /// <param name="type"> The type of location approximation. Always `approximate`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebSearchApproximateLocation(WebSearchApproximateLocationType? @type, string country, string region, string city, string timezone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebSearchApproximateLocation(string country, string region, string city, string timezone, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
             Country = country;
             Region = region;
             City = city;
             Timezone = timezone;
+            Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The type of location approximation. Always `approximate`. </summary>
-        public WebSearchApproximateLocationType? Type { get; set; }
 
         /// <summary> Gets or sets the Country. </summary>
         public string Country { get; set; }
@@ -49,5 +46,8 @@ namespace Azure.AI.Projects
 
         /// <summary> Gets or sets the Timezone. </summary>
         public string Timezone { get; set; }
+
+        /// <summary> The type of location approximation. Always `approximate`. </summary>
+        public string Type { get; } = "approximate";
     }
 }

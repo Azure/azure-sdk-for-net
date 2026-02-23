@@ -16,8 +16,8 @@ using OpenAI;
 namespace Azure.AI.Projects;
 
 [CodeGenType("AIProjectAgentsOperations")]
-[CodeGenSuppress("CreateAgent", typeof(string), typeof(InternalAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(BinaryData), typeof(CancellationToken))]
-[CodeGenSuppress("CreateAgentAsync", typeof(string), typeof(InternalAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(BinaryData), typeof(CancellationToken))]
+[CodeGenSuppress("CreateAgent", typeof(string), typeof(InternalAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentDefinitionFeatureKeys), typeof(CancellationToken))]
+[CodeGenSuppress("CreateAgentAsync", typeof(string), typeof(InternalAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentDefinitionFeatureKeys), typeof(CancellationToken))]
 [CodeGenSuppress("CreateAgentFromManifest", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("CreateAgentFromManifestAsync", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("CreateAgentVersionFromManifest", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
@@ -29,10 +29,10 @@ namespace Azure.AI.Projects;
 [CodeGenSuppress("GetAgentVersionsAsync", typeof(AgentKind), typeof(int?), typeof(AgentListOrder), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetAgentVersionsAsync", typeof(string), typeof(int?), typeof(AgentListOrder), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetInternalAgentResponsesClient")]
-[CodeGenSuppress("CreateAgentVersion", typeof(string), typeof(InternalAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(BinaryData), typeof(CancellationToken))]
-[CodeGenSuppress("CreateAgentVersionAsync", typeof(string), typeof(InternalAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(BinaryData), typeof(CancellationToken))]
-[CodeGenSuppress("UpdateAgent", typeof(string), typeof(InternalAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(BinaryData), typeof(CancellationToken))]
-[CodeGenSuppress("UpdateAgentAsync", typeof(string), typeof(InternalAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(BinaryData), typeof(CancellationToken))]
+[CodeGenSuppress("CreateAgentVersion", typeof(string), typeof(InternalAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentDefinitionFeatureKeys), typeof(CancellationToken))]
+[CodeGenSuppress("CreateAgentVersionAsync", typeof(string), typeof(InternalAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentDefinitionFeatureKeys), typeof(CancellationToken))]
+[CodeGenSuppress("UpdateAgent", typeof(string), typeof(InternalAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentDefinitionFeatureKeys), typeof(CancellationToken))]
+[CodeGenSuppress("UpdateAgentAsync", typeof(string), typeof(InternalAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentDefinitionFeatureKeys), typeof(CancellationToken))]
 [CodeGenSuppress("UpdateAgentFromManifest", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("UpdateAgentFromManifestAsync", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
 public partial class AIProjectAgentsOperations
@@ -73,7 +73,7 @@ public partial class AIProjectAgentsOperations
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="options"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual ClientResult<AgentVersion> CreateAgentVersion(string agentName, AgentVersionCreationOptions options, BinaryData foundryFeatures = null, CancellationToken cancellationToken = default)
+    public virtual ClientResult<AgentVersion> CreateAgentVersion(string agentName, AgentVersionCreationOptions options, string foundryFeatures = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNull(options, nameof(options));
@@ -94,7 +94,7 @@ public partial class AIProjectAgentsOperations
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="options"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual async Task<ClientResult<AgentVersion>> CreateAgentVersionAsync(string agentName, AgentVersionCreationOptions options = null, BinaryData foundryFeatures = null, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<AgentVersion>> CreateAgentVersionAsync(string agentName, AgentVersionCreationOptions options = null, string foundryFeatures = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNull(options, nameof(options));
