@@ -141,6 +141,10 @@ public sealed class CopilotService : IAsyncDisposable
                                     $"Security violation: {input.ToolName} attempted to access '{filePath}' which is outside the project directory '{normalizedProjectPath}'. Aborting execution.");
                             }
                         }
+                        catch (InvalidOperationException)
+                        {
+                            throw;
+                        }
                         catch (Exception)
                         {
                             logger.LogWarning("Denying {ToolName} - path validation failed: {FilePath}",
