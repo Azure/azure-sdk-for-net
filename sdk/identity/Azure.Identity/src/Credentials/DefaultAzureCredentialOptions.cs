@@ -594,7 +594,7 @@ namespace Azure.Identity
                 dacClone.AzurePipelinesClientId = AzurePipelinesClientId;
                 dacClone.AzurePipelinesServiceConnectionId = AzurePipelinesServiceConnectionId;
                 dacClone.AzurePipelinesSystemAccessToken = AzurePipelinesSystemAccessToken;
-                dacClone.TokenCachePersistenceOptions = TokenCachePersistenceOptions;
+                dacClone.TokenCachePersistenceOptions = TokenCachePersistenceOptions?.Clone();
                 dacClone.DisableAutomaticAuthentication = DisableAutomaticAuthentication;
                 dacClone.LoginHint = LoginHint;
                 if (BrowserCustomization != null)
