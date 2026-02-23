@@ -73,7 +73,7 @@ namespace Azure.Generator.Providers
                 // Pre-collect the effective (non-credential, non-options) parameter types for credential constructors
                 // to avoid generating duplicate extension methods that favor non-credential versions.
                 var comparer = new CSharpType.CSharpTypeIgnoreNullableComparer();
-                var credentialParamSets = new List<CSharpType[]>();
+                var credentialParamSets = new HashSet<CSharpType>(comparer);
                 foreach (var ctor in client.CanonicalView.Constructors)
                 {
                     if (!ctor.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public))
@@ -85,7 +85,8 @@ namespace Azure.Generator.Providers
                         var credType = ctor.Signature.Parameters[^2].Type;
                         if (comparer.Equals(credType, typeof(TokenCredential)) || comparer.Equals(credType, typeof(AzureKeyCredential)))
                         {
-                            credentialParamSets.Add(ctor.Signature.Parameters.SkipLast(2).Select(p => p.Type).ToArray());
+                            foreach (var param in ctor.Signature.Parameters.SkipLast(2))
+                                credentialParamSets.Add(param.Type);
                         }
                     }
                 }
@@ -113,10 +114,8 @@ namespace Azure.Generator.Providers
                     // as an existing TokenCredential constructor. Prefer the credential version.
                     if (!isTokenCredential)
                     {
-                        var nonCredParams = constructor.Signature.Parameters.SkipLast(1).Select(p => p.Type).ToArray();
-                        if (credentialParamSets.Any(credParams =>
-                            credParams.Length == nonCredParams.Length &&
-                            credParams.Zip(nonCredParams).All(pair => comparer.Equals(pair.First, pair.Second))))
+                        var nonCredParams = constructor.Signature.Parameters.SkipLast(1).ToArray();
+                        if (nonCredParams.Length > 0 && nonCredParams.All(p => credentialParamSets.Contains(p.Type)))
                         {
                             continue;
                         }
