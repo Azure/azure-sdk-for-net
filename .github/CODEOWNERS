@@ -451,10 +451,10 @@
 # ServiceOwners:                                                   @jpalvarezl @trrwilson
 
 # PRLabel: %Planetary Computer
-/sdk/planetarycomputer/Azure.Analytics.PlanetaryComputer/          @chahibi @mandarinamdar
+/sdk/planetarycomputer/Azure.Analytics.PlanetaryComputer/          @chahibi @karthick-rn @mandarinamdar
 
 # ServiceLabel: %Planetary Computer
-# ServiceOwners:                                                   @chahibi @mandarinamdar
+# ServiceOwners:                                                   @chahibi @karthick-rn @mandarinamdar
 
 # PRLabel: %Provisioning
 /sdk/provisioning/                                                 @ArcturusZhang @ArthurMa1978 @m-nash
@@ -1105,10 +1105,10 @@
 /sdk/pineconevectordb/Azure.ResourceManager.*/                     @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Planetary Computer
-/sdk/planetarycomputer/Azure.ResourceManager.*/                    @chahibi @mandarinamdar
+/sdk/planetarycomputer/Azure.ResourceManager.*/                    @chahibi @karthick-rn @mandarinamdar
 
 # ServiceLabel: %Planetary Computer %Mgmt
-# ServiceOwners:                                                   @chahibi @mandarinamdar
+# ServiceOwners:                                                   @chahibi @karthick-rn @mandarinamdar
 
 # PRLabel: %PureStorage
 /sdk/purestorageblock/Azure.ResourceManager.*/                     @ArthurMa1978 @ArcturusZhang
