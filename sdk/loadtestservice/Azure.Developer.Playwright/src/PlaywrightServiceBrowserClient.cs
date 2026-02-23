@@ -348,7 +348,7 @@ public class PlaywrightServiceBrowserClient : IDisposable
                 content: content,
                 authorization: $"Bearer {authToken}",
                 xCorrelationId: Guid.NewGuid().ToString(),
-                context: cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null
+                context: new RequestContext { CancellationToken = cancellationToken }
             ).ConfigureAwait(false);
             _logger?.LogInformation("Test run created successfully.");
         }
