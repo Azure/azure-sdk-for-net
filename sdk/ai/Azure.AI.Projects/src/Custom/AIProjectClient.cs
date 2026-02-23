@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Azure.AI.Projects.OpenAI;
+using Azure.AI.Projects.Telemetry;
+using Azure.Core;
 
 #pragma warning disable AZC0007
 
@@ -63,7 +65,18 @@ namespace Azure.AI.Projects
             PipelinePolicyHelpers.OpenAI.AddErrorTransformPolicy(options);
             PipelinePolicyHelpers.OpenAI.AddAzureFinetuningParityPolicy(options);
 
-            Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new BearerTokenPolicy(_tokenProvider, _flows) }, Array.Empty<PipelinePolicy>());
+            bool enableTraceContextPropagation = AppContextSwitchHelper.GetConfigValue(
+                OpenTelemetryConstants.TraceContextPropagationSwitch,
+                OpenTelemetryConstants.TraceContextPropagationEnvironmentVariable);
+
+            PipelinePolicy[] perCallPolicies = enableTraceContextPropagation
+                ? new PipelinePolicy[] { new TraceContextPropagationPolicy(
+                    includeBaggage: AppContextSwitchHelper.GetConfigValue(
+                        OpenTelemetryConstants.BaggagePropagationSwitch,
+                        OpenTelemetryConstants.BaggagePropagationEnvironmentVariable)) }
+                : Array.Empty<PipelinePolicy>();
+
+            Pipeline = ClientPipeline.Create(options, perCallPolicies, new PipelinePolicy[] { new BearerTokenPolicy(_tokenProvider, _flows) }, Array.Empty<PipelinePolicy>());
 
             _cacheManager = new ClientConnectionCacheManager(_endpoint, Pipeline, tokenProvider);
         }

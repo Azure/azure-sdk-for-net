@@ -101,5 +101,21 @@ namespace Azure.AI.Projects.Telemetry
         // experimentation.
         public const string UseMessageEventsSwitch = "Azure.Experimental.UseMessageEvents";
         public const string UseMessageEventsEnvironmentVariable = "AZURE_EXPERIMENTAL_TRACING_GEN_AI_USE_MESSAGE_EVENTS";
+
+        // Trace context propagation configuration.
+        // When enabled, W3C traceparent/tracestate headers are injected into outgoing
+        // HTTP requests so that server-side spans can be correlated with client-side spans.
+        // Requires W3C trace ID format (Activity.DefaultIdFormat = ActivityIdFormat.W3C).
+        // On .NET Framework, this must be set explicitly; the OpenTelemetry SDK sets it
+        // automatically when a TracerProvider is created.
+        public const string TraceContextPropagationSwitch = "Azure.Experimental.TraceContextPropagation";
+        public const string TraceContextPropagationEnvironmentVariable = "AZURE_TRACING_GEN_AI_ENABLE_TRACE_CONTEXT_PROPAGATION";
+
+        // Baggage propagation configuration.
+        // When enabled (and trace context propagation is also enabled), the W3C baggage
+        // header is included in outgoing HTTP requests.
+        // Note: Baggage may contain sensitive application data.
+        public const string BaggagePropagationSwitch = "Azure.Experimental.TraceContextBaggagePropagation";
+        public const string BaggagePropagationEnvironmentVariable = "AZURE_TRACING_GEN_AI_TRACE_CONTEXT_PROPAGATION_INCLUDE_BAGGAGE";
     }
 }
