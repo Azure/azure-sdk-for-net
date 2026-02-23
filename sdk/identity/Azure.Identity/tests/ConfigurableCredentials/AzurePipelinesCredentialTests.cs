@@ -139,10 +139,10 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.AzurePipelines
             return instrumented;
         }
 
-        public override async Task AzurePipelineCredentialWorksInChainedCredential()
+        public override Task AzurePipelineCredentialWorksInChainedCredential()
         {
             Assert.Ignore("Chained credential is not supported by the configurable credential path.");
-            await Task.CompletedTask;
+            return Task.CompletedTask;
         }
 
         protected override AzurePipelinesCredential CreateCredentialWithTransport(string tenantId, string clientId, string serviceConnectionId, string systemAccessToken, MockTransport mockTransport, string oidcRequestUri = null)
