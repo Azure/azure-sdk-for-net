@@ -193,13 +193,32 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.AreEqual("1-3", value);
         }
 
+        #endregion
+
+        #region AnalysisInput.InputRange (ContentRange? property)
+
         [Test]
-        public void ImplicitConversion_ContentRangeToString_AssignableToInputRange()
+        public void AnalysisInput_InputRange_AcceptsContentRange()
         {
-            // ContentRange implicitly converts to string, which is the type of AnalysisInput.InputRange
-            ContentRange range = ContentRange.Pages(1, 3);
-            string inputRange = range;
-            Assert.AreEqual("1-3", inputRange);
+            var input = new AnalysisInput();
+            input.InputRange = ContentRange.Pages(1, 3);
+            Assert.AreEqual("1-3", input.InputRange?.ToString());
+        }
+
+        [Test]
+        public void AnalysisInput_InputRange_NullByDefault()
+        {
+            var input = new AnalysisInput();
+            Assert.IsNull(input.InputRange);
+        }
+
+        [Test]
+        public void AnalysisInput_InputRange_RoundTripsContentRange()
+        {
+            var input = new AnalysisInput();
+            var range = ContentRange.Combine(ContentRange.Pages(1, 3), ContentRange.Page(5));
+            input.InputRange = range;
+            Assert.AreEqual(range, input.InputRange);
         }
 
         #endregion

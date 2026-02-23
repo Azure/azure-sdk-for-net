@@ -4,7 +4,7 @@ namespace Azure.AI.ContentUnderstanding
     {
         public AnalysisInput() { }
         public System.BinaryData Data { get { throw null; } set { } }
-        public string InputRange { get { throw null; } set { } }
+        public Azure.AI.ContentUnderstanding.ContentRange? InputRange { get { throw null; } set { } }
         public string MimeType { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
@@ -450,7 +450,7 @@ namespace Azure.AI.ContentUnderstanding
     }
     public static partial class ContentUnderstandingModelFactory
     {
-        public static Azure.AI.ContentUnderstanding.AnalysisInput AnalysisInput(System.Uri uri = null, System.BinaryData data = null, string name = null, string mimeType = null, string inputRange = null) { throw null; }
+        public static Azure.AI.ContentUnderstanding.AnalysisInput AnalysisInput(System.Uri uri = null, System.BinaryData data = null, string name = null, string mimeType = null, string inputRangeValue = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.AnalysisResult AnalysisResult(string analyzerId = null, string apiVersion = null, System.DateTimeOffset? createdAt = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResponseError> warnings = null, string stringEncoding = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.MediaContent> contents = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.ArrayField ArrayField(System.Collections.Generic.IList<Azure.AI.ContentUnderstanding.ContentField>? value = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.ContentSpan>? spans = null, float? confidence = default(float?), string? source = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.AudioVisualContent AudioVisualContent(string mimeType = null, string analyzerId = null, string category = null, string path = null, string markdown = null, System.Collections.Generic.IDictionary<string, Azure.AI.ContentUnderstanding.ContentField> fields = null, long startTimeMs = (long)0, long endTimeMs = (long)0, int? width = default(int?), int? height = default(int?), System.Collections.Generic.IEnumerable<long> cameraShotTimesMs = null, System.Collections.Generic.IEnumerable<long> keyFrameTimesMs = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.TranscriptPhrase> transcriptPhrases = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.AudioVisualContentSegment> segments = null) { throw null; }
