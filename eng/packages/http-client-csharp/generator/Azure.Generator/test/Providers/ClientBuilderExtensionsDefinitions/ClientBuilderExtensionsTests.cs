@@ -111,7 +111,7 @@ namespace Azure.Generator.Tests.Providers.ClientBuilderExtensionsDefinitions
         }
 
         [Test]
-        public void DoesNotGenerateDuplicateExtensionMethodWhenNonCredentialConstructorMatchesCredentialParams()
+        public void SkipsDuplicateNonCredentialExtension()
         {
             var inputClient = InputFactory.Client("TestClient", "Samples", "");
             var plugin = MockHelpers.LoadMockGenerator(
