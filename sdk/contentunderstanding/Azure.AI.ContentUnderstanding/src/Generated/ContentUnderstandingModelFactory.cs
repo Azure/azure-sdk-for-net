@@ -20,16 +20,16 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="data"> Raw image bytes. Provide bytes-like object; do not base64-encode. Only one of url or data should be specified. </param>
         /// <param name="name"> Name of the input. </param>
         /// <param name="mimeType"> The MIME type of the input content.  Ex. application/pdf, image/jpeg, etc. </param>
-        /// <param name="inputRangeValue"> Range of the input to analyze (ex. `1-3,5,9-`).  Document content uses 1-based page numbers, while audio visual content uses integer milliseconds. </param>
+        /// <param name="contentRangeValue"> Range of the input to analyze (ex. `1-3,5,9-`).  Document content uses 1-based page numbers, while audio visual content uses integer milliseconds. </param>
         /// <returns> A new <see cref="ContentUnderstanding.AnalysisInput"/> instance for mocking. </returns>
-        public static AnalysisInput AnalysisInput(Uri uri = default, BinaryData data = default, string name = default, string mimeType = default, string inputRangeValue = default)
+        public static AnalysisInput AnalysisInput(Uri uri = default, BinaryData data = default, string name = default, string mimeType = default, string contentRangeValue = default)
         {
             return new AnalysisInput(
                 uri,
                 data,
                 name,
                 mimeType,
-                inputRangeValue,
+                contentRangeValue,
                 additionalBinaryDataProperties: null);
         }
 

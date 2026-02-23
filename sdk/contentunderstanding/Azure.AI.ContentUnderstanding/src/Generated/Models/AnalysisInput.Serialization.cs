@@ -93,10 +93,10 @@ namespace Azure.AI.ContentUnderstanding
                 writer.WritePropertyName("mimeType"u8);
                 writer.WriteStringValue(MimeType);
             }
-            if (Optional.IsDefined(InputRangeValue))
+            if (Optional.IsDefined(ContentRangeValue))
             {
                 writer.WritePropertyName("range"u8);
-                writer.WriteStringValue(InputRangeValue);
+                writer.WriteStringValue(ContentRangeValue);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -144,7 +144,7 @@ namespace Azure.AI.ContentUnderstanding
             BinaryData data = default;
             string name = default;
             string mimeType = default;
-            string inputRangeValue = default;
+            string contentRangeValue = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -178,7 +178,7 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("range"u8))
                 {
-                    inputRangeValue = prop.Value.GetString();
+                    contentRangeValue = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -191,7 +191,7 @@ namespace Azure.AI.ContentUnderstanding
                 data,
                 name,
                 mimeType,
-                inputRangeValue,
+                contentRangeValue,
                 additionalBinaryDataProperties);
         }
     }
