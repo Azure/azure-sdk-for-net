@@ -77,16 +77,22 @@ namespace Azure.Generator.Providers
                 foreach (var ctor in client.CanonicalView.Constructors)
                 {
                     if (!ctor.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public))
+                    {
                         continue;
+                    }
                     if (ctor.Signature.Parameters.LastOrDefault()?.Type.Name.Equals(client.ClientOptionsParameter.Type.Name) != true)
+                    {
                         continue;
+                    }
                     if (ctor.Signature.Parameters.Count >= 2)
                     {
                         var credType = ctor.Signature.Parameters[^2].Type;
                         if (comparer.Equals(credType, typeof(TokenCredential)) || comparer.Equals(credType, typeof(AzureKeyCredential)))
                         {
                             foreach (var param in ctor.Signature.Parameters.SkipLast(2))
+                            {
                                 credentialParamSets.Add(param.Type);
+                            }
                         }
                     }
                 }
