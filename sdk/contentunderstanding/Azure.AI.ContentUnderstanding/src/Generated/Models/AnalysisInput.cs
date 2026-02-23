@@ -64,6 +64,5 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary> The MIME type of the input content.  Ex. application/pdf, image/jpeg, etc. </summary>
         public string MimeType { get; set; }
-
     }
 }
