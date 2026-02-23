@@ -447,7 +447,7 @@ namespace Azure.Identity
 
             if (Options.TokenCachePersistenceOptions != null)
             {
-                options.TokenCachePersistenceOptions = Options.TokenCachePersistenceOptions.Clone();
+                options.TokenCachePersistenceOptions = Options.TokenCachePersistenceOptions;
             }
 
             var tenantId = Options.TenantId;

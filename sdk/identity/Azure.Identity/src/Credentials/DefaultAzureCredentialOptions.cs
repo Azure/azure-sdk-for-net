@@ -589,7 +589,7 @@ namespace Azure.Identity
                 }
                 dacClone.AuthenticationRecord = AuthenticationRecord;
                 dacClone.RedirectUri = RedirectUri;
-                dacClone.TokenCachePersistenceOptions = TokenCachePersistenceOptions?.Clone();
+                dacClone.TokenCachePersistenceOptions = TokenCachePersistenceOptions;
                 dacClone.UseDefaultBrokerAccount = UseDefaultBrokerAccount;
                 dacClone.IsLegacyMsaPassthroughEnabled = IsLegacyMsaPassthroughEnabled;
             }
