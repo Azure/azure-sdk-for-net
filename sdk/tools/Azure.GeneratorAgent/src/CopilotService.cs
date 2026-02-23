@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Text;
+using System.Text.Json;
 using GitHub.Copilot.SDK;
 using Microsoft.Extensions.Logging;
 
@@ -63,6 +64,10 @@ public sealed class CopilotService : IAsyncDisposable
 
             await client.StartAsync().ConfigureAwait(false);
 
+            var normalizedProjectPath = Path.GetFullPath(projectPath);
+            if (!normalizedProjectPath.EndsWith(Path.DirectorySeparatorChar))
+                normalizedProjectPath += Path.DirectorySeparatorChar;
+
             session = await client.CreateSessionAsync(new SessionConfig
             {
                 Model = settings.Model,
@@ -74,10 +79,89 @@ public sealed class CopilotService : IAsyncDisposable
                 AvailableTools = ["powershell", "read_powershell", "view", "edit", "create", "grep", "glob"],
                 InfiniteSessions = new InfiniteSessionConfig { Enabled = false },
                 Streaming = true,
-                OnPermissionRequest = async (request, invocation) =>
+                Hooks = new SessionHooks
                 {
-                    logger.LogDebug("Approving permission request: Kind={Kind}", request.Kind);
-                    return new PermissionRequestResult { Kind = "approved" };
+                    OnPreToolUse = async (input, invocation) =>
+                    {
+                        if (input.ToolName?.ToLowerInvariant() is not ("edit" or "create"))
+                        {
+                            return new PreToolUseHookOutput
+                            {
+                                PermissionDecision = "allow",
+                                ModifiedArgs = input.ToolArgs
+                            };
+                        }
+
+                        // Extract file path from tool arguments
+                        string? filePath = null;
+                        try
+                        {
+                            var args = input.ToolArgs?.ToString();
+                            if (!string.IsNullOrEmpty(args))
+                            {
+                                using var document = JsonDocument.Parse(args);
+                                var root = document.RootElement;
+                                if (root.TryGetProperty("path", out var pathElement) && pathElement.ValueKind == JsonValueKind.String)
+                                {
+                                    filePath = pathElement.GetString();
+                                }
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            logger.LogWarning("Denying {ToolName} - failed to parse arguments", input.ToolName);
+                            return new PreToolUseHookOutput
+                            {
+                                PermissionDecision = "deny",
+                                AdditionalContext = "Failed to parse tool arguments"
+                            };
+                        }
+
+                        if (string.IsNullOrEmpty(filePath))
+                        {
+                            logger.LogWarning("Denying {ToolName} - no file path found", input.ToolName);
+                            return new PreToolUseHookOutput
+                            {
+                                PermissionDecision = "deny",
+                                AdditionalContext = "No file path found in arguments"
+                            };
+                        }
+
+                        // Validate file path is within project directory
+                        try
+                        {
+                            var absoluteFilePath = Path.IsPathFullyQualified(filePath)
+                                ? Path.GetFullPath(filePath)
+                                : Path.GetFullPath(Path.Combine(projectPath, filePath));
+
+                            if (!absoluteFilePath.StartsWith(normalizedProjectPath, StringComparison.Ordinal))
+                            {
+                                logger.LogWarning("Denying {ToolName} - path outside project: {FilePath}",
+                                    input.ToolName, filePath);
+                                return new PreToolUseHookOutput
+                                {
+                                    PermissionDecision = "deny",
+                                    AdditionalContext = $"Access denied: {filePath} is outside project directory"
+                                };
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            logger.LogWarning("Denying {ToolName} - path validation failed: {FilePath}",
+                                input.ToolName, filePath);
+                            return new PreToolUseHookOutput
+                            {
+                                PermissionDecision = "deny",
+                                AdditionalContext = "Path validation failed"
+                            };
+                        }
+
+                        return new PreToolUseHookOutput
+                        {
+                            PermissionDecision = "allow",
+                            ModifiedArgs = input.ToolArgs
+                        };
+                    }
                 }
             }).ConfigureAwait(false);
 
