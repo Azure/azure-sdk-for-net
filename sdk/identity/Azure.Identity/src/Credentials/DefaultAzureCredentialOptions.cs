@@ -588,6 +588,10 @@ namespace Azure.Identity
                 dacClone.UseDefaultBrokerAccount = UseDefaultBrokerAccount;
                 dacClone.IsLegacyMsaPassthroughEnabled = IsLegacyMsaPassthroughEnabled;
             }
+            else if (clone is InteractiveBrowserCredentialOptions ibcClone)
+            {
+                ibcClone.CopyFromDacOptions(this);
+            }
 
             return clone;
         }

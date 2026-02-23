@@ -99,6 +99,28 @@ namespace Azure.Identity
             return clone;
         }
 
+        /// <summary>
+        /// Copies IBC-relevant properties from a DefaultAzureCredentialOptions source.
+        /// Called by DAC.Clone when the target type is an IBC-derived type.
+        /// </summary>
+        internal virtual void CopyFromDacOptions(DefaultAzureCredentialOptions source)
+        {
+            DisableAutomaticAuthentication = source.DisableAutomaticAuthentication;
+            TokenCachePersistenceOptions = source.TokenCachePersistenceOptions?.Clone();
+            AuthenticationRecord = source.AuthenticationRecord;
+            RedirectUri = source.RedirectUri;
+
+            if (!string.IsNullOrEmpty(source.LoginHint))
+            {
+                LoginHint = source.LoginHint;
+            }
+
+            if (source.BrowserCustomization != null)
+            {
+                BrowserCustomization = source.BrowserCustomization.Clone();
+            }
+        }
+
         internal virtual void CopyMsalSettableProperties(TokenCredentialOptions source)
         {
             if (source != null && this is IMsalSettablePublicClientInitializerOptions target)

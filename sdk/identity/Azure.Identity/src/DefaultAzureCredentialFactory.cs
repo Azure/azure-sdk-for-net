@@ -354,31 +354,8 @@ namespace Azure.Identity
 
             var options = brokerOptions ?? Options.Clone<InteractiveBrowserCredentialOptions>();
 
-            options.TokenCachePersistenceOptions = Options.TokenCachePersistenceOptions?.Clone() ?? new TokenCachePersistenceOptions();
-
+            options.TokenCachePersistenceOptions ??= new TokenCachePersistenceOptions();
             options.TenantId = Options.InteractiveBrowserTenantId;
-
-            options.DisableAutomaticAuthentication = Options.DisableAutomaticAuthentication;
-
-            if (!string.IsNullOrEmpty(Options.LoginHint))
-            {
-                options.LoginHint = Options.LoginHint;
-            }
-
-            if (Options.BrowserCustomization != null)
-            {
-                options.BrowserCustomization = Options.BrowserCustomization.Clone();
-            }
-
-            if (Options.AuthenticationRecord != null)
-            {
-                options.AuthenticationRecord = Options.AuthenticationRecord;
-            }
-
-            if (Options.RedirectUri != null)
-            {
-                options.RedirectUri = Options.RedirectUri;
-            }
 
             return new InteractiveBrowserCredential(
                 Options.InteractiveBrowserTenantId,
@@ -390,33 +367,12 @@ namespace Azure.Identity
         internal TokenCredential CreateBrokerCredential()
         {
             var options = Options.Clone<DevelopmentBrokerOptions>();
-            options.TokenCachePersistenceOptions = Options.TokenCachePersistenceOptions?.Clone() ?? new TokenCachePersistenceOptions();
+            options.TokenCachePersistenceOptions ??= new TokenCachePersistenceOptions();
             options.TenantId = Options.InteractiveBrowserTenantId;
             options.IsChainedCredential = Options.CredentialSource == null;
             options.ClientId = Options.InteractiveBrowserCredentialClientId ?? Constants.DeveloperSignOnClientId;
-            options.DisableAutomaticAuthentication = Options.DisableAutomaticAuthentication;
 
             options.CopyMsalSettableProperties(Options);
-
-            if (!string.IsNullOrEmpty(Options.LoginHint))
-            {
-                options.LoginHint = Options.LoginHint;
-            }
-
-            if (Options.BrowserCustomization != null)
-            {
-                options.BrowserCustomization = Options.BrowserCustomization.Clone();
-            }
-
-            if (Options.AuthenticationRecord != null)
-            {
-                options.AuthenticationRecord = Options.AuthenticationRecord;
-            }
-
-            if (Options.RedirectUri != null)
-            {
-                options.RedirectUri = Options.RedirectUri;
-            }
 
             if (Options.IsLegacyMsaPassthroughEnabled.HasValue)
             {
