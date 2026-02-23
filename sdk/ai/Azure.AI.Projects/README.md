@@ -47,8 +47,6 @@ The client library uses version `v1` of the AI Foundry [data plane REST APIs](ht
 - [Tracing](#tracing)
     - [Azure Monitor Tracing](#tracing-to-azure-monitor)
     - [Console Tracing](#tracing-to-console)
-    - [Enabling trace context propagation](#enabling-trace-context-propagation)
-    - [Controlling baggage propagation](#controlling-baggage-propagation)
     - [Enabling content recording](#enabling-content-recording)
 - [Troubleshooting](#troubleshooting)
 - [Next steps](#next-steps)

@@ -608,7 +608,7 @@ namespace Azure.AI.Projects.Telemetry
         internal static void ResetEnvironmentForTests()
         {
             s_traceContent = AppContextSwitchHelper.GetConfigValue(TraceContentsSwitch, TraceContentsEnvironmentVariable);
-            s_enableTelemetry = AppContextSwitchHelper.GetConfigValue(EnableOpenTelemetrySwitch, EnableOpenTelemetryEnvironmentVariable);
+            s_enableTelemetry = InitializeGenAITelemetry();
             s_useMessageEvents = AppContextSwitchHelper.GetConfigValue(UseMessageEventsSwitch, UseMessageEventsEnvironmentVariable);
         }
     }

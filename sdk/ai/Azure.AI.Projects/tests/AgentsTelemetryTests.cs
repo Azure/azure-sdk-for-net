@@ -29,8 +29,8 @@ public partial class AgentsTelemetryTests : AgentsTestBase
     public const string UseMessageEventsEnvironmentVariable = "AZURE_EXPERIMENTAL_TRACING_GEN_AI_USE_MESSAGE_EVENTS";
     private MemoryTraceExporter _exporter;
     private TracerProvider _tracerProvider;
-    private bool _contentRecordingEnabledInitialValue = false;
-    private bool _tracesEnabledInitialValue = false;
+    private string _contentRecordingEnabledInitialValue;
+    private string _tracesEnabledInitialValue;
     private string _useMessageEventsInitialValue;
 
     public AgentsTelemetryTests(bool isAsync) : base(isAsync)
@@ -42,17 +42,9 @@ public partial class AgentsTelemetryTests : AgentsTestBase
     {
         _exporter = new MemoryTraceExporter();
 
-        _tracesEnabledInitialValue = string.Equals(
-            Environment.GetEnvironmentVariable(EnableOpenTelemetryEnvironmentVariable),
-            "true",
-            StringComparison.OrdinalIgnoreCase);
-
-        _contentRecordingEnabledInitialValue = string.Equals(
-            Environment.GetEnvironmentVariable(TraceContentsEnvironmentVariable),
-            "true",
-            StringComparison.OrdinalIgnoreCase);
-
-        _useMessageEventsInitialValue = Environment.GetEnvironmentVariable(UseMessageEventsEnvironmentVariable);
+        _tracesEnabledInitialValue = Environment.GetEnvironmentVariable(EnableOpenTelemetryEnvironmentVariable, EnvironmentVariableTarget.Process);
+        _contentRecordingEnabledInitialValue = Environment.GetEnvironmentVariable(TraceContentsEnvironmentVariable, EnvironmentVariableTarget.Process);
+        _useMessageEventsInitialValue = Environment.GetEnvironmentVariable(UseMessageEventsEnvironmentVariable, EnvironmentVariableTarget.Process);
 
         Environment.SetEnvironmentVariable(EnableOpenTelemetryEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
 
@@ -71,11 +63,11 @@ public partial class AgentsTelemetryTests : AgentsTestBase
         _exporter.Clear();
         Environment.SetEnvironmentVariable(
             TraceContentsEnvironmentVariable,
-            _contentRecordingEnabledInitialValue.ToString(),
+            _contentRecordingEnabledInitialValue,
             EnvironmentVariableTarget.Process);
         Environment.SetEnvironmentVariable(
             EnableOpenTelemetryEnvironmentVariable,
-            _tracesEnabledInitialValue.ToString(),
+            _tracesEnabledInitialValue,
             EnvironmentVariableTarget.Process);
         Environment.SetEnvironmentVariable(
             UseMessageEventsEnvironmentVariable,
