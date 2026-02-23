@@ -21,8 +21,8 @@ namespace Azure.AI.ContentUnderstanding
     // Suppress convenience methods with stringEncoding parameter - we'll implement custom versions without it
     [CodeGenSuppress("AnalyzeAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(IEnumerable<AnalysisInput>), typeof(IDictionary<string, string>), typeof(ProcessingLocation?), typeof(CancellationToken))]
     [CodeGenSuppress("Analyze", typeof(WaitUntil), typeof(string), typeof(string), typeof(IEnumerable<AnalysisInput>), typeof(IDictionary<string, string>), typeof(ProcessingLocation?), typeof(CancellationToken))]
-    [CodeGenSuppress("AnalyzeBinaryAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(BinaryData), typeof(string), typeof(string), typeof(ProcessingLocation?), typeof(CancellationToken))]
-    [CodeGenSuppress("AnalyzeBinary", typeof(WaitUntil), typeof(string), typeof(string), typeof(BinaryData), typeof(string), typeof(string), typeof(ProcessingLocation?), typeof(CancellationToken))]
+    [CodeGenSuppress("AnalyzeBinaryAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(string), typeof(BinaryData), typeof(string), typeof(ProcessingLocation?), typeof(CancellationToken))]
+    [CodeGenSuppress("AnalyzeBinary", typeof(WaitUntil), typeof(string), typeof(string), typeof(string), typeof(BinaryData), typeof(string), typeof(ProcessingLocation?), typeof(CancellationToken))]
     // Suppress protocol methods - we'll implement custom versions that wrap with OperationWithId
     [CodeGenSuppress("AnalyzeAsync", typeof(WaitUntil), typeof(string), typeof(RequestContent), typeof(string), typeof(string), typeof(Guid?), typeof(RequestContext))]
     [CodeGenSuppress("Analyze", typeof(WaitUntil), typeof(string), typeof(RequestContent), typeof(string), typeof(string), typeof(Guid?), typeof(RequestContext))]
@@ -36,7 +36,7 @@ namespace Azure.AI.ContentUnderstanding
         //   - Hiding the stringEncoding parameter. We're making its value default to 'utf16' (appropriate for .NET).
         //   - For AnalyzeBinary methods: Automatically determining contentType from BinaryData.MediaType if not
         //     explicitly provided, defaulting to "application/octet-stream" if neither is available.
-        //   - Adding AnalyzeBinary overloads that accept ContentRange instead of string for a self-documenting
+        //   - AnalyzeBinary convenience methods accept ContentRange? instead of string for a self-documenting
         //     range API (e.g., ContentRange.Pages(1, 3) instead of "1-3").
         //   - We're also overriding the protocol methods to wrap the result in OperationWithId
         //     so that the operation ID is accessible via the Id property.
@@ -97,14 +97,14 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="analyzerId"> The unique identifier of the analyzer. </param>
         /// <param name="binaryInput"> The binary content of the document to analyze. </param>
-        /// <param name="contentRange"> Range of the input to analyze (e.g., <c>"1-3,5,9-"</c>). Document content uses 1-based page numbers; audio/video content uses integer milliseconds. For a self-documenting API, consider using the <see cref="AnalyzeBinaryAsync(WaitUntil, string, BinaryData, ContentRange, string, ProcessingLocation?, CancellationToken)">overload that accepts <see cref="ContentRange"/></see>. </param>
+        /// <param name="contentRange"> Range of the input to analyze. Use factory methods such as <see cref="ContentRange.Pages(int, int)"/>, <see cref="ContentRange.TimeRange(long, long)"/>, or <see cref="ContentRange.Combine(ContentRange[])"/> to build the range. </param>
         /// <param name="contentType"> Request content type. If not specified, uses <paramref name="binaryInput"/>'s <see cref="BinaryData.MediaType"/> if available, otherwise defaults to "application/octet-stream". </param>
         /// <param name="processingLocation"> The location where the data may be processed.  Defaults to global. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analyzerId"/> or <paramref name="binaryInput"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="analyzerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The <see cref="Operation{AnalysisResult}"/> with operation ID accessible via the <c>Id</c> property. </returns>
-        public virtual async Task<Operation<AnalysisResult>> AnalyzeBinaryAsync(WaitUntil waitUntil, string analyzerId, BinaryData binaryInput, string? contentRange = default, string? contentType = default, ProcessingLocation? processingLocation = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<AnalysisResult>> AnalyzeBinaryAsync(WaitUntil waitUntil, string analyzerId, BinaryData binaryInput, ContentRange? contentRange = default, string? contentType = default, ProcessingLocation? processingLocation = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
             Argument.AssertNotNull(binaryInput, nameof(binaryInput));
@@ -114,29 +114,7 @@ namespace Azure.AI.ContentUnderstanding
             string effectiveContentType = contentType ?? binaryInput.MediaType ?? DefaultContentType;
 
             // SDK-EXT: Use DefaultStringEncoding to hide the stringEncoding parameter from the public API (defaults to 'utf16' for .NET)
-            Operation<BinaryData> result = await AnalyzeBinaryAsync(waitUntil, analyzerId, effectiveContentType, RequestContent.Create(binaryInput), DefaultStringEncoding, processingLocation?.ToString()!, contentRange!, clientRequestId: default, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => AnalysisResult.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.AnalyzeBinaryAsync");
-        }
-
-        /// <summary> Extract content and fields from binary input using a <see cref="ContentRange"/> to specify the range of content to analyze. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="analyzerId"> The unique identifier of the analyzer. </param>
-        /// <param name="binaryInput"> The binary content of the document to analyze. </param>
-        /// <param name="contentRange"> Range of the input to analyze. Use factory methods such as <see cref="ContentRange.Pages(int, int)"/>, <see cref="ContentRange.TimeRange(long, long)"/>, or <see cref="ContentRange.Combine(ContentRange[])"/> to build the range. </param>
-        /// <param name="contentType"> Request content type. If not specified, uses <paramref name="binaryInput"/>'s <see cref="BinaryData.MediaType"/> if available, otherwise defaults to "application/octet-stream". </param>
-        /// <param name="processingLocation"> The location where the data may be processed.  Defaults to global. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="analyzerId"/> or <paramref name="binaryInput"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="analyzerId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> The <see cref="Operation{AnalysisResult}"/> with operation ID accessible via the <c>Id</c> property. </returns>
-        public virtual async Task<Operation<AnalysisResult>> AnalyzeBinaryAsync(WaitUntil waitUntil, string analyzerId, BinaryData binaryInput, ContentRange contentRange, string? contentType = default, ProcessingLocation? processingLocation = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
-            Argument.AssertNotNull(binaryInput, nameof(binaryInput));
-
-            string effectiveContentType = contentType ?? binaryInput.MediaType ?? DefaultContentType;
-
-            Operation<BinaryData> result = await AnalyzeBinaryAsync(waitUntil, analyzerId, effectiveContentType, RequestContent.Create(binaryInput), DefaultStringEncoding, processingLocation?.ToString()!, contentRange.ToString()!, clientRequestId: default, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Operation<BinaryData> result = await AnalyzeBinaryAsync(waitUntil, analyzerId, effectiveContentType, RequestContent.Create(binaryInput), DefaultStringEncoding, processingLocation?.ToString()!, contentRange?.ToString()!, clientRequestId: default, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(result, response => AnalysisResult.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.AnalyzeBinaryAsync");
         }
 
@@ -144,14 +122,14 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="analyzerId"> The unique identifier of the analyzer. </param>
         /// <param name="binaryInput"> The binary content of the document to analyze. </param>
-        /// <param name="contentRange"> Range of the input to analyze (e.g., <c>"1-3,5,9-"</c>). Document content uses 1-based page numbers; audio/video content uses integer milliseconds. For a self-documenting API, consider using the <see cref="AnalyzeBinary(WaitUntil, string, BinaryData, ContentRange, string, ProcessingLocation?, CancellationToken)">overload that accepts <see cref="ContentRange"/></see>. </param>
+        /// <param name="contentRange"> Range of the input to analyze. Use factory methods such as <see cref="ContentRange.Pages(int, int)"/>, <see cref="ContentRange.TimeRange(long, long)"/>, or <see cref="ContentRange.Combine(ContentRange[])"/> to build the range. </param>
         /// <param name="contentType"> Request content type. If not specified, uses <paramref name="binaryInput"/>'s <see cref="BinaryData.MediaType"/> if available, otherwise defaults to "application/octet-stream". </param>
         /// <param name="processingLocation"> The location where the data may be processed.  Defaults to global. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analyzerId"/> or <paramref name="binaryInput"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="analyzerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The <see cref="Operation{AnalysisResult}"/> with operation ID accessible via the <c>Id</c> property. </returns>
-        public virtual Operation<AnalysisResult> AnalyzeBinary(WaitUntil waitUntil, string analyzerId, BinaryData binaryInput, string? contentRange = default, string? contentType = default, ProcessingLocation? processingLocation = default, CancellationToken cancellationToken = default)
+        public virtual Operation<AnalysisResult> AnalyzeBinary(WaitUntil waitUntil, string analyzerId, BinaryData binaryInput, ContentRange? contentRange = default, string? contentType = default, ProcessingLocation? processingLocation = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
             Argument.AssertNotNull(binaryInput, nameof(binaryInput));
@@ -161,29 +139,7 @@ namespace Azure.AI.ContentUnderstanding
             string effectiveContentType = contentType ?? binaryInput.MediaType ?? DefaultContentType;
 
             // SDK-EXT: Use DefaultStringEncoding to hide the stringEncoding parameter from the public API (defaults to 'utf16' for .NET)
-            Operation<BinaryData> result = AnalyzeBinary(waitUntil, analyzerId, effectiveContentType, RequestContent.Create(binaryInput), DefaultStringEncoding, processingLocation?.ToString()!, contentRange!, clientRequestId: default, cancellationToken.ToRequestContext());
-            return ProtocolOperationHelpers.Convert(result, response => AnalysisResult.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.AnalyzeBinary");
-        }
-
-        /// <summary> Extract content and fields from binary input using a <see cref="ContentRange"/> to specify the range of content to analyze. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="analyzerId"> The unique identifier of the analyzer. </param>
-        /// <param name="binaryInput"> The binary content of the document to analyze. </param>
-        /// <param name="contentRange"> Range of the input to analyze. Use factory methods such as <see cref="ContentRange.Pages(int, int)"/>, <see cref="ContentRange.TimeRange(long, long)"/>, or <see cref="ContentRange.Combine(ContentRange[])"/> to build the range. </param>
-        /// <param name="contentType"> Request content type. If not specified, uses <paramref name="binaryInput"/>'s <see cref="BinaryData.MediaType"/> if available, otherwise defaults to "application/octet-stream". </param>
-        /// <param name="processingLocation"> The location where the data may be processed.  Defaults to global. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="analyzerId"/> or <paramref name="binaryInput"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="analyzerId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> The <see cref="Operation{AnalysisResult}"/> with operation ID accessible via the <c>Id</c> property. </returns>
-        public virtual Operation<AnalysisResult> AnalyzeBinary(WaitUntil waitUntil, string analyzerId, BinaryData binaryInput, ContentRange contentRange, string? contentType = default, ProcessingLocation? processingLocation = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
-            Argument.AssertNotNull(binaryInput, nameof(binaryInput));
-
-            string effectiveContentType = contentType ?? binaryInput.MediaType ?? DefaultContentType;
-
-            Operation<BinaryData> result = AnalyzeBinary(waitUntil, analyzerId, effectiveContentType, RequestContent.Create(binaryInput), DefaultStringEncoding, processingLocation?.ToString()!, contentRange.ToString()!, clientRequestId: default, cancellationToken.ToRequestContext());
+            Operation<BinaryData> result = AnalyzeBinary(waitUntil, analyzerId, effectiveContentType, RequestContent.Create(binaryInput), DefaultStringEncoding, processingLocation?.ToString()!, contentRange?.ToString()!, clientRequestId: default, cancellationToken.ToRequestContext());
             return ProtocolOperationHelpers.Convert(result, response => AnalysisResult.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.AnalyzeBinary");
         }
 
