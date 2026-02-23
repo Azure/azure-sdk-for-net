@@ -136,7 +136,6 @@ public sealed class CopilotService : IAsyncDisposable
 
                             if (!absoluteFilePath.StartsWith(normalizedProjectPath, StringComparison.Ordinal))
                             {
-                                logger.LogError("Copilot attempted to access a file at {filePath} outside the allowed project directory. ", filePath);
                                 throw new UnauthorizedAccessException(
                                     $"Security violation: {input.ToolName} attempted to access '{filePath}' which is outside the project directory '{normalizedProjectPath}'. Aborting execution.");
                             }
@@ -145,15 +144,10 @@ public sealed class CopilotService : IAsyncDisposable
                         {
                             throw;
                         }
-                        catch (Exception)
+                        catch (Exception ex)
                         {
-                            logger.LogWarning("Denying {ToolName} - path validation failed: {FilePath}",
-                                input.ToolName, filePath);
-                            return new PreToolUseHookOutput
-                            {
-                                PermissionDecision = "deny",
-                                AdditionalContext = "Path validation failed"
-                            };
+                            throw new InvalidOperationException(
+                                $"Security violation: path validation failed for '{filePath}' in {input.ToolName}. Aborting execution.", ex);
                         }
 
                         return new PreToolUseHookOutput
