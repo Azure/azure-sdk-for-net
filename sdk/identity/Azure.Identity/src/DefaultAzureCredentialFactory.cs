@@ -441,7 +441,7 @@ namespace Azure.Identity
             if (Options.CredentialSource == null)
             {
                 throw new InvalidOperationException(
-                    "AzurePipelinesCredential is not supported via the AZURE_CREDENTIAL environment variable. " +
+                    "AzurePipelinesCredential is not supported via the AZURE_TOKEN_CREDENTIALS environment variable. " +
                     "Use IConfiguration-based credential selection with DefaultAzureCredentialOptions to configure AzurePipelinesCredential, " +
                     "as it requires additional properties (AzurePipelinesClientId, AzurePipelinesServiceConnectionId, AzurePipelinesSystemAccessToken) " +
                     "that cannot be specified through environment variables.");

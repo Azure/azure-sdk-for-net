@@ -595,7 +595,7 @@ namespace Azure.Identity.Tests
             {
                 var factory = new DefaultAzureCredentialFactory(null);
                 var ex = Assert.Throws<InvalidOperationException>(() => factory.CreateCredentialChain());
-                Assert.That(ex.Message, Does.Contain("AzurePipelinesCredential is not supported via the AZURE_CREDENTIAL environment variable"));
+                Assert.That(ex.Message, Does.Contain("AzurePipelinesCredential is not supported via the AZURE_TOKEN_CREDENTIALS environment variable"));
                 Assert.That(ex.Message, Does.Contain("IConfiguration"));
             }
         }
