@@ -11,25 +11,34 @@ using Azure.Identity.Tests.ConfigurableCredentials;
 #endif
 
 #if IDENTITY_TESTS
-namespace Azure.Identity.Tests.ConfigurableCredentials.InteractiveBrowser
+namespace Azure.Identity.Tests.ConfigurableCredentials.Broker
 #else
-namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
+namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.Broker
 #endif
 {
     /// <summary>
-    /// Validates that all InteractiveBrowserCredential-specific properties can be set
-    /// via IConfiguration and that the correct values are passed through to the
-    /// underlying credential.
+    /// Validates that BrokerCredential properties can be set via IConfiguration and
+    /// that the correct priority order is honoured:
+    ///   1. IConfiguration value  (highest)
+    ///   2. Well-known environment variable
+    ///   3. Hard-coded default     (lowest)
+    ///
+    /// BrokerCredential inherits from InteractiveBrowserCredential, so these tests
+    /// cover all InteractiveBrowserCredentialOptions properties.  The broker factory
+    /// path (CreateBrokerCredential) passes through a subset of them; the remaining
+    /// IBC properties are verified to have their expected defaults.
     /// </summary>
-    internal class InteractiveBrowserCredentialCreationTests : CredentialCreationTestBase<InteractiveBrowserCredential>
+    internal class BrokerCredentialCreationTests : CredentialCreationTestBase<BrokerCredential>
     {
-        protected override string CredentialSource => "InteractiveBrowser";
+        protected override string CredentialSource => "Broker";
 
         private static Dictionary<string, string> AllNulledEnvVars() => new()
         {
             { "AZURE_TENANT_ID", null },
             { "AZURE_ADDITIONALLY_ALLOWED_TENANTS", null },
         };
+
+        // ── TenantId ───────────────────────────────────────────────────────
 
         [Test]
         [NonParallelizable]
@@ -40,8 +49,8 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:TenantId"] = "config-tenant";
 
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                Assert.AreEqual("config-tenant", ReadProperty<string>(ibc, "TenantId"));
+                var broker = GetUnderlying(CreateFromConfig(config));
+                Assert.AreEqual("config-tenant", ReadProperty<string>(broker, "TenantId"));
             }
         }
 
@@ -58,8 +67,8 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:TenantId"] = "config-tenant";
 
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                Assert.AreEqual("config-tenant", ReadProperty<string>(ibc, "TenantId"));
+                var broker = GetUnderlying(CreateFromConfig(config));
+                Assert.AreEqual("config-tenant", ReadProperty<string>(broker, "TenantId"));
             }
         }
 
@@ -75,8 +84,8 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
             {
                 IConfiguration config = Helper.GetConfiguration();
 
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                Assert.AreEqual("env-tenant", ReadProperty<string>(ibc, "TenantId"));
+                var broker = GetUnderlying(CreateFromConfig(config));
+                Assert.AreEqual("env-tenant", ReadProperty<string>(broker, "TenantId"));
             }
         }
 
@@ -88,37 +97,12 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
             {
                 IConfiguration config = Helper.GetConfiguration();
 
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                Assert.IsNull(ReadProperty<string>(ibc, "TenantId"));
+                var broker = GetUnderlying(CreateFromConfig(config));
+                Assert.IsNull(ReadProperty<string>(broker, "TenantId"));
             }
         }
 
-        [Test]
-        [NonParallelizable]
-        public void ClientId_ConfigSetsValue()
-        {
-            using (new TestEnvVar(AllNulledEnvVars()))
-            {
-                IConfiguration config = Helper.GetConfiguration();
-                config["MyClient:Credential:InteractiveBrowserCredentialClientId"] = "my-client-id";
-
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                Assert.AreEqual("my-client-id", ReadProperty<string>(ibc, "ClientId"));
-            }
-        }
-
-        [Test]
-        [NonParallelizable]
-        public void ClientId_DefaultsToDeveloperSignOnClientId()
-        {
-            using (new TestEnvVar(AllNulledEnvVars()))
-            {
-                IConfiguration config = Helper.GetConfiguration();
-
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                Assert.AreEqual(Constants.DeveloperSignOnClientId, ReadProperty<string>(ibc, "ClientId"));
-            }
-        }
+        // ── AdditionallyAllowedTenants ─────────────────────────────────────
 
         [Test]
         [NonParallelizable]
@@ -129,8 +113,8 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:AdditionallyAllowedTenants:0"] = "tenant-a";
 
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                var tenants = ReadProperty<string[]>(ibc, "AdditionallyAllowedTenantIds");
+                var broker = GetUnderlying(CreateFromConfig(config));
+                var tenants = ReadProperty<string[]>(broker, "AdditionallyAllowedTenantIds");
                 Assert.AreEqual(1, tenants.Length);
                 Assert.AreEqual("tenant-a", tenants[0]);
             }
@@ -147,8 +131,8 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
                 config["MyClient:Credential:AdditionallyAllowedTenants:1"] = "tenant-b";
                 config["MyClient:Credential:AdditionallyAllowedTenants:2"] = "tenant-c";
 
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                var tenants = ReadProperty<string[]>(ibc, "AdditionallyAllowedTenantIds");
+                var broker = GetUnderlying(CreateFromConfig(config));
+                var tenants = ReadProperty<string[]>(broker, "AdditionallyAllowedTenantIds");
                 Assert.AreEqual(3, tenants.Length);
                 CollectionAssert.Contains(tenants, "tenant-a");
                 CollectionAssert.Contains(tenants, "tenant-b");
@@ -165,8 +149,8 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:AdditionallyAllowedTenants:0"] = "*";
 
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                var tenants = ReadProperty<string[]>(ibc, "AdditionallyAllowedTenantIds");
+                var broker = GetUnderlying(CreateFromConfig(config));
+                var tenants = ReadProperty<string[]>(broker, "AdditionallyAllowedTenantIds");
                 CollectionAssert.Contains(tenants, "*");
             }
         }
@@ -184,8 +168,8 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:AdditionallyAllowedTenants:0"] = "config-tenant-a";
 
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                var tenants = ReadProperty<string[]>(ibc, "AdditionallyAllowedTenantIds");
+                var broker = GetUnderlying(CreateFromConfig(config));
+                var tenants = ReadProperty<string[]>(broker, "AdditionallyAllowedTenantIds");
                 Assert.IsNotNull(tenants);
                 CollectionAssert.Contains(tenants, "config-tenant-a");
                 CollectionAssert.DoesNotContain(tenants, "env-tenant-x");
@@ -204,8 +188,8 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
             {
                 IConfiguration config = Helper.GetConfiguration();
 
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                var tenants = ReadProperty<string[]>(ibc, "AdditionallyAllowedTenantIds");
+                var broker = GetUnderlying(CreateFromConfig(config));
+                var tenants = ReadProperty<string[]>(broker, "AdditionallyAllowedTenantIds");
                 Assert.IsNotNull(tenants);
                 CollectionAssert.Contains(tenants, "env-tenant-x");
                 CollectionAssert.Contains(tenants, "env-tenant-y");
@@ -220,12 +204,43 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
             {
                 IConfiguration config = Helper.GetConfiguration();
 
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                var tenants = ReadProperty<string[]>(ibc, "AdditionallyAllowedTenantIds");
+                var broker = GetUnderlying(CreateFromConfig(config));
+                var tenants = ReadProperty<string[]>(broker, "AdditionallyAllowedTenantIds");
                 Assert.IsNotNull(tenants);
                 Assert.IsEmpty(tenants);
             }
         }
+
+        // ── ClientId ───────────────────────────────────────────────────────
+
+        [Test]
+        [NonParallelizable]
+        public void ClientId_ConfigSetsValue()
+        {
+            using (new TestEnvVar(AllNulledEnvVars()))
+            {
+                IConfiguration config = Helper.GetConfiguration();
+                config["MyClient:Credential:InteractiveBrowserCredentialClientId"] = "my-client-id";
+
+                var broker = GetUnderlying(CreateFromConfig(config));
+                Assert.AreEqual("my-client-id", ReadProperty<string>(broker, "ClientId"));
+            }
+        }
+
+        [Test]
+        [NonParallelizable]
+        public void ClientId_DefaultsToDeveloperSignOnClientId()
+        {
+            using (new TestEnvVar(AllNulledEnvVars()))
+            {
+                IConfiguration config = Helper.GetConfiguration();
+
+                var broker = GetUnderlying(CreateFromConfig(config));
+                Assert.AreEqual(Constants.DeveloperSignOnClientId, ReadProperty<string>(broker, "ClientId"));
+            }
+        }
+
+        // ── DisableAutomaticAuthentication ─────────────────────────────────
 
         [Test]
         [NonParallelizable]
@@ -236,8 +251,8 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:DisableAutomaticAuthentication"] = "true";
 
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                Assert.IsTrue(ReadProperty<bool>(ibc, "DisableAutomaticAuthentication"));
+                var broker = GetUnderlying(CreateFromConfig(config));
+                Assert.IsTrue(ReadProperty<bool>(broker, "DisableAutomaticAuthentication"));
             }
         }
 
@@ -250,8 +265,8 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:DisableAutomaticAuthentication"] = "false";
 
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                Assert.IsFalse(ReadProperty<bool>(ibc, "DisableAutomaticAuthentication"));
+                var broker = GetUnderlying(CreateFromConfig(config));
+                Assert.IsFalse(ReadProperty<bool>(broker, "DisableAutomaticAuthentication"));
             }
         }
 
@@ -263,10 +278,12 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
             {
                 IConfiguration config = Helper.GetConfiguration();
 
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                Assert.IsFalse(ReadProperty<bool>(ibc, "DisableAutomaticAuthentication"));
+                var broker = GetUnderlying(CreateFromConfig(config));
+                Assert.IsFalse(ReadProperty<bool>(broker, "DisableAutomaticAuthentication"));
             }
         }
+
+        // ── LoginHint ──────────────────────────────────────────────────────
 
         [Test]
         [NonParallelizable]
@@ -277,8 +294,8 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:LoginHint"] = "user@example.com";
 
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                Assert.AreEqual("user@example.com", ReadProperty<string>(ibc, "LoginHint"));
+                var broker = GetUnderlying(CreateFromConfig(config));
+                Assert.AreEqual("user@example.com", ReadProperty<string>(broker, "LoginHint"));
             }
         }
 
@@ -290,10 +307,12 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
             {
                 IConfiguration config = Helper.GetConfiguration();
 
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                Assert.IsNull(ReadProperty<string>(ibc, "LoginHint"));
+                var broker = GetUnderlying(CreateFromConfig(config));
+                Assert.IsNull(ReadProperty<string>(broker, "LoginHint"));
             }
         }
+
+        // ── BrowserCustomization ───────────────────────────────────────────
 
         [Test]
         [NonParallelizable]
@@ -304,8 +323,8 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:BrowserCustomization:SuccessMessage"] = "<p>Login successful</p>";
 
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                var bc = ReadProperty<BrowserCustomizationOptions>(ibc, "BrowserCustomization");
+                var broker = GetUnderlying(CreateFromConfig(config));
+                var bc = ReadProperty<BrowserCustomizationOptions>(broker, "BrowserCustomization");
                 Assert.IsNotNull(bc);
                 Assert.AreEqual("<p>Login successful</p>", bc.SuccessMessage);
             }
@@ -320,28 +339,10 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:BrowserCustomization:ErrorMessage"] = "<p>Error: {0}</p>";
 
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                var bc = ReadProperty<BrowserCustomizationOptions>(ibc, "BrowserCustomization");
+                var broker = GetUnderlying(CreateFromConfig(config));
+                var bc = ReadProperty<BrowserCustomizationOptions>(broker, "BrowserCustomization");
                 Assert.IsNotNull(bc);
                 Assert.AreEqual("<p>Error: {0}</p>", bc.ErrorMessage);
-            }
-        }
-
-        [Test]
-        [NonParallelizable]
-        public void BrowserCustomization_UseEmbeddedWebView_ConfigSetsTrue()
-        {
-            using (new TestEnvVar(AllNulledEnvVars()))
-            {
-                IConfiguration config = Helper.GetConfiguration();
-                config["MyClient:Credential:BrowserCustomization:UseEmbeddedWebView"] = "true";
-
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                var bc = ReadProperty<BrowserCustomizationOptions>(ibc, "BrowserCustomization");
-                Assert.IsNotNull(bc);
-#pragma warning disable CS0618 // Type or member is obsolete
-                Assert.IsTrue(bc.UseEmbeddedWebView);
-#pragma warning restore CS0618
             }
         }
 
@@ -355,8 +356,8 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
                 config["MyClient:Credential:BrowserCustomization:SuccessMessage"] = "<p>OK</p>";
                 config["MyClient:Credential:BrowserCustomization:ErrorMessage"] = "<p>Fail</p>";
 
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                var bc = ReadProperty<BrowserCustomizationOptions>(ibc, "BrowserCustomization");
+                var broker = GetUnderlying(CreateFromConfig(config));
+                var bc = ReadProperty<BrowserCustomizationOptions>(broker, "BrowserCustomization");
                 Assert.IsNotNull(bc);
                 Assert.AreEqual("<p>OK</p>", bc.SuccessMessage);
                 Assert.AreEqual("<p>Fail</p>", bc.ErrorMessage);
@@ -371,10 +372,12 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
             {
                 IConfiguration config = Helper.GetConfiguration();
 
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                Assert.IsNull(ReadProperty<BrowserCustomizationOptions>(ibc, "BrowserCustomization"));
+                var broker = GetUnderlying(CreateFromConfig(config));
+                Assert.IsNull(ReadProperty<BrowserCustomizationOptions>(broker, "BrowserCustomization"));
             }
         }
+
+        // ── AuthenticationRecord ───────────────────────────────────────────
 
         [Test]
         [NonParallelizable]
@@ -389,8 +392,8 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
                 config["MyClient:Credential:AuthenticationRecord:TenantId"] = "record-tenant";
                 config["MyClient:Credential:AuthenticationRecord:ClientId"] = "record-client";
 
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                var record = ReadProperty<AuthenticationRecord>(ibc, "Record");
+                var broker = GetUnderlying(CreateFromConfig(config));
+                var record = ReadProperty<AuthenticationRecord>(broker, "Record");
                 Assert.IsNotNull(record);
                 Assert.AreEqual("user@contoso.com", record.Username);
                 Assert.AreEqual("login.microsoftonline.com", record.Authority);
@@ -408,8 +411,8 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
             {
                 IConfiguration config = Helper.GetConfiguration();
 
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                Assert.IsNull(ReadProperty<AuthenticationRecord>(ibc, "Record"));
+                var broker = GetUnderlying(CreateFromConfig(config));
+                Assert.IsNull(ReadProperty<AuthenticationRecord>(broker, "Record"));
             }
         }
 
@@ -424,8 +427,8 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:RedirectUri"] = "http://localhost:12345/";
 
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                var client = ReadProperty<MsalPublicClient>(ibc, "Client");
+                var broker = GetUnderlying(CreateFromConfig(config));
+                var client = ReadProperty<MsalPublicClient>(broker, "Client");
                 Assert.AreEqual("http://localhost:12345/", ReadProperty<string>(client, "RedirectUrl"));
             }
         }
@@ -438,9 +441,20 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
             {
                 IConfiguration config = Helper.GetConfiguration();
 
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                var client = ReadProperty<MsalPublicClient>(ibc, "Client");
-                Assert.AreEqual("http://localhost", ReadProperty<string>(client, "RedirectUrl"));
+                string expectedRedirectUrl = "http://localhost";
+#if !IDENTITY_TESTS
+                // When the broker package is available, the Broker DBO sets a
+                // platform-specific redirect URI on macOS.
+                if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(
+                    System.Runtime.InteropServices.OSPlatform.OSX))
+                {
+                    expectedRedirectUrl = new Uri(Constants.MacBrokerRedirectUri).ToString();
+                }
+#endif
+
+                var broker = GetUnderlying(CreateFromConfig(config));
+                var client = ReadProperty<MsalPublicClient>(broker, "Client");
+                Assert.AreEqual(expectedRedirectUrl, ReadProperty<string>(client, "RedirectUrl"));
             }
         }
 
@@ -455,8 +469,8 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:TokenCachePersistenceOptions:Name"] = "my-cache";
 
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                var client = ReadProperty<MsalPublicClient>(ibc, "Client");
+                var broker = GetUnderlying(CreateFromConfig(config));
+                var client = ReadProperty<MsalPublicClient>(broker, "Client");
                 var cacheOptions = ReadField<TokenCachePersistenceOptions>(client, "_tokenCachePersistenceOptions");
                 Assert.IsNotNull(cacheOptions);
                 Assert.AreEqual("my-cache", cacheOptions.Name);
@@ -473,8 +487,8 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:TokenCachePersistenceOptions:UnsafeAllowUnencryptedStorage"] = "true";
 
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                var client = ReadProperty<MsalPublicClient>(ibc, "Client");
+                var broker = GetUnderlying(CreateFromConfig(config));
+                var client = ReadProperty<MsalPublicClient>(broker, "Client");
                 var cacheOptions = ReadField<TokenCachePersistenceOptions>(client, "_tokenCachePersistenceOptions");
                 Assert.IsNotNull(cacheOptions);
                 Assert.IsNull(cacheOptions.Name);
@@ -492,8 +506,8 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
                 config["MyClient:Credential:TokenCachePersistenceOptions:Name"] = "my-cache";
                 config["MyClient:Credential:TokenCachePersistenceOptions:UnsafeAllowUnencryptedStorage"] = "true";
 
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                var client = ReadProperty<MsalPublicClient>(ibc, "Client");
+                var broker = GetUnderlying(CreateFromConfig(config));
+                var client = ReadProperty<MsalPublicClient>(broker, "Client");
                 var cacheOptions = ReadField<TokenCachePersistenceOptions>(client, "_tokenCachePersistenceOptions");
                 Assert.IsNotNull(cacheOptions);
                 Assert.AreEqual("my-cache", cacheOptions.Name);
@@ -509,8 +523,8 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
             {
                 IConfiguration config = Helper.GetConfiguration();
 
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                var client = ReadProperty<MsalPublicClient>(ibc, "Client");
+                var broker = GetUnderlying(CreateFromConfig(config));
+                var client = ReadProperty<MsalPublicClient>(broker, "Client");
                 var cacheOptions = ReadField<TokenCachePersistenceOptions>(client, "_tokenCachePersistenceOptions");
                 Assert.IsNotNull(cacheOptions);
                 Assert.IsNull(cacheOptions.Name);
@@ -529,8 +543,8 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:DisableInstanceDiscovery"] = "true";
 
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                var client = ReadProperty<MsalPublicClient>(ibc, "Client");
+                var broker = GetUnderlying(CreateFromConfig(config));
+                var client = ReadProperty<MsalPublicClient>(broker, "Client");
                 Assert.IsTrue(ReadProperty<bool>(client, "DisableInstanceDiscovery"));
             }
         }
@@ -543,8 +557,8 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
             {
                 IConfiguration config = Helper.GetConfiguration();
 
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                var client = ReadProperty<MsalPublicClient>(ibc, "Client");
+                var broker = GetUnderlying(CreateFromConfig(config));
+                var client = ReadProperty<MsalPublicClient>(broker, "Client");
                 Assert.IsFalse(ReadProperty<bool>(client, "DisableInstanceDiscovery"));
             }
         }
@@ -560,8 +574,8 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:AuthorityHost"] = "https://login.microsoftonline.us/";
 
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                Assert.AreEqual("https://management.usgovcloudapi.net/.default", ReadProperty<string>(ibc, "DefaultScope"));
+                var broker = GetUnderlying(CreateFromConfig(config));
+                Assert.AreEqual("https://management.usgovcloudapi.net/.default", ReadProperty<string>(broker, "DefaultScope"));
             }
         }
 
@@ -573,8 +587,8 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
             {
                 IConfiguration config = Helper.GetConfiguration();
 
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                Assert.AreEqual("https://management.azure.com//.default", ReadProperty<string>(ibc, "DefaultScope"));
+                var broker = GetUnderlying(CreateFromConfig(config));
+                Assert.AreEqual("https://management.azure.com//.default", ReadProperty<string>(broker, "DefaultScope"));
             }
         }
 
@@ -589,8 +603,8 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:IsUnsafeSupportLoggingEnabled"] = "true";
 
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                var client = ReadProperty<MsalPublicClient>(ibc, "Client");
+                var broker = GetUnderlying(CreateFromConfig(config));
+                var client = ReadProperty<MsalPublicClient>(broker, "Client");
                 Assert.IsTrue(ReadProperty<bool>(client, "IsSupportLoggingEnabled"));
             }
         }
@@ -603,8 +617,8 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
             {
                 IConfiguration config = Helper.GetConfiguration();
 
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                var client = ReadProperty<MsalPublicClient>(ibc, "Client");
+                var broker = GetUnderlying(CreateFromConfig(config));
+                var client = ReadProperty<MsalPublicClient>(broker, "Client");
                 Assert.IsFalse(ReadProperty<bool>(client, "IsSupportLoggingEnabled"));
             }
         }
@@ -612,8 +626,9 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
         // ── UseDefaultBrokerAccount ────────────────────────────────────────
 
 #if !IDENTITY_TESTS
-        // UseDefaultBrokerAccount=true with InteractiveBrowser source requires
-        // the broker package. Without it, CreateInteractiveBrowserCredential throws.
+        // UseDefaultBrokerAccount can only flow through to the underlying credential
+        // when the broker package is available, because the fallback IBC options do
+        // not implement IMsalSettablePublicClientInitializerOptions.
         [Test]
         [NonParallelizable]
         public void UseDefaultBrokerAccount_ConfigSetsTrue()
@@ -623,8 +638,8 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:UseDefaultBrokerAccount"] = "true";
 
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                Assert.IsTrue(ReadProperty<bool>(ibc, "UseOperatingSystemAccount"));
+                var broker = GetUnderlying(CreateFromConfig(config));
+                Assert.IsTrue(ReadProperty<bool>(broker, "UseOperatingSystemAccount"));
             }
         }
 #endif
@@ -638,8 +653,8 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:UseDefaultBrokerAccount"] = "false";
 
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                Assert.IsFalse(ReadProperty<bool>(ibc, "UseOperatingSystemAccount"));
+                var broker = GetUnderlying(CreateFromConfig(config));
+                Assert.IsFalse(ReadProperty<bool>(broker, "UseOperatingSystemAccount"));
             }
         }
 
@@ -651,10 +666,51 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
             {
                 IConfiguration config = Helper.GetConfiguration();
 
-                var ibc = GetUnderlying(CreateFromConfig(config));
-                Assert.IsFalse(ReadProperty<bool>(ibc, "UseOperatingSystemAccount"));
+                var broker = GetUnderlying(CreateFromConfig(config));
+                Assert.IsFalse(ReadProperty<bool>(broker, "UseOperatingSystemAccount"));
             }
         }
+
+        // ── IsLegacyMsaPassthroughEnabled ─────────────────────────────────
+
+#if !IDENTITY_TESTS
+        // IsLegacyMsaPassthroughEnabled is a DBO-only property that is only meaningful
+        // when the broker package is available. These tests require the Broker DBO to
+        // override CopyMsalSettableProperties, which will be added once Azure.Identity
+        // is published with the internal virtual method.
+        [Test]
+        [NonParallelizable]
+        [Ignore("Requires Broker DBO override of CopyMsalSettableProperties — see https://github.com/Azure/azure-sdk-for-net/issues/56384")]
+        public void IsLegacyMsaPassthroughEnabled_ConfigSetsFalse()
+        {
+            using (new TestEnvVar(AllNulledEnvVars()))
+            {
+                IConfiguration config = Helper.GetConfiguration();
+                config["MyClient:Credential:IsLegacyMsaPassthroughEnabled"] = "false";
+
+                // Verify the credential is created without error and broker path is enabled.
+                var broker = GetUnderlying(CreateFromConfig(config));
+                Assert.IsTrue(ReadField<bool>(broker, "_isBrokerOptionsEnabled"));
+            }
+        }
+
+        [Test]
+        [NonParallelizable]
+        [Ignore("Requires Broker DBO override of CopyMsalSettableProperties — see https://github.com/Azure/azure-sdk-for-net/issues/56384")]
+        public void IsLegacyMsaPassthroughEnabled_ConfigSetsTrue()
+        {
+            using (new TestEnvVar(AllNulledEnvVars()))
+            {
+                IConfiguration config = Helper.GetConfiguration();
+                config["MyClient:Credential:IsLegacyMsaPassthroughEnabled"] = "true";
+
+                var broker = GetUnderlying(CreateFromConfig(config));
+                Assert.IsTrue(ReadField<bool>(broker, "_isBrokerOptionsEnabled"));
+            }
+        }
+#endif
+
+        // ── AllOptions ─────────────────────────────────────────────────────
 
         [Test]
         [NonParallelizable]
@@ -673,6 +729,9 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
                 config["MyClient:Credential:InteractiveBrowserCredentialClientId"] = "my-client-id";
                 config["MyClient:Credential:AdditionallyAllowedTenants:0"] = "*";
                 config["MyClient:Credential:DisableAutomaticAuthentication"] = "true";
+#if !IDENTITY_TESTS
+                config["MyClient:Credential:UseDefaultBrokerAccount"] = "true";
+#endif
                 config["MyClient:Credential:LoginHint"] = "user@example.com";
                 config["MyClient:Credential:BrowserCustomization:SuccessMessage"] = "<p>OK</p>";
                 config["MyClient:Credential:BrowserCustomization:ErrorMessage"] = "<p>Fail</p>";
@@ -682,24 +741,27 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
                 config["MyClient:Credential:AuthenticationRecord:TenantId"] = "rec-tenant";
                 config["MyClient:Credential:AuthenticationRecord:ClientId"] = "rec-client";
 
-                var ibc = GetUnderlying(CreateFromConfig(config));
+                var broker = GetUnderlying(CreateFromConfig(config));
 
-                Assert.AreEqual(configTenant, ReadProperty<string>(ibc, "TenantId"));
-                Assert.AreEqual("my-client-id", ReadProperty<string>(ibc, "ClientId"));
+                Assert.AreEqual(configTenant, ReadProperty<string>(broker, "TenantId"));
+                Assert.AreEqual("my-client-id", ReadProperty<string>(broker, "ClientId"));
 
-                var tenants = ReadProperty<string[]>(ibc, "AdditionallyAllowedTenantIds");
+                var tenants = ReadProperty<string[]>(broker, "AdditionallyAllowedTenantIds");
                 CollectionAssert.Contains(tenants, "*");
                 CollectionAssert.DoesNotContain(tenants, "env-extra");
 
-                Assert.IsTrue(ReadProperty<bool>(ibc, "DisableAutomaticAuthentication"));
-                Assert.AreEqual("user@example.com", ReadProperty<string>(ibc, "LoginHint"));
+                Assert.IsTrue(ReadProperty<bool>(broker, "DisableAutomaticAuthentication"));
+#if !IDENTITY_TESTS
+                Assert.IsTrue(ReadProperty<bool>(broker, "UseOperatingSystemAccount"));
+#endif
+                Assert.AreEqual("user@example.com", ReadProperty<string>(broker, "LoginHint"));
 
-                var bc = ReadProperty<BrowserCustomizationOptions>(ibc, "BrowserCustomization");
+                var bc = ReadProperty<BrowserCustomizationOptions>(broker, "BrowserCustomization");
                 Assert.IsNotNull(bc);
                 Assert.AreEqual("<p>OK</p>", bc.SuccessMessage);
                 Assert.AreEqual("<p>Fail</p>", bc.ErrorMessage);
 
-                var record = ReadProperty<AuthenticationRecord>(ibc, "Record");
+                var record = ReadProperty<AuthenticationRecord>(broker, "Record");
                 Assert.IsNotNull(record);
                 Assert.AreEqual("user@contoso.com", record.Username);
                 Assert.AreEqual("login.microsoftonline.com", record.Authority);
@@ -717,15 +779,18 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
             {
                 IConfiguration config = Helper.GetConfiguration();
 
-                var ibc = GetUnderlying(CreateFromConfig(config));
+                var broker = GetUnderlying(CreateFromConfig(config));
 
-                Assert.IsNull(ReadProperty<string>(ibc, "TenantId"));
-                Assert.AreEqual(Constants.DeveloperSignOnClientId, ReadProperty<string>(ibc, "ClientId"));
-                Assert.IsEmpty(ReadProperty<string[]>(ibc, "AdditionallyAllowedTenantIds"));
-                Assert.IsFalse(ReadProperty<bool>(ibc, "DisableAutomaticAuthentication"));
-                Assert.IsNull(ReadProperty<string>(ibc, "LoginHint"));
-                Assert.IsNull(ReadProperty<BrowserCustomizationOptions>(ibc, "BrowserCustomization"));
-                Assert.IsNull(ReadProperty<AuthenticationRecord>(ibc, "Record"));
+                Assert.IsNull(ReadProperty<string>(broker, "TenantId"));
+                Assert.AreEqual(Constants.DeveloperSignOnClientId, ReadProperty<string>(broker, "ClientId"));
+                Assert.IsEmpty(ReadProperty<string[]>(broker, "AdditionallyAllowedTenantIds"));
+                Assert.IsFalse(ReadProperty<bool>(broker, "DisableAutomaticAuthentication"));
+#if !IDENTITY_TESTS
+                Assert.IsFalse(ReadProperty<bool>(broker, "UseOperatingSystemAccount"));
+#endif
+                Assert.IsNull(ReadProperty<string>(broker, "LoginHint"));
+                Assert.IsNull(ReadProperty<BrowserCustomizationOptions>(broker, "BrowserCustomization"));
+                Assert.IsNull(ReadProperty<AuthenticationRecord>(broker, "Record"));
             }
         }
     }

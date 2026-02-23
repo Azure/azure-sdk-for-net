@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Azure.Core;
+using Microsoft.Identity.Client;
 
 namespace Azure.Identity
 {
@@ -354,26 +355,8 @@ namespace Azure.Identity
 
             var options = brokerOptions ?? Options.Clone<InteractiveBrowserCredentialOptions>();
 
-            options.TokenCachePersistenceOptions = new TokenCachePersistenceOptions();
-
+            options.TokenCachePersistenceOptions ??= new TokenCachePersistenceOptions();
             options.TenantId = Options.InteractiveBrowserTenantId;
-
-            options.DisableAutomaticAuthentication = Options.DisableAutomaticAuthentication;
-
-            if (!string.IsNullOrEmpty(Options.LoginHint))
-            {
-                options.LoginHint = Options.LoginHint;
-            }
-
-            if (Options.BrowserCustomization != null)
-            {
-                options.BrowserCustomization = Options.BrowserCustomization.Clone();
-            }
-
-            if (Options.AuthenticationRecord != null)
-            {
-                options.AuthenticationRecord = Options.AuthenticationRecord;
-            }
 
             return new InteractiveBrowserCredential(
                 Options.InteractiveBrowserTenantId,
@@ -385,9 +368,17 @@ namespace Azure.Identity
         internal TokenCredential CreateBrokerCredential()
         {
             var options = Options.Clone<DevelopmentBrokerOptions>();
-            options.TokenCachePersistenceOptions = new TokenCachePersistenceOptions();
+            options.TokenCachePersistenceOptions ??= new TokenCachePersistenceOptions();
             options.TenantId = Options.InteractiveBrowserTenantId;
             options.IsChainedCredential = Options.CredentialSource == null;
+            options.ClientId = Options.InteractiveBrowserCredentialClientId ?? Constants.DeveloperSignOnClientId;
+
+            options.CopyMsalSettableProperties(Options);
+
+            if (Options.IsLegacyMsaPassthroughEnabled.HasValue)
+            {
+                options.IsLegacyMsaPassthroughEnabled = Options.IsLegacyMsaPassthroughEnabled;
+            }
 
             return new BrokerCredential(options);
         }

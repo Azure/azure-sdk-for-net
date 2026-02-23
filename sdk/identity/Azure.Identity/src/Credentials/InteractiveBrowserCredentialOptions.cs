@@ -99,11 +99,40 @@ namespace Azure.Identity
             return clone;
         }
 
-        internal void CopyMsalSettableProperties(DefaultAzureCredentialOptions options)
+        /// <summary>
+        /// Copies IBC-relevant properties from a DefaultAzureCredentialOptions source.
+        /// Called by DAC.Clone when the target type is an IBC-derived type.
+        /// </summary>
+        internal virtual void CopyFromDacOptions(DefaultAzureCredentialOptions source)
         {
-            if (this is IMsalSettablePublicClientInitializerOptions thisAsInterface)
+            DisableAutomaticAuthentication = source.DisableAutomaticAuthentication;
+            TokenCachePersistenceOptions = source.TokenCachePersistenceOptions?.Clone();
+            AuthenticationRecord = source.AuthenticationRecord;
+            RedirectUri = source.RedirectUri;
+
+            if (!string.IsNullOrEmpty(source.LoginHint))
             {
-                thisAsInterface.UseDefaultBrokerAccount = options.UseDefaultBrokerAccount;
+                LoginHint = source.LoginHint;
+            }
+
+            if (source.BrowserCustomization != null)
+            {
+                BrowserCustomization = source.BrowserCustomization.Clone();
+            }
+        }
+
+        internal virtual void CopyMsalSettableProperties(TokenCredentialOptions source)
+        {
+            if (source != null && this is IMsalSettablePublicClientInitializerOptions target)
+            {
+                if (source is DefaultAzureCredentialOptions dacOptions)
+                {
+                    target.UseDefaultBrokerAccount = dacOptions.UseDefaultBrokerAccount;
+                }
+                else if (source is IMsalPublicClientInitializerOptions msalSource)
+                {
+                    target.UseDefaultBrokerAccount = msalSource.UseDefaultBrokerAccount;
+                }
             }
         }
     }
