@@ -36,6 +36,8 @@ namespace Azure.AI.ContentUnderstanding
         //   - Hiding the stringEncoding parameter. We're making its value default to 'utf16' (appropriate for .NET).
         //   - For AnalyzeBinary methods: Automatically determining contentType from BinaryData.MediaType if not
         //     explicitly provided, defaulting to "application/octet-stream" if neither is available.
+        //   - Adding AnalyzeBinary overloads that accept ContentRange instead of string for a self-documenting
+        //     range API (e.g., ContentRange.Pages(1, 3) instead of "1-3").
         //   - We're also overriding the protocol methods to wrap the result in OperationWithId
         //     so that the operation ID is accessible via the Id property.
         private const string DefaultStringEncoding = "utf16";
