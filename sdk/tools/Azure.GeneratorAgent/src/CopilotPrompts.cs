@@ -22,9 +22,11 @@ internal static class CopilotPrompts
             CRITICAL RULES - YOU MUST FOLLOW THESE:
             1. NEVER modify, edit, or create files under any "Generated" folder or path containing "Generated".
             2. If an error is in a Generated file, you must fix it by creating/editing a CUSTOMIZATION file instead.
-            3. Do not expect all errors to be fixed simply by modifying custom files - you will need to regenerate code after making fixes. You 
-               are being run in a loop where after you make fixes, code generation will be re-run. When you are finished fixing errors, and require
-               a regeneration, end your current fix iteration.
+            3. Understand the fix-and-regenerate cycle:
+               a. Not all errors can be fixed simply by modifying custom files
+               b. You will need to regenerate code after making fixes
+               c. You are being run in a loop where code generation re-runs after each fix iteration
+               d. When you finish fixing errors and require regeneration, end your current fix iteration
             4. Common fix patterns for Generated file errors:
                - Create a partial class in the non-Generated folder to extend the generated type
                - Add missing interface implementations in customization files
@@ -79,6 +81,12 @@ internal static class CopilotPrompts
             4. If in Generated file: create/edit a customization file in the parallel non-Generated location
             5. Use edit or create to make your fixes
             6. Only fix files that are NOT in Generated folders
+
+            GENERATOR BUG IDENTIFICATION:
+            If you encounter errors that appear to be generator bugs (syntax errors in Generated code, missing generated types that cannot be fixed through customization, TypeSpec compilation failures), document and report them instead of attempting fixes:
+            - Gather error details, reproduction steps, and expected behavior
+            - Report to the user with clear repro instructions
+            - Do not attempt to manually fix generator-produced code
             """
 ;
     }
@@ -173,6 +181,34 @@ internal static class CopilotPrompts
             - For PowerShell scripts, find the azure-sdk-for-net root directory first (contains 'eng' folder and 'global.json')
             - Run PowerShell scripts from the repository root, not the project directory
             - Be extremely verbose about your reasoning and actions
+
+            ERROR HANDLING STRATEGY:
+            When encountering multiple build errors:
+            1. DO NOT try to fix all errors at once
+            2. Fix errors in small batches (3-5 related errors maximum)
+            3. After each batch of fixes, immediately re-run the build command
+            4. Some errors may disappear after fixing others due to dependencies
+            5. This iterative approach prevents confusion and allows for better error resolution
+
+            GENERATOR BUG DIAGNOSIS:
+            When encountering errors, evaluate if they might be generator bugs by looking for these patterns:
+            - Generated code with syntax errors or compilation issues that cannot be fixed by customization files
+            - Missing or incorrectly generated types, methods, or properties in Generated folder
+            - Generated code that violates C# language rules or .NET conventions
+            - TypeSpec compilation errors or issues with the generator itself
+            - Generated code that produces runtime exceptions or unexpected behavior patterns
+            
+            If you suspect a generator bug:
+            1. ANNOUNCE: "Potential generator bug detected - documenting issue for reporting"
+            2. Gather the following information:
+               - Specific error messages and stack traces
+               - The generated code that appears incorrect
+               - Steps to reproduce the issue (project path, build commands used)
+               - Expected vs actual generated code behavior
+            3. REPORT the bug details to the user instead of attempting further fixes
+            4. ANNOUNCE: "Generator bug documented and reported - manual intervention may be required"
+
+            If the issue can be resolved through customization files, continue with normal error fixing procedures.
 
             Start now. Remember to announce every command before you run it!
             """;
