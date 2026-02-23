@@ -10,8 +10,8 @@ namespace Azure.AI.ContentUnderstanding
 {
     /// <summary>
     /// Represents a range of content to analyze. Use this type with the
-    /// <see cref="ContentUnderstandingClient.AnalyzeBinaryAsync(WaitUntil, string, BinaryData, ContentRange, string, ProcessingLocation?, System.Threading.CancellationToken)"/>
-    /// overload for a self-documenting API.
+    /// <see cref="ContentUnderstandingClient.AnalyzeBinaryAsync(WaitUntil, string, BinaryData, ContentRange?, string, ProcessingLocation?, System.Threading.CancellationToken)"/>
+    /// method for a self-documenting API.
     /// <para>
     /// For documents, ranges use 1-based page numbers (e.g., <c>"1-3"</c>, <c>"5"</c>, <c>"9-"</c>).
     /// For audio/video, ranges use integer milliseconds (e.g., <c>"0-5000"</c>, <c>"5000-"</c>).
