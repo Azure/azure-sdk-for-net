@@ -135,6 +135,21 @@ namespace Azure.Identity
                 IsAzureProxyEnabled = isAzureProxyEnabled;
             }
 
+            if (section[nameof(AzurePipelinesClientId)] is string azurePipelinesClientId)
+            {
+                AzurePipelinesClientId = azurePipelinesClientId;
+            }
+
+            if (section[nameof(AzurePipelinesServiceConnectionId)] is string azurePipelinesServiceConnectionId)
+            {
+                AzurePipelinesServiceConnectionId = azurePipelinesServiceConnectionId;
+            }
+
+            if (section[nameof(AzurePipelinesSystemAccessToken)] is string azurePipelinesSystemAccessToken)
+            {
+                AzurePipelinesSystemAccessToken = azurePipelinesSystemAccessToken;
+            }
+
             if (bool.TryParse(section[nameof(DisableAutomaticAuthentication)], out bool disableAutomaticAuthentication))
             {
                 DisableAutomaticAuthentication = disableAutomaticAuthentication;
@@ -196,6 +211,7 @@ namespace Azure.Identity
             "ManagedIdentity" => Constants.ManagedIdentityCredential,
             "InteractiveBrowser" => Constants.InteractiveBrowserCredential,
             "Broker" => Constants.BrokerCredential,
+            "AzurePipelines" => Constants.AzurePipelinesCredential,
             "ApiKey" => Constants.ApiKeyCredential,
             // Accept already-converted values (e.g. from Clone)
             Constants.VisualStudioCredential or
@@ -208,6 +224,7 @@ namespace Azure.Identity
             Constants.ManagedIdentityCredential or
             Constants.InteractiveBrowserCredential or
             Constants.BrokerCredential or
+            Constants.AzurePipelinesCredential or
             Constants.ApiKeyCredential => value,
             _ => throw new InvalidOperationException($"Unsupported CredentialSource found in configuration: {value}."),
         };
@@ -498,6 +515,26 @@ namespace Azure.Identity
 
         internal bool IsAzureProxyEnabled { get; set; }
 
+        /// <summary>
+        /// Specifies the client ID of the application the Azure Pipelines credential will authenticate.
+        /// </summary>
+        internal string AzurePipelinesClientId { get; set; }
+
+        /// <summary>
+        /// Specifies the service connection ID for the Azure Pipelines credential.
+        /// </summary>
+        internal string AzurePipelinesServiceConnectionId { get; set; }
+
+        /// <summary>
+        /// Specifies the System.AccessToken value for the Azure Pipelines credential.
+        /// </summary>
+        internal string AzurePipelinesSystemAccessToken { get; set; }
+
+        /// <summary>
+        /// Specifies token cache persistence options for credentials that support it.
+        /// </summary>
+        internal TokenCachePersistenceOptions TokenCachePersistenceOptions { get; set; }
+
         internal bool DisableAutomaticAuthentication { get; set; }
 
         internal string LoginHint { get; set; }
@@ -554,6 +591,10 @@ namespace Azure.Identity
                     dacClone.Subscription = Subscription;
                 }
                 dacClone.IsAzureProxyEnabled = IsAzureProxyEnabled;
+                dacClone.AzurePipelinesClientId = AzurePipelinesClientId;
+                dacClone.AzurePipelinesServiceConnectionId = AzurePipelinesServiceConnectionId;
+                dacClone.AzurePipelinesSystemAccessToken = AzurePipelinesSystemAccessToken;
+                dacClone.TokenCachePersistenceOptions = TokenCachePersistenceOptions;
                 dacClone.DisableAutomaticAuthentication = DisableAutomaticAuthentication;
                 dacClone.LoginHint = LoginHint;
                 if (BrowserCustomization != null)

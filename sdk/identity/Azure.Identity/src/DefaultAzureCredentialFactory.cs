@@ -234,7 +234,7 @@ namespace Azure.Identity
         /// <returns>Array containing the specific TokenCredential instance.</returns>
         private TokenCredential[] CreateSpecificCredentialChain(string credentialSelection, string environmentVariableName)
         {
-            string validCredentials = $"'{Constants.DevCredentials}', '{Constants.ProdCredentials}', '{Constants.VisualStudioCredential}', '{Constants.VisualStudioCodeCredential}', '{Constants.AzureCliCredential}', '{Constants.AzurePowerShellCredential}', '{Constants.AzureDeveloperCliCredential}', '{Constants.EnvironmentCredential}', '{Constants.WorkloadIdentityCredential}', '{Constants.ManagedIdentityCredential}', '{Constants.InteractiveBrowserCredential}', '{Constants.BrokerCredential}'";
+            string validCredentials = $"'{Constants.DevCredentials}', '{Constants.ProdCredentials}', '{Constants.VisualStudioCredential}', '{Constants.VisualStudioCodeCredential}', '{Constants.AzureCliCredential}', '{Constants.AzurePowerShellCredential}', '{Constants.AzureDeveloperCliCredential}', '{Constants.EnvironmentCredential}', '{Constants.WorkloadIdentityCredential}', '{Constants.ManagedIdentityCredential}', '{Constants.InteractiveBrowserCredential}', '{Constants.BrokerCredential}', '{Constants.AzurePipelinesCredential}'";
 
             return credentialSelection switch
             {
@@ -248,6 +248,7 @@ namespace Azure.Identity
                 Constants.ManagedIdentityCredential => [CreateManagedIdentityCredential(false)],
                 Constants.InteractiveBrowserCredential => [CreateInteractiveBrowserCredential()],
                 Constants.BrokerCredential => [CreateBrokerCredential()],
+                Constants.AzurePipelinesCredential => [CreateAzurePipelinesCredential()],
                 _ => throw new InvalidOperationException($"Invalid value for environment variable {environmentVariableName}: {credentialSelection}. Valid values are {validCredentials}.{_troubleshootingMessage}")
             };
         }
@@ -442,6 +443,28 @@ namespace Azure.Identity
             options.IsChainedCredential = Options.CredentialSource == null;
 
             return new AzurePowerShellCredential(options, Pipeline, default);
+        }
+
+        public virtual TokenCredential CreateAzurePipelinesCredential()
+        {
+            var options = Options.Clone<AzurePipelinesCredentialOptions>();
+
+            if (Options.TokenCachePersistenceOptions != null)
+            {
+                options.TokenCachePersistenceOptions = Options.TokenCachePersistenceOptions;
+            }
+
+            var tenantId = Options.TenantId;
+            var clientId = Options.AzurePipelinesClientId;
+            var serviceConnectionId = Options.AzurePipelinesServiceConnectionId;
+            var systemAccessToken = Options.AzurePipelinesSystemAccessToken;
+
+            Argument.AssertNotNullOrEmpty(tenantId, nameof(tenantId));
+            Argument.AssertNotNullOrEmpty(clientId, nameof(clientId));
+            Argument.AssertNotNullOrEmpty(serviceConnectionId, nameof(serviceConnectionId));
+            Argument.AssertNotNullOrEmpty(systemAccessToken, nameof(systemAccessToken));
+
+            return new AzurePipelinesCredential(tenantId, clientId, serviceConnectionId, systemAccessToken, options);
         }
 
         /// <summary>
