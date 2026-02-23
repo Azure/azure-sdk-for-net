@@ -65,7 +65,5 @@ namespace Azure.AI.ContentUnderstanding
         /// <summary> The MIME type of the input content.  Ex. application/pdf, image/jpeg, etc. </summary>
         public string MimeType { get; set; }
 
-        /// <summary> Range of the input to analyze (ex. `1-3,5,9-`).  Document content uses 1-based page numbers, while audio visual content uses integer milliseconds. </summary>
-        public string InputRange { get; set; }
     }
 }
