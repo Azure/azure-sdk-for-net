@@ -35,7 +35,10 @@ namespace Azure.AI.ContentUnderstanding
             uri.AppendPath("/analyzers/", false);
             uri.AppendPath(analyzerId, true);
             uri.AppendPath(":analyze", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (stringEncoding != null)
             {
                 uri.AppendQuery("stringEncoding", stringEncoding, true);
@@ -62,7 +65,10 @@ namespace Azure.AI.ContentUnderstanding
             uri.AppendPath("/analyzers/", false);
             uri.AppendPath(analyzerId, true);
             uri.AppendPath(":analyzeBinary", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (stringEncoding != null)
             {
                 uri.AppendQuery("stringEncoding", stringEncoding, true);
@@ -93,12 +99,15 @@ namespace Azure.AI.ContentUnderstanding
             uri.AppendPath("/analyzers/", false);
             uri.AppendPath(analyzerId, true);
             uri.AppendPath(":copy", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (allowReplace != null)
             {
                 uri.AppendQuery("allowReplace", TypeFormatters.ConvertToString(allowReplace), true);
             }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
@@ -115,7 +124,10 @@ namespace Azure.AI.ContentUnderstanding
             uri.AppendPath("/contentunderstanding", false);
             uri.AppendPath("/analyzers/", false);
             uri.AppendPath(analyzerId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (allowReplace != null)
             {
                 uri.AppendQuery("allowReplace", TypeFormatters.ConvertToString(allowReplace), true);
@@ -137,7 +149,10 @@ namespace Azure.AI.ContentUnderstanding
             uri.AppendPath("/contentunderstanding", false);
             uri.AppendPath("/analyzers/", false);
             uri.AppendPath(analyzerId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
@@ -152,7 +167,10 @@ namespace Azure.AI.ContentUnderstanding
             uri.AppendPath("/contentunderstanding", false);
             uri.AppendPath("/analyzerResults/", false);
             uri.AppendPath(operationId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
@@ -167,7 +185,10 @@ namespace Azure.AI.ContentUnderstanding
             uri.AppendPath("/contentunderstanding", false);
             uri.AppendPath("/analyzers/", false);
             uri.AppendPath(analyzerId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -182,7 +203,10 @@ namespace Azure.AI.ContentUnderstanding
             uri.Reset(_endpoint);
             uri.AppendPath("/contentunderstanding", false);
             uri.AppendPath("/defaults", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -200,7 +224,10 @@ namespace Azure.AI.ContentUnderstanding
             uri.AppendPath(analyzerId, true);
             uri.AppendPath("/operations/", false);
             uri.AppendPath(operationId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -216,7 +243,10 @@ namespace Azure.AI.ContentUnderstanding
             uri.AppendPath("/contentunderstanding", false);
             uri.AppendPath("/analyzerResults/", false);
             uri.AppendPath(operationId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -234,7 +264,10 @@ namespace Azure.AI.ContentUnderstanding
             uri.AppendPath(operationId, true);
             uri.AppendPath("/files/", false);
             uri.AppendPath(path, false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -251,7 +284,10 @@ namespace Azure.AI.ContentUnderstanding
             uri.AppendPath("/analyzers/", false);
             uri.AppendPath(analyzerId, true);
             uri.AppendPath(":grantCopyAuthorization", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -268,7 +304,10 @@ namespace Azure.AI.ContentUnderstanding
             uri.Reset(_endpoint);
             uri.AppendPath("/contentunderstanding", false);
             uri.AppendPath("/analyzers", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -288,7 +327,10 @@ namespace Azure.AI.ContentUnderstanding
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -304,7 +346,10 @@ namespace Azure.AI.ContentUnderstanding
             uri.AppendPath("/contentunderstanding", false);
             uri.AppendPath("/analyzers/", false);
             uri.AppendPath(analyzerId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -321,7 +366,10 @@ namespace Azure.AI.ContentUnderstanding
             uri.Reset(_endpoint);
             uri.AppendPath("/contentunderstanding", false);
             uri.AppendPath("/defaults", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;

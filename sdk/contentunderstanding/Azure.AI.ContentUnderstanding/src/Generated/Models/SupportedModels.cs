@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.AI.ContentUnderstanding
 {
@@ -17,10 +18,12 @@ namespace Azure.AI.ContentUnderstanding
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SupportedModels"/>. </summary>
-        internal SupportedModels()
+        /// <param name="completion"> Chat completion models supported by the analyzer. </param>
+        /// <param name="embedding"> Embedding models supported by the analyzer. </param>
+        internal SupportedModels(IEnumerable<string> completion, IEnumerable<string> embedding)
         {
-            Completion = new ChangeTrackingList<string>();
-            Embedding = new ChangeTrackingList<string>();
+            Completion = completion.ToList();
+            Embedding = embedding.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="SupportedModels"/>. </summary>
