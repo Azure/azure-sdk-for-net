@@ -93,6 +93,7 @@ public class AzureClientGenerator : ScmCodeModelGenerator
         AddVisitor(new ClientRequestIdHeaderVisitor());
         AddVisitor(new SystemTextJsonConverterVisitor());
         AddVisitor(new MultiPartFormDataVisitor());
+        AddVisitor(new DictionaryHeadersVisitor());
         AddVisitor(new InvokeDelimitedMethodVisitor());
         AddVisitor(new XmlSerializableVisitor());
     }
