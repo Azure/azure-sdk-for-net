@@ -195,30 +195,30 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
         #endregion
 
-        #region AnalysisInput.InputRange (ContentRange? property)
+        #region AnalysisInput.ContentRange (ContentRange? property)
 
         [Test]
-        public void AnalysisInput_InputRange_AcceptsContentRange()
+        public void AnalysisInput_ContentRange_AcceptsContentRange()
         {
             var input = new AnalysisInput();
-            input.InputRange = ContentRange.Pages(1, 3);
-            Assert.AreEqual("1-3", input.InputRange?.ToString());
+            input.ContentRange = ContentRange.Pages(1, 3);
+            Assert.AreEqual("1-3", input.ContentRange?.ToString());
         }
 
         [Test]
-        public void AnalysisInput_InputRange_NullByDefault()
+        public void AnalysisInput_ContentRange_NullByDefault()
         {
             var input = new AnalysisInput();
-            Assert.IsNull(input.InputRange);
+            Assert.IsNull(input.ContentRange);
         }
 
         [Test]
-        public void AnalysisInput_InputRange_RoundTripsContentRange()
+        public void AnalysisInput_ContentRange_RoundTripsContentRange()
         {
             var input = new AnalysisInput();
             var range = ContentRange.Combine(ContentRange.Pages(1, 3), ContentRange.Page(5));
-            input.InputRange = range;
-            Assert.AreEqual(range, input.InputRange);
+            input.ContentRange = range;
+            Assert.AreEqual(range, input.ContentRange);
         }
 
         #endregion
