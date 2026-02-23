@@ -61,7 +61,7 @@ namespace Azure.AI.ContentUnderstanding
             return message;
         }
 
-        internal HttpMessage CreateAnalyzeBinaryRequest(string analyzerId, string contentType, RequestContent content, string stringEncoding, string processingLocation, string inputRange, Guid? clientRequestId, RequestContext context)
+        internal HttpMessage CreateAnalyzeBinaryRequest(string analyzerId, string contentType, RequestContent content, string stringEncoding, string processingLocation, string contentRange, Guid? clientRequestId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -81,9 +81,9 @@ namespace Azure.AI.ContentUnderstanding
             {
                 uri.AppendQuery("processingLocation", processingLocation, true);
             }
-            if (inputRange != null)
+            if (contentRange != null)
             {
-                uri.AppendQuery("range", inputRange, true);
+                uri.AppendQuery("range", contentRange, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
