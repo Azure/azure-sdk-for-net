@@ -1313,16 +1313,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="id"> Unique identifier for the feature. </param>
         /// <param name="boundingBox"> Bounding box coordinates for the feature. </param>
         /// <returns> A new <see cref="PlanetaryComputer.TilerInfoGeoJsonFeature"/> instance for mocking. </returns>
-        public static TilerInfoGeoJsonFeature TilerInfoGeoJsonFeature(FeatureType @type = default, GeoJsonGeometry geometry = default, IDictionary<string, TilerInfo> properties = default, string id = default, float? boundingBox = default)
+        public static TilerInfoGeoJsonFeature TilerInfoGeoJsonFeature(FeatureType @type = default, GeoJsonGeometry geometry = default, IDictionary<string, TilerInfo> properties = default, string id = default, IEnumerable<float> boundingBox = default)
         {
             properties ??= new ChangeTrackingDictionary<string, TilerInfo>();
+            boundingBox ??= new ChangeTrackingList<float>();
 
             return new TilerInfoGeoJsonFeature(
                 @type,
                 geometry,
                 properties,
                 id,
-                boundingBox,
+                boundingBox.ToList(),
                 additionalBinaryDataProperties: null);
         }
 
