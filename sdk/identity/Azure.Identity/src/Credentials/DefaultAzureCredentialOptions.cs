@@ -530,11 +530,6 @@ namespace Azure.Identity
         /// </summary>
         internal string AzurePipelinesSystemAccessToken { get; set; }
 
-        /// <summary>
-        /// Specifies token cache persistence options for credentials that support it.
-        /// </summary>
-        internal TokenCachePersistenceOptions TokenCachePersistenceOptions { get; set; }
-
         internal bool DisableAutomaticAuthentication { get; set; }
 
         internal string LoginHint { get; set; }
@@ -542,6 +537,8 @@ namespace Azure.Identity
         internal BrowserCustomizationOptions BrowserCustomization { get; set; }
 
         internal AuthenticationRecord AuthenticationRecord { get; set; }
+
+        internal TokenCachePersistenceOptions TokenCachePersistenceOptions { get; set; }
 
         internal bool UseDefaultBrokerAccount { get; set; }
 
@@ -594,7 +591,6 @@ namespace Azure.Identity
                 dacClone.AzurePipelinesClientId = AzurePipelinesClientId;
                 dacClone.AzurePipelinesServiceConnectionId = AzurePipelinesServiceConnectionId;
                 dacClone.AzurePipelinesSystemAccessToken = AzurePipelinesSystemAccessToken;
-                dacClone.TokenCachePersistenceOptions = TokenCachePersistenceOptions?.Clone();
                 dacClone.DisableAutomaticAuthentication = DisableAutomaticAuthentication;
                 dacClone.LoginHint = LoginHint;
                 if (BrowserCustomization != null)
@@ -602,6 +598,7 @@ namespace Azure.Identity
                     dacClone.BrowserCustomization = BrowserCustomization.Clone();
                 }
                 dacClone.AuthenticationRecord = AuthenticationRecord;
+                dacClone.TokenCachePersistenceOptions = TokenCachePersistenceOptions?.Clone();
                 dacClone.UseDefaultBrokerAccount = UseDefaultBrokerAccount;
             }
 
