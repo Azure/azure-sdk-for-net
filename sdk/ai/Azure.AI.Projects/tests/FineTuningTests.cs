@@ -750,6 +750,7 @@ public class FineTuningTests : ProjectsClientTestBase
         Assert.That(checkpointsList[0].StepNumber, Is.GreaterThan(0));
     }
 
+    [Ignore("The service for fine tuning is only available internally.")]
     [RecordedTest]
     public async Task Test_FineTuning_Inference_With_Existing_Deployment()
     {

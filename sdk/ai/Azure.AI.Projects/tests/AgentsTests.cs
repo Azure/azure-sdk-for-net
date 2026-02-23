@@ -1118,8 +1118,9 @@ public class AgentsTests : AgentsTestBase
         };
     }
 
+    [Ignore("Blocked by ADO Items 4806071, 5028868 and 5028464.")]
     [RecordedTest]
-    // [TestCase(true)] File upload mechanism is blocked by the Bug 4806071 (ADO)
+    [TestCase(true)] //File upload mechanism is blocked by the Bug 4806071 (ADO)
     [TestCase(false)]
     public async Task TestComputerUse(bool useFileUpload)
     {
