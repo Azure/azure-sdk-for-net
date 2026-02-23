@@ -79,7 +79,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="ArgumentNullException"><paramref name="settings"/> is null, or the endpoint or credential in the settings is null.</exception>
         [Experimental("SCME0002")]
         public SecretClient(SecretClientSettings settings)
-            : this(settings?.VaultUri, (TokenCredential)settings?.CredentialProvider, settings?.Options)
+            : this(settings?.VaultUri, settings?.CredentialProvider as TokenCredential, settings?.Options)
         {
         }
 
