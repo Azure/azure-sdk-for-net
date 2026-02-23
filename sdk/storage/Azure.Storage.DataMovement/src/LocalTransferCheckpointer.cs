@@ -21,7 +21,7 @@ namespace Azure.Storage.DataMovement
     /// Creates a checkpointer which uses a locally stored file to obtain
     /// the information in order to resume transfers in the future.
     /// </summary>
-    internal class LocalTransferCheckpointer : SerializerTransferCheckpointer
+    internal class LocalTransferCheckpointer : SerializerTransferCheckpointer, IDisposable
     {
         internal string _pathToCheckpointer;
 
@@ -29,6 +29,7 @@ namespace Azure.Storage.DataMovement
         /// Stores references to the memory mapped files stored by IDs.
         /// </summary>
         internal readonly ConcurrentDictionary<string, JobPlanFile> _transferStates;
+        internal bool _disposed;
 
         /// <summary>
         /// Initializes a new instance of <see cref="LocalTransferCheckpointer"/> class.
@@ -36,6 +37,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="folderPath">Path to the folder containing the checkpointing information to resume from.</param>
         public LocalTransferCheckpointer(string folderPath)
         {
+            _disposed = false;
             _transferStates = new ConcurrentDictionary<string, JobPlanFile>();
             if (string.IsNullOrEmpty(folderPath))
             {
@@ -54,6 +56,22 @@ namespace Azure.Storage.DataMovement
             {
                 _pathToCheckpointer = folderPath;
             }
+        }
+
+        public void Dispose()
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            foreach (var kvp in _transferStates)
+            {
+                DisposeOfJobPartPlanAndPlanFile(kvp.Value);
+            }
+            _transferStates.Clear();
+
+            _disposed = true;
         }
 
         private bool TryGetJobPlanFile(string transferId, out JobPlanFile result)
@@ -267,19 +285,24 @@ namespace Azure.Storage.DataMovement
 
             List<string> filesToDelete = new List<string>();
 
-            if (TryGetJobPlanFile(transferId, out JobPlanFile jobPlanFile))
-            {
-                filesToDelete.Add(jobPlanFile.FilePath);
-            }
-            else
+            if (!TryGetJobPlanFile(transferId, out JobPlanFile jobPlanFile))
             {
                 return Task.FromResult(false);
             }
 
+            filesToDelete.Add(jobPlanFile.FilePath);
+
+            // Dispose of Job Plan Part Files and after the Job Plan File
             foreach (KeyValuePair<int, JobPartPlanFile> jobPartPair in jobPlanFile.JobParts)
             {
                 filesToDelete.Add(jobPartPair.Value.FilePath);
+                jobPartPair.Value.Dispose();
             }
+
+            jobPlanFile.Dispose();
+
+            // Remove from dictionary after disposing
+            _transferStates.TryRemove(transferId, out _);
 
             bool result = true;
             foreach (string file in filesToDelete)
@@ -302,8 +325,6 @@ namespace Azure.Storage.DataMovement
                     result = false;
                 }
             }
-
-            _transferStates.TryRemove(transferId, out _);
             return Task.FromResult(result);
         }
 
@@ -335,13 +356,6 @@ namespace Azure.Storage.DataMovement
                 return;
             }
 
-            // if paused or other completion state, remove the memory cache but still write state to the plan file for later resume
-            if (status.State == TransferState.Completed || status.State == TransferState.Paused)
-            {
-                // If TryRemove fails, it's fine it may be because it does not already exist or already has been removed
-                _transferStates.TryRemove(transferId, out _);
-            }
-
             await jobPlanFile.WriteLock.WaitAsync(cancellationToken).ConfigureAwait(false);
             try
             {
@@ -355,6 +369,16 @@ namespace Azure.Storage.DataMovement
             finally
             {
                 jobPlanFile.WriteLock.Release();
+            }
+
+            // if paused or other completion state, remove the memory cache but still write state to the plan file for later resume
+            if (status.State == TransferState.Completed || status.State == TransferState.Paused)
+            {
+                // If TryRemove fails, it's fine it may be because it does not already exist or already has been removed
+                if (_transferStates.TryRemove(transferId, out JobPlanFile removedFile))
+                {
+                    DisposeOfJobPartPlanAndPlanFile(removedFile);
+                }
             }
         }
 
@@ -398,6 +422,11 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         private void RefreshCache()
         {
+            // Dispose all existing items, then clear _transferSates dicitonary
+            foreach (var planState in _transferStates)
+            {
+                DisposeOfJobPartPlanAndPlanFile(planState.Value);
+            }
             _transferStates.Clear();
 
             // First, retrieve all valid job plan files
@@ -440,7 +469,11 @@ namespace Azure.Storage.DataMovement
         private void RefreshCache(string transferId)
         {
             // If TryRemove fails, it's fine it may be because it does not already exist or already has been removed
-            _transferStates.TryRemove(transferId, out _);
+            if (_transferStates.TryRemove(transferId, out JobPlanFile existingFile))
+            {
+                DisposeOfJobPartPlanAndPlanFile(existingFile);
+            }
+
             JobPlanFile jobPlanFile = JobPlanFile.LoadExistingJobPlanFile(_pathToCheckpointer, transferId);
             if (!File.Exists(jobPlanFile.FilePath))
             {
@@ -487,6 +520,17 @@ namespace Azure.Storage.DataMovement
             {
                 throw Errors.CollisionJobPlanFile(transferId);
             }
+        }
+
+        private void DisposeOfJobPartPlanAndPlanFile(JobPlanFile jobPlanFile)
+        {
+            // Dispose of all parts
+            foreach (var partKvp in jobPlanFile.JobParts)
+            {
+                partKvp.Value.Dispose();
+            }
+            // Dispose the plan file
+            jobPlanFile.Dispose();
         }
     }
 }
