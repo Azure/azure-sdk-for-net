@@ -286,7 +286,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                Response response = await GetTaskFilePropertiesInternalAsync(jobId, taskId, filePath, timeOutInSeconds, ocpdate, null, null).ConfigureAwait(false);
+                Response response = await GetTaskFilePropertiesInternalAsync(jobId, taskId, filePath, timeOutInSeconds, ocpdate, null, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
                 return Response.FromValue(BatchFileProperties.FromResponse(response), response);
             }
             catch (Exception e)
@@ -424,7 +424,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                Response response = GetNodeFilePropertiesInternal(poolId, nodeId, filePath, timeOutInSeconds, ocpdate, null, null);
+                Response response = GetNodeFilePropertiesInternal(poolId, nodeId, filePath, timeOutInSeconds, ocpdate, null, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
                 return Response.FromValue(BatchFileProperties.FromResponse(response), response);
             }
             catch (Exception e)
