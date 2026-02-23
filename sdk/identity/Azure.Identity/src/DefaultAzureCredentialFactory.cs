@@ -447,6 +447,15 @@ namespace Azure.Identity
 
         public virtual TokenCredential CreateAzurePipelinesCredential()
         {
+            if (Options.CredentialSource == null)
+            {
+                throw new InvalidOperationException(
+                    "AzurePipelinesCredential is not supported via the AZURE_CREDENTIAL environment variable. " +
+                    "Use IConfiguration-based credential selection with DefaultAzureCredentialOptions to configure AzurePipelinesCredential, " +
+                    "as it requires additional properties (AzurePipelinesClientId, AzurePipelinesServiceConnectionId, AzurePipelinesSystemAccessToken) " +
+                    "that cannot be specified through environment variables.");
+            }
+
             var options = Options.Clone<AzurePipelinesCredentialOptions>();
 
             if (Options.TokenCachePersistenceOptions != null)
