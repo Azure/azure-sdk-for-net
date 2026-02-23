@@ -318,10 +318,6 @@ namespace Azure.Identity
             {
                 miOptions.ManagedIdentityId = ManagedIdentityId.FromUserAssignedResourceId(options.ManagedIdentityResourceId);
             }
-            else if (!string.IsNullOrEmpty(options.ManagedIdentityObjectId))
-            {
-                miOptions.ManagedIdentityId = ManagedIdentityId.FromUserAssignedObjectId(options.ManagedIdentityObjectId);
-            }
             else
             {
                 miOptions.ManagedIdentityId = ManagedIdentityId.SystemAssigned;
@@ -443,7 +439,7 @@ namespace Azure.Identity
                 throw new InvalidOperationException(
                     "AzurePipelinesCredential is not supported via the AZURE_TOKEN_CREDENTIALS environment variable. " +
                     "Use IConfiguration-based credential selection with DefaultAzureCredentialOptions to configure AzurePipelinesCredential, " +
-                    "as it requires additional properties (AzurePipelinesClientId, AzurePipelinesServiceConnectionId, AzurePipelinesSystemAccessToken) " +
+                    "as it requires additional properties (ClientId, AzurePipelinesServiceConnectionId, AzurePipelinesSystemAccessToken) " +
                     "that cannot be specified through environment variables.");
             }
 
@@ -455,7 +451,7 @@ namespace Azure.Identity
             }
 
             var tenantId = Options.TenantId;
-            var clientId = Options.AzurePipelinesClientId;
+            var clientId = Options.ClientId;
             var serviceConnectionId = Options.AzurePipelinesServiceConnectionId;
             var systemAccessToken = Options.AzurePipelinesSystemAccessToken;
 

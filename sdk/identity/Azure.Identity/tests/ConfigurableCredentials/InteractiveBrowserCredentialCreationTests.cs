@@ -100,7 +100,7 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
             using (new TestEnvVar(AllNulledEnvVars()))
             {
                 IConfiguration config = Helper.GetConfiguration();
-                config["MyClient:Credential:InteractiveBrowserCredentialClientId"] = "my-client-id";
+                config["MyClient:Credential:ClientId"] = "my-client-id";
 
                 var ibc = GetUnderlying(CreateFromConfig(config));
                 Assert.AreEqual("my-client-id", ReadProperty<string>(ibc, "ClientId"));
@@ -670,7 +670,7 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
             {
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:TenantId"] = configTenant;
-                config["MyClient:Credential:InteractiveBrowserCredentialClientId"] = "my-client-id";
+                config["MyClient:Credential:ClientId"] = "my-client-id";
                 config["MyClient:Credential:AdditionallyAllowedTenants:0"] = "*";
                 config["MyClient:Credential:DisableAutomaticAuthentication"] = "true";
                 config["MyClient:Credential:LoginHint"] = "user@example.com";

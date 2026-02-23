@@ -48,7 +48,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.AzurePipelines
             string systemAccessToken = "test-token")
         {
             config["MyClient:Credential:TenantId"] = tenantId;
-            config["MyClient:Credential:AzurePipelinesClientId"] = clientId;
+            config["MyClient:Credential:ClientId"] = clientId;
             config["MyClient:Credential:AzurePipelinesServiceConnectionId"] = serviceConnectionId;
             config["MyClient:Credential:AzurePipelinesSystemAccessToken"] = systemAccessToken;
         }
@@ -85,7 +85,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.AzurePipelines
             {
                 IConfiguration config = Helper.GetConfiguration();
                 // TenantId intentionally not set in config — should fall back to env var.
-                config["MyClient:Credential:AzurePipelinesClientId"] = "test-client";
+                config["MyClient:Credential:ClientId"] = "test-client";
                 config["MyClient:Credential:AzurePipelinesServiceConnectionId"] = "test-connection";
                 config["MyClient:Credential:AzurePipelinesSystemAccessToken"] = "test-token";
 
@@ -142,7 +142,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.AzurePipelines
             {
                 IConfiguration config = Helper.GetConfiguration();
                 // TenantId not set in config and env var is null.
-                config["MyClient:Credential:AzurePipelinesClientId"] = "test-client";
+                config["MyClient:Credential:ClientId"] = "test-client";
                 config["MyClient:Credential:AzurePipelinesServiceConnectionId"] = "test-connection";
                 config["MyClient:Credential:AzurePipelinesSystemAccessToken"] = "test-token";
 
@@ -159,7 +159,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.AzurePipelines
             {
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:TenantId"] = "test-tenant";
-                // AzurePipelinesClientId not set.
+                // ClientId not set.
                 config["MyClient:Credential:AzurePipelinesServiceConnectionId"] = "test-connection";
                 config["MyClient:Credential:AzurePipelinesSystemAccessToken"] = "test-token";
 
@@ -176,7 +176,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.AzurePipelines
             {
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:TenantId"] = "test-tenant";
-                config["MyClient:Credential:AzurePipelinesClientId"] = "test-client";
+                config["MyClient:Credential:ClientId"] = "test-client";
                 // AzurePipelinesServiceConnectionId not set.
                 config["MyClient:Credential:AzurePipelinesSystemAccessToken"] = "test-token";
 
@@ -193,7 +193,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.AzurePipelines
             {
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:TenantId"] = "test-tenant";
-                config["MyClient:Credential:AzurePipelinesClientId"] = "test-client";
+                config["MyClient:Credential:ClientId"] = "test-client";
                 config["MyClient:Credential:AzurePipelinesServiceConnectionId"] = "test-connection";
                 // AzurePipelinesSystemAccessToken not set.
 
@@ -386,7 +386,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.AzurePipelines
             {
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:TenantId"] = configTenant;
-                config["MyClient:Credential:AzurePipelinesClientId"] = configClient;
+                config["MyClient:Credential:ClientId"] = configClient;
                 config["MyClient:Credential:AzurePipelinesServiceConnectionId"] = configConnectionId;
                 config["MyClient:Credential:AzurePipelinesSystemAccessToken"] = "config-token";
                 config["MyClient:Credential:AuthorityHost"] = configAuthority.ToString();

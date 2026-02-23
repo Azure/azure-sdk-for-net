@@ -33,7 +33,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.AzurePipelines
             {
                 config["MyClient:Credential:TenantId"] = tenantId;
             }
-            config["MyClient:Credential:AzurePipelinesClientId"] = ClientId;
+            config["MyClient:Credential:ClientId"] = ClientId;
             config["MyClient:Credential:AzurePipelinesServiceConnectionId"] = Guid.NewGuid().ToString();
             config["MyClient:Credential:AzurePipelinesSystemAccessToken"] = "mytoken";
             configureExtra?.Invoke(config);
@@ -88,7 +88,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.AzurePipelines
             }
 
             IConfiguration configuration = _helper.GetConfigurationFromCommonCredentialTestConfig<AzurePipelinesCredentialOptions>(config);
-            configuration["MyClient:Credential:AzurePipelinesClientId"] = ClientId;
+            configuration["MyClient:Credential:ClientId"] = ClientId;
             configuration["MyClient:Credential:AzurePipelinesServiceConnectionId"] = "myConnectionId";
             configuration["MyClient:Credential:AzurePipelinesSystemAccessToken"] = "mytoken";
 
@@ -150,7 +150,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.AzurePipelines
             // Don't use TestEnvVar here — the calling test already manages env vars.
             IConfiguration config = _helper.GetConfiguration();
             config["MyClient:Credential:TenantId"] = tenantId;
-            config["MyClient:Credential:AzurePipelinesClientId"] = clientId;
+            config["MyClient:Credential:ClientId"] = clientId;
             config["MyClient:Credential:AzurePipelinesServiceConnectionId"] = serviceConnectionId;
             config["MyClient:Credential:AzurePipelinesSystemAccessToken"] = systemAccessToken;
 

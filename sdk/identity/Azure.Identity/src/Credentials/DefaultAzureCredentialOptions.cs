@@ -80,29 +80,11 @@ namespace Azure.Identity
                     .ToList();
             }
 
-            if (section[nameof(InteractiveBrowserCredentialClientId)] is string interactiveBrowserCredentialClientId)
+            if (section[nameof(ClientId)] is string clientId)
             {
-                InteractiveBrowserCredentialClientId = interactiveBrowserCredentialClientId;
-            }
-
-            if (section[nameof(WorkloadIdentityClientId)] is string workloadIdentityClientId)
-            {
-                WorkloadIdentityClientId = workloadIdentityClientId;
-            }
-
-            if (section[nameof(ManagedIdentityClientId)] is string managedIdentityClientId)
-            {
-                ManagedIdentityClientId = managedIdentityClientId;
-            }
-
-            if (section[nameof(ManagedIdentityResourceId)] is string managedIdentityResourceId)
-            {
-                ManagedIdentityResourceId = new ResourceIdentifier(managedIdentityResourceId);
-            }
-
-            if (section[nameof(ManagedIdentityObjectId)] is string managedIdentityObjectId)
-            {
-                ManagedIdentityObjectId = managedIdentityObjectId;
+                ClientId = clientId;
+                InteractiveBrowserCredentialClientId = clientId;
+                WorkloadIdentityClientId = clientId;
             }
 
             if (section[nameof(ManagedIdentityIdKind)] is string managedIdentityIdKind)
@@ -133,11 +115,6 @@ namespace Azure.Identity
             if (bool.TryParse(section[nameof(WorkloadIdentityCredentialOptions.IsAzureProxyEnabled)], out bool isAzureProxyEnabled))
             {
                 IsAzureProxyEnabled = isAzureProxyEnabled;
-            }
-
-            if (section[nameof(AzurePipelinesClientId)] is string azurePipelinesClientId)
-            {
-                AzurePipelinesClientId = azurePipelinesClientId;
             }
 
             if (section[nameof(AzurePipelinesServiceConnectionId)] is string azurePipelinesServiceConnectionId)
@@ -420,12 +397,6 @@ namespace Azure.Identity
         public ResourceIdentifier ManagedIdentityResourceId { get; set; }
 
         /// <summary>
-        /// Specifies the object ID of a user-assigned managed identity. If this value is configured, then
-        /// <see cref="ManagedIdentityClientId"/> and <see cref="ManagedIdentityResourceId"/> should not be configured.
-        /// </summary>
-        internal string ManagedIdentityObjectId { get; set; }
-
-        /// <summary>
         /// Specifies the type of managed identity to use. Valid values are "SystemAssigned", "ClientId", "ResourceId", and "ObjectId".
         /// When set to a user-assigned type, <see cref="ManagedIdentityId"/> must also be specified.
         /// </summary>
@@ -532,9 +503,9 @@ namespace Azure.Identity
         internal bool IsAzureProxyEnabled { get; set; }
 
         /// <summary>
-        /// Specifies the client ID of the application the Azure Pipelines credential will authenticate.
+        /// Specifies the client ID of the application the credential will authenticate.
         /// </summary>
-        internal string AzurePipelinesClientId { get; set; }
+        internal string ClientId { get; set; }
 
         /// <summary>
         /// Specifies the service connection ID for the Azure Pipelines credential.
@@ -580,7 +551,6 @@ namespace Azure.Identity
                 dacClone.WorkloadIdentityClientId = WorkloadIdentityClientId;
                 dacClone.ManagedIdentityClientId = ManagedIdentityClientId;
                 dacClone.ManagedIdentityResourceId = ManagedIdentityResourceId;
-                dacClone.ManagedIdentityObjectId = ManagedIdentityObjectId;
                 dacClone.ManagedIdentityIdKind = ManagedIdentityIdKind;
                 dacClone.ManagedIdentityId = ManagedIdentityId;
                 dacClone.CredentialProcessTimeout = CredentialProcessTimeout;
@@ -608,7 +578,7 @@ namespace Azure.Identity
                     dacClone.Subscription = Subscription;
                 }
                 dacClone.IsAzureProxyEnabled = IsAzureProxyEnabled;
-                dacClone.AzurePipelinesClientId = AzurePipelinesClientId;
+                dacClone.ClientId = ClientId;
                 dacClone.AzurePipelinesServiceConnectionId = AzurePipelinesServiceConnectionId;
                 dacClone.AzurePipelinesSystemAccessToken = AzurePipelinesSystemAccessToken;
                 dacClone.DisableAutomaticAuthentication = DisableAutomaticAuthentication;
