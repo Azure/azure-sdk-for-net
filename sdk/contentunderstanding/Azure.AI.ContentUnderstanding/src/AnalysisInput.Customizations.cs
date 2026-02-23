@@ -30,6 +30,6 @@ namespace Azure.AI.ContentUnderstanding
         /// </para>
         /// </summary>
         /// <seealso cref="ContentRange"/>
-        public string? InputRange { get; set; }
+        public string InputRange { get; set; }
     }
 }
