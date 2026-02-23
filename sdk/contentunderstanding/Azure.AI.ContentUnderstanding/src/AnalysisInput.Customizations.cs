@@ -3,33 +3,34 @@
 
 #nullable enable
 
+using Microsoft.TypeSpec.Generator.Customizations;
+
 namespace Azure.AI.ContentUnderstanding
 {
     public partial class AnalysisInput
     {
-        // CUSTOMIZATION: Replaces the generated InputRange property to add ContentRange
-        // discoverability in XML doc / IDE tooltips. The property type and behavior are unchanged.
+        // CUSTOMIZATION: Replaces the generated InputRange (string) with ContentRange type
+        // for a self-documenting API. Wire format (string) preserved via internal backing property.
+
+        [CodeGenMember("InputRange")]
+        internal string InputRangeValue { get; set; }
 
         /// <summary>
-        /// Range of the input to analyze (ex. <c>"1-3,5,9-"</c>). Document content uses
-        /// 1-based page numbers; audio/video content uses integer milliseconds.
-        /// <para>
-        /// Use <see cref="ContentRange"/> factory methods for a self-documenting API.
-        /// <c>ContentRange</c> converts to <c>string</c> implicitly:
+        /// Range of the input to analyze. Document content uses 1-based page numbers;
+        /// audio/video content uses integer milliseconds.
         /// <code>
-        /// // Document pages (1-based)
         /// input.InputRange = ContentRange.Pages(1, 3);           // "1-3"
         /// input.InputRange = ContentRange.Combine(
         ///     ContentRange.Pages(1, 3),
         ///     ContentRange.Page(5));                              // "1-3,5"
-        ///
-        /// // Audio/video time ranges (milliseconds)
         /// input.InputRange = ContentRange.TimeRange(0, 5000);    // "0-5000"
-        /// input.InputRange = ContentRange.TimeRangeFrom(30000);  // "30000-"
         /// </code>
-        /// </para>
         /// </summary>
         /// <seealso cref="ContentRange"/>
-        public string InputRange { get; set; }
+        public ContentRange? InputRange
+        {
+            get => string.IsNullOrEmpty(InputRangeValue) ? null : new ContentRange(InputRangeValue);
+            set => InputRangeValue = value?.ToString()!;
+        }
     }
 }
