@@ -170,7 +170,14 @@ if (analyzeResult.Contents?.FirstOrDefault() is DocumentContent content)
         var companyName = companyNameField is StringField sf ? sf.Value : null;
         Console.WriteLine($"Company Name (extract): {companyName ?? "(not found)"}");
         Console.WriteLine($"  Confidence: {companyNameField.Confidence?.ToString("F2") ?? "N/A"}");
-        Console.WriteLine($"  Source: {companyNameField.Source ?? "N/A"}");
+        if (companyNameField.GroundingSources != null)
+        {
+            foreach (var source in companyNameField.GroundingSources)
+            {
+                if (source is DocumentSource docSource)
+                    Console.WriteLine($"  Grounding: page {docSource.PageNumber}");
+            }
+        }
         if (companyNameField.Spans != null && companyNameField.Spans.Count > 0)
         {
             var span = companyNameField.Spans[0];
@@ -184,7 +191,14 @@ if (analyzeResult.Contents?.FirstOrDefault() is DocumentContent content)
         var totalAmount = totalAmountField is NumberField nf ? nf.Value : null;
         Console.WriteLine($"Total Amount (extract): {totalAmount?.ToString("F2") ?? "(not found)"}");
         Console.WriteLine($"  Confidence: {totalAmountField.Confidence?.ToString("F2") ?? "N/A"}");
-        Console.WriteLine($"  Source: {totalAmountField.Source ?? "N/A"}");
+        if (totalAmountField.GroundingSources != null)
+        {
+            foreach (var source in totalAmountField.GroundingSources)
+            {
+                if (source is DocumentSource docSource)
+                    Console.WriteLine($"  Grounding: page {docSource.PageNumber}");
+            }
+        }
         if (totalAmountField.Spans != null && totalAmountField.Spans.Count > 0)
         {
             var span = totalAmountField.Spans[0];
@@ -198,10 +212,10 @@ if (analyzeResult.Contents?.FirstOrDefault() is DocumentContent content)
         var summary = summaryField is StringField sf ? sf.Value : null;
         Console.WriteLine($"Document Summary (generate): {summary ?? "(not found)"}");
         Console.WriteLine($"  Confidence: {summaryField.Confidence?.ToString("F2") ?? "N/A"}");
-        // Note: Generated fields may not have source information
-        if (!string.IsNullOrEmpty(summaryField.Source))
+        // Note: Generated fields may not have grounding source information
+        if (summaryField.GroundingSources != null)
         {
-            Console.WriteLine($"  Source: {summaryField.Source}");
+            Console.WriteLine($"  Grounding sources: {summaryField.GroundingSources.Length}");
         }
     }
 
@@ -211,10 +225,10 @@ if (analyzeResult.Contents?.FirstOrDefault() is DocumentContent content)
         var documentType = documentTypeField is StringField sf ? sf.Value : null;
         Console.WriteLine($"Document Type (classify): {documentType ?? "(not found)"}");
         Console.WriteLine($"  Confidence: {documentTypeField.Confidence?.ToString("F2") ?? "N/A"}");
-        // Note: Classified fields may not have source information
-        if (!string.IsNullOrEmpty(documentTypeField.Source))
+        // Note: Classified fields may not have grounding source information
+        if (documentTypeField.GroundingSources != null)
         {
-            Console.WriteLine($"  Source: {documentTypeField.Source}");
+            Console.WriteLine($"  Grounding sources: {documentTypeField.GroundingSources.Length}");
         }
     }
 }

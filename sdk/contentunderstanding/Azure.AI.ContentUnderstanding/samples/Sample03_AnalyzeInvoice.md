@@ -96,7 +96,19 @@ Console.WriteLine();
 var customerNameField = documentContent.Fields["CustomerName"];
 Console.WriteLine($"Customer Name: {customerNameField.Value ?? "(None)"}");
 Console.WriteLine($"  Confidence: {customerNameField.Confidence?.ToString("F2") ?? "N/A"}");
-Console.WriteLine($"  Source: {customerNameField.Source ?? "N/A"}");
+
+// Access parsed grounding sources to get page number and polygon coordinates
+if (customerNameField.GroundingSources != null)
+{
+    foreach (var source in customerNameField.GroundingSources)
+    {
+        if (source is DocumentSource docSource)
+        {
+            Console.WriteLine($"  Grounding: page {docSource.PageNumber}, polygon: [{string.Join(", ", docSource.Polygon.Select(p => $"({p.X:F4},{p.Y:F4})"))}]");
+        }
+    }
+}
+
 if (customerNameField.Spans?.Count > 0)
 {
     var span = customerNameField.Spans[0];
@@ -107,7 +119,19 @@ if (customerNameField.Spans?.Count > 0)
 var invoiceDateField = documentContent.Fields.GetFieldOrDefault("InvoiceDate");
 Console.WriteLine($"Invoice Date: {invoiceDateField?.Value ?? "(None)"}");
 Console.WriteLine($"  Confidence: {invoiceDateField?.Confidence?.ToString("F2") ?? "N/A"}");
-Console.WriteLine($"  Source: {invoiceDateField?.Source ?? "N/A"}");
+
+// Access parsed grounding sources for date field
+if (invoiceDateField?.GroundingSources != null)
+{
+    foreach (var source in invoiceDateField.GroundingSources)
+    {
+        if (source is DocumentSource docSource)
+        {
+            Console.WriteLine($"  Grounding: page {docSource.PageNumber}, polygon: [{string.Join(", ", docSource.Polygon.Select(p => $"({p.X:F4},{p.Y:F4})"))}]");
+        }
+    }
+}
+
 if (invoiceDateField?.Spans?.Count > 0)
 {
     var span = invoiceDateField.Spans[0];
@@ -121,7 +145,18 @@ if (documentContent.Fields.GetFieldOrDefault("TotalAmount") is ObjectField total
     var currency = totalAmountObj.Value?.GetFieldOrDefault("CurrencyCode")?.Value;
     Console.WriteLine($"Total: {currency ?? "$"}{amount?.ToString("F2") ?? "(None)"}");
     Console.WriteLine($"  Confidence: {totalAmountObj.Confidence?.ToString("F2") ?? "N/A"}");
-    Console.WriteLine($"  Source: {totalAmountObj.Source ?? "N/A"}");
+
+    // Access parsed grounding sources for object field
+    if (totalAmountObj.GroundingSources != null)
+    {
+        foreach (var source in totalAmountObj.GroundingSources)
+        {
+            if (source is DocumentSource docSource)
+            {
+                Console.WriteLine($"  Grounding: page {docSource.PageNumber}, polygon: [{string.Join(", ", docSource.Polygon.Select(p => $"({p.X:F4},{p.Y:F4})"))}]");
+            }
+        }
+    }
 }
 
 // Extract array fields (collections like line items)
@@ -180,17 +215,14 @@ For **array fields**, access elements via `ArrayField.Value` (returns `IList<Con
 Each extracted field provides metadata to help you understand the extraction quality:
 
 - **Confidence**: A float value between 0.0 and 1.0 indicating how certain the analyzer is about the extracted value. Higher values indicate higher confidence. Use this to filter or flag low-confidence extractions for manual review.
-- **Source**: An encoded identifier that contains bounding box coordinates identifying the position of the field value in the original document. The format is `D(pageNumber, x1, y1, x2, y2, x3, y3, x4, y4)` where:
-  - `pageNumber`: The page number (1-indexed) where the field was found
-  - `x1, y1, x2, y2, x3, y3, x4, y4`: The four corner coordinates of the bounding box
+- **GroundingSources**: Parsed grounding source objects that identify the position of the field value in the original content. The `GroundingSources` property returns a `ContentSource[]?` — each element is a `DocumentSource` (for documents) or `AudioVisualSource` (for audio/video). For documents, `DocumentSource` provides:
+  - `PageNumber`: The page number (1-indexed) where the field was found
+  - `Polygon`: Four `PointF` coordinates defining the bounding quadrilateral
   - Coordinates are in the document's unit (typically "inch" for US documents, as indicated by `DocumentContent.Unit`)
 
-  For example, a source value like `D(1,1.265,1.0836,2.4972,1.0816,2.4964,1.4117,1.2645,1.4117)` indicates:
-  - Page 1
-  - Bounding box with corners at (1.265, 1.0836), (2.4972, 1.0816), (2.4964, 1.4117), and (1.2645, 1.4117)
-  - All coordinates are in inches (since `DocumentContent.Unit` is "inch")
+  For example, a field on page 1 with bounding box corners at (1.265, 1.0836), (2.4972, 1.0816), (2.4964, 1.4117), and (1.2645, 1.4117) — all in inches (since `DocumentContent.Unit` is "inch").
 
-  The source can be used to trace back to the exact location where the value was found in the original document. For more information, see the [Source documentation][source-docs].
+  The grounding source can be used to trace back to the exact location where the value was found in the original document. For more information, see the [Source documentation][source-docs].
 - **Spans**: A list of `ContentSpan` objects that indicate the position of the field value in the markdown content. Each span contains:
   - `Offset`: The starting position (0-indexed) in characters
   - `Length`: The length of the text in characters
@@ -205,7 +237,7 @@ See [Sample 06: Get analyzer information][sample06] to learn how to retrieve and
 
 ### Document unit
 
-The `DocumentContent.Unit` property indicates the measurement system used for coordinates in the `Source` field. For US documents, this is typically "inch", meaning all bounding box coordinates in the source field are measured in inches. This allows you to precisely locate extracted values in the original document.
+The `DocumentContent.Unit` property indicates the measurement system used for polygon coordinates in `DocumentSource`. For US documents, this is typically "inch", meaning all bounding box coordinates are measured in inches. This allows you to precisely locate extracted values in the original document.
 
 For more details about `DocumentContent` and all available document elements (pages, paragraphs, tables, figures, etc.), see the [Document elements documentation][document-elements-docs].
 

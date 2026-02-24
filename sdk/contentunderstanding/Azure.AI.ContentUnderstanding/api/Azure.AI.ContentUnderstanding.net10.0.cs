@@ -109,6 +109,15 @@ namespace Azure.AI.ContentUnderstanding
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.AudioVisualContentSegment>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.AudioVisualContentSegment>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class AudioVisualSource : Azure.AI.ContentUnderstanding.ContentSource
+    {
+        internal AudioVisualSource() : base (default(string)) { }
+        public System.Drawing.Rectangle? BoundingBox { get { throw null; } }
+        public int TimeMs { get { throw null; } }
+        public static new Azure.AI.ContentUnderstanding.AudioVisualSource Parse(string source) { throw null; }
+        public static new Azure.AI.ContentUnderstanding.AudioVisualSource[] ParseAll(string source) { throw null; }
+        public static (Azure.AI.ContentUnderstanding.AudioVisualSource Start, Azure.AI.ContentUnderstanding.AudioVisualSource End) ParseTrackletPair(string trackletPair) { throw null; }
+    }
     public partial class AzureAIContentUnderstandingContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureAIContentUnderstandingContext() { }
@@ -244,7 +253,7 @@ namespace Azure.AI.ContentUnderstanding
     {
         internal ContentField() { }
         public float? Confidence { get { throw null; } }
-        public string Source { get { throw null; } }
+        public Azure.AI.ContentUnderstanding.ContentSource[]? GroundingSources { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.ContentUnderstanding.ContentSpan> Spans { get { throw null; } }
         public object Value { get { throw null; } }
         protected virtual Azure.AI.ContentUnderstanding.ContentField JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -343,6 +352,14 @@ namespace Azure.AI.ContentUnderstanding
         public static Azure.AI.ContentUnderstanding.ContentRange PagesFrom(int startPage) { throw null; }
         public static Azure.AI.ContentUnderstanding.ContentRange TimeRange(long startMs, long endMs) { throw null; }
         public static Azure.AI.ContentUnderstanding.ContentRange TimeRangeFrom(long startMs) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public abstract partial class ContentSource
+    {
+        protected ContentSource(string rawValue) { }
+        public string RawValue { get { throw null; } }
+        public static Azure.AI.ContentUnderstanding.ContentSource Parse(string source) { throw null; }
+        public static Azure.AI.ContentUnderstanding.ContentSource[] ParseAll(string source) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ContentSpan : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentUnderstanding.ContentSpan>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.ContentSpan>
@@ -455,7 +472,7 @@ namespace Azure.AI.ContentUnderstanding
         public static Azure.AI.ContentUnderstanding.ContentAnalyzer ContentAnalyzer(string analyzerId = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.AI.ContentUnderstanding.ContentAnalyzerStatus status = default(Azure.AI.ContentUnderstanding.ContentAnalyzerStatus), System.DateTimeOffset createdAt = default(System.DateTimeOffset), System.DateTimeOffset lastModifiedAt = default(System.DateTimeOffset), System.Collections.Generic.IEnumerable<Azure.ResponseError> warnings = null, string baseAnalyzerId = null, Azure.AI.ContentUnderstanding.ContentAnalyzerConfig config = null, Azure.AI.ContentUnderstanding.ContentFieldSchema fieldSchema = null, bool? hasDynamicFieldSchema = default(bool?), Azure.AI.ContentUnderstanding.ProcessingLocation? processingLocation = default(Azure.AI.ContentUnderstanding.ProcessingLocation?), System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.KnowledgeSource> knowledgeSources = null, System.Collections.Generic.IDictionary<string, string> models = null, Azure.AI.ContentUnderstanding.SupportedModels supportedModels = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.ContentAnalyzerConfig ContentAnalyzerConfig(bool? shouldReturnDetails = default(bool?), System.Collections.Generic.IEnumerable<string> locales = null, bool? enableOcr = default(bool?), bool? enableLayout = default(bool?), bool? enableFigureDescription = default(bool?), bool? enableFigureAnalysis = default(bool?), bool? enableFormula = default(bool?), Azure.AI.ContentUnderstanding.TableFormat? tableFormat = default(Azure.AI.ContentUnderstanding.TableFormat?), Azure.AI.ContentUnderstanding.ChartFormat? chartFormat = default(Azure.AI.ContentUnderstanding.ChartFormat?), Azure.AI.ContentUnderstanding.AnnotationFormat? annotationFormat = default(Azure.AI.ContentUnderstanding.AnnotationFormat?), bool? disableFaceBlurring = default(bool?), bool? estimateFieldSourceAndConfidence = default(bool?), System.Collections.Generic.IDictionary<string, Azure.AI.ContentUnderstanding.ContentCategoryDefinition> contentCategories = null, bool? enableSegment = default(bool?), bool? segmentPerPage = default(bool?), bool? shouldOmitContent = default(bool?)) { throw null; }
         public static Azure.AI.ContentUnderstanding.ContentCategoryDefinition ContentCategoryDefinition(string description = null, string analyzerId = null, Azure.AI.ContentUnderstanding.ContentAnalyzer analyzer = null) { throw null; }
-        public static Azure.AI.ContentUnderstanding.ContentField ContentField(string type = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.ContentSpan> spans = null, float? confidence = default(float?), string source = null) { throw null; }
+        public static Azure.AI.ContentUnderstanding.ContentField ContentField(string type = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.ContentSpan> spans = null, float? confidence = default(float?), string sourceValue = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.ContentFieldDefinition ContentFieldDefinition(Azure.AI.ContentUnderstanding.GenerationMethod? method = default(Azure.AI.ContentUnderstanding.GenerationMethod?), Azure.AI.ContentUnderstanding.ContentFieldType? type = default(Azure.AI.ContentUnderstanding.ContentFieldType?), string description = null, Azure.AI.ContentUnderstanding.ContentFieldDefinition itemDefinition = null, System.Collections.Generic.IDictionary<string, Azure.AI.ContentUnderstanding.ContentFieldDefinition> properties = null, System.Collections.Generic.IEnumerable<string> examples = null, System.Collections.Generic.IEnumerable<string> @enum = null, System.Collections.Generic.IDictionary<string, string> enumDescriptions = null, string @ref = null, bool? estimateSourceAndConfidence = default(bool?)) { throw null; }
         public static Azure.AI.ContentUnderstanding.ContentFieldSchema ContentFieldSchema(string name = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.ContentUnderstanding.ContentFieldDefinition> fields = null, System.Collections.Generic.IDictionary<string, Azure.AI.ContentUnderstanding.ContentFieldDefinition> definitions = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.ContentSpan ContentSpan(int offset = 0, int length = 0) { throw null; }
@@ -883,6 +900,14 @@ namespace Azure.AI.ContentUnderstanding
         Azure.AI.ContentUnderstanding.DocumentSection System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.DocumentSection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.DocumentSection>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.DocumentSection>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DocumentSource : Azure.AI.ContentUnderstanding.ContentSource
+    {
+        internal DocumentSource() : base (default(string)) { }
+        public int PageNumber { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<System.Drawing.PointF> Polygon { get { throw null; } }
+        public static new Azure.AI.ContentUnderstanding.DocumentSource Parse(string source) { throw null; }
+        public static new Azure.AI.ContentUnderstanding.DocumentSource[] ParseAll(string source) { throw null; }
     }
     public partial class DocumentTable : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentUnderstanding.DocumentTable>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.DocumentTable>
     {
