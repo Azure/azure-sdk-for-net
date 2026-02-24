@@ -45,12 +45,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<ContainerServiceFleetUpdateRunResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string updateRunName, ContainerServiceFleetUpdateRunData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            var matchConditions = new MatchConditions
-            {
-                IfMatch = ifMatch != null ? new ETag(ifMatch) : null,
-                IfNoneMatch = ifNoneMatch != null ? new ETag(ifNoneMatch) : null
-            };
-            return await CreateOrUpdateAsync(waitUntil, updateRunName, data, matchConditions, cancellationToken).ConfigureAwait(false);
+            return await CreateOrUpdateAsync(waitUntil, updateRunName, data, ETagHelper.ToMatchConditions(ifMatch, ifNoneMatch), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -85,12 +80,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<ContainerServiceFleetUpdateRunResource> CreateOrUpdate(WaitUntil waitUntil, string updateRunName, ContainerServiceFleetUpdateRunData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            var matchConditions = new MatchConditions
-            {
-                IfMatch = ifMatch != null ? new ETag(ifMatch) : null,
-                IfNoneMatch = ifNoneMatch != null ? new ETag(ifNoneMatch) : null
-            };
-            return CreateOrUpdate(waitUntil, updateRunName, data, matchConditions, cancellationToken);
+            return CreateOrUpdate(waitUntil, updateRunName, data, ETagHelper.ToMatchConditions(ifMatch, ifNoneMatch), cancellationToken);
         }
 
         /// <summary>

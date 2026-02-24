@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            return await DeleteAsync(waitUntil, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken).ConfigureAwait(false);
+            return await DeleteAsync(waitUntil, ETagHelper.ToETag(ifMatch), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation Delete(WaitUntil waitUntil, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            return Delete(waitUntil, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken);
+            return Delete(waitUntil, ETagHelper.ToETag(ifMatch), cancellationToken);
         }
 
         /// <summary>
@@ -104,12 +104,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<ContainerServiceFleetUpdateRunResource>> UpdateAsync(WaitUntil waitUntil, ContainerServiceFleetUpdateRunData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            var matchConditions = new MatchConditions
-            {
-                IfMatch = ifMatch != null ? new ETag(ifMatch) : null,
-                IfNoneMatch = ifNoneMatch != null ? new ETag(ifNoneMatch) : null
-            };
-            return await UpdateAsync(waitUntil, data, matchConditions, cancellationToken).ConfigureAwait(false);
+            return await UpdateAsync(waitUntil, data, ETagHelper.ToMatchConditions(ifMatch, ifNoneMatch), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -142,12 +137,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<ContainerServiceFleetUpdateRunResource> Update(WaitUntil waitUntil, ContainerServiceFleetUpdateRunData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            var matchConditions = new MatchConditions
-            {
-                IfMatch = ifMatch != null ? new ETag(ifMatch) : null,
-                IfNoneMatch = ifNoneMatch != null ? new ETag(ifNoneMatch) : null
-            };
-            return Update(waitUntil, data, matchConditions, cancellationToken);
+            return Update(waitUntil, data, ETagHelper.ToMatchConditions(ifMatch, ifNoneMatch), cancellationToken);
         }
 
         /// <summary>
@@ -179,7 +169,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<ContainerServiceFleetUpdateRunResource>> SkipAsync(WaitUntil waitUntil, ContainerServiceFleetSkipProperties body, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            return await SkipAsync(waitUntil, body, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken).ConfigureAwait(false);
+            return await SkipAsync(waitUntil, body, ETagHelper.ToETag(ifMatch), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -211,7 +201,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<ContainerServiceFleetUpdateRunResource> Skip(WaitUntil waitUntil, ContainerServiceFleetSkipProperties body, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            return Skip(waitUntil, body, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken);
+            return Skip(waitUntil, body, ETagHelper.ToETag(ifMatch), cancellationToken);
         }
 
         /// <summary>
@@ -241,7 +231,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<ContainerServiceFleetUpdateRunResource>> StartAsync(WaitUntil waitUntil, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            return await StartAsync(waitUntil, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken).ConfigureAwait(false);
+            return await StartAsync(waitUntil, ETagHelper.ToETag(ifMatch), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -271,7 +261,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<ContainerServiceFleetUpdateRunResource> Start(WaitUntil waitUntil, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            return Start(waitUntil, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken);
+            return Start(waitUntil, ETagHelper.ToETag(ifMatch), cancellationToken);
         }
 
         /// <summary>
@@ -301,7 +291,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<ContainerServiceFleetUpdateRunResource>> StopAsync(WaitUntil waitUntil, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            return await StopAsync(waitUntil, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken).ConfigureAwait(false);
+            return await StopAsync(waitUntil, ETagHelper.ToETag(ifMatch), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -331,7 +321,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<ContainerServiceFleetUpdateRunResource> Stop(WaitUntil waitUntil, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            return Stop(waitUntil, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken);
+            return Stop(waitUntil, ETagHelper.ToETag(ifMatch), cancellationToken);
         }
     }
 }

@@ -45,12 +45,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<AutoUpgradeProfileResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string autoUpgradeProfileName, AutoUpgradeProfileData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            var matchConditions = new MatchConditions
-            {
-                IfMatch = ifMatch != null ? new ETag(ifMatch) : null,
-                IfNoneMatch = ifNoneMatch != null ? new ETag(ifNoneMatch) : null
-            };
-            return await CreateOrUpdateAsync(waitUntil, autoUpgradeProfileName, data, matchConditions, cancellationToken).ConfigureAwait(false);
+            return await CreateOrUpdateAsync(waitUntil, autoUpgradeProfileName, data, ETagHelper.ToMatchConditions(ifMatch, ifNoneMatch), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -85,12 +80,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<AutoUpgradeProfileResource> CreateOrUpdate(WaitUntil waitUntil, string autoUpgradeProfileName, AutoUpgradeProfileData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            var matchConditions = new MatchConditions
-            {
-                IfMatch = ifMatch != null ? new ETag(ifMatch) : null,
-                IfNoneMatch = ifNoneMatch != null ? new ETag(ifNoneMatch) : null
-            };
-            return CreateOrUpdate(waitUntil, autoUpgradeProfileName, data, matchConditions, cancellationToken);
+            return CreateOrUpdate(waitUntil, autoUpgradeProfileName, data, ETagHelper.ToMatchConditions(ifMatch, ifNoneMatch), cancellationToken);
         }
 
         /// <summary>

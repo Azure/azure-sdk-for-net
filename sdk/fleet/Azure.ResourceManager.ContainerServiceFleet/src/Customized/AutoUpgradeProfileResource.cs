@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            return await DeleteAsync(waitUntil, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken).ConfigureAwait(false);
+            return await DeleteAsync(waitUntil, ETagHelper.ToETag(ifMatch), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation Delete(WaitUntil waitUntil, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            return Delete(waitUntil, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken);
+            return Delete(waitUntil, ETagHelper.ToETag(ifMatch), cancellationToken);
         }
 
         /// <summary>
@@ -103,12 +103,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<AutoUpgradeProfileResource>> UpdateAsync(WaitUntil waitUntil, AutoUpgradeProfileData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            var matchConditions = new MatchConditions
-            {
-                IfMatch = ifMatch != null ? new ETag(ifMatch) : null,
-                IfNoneMatch = ifNoneMatch != null ? new ETag(ifNoneMatch) : null
-            };
-            return await UpdateAsync(waitUntil, data, matchConditions, cancellationToken).ConfigureAwait(false);
+            return await UpdateAsync(waitUntil, data, ETagHelper.ToMatchConditions(ifMatch, ifNoneMatch), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -141,12 +136,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<AutoUpgradeProfileResource> Update(WaitUntil waitUntil, AutoUpgradeProfileData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            var matchConditions = new MatchConditions
-            {
-                IfMatch = ifMatch != null ? new ETag(ifMatch) : null,
-                IfNoneMatch = ifNoneMatch != null ? new ETag(ifNoneMatch) : null
-            };
-            return Update(waitUntil, data, matchConditions, cancellationToken);
+            return Update(waitUntil, data, ETagHelper.ToMatchConditions(ifMatch, ifNoneMatch), cancellationToken);
         }
     }
 }

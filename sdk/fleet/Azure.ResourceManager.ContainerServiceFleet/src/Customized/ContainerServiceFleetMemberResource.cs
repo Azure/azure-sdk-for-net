@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            return await DeleteAsync(waitUntil, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken).ConfigureAwait(false);
+            return await DeleteAsync(waitUntil, ETagHelper.ToETag(ifMatch), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation Delete(WaitUntil waitUntil, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            return Delete(waitUntil, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken);
+            return Delete(waitUntil, ETagHelper.ToETag(ifMatch), cancellationToken);
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<ContainerServiceFleetMemberResource>> UpdateAsync(WaitUntil waitUntil, ContainerServiceFleetMemberPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            return await UpdateAsync(waitUntil, patch, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken).ConfigureAwait(false);
+            return await UpdateAsync(waitUntil, patch, ETagHelper.ToETag(ifMatch), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<ContainerServiceFleetMemberResource> Update(WaitUntil waitUntil, ContainerServiceFleetMemberPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            return  Update(waitUntil, patch, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken);
+            return  Update(waitUntil, patch, ETagHelper.ToETag(ifMatch), cancellationToken);
         }
     }
 }
