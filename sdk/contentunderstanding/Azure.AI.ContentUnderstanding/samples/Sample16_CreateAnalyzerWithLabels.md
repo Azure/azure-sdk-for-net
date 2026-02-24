@@ -113,7 +113,8 @@ if (string.IsNullOrEmpty(trainingDataSasUrl))
     {
         var credential = new Azure.Identity.DefaultAzureCredential();
         string localLabelDir = "<path_to_local_receipt_labels_folder>";
-        await UploadTrainingDataAsync(storageAccount, container, credential, localLabelDir);
+        string? prefix = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_PREFIX");
+        await UploadTrainingDataAsync(storageAccount, container, credential, localLabelDir, prefix);
         trainingDataSasUrl = await GenerateUserDelegationSasUrlAsync(storageAccount, container, credential);
     }
 }
