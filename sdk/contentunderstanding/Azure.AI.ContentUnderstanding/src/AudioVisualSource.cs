@@ -20,9 +20,8 @@ namespace Azure.AI.ContentUnderstanding
     /// </para>
     /// <para>
     /// Face tracklet pairs use the format <c>AV(...)-AV(...)</c>. When parsing with
-    /// <see cref="ContentSource.ParseAll(string)"/>, tracklet pairs within a single <c>;</c>-delimited
-    /// segment are preserved as a single raw string. Use <see cref="ParseTrackletPair(string)"/>
-    /// to split a tracklet pair into its two components.
+    /// <see cref="ContentSource.Parse(string)"/> or <see cref="ContentSource.ParseAll(string)"/>,
+    /// tracklet pairs are automatically detected and returned as <see cref="TrackletSource"/> instances.
     /// </para>
     /// </remarks>
     public class AudioVisualSource : ContentSource
@@ -87,33 +86,6 @@ namespace Azure.AI.ContentUnderstanding
             }
 
             return results.ToArray();
-        }
-
-        /// <summary>
-        /// Splits a face tracklet pair string (e.g., <c>"AV(0,100,200,50,60)-AV(1000,105,205,50,60)"</c>)
-        /// into its two component <see cref="AudioVisualSource"/> instances.
-        /// </summary>
-        /// <param name="trackletPair"> The tracklet pair string containing two <c>AV(...)</c> segments joined by <c>-</c>. </param>
-        /// <returns> A tuple of the two <see cref="AudioVisualSource"/> instances. </returns>
-        /// <exception cref="ArgumentNullException"> <paramref name="trackletPair"/> is null. </exception>
-        /// <exception cref="FormatException"> The string does not contain exactly two <c>AV(...)</c> segments. </exception>
-        public static (AudioVisualSource Start, AudioVisualSource End) ParseTrackletPair(string trackletPair)
-        {
-            Argument.AssertNotNullOrEmpty(trackletPair, nameof(trackletPair));
-
-            // Split on ")-AV(" to find the boundary between the two AV segments
-            const string separator = ")-AV(";
-            int separatorIndex = trackletPair.IndexOf(separator, StringComparison.Ordinal);
-
-            if (separatorIndex < 0)
-            {
-                throw new FormatException($"Expected a tracklet pair in the format 'AV(...)-AV(...)': '{trackletPair}'.");
-            }
-
-            string first = trackletPair.Substring(0, separatorIndex + 1); // include the closing ')'
-            string second = trackletPair.Substring(separatorIndex + 2);   // skip the '-', start at 'AV('
-
-            return (new AudioVisualSource(first), new AudioVisualSource(second));
         }
 
         private static void ParseCore(string source, out int time, out Rectangle? bbox)

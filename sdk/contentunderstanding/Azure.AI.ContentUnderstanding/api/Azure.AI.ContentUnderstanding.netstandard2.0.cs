@@ -116,7 +116,6 @@ namespace Azure.AI.ContentUnderstanding
         public int TimeMs { get { throw null; } }
         public static new Azure.AI.ContentUnderstanding.AudioVisualSource Parse(string source) { throw null; }
         public static new Azure.AI.ContentUnderstanding.AudioVisualSource[] ParseAll(string source) { throw null; }
-        public static (Azure.AI.ContentUnderstanding.AudioVisualSource Start, Azure.AI.ContentUnderstanding.AudioVisualSource End) ParseTrackletPair(string trackletPair) { throw null; }
     }
     public partial class AzureAIContentUnderstandingContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
@@ -904,6 +903,7 @@ namespace Azure.AI.ContentUnderstanding
     public partial class DocumentSource : Azure.AI.ContentUnderstanding.ContentSource
     {
         internal DocumentSource() : base (default(string)) { }
+        public System.Drawing.RectangleF BoundingBox { get { throw null; } }
         public int PageNumber { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<System.Drawing.PointF> Polygon { get { throw null; } }
         public static new Azure.AI.ContentUnderstanding.DocumentSource Parse(string source) { throw null; }
@@ -1228,6 +1228,13 @@ namespace Azure.AI.ContentUnderstanding
         Azure.AI.ContentUnderstanding.TimeField System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.TimeField>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.TimeField>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.TimeField>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class TrackletSource : Azure.AI.ContentUnderstanding.ContentSource
+    {
+        internal TrackletSource() : base (default(string)) { }
+        public Azure.AI.ContentUnderstanding.AudioVisualSource End { get { throw null; } }
+        public Azure.AI.ContentUnderstanding.AudioVisualSource Start { get { throw null; } }
+        public static new Azure.AI.ContentUnderstanding.TrackletSource Parse(string source) { throw null; }
     }
     public partial class TranscriptPhrase : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentUnderstanding.TranscriptPhrase>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.TranscriptPhrase>
     {

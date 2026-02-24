@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
+using System.Linq;
 
 namespace Azure.AI.ContentUnderstanding
 {
@@ -29,6 +30,12 @@ namespace Azure.AI.ContentUnderstanding
         public IReadOnlyList<PointF> Polygon { get; }
 
         /// <summary>
+        /// Gets the axis-aligned bounding rectangle computed from the polygon coordinates.
+        /// Useful for drawing highlight rectangles over extracted fields.
+        /// </summary>
+        public RectangleF BoundingBox { get; }
+
+        /// <summary>
         /// Initializes a new instance of <see cref="DocumentSource"/> by parsing a source string.
         /// </summary>
         /// <param name="source"> The raw source string in the format <c>D(page,x1,y1,...,x4,y4)</c>. </param>
@@ -38,6 +45,13 @@ namespace Azure.AI.ContentUnderstanding
             ParseCore(source, out int page, out PointF[] polygon);
             PageNumber = page;
             Polygon = polygon;
+            float minX = polygon.Min(p => p.X);
+            float minY = polygon.Min(p => p.Y);
+            BoundingBox = new RectangleF(
+                minX,
+                minY,
+                polygon.Max(p => p.X) - minX,
+                polygon.Max(p => p.Y) - minY);
         }
 
         /// <summary>
