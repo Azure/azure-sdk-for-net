@@ -43,9 +43,11 @@ namespace Azure.Security.Attestation
                             // the key returned must have a X5c property.
                             throw new InvalidOperationException(Azure_Security_Attestation.PolicyCertificatesRequireX5C);
                         }
-#pragma warning disable SYSLIB0057 // Type or member is obsolete
+#if NET9_0_OR_GREATER
+                        certificates.Add(X509CertificateLoader.LoadCertificate(Convert.FromBase64String(key.X5C[0])));
+#else
                         certificates.Add(new X509Certificate2(Convert.FromBase64String(key.X5C[0])));
-#pragma warning restore SYSLIB0057 // Type or member is obsolete
+#endif
                     }
                     _certificateList = certificates;
                 }
