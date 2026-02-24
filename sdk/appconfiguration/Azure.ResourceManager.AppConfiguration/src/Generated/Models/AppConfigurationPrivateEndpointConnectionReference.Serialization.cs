@@ -19,6 +19,23 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     /// <summary> A reference to a related private endpoint connection. </summary>
     public partial class AppConfigurationPrivateEndpointConnectionReference : ResourceData, IJsonModel<AppConfigurationPrivateEndpointConnectionReference>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AppConfigurationPrivateEndpointConnectionReference>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAppConfigurationPrivateEndpointConnectionReference(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppConfigurationPrivateEndpointConnectionReference)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AppConfigurationPrivateEndpointConnectionReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -157,23 +174,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AppConfigurationPrivateEndpointConnectionReference IPersistableModel<AppConfigurationPrivateEndpointConnectionReference>.Create(BinaryData data, ModelReaderWriterOptions options) => (AppConfigurationPrivateEndpointConnectionReference)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AppConfigurationPrivateEndpointConnectionReference>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAppConfigurationPrivateEndpointConnectionReference(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AppConfigurationPrivateEndpointConnectionReference)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AppConfigurationPrivateEndpointConnectionReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

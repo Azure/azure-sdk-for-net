@@ -12,21 +12,21 @@ using Azure.ResourceManager.AppConfiguration;
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
     /// <summary> Managed-On-Behalf-Of configuration properties. This configuration exists for the resources where a resource provider manages those resources on behalf of the resource owner. </summary>
-    internal partial class ManagedOnBehalfOfConfiguration
+    internal partial class AppConfigurationManagedOnBehalfOfConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedOnBehalfOfConfiguration"/>. </summary>
-        internal ManagedOnBehalfOfConfiguration()
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationManagedOnBehalfOfConfiguration"/>. </summary>
+        internal AppConfigurationManagedOnBehalfOfConfiguration()
         {
-            MoboBrokerResources = new ChangeTrackingList<MoboBrokerResource>();
+            MoboBrokerResources = new ChangeTrackingList<AppConfigurationMoboBrokerResourceInfo>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedOnBehalfOfConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationManagedOnBehalfOfConfiguration"/>. </summary>
         /// <param name="moboBrokerResources"> Managed-On-Behalf-Of broker resources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedOnBehalfOfConfiguration(IReadOnlyList<MoboBrokerResource> moboBrokerResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppConfigurationManagedOnBehalfOfConfiguration(IReadOnlyList<AppConfigurationMoboBrokerResourceInfo> moboBrokerResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MoboBrokerResources = moboBrokerResources;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         /// <summary> Managed-On-Behalf-Of broker resources. </summary>
         [WirePath("moboBrokerResources")]
-        public IReadOnlyList<MoboBrokerResource> MoboBrokerResources { get; }
+        public IReadOnlyList<AppConfigurationMoboBrokerResourceInfo> MoboBrokerResources { get; }
     }
 }

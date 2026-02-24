@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppConfiguration
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetDeletedRequest(nextLink, _subscriptionId, _context) : _client.CreateGetDeletedRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableAppConfigurationSubscriptionResource.GetDeleted");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DeletedAppConfigurationStoreCollection.GetAll");
             scope.Start();
             try
             {

@@ -1,4 +1,4 @@
 directory: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/AppConfiguration
-commit: acef16789ed030e4a6b9c8f935358d80751cde9a
+commit: 00b6741390fcfcfb96e73c39e2a34901d5e2657c
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

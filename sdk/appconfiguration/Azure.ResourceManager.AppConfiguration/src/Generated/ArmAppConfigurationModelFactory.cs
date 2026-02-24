@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="identity"> The managed identity information, if configured. </param>
         /// <param name="skuName"> The SKU name of the configuration store. </param>
         /// <returns> A new <see cref="AppConfiguration.AppConfigurationStoreData"/> instance for mocking. </returns>
-        public static AppConfigurationStoreData AppConfigurationStoreData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AppConfigurationProvisioningState? provisioningState = default, DateTimeOffset? createdOn = default, string endpoint = default, IEnumerable<AppConfigurationPrivateEndpointConnectionReference> privateEndpointConnections = default, AppConfigurationPublicNetworkAccess? publicNetworkAccess = default, bool? disableLocalAuth = default, int? softDeleteRetentionInDays = default, long? defaultKeyValueRevisionRetentionPeriodInSeconds = default, bool? enablePurgeProtection = default, AppConfigurationDataPlaneProxyProperties dataPlaneProxy = default, AppConfigurationCreateMode? createMode = default, AppConfigurationKeyVaultProperties encryptionKeyVaultProperties = default, ResourceIdentifier telemetryResourceId = default, IEnumerable<MoboBrokerResource> managedOnBehalfOfMoboBrokerResources = default, ResourceIdentifier azureFrontDoorResourceId = default, ManagedServiceIdentity identity = default, string skuName = default)
+        public static AppConfigurationStoreData AppConfigurationStoreData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AppConfigurationProvisioningState? provisioningState = default, DateTimeOffset? createdOn = default, string endpoint = default, IEnumerable<AppConfigurationPrivateEndpointConnectionReference> privateEndpointConnections = default, AppConfigurationPublicNetworkAccess? publicNetworkAccess = default, bool? disableLocalAuth = default, int? softDeleteRetentionInDays = default, long? defaultKeyValueRevisionRetentionPeriodInSeconds = default, bool? enablePurgeProtection = default, AppConfigurationDataPlaneProxyProperties dataPlaneProxy = default, AppConfigurationCreateMode? createMode = default, AppConfigurationKeyVaultProperties encryptionKeyVaultProperties = default, ResourceIdentifier telemetryResourceId = default, IEnumerable<AppConfigurationMoboBrokerResourceInfo> managedOnBehalfOfMoboBrokerResources = default, ResourceIdentifier azureFrontDoorResourceId = default, ManagedServiceIdentity identity = default, string skuName = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     dataPlaneProxy,
                     createMode,
                     new TelemetryProperties(telemetryResourceId, null),
-                    new ManagedOnBehalfOfConfiguration((managedOnBehalfOfMoboBrokerResources ?? new ChangeTrackingList<MoboBrokerResource>()).ToList(), null),
+                    new AppConfigurationManagedOnBehalfOfConfiguration((managedOnBehalfOfMoboBrokerResources ?? new ChangeTrackingList<AppConfigurationMoboBrokerResourceInfo>()).ToList(), null),
                     new AzureFrontDoorProperties(azureFrontDoorResourceId, null),
                     null),
                 identity,
@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         /// <summary> Managed-On-Behalf-Of broker resource. This resource is created by the Resource Provider to manage some resources on behalf of the user. </summary>
         /// <param name="id"> Resource identifier of a Managed-On-Behalf-Of broker resource. </param>
-        /// <returns> A new <see cref="Models.MoboBrokerResource"/> instance for mocking. </returns>
-        public static MoboBrokerResource MoboBrokerResource(ResourceIdentifier id = default)
+        /// <returns> A new <see cref="Models.AppConfigurationMoboBrokerResourceInfo"/> instance for mocking. </returns>
+        public static AppConfigurationMoboBrokerResourceInfo AppConfigurationMoboBrokerResourceInfo(ResourceIdentifier id = default)
         {
-            return new MoboBrokerResource(id, additionalBinaryDataProperties: null);
+            return new AppConfigurationMoboBrokerResourceInfo(id, additionalBinaryDataProperties: null);
         }
 
         /// <param name="disableLocalAuth"> Disables all authentication methods other than AAD authentication. </param>

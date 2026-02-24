@@ -22,6 +22,30 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AppConfigurationStoreApiKeyListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AppConfigurationStoreApiKeyListResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAppConfigurationStoreApiKeyListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppConfigurationStoreApiKeyListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AppConfigurationStoreApiKeyListResult"/> from. </param>
+        internal static AppConfigurationStoreApiKeyListResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAppConfigurationStoreApiKeyListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AppConfigurationStoreApiKeyListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -146,31 +170,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         AppConfigurationStoreApiKeyListResult IPersistableModel<AppConfigurationStoreApiKeyListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AppConfigurationStoreApiKeyListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AppConfigurationStoreApiKeyListResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAppConfigurationStoreApiKeyListResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AppConfigurationStoreApiKeyListResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AppConfigurationStoreApiKeyListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AppConfigurationStoreApiKeyListResult"/> from. </param>
-        internal static AppConfigurationStoreApiKeyListResult FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAppConfigurationStoreApiKeyListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

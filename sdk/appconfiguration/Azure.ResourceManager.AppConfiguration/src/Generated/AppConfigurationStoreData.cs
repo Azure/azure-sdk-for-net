@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.AppConfiguration
 
         /// <summary> Managed-On-Behalf-Of broker resources. </summary>
         [WirePath("properties.managedOnBehalfOfConfiguration.moboBrokerResources")]
-        public IReadOnlyList<MoboBrokerResource> ManagedOnBehalfOfMoboBrokerResources
+        public IReadOnlyList<AppConfigurationMoboBrokerResourceInfo> ManagedOnBehalfOfMoboBrokerResources
         {
             get
             {

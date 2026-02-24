@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     /// <summary> The properties for updating a configuration store. </summary>
     internal partial class ConfigurationStorePropertiesUpdateParameters : IJsonModel<ConfigurationStorePropertiesUpdateParameters>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ConfigurationStorePropertiesUpdateParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationStorePropertiesUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeConfigurationStorePropertiesUpdateParameters(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConfigurationStorePropertiesUpdateParameters)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConfigurationStorePropertiesUpdateParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -235,23 +252,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ConfigurationStorePropertiesUpdateParameters IPersistableModel<ConfigurationStorePropertiesUpdateParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ConfigurationStorePropertiesUpdateParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationStorePropertiesUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeConfigurationStorePropertiesUpdateParameters(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ConfigurationStorePropertiesUpdateParameters)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ConfigurationStorePropertiesUpdateParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

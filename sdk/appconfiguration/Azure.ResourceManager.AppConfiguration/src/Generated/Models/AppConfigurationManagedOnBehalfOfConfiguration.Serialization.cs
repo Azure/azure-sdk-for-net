@@ -14,11 +14,28 @@ using Azure.ResourceManager.AppConfiguration;
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
     /// <summary> Managed-On-Behalf-Of configuration properties. This configuration exists for the resources where a resource provider manages those resources on behalf of the resource owner. </summary>
-    internal partial class ManagedOnBehalfOfConfiguration : IJsonModel<ManagedOnBehalfOfConfiguration>
+    internal partial class AppConfigurationManagedOnBehalfOfConfiguration : IJsonModel<AppConfigurationManagedOnBehalfOfConfiguration>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AppConfigurationManagedOnBehalfOfConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AppConfigurationManagedOnBehalfOfConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAppConfigurationManagedOnBehalfOfConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppConfigurationManagedOnBehalfOfConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ManagedOnBehalfOfConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AppConfigurationManagedOnBehalfOfConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,16 +46,16 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedOnBehalfOfConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppConfigurationManagedOnBehalfOfConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedOnBehalfOfConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AppConfigurationManagedOnBehalfOfConfiguration)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(MoboBrokerResources))
             {
                 writer.WritePropertyName("moboBrokerResources"u8);
                 writer.WriteStartArray();
-                foreach (MoboBrokerResource item in MoboBrokerResources)
+                foreach (AppConfigurationMoboBrokerResourceInfo item in MoboBrokerResources)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -63,30 +80,30 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedOnBehalfOfConfiguration IJsonModel<ManagedOnBehalfOfConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AppConfigurationManagedOnBehalfOfConfiguration IJsonModel<AppConfigurationManagedOnBehalfOfConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedOnBehalfOfConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AppConfigurationManagedOnBehalfOfConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedOnBehalfOfConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppConfigurationManagedOnBehalfOfConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedOnBehalfOfConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AppConfigurationManagedOnBehalfOfConfiguration)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeManagedOnBehalfOfConfiguration(document.RootElement, options);
+            return DeserializeAppConfigurationManagedOnBehalfOfConfiguration(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ManagedOnBehalfOfConfiguration DeserializeManagedOnBehalfOfConfiguration(JsonElement element, ModelReaderWriterOptions options)
+        internal static AppConfigurationManagedOnBehalfOfConfiguration DeserializeAppConfigurationManagedOnBehalfOfConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<MoboBrokerResource> moboBrokerResources = default;
+            IReadOnlyList<AppConfigurationMoboBrokerResourceInfo> moboBrokerResources = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -96,10 +113,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     {
                         continue;
                     }
-                    List<MoboBrokerResource> array = new List<MoboBrokerResource>();
+                    List<AppConfigurationMoboBrokerResourceInfo> array = new List<AppConfigurationMoboBrokerResourceInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MoboBrokerResource.DeserializeMoboBrokerResource(item, options));
+                        array.Add(AppConfigurationMoboBrokerResourceInfo.DeserializeAppConfigurationMoboBrokerResourceInfo(item, options));
                     }
                     moboBrokerResources = array;
                     continue;
@@ -109,47 +126,30 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedOnBehalfOfConfiguration(moboBrokerResources ?? new ChangeTrackingList<MoboBrokerResource>(), additionalBinaryDataProperties);
+            return new AppConfigurationManagedOnBehalfOfConfiguration(moboBrokerResources ?? new ChangeTrackingList<AppConfigurationMoboBrokerResourceInfo>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ManagedOnBehalfOfConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AppConfigurationManagedOnBehalfOfConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedOnBehalfOfConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppConfigurationManagedOnBehalfOfConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAppConfigurationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedOnBehalfOfConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppConfigurationManagedOnBehalfOfConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedOnBehalfOfConfiguration IPersistableModel<ManagedOnBehalfOfConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedOnBehalfOfConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedOnBehalfOfConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeManagedOnBehalfOfConfiguration(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ManagedOnBehalfOfConfiguration)} does not support reading '{options.Format}' format.");
-            }
-        }
+        AppConfigurationManagedOnBehalfOfConfiguration IPersistableModel<AppConfigurationManagedOnBehalfOfConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ManagedOnBehalfOfConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AppConfigurationManagedOnBehalfOfConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
