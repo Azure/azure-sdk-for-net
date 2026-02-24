@@ -930,13 +930,7 @@ function getAllResourceModels(codeModel: CodeModel): InputModelType[] {
     // 2. Custom Azure resources: Models inheriting from a @customAzureResource base model
     //    Used by legacy services like TrafficManager that don't use standard ARM templates
     else if (hasCustomAzureResourceInHierarchy(model)) {
-      // Only include models that have properties defined.
-      // This filters out completely empty models. Note that the base CustomResource model
-      // also has properties (id, name, type), but it won't become a resource in the final schema
-      // because only models with defined operations become actual resources.
-      if (model.properties && model.properties.length > 0) {
-        resourceModels.push(model);
-      }
+      resourceModels.push(model);
     }
   }
   return resourceModels;

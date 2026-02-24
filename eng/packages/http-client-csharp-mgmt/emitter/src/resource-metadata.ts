@@ -54,7 +54,7 @@ export interface ResourceMetadata {
 export function convertResourceMetadataToArguments(
   metadata: ResourceMetadata
 ): Record<string, any> {
-  const result: Record<string, any> = {
+  return {
     resourceIdPattern: metadata.resourceIdPattern,
     resourceType: metadata.resourceType,
     methods: metadata.methods,
@@ -63,8 +63,6 @@ export function convertResourceMetadataToArguments(
     singletonResourceName: metadata.singletonResourceName,
     resourceName: metadata.resourceName
   };
-
-  return result;
 }
 
 export interface NonResourceMethod {
@@ -196,25 +194,22 @@ export function convertArmProviderSchemaToArguments(
   schema: ArmProviderSchema
 ): Record<string, any> {
   return {
-    resources: schema.resources.map((r) => {
-      const resource: Record<string, any> = {
-        resourceModelId: r.resourceModelId,
-        resourceIdPattern: r.metadata.resourceIdPattern,
-        resourceType: r.metadata.resourceType,
-        methods: r.metadata.methods.map((m) => ({
-          methodId: m.methodId,
-          kind: m.kind,
-          operationPath: m.operationPath,
-          operationScope: m.operationScope,
-          resourceScope: m.resourceScope
-        })),
-        resourceScope: r.metadata.resourceScope,
-        parentResourceId: r.metadata.parentResourceId,
-        singletonResourceName: r.metadata.singletonResourceName,
-        resourceName: r.metadata.resourceName
-      };
-      return resource;
-    }),
+    resources: schema.resources.map((r) => ({
+      resourceModelId: r.resourceModelId,
+      resourceIdPattern: r.metadata.resourceIdPattern,
+      resourceType: r.metadata.resourceType,
+      methods: r.metadata.methods.map((m) => ({
+        methodId: m.methodId,
+        kind: m.kind,
+        operationPath: m.operationPath,
+        operationScope: m.operationScope,
+        resourceScope: m.resourceScope
+      })),
+      resourceScope: r.metadata.resourceScope,
+      parentResourceId: r.metadata.parentResourceId,
+      singletonResourceName: r.metadata.singletonResourceName,
+      resourceName: r.metadata.resourceName
+    })),
     nonResourceMethods: schema.nonResourceMethods.map((m) => ({
       methodId: m.methodId,
       operationPath: m.operationPath,

@@ -1556,7 +1556,10 @@ interface BestPracticeVersionDetails {
         r.metadata.resourceIdPattern ===
         "/providers/Microsoft.ContosoProviderHub/bestPractices/{bestPracticeName}/versions/{versionName}/details/{detailName}"
     );
-    ok(bestPracticeVersionDetail, "Should have BestPracticeVersionDetail resource");
+    ok(
+      bestPracticeVersionDetail,
+      "Should have BestPracticeVersionDetail resource"
+    );
 
     // Critical assertion: BestPracticeVersion's parent should be BestPractice
     strictEqual(
@@ -1575,8 +1578,14 @@ interface BestPracticeVersionDetails {
 
     // Validate resource names
     strictEqual(bestPractice.metadata.resourceName, "BestPractice");
-    strictEqual(bestPracticeVersion.metadata.resourceName, "BestPracticeVersion");
-    strictEqual(bestPracticeVersionDetail.metadata.resourceName, "BestPracticeVersionDetail");
+    strictEqual(
+      bestPracticeVersion.metadata.resourceName,
+      "BestPracticeVersion"
+    );
+    strictEqual(
+      bestPracticeVersionDetail.metadata.resourceName,
+      "BestPracticeVersionDetail"
+    );
 
     // Validate using resolveArmResources API and compare
     const resolvedSchema = resolveArmResources(program, sdkContext);
@@ -1840,7 +1849,10 @@ interface SitesByServiceGroup extends SiteOps<ServiceGroup> {}
     };
     deepStrictEqual(
       normalizeSchemaForComparison(resolvedSchema, normalizeServiceGroupScopes),
-      normalizeSchemaForComparison(armProviderSchema, normalizeServiceGroupScopes)
+      normalizeSchemaForComparison(
+        armProviderSchema,
+        normalizeServiceGroupScopes
+      )
     );
   });
 
@@ -1982,6 +1994,11 @@ interface TrafficEndpoints {
     );
     ok(trafficProfileResource, "TrafficProfile resource should be detected");
     strictEqual(
+      trafficProfileResource.resourceModelId,
+      "Microsoft.ContosoProviderHub.TrafficProfile",
+      "TrafficProfile resource model ID should match"
+    );
+    strictEqual(
       trafficProfileResource.metadata.resourceName,
       "TrafficProfile",
       "Resource name should be TrafficProfile"
@@ -2000,6 +2017,11 @@ interface TrafficEndpoints {
     );
     ok(trafficEndpointResource, "TrafficEndpoint resource should be detected");
     strictEqual(
+      trafficEndpointResource.resourceModelId,
+      "Microsoft.ContosoProviderHub.TrafficEndpoint",
+      "TrafficEndpoint resource model ID should match"
+    );
+    strictEqual(
       trafficEndpointResource.metadata.resourceName,
       "TrafficEndpoint",
       "Resource name should be TrafficEndpoint"
@@ -2015,6 +2037,20 @@ interface TrafficEndpoints {
       trafficEndpointResource.metadata.parentResourceId,
       trafficProfileResource.metadata.resourceIdPattern,
       "TrafficEndpoint should have TrafficProfile as parent"
+    );
+
+    // Validate using resolveArmResources API
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    // Note: resolveArmResources does not detect custom Azure resources
+    // (those using @customAzureResource decorator), so the resolved schema
+    // will have no resources. This is a known gap — custom resources are only
+    // detected by the legacy buildArmProviderSchema path.
+    strictEqual(
+      resolvedSchema.resources.length,
+      0,
+      "resolveArmResources does not detect custom Azure resources"
     );
   });
 });
