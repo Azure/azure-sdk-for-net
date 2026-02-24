@@ -302,8 +302,11 @@ The requirement was to add NetworkSecurityPerimeter support. The resources alrea
 - Try running `dotnet restore` before the generator
 
 ### API compatibility errors
-- Use `ApiCompatBaseline.txt` to suppress expected breaking changes (provisioning packages only)
-- Or create backward-compatible stubs/properties
+- Use customization code to maintain backward compatibility (preferred approach):
+  - Create backward-compatible stubs in `BackwardCompatible/Models/`
+  - Use `CustomizeProperty` and `CustomizeResource` in specification files
+  - Add partial classes with `DefineAdditionalProperties()` for property renames
+- Only `[DataMember]` attribute removal errors can be suppressed via `ApiCompatBaseline.txt`
 
 ### Enum values in wrong order
 - Use `OrderEnum<T>()` in the specification file to control ordering
