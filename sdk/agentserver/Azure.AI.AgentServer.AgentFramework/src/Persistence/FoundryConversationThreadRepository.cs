@@ -9,12 +9,12 @@ using Microsoft.Agents.AI;
 namespace Azure.AI.AgentServer.AgentFramework.Persistence;
 
 /// <summary>
-/// Thread repository that hydrates thread messages from Foundry Conversations API.
+/// Thread repository that hydrates session messages from Foundry Conversations API.
 /// </summary>
 public class FoundryConversationThreadRepository : IAgentThreadRepository
 {
     private readonly ConversationItemsClient _itemsClient;
-    private readonly ConcurrentDictionary<string, AgentThread> _threads = new(StringComparer.Ordinal);
+    private readonly ConcurrentDictionary<string, AgentSession> _sessions = new(StringComparer.Ordinal);
 
     /// <summary>
     /// Initializes a new instance of the <see cref="FoundryConversationThreadRepository"/> class.
@@ -32,78 +32,75 @@ public class FoundryConversationThreadRepository : IAgentThreadRepository
     }
 
     /// <inheritdoc />
-    public async Task<AgentThread> Get(string? conversationId, AIAgent? agent = null)
+    public async Task<AgentSession> Get(string? conversationId, AIAgent? agent = null)
     {
         if (string.IsNullOrWhiteSpace(conversationId))
         {
             if (agent != null)
             {
-                return agent.GetNewThread();
+                return await agent.CreateSessionAsync().ConfigureAwait(false);
             }
 
             throw new InvalidOperationException("Agent instance must be provided when conversation ID is null.");
         }
 
-        if (_threads.TryGetValue(conversationId, out var existingThread))
+        if (_sessions.TryGetValue(conversationId, out var existingSession))
         {
-            return existingThread;
+            return existingSession;
         }
 
-        var createdThread = await CreateThreadAsync(conversationId, agent).ConfigureAwait(false);
-        if (_threads.TryAdd(conversationId, createdThread))
+        var createdSession = await CreateSessionAsync(conversationId, agent).ConfigureAwait(false);
+        if (_sessions.TryAdd(conversationId, createdSession))
         {
-            return createdThread;
+            return createdSession;
         }
 
-        return _threads[conversationId];
+        return _sessions[conversationId];
     }
 
     /// <inheritdoc />
-    public Task Set(string? conversationId, AgentThread thread)
+    public Task Set(string? conversationId, AgentSession session)
     {
         if (string.IsNullOrWhiteSpace(conversationId))
         {
             return Task.CompletedTask;
         }
 
-        ArgumentNullException.ThrowIfNull(thread);
+        ArgumentNullException.ThrowIfNull(session);
 
-        _threads[conversationId] = thread;
+        _sessions[conversationId] = session;
         return Task.CompletedTask;
     }
 
-    private async Task<AgentThread> CreateThreadAsync(string conversationId, AIAgent? agent)
+    private async Task<AgentSession> CreateSessionAsync(string conversationId, AIAgent? agent)
     {
         var messageStore = new FoundryConversationMessageStore(_itemsClient, conversationId);
         var messages = await messageStore.GetMessagesAsync().ConfigureAwait(false);
 
-        // Agent threads must be created by the target agent to ensure compatibility.
+        // Agent sessions must be created by the target agent to ensure compatibility.
         if (agent is ChatClientAgent chatClientAgent)
         {
-            var inMemoryMessageStore = new InMemoryChatMessageStore();
-            foreach (var message in messages)
+            var session = await chatClientAgent.CreateSessionAsync(conversationId).ConfigureAwait(false);
+            if (chatClientAgent.ChatHistoryProvider is InMemoryChatHistoryProvider memoryProvider)
             {
-                inMemoryMessageStore.Add(message);
+                memoryProvider.SetMessages(session, messages.ToList());
             }
-
-            return chatClientAgent.GetNewThread(inMemoryMessageStore);
+            return session;
         }
 
         if (agent != null)
         {
-            var agentThread = agent.GetNewThread();
+            var session = await agent.CreateSessionAsync().ConfigureAwait(false);
 
-            if (agentThread is InMemoryAgentThread inMemoryAgentThread)
+            if (agent.GetService<ChatHistoryProvider>() is InMemoryChatHistoryProvider memoryProvider)
             {
-                foreach (var message in messages)
-                {
-                    inMemoryAgentThread.MessageStore.Add(message);
-                }
+                memoryProvider.SetMessages(session, messages.ToList());
             }
 
-            return agentThread;
+            return session;
         }
 
-        return new FoundryConversationAgentThread(conversationId, messages);
+        // Fallback: no agent available to create a session
+        throw new InvalidOperationException("Agent instance must be provided to create a session.");
     }
 }

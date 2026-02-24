@@ -10,22 +10,22 @@ namespace Azure.AI.AgentServer.AgentFramework.Persistence
     /// </summary>
     public class InMemoryAgentThreadRepository : IAgentThreadRepository
     {
-        private readonly Dictionary<string, AgentThread> _threads = new();
+        private readonly Dictionary<string, AgentSession> _sessions = new();
         private readonly AIAgent? _agent;
 
         /// <summary>
         /// Instructor of InMemoryAgentThreadRepository
         /// </summary>
-        /// <param name="agent">AIAgent instance to associate with the threads.</param>
+        /// <param name="agent">AIAgent instance to associate with the sessions.</param>
         public InMemoryAgentThreadRepository(AIAgent? agent = null)
         {
             _agent = agent;
         }
 
         /// <inheritdoc/>
-        public Task<AgentThread> Get(string? conversationId, AIAgent? agent = null)
+        public async Task<AgentSession> Get(string? conversationId, AIAgent? agent = null)
         {
-            if (string.IsNullOrEmpty(conversationId) || !_threads.ContainsKey(conversationId))
+            if (string.IsNullOrEmpty(conversationId) || !_sessions.ContainsKey(conversationId))
             {
                 agent ??= _agent;
 
@@ -33,20 +33,20 @@ namespace Azure.AI.AgentServer.AgentFramework.Persistence
                 {
                     throw new InvalidOperationException("Agent instance must be provided either in the constructor or in the method call.");
                 }
-                return Task.FromResult(agent.GetNewThread());
+                return await agent.CreateSessionAsync().ConfigureAwait(false);
             }
-            return Task.FromResult(_threads[conversationId]);
+            return _sessions[conversationId];
         }
 
         /// <inheritdoc/>
-        public Task Set(string? conversationId, AgentThread agentThread)
+        public Task Set(string? conversationId, AgentSession session)
         {
             if (string.IsNullOrEmpty(conversationId))
             {
                 return Task.CompletedTask;
             }
 
-            _threads[conversationId] = agentThread;
+            _sessions[conversationId] = session;
             return Task.CompletedTask;
         }
     }

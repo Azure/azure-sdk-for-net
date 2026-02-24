@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Runtime.CompilerServices;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using Microsoft.Agents.AI;
 using Microsoft.Extensions.AI;
 
@@ -21,24 +21,22 @@ internal sealed class FoundryToolAgent : DelegatingAIAgent, IAsyncDisposable
         _innerAgentAddsDefaultTools = IsOrWrapsChatClientAgent(innerAgent);
     }
 
-    public override async Task<AgentRunResponse> RunAsync(
-        IEnumerable<ChatMessage> messages,
-        AgentThread? thread = null,
+    public new async Task<AgentResponse> RunAsync(
+        AgentSession? session = null,
         AgentRunOptions? options = null,
         CancellationToken cancellationToken = default)
     {
         var runOptions = await CreateRunOptionsAsync(options, cancellationToken).ConfigureAwait(false);
-        return await InnerAgent.RunAsync(messages, thread, runOptions, cancellationToken).ConfigureAwait(false);
+        return await InnerAgent.RunAsync(session, runOptions, cancellationToken).ConfigureAwait(false);
     }
 
-    public override async IAsyncEnumerable<AgentRunResponseUpdate> RunStreamingAsync(
-        IEnumerable<ChatMessage> messages,
-        AgentThread? thread = null,
+    public new async IAsyncEnumerable<AgentResponseUpdate> RunStreamingAsync(
+        AgentSession? session = null,
         AgentRunOptions? options = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         var runOptions = await CreateRunOptionsAsync(options, cancellationToken).ConfigureAwait(false);
-        await foreach (var update in InnerAgent.RunStreamingAsync(messages, thread, runOptions, cancellationToken).ConfigureAwait(false))
+        await foreach (var update in InnerAgent.RunStreamingAsync(session, runOptions, cancellationToken).ConfigureAwait(false))
         {
             yield return update;
         }

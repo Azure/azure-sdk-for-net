@@ -13,6 +13,8 @@ using Azure.AI.AgentServer.Responses.Invocation;
 using Microsoft.Agents.AI;
 using Microsoft.Extensions.AI;
 
+using AgentRunContext = Azure.AI.AgentServer.Responses.Invocation.AgentRunContext;
+
 namespace Azure.AI.AgentServer.AgentFramework.Converters;
 
 /// <summary>
@@ -23,24 +25,24 @@ public static class ResponseConverterExtensions
     private static readonly JsonSerializerOptions Json = JsonExtensions.DefaultJsonSerializerOptions;
 
     /// <summary>
-    /// Converts an agent run response to a response contract object.
+    /// Converts an agent response to a response contract object.
     /// </summary>
-    /// <param name="agentRunResponse">The agent run response to convert.</param>
+    /// <param name="agentResponse">The agent response to convert.</param>
     /// <param name="request">The create response request.</param>
     /// <param name="context">The agent run context.</param>
     /// <returns>A response contract object.</returns>
-    public static Contracts.Generated.Responses.Response ToResponse(this AgentRunResponse agentRunResponse,
+    public static Contracts.Generated.Responses.Response ToResponse(this AgentResponse agentResponse,
         CreateResponseRequest request,
         AgentRunContext context)
     {
-        var output = agentRunResponse.Messages
+        var output = agentResponse.Messages
             .SelectMany(msg => msg.ToItemResource(context.IdGenerator, context.ResponseId));
 
         return request.ToResponse(
             context: context,
             output: output,
-            createdAt: agentRunResponse.CreatedAt,
-            usage: agentRunResponse.Usage.ToResponseUsage()
+            createdAt: agentResponse.CreatedAt,
+            usage: agentResponse.Usage.ToResponseUsage()
         );
     }
 

@@ -14,67 +14,55 @@ public class FoundryConversationThreadRepositoryTests
     private static readonly Uri ProjectEndpoint = new("https://contoso.services.ai.azure.com/api/projects/demo");
 
     [Test]
-    public async Task Get_WithSameConversationId_ReturnsSameThread()
+    public async Task Get_WithSameConversationId_ReturnsSameSession()
     {
         var repository = CreateRepository();
+        var agent = CreateTestAgent();
 
-        var first = await repository.Get("conv_123").ConfigureAwait(false);
-        var second = await repository.Get("conv_123").ConfigureAwait(false);
+        var first = await repository.Get("conv_123", agent).ConfigureAwait(false);
+        var second = await repository.Get("conv_123", agent).ConfigureAwait(false);
 
         Assert.That(first, Is.SameAs(second));
     }
 
     [Test]
-    public async Task Get_CreatesInMemoryAgentThreadWithMessageStore()
+    public async Task Set_WithExistingSession_ReplacesSessionEntry()
     {
         var repository = CreateRepository();
+        var agent = CreateTestAgent();
 
-        var thread = await repository.Get("conv_456").ConfigureAwait(false);
-
-        Assert.That(thread, Is.InstanceOf<InMemoryAgentThread>());
-        Assert.That(((InMemoryAgentThread)thread).MessageStore, Is.Not.Null);
-    }
-
-    [Test]
-    public async Task Set_WithExistingThread_ReplacesThreadEntry()
-    {
-        var repository = CreateRepository();
-        var first = await repository.Get("conv_789").ConfigureAwait(false);
-        var replacement = new TestAgentThread();
+        var first = await repository.Get("conv_789", agent).ConfigureAwait(false);
+        var replacement = await agent.CreateSessionAsync().ConfigureAwait(false);
 
         await repository.Set("conv_789", replacement).ConfigureAwait(false);
-        var updated = await repository.Get("conv_789").ConfigureAwait(false);
+        var updated = await repository.Get("conv_789", agent).ConfigureAwait(false);
 
         Assert.That(updated, Is.SameAs(replacement));
         Assert.That(updated, Is.Not.SameAs(first));
     }
 
     [Test]
-    public async Task Get_WithAgent_CreatesThreadUsingAgent()
+    public async Task Get_WithAgent_CreatesSessionUsingAgent()
     {
         var repository = CreateRepository();
-        var expectedThread = new TestAgentThread();
-        var agent = new Mock<AIAgent>();
-        agent.Setup(mock => mock.GetNewThread()).Returns(expectedThread);
+        var agent = CreateTestAgent();
 
-        var thread = await repository.Get("conv_with_agent", agent.Object).ConfigureAwait(false);
+        var session = await repository.Get("conv_with_agent", agent).ConfigureAwait(false);
 
-        Assert.That(thread, Is.SameAs(expectedThread));
-        agent.Verify(mock => mock.GetNewThread(), Times.Once);
+        Assert.That(session, Is.Not.Null);
+        Assert.That(session, Is.InstanceOf<AgentSession>());
     }
 
     [Test]
-    public async Task Get_WithNullConversationId_ReturnsNewThreadFromAgent()
+    public async Task Get_WithNullConversationId_ReturnsNewSessionFromAgent()
     {
         var repository = CreateRepository();
-        var expectedThread = new TestAgentThread();
-        var agent = new Mock<AIAgent>();
-        agent.Setup(mock => mock.GetNewThread()).Returns(expectedThread);
+        var agent = CreateTestAgent();
 
-        var thread = await repository.Get(null, agent.Object).ConfigureAwait(false);
+        var session = await repository.Get(null, agent).ConfigureAwait(false);
 
-        Assert.That(thread, Is.SameAs(expectedThread));
-        agent.Verify(mock => mock.GetNewThread(), Times.Once);
+        Assert.That(session, Is.Not.Null);
+        Assert.That(session, Is.InstanceOf<AgentSession>());
     }
 
     [Test]
@@ -90,14 +78,20 @@ public class FoundryConversationThreadRepositoryTests
     public void Set_WithNullConversationId_DoesNotThrow()
     {
         var repository = CreateRepository();
+        var agent = CreateTestAgent();
 
         Assert.DoesNotThrowAsync(async () =>
-            await repository.Set(null, new TestAgentThread()).ConfigureAwait(false));
+            await repository.Set(null, await agent.CreateSessionAsync().ConfigureAwait(false)).ConfigureAwait(false));
     }
 
     private static FoundryConversationThreadRepository CreateRepository()
     {
         return new FoundryConversationThreadRepository(ProjectEndpoint, new TestTokenCredential());
+    }
+
+    private static ChatClientAgent CreateTestAgent()
+    {
+        return new ChatClientAgent(new Mock<IChatClient>().Object);
     }
 
     private sealed class TestTokenCredential : TokenCredential
@@ -109,13 +103,5 @@ public class FoundryConversationThreadRepositoryTests
             TokenRequestContext requestContext,
             CancellationToken cancellationToken)
             => ValueTask.FromResult(GetToken(requestContext, cancellationToken));
-    }
-
-    private sealed class TestAgentThread : InMemoryAgentThread
-    {
-        public TestAgentThread()
-            : base(Array.Empty<ChatMessage>())
-        {
-        }
     }
 }

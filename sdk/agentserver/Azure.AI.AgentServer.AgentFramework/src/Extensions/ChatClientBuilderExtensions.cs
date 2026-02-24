@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using System.Reflection;
-using Azure.Identity;
-using Microsoft.Extensions.AI;
 using Azure.AI.AgentServer.Core.Context;
 using Azure.AI.AgentServer.Core.Tools.Models;
 using Azure.AI.AgentServer.Core.Tools.Runtime.Facade;
+using Azure.Identity;
+using Microsoft.Extensions.AI;
 
 namespace Azure.AI.AgentServer.AgentFramework.Extensions;
 

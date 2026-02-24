@@ -9,6 +9,8 @@ using Azure.AI.AgentServer.Responses.Invocation;
 using Microsoft.Agents.AI;
 using Microsoft.Extensions.AI;
 
+using AgentRunContext = Azure.AI.AgentServer.Responses.Invocation.AgentRunContext;
+
 namespace Azure.AI.AgentServer.AgentFramework.Converters
 {
     /// <summary>
@@ -99,34 +101,29 @@ namespace Azure.AI.AgentServer.AgentFramework.Converters
         }
 
         /// <summary>
-        /// Filter FunctionApprovalRequestContents from an AgentThread's pending user input requests.
+        /// Filter FunctionApprovalRequestContents from an agent's session messages.
         /// </summary>
-        /// <param name="agentThread">Thread messages of the conversation.</param>
+        /// <param name="agent">The AI agent.</param>
+        /// <param name="session">The agent session.</param>
         /// <returns>A dictionary with function call_id and FunctionApprovalRequests that are pending for approval.</returns>
-        public static async Task<Dictionary<string, UserInputRequestContent>> GetPendingUserInputRequestContents(
-            this AgentThread agentThread)
+        public static Dictionary<string, UserInputRequestContent> GetPendingUserInputRequestContents(
+            AIAgent agent,
+            AgentSession? session)
         {
             var res = new Dictionary<string, UserInputRequestContent>();
-            if (agentThread == null)
+            if (session == null)
             {
                 return res;
             }
 
             IEnumerable<ChatMessage>? messages = null;
-            if (agentThread is ChatClientAgentThread chatClientAgentThread)
+            if (agent is ChatClientAgent chatClientAgent &&
+                chatClientAgent.ChatHistoryProvider is InMemoryChatHistoryProvider memoryProvider)
             {
-                if (chatClientAgentThread.MessageStore == null)
-                {
-                    return res;
-                }
+                messages = memoryProvider.GetMessages(session);
+            }
 
-                messages = await chatClientAgentThread.MessageStore.GetMessagesAsync().ConfigureAwait(false);
-            }
-            else if (agentThread is InMemoryAgentThread inMemoryAgentThread)
-            {
-                messages = await inMemoryAgentThread.MessageStore.GetMessagesAsync().ConfigureAwait(false);
-            }
-            else
+            if (messages == null)
             {
                 return res;
             }

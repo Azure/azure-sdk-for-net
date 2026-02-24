@@ -13,13 +13,15 @@ using Azure.AI.AgentServer.Responses.Invocation.Stream;
 using Microsoft.Agents.AI;
 using Microsoft.Extensions.AI;
 
+using AgentRunContext = Azure.AI.AgentServer.Responses.Invocation.AgentRunContext;
+
 namespace Azure.AI.AgentServer.AgentFramework.Converters;
 
 /// <summary>
 /// Generates item resources from agent run response updates with streaming support.
 /// </summary>
 public class ItemResourceGenerator
-    : NestedChunkedUpdatingGeneratorBase<IEnumerable<ItemResource>, AgentRunResponseUpdate>
+    : NestedChunkedUpdatingGeneratorBase<IEnumerable<ItemResource>, AgentResponseUpdate>
 {
     /// <summary>
     /// Gets or initializes the agent run context.
@@ -37,7 +39,7 @@ public class ItemResourceGenerator
     /// <param name="previous">The previous update.</param>
     /// <param name="current">The current update.</param>
     /// <returns>True if the message ID has changed; otherwise, false.</returns>
-    protected override bool Changed(AgentRunResponseUpdate previous, AgentRunResponseUpdate current)
+    protected override bool Changed(AgentResponseUpdate previous, AgentResponseUpdate current)
     {
         return previous.MessageId != current.MessageId;
     }
@@ -64,7 +66,7 @@ public class ItemResourceGenerator
     /// <param name="updateGroup">The group of updates to process.</param>
     /// <returns>A nested events group containing item resources.</returns>
     protected override NestedEventsGroup<IEnumerable<ItemResource>> CreateGroup(
-        IAsyncEnumerable<AgentRunResponseUpdate> updateGroup)
+        IAsyncEnumerable<AgentResponseUpdate> updateGroup)
     {
         List<ItemResource> items = [];
         return new NestedEventsGroup<IEnumerable<ItemResource>>()
@@ -75,7 +77,7 @@ public class ItemResourceGenerator
     }
 
     private async IAsyncEnumerable<ResponseStreamEvent> GenerateEvents(
-        IAsyncEnumerable<AgentRunResponseUpdate> updates,
+        IAsyncEnumerable<AgentResponseUpdate> updates,
         Action<ItemResource> onItemResource)
     {
         var p = await FlattenContents(updates).Peek(CancellationToken).ConfigureAwait(false);
@@ -100,8 +102,8 @@ public class ItemResourceGenerator
         }
     }
 
-    private async IAsyncEnumerable<(AgentRunResponseUpdate Update, AIContent Content)> FlattenContents(
-        IAsyncEnumerable<AgentRunResponseUpdate> updates)
+    private async IAsyncEnumerable<(AgentResponseUpdate Update, AIContent Content)> FlattenContents(
+        IAsyncEnumerable<AgentResponseUpdate> updates)
     {
         await foreach (var update in updates.ConfigureAwait(false))
         {
@@ -125,7 +127,7 @@ public class ItemResourceGenerator
     }
 
     private async IAsyncEnumerable<ResponseStreamEvent> GenerateFunctionCallEvents(
-        IAsyncEnumerable<(AgentRunResponseUpdate Update, AIContent Content)> source,
+        IAsyncEnumerable<(AgentResponseUpdate Update, AIContent Content)> source,
         Action<ItemResource> onItemResource)
     {
         string? authorName = null;
@@ -171,7 +173,7 @@ public class ItemResourceGenerator
     }
 
     private async IAsyncEnumerable<ResponseStreamEvent> GenerateHumanInTheLoopEvents(
-    IAsyncEnumerable<(AgentRunResponseUpdate Update, AIContent Content)> source,
+    IAsyncEnumerable<(AgentResponseUpdate Update, AIContent Content)> source,
     Action<ItemResource> onItemResource)
     {
         string? authorName = null;
@@ -222,7 +224,7 @@ public class ItemResourceGenerator
     }
 
     private async IAsyncEnumerable<ResponseStreamEvent> GenerateFunctionCallOutputEvents(
-        IAsyncEnumerable<(AgentRunResponseUpdate Update, AIContent Content)> source,
+        IAsyncEnumerable<(AgentResponseUpdate Update, AIContent Content)> source,
         Action<ItemResource> onItemResource)
     {
         string? authorName = null;
@@ -256,7 +258,7 @@ public class ItemResourceGenerator
     }
 
     private async IAsyncEnumerable<ResponseStreamEvent> GenerateAssistantMessageEvents(
-        IAsyncEnumerable<(AgentRunResponseUpdate Update, AIContent Content)> source,
+        IAsyncEnumerable<(AgentResponseUpdate Update, AIContent Content)> source,
         Action<ItemResource> onItemResource)
     {
         var groupSeq = GroupSeq.Next();

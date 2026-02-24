@@ -13,13 +13,15 @@ using Microsoft.Agents.AI;
 using Microsoft.Extensions.AI;
 using Microsoft.Identity.Client;
 
+using AgentRunContext = Azure.AI.AgentServer.Responses.Invocation.AgentRunContext;
+
 namespace Azure.AI.AgentServer.AgentFramework;
 
 /// <summary>
 /// Provides an implementation of agent invocation using the Microsoft Agents AI framework.
 /// </summary>
 /// <param name="agent">The AI agent to invoke.</param>
-/// <param name="threadRepository">Optional repository for managing agent threads.</param>
+/// <param name="threadRepository">Optional repository for managing agent sessions.</param>
 public class AIAgentInvocation(
     AIAgent agent,
     IAgentThreadRepository? threadRepository = null) : AgentInvocationBase
@@ -37,14 +39,16 @@ public class AIAgentInvocation(
         Activity.Current?.SetServiceNamespace("agentframework");
 
         var request = context.Request;
-        AgentThread? thread = await GetThread(context).ConfigureAwait(false);
+        AgentSession? session = await GetSession(context).ConfigureAwait(false);
 
-        var messages = await GetInput(request, thread).ConfigureAwait(false);
+        var messages = await GetInput(request, session).ConfigureAwait(false);
+
+        AddMessagesToSession(session, messages);
 
         var response = await agent.RunAsync(
-            messages, thread: thread,
+            session: session,
             cancellationToken: cancellationToken).ConfigureAwait(false);
-        await SaveThread(context, thread).ConfigureAwait(false);
+        await SaveSession(context, session).ConfigureAwait(false);
         return response.ToResponse(request, context);
     }
 
@@ -62,11 +66,14 @@ public class AIAgentInvocation(
     {
         Activity.Current?.SetServiceNamespace("agentframework");
 
-        AgentThread? thread = await GetThread(context).ConfigureAwait(false);
+        AgentSession? session = await GetSession(context).ConfigureAwait(false);
 
         var request = context.Request;
-        var messages = await GetInput(request, thread).ConfigureAwait(false);
-        var updates = agent.RunStreamingAsync(messages, thread: thread, cancellationToken: cancellationToken);
+        var messages = await GetInput(request, session).ConfigureAwait(false);
+
+        AddMessagesToSession(session, messages);
+
+        var updates = agent.RunStreamingAsync(session: session, cancellationToken: cancellationToken);
         // TODO refine to multicast event
         IList<Action<ResponseUsage>> usageUpdaters = [];
 
@@ -95,12 +102,12 @@ public class AIAgentInvocation(
 
         var func = (async (CancellationToken ct) =>
         {
-            await SaveThread(context, thread).ConfigureAwait(false);
+            await SaveSession(context, session).ConfigureAwait(false);
         });
         return (generator, func);
     }
 
-    private async Task<AgentThread?> GetThread(AgentRunContext context)
+    private async Task<AgentSession?> GetSession(AgentRunContext context)
     {
         if (threadRepository != null && !string.IsNullOrEmpty(context.ConversationId))
         {
@@ -109,26 +116,67 @@ public class AIAgentInvocation(
         return null;
     }
 
-    private async Task SaveThread(AgentRunContext context, AgentThread? agentThread)
+    private async Task SaveSession(AgentRunContext context, AgentSession? session)
     {
-        if (agentThread != null && threadRepository != null && !string.IsNullOrEmpty(context.ConversationId))
+        if (session != null && threadRepository != null && !string.IsNullOrEmpty(context.ConversationId))
         {
-            await threadRepository.Set(context.ConversationId, agentThread).ConfigureAwait(false);
+            await threadRepository.Set(context.ConversationId, session).ConfigureAwait(false);
         }
     }
 
-    private async Task<IReadOnlyCollection<ChatMessage>> GetInput(CreateResponseRequest request, AgentThread? thread)
+    private void AddMessagesToSession(AgentSession? session, IReadOnlyCollection<ChatMessage> messages)
     {
-        Dictionary<string, UserInputRequestContent> pendingApprovalRequests = new();
-        if (thread != null)
+        if (session == null || messages.Count == 0)
         {
-            pendingApprovalRequests = await thread.GetPendingUserInputRequestContents().ConfigureAwait(false);
-            var res = request.ValidateAndConvertResponse(pendingApprovalRequests);
-            if (res != null && res.Count > 0)
+            return;
+        }
+
+        if (agent is ChatClientAgent chatClientAgent &&
+            chatClientAgent.ChatHistoryProvider is InMemoryChatHistoryProvider memoryProvider)
+        {
+            var existingMessages = memoryProvider.GetMessages(session);
+            existingMessages.AddRange(messages);
+            memoryProvider.SetMessages(session, existingMessages);
+        }
+    }
+
+    private Task<IReadOnlyCollection<ChatMessage>> GetInput(CreateResponseRequest request, AgentSession? session)
+    {
+        if (session != null && agent is ChatClientAgent chatClientAgent &&
+            chatClientAgent.ChatHistoryProvider is InMemoryChatHistoryProvider memoryProvider)
+        {
+            var sessionMessages = memoryProvider.GetMessages(session);
+            var pendingApprovalRequests = GetPendingUserInputRequestContents(sessionMessages);
+            if (pendingApprovalRequests.Count > 0)
             {
-                return res;
+                var res = request.ValidateAndConvertResponse(pendingApprovalRequests);
+                if (res != null && res.Count > 0)
+                {
+                    return Task.FromResult<IReadOnlyCollection<ChatMessage>>(res);
+                }
             }
         }
-        return request.GetInputMessages();
+        return Task.FromResult<IReadOnlyCollection<ChatMessage>>(request.GetInputMessages());
+    }
+
+    private static Dictionary<string, UserInputRequestContent> GetPendingUserInputRequestContents(
+        IEnumerable<ChatMessage> messages)
+    {
+        var res = new Dictionary<string, UserInputRequestContent>();
+        foreach (var message in messages)
+        {
+            foreach (var content in message.Contents)
+            {
+                if (content is UserInputRequestContent userRequestContent)
+                {
+                    res[userRequestContent.Id] = userRequestContent;
+                }
+                else if (content is UserInputResponseContent userInputResponseContent)
+                {
+                    res.Remove(userInputResponseContent.Id);
+                }
+            }
+        }
+        return res;
     }
 }
