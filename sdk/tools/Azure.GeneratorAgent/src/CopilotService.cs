@@ -107,47 +107,36 @@ public sealed class CopilotService : IAsyncDisposable
                                 }
                             }
                         }
-                        catch (Exception)
+                        catch (Exception ex)
                         {
-                            logger.LogWarning("Denying {ToolName} - failed to parse arguments", input.ToolName);
-                            return new PreToolUseHookOutput
-                            {
-                                PermissionDecision = "deny",
-                                AdditionalContext = "Failed to parse tool arguments"
-                            };
+                            throw new InvalidOperationException(
+                                $"Failed to parse tool arguments for {input.ToolName}. Aborting execution.", ex);
                         }
 
                         if (string.IsNullOrEmpty(filePath))
                         {
-                            logger.LogWarning("Denying {ToolName} - no file path found", input.ToolName);
-                            return new PreToolUseHookOutput
-                            {
-                                PermissionDecision = "deny",
-                                AdditionalContext = "No file path found in arguments"
-                            };
+                            throw new InvalidOperationException(
+                                $"No file path found in {input.ToolName} arguments. Aborting execution.");
                         }
 
                         // Validate file path is within project directory
+                        string absoluteFilePath;
                         try
                         {
-                            var absoluteFilePath = Path.IsPathFullyQualified(filePath)
+                            absoluteFilePath = Path.IsPathFullyQualified(filePath)
                                 ? Path.GetFullPath(filePath)
                                 : Path.GetFullPath(Path.Combine(projectPath, filePath));
-
-                            if (!absoluteFilePath.StartsWith(normalizedProjectPath, StringComparison.Ordinal))
-                            {
-                                throw new UnauthorizedAccessException(
-                                    $"Security violation: {input.ToolName} attempted to access '{filePath}' which is outside the project directory '{normalizedProjectPath}'. Aborting execution.");
-                            }
-                        }
-                        catch (UnauthorizedAccessException)
-                        {
-                            throw;
                         }
                         catch (Exception ex)
                         {
                             throw new InvalidOperationException(
                                 $"Security violation: path validation failed for '{filePath}' in {input.ToolName}. Aborting execution.", ex);
+                        }
+
+                        if (!absoluteFilePath.StartsWith(normalizedProjectPath, StringComparison.Ordinal))
+                        {
+                            throw new UnauthorizedAccessException(
+                                $"Security violation: {input.ToolName} attempted to access '{filePath}' which is outside the project directory '{normalizedProjectPath}'. Aborting execution.");
                         }
 
                         return new PreToolUseHookOutput
