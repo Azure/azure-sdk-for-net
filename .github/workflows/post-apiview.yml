@@ -13,7 +13,7 @@ jobs:
     name: After APIView
     runs-on: ["self-hosted", "1ES.Pool=azsdk-pool-github"]
     if: |
-      github.event.check_run.pull_requests &&
+      toJson(github.event.check_run.pull_requests) != '[]' &&
       github.event.check_run.check_suite.app.name == 'Azure Pipelines' && (
       contains(github.event.check_run.name, 'Build Build') ||
       contains(github.event.check_run.name, 'Build Analyze') )
