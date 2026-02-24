@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary> Document content.  Ex. text/plain, application/pdf, image/jpeg. </summary>
-    public partial class DocumentContent : MediaContent
+    public partial class DocumentContent : AnalysisContent
     {
         /// <summary> Initializes a new instance of <see cref="DocumentContent"/>. </summary>
         /// <param name="mimeType"> Detected MIME type of the content.  Ex. application/pdf, image/jpeg, etc. </param>

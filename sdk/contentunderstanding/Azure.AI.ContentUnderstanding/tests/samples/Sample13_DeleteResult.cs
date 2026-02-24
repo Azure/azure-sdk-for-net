@@ -107,16 +107,16 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     fieldsFound.Add(fieldName);
                     var field = docContent.Fields[fieldName];
 
-                    if (field is StringField sf && !string.IsNullOrWhiteSpace(sf.Value))
+                    if (field is ContentStringField sf && !string.IsNullOrWhiteSpace(sf.Value))
                     {
                         Console.WriteLine($"  {fieldName}: {sf.Value}");
                     }
-                    else if (field is ObjectField of)
+                    else if (field is ContentObjectField of)
                     {
                         var propertyCount = of.Value is System.Collections.IDictionary dict ? dict.Count : 0;
                         Console.WriteLine($"  {fieldName}: [Object with {propertyCount} properties]");
                     }
-                    else if (field is ArrayField af)
+                    else if (field is ContentArrayField af)
                     {
                         Console.WriteLine($"  {fieldName}: [Array with {af.Count} items]");
                     }

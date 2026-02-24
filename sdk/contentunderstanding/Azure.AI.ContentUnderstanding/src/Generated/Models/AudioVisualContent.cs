@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary> Audio visual content.  Ex. audio/wav, video/mp4. </summary>
-    public partial class AudioVisualContent : MediaContent
+    public partial class AudioVisualContent : AnalysisContent
     {
         /// <summary> Initializes a new instance of <see cref="AudioVisualContent"/>. </summary>
         /// <param name="mimeType"> Detected MIME type of the content.  Ex. application/pdf, image/jpeg, etc. </param>

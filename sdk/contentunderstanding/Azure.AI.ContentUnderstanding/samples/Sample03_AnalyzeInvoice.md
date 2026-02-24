@@ -69,10 +69,10 @@ AnalysisResult result = operation.Value;
 
 ## Extract invoice fields
 
-The `prebuilt-invoice` analyzer returns **fields**, which are extracted structured data from the document. Fields can be accessed via `MediaContent.Fields`, which is an `IDictionary<string, ContentField>` where the key is the field name and the value is a `ContentField` object. Fields come in different types derived from `ContentField`:
+The `prebuilt-invoice` analyzer returns **fields**, which are extracted structured data from the document. Fields can be accessed via `AnalysisContent.Fields`, which is an `IDictionary<string, ContentField>` where the key is the field name and the value is a `ContentField` object. Fields come in different types derived from `ContentField`:
 
-- **Simple field types**: `StringField`, `NumberField`, `IntegerField`, `DateField`, `TimeField`, `BooleanField`, `JsonField`
-- **Complex field types**: `ObjectField`, `ArrayField`
+- **Simple field types**: `ContentStringField`, `ContentNumberField`, `ContentIntegerField`, `ContentDateTimeOffsetField`, `ContentTimeField`, `ContentBooleanField`, `ContentJsonField`
+- **Complex field types**: `ContentObjectField`, `ContentArrayField`
 
 The following code snippet shows small examples of extracting some of the many fields available from a `prebuilt-invoice` result:
 
@@ -147,7 +147,7 @@ if (invoiceDateField?.Spans?.Count > 0)
 }
 
 // Extract object fields (nested structures)
-if (documentContent.Fields.GetFieldOrDefault("TotalAmount") is ObjectField totalAmountObj)
+if (documentContent.Fields.GetFieldOrDefault("TotalAmount") is ContentObjectField totalAmountObj)
 {
     var amount = totalAmountObj.Value?.GetFieldOrDefault("Amount")?.Value as double?;
     var currency = totalAmountObj.Value?.GetFieldOrDefault("CurrencyCode")?.Value;
@@ -169,12 +169,12 @@ if (documentContent.Fields.GetFieldOrDefault("TotalAmount") is ObjectField total
 }
 
 // Extract array fields (collections like line items)
-if (documentContent.Fields.GetFieldOrDefault("LineItems") is ArrayField lineItems)
+if (documentContent.Fields.GetFieldOrDefault("LineItems") is ContentArrayField lineItems)
 {
     Console.WriteLine($"Line Items ({lineItems.Count}):");
     for (int i = 0; i < lineItems.Count; i++)
     {
-        if (lineItems[i] is ObjectField item)
+        if (lineItems[i] is ContentObjectField item)
         {
             var description = item.Value?.GetFieldOrDefault("Description")?.Value;
             var quantity = item.Value?.GetFieldOrDefault("Quantity")?.Value as double?;
@@ -192,32 +192,32 @@ if (documentContent.Fields.GetFieldOrDefault("LineItems") is ArrayField lineItem
 Fields are organized into three categories that can be combined to form complex data structures:
 
 - **Simple fields** - Single values of primitive types. Access values using type-specific properties:
-  - `StringField.Value` - Returns `string` (non-nullable)
-  - `NumberField.Value` - Returns `double?` (nullable)
-  - `IntegerField.Value` - Returns `long?` (nullable)
-  - `DateTimeOffsetField.Value` - Returns `DateTimeOffset?` (nullable, ISO 8601 YYYY-MM-DD format)
-  - `TimeField.Value` - Returns `TimeSpan?` (nullable, ISO 8601 hh:mm:ss format)
-  - `BooleanField.Value` - Returns `bool?` (nullable)
-  - `JsonField.Value` - Returns `BinaryData` (non-nullable)
+  - `ContentStringField.Value` - Returns `string` (non-nullable)
+  - `ContentNumberField.Value` - Returns `double?` (nullable)
+  - `ContentIntegerField.Value` - Returns `long?` (nullable)
+  - `ContentDateTimeOffsetField.Value` - Returns `DateTimeOffset?` (nullable, ISO 8601 YYYY-MM-DD format)
+  - `ContentTimeField.Value` - Returns `TimeSpan?` (nullable, ISO 8601 hh:mm:ss format)
+  - `ContentBooleanField.Value` - Returns `bool?` (nullable)
+  - `ContentJsonField.Value` - Returns `BinaryData` (non-nullable)
 
   Alternatively, use the convenience property `ContentField.Value` which returns the value as an `object` (automatically converts to the appropriate type).
-- **Object fields** - Nested structures containing multiple fields. Access nested fields via `ObjectField.Value`, which returns `IDictionary<string, ContentField>` (non-nullable) where the key is the nested field name and the value is a `ContentField` object. The dictionary can contain any `ContentField`-derived classes, including simple fields (e.g., `StringField`, `NumberField`), object fields (`ObjectField`), or array fields (`ArrayField`), allowing for arbitrarily nested and complex data structures. Use `GetFieldOrDefault()` or the indexer to retrieve individual nested fields (see sample code below).
-- **Array fields** - Collections of fields (can contain simple fields, object fields, or other arrays). Access elements via `ArrayField.Value`, which returns `IList<ContentField>` (non-nullable). Alternatively, use the convenience `Count` property (returns `int`) and indexer `[i]` (returns `ContentField`) to access elements. Each element can be cast to the appropriate field type.
+- **Object fields** - Nested structures containing multiple fields. Access nested fields via `ContentObjectField.Value`, which returns `IDictionary<string, ContentField>` (non-nullable) where the key is the nested field name and the value is a `ContentField` object. The dictionary can contain any `ContentField`-derived classes, including simple fields (e.g., `ContentStringField`, `ContentNumberField`), object fields (`ContentObjectField`), or array fields (`ContentArrayField`), allowing for arbitrarily nested and complex data structures. Use `GetFieldOrDefault()` or the indexer to retrieve individual nested fields (see sample code below).
+- **Array fields** - Collections of fields (can contain simple fields, object fields, or other arrays). Access elements via `ContentArrayField.Value`, which returns `IList<ContentField>` (non-nullable). Alternatively, use the convenience `Count` property (returns `int`) and indexer `[i]` (returns `ContentField`) to access elements. Each element can be cast to the appropriate field type.
 
 ### Accessing field values
 
 For **simple fields**, use the `ContentField.Value` convenience property to get the value without needing to know the specific field type. Alternatively, you can access type-specific properties directly for each field type:
-- `StringField.Value` - Returns `string` (non-nullable)
-- `NumberField.Value` - Returns `double?` (nullable)
-- `IntegerField.Value` - Returns `long?` (nullable)
-- `DateTimeOffsetField.Value` - Returns `DateTimeOffset?` (nullable, ISO 8601 YYYY-MM-DD format)
-- `TimeField.Value` - Returns `TimeSpan?` (nullable, ISO 8601 hh:mm:ss format)
-- `BooleanField.Value` - Returns `bool?` (nullable)
-- `JsonField.Value` - Returns `BinaryData` (non-nullable)
+- `ContentStringField.Value` - Returns `string` (non-nullable)
+- `ContentNumberField.Value` - Returns `double?` (nullable)
+- `ContentIntegerField.Value` - Returns `long?` (nullable)
+- `ContentDateTimeOffsetField.Value` - Returns `DateTimeOffset?` (nullable, ISO 8601 YYYY-MM-DD format)
+- `ContentTimeField.Value` - Returns `TimeSpan?` (nullable, ISO 8601 hh:mm:ss format)
+- `ContentBooleanField.Value` - Returns `bool?` (nullable)
+- `ContentJsonField.Value` - Returns `BinaryData` (non-nullable)
 
-For **object fields**, access nested fields through `ObjectField.Value` (an `IDictionary<string, ContentField>`). The dictionary can contain any `ContentField`-derived classes, including simple fields, object fields, or array fields. See the sample code above for examples.
+For **object fields**, access nested fields through `ContentObjectField.Value` (an `IDictionary<string, ContentField>`). The dictionary can contain any `ContentField`-derived classes, including simple fields, object fields, or array fields. See the sample code above for examples.
 
-For **array fields**, access elements via `ArrayField.Value` (returns `IList<ContentField>`) or use the convenience `Count` property and indexer. See the sample code above for examples.
+For **array fields**, access elements via `ContentArrayField.Value` (returns `IList<ContentField>`) or use the convenience `Count` property and indexer. See the sample code above for examples.
 
 ### Understanding field metadata
 
@@ -237,7 +237,7 @@ Each extracted field provides metadata to help you understand the extraction qua
   - `Offset`: The starting position (0-indexed) in characters
   - `Length`: The length of the text in characters
 
-These metadata properties are available on all field types (`StringField`, `NumberField`, `DateField`, `ObjectField`, `ArrayField`, etc.).
+These metadata properties are available on all field types (`ContentStringField`, `ContentNumberField`, `ContentDateTimeOffsetField`, `ContentObjectField`, `ContentArrayField`, etc.).
 
 ## Understanding analyzer schemas
 

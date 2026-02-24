@@ -269,21 +269,21 @@ namespace Azure.AI.ContentUnderstanding.Tests
         [Test]
         public void ContentField_Sources_NullSource_ReturnsNull()
         {
-            var field = ContentUnderstandingModelFactory.StringField(source: null);
+            var field = ContentUnderstandingModelFactory.ContentStringField(source: null);
             Assert.IsNull(field.Sources);
         }
 
         [Test]
         public void ContentField_Sources_EmptySource_ReturnsNull()
         {
-            var field = ContentUnderstandingModelFactory.StringField(source: "");
+            var field = ContentUnderstandingModelFactory.ContentStringField(source: "");
             Assert.IsNull(field.Sources);
         }
 
         [Test]
         public void ContentField_Sources_ValidDocumentSource_ReturnsParsedArray()
         {
-            var field = ContentUnderstandingModelFactory.StringField(
+            var field = ContentUnderstandingModelFactory.ContentStringField(
                 source: "D(1,0.5712,1.4062,2.1087,1.4088,2.1084,1.5762,0.5709,1.5736)");
 
             var sources = field.Sources;
@@ -300,7 +300,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
         [Test]
         public void ContentField_Sources_MultiRegion_ReturnsMultipleSources()
         {
-            var field = ContentUnderstandingModelFactory.StringField(
+            var field = ContentUnderstandingModelFactory.ContentStringField(
                 source: "D(1,0.0,0.0,1.0,0.0,1.0,1.0,0.0,1.0);D(2,0.0,0.0,1.0,0.0,1.0,1.0,0.0,1.0)");
 
             var sources = field.Sources;

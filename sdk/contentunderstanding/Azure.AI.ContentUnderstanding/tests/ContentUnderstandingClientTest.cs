@@ -265,11 +265,11 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.AreEqual(1, result.Contents.Count, "PDF file should have exactly one content element");
 
             // Extract markdown from first content
-            MediaContent? content = result.Contents.First();
+            AnalysisContent? content = result.Contents.First();
             Assert.IsNotNull(content, "Content should not be null");
-            Assert.IsInstanceOf<MediaContent>(content, "Content should be of type MediaContent");
+            Assert.IsInstanceOf<AnalysisContent>(content, "Content should be of type AnalysisContent");
 
-            if (content is MediaContent mediaContent)
+            if (content is AnalysisContent mediaContent)
             {
                 Assert.IsNotNull(mediaContent.Markdown, "Markdown content should not be null");
                 Assert.IsTrue(mediaContent.Markdown.Length > 0, "Markdown content should not be empty");
@@ -306,7 +306,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.IsNotNull(result.Contents, "Result should contain contents");
             Assert.IsTrue(result.Contents!.Count > 0, "Result should have at least one content");
 
-            MediaContent? content = result.Contents.First();
+            AnalysisContent? content = result.Contents.First();
             Assert.IsNotNull(content, "Content should not be null for document properties validation");
 
             // Verify document content type and properties
@@ -440,11 +440,11 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.AreEqual(1, result.Contents.Count, "PDF file should have exactly one content element");
 
             // Verify markdown content
-            MediaContent? content = result.Contents.First();
+            AnalysisContent? content = result.Contents.First();
             Assert.IsNotNull(content, "Content should not be null");
-            Assert.IsInstanceOf<MediaContent>(content, "Content should be of type MediaContent");
+            Assert.IsInstanceOf<AnalysisContent>(content, "Content should be of type AnalysisContent");
 
-            if (content is MediaContent mediaContent)
+            if (content is AnalysisContent mediaContent)
             {
                 Assert.IsNotNull(mediaContent.Markdown, "Markdown content should not be null");
                 Assert.IsTrue(mediaContent.Markdown.Length > 0, "Markdown content should not be empty");
@@ -510,8 +510,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 // Note: LLM can return different variations, so we accept multiple possible values
                 if (docContent.Fields.TryGetValue("CustomerName", out var customerNameField))
                 {
-                    Assert.IsTrue(customerNameField is StringField, "CustomerName should be a StringField");
-                    if (customerNameField is StringField customerNameStr)
+                    Assert.IsTrue(customerNameField is ContentStringField, "CustomerName should be a ContentStringField");
+                    if (customerNameField is ContentStringField customerNameStr)
                     {
                         Assert.IsFalse(string.IsNullOrWhiteSpace(customerNameStr.Value),
                             "CustomerName value should not be empty");
@@ -552,8 +552,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 // Verify InvoiceDate field with expected value
                 if (docContent.Fields.TryGetValue("InvoiceDate", out var invoiceDateField))
                 {
-                    Assert.IsTrue(invoiceDateField is DateTimeOffsetField, "InvoiceDate should be a DateField");
-                    if (invoiceDateField is DateTimeOffsetField invoiceDate)
+                    Assert.IsTrue(invoiceDateField is ContentDateTimeOffsetField, "InvoiceDate should be a ContentDateTimeOffsetField");
+                    if (invoiceDateField is ContentDateTimeOffsetField invoiceDate)
                     {
                         Assert.IsTrue(invoiceDate.Value.HasValue,
                             "InvoiceDate should have a date value");
@@ -574,14 +574,14 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 // Verify TotalAmount field with expected value
                 if (docContent.Fields.TryGetValue("TotalAmount", out var totalAmountField))
                 {
-                    Assert.IsTrue(totalAmountField is ObjectField, "TotalAmount should be an ObjectField");
-                    if (totalAmountField is ObjectField totalAmountObj)
+                    Assert.IsTrue(totalAmountField is ContentObjectField, "TotalAmount should be a ContentObjectField");
+                    if (totalAmountField is ContentObjectField totalAmountObj)
                     {
                         // Verify Amount sub-field - field is known to exist based on recording
                         var amountField = totalAmountObj["Amount"];  // Throws KeyNotFoundException if not found
                         Assert.IsNotNull(amountField, "TotalAmount.Amount should not be null");
-                        Assert.IsTrue(amountField is NumberField, "TotalAmount.Amount should be a NumberField");
-                        if (amountField is NumberField amountNum)
+                        Assert.IsTrue(amountField is ContentNumberField, "TotalAmount.Amount should be a ContentNumberField");
+                        if (amountField is ContentNumberField amountNum)
                         {
                             Assert.IsTrue(amountNum.Value.HasValue,
                                 "TotalAmount.Amount should have a numeric value");
@@ -594,8 +594,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
                         // Note: LLM can return different values or null at different runs, so we accept multiple possibilities
                         var currencyField = totalAmountObj["CurrencyCode"];  // Throws KeyNotFoundException if not found
                         Assert.IsNotNull(currencyField, "TotalAmount.CurrencyCode should not be null");
-                        Assert.IsTrue(currencyField is StringField, "TotalAmount.CurrencyCode should be a StringField");
-                        if (currencyField is StringField currencyStr)
+                        Assert.IsTrue(currencyField is ContentStringField, "TotalAmount.CurrencyCode should be a ContentStringField");
+                        if (currencyField is ContentStringField currencyStr)
                         {
                             // Accept both "USD" and null/empty as valid values since LLM may not always extract it
                             var currencyValue = currencyStr.Value;
@@ -614,20 +614,20 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 // Verify LineItems field with expected values
                 if (docContent.Fields.TryGetValue("LineItems", out var lineItemsField))
                 {
-                    Assert.IsTrue(lineItemsField is ArrayField, "LineItems should be an ArrayField");
-                    if (lineItemsField is ArrayField lineItems)
+                    Assert.IsTrue(lineItemsField is ContentArrayField, "LineItems should be a ContentArrayField");
+                    if (lineItemsField is ContentArrayField lineItems)
                     {
                         // Expected count from recording: 3
                         Assert.AreEqual(3, lineItems.Count,
                             "LineItems should have expected count");
 
                         // Verify first line item (Consulting Services)
-                        if (lineItems[0] is ObjectField item1)
+                        if (lineItems[0] is ContentObjectField item1)
                         {
                             // Fields known to exist based on recording - using indexer which throws if not found
                             var desc1 = item1["Description"];
                             Assert.IsNotNull(desc1, "Item 1 Description should not be null");
-                            if (desc1 is StringField desc1Str)
+                            if (desc1 is ContentStringField desc1Str)
                             {
                                 // Expected value from recording: "Consulting Services"
                                 Assert.AreEqual("Consulting Services", desc1Str.Value,
@@ -636,7 +636,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
                             var qty1 = item1["Quantity"];
                             Assert.IsNotNull(qty1, "Item 1 Quantity should not be null");
-                            if (qty1 is NumberField qty1Num && qty1Num.Value.HasValue)
+                            if (qty1 is ContentNumberField qty1Num && qty1Num.Value.HasValue)
                             {
                                 // Expected value from recording: 2
                                 Assert.AreEqual(2.0, qty1Num.Value.Value,
@@ -644,10 +644,10 @@ namespace Azure.AI.ContentUnderstanding.Tests
                             }
 
                             // UnitPrice may or may not exist - using GetFieldOrDefault for null-safe access
-                            if (item1.Value?.GetFieldOrDefault("UnitPrice") is ObjectField unitPrice1Obj)
+                            if (item1.Value?.GetFieldOrDefault("UnitPrice") is ContentObjectField unitPrice1Obj)
                             {
                                 var unitPrice1Amount = unitPrice1Obj.Value?.GetFieldOrDefault("Amount");
-                                if (unitPrice1Amount is NumberField unitPrice1Num && unitPrice1Num.Value.HasValue)
+                                if (unitPrice1Amount is ContentNumberField unitPrice1Num && unitPrice1Num.Value.HasValue)
                                 {
                                     // Expected value from recording: 30
                                     Assert.AreEqual(30.0, unitPrice1Num.Value.Value,
@@ -657,12 +657,12 @@ namespace Azure.AI.ContentUnderstanding.Tests
                         }
 
                         // Verify second line item (Document Fee)
-                        if (lineItems[1] is ObjectField item2)
+                        if (lineItems[1] is ContentObjectField item2)
                         {
                             // Fields known to exist based on recording - using indexer which throws if not found
                             var desc2 = item2["Description"];
                             Assert.IsNotNull(desc2, "Item 2 Description should not be null");
-                            if (desc2 is StringField desc2Str)
+                            if (desc2 is ContentStringField desc2Str)
                             {
                                 // Expected value from recording: "Document Fee"
                                 Assert.AreEqual("Document Fee", desc2Str.Value,
@@ -671,7 +671,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
                             var qty2 = item2["Quantity"];
                             Assert.IsNotNull(qty2, "Item 2 Quantity should not be null");
-                            if (qty2 is NumberField qty2Num && qty2Num.Value.HasValue)
+                            if (qty2 is ContentNumberField qty2Num && qty2Num.Value.HasValue)
                             {
                                 // Expected value from recording: 3
                                 Assert.AreEqual(3.0, qty2Num.Value.Value,
@@ -679,10 +679,10 @@ namespace Azure.AI.ContentUnderstanding.Tests
                             }
 
                             // TotalAmount may or may not exist - using GetFieldOrDefault for null-safe access
-                            if (item2.Value?.GetFieldOrDefault("TotalAmount") is ObjectField totalAmount2Obj)
+                            if (item2.Value?.GetFieldOrDefault("TotalAmount") is ContentObjectField totalAmount2Obj)
                             {
                                 var totalAmount2Amount = totalAmount2Obj.Value?.GetFieldOrDefault("Amount");
-                                if (totalAmount2Amount is NumberField totalAmount2Num && totalAmount2Num.Value.HasValue)
+                                if (totalAmount2Amount is ContentNumberField totalAmount2Num && totalAmount2Num.Value.HasValue)
                                 {
                                     // Expected value from recording: 30
                                     Assert.AreEqual(30.0, totalAmount2Num.Value.Value,
@@ -692,12 +692,12 @@ namespace Azure.AI.ContentUnderstanding.Tests
                         }
 
                         // Verify third line item (Printing Fee)
-                        if (lineItems[2] is ObjectField item3)
+                        if (lineItems[2] is ContentObjectField item3)
                         {
                             // Fields known to exist based on recording - using indexer which throws if not found
                             var desc3 = item3["Description"];
                             Assert.IsNotNull(desc3, "Item 3 Description should not be null");
-                            if (desc3 is StringField desc3Str)
+                            if (desc3 is ContentStringField desc3Str)
                             {
                                 // Expected value from recording: "Printing Fee"
                                 Assert.AreEqual("Printing Fee", desc3Str.Value,
@@ -706,7 +706,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
                             var qty3 = item3["Quantity"];
                             Assert.IsNotNull(qty3, "Item 3 Quantity should not be null");
-                            if (qty3 is NumberField qty3Num && qty3Num.Value.HasValue)
+                            if (qty3 is ContentNumberField qty3Num && qty3Num.Value.HasValue)
                             {
                                 // Expected value from recording: 10
                                 Assert.AreEqual(10.0, qty3Num.Value.Value,
@@ -714,10 +714,10 @@ namespace Azure.AI.ContentUnderstanding.Tests
                             }
 
                             // UnitPrice may or may not exist - using GetFieldOrDefault for null-safe access
-                            if (item3.Value?.GetFieldOrDefault("UnitPrice") is ObjectField unitPrice3Obj)
+                            if (item3.Value?.GetFieldOrDefault("UnitPrice") is ContentObjectField unitPrice3Obj)
                             {
                                 var unitPrice3Amount = unitPrice3Obj.Value?.GetFieldOrDefault("Amount");
-                                if (unitPrice3Amount is NumberField unitPrice3Num && unitPrice3Num.Value.HasValue)
+                                if (unitPrice3Amount is ContentNumberField unitPrice3Num && unitPrice3Num.Value.HasValue)
                                 {
                                     // Expected value from recording: 1
                                     Assert.AreEqual(1.0, unitPrice3Num.Value.Value,
@@ -726,10 +726,10 @@ namespace Azure.AI.ContentUnderstanding.Tests
                             }
 
                             // TotalAmount may or may not exist - using GetFieldOrDefault for null-safe access
-                            if (item3.Value?.GetFieldOrDefault("TotalAmount") is ObjectField totalAmount3Obj)
+                            if (item3.Value?.GetFieldOrDefault("TotalAmount") is ContentObjectField totalAmount3Obj)
                             {
                                 var totalAmount3Amount = totalAmount3Obj.Value?.GetFieldOrDefault("Amount");
-                                if (totalAmount3Amount is NumberField totalAmount3Num && totalAmount3Num.Value.HasValue)
+                                if (totalAmount3Amount is ContentNumberField totalAmount3Num && totalAmount3Num.Value.HasValue)
                                 {
                                     // Expected value from recording: 10
                                     Assert.AreEqual(10.0, totalAmount3Num.Value.Value,

@@ -20,7 +20,7 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary> Initializes a new instance of <see cref="AnalysisResult"/>. </summary>
         /// <param name="contents"> The extracted content. </param>
-        internal AnalysisResult(IEnumerable<MediaContent> contents)
+        internal AnalysisResult(IEnumerable<AnalysisContent> contents)
         {
             Warnings = new ChangeTrackingList<ResponseError>();
             Contents = contents.ToList();
@@ -37,7 +37,7 @@ namespace Azure.AI.ContentUnderstanding
         /// </param>
         /// <param name="contents"> The extracted content. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalysisResult(string analyzerId, string apiVersion, DateTimeOffset? createdAt, IList<ResponseError> warnings, string stringEncoding, IList<MediaContent> contents, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalysisResult(string analyzerId, string apiVersion, DateTimeOffset? createdAt, IList<ResponseError> warnings, string stringEncoding, IList<AnalysisContent> contents, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AnalyzerId = analyzerId;
             ApiVersion = apiVersion;
@@ -67,6 +67,6 @@ namespace Azure.AI.ContentUnderstanding
         public string StringEncoding { get; }
 
         /// <summary> The extracted content. </summary>
-        public IList<MediaContent> Contents { get; }
+        public IList<AnalysisContent> Contents { get; }
     }
 }

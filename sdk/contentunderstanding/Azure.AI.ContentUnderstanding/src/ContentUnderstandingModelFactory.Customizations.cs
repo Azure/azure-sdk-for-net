@@ -12,78 +12,78 @@ namespace Azure.AI.ContentUnderstanding
 {
     // Customization: factory methods use "value" param name instead of "valueString", "valueNumber", etc.
     // Suppress generated factory methods that use wire-format param names.
-    [CodeGenSuppress("StringField", typeof(IEnumerable<ContentSpan>), typeof(float?), typeof(string), typeof(string))]
-    [CodeGenSuppress("NumberField", typeof(IEnumerable<ContentSpan>), typeof(float?), typeof(string), typeof(double?))]
-    [CodeGenSuppress("IntegerField", typeof(IEnumerable<ContentSpan>), typeof(float?), typeof(string), typeof(long?))]
-    [CodeGenSuppress("BooleanField", typeof(IEnumerable<ContentSpan>), typeof(float?), typeof(string), typeof(bool?))]
-    [CodeGenSuppress("TimeField", typeof(IEnumerable<ContentSpan>), typeof(float?), typeof(string), typeof(TimeSpan?))]
-    [CodeGenSuppress("DateTimeOffsetField", typeof(IEnumerable<ContentSpan>), typeof(float?), typeof(string), typeof(DateTimeOffset?))]
-    [CodeGenSuppress("JsonField", typeof(IEnumerable<ContentSpan>), typeof(float?), typeof(string), typeof(BinaryData))]
-    [CodeGenSuppress("ArrayField", typeof(IEnumerable<ContentSpan>), typeof(float?), typeof(string), typeof(IEnumerable<ContentField>))]
-    [CodeGenSuppress("ObjectField", typeof(IEnumerable<ContentSpan>), typeof(float?), typeof(string), typeof(IDictionary<string, ContentField>))]
+    [CodeGenSuppress("ContentStringField", typeof(IEnumerable<ContentSpan>), typeof(float?), typeof(string), typeof(string))]
+    [CodeGenSuppress("ContentNumberField", typeof(IEnumerable<ContentSpan>), typeof(float?), typeof(string), typeof(double?))]
+    [CodeGenSuppress("ContentIntegerField", typeof(IEnumerable<ContentSpan>), typeof(float?), typeof(string), typeof(long?))]
+    [CodeGenSuppress("ContentBooleanField", typeof(IEnumerable<ContentSpan>), typeof(float?), typeof(string), typeof(bool?))]
+    [CodeGenSuppress("ContentTimeField", typeof(IEnumerable<ContentSpan>), typeof(float?), typeof(string), typeof(TimeSpan?))]
+    [CodeGenSuppress("ContentDateTimeOffsetField", typeof(IEnumerable<ContentSpan>), typeof(float?), typeof(string), typeof(DateTimeOffset?))]
+    [CodeGenSuppress("ContentJsonField", typeof(IEnumerable<ContentSpan>), typeof(float?), typeof(string), typeof(BinaryData))]
+    [CodeGenSuppress("ContentArrayField", typeof(IEnumerable<ContentSpan>), typeof(float?), typeof(string), typeof(IEnumerable<ContentField>))]
+    [CodeGenSuppress("ContentObjectField", typeof(IEnumerable<ContentSpan>), typeof(float?), typeof(string), typeof(IDictionary<string, ContentField>))]
     public static partial class ContentUnderstandingModelFactory
     {
-        /// <summary> Creates a new <see cref="ContentUnderstanding.StringField"/> for mocking. </summary>
-        public static StringField StringField(string? value = default, IEnumerable<ContentSpan>? spans = default, float? confidence = default, string? source = default)
+        /// <summary> Creates a new <see cref="ContentUnderstanding.ContentStringField"/> for mocking. </summary>
+        public static ContentStringField ContentStringField(string? value = default, IEnumerable<ContentSpan>? spans = default, float? confidence = default, string? source = default)
         {
             spans ??= new ChangeTrackingList<ContentSpan>();
-            return new StringField(ContentFieldType.String, spans.ToList(), confidence, source!, null!, value!);
+            return new ContentStringField(ContentFieldType.String, spans.ToList(), confidence, source!, null!, value!);
         }
 
-        /// <summary> Creates a new <see cref="ContentUnderstanding.NumberField"/> for mocking. </summary>
-        public static NumberField NumberField(double? value = default, IEnumerable<ContentSpan>? spans = default, float? confidence = default, string? source = default)
+        /// <summary> Creates a new <see cref="ContentUnderstanding.ContentNumberField"/> for mocking. </summary>
+        public static ContentNumberField ContentNumberField(double? value = default, IEnumerable<ContentSpan>? spans = default, float? confidence = default, string? source = default)
         {
             spans ??= new ChangeTrackingList<ContentSpan>();
-            return new NumberField(ContentFieldType.Number, spans.ToList(), confidence, source!, null!, value);
+            return new ContentNumberField(ContentFieldType.Number, spans.ToList(), confidence, source!, null!, value);
         }
 
-        /// <summary> Creates a new <see cref="ContentUnderstanding.IntegerField"/> for mocking. </summary>
-        public static IntegerField IntegerField(long? value = default, IEnumerable<ContentSpan>? spans = default, float? confidence = default, string? source = default)
+        /// <summary> Creates a new <see cref="ContentUnderstanding.ContentIntegerField"/> for mocking. </summary>
+        public static ContentIntegerField ContentIntegerField(long? value = default, IEnumerable<ContentSpan>? spans = default, float? confidence = default, string? source = default)
         {
             spans ??= new ChangeTrackingList<ContentSpan>();
-            return new IntegerField(ContentFieldType.Integer, spans.ToList(), confidence, source!, null!, value);
+            return new ContentIntegerField(ContentFieldType.Integer, spans.ToList(), confidence, source!, null!, value);
         }
 
-        /// <summary> Creates a new <see cref="ContentUnderstanding.BooleanField"/> for mocking. </summary>
-        public static BooleanField BooleanField(bool? value = default, IEnumerable<ContentSpan>? spans = default, float? confidence = default, string? source = default)
+        /// <summary> Creates a new <see cref="ContentUnderstanding.ContentBooleanField"/> for mocking. </summary>
+        public static ContentBooleanField ContentBooleanField(bool? value = default, IEnumerable<ContentSpan>? spans = default, float? confidence = default, string? source = default)
         {
             spans ??= new ChangeTrackingList<ContentSpan>();
-            return new BooleanField(ContentFieldType.Boolean, spans.ToList(), confidence, source!, null!, value);
+            return new ContentBooleanField(ContentFieldType.Boolean, spans.ToList(), confidence, source!, null!, value);
         }
 
-        /// <summary> Creates a new <see cref="ContentUnderstanding.TimeField"/> for mocking. </summary>
-        public static TimeField TimeField(TimeSpan? value = default, IEnumerable<ContentSpan>? spans = default, float? confidence = default, string? source = default)
+        /// <summary> Creates a new <see cref="ContentUnderstanding.ContentTimeField"/> for mocking. </summary>
+        public static ContentTimeField ContentTimeField(TimeSpan? value = default, IEnumerable<ContentSpan>? spans = default, float? confidence = default, string? source = default)
         {
             spans ??= new ChangeTrackingList<ContentSpan>();
-            return new TimeField(ContentFieldType.Time, spans.ToList(), confidence, source!, null!, value);
+            return new ContentTimeField(ContentFieldType.Time, spans.ToList(), confidence, source!, null!, value);
         }
 
-        /// <summary> Creates a new <see cref="ContentUnderstanding.DateTimeOffsetField"/> for mocking. </summary>
-        public static DateTimeOffsetField DateTimeOffsetField(DateTimeOffset? value = default, IEnumerable<ContentSpan>? spans = default, float? confidence = default, string? source = default)
+        /// <summary> Creates a new <see cref="ContentUnderstanding.ContentDateTimeOffsetField"/> for mocking. </summary>
+        public static ContentDateTimeOffsetField ContentDateTimeOffsetField(DateTimeOffset? value = default, IEnumerable<ContentSpan>? spans = default, float? confidence = default, string? source = default)
         {
             spans ??= new ChangeTrackingList<ContentSpan>();
-            return new DateTimeOffsetField(ContentFieldType.Date, spans.ToList(), confidence, source!, null!, value);
+            return new ContentDateTimeOffsetField(ContentFieldType.Date, spans.ToList(), confidence, source!, null!, value);
         }
 
-        /// <summary> Creates a new <see cref="ContentUnderstanding.JsonField"/> for mocking. </summary>
-        public static JsonField JsonField(BinaryData? value = default, IEnumerable<ContentSpan>? spans = default, float? confidence = default, string? source = default)
+        /// <summary> Creates a new <see cref="ContentUnderstanding.ContentJsonField"/> for mocking. </summary>
+        public static ContentJsonField ContentJsonField(BinaryData? value = default, IEnumerable<ContentSpan>? spans = default, float? confidence = default, string? source = default)
         {
             spans ??= new ChangeTrackingList<ContentSpan>();
-            return new JsonField(ContentFieldType.Json, spans.ToList(), confidence, source!, null!, value!);
+            return new ContentJsonField(ContentFieldType.Json, spans.ToList(), confidence, source!, null!, value!);
         }
 
-        /// <summary> Creates a new <see cref="ContentUnderstanding.ArrayField"/> for mocking. </summary>
-        public static ArrayField ArrayField(IList<ContentField>? value = default, IEnumerable<ContentSpan>? spans = default, float? confidence = default, string? source = default)
+        /// <summary> Creates a new <see cref="ContentUnderstanding.ContentArrayField"/> for mocking. </summary>
+        public static ContentArrayField ContentArrayField(IList<ContentField>? value = default, IEnumerable<ContentSpan>? spans = default, float? confidence = default, string? source = default)
         {
             spans ??= new ChangeTrackingList<ContentSpan>();
-            return new ArrayField(ContentFieldType.Array, spans.ToList(), confidence, source!, null!, value?.ToList()!);
+            return new ContentArrayField(ContentFieldType.Array, spans.ToList(), confidence, source!, null!, value?.ToList()!);
         }
 
-        /// <summary> Creates a new <see cref="ContentUnderstanding.ObjectField"/> for mocking. </summary>
-        public static ObjectField ObjectField(IDictionary<string, ContentField>? value = default, IEnumerable<ContentSpan>? spans = default, float? confidence = default, string? source = default)
+        /// <summary> Creates a new <see cref="ContentUnderstanding.ContentObjectField"/> for mocking. </summary>
+        public static ContentObjectField ContentObjectField(IDictionary<string, ContentField>? value = default, IEnumerable<ContentSpan>? spans = default, float? confidence = default, string? source = default)
         {
             spans ??= new ChangeTrackingList<ContentSpan>();
-            return new ObjectField(ContentFieldType.Object, spans.ToList(), confidence, source!, null!, value!);
+            return new ContentObjectField(ContentFieldType.Object, spans.ToList(), confidence, source!, null!, value!);
         }
     }
 }

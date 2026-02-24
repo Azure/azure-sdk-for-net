@@ -336,7 +336,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     // Extract field (literal text extraction)
                     if (content.Fields.TryGetValue("company_name", out var companyNameField))
                     {
-                        var companyName = companyNameField is StringField sf ? sf.Value : null;
+                        var companyName = companyNameField is ContentStringField sf ? sf.Value : null;
                         Console.WriteLine($"Company Name (extract): {companyName ?? "(not found)"}");
                         Console.WriteLine($"  Confidence: {companyNameField.Confidence?.ToString("F2") ?? "N/A"}");
                         // Polygon: precise rotated region around the text.
@@ -361,7 +361,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     // Extract field (literal text extraction)
                     if (content.Fields.TryGetValue("total_amount", out var totalAmountField))
                     {
-                        var totalAmount = totalAmountField is NumberField nf ? nf.Value : null;
+                        var totalAmount = totalAmountField is ContentNumberField nf ? nf.Value : null;
                         Console.WriteLine($"Total Amount (extract): {totalAmount?.ToString("F2") ?? "(not found)"}");
                         Console.WriteLine($"  Confidence: {totalAmountField.Confidence?.ToString("F2") ?? "N/A"}");
                         if (totalAmountField.Sources != null)
@@ -384,7 +384,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     // Generate field (AI-generated value)
                     if (content.Fields.TryGetValue("document_summary", out var summaryField))
                     {
-                        var summary = summaryField is StringField sf ? sf.Value : null;
+                        var summary = summaryField is ContentStringField sf ? sf.Value : null;
                         Console.WriteLine($"Document Summary (generate): {summary ?? "(not found)"}");
                         Console.WriteLine($"  Confidence: {summaryField.Confidence?.ToString("F2") ?? "N/A"}");
                         // Note: Generated fields may not have grounding source information
@@ -397,7 +397,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     // Classify field (classification against predefined categories)
                     if (content.Fields.TryGetValue("document_type", out var documentTypeField))
                     {
-                        var documentType = documentTypeField is StringField sf ? sf.Value : null;
+                        var documentType = documentTypeField is ContentStringField sf ? sf.Value : null;
                         Console.WriteLine($"Document Type (classify): {documentType ?? "(not found)"}");
                         Console.WriteLine($"  Confidence: {documentTypeField.Confidence?.ToString("F2") ?? "N/A"}");
                         // Note: Classified fields may not have grounding source information
@@ -435,9 +435,9 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 if (documentContent.Fields.TryGetValue("company_name", out var companyNameFieldAssert))
                 {
                     Console.WriteLine("company_name field found");
-                    Assert.IsTrue(companyNameFieldAssert is StringField, "company_name should be a StringField");
+                    Assert.IsTrue(companyNameFieldAssert is ContentStringField, "company_name should be a ContentStringField");
 
-                    if (companyNameFieldAssert is StringField cnf && !string.IsNullOrWhiteSpace(cnf.Value))
+                    if (companyNameFieldAssert is ContentStringField cnf && !string.IsNullOrWhiteSpace(cnf.Value))
                     {
                         Console.WriteLine($"  Value: {cnf.Value}");
                     }
@@ -479,9 +479,9 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 if (documentContent.Fields.TryGetValue("total_amount", out var totalAmountFieldAssert))
                 {
                     Console.WriteLine("total_amount field found");
-                    Assert.IsTrue(totalAmountFieldAssert is NumberField, "total_amount should be a NumberField");
+                    Assert.IsTrue(totalAmountFieldAssert is ContentNumberField, "total_amount should be a ContentNumberField");
 
-                    if (totalAmountFieldAssert is NumberField nfAssert && nfAssert.Value.HasValue)
+                    if (totalAmountFieldAssert is ContentNumberField nfAssert && nfAssert.Value.HasValue)
                     {
                         Assert.IsTrue(nfAssert.Value.Value >= 0, $"total_amount should be >= 0, but was {nfAssert.Value.Value}");
                         Console.WriteLine($"  Value: {nfAssert.Value.Value:F2}");
@@ -523,9 +523,9 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 if (documentContent.Fields.TryGetValue("document_summary", out var summaryFieldAssert))
                 {
                     Console.WriteLine("document_summary field found");
-                    Assert.IsTrue(summaryFieldAssert is StringField, "document_summary should be a StringField");
+                    Assert.IsTrue(summaryFieldAssert is ContentStringField, "document_summary should be a ContentStringField");
 
-                    if (summaryFieldAssert is StringField dsf && !string.IsNullOrWhiteSpace(dsf.Value))
+                    if (summaryFieldAssert is ContentStringField dsf && !string.IsNullOrWhiteSpace(dsf.Value))
                     {
                         string dsfValue = dsf.Value!;
                         Assert.IsTrue(dsfValue.Length > 0, "document_summary should not be empty when present");
@@ -554,7 +554,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 if (documentContent.Fields.TryGetValue("document_type", out var documentTypeFieldAssert))
                 {
                     Console.WriteLine("document_type field found");
-                    Assert.IsTrue(documentTypeFieldAssert is StringField, "document_type should be a StringField");
+                    Assert.IsTrue(documentTypeFieldAssert is ContentStringField, "document_type should be a ContentStringField");
 
                     if (documentTypeFieldAssert.Confidence.HasValue)
                     {
@@ -564,7 +564,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     }
 
                     // Verify the classified value is one of the predefined enum values if present
-                    if (documentTypeFieldAssert is StringField sfAssert && !string.IsNullOrWhiteSpace(sfAssert.Value))
+                    if (documentTypeFieldAssert is ContentStringField sfAssert && !string.IsNullOrWhiteSpace(sfAssert.Value))
                     {
                         var validTypes = new[] { "invoice", "receipt", "contract", "report", "other" };
                         Assert.IsTrue(validTypes.Contains(sfAssert.Value),
