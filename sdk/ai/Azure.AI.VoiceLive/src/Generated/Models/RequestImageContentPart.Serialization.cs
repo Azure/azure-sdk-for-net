@@ -45,6 +45,16 @@ namespace Azure.AI.VoiceLive
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RequestImageContentPart>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RequestImageContentPart IPersistableModel<RequestImageContentPart>.Create(BinaryData data, ModelReaderWriterOptions options) => (RequestImageContentPart)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RequestImageContentPart>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RequestImageContentPart>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -133,15 +143,5 @@ namespace Azure.AI.VoiceLive
             }
             return new RequestImageContentPart(@type, additionalBinaryDataProperties, url, detail);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RequestImageContentPart>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        RequestImageContentPart IPersistableModel<RequestImageContentPart>.Create(BinaryData data, ModelReaderWriterOptions options) => (RequestImageContentPart)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RequestImageContentPart>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

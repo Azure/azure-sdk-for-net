@@ -51,6 +51,16 @@ namespace Azure.AI.Language.Conversations.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ConversationTargetIntentResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConversationTargetIntentResult IPersistableModel<ConversationTargetIntentResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConversationTargetIntentResult)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ConversationTargetIntentResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConversationTargetIntentResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -140,15 +150,5 @@ namespace Azure.AI.Language.Conversations.Models
             }
             return new ConversationTargetIntentResult(targetProjectKind, apiVersion, confidence, additionalBinaryDataProperties, result);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConversationTargetIntentResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ConversationTargetIntentResult IPersistableModel<ConversationTargetIntentResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConversationTargetIntentResult)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConversationTargetIntentResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

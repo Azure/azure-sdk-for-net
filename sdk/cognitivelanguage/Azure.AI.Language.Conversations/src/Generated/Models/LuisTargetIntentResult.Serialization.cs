@@ -51,6 +51,16 @@ namespace Azure.AI.Language.Conversations.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<LuisTargetIntentResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LuisTargetIntentResult IPersistableModel<LuisTargetIntentResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (LuisTargetIntentResult)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<LuisTargetIntentResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LuisTargetIntentResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -140,15 +150,5 @@ namespace Azure.AI.Language.Conversations.Models
             }
             return new LuisTargetIntentResult(targetProjectKind, apiVersion, confidence, additionalBinaryDataProperties, result);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LuisTargetIntentResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        LuisTargetIntentResult IPersistableModel<LuisTargetIntentResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (LuisTargetIntentResult)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LuisTargetIntentResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

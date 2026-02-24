@@ -53,6 +53,16 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MatchingPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MatchingPolicy IPersistableModel<MatchingPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MatchingPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MatchingPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -125,15 +135,5 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
             }
             return UnknownMatchingPolicy.DeserializeUnknownMatchingPolicy(element, options);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MatchingPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MatchingPolicy IPersistableModel<MatchingPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MatchingPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

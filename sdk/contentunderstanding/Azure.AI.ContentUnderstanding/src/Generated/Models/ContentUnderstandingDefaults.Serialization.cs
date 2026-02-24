@@ -51,6 +51,16 @@ namespace Azure.AI.ContentUnderstanding
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ContentUnderstandingDefaults>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContentUnderstandingDefaults IPersistableModel<ContentUnderstandingDefaults>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ContentUnderstandingDefaults>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ContentUnderstandingDefaults"/> from. </param>
         public static explicit operator ContentUnderstandingDefaults(Response response)
         {
@@ -159,15 +169,5 @@ namespace Azure.AI.ContentUnderstanding
             }
             return new ContentUnderstandingDefaults(modelDeployments, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ContentUnderstandingDefaults>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ContentUnderstandingDefaults IPersistableModel<ContentUnderstandingDefaults>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ContentUnderstandingDefaults>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

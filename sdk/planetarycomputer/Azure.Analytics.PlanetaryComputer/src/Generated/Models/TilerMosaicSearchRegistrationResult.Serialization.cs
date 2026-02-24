@@ -51,6 +51,16 @@ namespace Azure.Analytics.PlanetaryComputer
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TilerMosaicSearchRegistrationResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TilerMosaicSearchRegistrationResult IPersistableModel<TilerMosaicSearchRegistrationResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TilerMosaicSearchRegistrationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TilerMosaicSearchRegistrationResult"/> from. </param>
         public static explicit operator TilerMosaicSearchRegistrationResult(Response response)
         {
@@ -161,15 +171,5 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             return new TilerMosaicSearchRegistrationResult(searchId, links ?? new ChangeTrackingList<StacLink>(), additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TilerMosaicSearchRegistrationResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        TilerMosaicSearchRegistrationResult IPersistableModel<TilerMosaicSearchRegistrationResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TilerMosaicSearchRegistrationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

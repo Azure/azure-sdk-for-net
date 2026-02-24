@@ -50,6 +50,16 @@ namespace Azure.Analytics.OnlineExperimentation
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<EventRateMetricDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EventRateMetricDefinition IPersistableModel<EventRateMetricDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => (EventRateMetricDefinition)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EventRateMetricDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EventRateMetricDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -128,15 +138,5 @@ namespace Azure.Analytics.OnlineExperimentation
             }
             return new EventRateMetricDefinition(@type, additionalBinaryDataProperties, @event, rateCondition);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EventRateMetricDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        EventRateMetricDefinition IPersistableModel<EventRateMetricDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => (EventRateMetricDefinition)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EventRateMetricDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

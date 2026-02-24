@@ -51,6 +51,28 @@ namespace Azure.AI.Language.Text.Authoring
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TextAuthoringExportedModelDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TextAuthoringExportedModelDetails IPersistableModel<TextAuthoringExportedModelDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TextAuthoringExportedModelDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="textAuthoringExportedModelDetails"> The <see cref="TextAuthoringExportedModelDetails"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(TextAuthoringExportedModelDetails textAuthoringExportedModelDetails)
+        {
+            if (textAuthoringExportedModelDetails == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(textAuthoringExportedModelDetails, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TextAuthoringExportedModelDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -128,28 +150,6 @@ namespace Azure.AI.Language.Text.Authoring
                 }
             }
             return new TextAuthoringExportedModelDetails(trainedModelLabel, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TextAuthoringExportedModelDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        TextAuthoringExportedModelDetails IPersistableModel<TextAuthoringExportedModelDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TextAuthoringExportedModelDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="textAuthoringExportedModelDetails"> The <see cref="TextAuthoringExportedModelDetails"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(TextAuthoringExportedModelDetails textAuthoringExportedModelDetails)
-        {
-            if (textAuthoringExportedModelDetails == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(textAuthoringExportedModelDetails, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

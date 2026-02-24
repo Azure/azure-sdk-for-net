@@ -50,6 +50,16 @@ namespace Azure.AI.Language.Text.Authoring
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CustomTextSentimentEvalSummary>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CustomTextSentimentEvalSummary IPersistableModel<CustomTextSentimentEvalSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => (CustomTextSentimentEvalSummary)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CustomTextSentimentEvalSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CustomTextSentimentEvalSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -126,15 +136,5 @@ namespace Azure.AI.Language.Text.Authoring
             }
             return new CustomTextSentimentEvalSummary(projectKind, evaluationOptions, additionalBinaryDataProperties, customTextSentimentEvaluation);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CustomTextSentimentEvalSummary>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CustomTextSentimentEvalSummary IPersistableModel<CustomTextSentimentEvalSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => (CustomTextSentimentEvalSummary)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CustomTextSentimentEvalSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

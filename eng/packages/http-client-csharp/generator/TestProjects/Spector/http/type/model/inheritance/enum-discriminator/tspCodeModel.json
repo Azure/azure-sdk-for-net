@@ -334,7 +334,8 @@
                       },
                       "enumType": {
                         "$ref": "30"
-                      }
+                      },
+                      "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.DogKind.Golden"
                     }
                   ],
                   "isFixed": false,
@@ -499,7 +500,8 @@
                       },
                       "valueType": {
                         "$ref": "41"
-                      }
+                      },
+                      "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.SnakeKind.Cobra"
                     }
                   ],
                   "isFixed": true,

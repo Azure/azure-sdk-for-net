@@ -51,6 +51,28 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CloneTestRequest1>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CloneTestRequest1 IPersistableModel<CloneTestRequest1>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CloneTestRequest1>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="cloneTestRequest1"> The <see cref="CloneTestRequest1"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(CloneTestRequest1 cloneTestRequest1)
+        {
+            if (cloneTestRequest1 == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(cloneTestRequest1, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CloneTestRequest1>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -150,28 +172,6 @@ namespace Azure.Developer.LoadTesting
                 }
             }
             return new CloneTestRequest1(newTestId, displayName, description, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CloneTestRequest1>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CloneTestRequest1 IPersistableModel<CloneTestRequest1>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CloneTestRequest1>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="cloneTestRequest1"> The <see cref="CloneTestRequest1"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(CloneTestRequest1 cloneTestRequest1)
-        {
-            if (cloneTestRequest1 == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(cloneTestRequest1, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

@@ -44,6 +44,10 @@ The client library uses version `v1` of the AI Foundry [data plane REST APIs](ht
     - [Evaluation with Application Insights](#evaluation-with-application-insights)
     - [Evaluating responses](#evaluating-responses)
     - [Evaluation rules](#evaluation-rules)
+- [Tracing](#tracing)
+    - [Azure Monitor Tracing](#tracing-to-azure-monitor)
+    - [Console Tracing](#tracing-to-console)
+    - [Enabling content recording](#enabling-content-recording)
 - [Troubleshooting](#troubleshooting)
 - [Next steps](#next-steps)
 - [Contributing](#contributing)
@@ -1217,6 +1221,76 @@ EvaluationRule continuousEvalRule = await projectClient.EvaluationRules.CreateOr
 );
 Console.WriteLine($"Continuous Evaluation Rule created (id: {continuousEvalRule.Id}, name: {continuousEvalRule.DisplayName})");
 ```
+## Tracing
+
+**Note:** Tracing functionality is in preliminary preview and is subject to change. Spans, attributes, and events may be modified in future versions.
+
+### Enabling GenAI Tracing
+
+Tracing requires enabling GenAI-specific OpenTelemetry support. One way to do this is to set the `AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING` environment variable value to `true`. You can also enable the feature with the following code:
+```C# Snippet:Sample_EnableGenAITracing
+AppContext.SetSwitch("Azure.Experimental.EnableGenAITracing", true);
+```
+
+> **Precedence:** If both the `AppContext` switch and the environment variable are set, the `AppContext` switch takes priority. No exception is thrown on conflict. If neither is set, the value defaults to `false`.
+
+**Important:** When you enable `Azure.Experimental.EnableGenAITracing`, the SDK automatically enables the `Azure.Experimental.EnableActivitySource` flag, which is required for the OpenTelemetry instrumentation to function.
+
+You can add an Application Insights Azure resource to your Microsoft Foundry project. If one was enabled, you can get the Application Insights connection string, configure your AI Projects client, and observe traces in Azure Monitor. Typically, you might want to start tracing before you create a client or Agent.
+
+### Tracing to Azure Monitor
+
+First, set the `APPLICATIONINSIGHTS_CONNECTION_STRING` environment variable to point to your Azure Monitor resource.
+
+For tracing to Azure Monitor from your application, the preferred option is to use Azure.Monitor.OpenTelemetry.AspNetCore. Install the package with [NuGet](https://www.nuget.org/ ):
+```dotnetcli
+dotnet add package Azure.Monitor.OpenTelemetry.AspNetCore
+```
+
+More information about using the Azure.Monitor.OpenTelemetry.AspNetCore package can be found [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/README.md).
+
+Another option is to use Azure.Monitor.OpenTelemetry.Exporter package. Install the package with [NuGet](https://www.nuget.org/ ):
+```dotnetcli
+dotnet add package Azure.Monitor.OpenTelemetry.Exporter
+```
+
+Here is an example how to set up tracing to Azure Monitor using Azure.Monitor.OpenTelemetry.Exporter:
+```C# Snippet:Sample_SetupTracingToAzureMonitor
+var tracerProvider = Sdk.CreateTracerProviderBuilder()
+    .AddSource("Azure.AI.Projects.*")
+    .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("AgentTracingSample"))
+    .AddAzureMonitorTraceExporter().Build();
+```
+
+### Tracing to Console
+
+For tracing to console from your application, install the OpenTelemetry.Exporter.Console with [NuGet](https://www.nuget.org/ ):
+
+```dotnetcli
+dotnet add package OpenTelemetry.Exporter.Console
+```
+
+Here is an example how to set up tracing to console:
+```C# Snippet:Sample_SetupTracingToConsole
+var tracerProvider = Sdk.CreateTracerProviderBuilder()
+                .AddSource("Azure.AI.Projects.*") // Add the required sources name
+                .SetResourceBuilder(OpenTelemetry.Resources.ResourceBuilder.CreateDefault().AddService("AgentTracingSample"))
+                .AddConsoleExporter() // Export traces to the console
+                .Build();
+```
+
+### Enabling content recording
+
+Content recording controls whether message contents and tool call related details, such as parameters and return values, are captured with the traces. This data may include sensitive user information.
+
+To enable content recording, set the `OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT` environment variable to `true`. Alternatively, you can control content recording with the following code:
+```C#
+AppContext.SetSwitch("Azure.Experimental.TraceGenAIMessageContent", true);
+```
+
+If neither the environment variable nor the `AppContext` switch is set, content recording defaults to `false`.
+
+> **Precedence:** If both the `AppContext` switch and the environment variable are set, the `AppContext` switch takes priority. No exception is thrown on conflict.
 
 ## Troubleshooting
 

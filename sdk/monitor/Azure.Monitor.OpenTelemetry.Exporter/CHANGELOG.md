@@ -10,11 +10,16 @@
 
 ### Other Changes
 
+* Made `AzureMonitorLogExporter`, `AzureMonitorMetricExporter`, `AzureMonitorTraceExporter`.
+   ([#56344](https://github.com/Azure/azure-sdk-for-net/pull/56344))
+* Made options `EnablePerfCounters` and `EnableStandardMetrics` public in `AzureMonitorExporterOptions`.
+   ([#56344](https://github.com/Azure/azure-sdk-for-net/pull/56344))
+
 ## 1.6.0 (2026-01-28)
 
 ### Other Changes
 
-* The customer-facing SDK stats feature 
+* The customer-facing SDK stats feature
   metric names have been updated to match the stable specification.
   - **Metric names changed**: `preview.item.success.count` → `Item_Success_Count`,
     `preview.item.dropped.count` → `Item_Dropped_Count`,

@@ -56,7 +56,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.WorkloadIdentity
             {
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:TenantId"] = "config-tenant";
-                config["MyClient:Credential:WorkloadIdentityClientId"] = "test-client";
+                config["MyClient:Credential:ClientId"] = "test-client";
 
                 var cac = GetClientAssertionCredential(GetUnderlying(CreateFromConfig(config)));
 
@@ -78,7 +78,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.WorkloadIdentity
             {
                 IConfiguration config = Helper.GetConfiguration();
                 // TenantId intentionally not set in config.
-                config["MyClient:Credential:WorkloadIdentityClientId"] = "test-client";
+                config["MyClient:Credential:ClientId"] = "test-client";
 
                 var cac = GetClientAssertionCredential(GetUnderlying(CreateFromConfig(config)));
 
@@ -100,7 +100,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.WorkloadIdentity
             {
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:TenantId"] = "test-tenant";
-                config["MyClient:Credential:WorkloadIdentityClientId"] = "config-client";
+                config["MyClient:Credential:ClientId"] = "config-client";
 
                 var cac = GetClientAssertionCredential(GetUnderlying(CreateFromConfig(config)));
 
@@ -144,7 +144,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.WorkloadIdentity
             {
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:TenantId"] = "test-tenant";
-                config["MyClient:Credential:WorkloadIdentityClientId"] = "test-client";
+                config["MyClient:Credential:ClientId"] = "test-client";
 
                 var cac = GetClientAssertionCredential(GetUnderlying(CreateFromConfig(config)));
 
@@ -165,7 +165,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.WorkloadIdentity
             {
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:TenantId"] = "test-tenant";
-                config["MyClient:Credential:WorkloadIdentityClientId"] = "test-client";
+                config["MyClient:Credential:ClientId"] = "test-client";
 
                 var cac = GetClientAssertionCredential(GetUnderlying(CreateFromConfig(config)));
 
@@ -187,7 +187,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.WorkloadIdentity
             {
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:TenantId"] = "test-tenant";
-                config["MyClient:Credential:WorkloadIdentityClientId"] = "test-client";
+                config["MyClient:Credential:ClientId"] = "test-client";
                 config["MyClient:Credential:AuthorityHost"] = AzureAuthorityHosts.AzureChina.ToString();
 
                 var cac = GetClientAssertionCredential(GetUnderlying(CreateFromConfig(config)));
@@ -212,7 +212,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.WorkloadIdentity
             {
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:TenantId"] = "test-tenant";
-                config["MyClient:Credential:WorkloadIdentityClientId"] = "test-client";
+                config["MyClient:Credential:ClientId"] = "test-client";
                 // AuthorityHost intentionally not set in config.
 
                 var cac = GetClientAssertionCredential(GetUnderlying(CreateFromConfig(config)));
@@ -237,7 +237,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.WorkloadIdentity
             {
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:TenantId"] = "test-tenant";
-                config["MyClient:Credential:WorkloadIdentityClientId"] = "test-client";
+                config["MyClient:Credential:ClientId"] = "test-client";
 
                 var cac = GetClientAssertionCredential(GetUnderlying(CreateFromConfig(config)));
                 Assert.IsNotNull(cac);
@@ -256,7 +256,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.WorkloadIdentity
             {
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:TenantId"] = "test-tenant";
-                config["MyClient:Credential:WorkloadIdentityClientId"] = "test-client";
+                config["MyClient:Credential:ClientId"] = "test-client";
                 config["MyClient:Credential:DisableInstanceDiscovery"] = "true";
 
                 var cac = GetClientAssertionCredential(GetUnderlying(CreateFromConfig(config)));
@@ -274,7 +274,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.WorkloadIdentity
             {
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:TenantId"] = "test-tenant";
-                config["MyClient:Credential:WorkloadIdentityClientId"] = "test-client";
+                config["MyClient:Credential:ClientId"] = "test-client";
 
                 var cac = GetClientAssertionCredential(GetUnderlying(CreateFromConfig(config)));
                 Assert.IsNotNull(cac);
@@ -291,7 +291,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.WorkloadIdentity
             {
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:TenantId"] = "test-tenant";
-                config["MyClient:Credential:WorkloadIdentityClientId"] = "test-client";
+                config["MyClient:Credential:ClientId"] = "test-client";
                 config["MyClient:Credential:IsUnsafeSupportLoggingEnabled"] = "true";
 
                 var cac = GetClientAssertionCredential(GetUnderlying(CreateFromConfig(config)));
@@ -309,7 +309,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.WorkloadIdentity
             {
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:TenantId"] = "test-tenant";
-                config["MyClient:Credential:WorkloadIdentityClientId"] = "test-client";
+                config["MyClient:Credential:ClientId"] = "test-client";
 
                 var cac = GetClientAssertionCredential(GetUnderlying(CreateFromConfig(config)));
                 Assert.IsNotNull(cac);
@@ -331,7 +331,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.WorkloadIdentity
             {
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:TenantId"] = "test-tenant";
-                config["MyClient:Credential:WorkloadIdentityClientId"] = "test-client";
+                config["MyClient:Credential:ClientId"] = "test-client";
                 config["MyClient:Credential:AdditionallyAllowedTenants:0"] = "config-tenant-a";
 
                 var cac = GetClientAssertionCredential(GetUnderlying(CreateFromConfig(config)));
@@ -358,7 +358,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.WorkloadIdentity
             {
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:TenantId"] = "test-tenant";
-                config["MyClient:Credential:WorkloadIdentityClientId"] = "test-client";
+                config["MyClient:Credential:ClientId"] = "test-client";
                 // AdditionallyAllowedTenants intentionally not set in config.
 
                 var cac = GetClientAssertionCredential(GetUnderlying(CreateFromConfig(config)));
@@ -385,7 +385,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.WorkloadIdentity
             {
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:TenantId"] = "test-tenant";
-                config["MyClient:Credential:WorkloadIdentityClientId"] = "test-client";
+                config["MyClient:Credential:ClientId"] = "test-client";
 
                 var cac = GetClientAssertionCredential(GetUnderlying(CreateFromConfig(config)));
                 Assert.IsNotNull(cac);
@@ -411,7 +411,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.WorkloadIdentity
             {
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:TenantId"] = "test-tenant";
-                config["MyClient:Credential:WorkloadIdentityClientId"] = "test-client";
+                config["MyClient:Credential:ClientId"] = "test-client";
                 config["MyClient:Credential:IsAzureProxyEnabled"] = "true";
 
                 var ex = Assert.Throws<InvalidOperationException>(() => CreateFromConfig(config));
@@ -434,7 +434,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.WorkloadIdentity
             {
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:TenantId"] = "test-tenant";
-                config["MyClient:Credential:WorkloadIdentityClientId"] = "test-client";
+                config["MyClient:Credential:ClientId"] = "test-client";
 
                 var credential = CreateFromConfig(config);
                 Assert.IsNotNull(GetUnderlying(credential));
@@ -461,7 +461,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.WorkloadIdentity
             {
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:TenantId"] = configTenant;
-                config["MyClient:Credential:WorkloadIdentityClientId"] = configClient;
+                config["MyClient:Credential:ClientId"] = configClient;
                 config["MyClient:Credential:AuthorityHost"] = configAuthority.ToString();
                 config["MyClient:Credential:DisableInstanceDiscovery"] = "true";
                 config["MyClient:Credential:IsUnsafeSupportLoggingEnabled"] = "true";

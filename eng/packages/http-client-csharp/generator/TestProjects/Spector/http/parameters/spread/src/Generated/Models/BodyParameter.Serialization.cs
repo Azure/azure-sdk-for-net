@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Parameters.Spread.Models
+namespace Parameters.Spread._Model
 {
     public partial class BodyParameter : IJsonModel<BodyParameter>
     {

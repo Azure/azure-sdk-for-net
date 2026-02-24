@@ -53,6 +53,16 @@ namespace Azure.AI.VoiceLive
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SessionUpdateResponseTextDone>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SessionUpdateResponseTextDone IPersistableModel<SessionUpdateResponseTextDone>.Create(BinaryData data, ModelReaderWriterOptions options) => (SessionUpdateResponseTextDone)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SessionUpdateResponseTextDone>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SessionUpdateResponseTextDone>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -169,15 +179,5 @@ namespace Azure.AI.VoiceLive
                 contentIndex,
                 text);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SessionUpdateResponseTextDone>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SessionUpdateResponseTextDone IPersistableModel<SessionUpdateResponseTextDone>.Create(BinaryData data, ModelReaderWriterOptions options) => (SessionUpdateResponseTextDone)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SessionUpdateResponseTextDone>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

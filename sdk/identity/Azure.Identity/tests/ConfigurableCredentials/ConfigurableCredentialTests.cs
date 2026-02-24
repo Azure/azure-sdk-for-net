@@ -156,19 +156,12 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
         }
 
         [Test]
-        public void Constructor_WithNullCredentialSource_CreatesAllDefaultCredentials()
+        public void Constructor_WithNullCredentialSource_Throws()
         {
             var settings = CreateCredentialSettings(null, null);
 
-            var credential = new ConfigurableCredential(settings);
-            var innerCredential = GetInnerCredential(credential) as DefaultAzureCredential;
-
-            Assert.IsNotNull(innerCredential);
-
-            var sources = GetDefaultAzureCredentialSources(innerCredential);
-            Assert.IsNotNull(sources);
-            // When no credential source is specified, DefaultAzureCredential should include all default credentials
-            Assert.GreaterOrEqual(sources.Length, 8, "Expected multiple default credentials when no specific source is specified");
+            var ex = Assert.Throws<InvalidOperationException>(() => new ConfigurableCredential(settings));
+            Assert.That(ex.Message, Does.Contain("CredentialSource is required"));
         }
 
         [Test]

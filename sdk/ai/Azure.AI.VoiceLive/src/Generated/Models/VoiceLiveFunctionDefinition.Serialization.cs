@@ -50,6 +50,16 @@ namespace Azure.AI.VoiceLive
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<VoiceLiveFunctionDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VoiceLiveFunctionDefinition IPersistableModel<VoiceLiveFunctionDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => (VoiceLiveFunctionDefinition)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VoiceLiveFunctionDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VoiceLiveFunctionDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -153,15 +163,5 @@ namespace Azure.AI.VoiceLive
             }
             return new VoiceLiveFunctionDefinition(@type, additionalBinaryDataProperties, name, description, parameters);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VoiceLiveFunctionDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceLiveFunctionDefinition IPersistableModel<VoiceLiveFunctionDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => (VoiceLiveFunctionDefinition)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VoiceLiveFunctionDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

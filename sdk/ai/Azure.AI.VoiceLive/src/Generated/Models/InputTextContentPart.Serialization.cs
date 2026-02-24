@@ -50,6 +50,16 @@ namespace Azure.AI.VoiceLive
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InputTextContentPart>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InputTextContentPart IPersistableModel<InputTextContentPart>.Create(BinaryData data, ModelReaderWriterOptions options) => (InputTextContentPart)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InputTextContentPart>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InputTextContentPart>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -120,15 +130,5 @@ namespace Azure.AI.VoiceLive
             }
             return new InputTextContentPart(@type, additionalBinaryDataProperties, text);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InputTextContentPart>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InputTextContentPart IPersistableModel<InputTextContentPart>.Create(BinaryData data, ModelReaderWriterOptions options) => (InputTextContentPart)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InputTextContentPart>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

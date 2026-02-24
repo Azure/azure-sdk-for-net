@@ -66,6 +66,8 @@ namespace Azure.Identity.Tests
             return InstrumentClient(new VisualStudioCredential(default, default, fileSystem, processService, options));
         }
 
+        protected virtual bool IsChainedCredentialSupported => true;
+
         [Test]
         public async Task AuthenticateWithVsCredential([Values(null, TenantIdHint)] string tenantId, [Values(true)] bool allowMultiTenantAuthentication)
         {
@@ -327,6 +329,10 @@ namespace Azure.Identity.Tests
         [Test]
         public void OperationCanceledException_throws_CredentialUnavailableException_WhenChained()
         {
+            if (!IsChainedCredentialSupported)
+            {
+                Assert.Ignore("ConfigurableCredential with CredentialSource does not support chained credential scenarios.");
+            }
             var testProcess = new TestProcess() { ExceptionOnStartHandler = p => throw new OperationCanceledException("Test exception") };
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudio();
             var credential = CreateCredentialWithChainedOption(new TestProcessService(testProcess), fileSystem, isChained: true);
@@ -336,9 +342,11 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        [TestCase("TS003: Error, TS005: No accounts found.  Please go to Tools->Options->Azure Services Authentication, and add an account to be authenticated to Azure services during development.")]
-        public void GeneralExceptions_With_CertainErrors_throws_CredentialUnavailableException(string exceptionMessage)
+        public void GeneralExceptions_With_CertainErrors_throws_CredentialUnavailableException()
         {
+            // The error message is defined inline to avoid including ": Error" in the test name,
+            // which would be misinterpreted as a build error by the CI MSBuild log processor.
+            string exceptionMessage = "TS003: Error, TS005: No accounts found.  Please go to Tools->Options->Azure Services Authentication, and add an account to be authenticated to Azure services during development.";
             var testProcess = new TestProcess() { ExceptionOnStartHandler = p => throw new InvalidOperationException(exceptionMessage) };
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudio();
             var credential = CreateCredentialWithChainedOption(new TestProcessService(testProcess), fileSystem, isChained: false);
