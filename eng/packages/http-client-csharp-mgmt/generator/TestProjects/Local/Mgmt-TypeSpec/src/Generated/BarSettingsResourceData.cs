@@ -242,7 +242,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             get
             {
-                return OptionalFlattenProperty is null ? default : OptionalFlattenProperty.RandomCollectionProp;
+                if (OptionalFlattenProperty is null)
+                {
+                    OptionalFlattenProperty = new OptionalFlattenPropertyType();
+                }
+                return OptionalFlattenProperty.RandomCollectionProp;
             }
         }
     }
