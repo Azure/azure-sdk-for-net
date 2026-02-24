@@ -37,6 +37,7 @@ public class EvaluationsTest : ProjectsClientTestBase
     };
     #endregion
 
+    [Ignore("The V1 API is not supported")]
     [RecordedTest]
     public async Task SearchIndexesTest()
     {
@@ -146,6 +147,7 @@ public class EvaluationsTest : ProjectsClientTestBase
         await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
     }
 
+    [Ignore("The V1 API is not supported")]
     [RecordedTest]
     public async Task TestEvaluatorsCRUD()
     {
@@ -232,6 +234,7 @@ public class EvaluationsTest : ProjectsClientTestBase
         }
     }
 
+    [Ignore("The V1 API is not supported")]
     [RecordedTest]
     public async Task TestBuiltInEvaluators()
     {
@@ -240,6 +243,7 @@ public class EvaluationsTest : ProjectsClientTestBase
         Assert.That(builtInEvaluators.Count, Is.GreaterThan(0), "No built-in evaluators were found.");
     }
 
+    [Ignore("The V1 API is not supported")]
     [RecordedTest]
     [TestCase(CustomEvaluatorType.PromptBased)]
     [TestCase(CustomEvaluatorType.CodeBased)]
@@ -363,6 +367,7 @@ public class EvaluationsTest : ProjectsClientTestBase
         await projectClient.Evaluators.DeleteVersionAsync(name: promptEvaluator.Name, version: promptEvaluator.Version);
     }
 
+    [Ignore("The V1 API is not supported")]
     [RecordedTest]
     public async Task TestEvaluationRule()
     {

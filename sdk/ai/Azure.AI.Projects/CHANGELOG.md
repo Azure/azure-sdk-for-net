@@ -15,6 +15,13 @@
 ### Sample Updates
 - Added Evaluation sample.
 
+### Known Issues
+At the time of release, the following operation areas do not yet support the latest API version and will fail. Please temporarily use the previous library version until the new v1 operations are available.
+ - Computer use tool
+ - Fine tuning
+ - Red teams
+ - Evaluation
+
 ## 1.2.0-beta.5 (2025-12-12)
 
 ### Features Added

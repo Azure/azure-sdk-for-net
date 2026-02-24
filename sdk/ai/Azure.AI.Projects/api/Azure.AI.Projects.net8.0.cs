@@ -131,14 +131,14 @@ namespace Azure.AI.Projects
     {
         protected AIProjectAgentsOperations() { }
         public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
-        public virtual System.ClientModel.ClientResult CreateAgent(System.ClientModel.BinaryContent content, System.BinaryData foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> CreateAgentAsync(System.ClientModel.BinaryContent content, System.BinaryData foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.ClientModel.ClientResult CreateAgent(System.ClientModel.BinaryContent content, string foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> CreateAgentAsync(System.ClientModel.BinaryContent content, string foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.ClientModel.ClientResult CreateAgentFromManifest(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> CreateAgentFromManifestAsync(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.OpenAI.AgentVersion> CreateAgentVersion(string agentName, Azure.AI.Projects.AgentVersionCreationOptions options, System.BinaryData foundryFeatures = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.ClientResult CreateAgentVersion(string agentName, System.ClientModel.BinaryContent content, System.BinaryData foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.OpenAI.AgentVersion>> CreateAgentVersionAsync(string agentName, Azure.AI.Projects.AgentVersionCreationOptions options = null, System.BinaryData foundryFeatures = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> CreateAgentVersionAsync(string agentName, System.ClientModel.BinaryContent content, System.BinaryData foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.OpenAI.AgentVersion> CreateAgentVersion(string agentName, Azure.AI.Projects.AgentVersionCreationOptions options, string foundryFeatures = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult CreateAgentVersion(string agentName, System.ClientModel.BinaryContent content, string foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.OpenAI.AgentVersion>> CreateAgentVersionAsync(string agentName, Azure.AI.Projects.AgentVersionCreationOptions options = null, string foundryFeatures = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> CreateAgentVersionAsync(string agentName, System.ClientModel.BinaryContent content, string foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.ClientModel.ClientResult CreateAgentVersionFromManifest(string agentName, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.OpenAI.AgentVersion> CreateAgentVersionFromManifest(string agentName, string manifestId, Azure.AI.Projects.AgentManifestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> CreateAgentVersionFromManifestAsync(string agentName, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
@@ -167,8 +167,8 @@ namespace Azure.AI.Projects
         public virtual System.ClientModel.Primitives.CollectionResult GetAgentVersions(string agentName, int? limit, string order, string after, string before, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.OpenAI.AgentVersion> GetAgentVersionsAsync(string agentName, int? limit = default(int?), Azure.AI.Projects.AgentListOrder? order = default(Azure.AI.Projects.AgentListOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.Primitives.AsyncCollectionResult GetAgentVersionsAsync(string agentName, int? limit, string order, string after, string before, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        public virtual System.ClientModel.ClientResult UpdateAgent(string agentName, System.ClientModel.BinaryContent content, System.BinaryData foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> UpdateAgentAsync(string agentName, System.ClientModel.BinaryContent content, System.BinaryData foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.ClientModel.ClientResult UpdateAgent(string agentName, System.ClientModel.BinaryContent content, string foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> UpdateAgentAsync(string agentName, System.ClientModel.BinaryContent content, string foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.ClientModel.ClientResult UpdateAgentFromManifest(string agentName, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> UpdateAgentFromManifestAsync(string agentName, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
     }
@@ -1641,16 +1641,28 @@ namespace Azure.AI.Projects
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.FolderDataset>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.FolderDataset>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public enum FoundryFeaturesOptInKeys
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FoundryFeaturesOptInKeys : System.IEquatable<Azure.AI.Projects.FoundryFeaturesOptInKeys>
     {
-        ContainerAgentsV1Preview = 0,
-        HostedAgentsV1Preview = 1,
-        WorkflowAgentsV1Preview = 2,
-        EvaluationsV1Preview = 3,
-        SchedulesV1Preview = 4,
-        RedTeamsV1Preview = 5,
-        InsightsV1Preview = 6,
-        MemoryStoresV1Preview = 7,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FoundryFeaturesOptInKeys(string value) { throw null; }
+        public static Azure.AI.Projects.FoundryFeaturesOptInKeys ContainerAgentsV1Preview { get { throw null; } }
+        public static Azure.AI.Projects.FoundryFeaturesOptInKeys EvaluationsV1Preview { get { throw null; } }
+        public static Azure.AI.Projects.FoundryFeaturesOptInKeys HostedAgentsV1Preview { get { throw null; } }
+        public static Azure.AI.Projects.FoundryFeaturesOptInKeys InsightsV1Preview { get { throw null; } }
+        public static Azure.AI.Projects.FoundryFeaturesOptInKeys MemoryStoresV1Preview { get { throw null; } }
+        public static Azure.AI.Projects.FoundryFeaturesOptInKeys RedTeamsV1Preview { get { throw null; } }
+        public static Azure.AI.Projects.FoundryFeaturesOptInKeys SchedulesV1Preview { get { throw null; } }
+        public static Azure.AI.Projects.FoundryFeaturesOptInKeys WorkflowAgentsV1Preview { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.FoundryFeaturesOptInKeys other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.FoundryFeaturesOptInKeys left, Azure.AI.Projects.FoundryFeaturesOptInKeys right) { throw null; }
+        public static implicit operator Azure.AI.Projects.FoundryFeaturesOptInKeys (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.FoundryFeaturesOptInKeys? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.FoundryFeaturesOptInKeys left, Azure.AI.Projects.FoundryFeaturesOptInKeys right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class HourlyRecurrenceSchedule : Azure.AI.Projects.RecurrenceSchedule, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.HourlyRecurrenceSchedule>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.HourlyRecurrenceSchedule>
     {
