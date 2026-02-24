@@ -8,7 +8,7 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/ai/Azure.AI.VoiceLive
+    - sdk/voicelive/Azure.AI.VoiceLive
 
 pr:
   branches:
@@ -19,12 +19,12 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/ai/Azure.AI.VoiceLive
+    - sdk/voicelive/Azure.AI.VoiceLive
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: ai
+    ServiceDirectory: voicelive
     ArtifactName: packages
     Artifacts:
     - name: Azure.AI.VoiceLive

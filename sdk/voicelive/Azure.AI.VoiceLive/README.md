@@ -131,7 +131,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/ai/Azure.AI.VoiceLive/samples).
+You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/voicelive/Azure.AI.VoiceLive/samples).
 
 ### Basic voice assistant
 
@@ -327,7 +327,7 @@ Implement appropriate retry logic and connection management to handle throttling
 
 ## Next steps
 
-* Explore the comprehensive [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/ai/Azure.AI.VoiceLive/samples) including basic voice assistants and customer service bots
+* Explore the comprehensive [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/voicelive/Azure.AI.VoiceLive/samples) including basic voice assistants and customer service bots
 * Learn about [voice customization](https://learn.microsoft.com/azure/ai-services/speech-service/custom-neural-voice) to create unique brand voices
 * Understand [avatar integration](https://learn.microsoft.com/azure/ai-services/speech-service/text-to-speech-avatar/what-is-text-to-speech-avatar) for visual voice experiences
 * Review the [VoiceLive API documentation](https://docs.microsoft.com/azure/ai-services/) for advanced configuration options
@@ -341,8 +341,8 @@ When you submit a pull request, a CLA bot will automatically determine whether y
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
 <!-- LINKS -->
-[source_root]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/ai/Azure.AI.VoiceLive/src
-[source_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/ai/Azure.AI.VoiceLive/samples
+[source_root]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/voicelive/Azure.AI.VoiceLive/src
+[source_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/voicelive/Azure.AI.VoiceLive/samples
 [package]: https://www.nuget.org/
 [reference_docs]: https://azure.github.io/azure-sdk-for-net/
 [voicelive_docs]: https://docs.microsoft.com/azure/ai-services/
