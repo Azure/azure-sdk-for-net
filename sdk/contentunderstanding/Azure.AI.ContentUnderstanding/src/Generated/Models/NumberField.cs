@@ -22,10 +22,10 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="type"> Semantic data type of the field value. </param>
         /// <param name="spans"> Span(s) associated with the field value in the markdown content. </param>
         /// <param name="confidence"> Confidence of predicting the field value. </param>
-        /// <param name="source"> Encoded source that identifies the position of the field value in the content. </param>
+        /// <param name="sourceValue"> Encoded source that identifies the position of the field value in the content. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="valueNumber"> Number field value. </param>
-        internal NumberField(ContentFieldType @type, IList<ContentSpan> spans, float? confidence, string source, IDictionary<string, BinaryData> additionalBinaryDataProperties, double? valueNumber) : base(@type, spans, confidence, source, additionalBinaryDataProperties)
+        internal NumberField(ContentFieldType @type, IList<ContentSpan> spans, float? confidence, string sourceValue, IDictionary<string, BinaryData> additionalBinaryDataProperties, double? valueNumber) : base(@type, spans, confidence, sourceValue, additionalBinaryDataProperties)
         {
             ValueNumber = valueNumber;
         }

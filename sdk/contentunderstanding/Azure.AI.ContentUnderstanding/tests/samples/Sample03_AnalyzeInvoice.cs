@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure;
@@ -71,7 +72,19 @@ namespace Azure.AI.ContentUnderstanding.Samples
             var customerNameField = documentContent.Fields["CustomerName"];
             Console.WriteLine($"Customer Name: {customerNameField.Value ?? "(None)"}");
             Console.WriteLine($"  Confidence: {customerNameField.Confidence?.ToString("F2") ?? "N/A"}");
-            Console.WriteLine($"  Source: {customerNameField.Source ?? "N/A"}");
+
+            // Access parsed grounding sources to get page number and polygon coordinates
+            if (customerNameField.GroundingSources != null)
+            {
+                foreach (var source in customerNameField.GroundingSources)
+                {
+                    if (source is DocumentSource docSource)
+                    {
+                        Console.WriteLine($"  Grounding: page {docSource.PageNumber}, polygon: [{string.Join(", ", docSource.Polygon.Select(p => $"({p.X:F4},{p.Y:F4})"))}]");
+                    }
+                }
+            }
+
             if (customerNameField.Spans?.Count > 0)
             {
                 var span = customerNameField.Spans[0];
@@ -82,7 +95,19 @@ namespace Azure.AI.ContentUnderstanding.Samples
             var invoiceDateField = documentContent.Fields.GetFieldOrDefault("InvoiceDate");
             Console.WriteLine($"Invoice Date: {invoiceDateField?.Value ?? "(None)"}");
             Console.WriteLine($"  Confidence: {invoiceDateField?.Confidence?.ToString("F2") ?? "N/A"}");
-            Console.WriteLine($"  Source: {invoiceDateField?.Source ?? "N/A"}");
+
+            // Access parsed grounding sources for date field
+            if (invoiceDateField?.GroundingSources != null)
+            {
+                foreach (var source in invoiceDateField.GroundingSources)
+                {
+                    if (source is DocumentSource docSource)
+                    {
+                        Console.WriteLine($"  Grounding: page {docSource.PageNumber}, polygon: [{string.Join(", ", docSource.Polygon.Select(p => $"({p.X:F4},{p.Y:F4})"))}]");
+                    }
+                }
+            }
+
             if (invoiceDateField?.Spans?.Count > 0)
             {
                 var span = invoiceDateField.Spans[0];
@@ -96,7 +121,18 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 var currency = totalAmountObj.Value?.GetFieldOrDefault("CurrencyCode")?.Value;
                 Console.WriteLine($"Total: {currency ?? "$"}{amount?.ToString("F2") ?? "(None)"}");
                 Console.WriteLine($"  Confidence: {totalAmountObj.Confidence?.ToString("F2") ?? "N/A"}");
-                Console.WriteLine($"  Source: {totalAmountObj.Source ?? "N/A"}");
+
+                // Access parsed grounding sources for object field
+                if (totalAmountObj.GroundingSources != null)
+                {
+                    foreach (var source in totalAmountObj.GroundingSources)
+                    {
+                        if (source is DocumentSource docSource)
+                        {
+                            Console.WriteLine($"  Grounding: page {docSource.PageNumber}, polygon: [{string.Join(", ", docSource.Polygon.Select(p => $"({p.X:F4},{p.Y:F4})"))}]");
+                        }
+                    }
+                }
             }
 
             // Extract array fields (collections like line items)
@@ -147,10 +183,16 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     $"CustomerName confidence should be between 0 and 1, but was {customerNameFieldAssert.Confidence.Value}");
             }
 
-            if (!string.IsNullOrWhiteSpace(customerNameFieldAssert.Source))
+            // Verify grounding sources are parsed as DocumentSource
+            if (customerNameFieldAssert.GroundingSources != null)
             {
-                Assert.IsTrue(customerNameFieldAssert.Source.StartsWith("D("),
-                    "Source should start with 'D(' for document fields");
+                Assert.IsTrue(customerNameFieldAssert.GroundingSources.Length > 0,
+                    "GroundingSources should have at least one element");
+                Assert.IsInstanceOf<DocumentSource>(customerNameFieldAssert.GroundingSources[0],
+                    "Grounding source should be DocumentSource for document fields");
+                var docSource = (DocumentSource)customerNameFieldAssert.GroundingSources[0];
+                Assert.IsTrue(docSource.PageNumber >= 1, "PageNumber should be >= 1");
+                Assert.AreEqual(4, docSource.Polygon.Count, "Polygon should have 4 points");
             }
 
             // Spans are expected to exist and have at least one span
@@ -178,10 +220,14 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     $"InvoiceDate confidence should be between 0 and 1, but was {invoiceDateFieldAssert.Confidence.Value}");
             }
 
-            if (!string.IsNullOrWhiteSpace(invoiceDateFieldAssert.Source))
+            // Verify grounding sources are parsed as DocumentSource
+            if (invoiceDateFieldAssert.GroundingSources != null)
             {
-                Assert.IsTrue(invoiceDateFieldAssert.Source.StartsWith("D("),
-                    "Source should start with 'D(' for document fields");
+                Assert.IsInstanceOf<DocumentSource>(invoiceDateFieldAssert.GroundingSources[0],
+                    "Grounding source should be DocumentSource for document fields");
+                var docSource = (DocumentSource)invoiceDateFieldAssert.GroundingSources[0];
+                Assert.IsTrue(docSource.PageNumber >= 1, "PageNumber should be >= 1");
+                Assert.AreEqual(4, docSource.Polygon.Count, "Polygon should have 4 points");
             }
 
             // Spans are expected to exist and have at least one span
