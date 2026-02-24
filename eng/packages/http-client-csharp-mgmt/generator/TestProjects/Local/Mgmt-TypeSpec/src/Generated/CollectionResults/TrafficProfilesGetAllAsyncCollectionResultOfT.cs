@@ -50,7 +50,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     yield break;
                 }
                 TrafficProfileListResult result = TrafficProfileListResult.FromResponse(response);
-                yield return Page<TrafficProfileData>.FromValues((IReadOnlyList<TrafficProfileData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<TrafficProfileData>.FromValues((IReadOnlyList<TrafficProfileData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
