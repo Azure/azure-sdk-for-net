@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         {
             var matchConditions = new MatchConditions
             {
-                IfMatch = new ETag(ifMatch),
-                IfNoneMatch = new ETag(ifNoneMatch)
+                IfMatch = ifMatch != null ? new ETag(ifMatch) : null,
+                IfNoneMatch = ifNoneMatch != null ? new ETag(ifNoneMatch) : null
             };
             return await CreateOrUpdateAsync(waitUntil, autoUpgradeProfileName, data, matchConditions, cancellationToken).ConfigureAwait(false);
         }
@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         {
             var matchConditions = new MatchConditions
             {
-                IfMatch = new ETag(ifMatch),
-                IfNoneMatch = new ETag(ifNoneMatch)
+                IfMatch = ifMatch != null ? new ETag(ifMatch) : null,
+                IfNoneMatch = ifNoneMatch != null ? new ETag(ifNoneMatch) : null
             };
             return CreateOrUpdate(waitUntil, autoUpgradeProfileName, data, matchConditions, cancellationToken);
         }

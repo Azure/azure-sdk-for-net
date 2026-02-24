@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            return await DeleteAsync(waitUntil, new ETag(ifMatch), cancellationToken).ConfigureAwait(false);
+            return await DeleteAsync(waitUntil, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation Delete(WaitUntil waitUntil, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            return Delete(waitUntil, new ETag(ifMatch), cancellationToken);
+            return Delete(waitUntil, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken);
         }
 
         /// <summary>
@@ -105,8 +105,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         {
             var matchConditions = new MatchConditions
             {
-                IfMatch = new ETag(ifMatch),
-                IfNoneMatch = new ETag(ifNoneMatch)
+                IfMatch = ifMatch != null ? new ETag(ifMatch) : null,
+                IfNoneMatch = ifNoneMatch != null ? new ETag(ifNoneMatch) : null
             };
             return await UpdateAsync(waitUntil, data, matchConditions, cancellationToken).ConfigureAwait(false);
         }
@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         {
             var matchConditions = new MatchConditions
             {
-                IfMatch = new ETag(ifMatch),
-                IfNoneMatch = new ETag(ifNoneMatch)
+                IfMatch = ifMatch != null ? new ETag(ifMatch) : null,
+                IfNoneMatch = ifNoneMatch != null ? new ETag(ifNoneMatch) : null
             };
             return Update(waitUntil, data, matchConditions, cancellationToken);
         }

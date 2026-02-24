@@ -30,7 +30,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
         }
 
         [TestCase]
-        //[RecordedTest]
         public async Task FleetCRUDTest()
         {
             Console.WriteLine("starting FleetCRUDTest");
