@@ -6,18 +6,51 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary>
-    /// Partial class for AudioVisualContent to customize serialization/deserialization.
+    /// Partial class for AudioVisualContent to customize serialization/deserialization
+    /// and expose time properties as <see cref="TimeSpan"/>.
     /// </summary>
     // SERVICE-FIX: Suppress DeserializeAudioVisualContent to fix KeyFrameTimesMs property name casing inconsistency (service returns "KeyFrameTimesMs" instead of "keyFrameTimesMs")
     [CodeGenSuppress("DeserializeAudioVisualContent", typeof(JsonElement), typeof(ModelReaderWriterOptions))]
     public partial class AudioVisualContent
     {
+        // CUSTOMIZATION: Hide the generated long millisecond properties and expose TimeSpan instead.
+        [CodeGenMember("StartTimeMs")]
+        internal long StartTimeMsValue { get; }
+
+        [CodeGenMember("EndTimeMs")]
+        internal long EndTimeMsValue { get; }
+
+        [CodeGenMember("CameraShotTimesMs")]
+        internal IList<long> CameraShotTimesMsValues { get; }
+
+        [CodeGenMember("KeyFrameTimesMs")]
+        internal IList<long> KeyFrameTimesMsValues { get; }
+
+        /// <summary> Gets the start time of the content. </summary>
+        public TimeSpan StartTime => TimeSpan.FromMilliseconds(StartTimeMsValue);
+
+        /// <summary> Gets the end time of the content. </summary>
+        public TimeSpan EndTime => TimeSpan.FromMilliseconds(EndTimeMsValue);
+
+        /// <summary>
+        /// Gets the list of camera shot change timestamps.
+        /// Only populated if returnDetails is true.
+        /// </summary>
+        public IList<TimeSpan> CameraShotTimes => CameraShotTimesMsValues.Select(ms => TimeSpan.FromMilliseconds(ms)).ToList();
+
+        /// <summary>
+        /// Gets the list of key frame timestamps.
+        /// Only populated if returnDetails is true.
+        /// </summary>
+        public IList<TimeSpan> KeyFrameTimes => KeyFrameTimesMsValues.Select(ms => TimeSpan.FromMilliseconds(ms)).ToList();
+
         internal static AudioVisualContent DeserializeAudioVisualContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
