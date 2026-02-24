@@ -8,7 +8,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Extensions;
-using ResourceManagementClient;
+using Azure.ResourceManager.Batch;
 
 namespace Microsoft.Extensions.Azure
 {
@@ -18,8 +18,8 @@ namespace Microsoft.Extensions.Azure
         /// <summary> Registers a <see cref="BatchClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        public static IAzureClientBuilder<BatchClient, BatchClientOptions> AddBatchClient<TBuilder>(this TBuilder builder, Uri endpoint, Guid subscriptionId)
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        public static IAzureClientBuilder<BatchClient, BatchClientOptions> AddBatchClient<TBuilder>(this TBuilder builder, Uri endpoint, string subscriptionId)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
             return builder.RegisterClientFactory<BatchClient, BatchClientOptions>((options, cred) => new BatchClient(endpoint, subscriptionId, cred, options));

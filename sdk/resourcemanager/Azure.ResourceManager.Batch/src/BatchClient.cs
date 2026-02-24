@@ -12,16 +12,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace ResourceManagementClient
+namespace Azure.ResourceManager.Batch
 {
-    // Data plane generated client.
+    // Management plane (Resource Manager) generated client.
     /// <summary> The Batch service client. </summary>
     public partial class BatchClient
     {
-        private static readonly string[] AuthorizationScopes = new string[] { "user_impersonation" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://management.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly Guid _subscriptionId;
+        private readonly string _subscriptionId;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
@@ -37,20 +37,20 @@ namespace ResourceManagementClient
         }
 
         /// <summary> Initializes a new instance of BatchClient. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credential"/> is null. </exception>
-        public BatchClient(Guid subscriptionId, TokenCredential credential) : this(new Uri("https://management.azure.com"), subscriptionId, credential, new BatchClientOptions())
+        public BatchClient(string subscriptionId, TokenCredential credential) : this(new Uri("https://management.azure.com"), subscriptionId, credential, new BatchClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of BatchClient. </summary>
         /// <param name="endpoint"> server parameter. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public BatchClient(Uri endpoint, Guid subscriptionId, TokenCredential credential, BatchClientOptions options)
+        public BatchClient(Uri endpoint, string subscriptionId, TokenCredential credential, BatchClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));

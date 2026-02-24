@@ -17,7 +17,7 @@
 
 ### API Reference
 
-- **Namespace:** `ResourceManagementClient`
+- **Namespace:** `Azure.ResourceManager.Batch`
 - **Main Class:** `BatchClient`
 - **Service Version:** 2025-08-01-preview
 - **Target Framework:** .NET Standard 2.0, .NET 6.0+
