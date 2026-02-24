@@ -9,27 +9,27 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Quantum;
+using Azure.ResourceManager.AppConfiguration;
 
-namespace Azure.ResourceManager.Quantum.Models
+namespace Azure.ResourceManager.AppConfiguration.Models
 {
     /// <summary> Managed-On-Behalf-Of configuration properties. This configuration exists for the resources where a resource provider manages those resources on behalf of the resource owner. </summary>
     internal partial class AppConfigurationManagedOnBehalfOfConfiguration : IJsonModel<AppConfigurationManagedOnBehalfOfConfiguration>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedOnBehalfOfConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AppConfigurationManagedOnBehalfOfConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedOnBehalfOfConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppConfigurationManagedOnBehalfOfConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeManagedOnBehalfOfConfiguration(document.RootElement, options);
+                        return DeserializeAppConfigurationManagedOnBehalfOfConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedOnBehalfOfConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppConfigurationManagedOnBehalfOfConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -55,7 +55,6 @@ namespace Azure.ResourceManager.Quantum.Models
             {
                 writer.WritePropertyName("moboBrokerResources"u8);
                 writer.WriteStartArray();
-                
                 foreach (AppConfigurationMoboBrokerResourceInfo item in MoboBrokerResources)
                 {
                     writer.WriteObjectValue(item, options);
@@ -105,7 +104,6 @@ namespace Azure.ResourceManager.Quantum.Models
                 return null;
             }
             IReadOnlyList<AppConfigurationMoboBrokerResourceInfo> moboBrokerResources = default;
-
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -114,11 +112,6 @@ namespace Azure.ResourceManager.Quantum.Models
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
-                    }
-                    List<MoboBrokerInfo> array = new List<MoboBrokerInfo>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(MoboBrokerInfo.DeserializeMoboBrokerInfo(item, options));
                     }
                     List<AppConfigurationMoboBrokerResourceInfo> array = new List<AppConfigurationMoboBrokerResourceInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
@@ -133,8 +126,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-
-            return new ManagedOnBehalfOfConfiguration(moboBrokerResources ?? new ChangeTrackingList<MoboBrokerInfo>(), additionalBinaryDataProperties);
+            return new AppConfigurationManagedOnBehalfOfConfiguration(moboBrokerResources ?? new ChangeTrackingList<AppConfigurationMoboBrokerResourceInfo>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -156,23 +148,6 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AppConfigurationManagedOnBehalfOfConfiguration IPersistableModel<AppConfigurationManagedOnBehalfOfConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AppConfigurationManagedOnBehalfOfConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AppConfigurationManagedOnBehalfOfConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAppConfigurationManagedOnBehalfOfConfiguration(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AppConfigurationManagedOnBehalfOfConfiguration)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AppConfigurationManagedOnBehalfOfConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

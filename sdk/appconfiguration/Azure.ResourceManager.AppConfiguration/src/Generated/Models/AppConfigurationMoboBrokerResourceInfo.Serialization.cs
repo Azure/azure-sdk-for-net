@@ -22,47 +22,21 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         protected virtual AppConfigurationMoboBrokerResourceInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AppConfigurationMoboBrokerResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
-=======
-using Azure.ResourceManager.Quantum;
-
-namespace Azure.ResourceManager.Quantum.Models
-{
-    /// <summary> Managed-On-Behalf-Of broker resource. This resource is created by the Resource Provider to manage some resources on behalf of the user. </summary>
-<<<<<<<< HEAD:sdk/quantum/Azure.ResourceManager.Quantum/src/Generated/Models/MoboBrokerInfo.Serialization.cs
-    public partial class MoboBrokerInfo : IJsonModel<MoboBrokerInfo>
-========
-    public partial class AppConfigurationMoboBrokerResourceInfo : IJsonModel<AppConfigurationMoboBrokerResourceInfo>
->>>>>>>> e7b1db923c46d3f5fbd2121d39ae2dee921bb29a:sdk/appconfiguration/Azure.ResourceManager.AppConfiguration/src/Generated/Models/AppConfigurationMoboBrokerResourceInfo.Serialization.cs
-    {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MoboBrokerInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MoboBrokerInfo>)this).GetFormatFromOptions(options) : options.Format;
->>>>>>> e7b1db923c46d3f5fbd2121d39ae2dee921bb29a
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMoboBrokerInfo(document.RootElement, options);
+                        return DeserializeAppConfigurationMoboBrokerResourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MoboBrokerInfo)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppConfigurationMoboBrokerResourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-<<<<<<< HEAD
         void IJsonModel<AppConfigurationMoboBrokerResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-=======
-<<<<<<<< HEAD:sdk/quantum/Azure.ResourceManager.Quantum/src/Generated/Models/MoboBrokerInfo.Serialization.cs
-        void IJsonModel<MoboBrokerInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-========
-        void IJsonModel<AppConfigurationMoboBrokerResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
->>>>>>>> e7b1db923c46d3f5fbd2121d39ae2dee921bb29a:sdk/appconfiguration/Azure.ResourceManager.AppConfiguration/src/Generated/Models/AppConfigurationMoboBrokerResourceInfo.Serialization.cs
->>>>>>> e7b1db923c46d3f5fbd2121d39ae2dee921bb29a
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -73,23 +47,10 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-<<<<<<< HEAD
-=======
-<<<<<<<< HEAD:sdk/quantum/Azure.ResourceManager.Quantum/src/Generated/Models/MoboBrokerInfo.Serialization.cs
-            string format = options.Format == "W" ? ((IPersistableModel<MoboBrokerInfo>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(MoboBrokerInfo)} does not support writing '{format}' format.");
-========
->>>>>>> e7b1db923c46d3f5fbd2121d39ae2dee921bb29a
             string format = options.Format == "W" ? ((IPersistableModel<AppConfigurationMoboBrokerResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AppConfigurationMoboBrokerResourceInfo)} does not support writing '{format}' format.");
-<<<<<<< HEAD
-=======
->>>>>>>> e7b1db923c46d3f5fbd2121d39ae2dee921bb29a:sdk/appconfiguration/Azure.ResourceManager.AppConfiguration/src/Generated/Models/AppConfigurationMoboBrokerResourceInfo.Serialization.cs
->>>>>>> e7b1db923c46d3f5fbd2121d39ae2dee921bb29a
             }
             if (Optional.IsDefined(Id))
             {
@@ -115,24 +76,6 @@ namespace Azure.ResourceManager.Quantum.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-<<<<<<< HEAD
-=======
-<<<<<<<< HEAD:sdk/quantum/Azure.ResourceManager.Quantum/src/Generated/Models/MoboBrokerInfo.Serialization.cs
-        MoboBrokerInfo IJsonModel<MoboBrokerInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MoboBrokerInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MoboBrokerInfo>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(MoboBrokerInfo)} does not support reading '{format}' format.");
-            }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMoboBrokerInfo(document.RootElement, options);
-========
->>>>>>> e7b1db923c46d3f5fbd2121d39ae2dee921bb29a
         AppConfigurationMoboBrokerResourceInfo IJsonModel<AppConfigurationMoboBrokerResourceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
@@ -146,23 +89,11 @@ namespace Azure.ResourceManager.Quantum.Models
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAppConfigurationMoboBrokerResourceInfo(document.RootElement, options);
-<<<<<<< HEAD
-=======
->>>>>>>> e7b1db923c46d3f5fbd2121d39ae2dee921bb29a:sdk/appconfiguration/Azure.ResourceManager.AppConfiguration/src/Generated/Models/AppConfigurationMoboBrokerResourceInfo.Serialization.cs
->>>>>>> e7b1db923c46d3f5fbd2121d39ae2dee921bb29a
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-<<<<<<< HEAD
         internal static AppConfigurationMoboBrokerResourceInfo DeserializeAppConfigurationMoboBrokerResourceInfo(JsonElement element, ModelReaderWriterOptions options)
-=======
-<<<<<<<< HEAD:sdk/quantum/Azure.ResourceManager.Quantum/src/Generated/Models/MoboBrokerInfo.Serialization.cs
-        internal static MoboBrokerInfo DeserializeMoboBrokerInfo(JsonElement element, ModelReaderWriterOptions options)
-========
-        internal static AppConfigurationMoboBrokerResourceInfo DeserializeAppConfigurationMoboBrokerResourceInfo(JsonElement element, ModelReaderWriterOptions options)
->>>>>>>> e7b1db923c46d3f5fbd2121d39ae2dee921bb29a:sdk/appconfiguration/Azure.ResourceManager.AppConfiguration/src/Generated/Models/AppConfigurationMoboBrokerResourceInfo.Serialization.cs
->>>>>>> e7b1db923c46d3f5fbd2121d39ae2dee921bb29a
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -186,30 +117,15 @@ namespace Azure.ResourceManager.Quantum.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-<<<<<<< HEAD
-=======
-<<<<<<<< HEAD:sdk/quantum/Azure.ResourceManager.Quantum/src/Generated/Models/MoboBrokerInfo.Serialization.cs
-            return new MoboBrokerInfo(id, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MoboBrokerInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-========
->>>>>>> e7b1db923c46d3f5fbd2121d39ae2dee921bb29a
             return new AppConfigurationMoboBrokerResourceInfo(id, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AppConfigurationMoboBrokerResourceInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-<<<<<<< HEAD
-=======
->>>>>>>> e7b1db923c46d3f5fbd2121d39ae2dee921bb29a:sdk/appconfiguration/Azure.ResourceManager.AppConfiguration/src/Generated/Models/AppConfigurationMoboBrokerResourceInfo.Serialization.cs
->>>>>>> e7b1db923c46d3f5fbd2121d39ae2dee921bb29a
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-<<<<<<< HEAD
             string format = options.Format == "W" ? ((IPersistableModel<AppConfigurationMoboBrokerResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
@@ -217,57 +133,12 @@ namespace Azure.ResourceManager.Quantum.Models
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAppConfigurationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AppConfigurationMoboBrokerResourceInfo)} does not support writing '{options.Format}' format.");
-=======
-<<<<<<<< HEAD:sdk/quantum/Azure.ResourceManager.Quantum/src/Generated/Models/MoboBrokerInfo.Serialization.cs
-            string format = options.Format == "W" ? ((IPersistableModel<MoboBrokerInfo>)this).GetFormatFromOptions(options) : options.Format;
-========
-            string format = options.Format == "W" ? ((IPersistableModel<AppConfigurationMoboBrokerResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
->>>>>>>> e7b1db923c46d3f5fbd2121d39ae2dee921bb29a:sdk/appconfiguration/Azure.ResourceManager.AppConfiguration/src/Generated/Models/AppConfigurationMoboBrokerResourceInfo.Serialization.cs
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerQuantumContext.Default);
-                default:
-<<<<<<<< HEAD:sdk/quantum/Azure.ResourceManager.Quantum/src/Generated/Models/MoboBrokerInfo.Serialization.cs
-                    throw new FormatException($"The model {nameof(MoboBrokerInfo)} does not support writing '{options.Format}' format.");
-========
-                    throw new FormatException($"The model {nameof(AppConfigurationMoboBrokerResourceInfo)} does not support writing '{options.Format}' format.");
->>>>>>>> e7b1db923c46d3f5fbd2121d39ae2dee921bb29a:sdk/appconfiguration/Azure.ResourceManager.AppConfiguration/src/Generated/Models/AppConfigurationMoboBrokerResourceInfo.Serialization.cs
->>>>>>> e7b1db923c46d3f5fbd2121d39ae2dee921bb29a
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-<<<<<<< HEAD
         AppConfigurationMoboBrokerResourceInfo IPersistableModel<AppConfigurationMoboBrokerResourceInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AppConfigurationMoboBrokerResourceInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
->>>>>>> e7b1db923c46d3f5fbd2121d39ae2dee921bb29a
-<<<<<<<< HEAD:sdk/quantum/Azure.ResourceManager.Quantum/src/Generated/Models/MoboBrokerInfo.Serialization.cs
-        MoboBrokerInfo IPersistableModel<MoboBrokerInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MoboBrokerInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-        AppConfigurationMoboBrokerResourceInfo IPersistableModel<AppConfigurationMoboBrokerResourceInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AppConfigurationMoboBrokerResourceInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AppConfigurationMoboBrokerResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAppConfigurationMoboBrokerResourceInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AppConfigurationMoboBrokerResourceInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AppConfigurationMoboBrokerResourceInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
