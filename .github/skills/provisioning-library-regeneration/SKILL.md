@@ -58,11 +58,13 @@ dotnet run --framework net10.0 -- --filter PostgreSql
 
 ### Generator Errors
 
-If you encounter errors:
+If the generator fails with errors:
 
-1. **CS0618 (Obsolete type)**: Add `#pragma warning disable CS0618` at the top of the specification file (`sdk/provisioning/Generator/src/Specifications/{ServiceName}Specification.cs`)
+1. **Capture the full error output** including stack traces and error messages
+2. **Report the error to the user** with enough context to understand what went wrong
+3. **Stop and let the user decide** how to proceed — generator errors often require code changes to the generator itself or the specification files, which may need human judgment
 
-2. **Schema tree conflict**: If you see "already has a property at path" errors, this may require a fix in `sdk/provisioning/Generator/src/Model/Specification.Schema.cs` to handle leaf-vs-container conflicts
+Do NOT attempt to automatically fix generator errors without user guidance.
 
 ## Step 3: Handle Breaking Changes
 
