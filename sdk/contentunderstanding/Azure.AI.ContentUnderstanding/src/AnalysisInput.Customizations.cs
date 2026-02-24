@@ -23,7 +23,8 @@ namespace Azure.AI.ContentUnderstanding
         /// input.ContentRange = ContentRange.Combine(
         ///     ContentRange.Pages(1, 3),
         ///     ContentRange.Page(5));                              // "1-3,5"
-        /// input.ContentRange = ContentRange.TimeRange(0, 5000);    // "0-5000"
+        /// input.ContentRange = ContentRange.TimeRange(
+        ///     TimeSpan.Zero, TimeSpan.FromMilliseconds(5000));       // "0-5000"
         /// </code>
         /// </summary>
         /// <seealso cref="ContentRange"/>

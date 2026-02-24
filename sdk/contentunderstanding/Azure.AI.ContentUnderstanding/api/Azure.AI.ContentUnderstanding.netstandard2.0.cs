@@ -73,12 +73,12 @@ namespace Azure.AI.ContentUnderstanding
     public partial class AudioVisualContent : Azure.AI.ContentUnderstanding.MediaContent, System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentUnderstanding.AudioVisualContent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.AudioVisualContent>
     {
         internal AudioVisualContent() { }
-        public System.Collections.Generic.IList<long> CameraShotTimesMs { get { throw null; } }
-        public long EndTimeMs { get { throw null; } }
+        public System.Collections.Generic.IList<System.TimeSpan> CameraShotTimes { get { throw null; } }
+        public System.TimeSpan EndTime { get { throw null; } }
         public int? Height { get { throw null; } }
-        public System.Collections.Generic.IList<long> KeyFrameTimesMs { get { throw null; } }
+        public System.Collections.Generic.IList<System.TimeSpan> KeyFrameTimes { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.ContentUnderstanding.AudioVisualContentSegment> Segments { get { throw null; } }
-        public long StartTimeMs { get { throw null; } }
+        public System.TimeSpan StartTime { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.ContentUnderstanding.TranscriptPhrase> TranscriptPhrases { get { throw null; } }
         public int? Width { get { throw null; } }
         protected override Azure.AI.ContentUnderstanding.MediaContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -95,10 +95,10 @@ namespace Azure.AI.ContentUnderstanding
     {
         internal AudioVisualContentSegment() { }
         public string Category { get { throw null; } }
-        public long EndTimeMs { get { throw null; } }
+        public System.TimeSpan EndTime { get { throw null; } }
         public string SegmentId { get { throw null; } }
         public Azure.AI.ContentUnderstanding.ContentSpan Span { get { throw null; } }
-        public long StartTimeMs { get { throw null; } }
+        public System.TimeSpan StartTime { get { throw null; } }
         protected virtual Azure.AI.ContentUnderstanding.AudioVisualContentSegment JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.AI.ContentUnderstanding.AudioVisualContentSegment PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -113,7 +113,7 @@ namespace Azure.AI.ContentUnderstanding
     {
         internal AudioVisualSource() : base (default(string)) { }
         public System.Drawing.Rectangle? BoundingBox { get { throw null; } }
-        public int TimeMs { get { throw null; } }
+        public System.TimeSpan Time { get { throw null; } }
         public static new Azure.AI.ContentUnderstanding.AudioVisualSource Parse(string source) { throw null; }
         public static new Azure.AI.ContentUnderstanding.AudioVisualSource[] ParseAll(string source) { throw null; }
     }
@@ -252,7 +252,7 @@ namespace Azure.AI.ContentUnderstanding
     {
         internal ContentField() { }
         public float? Confidence { get { throw null; } }
-        public Azure.AI.ContentUnderstanding.ContentSource[]? GroundingSources { get { throw null; } }
+        public Azure.AI.ContentUnderstanding.ContentSource[]? Sources { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.ContentUnderstanding.ContentSpan> Spans { get { throw null; } }
         public object Value { get { throw null; } }
         protected virtual Azure.AI.ContentUnderstanding.ContentField JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -349,8 +349,8 @@ namespace Azure.AI.ContentUnderstanding
         public static Azure.AI.ContentUnderstanding.ContentRange Page(int pageNumber) { throw null; }
         public static Azure.AI.ContentUnderstanding.ContentRange Pages(int start, int end) { throw null; }
         public static Azure.AI.ContentUnderstanding.ContentRange PagesFrom(int startPage) { throw null; }
-        public static Azure.AI.ContentUnderstanding.ContentRange TimeRange(long startMs, long endMs) { throw null; }
-        public static Azure.AI.ContentUnderstanding.ContentRange TimeRangeFrom(long startMs) { throw null; }
+        public static Azure.AI.ContentUnderstanding.ContentRange TimeRange(System.TimeSpan start, System.TimeSpan end) { throw null; }
+        public static Azure.AI.ContentUnderstanding.ContentRange TimeRangeFrom(System.TimeSpan start) { throw null; }
         public override string ToString() { throw null; }
     }
     public abstract partial class ContentSource
@@ -360,6 +360,10 @@ namespace Azure.AI.ContentUnderstanding
         public static Azure.AI.ContentUnderstanding.ContentSource Parse(string source) { throw null; }
         public static Azure.AI.ContentUnderstanding.ContentSource[] ParseAll(string source) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public static partial class ContentSourceExtensions
+    {
+        public static string ToRawString(this Azure.AI.ContentUnderstanding.ContentSource[] sources) { throw null; }
     }
     public partial class ContentSpan : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentUnderstanding.ContentSpan>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.ContentSpan>
     {
@@ -465,8 +469,8 @@ namespace Azure.AI.ContentUnderstanding
         public static Azure.AI.ContentUnderstanding.AnalysisInput AnalysisInput(System.Uri uri = null, System.BinaryData data = null, string name = null, string mimeType = null, string contentRangeValue = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.AnalysisResult AnalysisResult(string analyzerId = null, string apiVersion = null, System.DateTimeOffset? createdAt = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResponseError> warnings = null, string stringEncoding = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.MediaContent> contents = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.ArrayField ArrayField(System.Collections.Generic.IList<Azure.AI.ContentUnderstanding.ContentField>? value = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.ContentSpan>? spans = null, float? confidence = default(float?), string? source = null) { throw null; }
-        public static Azure.AI.ContentUnderstanding.AudioVisualContent AudioVisualContent(string mimeType = null, string analyzerId = null, string category = null, string path = null, string markdown = null, System.Collections.Generic.IDictionary<string, Azure.AI.ContentUnderstanding.ContentField> fields = null, long startTimeMs = (long)0, long endTimeMs = (long)0, int? width = default(int?), int? height = default(int?), System.Collections.Generic.IEnumerable<long> cameraShotTimesMs = null, System.Collections.Generic.IEnumerable<long> keyFrameTimesMs = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.TranscriptPhrase> transcriptPhrases = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.AudioVisualContentSegment> segments = null) { throw null; }
-        public static Azure.AI.ContentUnderstanding.AudioVisualContentSegment AudioVisualContentSegment(string segmentId = null, string category = null, Azure.AI.ContentUnderstanding.ContentSpan span = null, long startTimeMs = (long)0, long endTimeMs = (long)0) { throw null; }
+        public static Azure.AI.ContentUnderstanding.AudioVisualContent AudioVisualContent(string mimeType = null, string analyzerId = null, string category = null, string path = null, string markdown = null, System.Collections.Generic.IDictionary<string, Azure.AI.ContentUnderstanding.ContentField> fields = null, long startTimeMsValue = (long)0, long endTimeMsValue = (long)0, int? width = default(int?), int? height = default(int?), System.Collections.Generic.IEnumerable<long> cameraShotTimesMsValues = null, System.Collections.Generic.IEnumerable<long> keyFrameTimesMsValues = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.TranscriptPhrase> transcriptPhrases = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.AudioVisualContentSegment> segments = null) { throw null; }
+        public static Azure.AI.ContentUnderstanding.AudioVisualContentSegment AudioVisualContentSegment(string segmentId = null, string category = null, Azure.AI.ContentUnderstanding.ContentSpan span = null, long startTimeMsValue = (long)0, long endTimeMsValue = (long)0) { throw null; }
         public static Azure.AI.ContentUnderstanding.BooleanField BooleanField(bool? value = default(bool?), System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.ContentSpan>? spans = null, float? confidence = default(float?), string? source = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.ContentAnalyzer ContentAnalyzer(string analyzerId = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.AI.ContentUnderstanding.ContentAnalyzerStatus status = default(Azure.AI.ContentUnderstanding.ContentAnalyzerStatus), System.DateTimeOffset createdAt = default(System.DateTimeOffset), System.DateTimeOffset lastModifiedAt = default(System.DateTimeOffset), System.Collections.Generic.IEnumerable<Azure.ResponseError> warnings = null, string baseAnalyzerId = null, Azure.AI.ContentUnderstanding.ContentAnalyzerConfig config = null, Azure.AI.ContentUnderstanding.ContentFieldSchema fieldSchema = null, bool? hasDynamicFieldSchema = default(bool?), Azure.AI.ContentUnderstanding.ProcessingLocation? processingLocation = default(Azure.AI.ContentUnderstanding.ProcessingLocation?), System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.KnowledgeSource> knowledgeSources = null, System.Collections.Generic.IDictionary<string, string> models = null, Azure.AI.ContentUnderstanding.SupportedModels supportedModels = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.ContentAnalyzerConfig ContentAnalyzerConfig(bool? shouldReturnDetails = default(bool?), System.Collections.Generic.IEnumerable<string> locales = null, bool? enableOcr = default(bool?), bool? enableLayout = default(bool?), bool? enableFigureDescription = default(bool?), bool? enableFigureAnalysis = default(bool?), bool? enableFormula = default(bool?), Azure.AI.ContentUnderstanding.TableFormat? tableFormat = default(Azure.AI.ContentUnderstanding.TableFormat?), Azure.AI.ContentUnderstanding.ChartFormat? chartFormat = default(Azure.AI.ContentUnderstanding.ChartFormat?), Azure.AI.ContentUnderstanding.AnnotationFormat? annotationFormat = default(Azure.AI.ContentUnderstanding.AnnotationFormat?), bool? disableFaceBlurring = default(bool?), bool? estimateFieldSourceAndConfidence = default(bool?), System.Collections.Generic.IDictionary<string, Azure.AI.ContentUnderstanding.ContentCategoryDefinition> contentCategories = null, bool? enableSegment = default(bool?), bool? segmentPerPage = default(bool?), bool? shouldOmitContent = default(bool?)) { throw null; }
@@ -507,8 +511,8 @@ namespace Azure.AI.ContentUnderstanding
         public static Azure.AI.ContentUnderstanding.StringField StringField(string? value = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.ContentSpan>? spans = null, float? confidence = default(float?), string? source = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.SupportedModels SupportedModels(System.Collections.Generic.IEnumerable<string> completion = null, System.Collections.Generic.IEnumerable<string> embedding = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.TimeField TimeField(System.TimeSpan? value = default(System.TimeSpan?), System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.ContentSpan>? spans = null, float? confidence = default(float?), string? source = null) { throw null; }
-        public static Azure.AI.ContentUnderstanding.TranscriptPhrase TranscriptPhrase(string speaker = null, long startTimeMs = (long)0, long endTimeMs = (long)0, string locale = null, string text = null, float? confidence = default(float?), Azure.AI.ContentUnderstanding.ContentSpan span = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.TranscriptWord> words = null) { throw null; }
-        public static Azure.AI.ContentUnderstanding.TranscriptWord TranscriptWord(long startTimeMs = (long)0, long endTimeMs = (long)0, string text = null, Azure.AI.ContentUnderstanding.ContentSpan span = null) { throw null; }
+        public static Azure.AI.ContentUnderstanding.TranscriptPhrase TranscriptPhrase(string speaker = null, long startTimeMsValue = (long)0, long endTimeMsValue = (long)0, string locale = null, string text = null, float? confidence = default(float?), Azure.AI.ContentUnderstanding.ContentSpan span = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.TranscriptWord> words = null) { throw null; }
+        public static Azure.AI.ContentUnderstanding.TranscriptWord TranscriptWord(long startTimeMsValue = (long)0, long endTimeMsValue = (long)0, string text = null, Azure.AI.ContentUnderstanding.ContentSpan span = null) { throw null; }
     }
     public partial class CopyAuthorization : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentUnderstanding.CopyAuthorization>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.CopyAuthorization>
     {
@@ -903,9 +907,9 @@ namespace Azure.AI.ContentUnderstanding
     public partial class DocumentSource : Azure.AI.ContentUnderstanding.ContentSource
     {
         internal DocumentSource() : base (default(string)) { }
-        public System.Drawing.RectangleF BoundingBox { get { throw null; } }
+        public System.Drawing.RectangleF? BoundingBox { get { throw null; } }
         public int PageNumber { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<System.Drawing.PointF> Polygon { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<System.Drawing.PointF>? Polygon { get { throw null; } }
         public static new Azure.AI.ContentUnderstanding.DocumentSource Parse(string source) { throw null; }
         public static new Azure.AI.ContentUnderstanding.DocumentSource[] ParseAll(string source) { throw null; }
     }
@@ -1229,22 +1233,15 @@ namespace Azure.AI.ContentUnderstanding
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.TimeField>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.TimeField>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TrackletSource : Azure.AI.ContentUnderstanding.ContentSource
-    {
-        internal TrackletSource() : base (default(string)) { }
-        public Azure.AI.ContentUnderstanding.AudioVisualSource End { get { throw null; } }
-        public Azure.AI.ContentUnderstanding.AudioVisualSource Start { get { throw null; } }
-        public static new Azure.AI.ContentUnderstanding.TrackletSource Parse(string source) { throw null; }
-    }
     public partial class TranscriptPhrase : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentUnderstanding.TranscriptPhrase>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.TranscriptPhrase>
     {
         internal TranscriptPhrase() { }
         public float? Confidence { get { throw null; } }
-        public long EndTimeMs { get { throw null; } }
+        public System.TimeSpan EndTime { get { throw null; } }
         public string Locale { get { throw null; } }
         public Azure.AI.ContentUnderstanding.ContentSpan Span { get { throw null; } }
         public string Speaker { get { throw null; } }
-        public long StartTimeMs { get { throw null; } }
+        public System.TimeSpan StartTime { get { throw null; } }
         public string Text { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.ContentUnderstanding.TranscriptWord> Words { get { throw null; } }
         protected virtual Azure.AI.ContentUnderstanding.TranscriptPhrase JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1260,9 +1257,9 @@ namespace Azure.AI.ContentUnderstanding
     public partial class TranscriptWord : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentUnderstanding.TranscriptWord>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.TranscriptWord>
     {
         internal TranscriptWord() { }
-        public long EndTimeMs { get { throw null; } }
+        public System.TimeSpan EndTime { get { throw null; } }
         public Azure.AI.ContentUnderstanding.ContentSpan Span { get { throw null; } }
-        public long StartTimeMs { get { throw null; } }
+        public System.TimeSpan StartTime { get { throw null; } }
         public string Text { get { throw null; } }
         protected virtual Azure.AI.ContentUnderstanding.TranscriptWord JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
