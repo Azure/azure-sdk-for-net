@@ -84,6 +84,19 @@ namespace Azure.AI.ContentUnderstanding.Tests
         }
 
         [Test]
+        public void DocumentSource_Parse_BoundingBox_ComputedFromPolygon()
+        {
+            var source = DocumentSource.Parse("D(1,0.5712,1.4062,2.1087,1.4088,2.1084,1.5762,0.5709,1.5736)");
+
+            var bbox = source.BoundingBox;
+            // Min X = 0.5709, Min Y = 1.4062, Max X = 2.1087, Max Y = 1.5762
+            Assert.AreEqual(0.5709f, bbox.X, 0.0001f);
+            Assert.AreEqual(1.4062f, bbox.Y, 0.0001f);
+            Assert.AreEqual(2.1087f - 0.5709f, bbox.Width, 0.001f);
+            Assert.AreEqual(1.5762f - 1.4062f, bbox.Height, 0.001f);
+        }
+
+        [Test]
         public void DocumentSource_Parse_InvalidPageNumber_ThrowsFormatException()
         {
             Assert.Throws<FormatException>(() => DocumentSource.Parse("D(0,0.0,0.0,1.0,0.0,1.0,1.0,0.0,1.0)"));
@@ -155,29 +168,38 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
         #endregion
 
-        #region AudioVisualSource Tracklet Pair
+        #region TrackletSource Parsing
 
         [Test]
-        public void AudioVisualSource_ParseTrackletPair_SplitsPairCorrectly()
+        public void TrackletSource_Parse_SplitsPairCorrectly()
         {
-            var (start, end) = AudioVisualSource.ParseTrackletPair("AV(0,100,200,50,60)-AV(1000,105,205,50,60)");
+            var tracklet = TrackletSource.Parse("AV(0,100,200,50,60)-AV(1000,105,205,50,60)");
 
-            Assert.AreEqual(0, start.TimeMs);
-            Assert.AreEqual(100, start.BoundingBox!.Value.X);
-            Assert.AreEqual(1000, end.TimeMs);
-            Assert.AreEqual(105, end.BoundingBox!.Value.X);
+            Assert.AreEqual(0, tracklet.Start.TimeMs);
+            Assert.AreEqual(100, tracklet.Start.BoundingBox!.Value.X);
+            Assert.AreEqual(1000, tracklet.End.TimeMs);
+            Assert.AreEqual(105, tracklet.End.BoundingBox!.Value.X);
         }
 
         [Test]
-        public void AudioVisualSource_ParseTrackletPair_InvalidFormat_ThrowsFormatException()
+        public void TrackletSource_Parse_PreservesRawValue()
         {
-            Assert.Throws<FormatException>(() => AudioVisualSource.ParseTrackletPair("AV(5000)"));
+            string raw = "AV(0,100,200,50,60)-AV(1000,105,205,50,60)";
+            var tracklet = TrackletSource.Parse(raw);
+            Assert.AreEqual(raw, tracklet.RawValue);
+            Assert.AreEqual(raw, tracklet.ToString());
         }
 
         [Test]
-        public void AudioVisualSource_ParseTrackletPair_Null_ThrowsArgumentException()
+        public void TrackletSource_Parse_InvalidFormat_ThrowsFormatException()
         {
-            Assert.Throws<ArgumentNullException>(() => AudioVisualSource.ParseTrackletPair(null!));
+            Assert.Throws<FormatException>(() => TrackletSource.Parse("AV(5000)"));
+        }
+
+        [Test]
+        public void TrackletSource_Parse_Null_ThrowsArgumentException()
+        {
+            Assert.Throws<ArgumentNullException>(() => TrackletSource.Parse(null!));
         }
 
         #endregion
@@ -196,6 +218,17 @@ namespace Azure.AI.ContentUnderstanding.Tests
         {
             var source = ContentSource.Parse("AV(5000,100,200,50,60)");
             Assert.IsInstanceOf<AudioVisualSource>(source);
+        }
+
+        [Test]
+        public void ContentSource_Parse_TrackletPair_ReturnsTrackletSource()
+        {
+            var source = ContentSource.Parse("AV(0,100,200,50,60)-AV(1000,105,205,50,60)");
+            Assert.IsInstanceOf<TrackletSource>(source);
+
+            var tracklet = (TrackletSource)source;
+            Assert.AreEqual(0, tracklet.Start.TimeMs);
+            Assert.AreEqual(1000, tracklet.End.TimeMs);
         }
 
         [Test]
@@ -231,6 +264,40 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var sources = ContentSource.ParseAll("AV(5000)");
             Assert.AreEqual(1, sources.Length);
             Assert.IsInstanceOf<AudioVisualSource>(sources[0]);
+        }
+
+        [Test]
+        public void ContentSource_ParseAll_MultiTracklet_ReturnsTrackletSources()
+        {
+            string input = "AV(0,100,200,50,60)-AV(1000,105,205,50,60);AV(5000,200,180,50,60)-AV(7000,210,190,50,60)";
+            var sources = ContentSource.ParseAll(input);
+
+            Assert.AreEqual(2, sources.Length);
+            Assert.IsInstanceOf<TrackletSource>(sources[0]);
+            Assert.IsInstanceOf<TrackletSource>(sources[1]);
+
+            var t1 = (TrackletSource)sources[0];
+            var t2 = (TrackletSource)sources[1];
+            Assert.AreEqual(0, t1.Start.TimeMs);
+            Assert.AreEqual(1000, t1.End.TimeMs);
+            Assert.AreEqual(5000, t2.Start.TimeMs);
+            Assert.AreEqual(7000, t2.End.TimeMs);
+        }
+
+        [Test]
+        public void ContentField_GroundingSources_TrackletPair_ReturnsTrackletSource()
+        {
+            var field = ContentUnderstandingModelFactory.StringField(
+                source: "AV(0,100,200,50,60)-AV(1000,105,205,50,60)");
+
+            var sources = field.GroundingSources;
+            Assert.IsNotNull(sources);
+            Assert.AreEqual(1, sources!.Length);
+            Assert.IsInstanceOf<TrackletSource>(sources[0]);
+
+            var tracklet = (TrackletSource)sources[0];
+            Assert.AreEqual(0, tracklet.Start.TimeMs);
+            Assert.AreEqual(1000, tracklet.End.TimeMs);
         }
 
         #endregion

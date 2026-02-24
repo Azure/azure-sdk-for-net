@@ -10,7 +10,7 @@ namespace Azure.AI.ContentUnderstanding
 {
     /// <summary>
     /// Represents a parsed grounding source that identifies the position of a field value in the content.
-    /// This is the base class for <see cref="DocumentSource"/> and <see cref="AudioVisualSource"/>.
+    /// This is the base class for <see cref="DocumentSource"/>, <see cref="AudioVisualSource"/>, and <see cref="TrackletSource"/>.
     /// </summary>
     /// <remarks>
     /// Source strings are encoded in the format <c>PREFIX(params)</c> with multiple regions separated by <c>;</c>.
@@ -37,7 +37,7 @@ namespace Azure.AI.ContentUnderstanding
         /// Parses a single source segment (e.g., <c>"D(1,0.5712,...)"</c> or <c>"AV(5000,100,200,50,60)"</c>).
         /// </summary>
         /// <param name="source"> The source string to parse. </param>
-        /// <returns> A <see cref="DocumentSource"/> or <see cref="AudioVisualSource"/> depending on the prefix. </returns>
+        /// <returns> A <see cref="DocumentSource"/>, <see cref="AudioVisualSource"/>, or <see cref="TrackletSource"/> depending on the format. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> is null. </exception>
         /// <exception cref="FormatException"> The source string has an unrecognized prefix or is malformed. </exception>
         public static ContentSource Parse(string source)
@@ -51,6 +51,12 @@ namespace Azure.AI.ContentUnderstanding
 
             if (source.StartsWith("AV(", StringComparison.Ordinal))
             {
+                // Detect tracklet pair: "AV(...)-AV(...)"
+                if (source.IndexOf(")-AV(", StringComparison.Ordinal) >= 0)
+                {
+                    return TrackletSource.Parse(source);
+                }
+
                 return AudioVisualSource.Parse(source);
             }
 
