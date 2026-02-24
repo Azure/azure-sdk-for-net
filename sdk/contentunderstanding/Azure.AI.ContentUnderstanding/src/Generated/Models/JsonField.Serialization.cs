@@ -116,7 +116,7 @@ namespace Azure.AI.ContentUnderstanding
             ContentFieldType @type = default;
             IList<ContentSpan> spans = default;
             float? confidence = default;
-            string source = default;
+            string sourceValue = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             BinaryData valueJson = default;
             foreach (var prop in element.EnumerateObject())
@@ -151,7 +151,7 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("source"u8))
                 {
-                    source = prop.Value.GetString();
+                    sourceValue = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("valueJson"u8))
@@ -172,7 +172,7 @@ namespace Azure.AI.ContentUnderstanding
                 @type,
                 spans ?? new ChangeTrackingList<ContentSpan>(),
                 confidence,
-                source,
+                sourceValue,
                 additionalBinaryDataProperties,
                 valueJson);
         }

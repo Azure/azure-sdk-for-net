@@ -527,6 +527,25 @@ namespace Azure.AI.ContentUnderstanding.Tests
                             Assert.IsTrue(customerNameStr.Confidence.Value >= 0 && customerNameStr.Confidence.Value <= 1,
                                 "CustomerName confidence should be between 0 and 1");
                         }
+
+                        // Verify grounding sources are parsed as DocumentSource
+                        if (customerNameStr.GroundingSources != null)
+                        {
+                            Assert.IsTrue(customerNameStr.GroundingSources.Length > 0,
+                                "GroundingSources should have at least one element");
+                            Assert.IsInstanceOf<DocumentSource>(customerNameStr.GroundingSources[0],
+                                "CustomerName grounding source should be DocumentSource");
+                            var docSource = (DocumentSource)customerNameStr.GroundingSources[0];
+                            Assert.AreEqual(1, docSource.PageNumber,
+                                "CustomerName should be on page 1");
+                            Assert.AreEqual(4, docSource.Polygon.Count,
+                                "DocumentSource polygon should have 4 points");
+                            foreach (var point in docSource.Polygon)
+                            {
+                                Assert.IsTrue(point.X >= 0, $"Polygon X coordinate should be >= 0, but was {point.X}");
+                                Assert.IsTrue(point.Y >= 0, $"Polygon Y coordinate should be >= 0, but was {point.Y}");
+                            }
+                        }
                     }
                 }
 

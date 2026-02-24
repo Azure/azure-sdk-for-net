@@ -339,7 +339,14 @@ namespace Azure.AI.ContentUnderstanding.Samples
                         var companyName = companyNameField is StringField sf ? sf.Value : null;
                         Console.WriteLine($"Company Name (extract): {companyName ?? "(not found)"}");
                         Console.WriteLine($"  Confidence: {companyNameField.Confidence?.ToString("F2") ?? "N/A"}");
-                        Console.WriteLine($"  Source: {companyNameField.Source ?? "N/A"}");
+                        if (companyNameField.GroundingSources != null)
+                        {
+                            foreach (var source in companyNameField.GroundingSources)
+                            {
+                                if (source is DocumentSource docSource)
+                                    Console.WriteLine($"  Grounding: page {docSource.PageNumber}");
+                            }
+                        }
                         if (companyNameField.Spans != null && companyNameField.Spans.Count > 0)
                         {
                             var span = companyNameField.Spans[0];
@@ -353,7 +360,14 @@ namespace Azure.AI.ContentUnderstanding.Samples
                         var totalAmount = totalAmountField is NumberField nf ? nf.Value : null;
                         Console.WriteLine($"Total Amount (extract): {totalAmount?.ToString("F2") ?? "(not found)"}");
                         Console.WriteLine($"  Confidence: {totalAmountField.Confidence?.ToString("F2") ?? "N/A"}");
-                        Console.WriteLine($"  Source: {totalAmountField.Source ?? "N/A"}");
+                        if (totalAmountField.GroundingSources != null)
+                        {
+                            foreach (var source in totalAmountField.GroundingSources)
+                            {
+                                if (source is DocumentSource docSource)
+                                    Console.WriteLine($"  Grounding: page {docSource.PageNumber}");
+                            }
+                        }
                         if (totalAmountField.Spans != null && totalAmountField.Spans.Count > 0)
                         {
                             var span = totalAmountField.Spans[0];
@@ -367,10 +381,10 @@ namespace Azure.AI.ContentUnderstanding.Samples
                         var summary = summaryField is StringField sf ? sf.Value : null;
                         Console.WriteLine($"Document Summary (generate): {summary ?? "(not found)"}");
                         Console.WriteLine($"  Confidence: {summaryField.Confidence?.ToString("F2") ?? "N/A"}");
-                        // Note: Generated fields may not have source information
-                        if (!string.IsNullOrEmpty(summaryField.Source))
+                        // Note: Generated fields may not have grounding source information
+                        if (summaryField.GroundingSources != null)
                         {
-                            Console.WriteLine($"  Source: {summaryField.Source}");
+                            Console.WriteLine($"  Grounding sources: {summaryField.GroundingSources.Length}");
                         }
                     }
 
@@ -380,10 +394,10 @@ namespace Azure.AI.ContentUnderstanding.Samples
                         var documentType = documentTypeField is StringField sf ? sf.Value : null;
                         Console.WriteLine($"Document Type (classify): {documentType ?? "(not found)"}");
                         Console.WriteLine($"  Confidence: {documentTypeField.Confidence?.ToString("F2") ?? "N/A"}");
-                        // Note: Classified fields may not have source information
-                        if (!string.IsNullOrEmpty(documentTypeField.Source))
+                        // Note: Classified fields may not have grounding source information
+                        if (documentTypeField.GroundingSources != null)
                         {
-                            Console.WriteLine($"  Source: {documentTypeField.Source}");
+                            Console.WriteLine($"  Grounding sources: {documentTypeField.GroundingSources.Length}");
                         }
                     }
                 }
@@ -429,11 +443,14 @@ namespace Azure.AI.ContentUnderstanding.Samples
                         Console.WriteLine($"  Confidence: {companyNameFieldAssert.Confidence.Value:F2}");
                     }
 
-                    if (!string.IsNullOrWhiteSpace(companyNameFieldAssert.Source))
+                    if (companyNameFieldAssert.GroundingSources != null)
                     {
-                        Assert.IsTrue(companyNameFieldAssert.Source.StartsWith("D("),
-                            "Source should start with 'D(' for extracted fields");
-                        Console.WriteLine($"  Source: {companyNameFieldAssert.Source}");
+                        Assert.IsInstanceOf<DocumentSource>(companyNameFieldAssert.GroundingSources[0],
+                            "Grounding source should be DocumentSource for extracted fields");
+                        var docSource = (DocumentSource)companyNameFieldAssert.GroundingSources[0];
+                        Assert.IsTrue(docSource.PageNumber >= 1, "PageNumber should be >= 1");
+                        Assert.AreEqual(4, docSource.Polygon.Count, "Polygon should have 4 points");
+                        Console.WriteLine($"  Grounding: page {docSource.PageNumber}");
                     }
 
                     if (companyNameFieldAssert.Spans != null && companyNameFieldAssert.Spans.Count > 0)
@@ -471,11 +488,13 @@ namespace Azure.AI.ContentUnderstanding.Samples
                         Console.WriteLine($"  Confidence: {totalAmountFieldAssert.Confidence.Value:F2}");
                     }
 
-                    if (!string.IsNullOrEmpty(totalAmountFieldAssert.Source))
+                    if (totalAmountFieldAssert.GroundingSources != null)
                     {
-                        Assert.IsTrue(totalAmountFieldAssert.Source.StartsWith("D("),
-                            "Source should start with 'D(' for extracted fields");
-                        Console.WriteLine($"  Source: {totalAmountFieldAssert.Source}");
+                        Assert.IsInstanceOf<DocumentSource>(totalAmountFieldAssert.GroundingSources[0],
+                            "Grounding source should be DocumentSource for extracted fields");
+                        var docSource = (DocumentSource)totalAmountFieldAssert.GroundingSources[0];
+                        Assert.IsTrue(docSource.PageNumber >= 1, "PageNumber should be >= 1");
+                        Console.WriteLine($"  Grounding: page {docSource.PageNumber}");
                     }
 
                     if (totalAmountFieldAssert.Spans != null && totalAmountFieldAssert.Spans.Count > 0)
@@ -514,10 +533,10 @@ namespace Azure.AI.ContentUnderstanding.Samples
                         Console.WriteLine($"  Confidence: {summaryFieldAssert.Confidence.Value:F2}");
                     }
 
-                    // Note: Generated fields may not have source or spans
-                    if (!string.IsNullOrEmpty(summaryFieldAssert.Source))
+                    // Note: Generated fields may not have grounding sources or spans
+                    if (summaryFieldAssert.GroundingSources != null)
                     {
-                        Console.WriteLine($"  Source: {summaryFieldAssert.Source}");
+                        Console.WriteLine($"  Grounding sources: {summaryFieldAssert.GroundingSources.Length}");
                     }
                 }
                 else
@@ -547,10 +566,10 @@ namespace Azure.AI.ContentUnderstanding.Samples
                         Console.WriteLine($"  Value: {sfAssert.Value}");
                     }
 
-                    // Note: Classified fields may not have source or spans
-                    if (!string.IsNullOrEmpty(documentTypeFieldAssert.Source))
+                    // Note: Classified fields may not have grounding sources or spans
+                    if (documentTypeFieldAssert.GroundingSources != null)
                     {
-                        Console.WriteLine($"  Source: {documentTypeFieldAssert.Source}");
+                        Console.WriteLine($"  Grounding sources: {documentTypeFieldAssert.GroundingSources.Length}");
                     }
                 }
                 else

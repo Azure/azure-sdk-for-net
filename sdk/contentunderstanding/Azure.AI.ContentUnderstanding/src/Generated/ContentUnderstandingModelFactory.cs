@@ -93,13 +93,13 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="type"> Semantic data type of the field value. </param>
         /// <param name="spans"> Span(s) associated with the field value in the markdown content. </param>
         /// <param name="confidence"> Confidence of predicting the field value. </param>
-        /// <param name="source"> Encoded source that identifies the position of the field value in the content. </param>
+        /// <param name="sourceValue"> Encoded source that identifies the position of the field value in the content. </param>
         /// <returns> A new <see cref="ContentUnderstanding.ContentField"/> instance for mocking. </returns>
-        public static ContentField ContentField(string @type = default, IEnumerable<ContentSpan> spans = default, float? confidence = default, string source = default)
+        public static ContentField ContentField(string @type = default, IEnumerable<ContentSpan> spans = default, float? confidence = default, string sourceValue = default)
         {
             spans ??= new ChangeTrackingList<ContentSpan>();
 
-            return new UnknownContentField(new ContentFieldType(@type), spans.ToList(), confidence, source, additionalBinaryDataProperties: null);
+            return new UnknownContentField(new ContentFieldType(@type), spans.ToList(), confidence, sourceValue, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Position of the element in markdown, specified as a character offset and length. </summary>

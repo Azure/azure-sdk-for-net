@@ -98,10 +98,10 @@ namespace Azure.AI.ContentUnderstanding
                 writer.WritePropertyName("confidence"u8);
                 writer.WriteNumberValue(Confidence.Value);
             }
-            if (Optional.IsDefined(Source))
+            if (Optional.IsDefined(SourceValue))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteStringValue(Source);
+                writer.WriteStringValue(SourceValue);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
