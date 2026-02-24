@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.SiteManager.Models
     /// <summary> Site address properties. </summary>
     public partial class EdgeSiteAddressProperties : IJsonModel<EdgeSiteAddressProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EdgeSiteAddressProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeSiteAddressProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeEdgeSiteAddressProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EdgeSiteAddressProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EdgeSiteAddressProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -179,23 +196,6 @@ namespace Azure.ResourceManager.SiteManager.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         EdgeSiteAddressProperties IPersistableModel<EdgeSiteAddressProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EdgeSiteAddressProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeSiteAddressProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeEdgeSiteAddressProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EdgeSiteAddressProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<EdgeSiteAddressProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

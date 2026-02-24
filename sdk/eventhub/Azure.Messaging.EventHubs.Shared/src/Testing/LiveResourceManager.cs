@@ -260,7 +260,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         default:
                             return false;
-                    };
+                    }
+                    ;
                 }
 
                 /// <summary>
@@ -274,16 +275,16 @@ namespace Azure.Messaging.EventHubs.Tests
                 ///
                 private bool IsRetriableStatus(int statusCode) => statusCode switch
                 {
-                   (int)HttpStatusCode.Unauthorized => true,
-                   (int)HttpStatusCode.Conflict => true,
-                   (int)HttpStatusCode.InternalServerError => true,
-                   (int)HttpStatusCode.ServiceUnavailable => true,
-                   (int)HttpStatusCode.GatewayTimeout => true,
-                   408 => true,
-                   429 => true,
-                   _ => false
+                    (int)HttpStatusCode.Unauthorized => true,
+                    (int)HttpStatusCode.Conflict => true,
+                    (int)HttpStatusCode.InternalServerError => true,
+                    (int)HttpStatusCode.ServiceUnavailable => true,
+                    (int)HttpStatusCode.GatewayTimeout => true,
+                    408 => true,
+                    429 => true,
+                    _ => false
                 };
-        };
+            };
         }
     }
 }

@@ -179,9 +179,9 @@ namespace Azure.Storage.Internal.Avro
             CancellationToken cancellationToken)
         {
             string key = await ReadStringAsync(stream, async, cancellationToken).ConfigureAwait(false);
-            #pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
             T value = await parseItemAsync(stream, async, cancellationToken).ConfigureAwait(false);
-            #pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
             return new KeyValuePair<string, T>(key, value);
         }
 
@@ -224,11 +224,12 @@ namespace Azure.Storage.Internal.Avro
                 }
                 while (length-- > 0)
                 {
-                    #pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                     T item = await parseItemAsync(stream, async, cancellationToken).ConfigureAwait(false);
-                    #pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                     items.Add(item);
-                };
+                }
+                ;
             }
             return items;
         }
@@ -374,9 +375,9 @@ namespace Azure.Storage.Internal.Avro
             CancellationToken cancellationToken) =>
             Primitive switch
             {
-                #pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                 AvroPrimitive.Null => await AvroParser.ReadNullAsync().ConfigureAwait(false),
-                #pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                 AvroPrimitive.Boolean => await AvroParser.ReadBoolAsync(stream, async, cancellationToken).ConfigureAwait(false),
                 AvroPrimitive.Int => await AvroParser.ReadIntAsync(stream, async, cancellationToken).ConfigureAwait(false),
                 AvroPrimitive.Long => await AvroParser.ReadLongAsync(stream, async, cancellationToken).ConfigureAwait(false),

@@ -48,8 +48,38 @@ namespace BasicTypeSpec
         /// <param name="anotherModel"></param>
         /// <param name="modelsWithNamespaces"></param>
         /// <param name="unwrappedModelsWithNamespaces"></param>
-        internal XmlAdvancedModel(string name, int age, bool enabled, float score, string nullableString, string id, int version, bool isActive, string originalName, string xmlIdentifier, string content, IEnumerable<string> unwrappedStrings, IEnumerable<int> unwrappedCounts, IEnumerable<XmlItem> unwrappedItems, IEnumerable<string> wrappedColors, IEnumerable<XmlItem> items, XmlNestedModel nestedModel, IDictionary<string, string> metadata, DateTimeOffset createdAt, TimeSpan duration, BinaryData data, StringFixedEnum fixedEnum, StringExtensibleEnum extensibleEnum, string label, int daysUsed, IEnumerable<string> fooItems, XmlNestedModel anotherModel, IEnumerable<XmlModelWithNamespace> modelsWithNamespaces, IEnumerable<XmlModelWithNamespace> unwrappedModelsWithNamespaces)
+        /// <param name="listOfListFoo"></param>
+        /// <param name="dictionaryFoo"></param>
+        /// <param name="dictionaryOfDictionaryFoo"></param>
+        /// <param name="dictionaryListFoo"></param>
+        /// <param name="listOfDictionaryFoo"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="id"/>, <paramref name="originalName"/>, <paramref name="xmlIdentifier"/>, <paramref name="content"/>, <paramref name="unwrappedStrings"/>, <paramref name="unwrappedCounts"/>, <paramref name="unwrappedItems"/>, <paramref name="wrappedColors"/>, <paramref name="items"/>, <paramref name="nestedModel"/>, <paramref name="metadata"/>, <paramref name="data"/>, <paramref name="label"/>, <paramref name="fooItems"/>, <paramref name="anotherModel"/>, <paramref name="modelsWithNamespaces"/>, <paramref name="unwrappedModelsWithNamespaces"/>, <paramref name="listOfListFoo"/>, <paramref name="dictionaryFoo"/>, <paramref name="dictionaryOfDictionaryFoo"/>, <paramref name="dictionaryListFoo"/> or <paramref name="listOfDictionaryFoo"/> is null. </exception>
+        public XmlAdvancedModel(string name, int age, bool enabled, float score, string nullableString, string id, int version, bool isActive, string originalName, string xmlIdentifier, string content, IEnumerable<string> unwrappedStrings, IEnumerable<int> unwrappedCounts, IEnumerable<XmlItem> unwrappedItems, IEnumerable<string> wrappedColors, IEnumerable<XmlItem> items, XmlNestedModel nestedModel, IDictionary<string, string> metadata, DateTimeOffset createdAt, TimeSpan duration, BinaryData data, StringFixedEnum fixedEnum, StringExtensibleEnum extensibleEnum, string label, int daysUsed, IEnumerable<string> fooItems, XmlNestedModel anotherModel, IEnumerable<XmlModelWithNamespace> modelsWithNamespaces, IEnumerable<XmlModelWithNamespace> unwrappedModelsWithNamespaces, IEnumerable<IList<XmlItem>> listOfListFoo, IDictionary<string, XmlItem> dictionaryFoo, IDictionary<string, IDictionary<string, XmlItem>> dictionaryOfDictionaryFoo, IDictionary<string, IList<XmlItem>> dictionaryListFoo, IEnumerable<IDictionary<string, XmlItem>> listOfDictionaryFoo)
         {
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(originalName, nameof(originalName));
+            Argument.AssertNotNull(xmlIdentifier, nameof(xmlIdentifier));
+            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(unwrappedStrings, nameof(unwrappedStrings));
+            Argument.AssertNotNull(unwrappedCounts, nameof(unwrappedCounts));
+            Argument.AssertNotNull(unwrappedItems, nameof(unwrappedItems));
+            Argument.AssertNotNull(wrappedColors, nameof(wrappedColors));
+            Argument.AssertNotNull(items, nameof(items));
+            Argument.AssertNotNull(nestedModel, nameof(nestedModel));
+            Argument.AssertNotNull(metadata, nameof(metadata));
+            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(label, nameof(label));
+            Argument.AssertNotNull(fooItems, nameof(fooItems));
+            Argument.AssertNotNull(anotherModel, nameof(anotherModel));
+            Argument.AssertNotNull(modelsWithNamespaces, nameof(modelsWithNamespaces));
+            Argument.AssertNotNull(unwrappedModelsWithNamespaces, nameof(unwrappedModelsWithNamespaces));
+            Argument.AssertNotNull(listOfListFoo, nameof(listOfListFoo));
+            Argument.AssertNotNull(dictionaryFoo, nameof(dictionaryFoo));
+            Argument.AssertNotNull(dictionaryOfDictionaryFoo, nameof(dictionaryOfDictionaryFoo));
+            Argument.AssertNotNull(dictionaryListFoo, nameof(dictionaryListFoo));
+            Argument.AssertNotNull(listOfDictionaryFoo, nameof(listOfDictionaryFoo));
+
             Name = name;
             Age = age;
             Enabled = enabled;
@@ -80,6 +110,11 @@ namespace BasicTypeSpec
             AnotherModel = anotherModel;
             ModelsWithNamespaces = modelsWithNamespaces.ToList();
             UnwrappedModelsWithNamespaces = unwrappedModelsWithNamespaces.ToList();
+            ListOfListFoo = listOfListFoo.ToList();
+            DictionaryFoo = dictionaryFoo;
+            DictionaryOfDictionaryFoo = dictionaryOfDictionaryFoo;
+            DictionaryListFoo = dictionaryListFoo;
+            ListOfDictionaryFoo = listOfDictionaryFoo.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="XmlAdvancedModel"/>. </summary>
@@ -118,8 +153,13 @@ namespace BasicTypeSpec
         /// <param name="anotherModel"></param>
         /// <param name="modelsWithNamespaces"></param>
         /// <param name="unwrappedModelsWithNamespaces"></param>
+        /// <param name="listOfListFoo"></param>
+        /// <param name="dictionaryFoo"></param>
+        /// <param name="dictionaryOfDictionaryFoo"></param>
+        /// <param name="dictionaryListFoo"></param>
+        /// <param name="listOfDictionaryFoo"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal XmlAdvancedModel(string name, int age, bool enabled, float score, string optionalString, int? optionalInt, string nullableString, string id, int version, bool isActive, string originalName, string xmlIdentifier, string content, IList<string> unwrappedStrings, IList<int> unwrappedCounts, IList<XmlItem> unwrappedItems, IList<string> wrappedColors, IList<XmlItem> items, XmlNestedModel nestedModel, XmlNestedModel optionalNestedModel, IDictionary<string, string> metadata, DateTimeOffset createdAt, TimeSpan duration, BinaryData data, IDictionary<string, BinaryData> optionalRecordUnknown, StringFixedEnum fixedEnum, StringExtensibleEnum extensibleEnum, IntFixedEnum? optionalFixedEnum, IntExtensibleEnum? optionalExtensibleEnum, string label, int daysUsed, IList<string> fooItems, XmlNestedModel anotherModel, IList<XmlModelWithNamespace> modelsWithNamespaces, IList<XmlModelWithNamespace> unwrappedModelsWithNamespaces, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal XmlAdvancedModel(string name, int age, bool enabled, float score, string optionalString, int? optionalInt, string nullableString, string id, int version, bool isActive, string originalName, string xmlIdentifier, string content, IList<string> unwrappedStrings, IList<int> unwrappedCounts, IList<XmlItem> unwrappedItems, IList<string> wrappedColors, IList<XmlItem> items, XmlNestedModel nestedModel, XmlNestedModel optionalNestedModel, IDictionary<string, string> metadata, DateTimeOffset createdAt, TimeSpan duration, BinaryData data, IDictionary<string, BinaryData> optionalRecordUnknown, StringFixedEnum fixedEnum, StringExtensibleEnum extensibleEnum, IntFixedEnum? optionalFixedEnum, IntExtensibleEnum? optionalExtensibleEnum, string label, int daysUsed, IList<string> fooItems, XmlNestedModel anotherModel, IList<XmlModelWithNamespace> modelsWithNamespaces, IList<XmlModelWithNamespace> unwrappedModelsWithNamespaces, IList<IList<XmlItem>> listOfListFoo, IDictionary<string, XmlItem> dictionaryFoo, IDictionary<string, IDictionary<string, XmlItem>> dictionaryOfDictionaryFoo, IDictionary<string, IList<XmlItem>> dictionaryListFoo, IList<IDictionary<string, XmlItem>> listOfDictionaryFoo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Age = age;
@@ -156,47 +196,52 @@ namespace BasicTypeSpec
             AnotherModel = anotherModel;
             ModelsWithNamespaces = modelsWithNamespaces;
             UnwrappedModelsWithNamespaces = unwrappedModelsWithNamespaces;
+            ListOfListFoo = listOfListFoo;
+            DictionaryFoo = dictionaryFoo;
+            DictionaryOfDictionaryFoo = dictionaryOfDictionaryFoo;
+            DictionaryListFoo = dictionaryListFoo;
+            ListOfDictionaryFoo = listOfDictionaryFoo;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A simple string property. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary> An integer property. </summary>
-        public int Age { get; }
+        public int Age { get; set; }
 
         /// <summary> A boolean property. </summary>
-        public bool Enabled { get; }
+        public bool Enabled { get; set; }
 
         /// <summary> A float property. </summary>
-        public float Score { get; }
+        public float Score { get; set; }
 
         /// <summary> An optional string. </summary>
-        public string OptionalString { get; }
+        public string OptionalString { get; set; }
 
         /// <summary> An optional integer. </summary>
-        public int? OptionalInt { get; }
+        public int? OptionalInt { get; set; }
 
         /// <summary> A nullable string. </summary>
-        public string NullableString { get; }
+        public string NullableString { get; set; }
 
         /// <summary> A string as XML attribute. </summary>
-        public string Id { get; }
+        public string Id { get; set; }
 
         /// <summary> An integer as XML attribute. </summary>
-        public int Version { get; }
+        public int Version { get; set; }
 
         /// <summary> A boolean as XML attribute. </summary>
-        public bool IsActive { get; }
+        public bool IsActive { get; set; }
 
         /// <summary> A property with a custom XML element name. </summary>
-        public string OriginalName { get; }
+        public string OriginalName { get; set; }
 
         /// <summary> An attribute with a custom XML name. </summary>
-        public string XmlIdentifier { get; }
+        public string XmlIdentifier { get; set; }
 
         /// <summary> Text content in the element (unwrapped string). </summary>
-        public string Content { get; }
+        public string Content { get; set; }
 
         /// <summary> An unwrapped array of strings - items appear directly without wrapper. </summary>
         public IList<string> UnwrappedStrings { get; }
@@ -214,19 +259,19 @@ namespace BasicTypeSpec
         public IList<XmlItem> Items { get; }
 
         /// <summary> A nested model property. </summary>
-        public XmlNestedModel NestedModel { get; }
+        public XmlNestedModel NestedModel { get; set; }
 
         /// <summary> An optional nested model. </summary>
-        public XmlNestedModel OptionalNestedModel { get; }
+        public XmlNestedModel OptionalNestedModel { get; set; }
 
         /// <summary> A dictionary property. </summary>
         public IDictionary<string, string> Metadata { get; }
 
         /// <summary> A date-time property. </summary>
-        public DateTimeOffset CreatedAt { get; }
+        public DateTimeOffset CreatedAt { get; set; }
 
         /// <summary> A duration property. </summary>
-        public TimeSpan Duration { get; }
+        public TimeSpan Duration { get; set; }
 
         /// <summary>
         /// A bytes property
@@ -244,7 +289,7 @@ namespace BasicTypeSpec
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Data { get; }
+        public BinaryData Data { get; set; }
 
         /// <summary>
         /// optional record of unknown
@@ -275,33 +320,48 @@ namespace BasicTypeSpec
         public IDictionary<string, BinaryData> OptionalRecordUnknown { get; }
 
         /// <summary> A fixed enum property. </summary>
-        public StringFixedEnum FixedEnum { get; }
+        public StringFixedEnum FixedEnum { get; set; }
 
         /// <summary> An extensible enum property. </summary>
-        public StringExtensibleEnum ExtensibleEnum { get; }
+        public StringExtensibleEnum ExtensibleEnum { get; set; }
 
         /// <summary> An optional fixed enum property. </summary>
-        public IntFixedEnum? OptionalFixedEnum { get; }
+        public IntFixedEnum? OptionalFixedEnum { get; set; }
 
         /// <summary> An optional extensible enum property. </summary>
-        public IntExtensibleEnum? OptionalExtensibleEnum { get; }
+        public IntExtensibleEnum? OptionalExtensibleEnum { get; set; }
 
-        /// <summary> Gets the Label. </summary>
-        public string Label { get; }
+        /// <summary> Gets or sets the Label. </summary>
+        public string Label { get; set; }
 
-        /// <summary> Gets the DaysUsed. </summary>
-        public int DaysUsed { get; }
+        /// <summary> Gets or sets the DaysUsed. </summary>
+        public int DaysUsed { get; set; }
 
         /// <summary> Gets the FooItems. </summary>
         public IList<string> FooItems { get; }
 
-        /// <summary> Gets the AnotherModel. </summary>
-        public XmlNestedModel AnotherModel { get; }
+        /// <summary> Gets or sets the AnotherModel. </summary>
+        public XmlNestedModel AnotherModel { get; set; }
 
         /// <summary> Gets the ModelsWithNamespaces. </summary>
         public IList<XmlModelWithNamespace> ModelsWithNamespaces { get; }
 
         /// <summary> Gets the UnwrappedModelsWithNamespaces. </summary>
         public IList<XmlModelWithNamespace> UnwrappedModelsWithNamespaces { get; }
+
+        /// <summary> Gets the ListOfListFoo. </summary>
+        public IList<IList<XmlItem>> ListOfListFoo { get; }
+
+        /// <summary> Gets the DictionaryFoo. </summary>
+        public IDictionary<string, XmlItem> DictionaryFoo { get; }
+
+        /// <summary> Gets the DictionaryOfDictionaryFoo. </summary>
+        public IDictionary<string, IDictionary<string, XmlItem>> DictionaryOfDictionaryFoo { get; }
+
+        /// <summary> Gets the DictionaryListFoo. </summary>
+        public IDictionary<string, IList<XmlItem>> DictionaryListFoo { get; }
+
+        /// <summary> Gets the ListOfDictionaryFoo. </summary>
+        public IList<IDictionary<string, XmlItem>> ListOfDictionaryFoo { get; }
     }
 }

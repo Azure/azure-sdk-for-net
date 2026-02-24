@@ -17,6 +17,65 @@ namespace Azure.Analytics.Purview.DataMap
     /// <summary> The glossary category. </summary>
     public partial class AtlasGlossaryCategory : IJsonModel<AtlasGlossaryCategory>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AtlasGlossaryCategory PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AtlasGlossaryCategory>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAtlasGlossaryCategory(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AtlasGlossaryCategory)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AtlasGlossaryCategory>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPurviewDataMapContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AtlasGlossaryCategory)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AtlasGlossaryCategory>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AtlasGlossaryCategory IPersistableModel<AtlasGlossaryCategory>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AtlasGlossaryCategory>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="atlasGlossaryCategory"> The <see cref="AtlasGlossaryCategory"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(AtlasGlossaryCategory atlasGlossaryCategory)
+        {
+            if (atlasGlossaryCategory == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(atlasGlossaryCategory, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AtlasGlossaryCategory"/> from. </param>
+        public static explicit operator AtlasGlossaryCategory(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAtlasGlossaryCategory(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AtlasGlossaryCategory>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -325,65 +384,6 @@ namespace Azure.Analytics.Purview.DataMap
                 parentCategory,
                 terms ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
                 additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AtlasGlossaryCategory>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasGlossaryCategory>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPurviewDataMapContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AtlasGlossaryCategory)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AtlasGlossaryCategory IPersistableModel<AtlasGlossaryCategory>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AtlasGlossaryCategory PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasGlossaryCategory>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAtlasGlossaryCategory(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AtlasGlossaryCategory)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AtlasGlossaryCategory>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="atlasGlossaryCategory"> The <see cref="AtlasGlossaryCategory"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(AtlasGlossaryCategory atlasGlossaryCategory)
-        {
-            if (atlasGlossaryCategory == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(atlasGlossaryCategory, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AtlasGlossaryCategory"/> from. </param>
-        public static explicit operator AtlasGlossaryCategory(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAtlasGlossaryCategory(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

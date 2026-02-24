@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     /// <summary> The SAP Availability Zone Pair. </summary>
     public partial class SapAvailabilityZonePair : IJsonModel<SapAvailabilityZonePair>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SapAvailabilityZonePair PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SapAvailabilityZonePair>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSapAvailabilityZonePair(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SapAvailabilityZonePair)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SapAvailabilityZonePair>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -136,23 +153,6 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         SapAvailabilityZonePair IPersistableModel<SapAvailabilityZonePair>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SapAvailabilityZonePair PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SapAvailabilityZonePair>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSapAvailabilityZonePair(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SapAvailabilityZonePair)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SapAvailabilityZonePair>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

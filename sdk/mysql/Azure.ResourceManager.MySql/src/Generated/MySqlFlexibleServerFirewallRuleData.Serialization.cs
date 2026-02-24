@@ -26,6 +26,30 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerFirewallRuleData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMySqlFlexibleServerFirewallRuleData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerFirewallRuleData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MySqlFlexibleServerFirewallRuleData"/> from. </param>
+        internal static MySqlFlexibleServerFirewallRuleData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeMySqlFlexibleServerFirewallRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MySqlFlexibleServerFirewallRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -153,23 +177,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="options"> The client options for reading and writing models. </param>
         MySqlFlexibleServerFirewallRuleData IPersistableModel<MySqlFlexibleServerFirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => (MySqlFlexibleServerFirewallRuleData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerFirewallRuleData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeMySqlFlexibleServerFirewallRuleData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServerFirewallRuleData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MySqlFlexibleServerFirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -183,13 +190,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(mySqlFlexibleServerFirewallRuleData, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MySqlFlexibleServerFirewallRuleData"/> from. </param>
-        internal static MySqlFlexibleServerFirewallRuleData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeMySqlFlexibleServerFirewallRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

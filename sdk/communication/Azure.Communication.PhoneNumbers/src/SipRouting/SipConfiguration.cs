@@ -82,7 +82,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string,SipTrunk> dictionary = new Dictionary<string, SipTrunk>();
+                    Dictionary<string, SipTrunk> dictionary = new Dictionary<string, SipTrunk>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.Value.ValueKind == JsonValueKind.Null)

@@ -21,6 +21,23 @@ namespace Azure.ResourceManager.IotOperations.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataflowDestinationHeaderAction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataflowDestinationAddIfNotPresentHeaderAction>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataflowDestinationAddIfNotPresentHeaderAction(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataflowDestinationAddIfNotPresentHeaderAction)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataflowDestinationAddIfNotPresentHeaderAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -119,23 +136,6 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         DataflowDestinationAddIfNotPresentHeaderAction IPersistableModel<DataflowDestinationAddIfNotPresentHeaderAction>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataflowDestinationAddIfNotPresentHeaderAction)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DataflowDestinationHeaderAction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataflowDestinationAddIfNotPresentHeaderAction>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDataflowDestinationAddIfNotPresentHeaderAction(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataflowDestinationAddIfNotPresentHeaderAction)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataflowDestinationAddIfNotPresentHeaderAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

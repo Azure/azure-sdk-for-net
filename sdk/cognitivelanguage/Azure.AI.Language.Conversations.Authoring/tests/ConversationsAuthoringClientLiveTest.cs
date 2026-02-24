@@ -524,7 +524,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
 
             ConversationAuthoringTrainedModel trainedModelAuthoringClient = client.GetTrainedModel(projectName, trainedModelLabel);
             // Act
-            Response<ConversationAuthoringEvalSummary> evaluationSummaryResponse = await trainedModelAuthoringClient.GetModelEvaluationSummaryAsync(            );
+            Response<ConversationAuthoringEvalSummary> evaluationSummaryResponse = await trainedModelAuthoringClient.GetModelEvaluationSummaryAsync();
 
             // Assert
             Assert.IsNotNull(evaluationSummaryResponse, "The evaluation summary response should not be null.");
@@ -710,7 +710,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
         }
 
         [RecordedTest]
-        public async Task DeployProjectAsync(){
+        public async Task DeployProjectAsync()
+        {
             // Arrange
             string projectName = "EmailApp";
             var deploymentName = "staging";

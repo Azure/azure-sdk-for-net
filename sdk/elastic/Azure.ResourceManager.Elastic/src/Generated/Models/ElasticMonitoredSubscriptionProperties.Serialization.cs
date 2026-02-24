@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.Elastic.Models
     /// <summary> The request to update subscriptions needed to be monitored by the Elastic monitor resource. </summary>
     public partial class ElasticMonitoredSubscriptionProperties : IJsonModel<ElasticMonitoredSubscriptionProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ElasticMonitoredSubscriptionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticMonitoredSubscriptionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeElasticMonitoredSubscriptionProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ElasticMonitoredSubscriptionProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ElasticMonitoredSubscriptionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -161,23 +178,6 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ElasticMonitoredSubscriptionProperties IPersistableModel<ElasticMonitoredSubscriptionProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ElasticMonitoredSubscriptionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ElasticMonitoredSubscriptionProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeElasticMonitoredSubscriptionProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ElasticMonitoredSubscriptionProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ElasticMonitoredSubscriptionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

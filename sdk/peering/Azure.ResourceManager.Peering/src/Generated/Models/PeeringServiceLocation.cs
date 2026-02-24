@@ -15,37 +15,8 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The peering service location. </summary>
     public partial class PeeringServiceLocation : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PeeringServiceLocation"/>. </summary>
         public PeeringServiceLocation()
@@ -53,27 +24,70 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PeeringServiceLocation"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="country"> Country of the customer. </param>
-        /// <param name="state"> State of the customer. </param>
-        /// <param name="azureRegion"> Azure region for the location. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PeeringServiceLocation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string country, string state, AzureLocation? azureRegion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties that define a peering service location. </param>
+        internal PeeringServiceLocation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PeeringServiceLocationProperties properties) : base(id, name, resourceType, systemData)
         {
-            Country = country;
-            State = state;
-            AzureRegion = azureRegion;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> The properties that define a peering service location. </summary>
+        internal PeeringServiceLocationProperties Properties { get; set; }
+
         /// <summary> Country of the customer. </summary>
-        public string Country { get; set; }
+        public string Country
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Country;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PeeringServiceLocationProperties();
+                }
+                Properties.Country = value;
+            }
+        }
+
         /// <summary> State of the customer. </summary>
-        public string State { get; set; }
+        public string State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PeeringServiceLocationProperties();
+                }
+                Properties.State = value;
+            }
+        }
+
         /// <summary> Azure region for the location. </summary>
-        public AzureLocation? AzureRegion { get; set; }
+        public AzureLocation? AzureRegion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AzureRegion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PeeringServiceLocationProperties();
+                }
+                Properties.AzureRegion = value.Value;
+            }
+        }
     }
 }

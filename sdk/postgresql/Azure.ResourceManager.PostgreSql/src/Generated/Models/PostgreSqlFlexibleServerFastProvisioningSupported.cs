@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Indicates if fast provisioning is supported. 'Enabled' means fast provisioning is supported. 'Disabled' stands for fast provisioning is not supported. Will be deprecated in the future. Look to Supported Features for 'FastProvisioning'.
-    /// Serialized Name: FastProvisioningSupport
-    /// </summary>
+    /// <summary> Indicates if fast provisioning is supported. 'Enabled' means fast provisioning is supported. 'Disabled' stands for fast provisioning is not supported. Will be deprecated in the future. Look to Supported Features for 'FastProvisioning'. </summary>
     public readonly partial struct PostgreSqlFlexibleServerFastProvisioningSupported : IEquatable<PostgreSqlFlexibleServerFastProvisioningSupported>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: FastProvisioningSupport.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static PostgreSqlFlexibleServerFastProvisioningSupported Enabled { get; } = new PostgreSqlFlexibleServerFastProvisioningSupported(EnabledValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: FastProvisioningSupport.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static PostgreSqlFlexibleServerFastProvisioningSupported Disabled { get; } = new PostgreSqlFlexibleServerFastProvisioningSupported(DisabledValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerFastProvisioningSupported"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerFastProvisioningSupported left, PostgreSqlFlexibleServerFastProvisioningSupported right) => left.Equals(right);

@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     /// <summary> The type used for updating tags in StorageContainer resources. </summary>
     public partial class HciVmStorageContainerPatch : IJsonModel<HciVmStorageContainerPatch>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HciVmStorageContainerPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmStorageContainerPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHciVmStorageContainerPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HciVmStorageContainerPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciVmStorageContainerPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -145,23 +162,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         HciVmStorageContainerPatch IPersistableModel<HciVmStorageContainerPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HciVmStorageContainerPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HciVmStorageContainerPatch>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeHciVmStorageContainerPatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HciVmStorageContainerPatch)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<HciVmStorageContainerPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

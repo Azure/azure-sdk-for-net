@@ -17,6 +17,30 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     /// <summary> The list of supported SKUs for different resources which are part of SAP deployment. </summary>
     public partial class SapSupportedResourceSkusResult : IJsonModel<SapSupportedResourceSkusResult>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SapSupportedResourceSkusResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SapSupportedResourceSkusResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSapSupportedResourceSkusResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SapSupportedResourceSkusResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SapSupportedResourceSkusResult"/> from. </param>
+        internal static SapSupportedResourceSkusResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSapSupportedResourceSkusResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SapSupportedResourceSkusResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -133,31 +157,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         SapSupportedResourceSkusResult IPersistableModel<SapSupportedResourceSkusResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SapSupportedResourceSkusResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SapSupportedResourceSkusResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSapSupportedResourceSkusResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SapSupportedResourceSkusResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SapSupportedResourceSkusResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SapSupportedResourceSkusResult"/> from. </param>
-        internal static SapSupportedResourceSkusResult FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSapSupportedResourceSkusResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

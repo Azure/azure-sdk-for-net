@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> The details of the latest move operation performed on the Azure Resource. </summary>
     public partial class VaultPropertiesMoveDetails : IJsonModel<VaultPropertiesMoveDetails>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual VaultPropertiesMoveDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VaultPropertiesMoveDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeVaultPropertiesMoveDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VaultPropertiesMoveDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VaultPropertiesMoveDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -184,23 +201,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         VaultPropertiesMoveDetails IPersistableModel<VaultPropertiesMoveDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VaultPropertiesMoveDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<VaultPropertiesMoveDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeVaultPropertiesMoveDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(VaultPropertiesMoveDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<VaultPropertiesMoveDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

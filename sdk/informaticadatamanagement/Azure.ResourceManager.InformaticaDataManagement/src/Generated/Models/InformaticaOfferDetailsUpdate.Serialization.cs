@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
     /// <summary> Details of the product offering. </summary>
     public partial class InformaticaOfferDetailsUpdate : IJsonModel<InformaticaOfferDetailsUpdate>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual InformaticaOfferDetailsUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InformaticaOfferDetailsUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeInformaticaOfferDetailsUpdate(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InformaticaOfferDetailsUpdate)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InformaticaOfferDetailsUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -179,23 +196,6 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         InformaticaOfferDetailsUpdate IPersistableModel<InformaticaOfferDetailsUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual InformaticaOfferDetailsUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<InformaticaOfferDetailsUpdate>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeInformaticaOfferDetailsUpdate(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(InformaticaOfferDetailsUpdate)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<InformaticaOfferDetailsUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

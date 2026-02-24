@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Forward shipment details. </summary>
     public partial class ForwardShippingDetails : IJsonModel<ForwardShippingDetails>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ForwardShippingDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ForwardShippingDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeForwardShippingDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ForwardShippingDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ForwardShippingDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -154,23 +171,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ForwardShippingDetails IPersistableModel<ForwardShippingDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ForwardShippingDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ForwardShippingDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeForwardShippingDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ForwardShippingDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ForwardShippingDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

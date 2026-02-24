@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> VMware to  AzStackHCI event model custom properties. This class provides provider specific details for events of type DataContract.HealthEvents.HealthEventType.ProtectedItemHealth and DataContract.HealthEvents.HealthEventType.AgentHealth. </summary>
     public partial class VMwareToAzStackHciEventCustomProperties : DataReplicationEventCustomProperties, IJsonModel<VMwareToAzStackHciEventCustomProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataReplicationEventCustomProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciEventCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeVMwareToAzStackHciEventCustomProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VMwareToAzStackHciEventCustomProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VMwareToAzStackHciEventCustomProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -160,23 +177,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         VMwareToAzStackHciEventCustomProperties IPersistableModel<VMwareToAzStackHciEventCustomProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (VMwareToAzStackHciEventCustomProperties)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DataReplicationEventCustomProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciEventCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeVMwareToAzStackHciEventCustomProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(VMwareToAzStackHciEventCustomProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<VMwareToAzStackHciEventCustomProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

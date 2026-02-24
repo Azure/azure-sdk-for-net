@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.Quota.Models
     /// <summary> The QuotaAllocationRequestBaseProperties. </summary>
     internal partial class QuotaAllocationRequestBaseProperties : IJsonModel<QuotaAllocationRequestBaseProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual QuotaAllocationRequestBaseProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<QuotaAllocationRequestBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeQuotaAllocationRequestBaseProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(QuotaAllocationRequestBaseProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<QuotaAllocationRequestBaseProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -147,23 +164,6 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         QuotaAllocationRequestBaseProperties IPersistableModel<QuotaAllocationRequestBaseProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual QuotaAllocationRequestBaseProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<QuotaAllocationRequestBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeQuotaAllocationRequestBaseProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(QuotaAllocationRequestBaseProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<QuotaAllocationRequestBaseProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

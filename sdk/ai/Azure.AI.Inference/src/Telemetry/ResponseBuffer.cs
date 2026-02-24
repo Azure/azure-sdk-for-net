@@ -205,7 +205,8 @@ namespace Azure.AI.Inference.Telemetry
             return _response;
         }
 
-        private object[] GetChoices() {
+        private object[] GetChoices()
+        {
             if (_choices == null)
             {
                 return null;

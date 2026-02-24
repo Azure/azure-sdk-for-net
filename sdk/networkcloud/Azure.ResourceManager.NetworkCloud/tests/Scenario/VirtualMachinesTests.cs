@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 {
     public class VirtualMachinesTests : NetworkCloudManagementTestBase
     {
-        public VirtualMachinesTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) {}
-        public VirtualMachinesTests(bool isAsync) : base(isAsync) {}
+        public VirtualMachinesTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) { }
+        public VirtualMachinesTests(bool isAsync) : base(isAsync) { }
 
         [Test, MaxTime(1800000)]
         [RecordedTest]

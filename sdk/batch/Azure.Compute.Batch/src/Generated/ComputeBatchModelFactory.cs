@@ -222,17 +222,10 @@ namespace Azure.Compute.Batch
         /// <param name="caching"> The type of caching to be enabled for the data disks. The default value for caching is readwrite. For information about the caching options see: https://blogs.msdn.microsoft.com/windowsazurestorage/2012/06/27/exploring-windows-azure-drives-disks-and-images/. </param>
         /// <param name="diskSizeGb"> The initial disk size in gigabytes. </param>
         /// <param name="managedDisk"> The managed disk parameters. </param>
-        /// <param name="storageAccountType"> The storage Account type to be used for the data disk. If omitted, the default is "standard_lrs". </param>
         /// <returns> A new <see cref="Batch.DataDisk"/> instance for mocking. </returns>
-        public static DataDisk DataDisk(int logicalUnitNumber = default, CachingType? caching = default, int diskSizeGb = default, ManagedDisk managedDisk = default, StorageAccountType? storageAccountType = default)
+        public static DataDisk DataDisk(int logicalUnitNumber = default, CachingType? caching = default, int diskSizeGb = default, ManagedDisk managedDisk = default)
         {
-            return new DataDisk(
-                logicalUnitNumber,
-                caching,
-                diskSizeGb,
-                managedDisk,
-                storageAccountType,
-                additionalBinaryDataProperties: null);
+            return new DataDisk(logicalUnitNumber, caching, diskSizeGb, managedDisk, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The managed disk parameters. </summary>

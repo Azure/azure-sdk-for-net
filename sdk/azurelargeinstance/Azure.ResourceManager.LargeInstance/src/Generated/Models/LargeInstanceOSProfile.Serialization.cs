@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.LargeInstance.Models
     /// <summary> Specifies the operating system settings for the Azure Large Instance. </summary>
     public partial class LargeInstanceOSProfile : IJsonModel<LargeInstanceOSProfile>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual LargeInstanceOSProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LargeInstanceOSProfile>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeLargeInstanceOSProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LargeInstanceOSProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LargeInstanceOSProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -150,23 +167,6 @@ namespace Azure.ResourceManager.LargeInstance.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         LargeInstanceOSProfile IPersistableModel<LargeInstanceOSProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LargeInstanceOSProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LargeInstanceOSProfile>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeLargeInstanceOSProfile(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(LargeInstanceOSProfile)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<LargeInstanceOSProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -83,7 +83,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             TestContext.WriteLine($"First matrix ID: {firstMatrix.Id}");
             TestContext.WriteLine($"Tile dimensions: {tileWidth}x{tileHeight}");
-            TestContext.WriteLine($"Scale denominator: {firstMatrix.ScaleDenominator}");        }
+            TestContext.WriteLine($"Scale denominator: {firstMatrix.ScaleDenominator}");
+        }
 
         /// <summary>
         /// Tests listing all available tile matrix set IDs.
@@ -385,7 +386,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Input - item_id: {itemId}");
 
             // Act
-            Response<IReadOnlyDictionary<string, BinaryData>> response = await dataClient.GetAssetStatisticsAsync(
+            Response<AssetStatisticsResponse> response = await dataClient.GetAssetStatisticsAsync(
                 collectionId: collectionId,
                 itemId: itemId,
                 assets: new[] { "image" }
@@ -394,7 +395,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             // Assert
             ValidateResponse(response, "GetAssetStatistics");
 
-            IReadOnlyDictionary<string, BinaryData> assetStatistics = response.Value;
+            IReadOnlyDictionary<string, BinaryData> assetStatistics = response.Value.AdditionalProperties;
             Assert.IsNotNull(assetStatistics, "Asset statistics should not be null");
             Assert.Greater(assetStatistics.Count, 0, "Should have statistics for at least one asset");
 

@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
     /// <summary> Result of Stage execution. </summary>
     public partial class EdgeExecutionStageStatus : IJsonModel<EdgeExecutionStageStatus>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EdgeExecutionStageStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeExecutionStageStatus>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeEdgeExecutionStageStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EdgeExecutionStageStatus)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EdgeExecutionStageStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -279,23 +296,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         EdgeExecutionStageStatus IPersistableModel<EdgeExecutionStageStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EdgeExecutionStageStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeExecutionStageStatus>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeEdgeExecutionStageStatus(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EdgeExecutionStageStatus)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<EdgeExecutionStageStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

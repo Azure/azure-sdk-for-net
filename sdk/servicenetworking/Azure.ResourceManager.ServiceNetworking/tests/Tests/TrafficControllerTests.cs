@@ -4,14 +4,14 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Network;
 using Azure.Core;
-using NUnit.Framework;
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.ServiceNetworking.Tests;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.ServiceNetworking.Models;
+using Azure.ResourceManager.ServiceNetworking.Tests;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
 {

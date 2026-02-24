@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
     /// <summary> The type used for update operations of the AzureKeyVaultSecretProviderClass. </summary>
     public partial class KeyVaultSecretProviderClassPatch : IJsonModel<KeyVaultSecretProviderClassPatch>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual KeyVaultSecretProviderClassPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultSecretProviderClassPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeKeyVaultSecretProviderClassPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KeyVaultSecretProviderClassPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KeyVaultSecretProviderClassPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -160,23 +177,6 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         KeyVaultSecretProviderClassPatch IPersistableModel<KeyVaultSecretProviderClassPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual KeyVaultSecretProviderClassPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultSecretProviderClassPatch>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeKeyVaultSecretProviderClassPatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(KeyVaultSecretProviderClassPatch)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<KeyVaultSecretProviderClassPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

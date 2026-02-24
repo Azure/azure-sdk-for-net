@@ -63,7 +63,8 @@ namespace Azure.Data.AppConfiguration
         public DateTimeOffset? ExpiresOn { get; }
         private long? _retentionPeriod;
         /// <summary> The amount of time that a snapshot will remain in the archived state before expiring. This property is only writable during the creation of a snapshot. If not specified, the default lifetime of key-value revisions will be used. </summary>
-        public TimeSpan? RetentionPeriod {
+        public TimeSpan? RetentionPeriod
+        {
             get
             {
                 return _retentionPeriod != null ? TimeSpan.FromSeconds((double)_retentionPeriod) : null;

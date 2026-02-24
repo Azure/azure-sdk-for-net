@@ -28,6 +28,30 @@ namespace Azure.ResourceManager.LargeInstance
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LargeInstanceData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeLargeInstanceData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LargeInstanceData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="LargeInstanceData"/> from. </param>
+        internal static LargeInstanceData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeLargeInstanceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LargeInstanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -192,23 +216,6 @@ namespace Azure.ResourceManager.LargeInstance
         /// <param name="options"> The client options for reading and writing models. </param>
         LargeInstanceData IPersistableModel<LargeInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (LargeInstanceData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LargeInstanceData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeLargeInstanceData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(LargeInstanceData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<LargeInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -222,13 +229,6 @@ namespace Azure.ResourceManager.LargeInstance
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(largeInstanceData, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="LargeInstanceData"/> from. </param>
-        internal static LargeInstanceData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeLargeInstanceData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

@@ -1,14 +1,12 @@
 {
   "name": "Encode.Array",
   "apiVersions": [],
-  "enums": [],
-  "constants": [
+  "enums": [
     {
       "$id": "1",
-      "kind": "constant",
-      "name": "commaDelimitedContentType",
-      "namespace": "",
-      "usage": "None",
+      "kind": "enum",
+      "name": "Colors",
+      "crossLanguageDefinitionId": "Encode.Array.Colors",
       "valueType": {
         "$id": "2",
         "kind": "string",
@@ -16,77 +14,118 @@
         "crossLanguageDefinitionId": "TypeSpec.string",
         "decorators": []
       },
-      "value": "application/json",
+      "values": [
+        {
+          "$id": "3",
+          "kind": "enumvalue",
+          "name": "Blue",
+          "value": "blue",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "decorators": []
+        },
+        {
+          "$id": "4",
+          "kind": "enumvalue",
+          "name": "Red",
+          "value": "red",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "decorators": []
+        },
+        {
+          "$id": "5",
+          "kind": "enumvalue",
+          "name": "Green",
+          "value": "green",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "decorators": []
+        }
+      ],
+      "namespace": "Encode.Array",
+      "isFixed": true,
+      "isFlags": false,
+      "usage": "Input,Output,Json",
       "decorators": []
     },
     {
-      "$id": "3",
-      "kind": "constant",
-      "name": "commaDelimitedContentType1",
-      "namespace": "",
-      "usage": "None",
+      "$id": "6",
+      "kind": "enum",
+      "name": "ColorsExtensibleEnum",
+      "crossLanguageDefinitionId": "Encode.Array.ColorsExtensibleEnum",
       "valueType": {
-        "$id": "4",
+        "$id": "7",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
         "decorators": []
       },
-      "value": "application/json",
+      "values": [
+        {
+          "$id": "8",
+          "kind": "enumvalue",
+          "name": "Blue",
+          "value": "blue",
+          "valueType": {
+            "$ref": "7"
+          },
+          "enumType": {
+            "$ref": "6"
+          },
+          "decorators": []
+        },
+        {
+          "$id": "9",
+          "kind": "enumvalue",
+          "name": "Red",
+          "value": "red",
+          "valueType": {
+            "$ref": "7"
+          },
+          "enumType": {
+            "$ref": "6"
+          },
+          "decorators": []
+        },
+        {
+          "$id": "10",
+          "kind": "enumvalue",
+          "name": "Green",
+          "value": "green",
+          "valueType": {
+            "$ref": "7"
+          },
+          "enumType": {
+            "$ref": "6"
+          },
+          "decorators": []
+        }
+      ],
+      "namespace": "Encode.Array",
+      "isFixed": false,
+      "isFlags": false,
+      "usage": "Input,Output,Json",
       "decorators": []
-    },
-    {
-      "$id": "5",
-      "kind": "constant",
-      "name": "spaceDelimitedContentType",
-      "namespace": "",
-      "usage": "None",
-      "valueType": {
-        "$id": "6",
-        "kind": "string",
-        "name": "string",
-        "crossLanguageDefinitionId": "TypeSpec.string",
-        "decorators": []
-      },
-      "value": "application/json",
-      "decorators": []
-    },
-    {
-      "$id": "7",
-      "kind": "constant",
-      "name": "spaceDelimitedContentType1",
-      "namespace": "",
-      "usage": "None",
-      "valueType": {
-        "$id": "8",
-        "kind": "string",
-        "name": "string",
-        "crossLanguageDefinitionId": "TypeSpec.string",
-        "decorators": []
-      },
-      "value": "application/json",
-      "decorators": []
-    },
-    {
-      "$id": "9",
-      "kind": "constant",
-      "name": "pipeDelimitedContentType",
-      "namespace": "",
-      "usage": "None",
-      "valueType": {
-        "$id": "10",
-        "kind": "string",
-        "name": "string",
-        "crossLanguageDefinitionId": "TypeSpec.string",
-        "decorators": []
-      },
-      "value": "application/json",
-      "decorators": []
-    },
+    }
+  ],
+  "constants": [
     {
       "$id": "11",
       "kind": "constant",
-      "name": "pipeDelimitedContentType1",
+      "name": "commaDelimitedContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -102,7 +141,7 @@
     {
       "$id": "13",
       "kind": "constant",
-      "name": "newlineDelimitedContentType",
+      "name": "commaDelimitedContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -118,7 +157,7 @@
     {
       "$id": "15",
       "kind": "constant",
-      "name": "newlineDelimitedContentType1",
+      "name": "spaceDelimitedContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -130,11 +169,347 @@
       },
       "value": "application/json",
       "decorators": []
+    },
+    {
+      "$id": "17",
+      "kind": "constant",
+      "name": "spaceDelimitedContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "18",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "19",
+      "kind": "constant",
+      "name": "pipeDelimitedContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "20",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "21",
+      "kind": "constant",
+      "name": "pipeDelimitedContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "22",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "23",
+      "kind": "constant",
+      "name": "newlineDelimitedContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "24",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "25",
+      "kind": "constant",
+      "name": "newlineDelimitedContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "26",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "27",
+      "kind": "constant",
+      "name": "enumCommaDelimitedContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "28",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "29",
+      "kind": "constant",
+      "name": "enumCommaDelimitedContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "30",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "31",
+      "kind": "constant",
+      "name": "enumSpaceDelimitedContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "32",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "33",
+      "kind": "constant",
+      "name": "enumSpaceDelimitedContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "34",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "35",
+      "kind": "constant",
+      "name": "enumPipeDelimitedContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "36",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "37",
+      "kind": "constant",
+      "name": "enumPipeDelimitedContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "38",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "39",
+      "kind": "constant",
+      "name": "enumNewlineDelimitedContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "40",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "41",
+      "kind": "constant",
+      "name": "enumNewlineDelimitedContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "42",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "43",
+      "kind": "constant",
+      "name": "extensibleEnumCommaDelimitedContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "44",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "45",
+      "kind": "constant",
+      "name": "extensibleEnumCommaDelimitedContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "46",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "47",
+      "kind": "constant",
+      "name": "extensibleEnumSpaceDelimitedContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "48",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "49",
+      "kind": "constant",
+      "name": "extensibleEnumSpaceDelimitedContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "50",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "51",
+      "kind": "constant",
+      "name": "extensibleEnumPipeDelimitedContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "52",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "53",
+      "kind": "constant",
+      "name": "extensibleEnumPipeDelimitedContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "54",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "55",
+      "kind": "constant",
+      "name": "extensibleEnumNewlineDelimitedContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "56",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "57",
+      "kind": "constant",
+      "name": "extensibleEnumNewlineDelimitedContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "58",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
     }
   ],
   "models": [
     {
-      "$id": "17",
+      "$id": "59",
       "kind": "model",
       "name": "CommaDelimitedArrayProperty",
       "namespace": "Encode.Array",
@@ -148,16 +523,16 @@
       },
       "properties": [
         {
-          "$id": "18",
+          "$id": "60",
           "kind": "property",
           "name": "value",
           "serializedName": "value",
           "type": {
-            "$id": "19",
+            "$id": "61",
             "kind": "array",
             "name": "Array",
             "valueType": {
-              "$id": "20",
+              "$id": "62",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -183,7 +558,7 @@
       ]
     },
     {
-      "$id": "21",
+      "$id": "63",
       "kind": "model",
       "name": "SpaceDelimitedArrayProperty",
       "namespace": "Encode.Array",
@@ -197,12 +572,12 @@
       },
       "properties": [
         {
-          "$id": "22",
+          "$id": "64",
           "kind": "property",
           "name": "value",
           "serializedName": "value",
           "type": {
-            "$ref": "19"
+            "$ref": "61"
           },
           "optional": false,
           "readOnly": false,
@@ -221,7 +596,7 @@
       ]
     },
     {
-      "$id": "23",
+      "$id": "65",
       "kind": "model",
       "name": "PipeDelimitedArrayProperty",
       "namespace": "Encode.Array",
@@ -235,12 +610,12 @@
       },
       "properties": [
         {
-          "$id": "24",
+          "$id": "66",
           "kind": "property",
           "name": "value",
           "serializedName": "value",
           "type": {
-            "$ref": "19"
+            "$ref": "61"
           },
           "optional": false,
           "readOnly": false,
@@ -259,7 +634,7 @@
       ]
     },
     {
-      "$id": "25",
+      "$id": "67",
       "kind": "model",
       "name": "NewlineDelimitedArrayProperty",
       "namespace": "Encode.Array",
@@ -273,12 +648,12 @@
       },
       "properties": [
         {
-          "$id": "26",
+          "$id": "68",
           "kind": "property",
           "name": "value",
           "serializedName": "value",
           "type": {
-            "$ref": "19"
+            "$ref": "61"
           },
           "optional": false,
           "readOnly": false,
@@ -295,11 +670,329 @@
           "encode": "newlineDelimited"
         }
       ]
+    },
+    {
+      "$id": "69",
+      "kind": "model",
+      "name": "CommaDelimitedEnumArrayProperty",
+      "namespace": "Encode.Array",
+      "crossLanguageDefinitionId": "Encode.Array.CommaDelimitedEnumArrayProperty",
+      "usage": "Input,Output,Json",
+      "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "CommaDelimitedEnumArrayProperty"
+        }
+      },
+      "properties": [
+        {
+          "$id": "70",
+          "kind": "property",
+          "name": "value",
+          "serializedName": "value",
+          "type": {
+            "$id": "71",
+            "kind": "array",
+            "name": "ArrayColors",
+            "valueType": {
+              "$ref": "1"
+            },
+            "crossLanguageDefinitionId": "TypeSpec.Array",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Encode.Array.CommaDelimitedEnumArrayProperty.value",
+          "serializationOptions": {
+            "json": {
+              "name": "value"
+            }
+          },
+          "isHttpMetadata": false,
+          "encode": "commaDelimited"
+        }
+      ]
+    },
+    {
+      "$id": "72",
+      "kind": "model",
+      "name": "SpaceDelimitedEnumArrayProperty",
+      "namespace": "Encode.Array",
+      "crossLanguageDefinitionId": "Encode.Array.SpaceDelimitedEnumArrayProperty",
+      "usage": "Input,Output,Json",
+      "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "SpaceDelimitedEnumArrayProperty"
+        }
+      },
+      "properties": [
+        {
+          "$id": "73",
+          "kind": "property",
+          "name": "value",
+          "serializedName": "value",
+          "type": {
+            "$ref": "71"
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Encode.Array.SpaceDelimitedEnumArrayProperty.value",
+          "serializationOptions": {
+            "json": {
+              "name": "value"
+            }
+          },
+          "isHttpMetadata": false,
+          "encode": "spaceDelimited"
+        }
+      ]
+    },
+    {
+      "$id": "74",
+      "kind": "model",
+      "name": "PipeDelimitedEnumArrayProperty",
+      "namespace": "Encode.Array",
+      "crossLanguageDefinitionId": "Encode.Array.PipeDelimitedEnumArrayProperty",
+      "usage": "Input,Output,Json",
+      "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "PipeDelimitedEnumArrayProperty"
+        }
+      },
+      "properties": [
+        {
+          "$id": "75",
+          "kind": "property",
+          "name": "value",
+          "serializedName": "value",
+          "type": {
+            "$ref": "71"
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Encode.Array.PipeDelimitedEnumArrayProperty.value",
+          "serializationOptions": {
+            "json": {
+              "name": "value"
+            }
+          },
+          "isHttpMetadata": false,
+          "encode": "pipeDelimited"
+        }
+      ]
+    },
+    {
+      "$id": "76",
+      "kind": "model",
+      "name": "NewlineDelimitedEnumArrayProperty",
+      "namespace": "Encode.Array",
+      "crossLanguageDefinitionId": "Encode.Array.NewlineDelimitedEnumArrayProperty",
+      "usage": "Input,Output,Json",
+      "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "NewlineDelimitedEnumArrayProperty"
+        }
+      },
+      "properties": [
+        {
+          "$id": "77",
+          "kind": "property",
+          "name": "value",
+          "serializedName": "value",
+          "type": {
+            "$ref": "71"
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Encode.Array.NewlineDelimitedEnumArrayProperty.value",
+          "serializationOptions": {
+            "json": {
+              "name": "value"
+            }
+          },
+          "isHttpMetadata": false,
+          "encode": "newlineDelimited"
+        }
+      ]
+    },
+    {
+      "$id": "78",
+      "kind": "model",
+      "name": "CommaDelimitedExtensibleEnumArrayProperty",
+      "namespace": "Encode.Array",
+      "crossLanguageDefinitionId": "Encode.Array.CommaDelimitedExtensibleEnumArrayProperty",
+      "usage": "Input,Output,Json",
+      "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "CommaDelimitedExtensibleEnumArrayProperty"
+        }
+      },
+      "properties": [
+        {
+          "$id": "79",
+          "kind": "property",
+          "name": "value",
+          "serializedName": "value",
+          "type": {
+            "$id": "80",
+            "kind": "array",
+            "name": "ArrayColorsExtensibleEnum",
+            "valueType": {
+              "$ref": "6"
+            },
+            "crossLanguageDefinitionId": "TypeSpec.Array",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Encode.Array.CommaDelimitedExtensibleEnumArrayProperty.value",
+          "serializationOptions": {
+            "json": {
+              "name": "value"
+            }
+          },
+          "isHttpMetadata": false,
+          "encode": "commaDelimited"
+        }
+      ]
+    },
+    {
+      "$id": "81",
+      "kind": "model",
+      "name": "SpaceDelimitedExtensibleEnumArrayProperty",
+      "namespace": "Encode.Array",
+      "crossLanguageDefinitionId": "Encode.Array.SpaceDelimitedExtensibleEnumArrayProperty",
+      "usage": "Input,Output,Json",
+      "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "SpaceDelimitedExtensibleEnumArrayProperty"
+        }
+      },
+      "properties": [
+        {
+          "$id": "82",
+          "kind": "property",
+          "name": "value",
+          "serializedName": "value",
+          "type": {
+            "$ref": "80"
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Encode.Array.SpaceDelimitedExtensibleEnumArrayProperty.value",
+          "serializationOptions": {
+            "json": {
+              "name": "value"
+            }
+          },
+          "isHttpMetadata": false,
+          "encode": "spaceDelimited"
+        }
+      ]
+    },
+    {
+      "$id": "83",
+      "kind": "model",
+      "name": "PipeDelimitedExtensibleEnumArrayProperty",
+      "namespace": "Encode.Array",
+      "crossLanguageDefinitionId": "Encode.Array.PipeDelimitedExtensibleEnumArrayProperty",
+      "usage": "Input,Output,Json",
+      "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "PipeDelimitedExtensibleEnumArrayProperty"
+        }
+      },
+      "properties": [
+        {
+          "$id": "84",
+          "kind": "property",
+          "name": "value",
+          "serializedName": "value",
+          "type": {
+            "$ref": "80"
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Encode.Array.PipeDelimitedExtensibleEnumArrayProperty.value",
+          "serializationOptions": {
+            "json": {
+              "name": "value"
+            }
+          },
+          "isHttpMetadata": false,
+          "encode": "pipeDelimited"
+        }
+      ]
+    },
+    {
+      "$id": "85",
+      "kind": "model",
+      "name": "NewlineDelimitedExtensibleEnumArrayProperty",
+      "namespace": "Encode.Array",
+      "crossLanguageDefinitionId": "Encode.Array.NewlineDelimitedExtensibleEnumArrayProperty",
+      "usage": "Input,Output,Json",
+      "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "NewlineDelimitedExtensibleEnumArrayProperty"
+        }
+      },
+      "properties": [
+        {
+          "$id": "86",
+          "kind": "property",
+          "name": "value",
+          "serializedName": "value",
+          "type": {
+            "$ref": "80"
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Encode.Array.NewlineDelimitedExtensibleEnumArrayProperty.value",
+          "serializationOptions": {
+            "json": {
+              "name": "value"
+            }
+          },
+          "isHttpMetadata": false,
+          "encode": "newlineDelimited"
+        }
+      ]
     }
   ],
   "clients": [
     {
-      "$id": "27",
+      "$id": "87",
       "kind": "client",
       "name": "ArrayClient",
       "namespace": "Encode.Array",
@@ -307,13 +1000,13 @@
       "methods": [],
       "parameters": [
         {
-          "$id": "28",
+          "$id": "88",
           "kind": "endpoint",
           "name": "endpoint",
           "serializedName": "endpoint",
           "doc": "Service host",
           "type": {
-            "$id": "29",
+            "$id": "89",
             "kind": "url",
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
@@ -324,7 +1017,7 @@
           "isEndpoint": true,
           "defaultValue": {
             "type": {
-              "$id": "30",
+              "$id": "90",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string"
@@ -343,31 +1036,31 @@
       "apiVersions": [],
       "children": [
         {
-          "$id": "31",
+          "$id": "91",
           "kind": "client",
           "name": "Property",
           "namespace": "Encode.Array.Property",
           "methods": [
             {
-              "$id": "32",
+              "$id": "92",
               "kind": "basic",
               "name": "commaDelimited",
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
-                "$id": "33",
+                "$id": "93",
                 "name": "commaDelimited",
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "34",
+                    "$id": "94",
                     "kind": "header",
                     "name": "contentType",
                     "serializedName": "Content-Type",
                     "doc": "Body parameter's content type. Known values are application/json",
                     "type": {
-                      "$ref": "1"
+                      "$ref": "11"
                     },
                     "isApiVersion": false,
                     "optional": false,
@@ -378,13 +1071,13 @@
                     "crossLanguageDefinitionId": "Encode.Array.Property.commaDelimited.contentType",
                     "methodParameterSegments": [
                       {
-                        "$id": "35",
+                        "$id": "95",
                         "kind": "method",
                         "name": "contentType",
                         "serializedName": "Content-Type",
                         "doc": "Body parameter's content type. Known values are application/json",
                         "type": {
-                          "$ref": "1"
+                          "$ref": "11"
                         },
                         "location": "Header",
                         "isApiVersion": false,
@@ -398,12 +1091,12 @@
                     ]
                   },
                   {
-                    "$id": "36",
+                    "$id": "96",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
                     "type": {
-                      "$ref": "3"
+                      "$ref": "13"
                     },
                     "isApiVersion": false,
                     "optional": false,
@@ -414,12 +1107,12 @@
                     "crossLanguageDefinitionId": "Encode.Array.Property.commaDelimited.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "37",
+                        "$id": "97",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
                         "type": {
-                          "$ref": "3"
+                          "$ref": "13"
                         },
                         "location": "Header",
                         "isApiVersion": false,
@@ -433,12 +1126,12 @@
                     ]
                   },
                   {
-                    "$id": "38",
+                    "$id": "98",
                     "kind": "body",
                     "name": "body",
                     "serializedName": "body",
                     "type": {
-                      "$ref": "17"
+                      "$ref": "59"
                     },
                     "isApiVersion": false,
                     "contentTypes": [
@@ -452,12 +1145,12 @@
                     "crossLanguageDefinitionId": "Encode.Array.Property.commaDelimited.body",
                     "methodParameterSegments": [
                       {
-                        "$id": "39",
+                        "$id": "99",
                         "kind": "method",
                         "name": "body",
                         "serializedName": "body",
                         "type": {
-                          "$ref": "17"
+                          "$ref": "59"
                         },
                         "location": "Body",
                         "isApiVersion": false,
@@ -477,7 +1170,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "17"
+                      "$ref": "59"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -501,18 +1194,18 @@
               },
               "parameters": [
                 {
-                  "$ref": "39"
+                  "$ref": "99"
                 },
                 {
-                  "$ref": "35"
+                  "$ref": "95"
                 },
                 {
-                  "$ref": "37"
+                  "$ref": "97"
                 }
               ],
               "response": {
                 "type": {
-                  "$ref": "17"
+                  "$ref": "59"
                 }
               },
               "isOverride": false,
@@ -521,25 +1214,25 @@
               "crossLanguageDefinitionId": "Encode.Array.Property.commaDelimited"
             },
             {
-              "$id": "40",
+              "$id": "100",
               "kind": "basic",
               "name": "spaceDelimited",
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
-                "$id": "41",
+                "$id": "101",
                 "name": "spaceDelimited",
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "42",
+                    "$id": "102",
                     "kind": "header",
                     "name": "contentType",
                     "serializedName": "Content-Type",
                     "doc": "Body parameter's content type. Known values are application/json",
                     "type": {
-                      "$ref": "5"
+                      "$ref": "15"
                     },
                     "isApiVersion": false,
                     "optional": false,
@@ -550,13 +1243,13 @@
                     "crossLanguageDefinitionId": "Encode.Array.Property.spaceDelimited.contentType",
                     "methodParameterSegments": [
                       {
-                        "$id": "43",
+                        "$id": "103",
                         "kind": "method",
                         "name": "contentType",
                         "serializedName": "Content-Type",
                         "doc": "Body parameter's content type. Known values are application/json",
                         "type": {
-                          "$ref": "5"
+                          "$ref": "15"
                         },
                         "location": "Header",
                         "isApiVersion": false,
@@ -570,12 +1263,12 @@
                     ]
                   },
                   {
-                    "$id": "44",
+                    "$id": "104",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
                     "type": {
-                      "$ref": "7"
+                      "$ref": "17"
                     },
                     "isApiVersion": false,
                     "optional": false,
@@ -586,12 +1279,12 @@
                     "crossLanguageDefinitionId": "Encode.Array.Property.spaceDelimited.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "45",
+                        "$id": "105",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
                         "type": {
-                          "$ref": "7"
+                          "$ref": "17"
                         },
                         "location": "Header",
                         "isApiVersion": false,
@@ -605,12 +1298,12 @@
                     ]
                   },
                   {
-                    "$id": "46",
+                    "$id": "106",
                     "kind": "body",
                     "name": "body",
                     "serializedName": "body",
                     "type": {
-                      "$ref": "21"
+                      "$ref": "63"
                     },
                     "isApiVersion": false,
                     "contentTypes": [
@@ -624,12 +1317,12 @@
                     "crossLanguageDefinitionId": "Encode.Array.Property.spaceDelimited.body",
                     "methodParameterSegments": [
                       {
-                        "$id": "47",
+                        "$id": "107",
                         "kind": "method",
                         "name": "body",
                         "serializedName": "body",
                         "type": {
-                          "$ref": "21"
+                          "$ref": "63"
                         },
                         "location": "Body",
                         "isApiVersion": false,
@@ -649,7 +1342,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "21"
+                      "$ref": "63"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -673,18 +1366,18 @@
               },
               "parameters": [
                 {
-                  "$ref": "47"
+                  "$ref": "107"
                 },
                 {
-                  "$ref": "43"
+                  "$ref": "103"
                 },
                 {
-                  "$ref": "45"
+                  "$ref": "105"
                 }
               ],
               "response": {
                 "type": {
-                  "$ref": "21"
+                  "$ref": "63"
                 }
               },
               "isOverride": false,
@@ -693,25 +1386,25 @@
               "crossLanguageDefinitionId": "Encode.Array.Property.spaceDelimited"
             },
             {
-              "$id": "48",
+              "$id": "108",
               "kind": "basic",
               "name": "pipeDelimited",
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
-                "$id": "49",
+                "$id": "109",
                 "name": "pipeDelimited",
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "50",
+                    "$id": "110",
                     "kind": "header",
                     "name": "contentType",
                     "serializedName": "Content-Type",
                     "doc": "Body parameter's content type. Known values are application/json",
                     "type": {
-                      "$ref": "9"
+                      "$ref": "19"
                     },
                     "isApiVersion": false,
                     "optional": false,
@@ -722,13 +1415,13 @@
                     "crossLanguageDefinitionId": "Encode.Array.Property.pipeDelimited.contentType",
                     "methodParameterSegments": [
                       {
-                        "$id": "51",
+                        "$id": "111",
                         "kind": "method",
                         "name": "contentType",
                         "serializedName": "Content-Type",
                         "doc": "Body parameter's content type. Known values are application/json",
                         "type": {
-                          "$ref": "9"
+                          "$ref": "19"
                         },
                         "location": "Header",
                         "isApiVersion": false,
@@ -742,12 +1435,12 @@
                     ]
                   },
                   {
-                    "$id": "52",
+                    "$id": "112",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
                     "type": {
-                      "$ref": "11"
+                      "$ref": "21"
                     },
                     "isApiVersion": false,
                     "optional": false,
@@ -758,12 +1451,12 @@
                     "crossLanguageDefinitionId": "Encode.Array.Property.pipeDelimited.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "53",
+                        "$id": "113",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
                         "type": {
-                          "$ref": "11"
+                          "$ref": "21"
                         },
                         "location": "Header",
                         "isApiVersion": false,
@@ -777,12 +1470,12 @@
                     ]
                   },
                   {
-                    "$id": "54",
+                    "$id": "114",
                     "kind": "body",
                     "name": "body",
                     "serializedName": "body",
                     "type": {
-                      "$ref": "23"
+                      "$ref": "65"
                     },
                     "isApiVersion": false,
                     "contentTypes": [
@@ -796,12 +1489,12 @@
                     "crossLanguageDefinitionId": "Encode.Array.Property.pipeDelimited.body",
                     "methodParameterSegments": [
                       {
-                        "$id": "55",
+                        "$id": "115",
                         "kind": "method",
                         "name": "body",
                         "serializedName": "body",
                         "type": {
-                          "$ref": "23"
+                          "$ref": "65"
                         },
                         "location": "Body",
                         "isApiVersion": false,
@@ -821,7 +1514,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "23"
+                      "$ref": "65"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -845,18 +1538,18 @@
               },
               "parameters": [
                 {
-                  "$ref": "55"
+                  "$ref": "115"
                 },
                 {
-                  "$ref": "51"
+                  "$ref": "111"
                 },
                 {
-                  "$ref": "53"
+                  "$ref": "113"
                 }
               ],
               "response": {
                 "type": {
-                  "$ref": "23"
+                  "$ref": "65"
                 }
               },
               "isOverride": false,
@@ -865,25 +1558,25 @@
               "crossLanguageDefinitionId": "Encode.Array.Property.pipeDelimited"
             },
             {
-              "$id": "56",
+              "$id": "116",
               "kind": "basic",
               "name": "newlineDelimited",
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
-                "$id": "57",
+                "$id": "117",
                 "name": "newlineDelimited",
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "58",
+                    "$id": "118",
                     "kind": "header",
                     "name": "contentType",
                     "serializedName": "Content-Type",
                     "doc": "Body parameter's content type. Known values are application/json",
                     "type": {
-                      "$ref": "13"
+                      "$ref": "23"
                     },
                     "isApiVersion": false,
                     "optional": false,
@@ -894,13 +1587,13 @@
                     "crossLanguageDefinitionId": "Encode.Array.Property.newlineDelimited.contentType",
                     "methodParameterSegments": [
                       {
-                        "$id": "59",
+                        "$id": "119",
                         "kind": "method",
                         "name": "contentType",
                         "serializedName": "Content-Type",
                         "doc": "Body parameter's content type. Known values are application/json",
                         "type": {
-                          "$ref": "13"
+                          "$ref": "23"
                         },
                         "location": "Header",
                         "isApiVersion": false,
@@ -914,12 +1607,12 @@
                     ]
                   },
                   {
-                    "$id": "60",
+                    "$id": "120",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
                     "type": {
-                      "$ref": "15"
+                      "$ref": "25"
                     },
                     "isApiVersion": false,
                     "optional": false,
@@ -930,12 +1623,12 @@
                     "crossLanguageDefinitionId": "Encode.Array.Property.newlineDelimited.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "61",
+                        "$id": "121",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
                         "type": {
-                          "$ref": "15"
+                          "$ref": "25"
                         },
                         "location": "Header",
                         "isApiVersion": false,
@@ -949,12 +1642,12 @@
                     ]
                   },
                   {
-                    "$id": "62",
+                    "$id": "122",
                     "kind": "body",
                     "name": "body",
                     "serializedName": "body",
                     "type": {
-                      "$ref": "25"
+                      "$ref": "67"
                     },
                     "isApiVersion": false,
                     "contentTypes": [
@@ -968,12 +1661,12 @@
                     "crossLanguageDefinitionId": "Encode.Array.Property.newlineDelimited.body",
                     "methodParameterSegments": [
                       {
-                        "$id": "63",
+                        "$id": "123",
                         "kind": "method",
                         "name": "body",
                         "serializedName": "body",
                         "type": {
-                          "$ref": "25"
+                          "$ref": "67"
                         },
                         "location": "Body",
                         "isApiVersion": false,
@@ -993,7 +1686,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "25"
+                      "$ref": "67"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -1017,35 +1710,1411 @@
               },
               "parameters": [
                 {
-                  "$ref": "63"
+                  "$ref": "123"
                 },
                 {
-                  "$ref": "59"
+                  "$ref": "119"
                 },
                 {
-                  "$ref": "61"
+                  "$ref": "121"
                 }
               ],
               "response": {
                 "type": {
-                  "$ref": "25"
+                  "$ref": "67"
                 }
               },
               "isOverride": false,
               "generateConvenient": true,
               "generateProtocol": true,
               "crossLanguageDefinitionId": "Encode.Array.Property.newlineDelimited"
+            },
+            {
+              "$id": "124",
+              "kind": "basic",
+              "name": "enumCommaDelimited",
+              "accessibility": "public",
+              "apiVersions": [],
+              "operation": {
+                "$id": "125",
+                "name": "enumCommaDelimited",
+                "resourceName": "Property",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "126",
+                    "kind": "header",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "27"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": true,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Encode.Array.Property.enumCommaDelimited.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "127",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "27"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Encode.Array.Property.enumCommaDelimited.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  },
+                  {
+                    "$id": "128",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "29"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Encode.Array.Property.enumCommaDelimited.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "129",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "29"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Encode.Array.Property.enumCommaDelimited.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  },
+                  {
+                    "$id": "130",
+                    "kind": "body",
+                    "name": "body",
+                    "serializedName": "body",
+                    "type": {
+                      "$ref": "69"
+                    },
+                    "isApiVersion": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Encode.Array.Property.enumCommaDelimited.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "131",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "69"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Encode.Array.Property.enumCommaDelimited.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "69"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ]
+                  }
+                ],
+                "httpMethod": "POST",
+                "uri": "{endpoint}",
+                "path": "/encode/array/property/enum/comma-delimited",
+                "requestMediaTypes": [
+                  "application/json"
+                ],
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Encode.Array.Property.enumCommaDelimited",
+                "decorators": [],
+                "namespace": "Encode.Array.Property"
+              },
+              "parameters": [
+                {
+                  "$ref": "131"
+                },
+                {
+                  "$ref": "127"
+                },
+                {
+                  "$ref": "129"
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "69"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Encode.Array.Property.enumCommaDelimited"
+            },
+            {
+              "$id": "132",
+              "kind": "basic",
+              "name": "enumSpaceDelimited",
+              "accessibility": "public",
+              "apiVersions": [],
+              "operation": {
+                "$id": "133",
+                "name": "enumSpaceDelimited",
+                "resourceName": "Property",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "134",
+                    "kind": "header",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "31"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": true,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Encode.Array.Property.enumSpaceDelimited.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "135",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "31"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Encode.Array.Property.enumSpaceDelimited.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  },
+                  {
+                    "$id": "136",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "33"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Encode.Array.Property.enumSpaceDelimited.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "137",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "33"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Encode.Array.Property.enumSpaceDelimited.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  },
+                  {
+                    "$id": "138",
+                    "kind": "body",
+                    "name": "body",
+                    "serializedName": "body",
+                    "type": {
+                      "$ref": "72"
+                    },
+                    "isApiVersion": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Encode.Array.Property.enumSpaceDelimited.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "139",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "72"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Encode.Array.Property.enumSpaceDelimited.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "72"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ]
+                  }
+                ],
+                "httpMethod": "POST",
+                "uri": "{endpoint}",
+                "path": "/encode/array/property/enum/space-delimited",
+                "requestMediaTypes": [
+                  "application/json"
+                ],
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Encode.Array.Property.enumSpaceDelimited",
+                "decorators": [],
+                "namespace": "Encode.Array.Property"
+              },
+              "parameters": [
+                {
+                  "$ref": "139"
+                },
+                {
+                  "$ref": "135"
+                },
+                {
+                  "$ref": "137"
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "72"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Encode.Array.Property.enumSpaceDelimited"
+            },
+            {
+              "$id": "140",
+              "kind": "basic",
+              "name": "enumPipeDelimited",
+              "accessibility": "public",
+              "apiVersions": [],
+              "operation": {
+                "$id": "141",
+                "name": "enumPipeDelimited",
+                "resourceName": "Property",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "142",
+                    "kind": "header",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "35"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": true,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Encode.Array.Property.enumPipeDelimited.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "143",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "35"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Encode.Array.Property.enumPipeDelimited.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  },
+                  {
+                    "$id": "144",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "37"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Encode.Array.Property.enumPipeDelimited.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "145",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "37"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Encode.Array.Property.enumPipeDelimited.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  },
+                  {
+                    "$id": "146",
+                    "kind": "body",
+                    "name": "body",
+                    "serializedName": "body",
+                    "type": {
+                      "$ref": "74"
+                    },
+                    "isApiVersion": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Encode.Array.Property.enumPipeDelimited.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "147",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "74"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Encode.Array.Property.enumPipeDelimited.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "74"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ]
+                  }
+                ],
+                "httpMethod": "POST",
+                "uri": "{endpoint}",
+                "path": "/encode/array/property/enum/pipe-delimited",
+                "requestMediaTypes": [
+                  "application/json"
+                ],
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Encode.Array.Property.enumPipeDelimited",
+                "decorators": [],
+                "namespace": "Encode.Array.Property"
+              },
+              "parameters": [
+                {
+                  "$ref": "147"
+                },
+                {
+                  "$ref": "143"
+                },
+                {
+                  "$ref": "145"
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "74"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Encode.Array.Property.enumPipeDelimited"
+            },
+            {
+              "$id": "148",
+              "kind": "basic",
+              "name": "enumNewlineDelimited",
+              "accessibility": "public",
+              "apiVersions": [],
+              "operation": {
+                "$id": "149",
+                "name": "enumNewlineDelimited",
+                "resourceName": "Property",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "150",
+                    "kind": "header",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "39"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": true,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Encode.Array.Property.enumNewlineDelimited.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "151",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "39"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Encode.Array.Property.enumNewlineDelimited.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  },
+                  {
+                    "$id": "152",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "41"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Encode.Array.Property.enumNewlineDelimited.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "153",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "41"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Encode.Array.Property.enumNewlineDelimited.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  },
+                  {
+                    "$id": "154",
+                    "kind": "body",
+                    "name": "body",
+                    "serializedName": "body",
+                    "type": {
+                      "$ref": "76"
+                    },
+                    "isApiVersion": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Encode.Array.Property.enumNewlineDelimited.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "155",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "76"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Encode.Array.Property.enumNewlineDelimited.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "76"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ]
+                  }
+                ],
+                "httpMethod": "POST",
+                "uri": "{endpoint}",
+                "path": "/encode/array/property/enum/newline-delimited",
+                "requestMediaTypes": [
+                  "application/json"
+                ],
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Encode.Array.Property.enumNewlineDelimited",
+                "decorators": [],
+                "namespace": "Encode.Array.Property"
+              },
+              "parameters": [
+                {
+                  "$ref": "155"
+                },
+                {
+                  "$ref": "151"
+                },
+                {
+                  "$ref": "153"
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "76"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Encode.Array.Property.enumNewlineDelimited"
+            },
+            {
+              "$id": "156",
+              "kind": "basic",
+              "name": "extensibleEnumCommaDelimited",
+              "accessibility": "public",
+              "apiVersions": [],
+              "operation": {
+                "$id": "157",
+                "name": "extensibleEnumCommaDelimited",
+                "resourceName": "Property",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "158",
+                    "kind": "header",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "43"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": true,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumCommaDelimited.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "159",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "43"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumCommaDelimited.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  },
+                  {
+                    "$id": "160",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "45"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumCommaDelimited.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "161",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "45"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumCommaDelimited.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  },
+                  {
+                    "$id": "162",
+                    "kind": "body",
+                    "name": "body",
+                    "serializedName": "body",
+                    "type": {
+                      "$ref": "78"
+                    },
+                    "isApiVersion": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumCommaDelimited.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "163",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "78"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumCommaDelimited.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "78"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ]
+                  }
+                ],
+                "httpMethod": "POST",
+                "uri": "{endpoint}",
+                "path": "/encode/array/property/extensible-enum/comma-delimited",
+                "requestMediaTypes": [
+                  "application/json"
+                ],
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumCommaDelimited",
+                "decorators": [],
+                "namespace": "Encode.Array.Property"
+              },
+              "parameters": [
+                {
+                  "$ref": "163"
+                },
+                {
+                  "$ref": "159"
+                },
+                {
+                  "$ref": "161"
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "78"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumCommaDelimited"
+            },
+            {
+              "$id": "164",
+              "kind": "basic",
+              "name": "extensibleEnumSpaceDelimited",
+              "accessibility": "public",
+              "apiVersions": [],
+              "operation": {
+                "$id": "165",
+                "name": "extensibleEnumSpaceDelimited",
+                "resourceName": "Property",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "166",
+                    "kind": "header",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "47"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": true,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumSpaceDelimited.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "167",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "47"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumSpaceDelimited.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  },
+                  {
+                    "$id": "168",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "49"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumSpaceDelimited.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "169",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "49"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumSpaceDelimited.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  },
+                  {
+                    "$id": "170",
+                    "kind": "body",
+                    "name": "body",
+                    "serializedName": "body",
+                    "type": {
+                      "$ref": "81"
+                    },
+                    "isApiVersion": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumSpaceDelimited.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "171",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "81"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumSpaceDelimited.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "81"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ]
+                  }
+                ],
+                "httpMethod": "POST",
+                "uri": "{endpoint}",
+                "path": "/encode/array/property/extensible-enum/space-delimited",
+                "requestMediaTypes": [
+                  "application/json"
+                ],
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumSpaceDelimited",
+                "decorators": [],
+                "namespace": "Encode.Array.Property"
+              },
+              "parameters": [
+                {
+                  "$ref": "171"
+                },
+                {
+                  "$ref": "167"
+                },
+                {
+                  "$ref": "169"
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "81"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumSpaceDelimited"
+            },
+            {
+              "$id": "172",
+              "kind": "basic",
+              "name": "extensibleEnumPipeDelimited",
+              "accessibility": "public",
+              "apiVersions": [],
+              "operation": {
+                "$id": "173",
+                "name": "extensibleEnumPipeDelimited",
+                "resourceName": "Property",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "174",
+                    "kind": "header",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "51"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": true,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumPipeDelimited.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "175",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "51"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumPipeDelimited.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  },
+                  {
+                    "$id": "176",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "53"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumPipeDelimited.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "177",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "53"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumPipeDelimited.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  },
+                  {
+                    "$id": "178",
+                    "kind": "body",
+                    "name": "body",
+                    "serializedName": "body",
+                    "type": {
+                      "$ref": "83"
+                    },
+                    "isApiVersion": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumPipeDelimited.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "179",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "83"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumPipeDelimited.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "83"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ]
+                  }
+                ],
+                "httpMethod": "POST",
+                "uri": "{endpoint}",
+                "path": "/encode/array/property/extensible-enum/pipe-delimited",
+                "requestMediaTypes": [
+                  "application/json"
+                ],
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumPipeDelimited",
+                "decorators": [],
+                "namespace": "Encode.Array.Property"
+              },
+              "parameters": [
+                {
+                  "$ref": "179"
+                },
+                {
+                  "$ref": "175"
+                },
+                {
+                  "$ref": "177"
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "83"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumPipeDelimited"
+            },
+            {
+              "$id": "180",
+              "kind": "basic",
+              "name": "extensibleEnumNewlineDelimited",
+              "accessibility": "public",
+              "apiVersions": [],
+              "operation": {
+                "$id": "181",
+                "name": "extensibleEnumNewlineDelimited",
+                "resourceName": "Property",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "182",
+                    "kind": "header",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "55"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": true,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumNewlineDelimited.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "183",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "55"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumNewlineDelimited.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  },
+                  {
+                    "$id": "184",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "57"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumNewlineDelimited.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "185",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "57"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumNewlineDelimited.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  },
+                  {
+                    "$id": "186",
+                    "kind": "body",
+                    "name": "body",
+                    "serializedName": "body",
+                    "type": {
+                      "$ref": "85"
+                    },
+                    "isApiVersion": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumNewlineDelimited.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "187",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "85"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumNewlineDelimited.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "85"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ]
+                  }
+                ],
+                "httpMethod": "POST",
+                "uri": "{endpoint}",
+                "path": "/encode/array/property/extensible-enum/newline-delimited",
+                "requestMediaTypes": [
+                  "application/json"
+                ],
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumNewlineDelimited",
+                "decorators": [],
+                "namespace": "Encode.Array.Property"
+              },
+              "parameters": [
+                {
+                  "$ref": "187"
+                },
+                {
+                  "$ref": "183"
+                },
+                {
+                  "$ref": "185"
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "85"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumNewlineDelimited"
             }
           ],
           "parameters": [
             {
-              "$id": "64",
+              "$id": "188",
               "kind": "endpoint",
               "name": "endpoint",
               "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "65",
+                "$id": "189",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -1056,7 +3125,7 @@
               "isEndpoint": true,
               "defaultValue": {
                 "type": {
-                  "$id": "66",
+                  "$id": "190",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1074,7 +3143,7 @@
           "crossLanguageDefinitionId": "Encode.Array.Property",
           "apiVersions": [],
           "parent": {
-            "$ref": "27"
+            "$ref": "87"
           },
           "isMultiServiceClient": false
         }

@@ -50,14 +50,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                         }
                     }
                  )
-                {
-                    Annotation = "annotation",
-                    PollingType = NetworkTapPollingType.Pull,
-                    Tags =
+            {
+                Annotation = "annotation",
+                PollingType = NetworkTapPollingType.Pull,
+                Tags =
                     {
                     ["key6024"] = "1234",
                     },
-                };
+            };
 
             ArmOperation<NetworkTapResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.NetworkTapName, data);
             NetworkTapResource createResult = lro.Value;

@@ -1,14 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Autorest.CSharp.Core;
-using System.Threading;
 using System;
-using Azure.Core;
 using System.ClientModel;
-using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Autorest.CSharp.Core;
+using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.AI.Agents.Persistent
 {
@@ -24,7 +24,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <param name="files">The files client to be used for file operations. </param>
         /// <param name="fileBatches">Te file batches client used to for file batches operations. </param>
-        internal VectorStores(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion, VectorStoreFiles files, VectorStoreFileBatches fileBatches) : this (clientDiagnostics: clientDiagnostics, pipeline: pipeline, tokenCredential: tokenCredential, endpoint: endpoint, apiVersion: apiVersion)
+        internal VectorStores(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion, VectorStoreFiles files, VectorStoreFileBatches fileBatches) : this(clientDiagnostics: clientDiagnostics, pipeline: pipeline, tokenCredential: tokenCredential, endpoint: endpoint, apiVersion: apiVersion)
         {
             _filesClient = files;
             _batchFileClient = fileBatches;
@@ -169,7 +169,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
             Response<InternalVectorStoreDeletionStatus> response = InternalDeleteVectorStore(vectorStoreId, cancellationToken);
-            bool isDeleted = response.GetRawResponse() !=null
+            bool isDeleted = response.GetRawResponse() != null
                 && !response.GetRawResponse().IsError
                 && response.Value != null
                 && response.Value.Deleted;

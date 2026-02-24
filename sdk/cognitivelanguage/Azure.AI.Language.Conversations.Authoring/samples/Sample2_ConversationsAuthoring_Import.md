@@ -39,10 +39,10 @@ ConversationAuthoringCreateProjectDetails projectMetadata = new ConversationAuth
 
 ConversationExportedProjectAsset projectAssets = new ConversationExportedProjectAsset();
 
-projectAssets.Intents.Add(new ConversationExportedIntent ( category : "intent1" ));
-projectAssets.Intents.Add(new ConversationExportedIntent ( category : "intent2" ));
+projectAssets.Intents.Add(new ConversationExportedIntent(category: "intent1"));
+projectAssets.Intents.Add(new ConversationExportedIntent(category: "intent2"));
 
-projectAssets.Entities.Add(new ConversationExportedEntity ( category : "entity1" ));
+projectAssets.Entities.Add(new ConversationExportedEntity(category: "entity1"));
 
 projectAssets.Utterances.Add(new ConversationExportedUtterance(
     text: "text1",
@@ -83,7 +83,7 @@ Operation operation = projectClient.Import(
     projectFormat: ConversationAuthoringExportedProjectFormat.Conversation
 );
 
- // Extract the operation-location header
+// Extract the operation-location header
 string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
 Console.WriteLine($"Operation Location: {operationLocation}");
 

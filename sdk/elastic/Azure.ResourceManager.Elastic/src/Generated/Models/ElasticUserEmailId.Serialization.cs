@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.Elastic.Models
     /// <summary> Email Id of the User Organization, of which the API Key must be returned. </summary>
     public partial class ElasticUserEmailId : IJsonModel<ElasticUserEmailId>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ElasticUserEmailId PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticUserEmailId>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeElasticUserEmailId(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ElasticUserEmailId)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ElasticUserEmailId>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -118,23 +135,6 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ElasticUserEmailId IPersistableModel<ElasticUserEmailId>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ElasticUserEmailId PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ElasticUserEmailId>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeElasticUserEmailId(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ElasticUserEmailId)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ElasticUserEmailId>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.WorkloadOrchestration
     /// <summary> Site Reference Resource. </summary>
     public partial class EdgeSiteReferenceData : ResourceData, IJsonModel<EdgeSiteReferenceData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeSiteReferenceData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeEdgeSiteReferenceData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EdgeSiteReferenceData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EdgeSiteReferenceData"/> from. </param>
+        internal static EdgeSiteReferenceData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeEdgeSiteReferenceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EdgeSiteReferenceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -154,23 +178,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="options"> The client options for reading and writing models. </param>
         EdgeSiteReferenceData IPersistableModel<EdgeSiteReferenceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (EdgeSiteReferenceData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeSiteReferenceData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeEdgeSiteReferenceData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EdgeSiteReferenceData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<EdgeSiteReferenceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -184,13 +191,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(edgeSiteReferenceData, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EdgeSiteReferenceData"/> from. </param>
-        internal static EdgeSiteReferenceData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeEdgeSiteReferenceData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

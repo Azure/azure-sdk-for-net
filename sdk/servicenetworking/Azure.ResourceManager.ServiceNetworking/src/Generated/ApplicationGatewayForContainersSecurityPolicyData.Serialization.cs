@@ -25,6 +25,30 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayForContainersSecurityPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeApplicationGatewayForContainersSecurityPolicyData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationGatewayForContainersSecurityPolicyData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ApplicationGatewayForContainersSecurityPolicyData"/> from. </param>
+        internal static ApplicationGatewayForContainersSecurityPolicyData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeApplicationGatewayForContainersSecurityPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApplicationGatewayForContainersSecurityPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -189,23 +213,6 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="options"> The client options for reading and writing models. </param>
         ApplicationGatewayForContainersSecurityPolicyData IPersistableModel<ApplicationGatewayForContainersSecurityPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ApplicationGatewayForContainersSecurityPolicyData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayForContainersSecurityPolicyData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeApplicationGatewayForContainersSecurityPolicyData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayForContainersSecurityPolicyData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ApplicationGatewayForContainersSecurityPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -219,13 +226,6 @@ namespace Azure.ResourceManager.ServiceNetworking
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(applicationGatewayForContainersSecurityPolicyData, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ApplicationGatewayForContainersSecurityPolicyData"/> from. </param>
-        internal static ApplicationGatewayForContainersSecurityPolicyData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeApplicationGatewayForContainersSecurityPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

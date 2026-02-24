@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure.Analytics.Synapse.Artifacts;
 using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Analytics.Synapse.Tests;
@@ -41,9 +41,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             WorkspaceGitRepoManagementClient client = TriggerRunClient();
             string clientID = "";
             string accessToken = "";
-            GitHubAccessTokenRequest request = new GitHubAccessTokenRequest (clientID, accessToken, "https://github.com/login/oauth/access_token");
-            GitHubAccessTokenResponse response = await client.GetGitHubAccessTokenAsync (request);
-            Assert.NotNull (response.GitHubAccessToken);
+            GitHubAccessTokenRequest request = new GitHubAccessTokenRequest(clientID, accessToken, "https://github.com/login/oauth/access_token");
+            GitHubAccessTokenResponse response = await client.GetGitHubAccessTokenAsync(request);
+            Assert.NotNull(response.GitHubAccessToken);
         }
     }
 }

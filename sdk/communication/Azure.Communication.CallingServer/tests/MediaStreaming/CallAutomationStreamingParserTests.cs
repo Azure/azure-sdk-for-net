@@ -38,7 +38,7 @@ namespace Azure.Communication.CallingServer.Tests.MediaStreaming
                 + "\"isSilence\": false"
                 + "}";
 
-            MediaStreamingAudio streamingAudio = (MediaStreamingAudio) MediaStreamingPackageParser.Parse(audioJson);
+            MediaStreamingAudio streamingAudio = (MediaStreamingAudio)MediaStreamingPackageParser.Parse(audioJson);
             ValidateAudioData(streamingAudio);
         }
 
@@ -69,7 +69,7 @@ namespace Azure.Communication.CallingServer.Tests.MediaStreaming
             jsonAudio["isSilence"] = false;
 
             byte[] receivedBytes = System.Text.Encoding.UTF8.GetBytes(jsonAudio.ToString());
-            MediaStreamingAudio parsedPackage = (MediaStreamingAudio) MediaStreamingPackageParser.Parse(receivedBytes);
+            MediaStreamingAudio parsedPackage = (MediaStreamingAudio)MediaStreamingPackageParser.Parse(receivedBytes);
 
             Assert.NotNull(parsedPackage);
             ValidateAudioData(parsedPackage);

@@ -75,7 +75,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// See the [STAC Collection Spec](https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md#spatial-extent-object).
         /// </param>
         /// <param name="additionalProperties"></param>
-        internal StacCollectionResource(string createdOn, string updatedOn, string shortDescription, IList<string> stacExtensions, string id, string description, string stacVersion, IList<StacLink> links, string title, string @type, IDictionary<string, StacAsset> assets, IDictionary<string, StacItemAsset> itemAssets, string license, StacExtensionExtent extent, IList<string> keywords, IList<StacProvider> providers, IDictionary<string, BinaryData> summaries, IDictionary<string, BinaryData> additionalProperties)
+        internal StacCollectionResource(DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string shortDescription, IList<string> stacExtensions, string id, string description, string stacVersion, IList<StacLink> links, string title, string @type, IDictionary<string, StacAsset> assets, IDictionary<string, StacItemAsset> itemAssets, string license, StacExtensionExtent extent, IList<string> keywords, IList<StacProvider> providers, IDictionary<string, BinaryData> summaries, IDictionary<string, BinaryData> additionalProperties)
         {
             CreatedOn = createdOn;
             UpdatedOn = updatedOn;
@@ -98,10 +98,10 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> MSFT Created. </summary>
-        public string CreatedOn { get; set; }
+        public DateTimeOffset? CreatedOn { get; set; }
 
         /// <summary> MSFT Updated. </summary>
-        public string UpdatedOn { get; set; }
+        public DateTimeOffset? UpdatedOn { get; set; }
 
         /// <summary> MSFT Short Description. </summary>
         public string ShortDescription { get; set; }

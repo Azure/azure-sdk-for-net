@@ -91,7 +91,7 @@ namespace Azure.Core.Amqp
                     if (_lazySegments != null)
                     {
                         // fields are lazy initialized to not occupy unnecessary memory when there are no data segments
-                        Segments.Append(_lazySegments,  ref _writer!, ref _segments!);
+                        Segments.Append(_lazySegments, ref _writer!, ref _segments!);
                         _lazySegments = null;
                     }
 

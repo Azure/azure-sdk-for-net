@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> The properties of a general host. </summary>
     public partial class GeneralAvsHostProperties : AvsHostProperties, IJsonModel<GeneralAvsHostProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AvsHostProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GeneralAvsHostProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeGeneralAvsHostProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GeneralAvsHostProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GeneralAvsHostProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -150,23 +167,6 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         GeneralAvsHostProperties IPersistableModel<GeneralAvsHostProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (GeneralAvsHostProperties)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AvsHostProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<GeneralAvsHostProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeGeneralAvsHostProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(GeneralAvsHostProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<GeneralAvsHostProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

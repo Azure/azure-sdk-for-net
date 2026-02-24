@@ -17,6 +17,30 @@ namespace Azure.ResourceManager.StorageActions.Models
     /// <summary> The response from the List Storage Task operation. </summary>
     internal partial class StorageTasksListResult : IJsonModel<StorageTasksListResult>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual StorageTasksListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StorageTasksListResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeStorageTasksListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StorageTasksListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StorageTasksListResult"/> from. </param>
+        internal static StorageTasksListResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeStorageTasksListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StorageTasksListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -144,31 +168,7 @@ namespace Azure.ResourceManager.StorageActions.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         StorageTasksListResult IPersistableModel<StorageTasksListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StorageTasksListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageTasksListResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeStorageTasksListResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(StorageTasksListResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<StorageTasksListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StorageTasksListResult"/> from. </param>
-        internal static StorageTasksListResult FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeStorageTasksListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

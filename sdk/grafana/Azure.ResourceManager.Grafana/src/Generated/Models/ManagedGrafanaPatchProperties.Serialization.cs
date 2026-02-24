@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.Grafana.Models
     /// <summary> The properties parameters for a PATCH request to a grafana resource. </summary>
     public partial class ManagedGrafanaPatchProperties : IJsonModel<ManagedGrafanaPatchProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ManagedGrafanaPatchProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedGrafanaPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeManagedGrafanaPatchProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedGrafanaPatchProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedGrafanaPatchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -274,23 +291,6 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ManagedGrafanaPatchProperties IPersistableModel<ManagedGrafanaPatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedGrafanaPatchProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedGrafanaPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeManagedGrafanaPatchProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ManagedGrafanaPatchProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ManagedGrafanaPatchProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

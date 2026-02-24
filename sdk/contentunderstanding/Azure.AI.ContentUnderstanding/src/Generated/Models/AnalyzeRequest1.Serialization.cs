@@ -16,6 +16,58 @@ namespace Azure.AI.ContentUnderstanding
     /// <summary> The AnalyzeRequest1. </summary>
     internal partial class AnalyzeRequest1 : IJsonModel<AnalyzeRequest1>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AnalyzeRequest1 PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeRequest1>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAnalyzeRequest1(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AnalyzeRequest1)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeRequest1>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIContentUnderstandingContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AnalyzeRequest1)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AnalyzeRequest1>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AnalyzeRequest1 IPersistableModel<AnalyzeRequest1>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AnalyzeRequest1>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="analyzeRequest1"> The <see cref="AnalyzeRequest1"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(AnalyzeRequest1 analyzeRequest1)
+        {
+            if (analyzeRequest1 == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(analyzeRequest1, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AnalyzeRequest1>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -148,58 +200,6 @@ namespace Azure.AI.ContentUnderstanding
                 }
             }
             return new AnalyzeRequest1(inputs ?? new ChangeTrackingList<AnalyzeInput>(), modelDeployments ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AnalyzeRequest1>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeRequest1>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIContentUnderstandingContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AnalyzeRequest1)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AnalyzeRequest1 IPersistableModel<AnalyzeRequest1>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AnalyzeRequest1 PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeRequest1>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAnalyzeRequest1(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AnalyzeRequest1)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AnalyzeRequest1>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="analyzeRequest1"> The <see cref="AnalyzeRequest1"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(AnalyzeRequest1 analyzeRequest1)
-        {
-            if (analyzeRequest1 == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(analyzeRequest1, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

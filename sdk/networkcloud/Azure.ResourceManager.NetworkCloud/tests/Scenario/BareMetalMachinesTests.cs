@@ -13,8 +13,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 {
     public class BareMetalMachinesTests : NetworkCloudManagementTestBase
     {
-        public BareMetalMachinesTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) {}
-        public BareMetalMachinesTests(bool isAsync) : base(isAsync) {}
+        public BareMetalMachinesTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) { }
+        public BareMetalMachinesTests(bool isAsync) : base(isAsync) { }
 
         [Test]
         [RecordedTest]
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 
             // Update
             NetworkCloudBareMetalMachineResource bareMetalMachine = Client.GetNetworkCloudBareMetalMachineResource(new ResourceIdentifier(firstBMM.Id));
-            NetworkCloudBareMetalMachinePatch patch = new NetworkCloudBareMetalMachinePatch(){};
+            NetworkCloudBareMetalMachinePatch patch = new NetworkCloudBareMetalMachinePatch() { };
             var testKey = "test-key";
             var testValue = "test-value";
             patch.Tags.Add(testKey, testValue);

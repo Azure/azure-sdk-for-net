@@ -61,7 +61,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 {
                     items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureAILanguageQuestionAnsweringAuthoringContext.Default));
                 }
-                yield return Page<BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
+                yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

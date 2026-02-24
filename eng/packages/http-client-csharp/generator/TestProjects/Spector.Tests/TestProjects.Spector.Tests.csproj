@@ -26,8 +26,10 @@
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-location\move-to-new-sub-client\src\Specs.Azure.Tcgc.ClientLo.NewSub.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-location\move-to-root-client\src\Specs.Azure.Tcgc.ClientLo.Root.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\hierarchy-building\src\_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.csproj" />
-    <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-initialization\src\_Specs_.Azure.ClientGenerator.Core.ClientInitialization.csproj" />
-<!--   not yet buildable <ProjectReference Include="..\Spector\http\azure\client-generator-core\override\src\_Specs_.Azure.ClientGenerator.Core.Override.csproj" />-->
+    <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-initialization\default\src\Specs.Azure.Tcgc.ClientInit.Default.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-initialization\individually\src\Specs.Azure.Tcgc.ClientInit.Individually.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-initialization\individuallyParent\src\Specs.Azure.Tcgc.ClientInit.Both.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\client-generator-core\override\src\_Specs_.Azure.ClientGenerator.Core.Override.csproj" />
     <ProjectReference Include="..\Spector\http\azure\special-headers\client-request-id\src\Azure.SpecialHeaders.XmsClientRequestId.csproj" />
     <ProjectReference Include="..\Spector\http\azure\core\lro\standard\src\_Specs_.Azure.Core.Lro.Standard.csproj" />
     <ProjectReference Include="..\Spector\http\azure\core\lro\rpc\src\_Specs_.Azure.Core.Lro.Rpc.csproj" />
@@ -71,6 +73,7 @@
     <ProjectReference Include="..\Spector\http\payload\media-type\src\Payload.MediaType.csproj" />
     <ProjectReference Include="..\Spector\http\payload\multipart\src\Payload.MultiPart.csproj" />
     <ProjectReference Include="..\Spector\http\payload\pageable\src\Payload.Pageable.csproj" />
+    <ProjectReference Include="..\Spector\http\payload\xml\src\Payload.Xml.csproj" />
     <ProjectReference Include="..\Spector\http\resiliency\srv-driven\v1\src\Resiliency.SrvDriven.V1.csproj" Aliases="SrvDrivenV1" />
     <ProjectReference Include="..\Spector\http\resiliency\srv-driven\v2\src\Resiliency.SrvDriven.V2.csproj" Aliases="SrvDrivenV2" />
     <ProjectReference Include="..\Spector\http\routes\src\Routes.csproj" />
