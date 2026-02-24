@@ -8,7 +8,6 @@ Grounding with Bing Custom Search tool uses Grounding with Bing, which has addit
 To enable your Agent to use Custom Bing search, we need to use `BingCustomSearchPreviewTool`.
 
 **Note:** This feature is in the preview.
-To enable your Agent to use Custom Bing search, we need to use `BingCustomSearchPreviewTool`.
 
 1. First, we need to read the environment variables, which will be used in the next steps.
 ```C# Snippet:Sample_CreateAgentClient_CustomBingSearch
