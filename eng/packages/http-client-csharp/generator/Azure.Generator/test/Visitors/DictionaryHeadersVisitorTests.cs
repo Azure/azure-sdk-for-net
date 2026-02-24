@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.Generator.Tests.TestHelpers;
 using Azure.Generator.Visitors;
 using Microsoft.TypeSpec.Generator.Expressions;
@@ -23,10 +24,12 @@ namespace Azure.Generator.Tests.Visitors
             MockHelpers.LoadMockGenerator();
             var visitor = new TestDictionaryHeadersVisitor();
             var mockMethod = new Mock<MethodProvider>();
+            var requestVar = new VariableExpression(new CSharpType(typeof(Request)), "request");
+            var headersExpr = new MemberExpression(requestVar, nameof(Request.Headers));
             var dictionaryType = new CSharpType(typeof(IDictionary<string, string>));
             var varExpr = new VariableExpression(dictionaryType, "metadata");
             var invokeMethod = new InvokeMethodExpression(
-                null,
+                headersExpr,
                 "SetDelimited",
                 [Snippet.Literal("x-ms-meta-"), varExpr, Snippet.Literal(",")]);
             var statement = new ExpressionStatement(invokeMethod);
@@ -36,10 +39,10 @@ namespace Azure.Generator.Tests.Visitors
 
             // Assert
             Assert.IsNotNull(result);
-            var resultExpression = result as ExpressionStatement;
-            Assert.IsNotNull(resultExpression);
+            var resultStatement = result as ExpressionStatement;
+            Assert.IsNotNull(resultStatement);
 
-            var resultInvoke = resultExpression!.Expression as InvokeMethodExpression;
+            var resultInvoke = resultStatement!.Expression as InvokeMethodExpression;
             Assert.IsNotNull(resultInvoke);
             Assert.AreEqual("Add", resultInvoke!.MethodName);
             Assert.AreEqual(2, resultInvoke.Arguments.Count);
@@ -97,6 +100,29 @@ namespace Azure.Generator.Tests.Visitors
             var resultInvoke = resultExpression!.Expression as InvokeMethodExpression;
             Assert.IsNotNull(resultInvoke);
             Assert.AreEqual("SetDelimited", resultInvoke!.MethodName);
+        }
+
+        [Test]
+        public void DoesNotUpdateSetDelimitedWithoutMemberExpressionInstanceReference()
+        {
+            // Arrange - instance reference is not a MemberExpression (e.g., null)
+            MockHelpers.LoadMockGenerator();
+            var visitor = new TestDictionaryHeadersVisitor();
+            var mockMethod = new Mock<MethodProvider>();
+            var dictionaryType = new CSharpType(typeof(IDictionary<string, string>));
+            var varExpr = new VariableExpression(dictionaryType, "metadata");
+            var invokeMethod = new InvokeMethodExpression(
+                null,
+                "SetDelimited",
+                [Snippet.Literal("x-ms-meta-"), varExpr, Snippet.Literal(",")]);
+            var statement = new ExpressionStatement(invokeMethod);
+
+            // Act
+            var result = visitor.InvokeVisitExpressionStatement(statement, mockMethod.Object);
+
+            // Assert - should return unchanged statement
+            Assert.IsNotNull(result);
+            Assert.AreEqual(statement, result);
         }
 
         [Test]

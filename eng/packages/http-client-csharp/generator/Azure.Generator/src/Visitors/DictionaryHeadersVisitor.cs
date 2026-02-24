@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -21,11 +22,10 @@ namespace Azure.Generator.Visitors
                 invokeMethod.MethodName == "SetDelimited" &&
                 invokeMethod.Arguments.Count >= 2 &&
                 invokeMethod.Arguments[1] is VariableExpression varExpr &&
-                varExpr.Type.IsDictionary)
+                varExpr.Type.IsDictionary &&
+                invokeMethod.InstanceReference is MemberExpression { Inner: VariableExpression requestVar })
             {
-                invokeMethod.Update(
-                    methodName: nameof(RequestHeaders.Add),
-                    arguments: [invokeMethod.Arguments[0], invokeMethod.Arguments[1]]);
+                return requestVar.As<Request>().AddDictionaryHeaders(invokeMethod.Arguments[0], invokeMethod.Arguments[1]);
             }
 
             return statement;

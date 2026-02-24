@@ -22,5 +22,8 @@ namespace Azure.Generator.Snippets
             => serializationFormat != null
             ? request.Property(nameof(Request.Headers)).Invoke(nameof(RequestHeaders.Add), value, Literal(serializationFormat)).Terminate()
             : request.Property(nameof(Request.Headers)).Invoke(nameof(RequestHeaders.Add), value).Terminate();
+
+        public static MethodBodyStatement AddDictionaryHeaders(this ScopedApi<Request> request, ValueExpression prefix, ValueExpression value)
+            => request.Property(nameof(Request.Headers)).Invoke(nameof(RequestHeaders.Add), prefix, value).Terminate();
     }
 }
