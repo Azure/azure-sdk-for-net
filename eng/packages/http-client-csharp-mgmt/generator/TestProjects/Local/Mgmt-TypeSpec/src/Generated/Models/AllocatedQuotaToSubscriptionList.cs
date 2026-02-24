@@ -34,6 +34,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> List of Group Quota Limit allocated to subscriptions. </summary>
         [WirePath("value")]
-        public IList<AllocatedToSubscription> Value { get; }
+        public IList<AllocatedToSubscription> Value { get; } = new ChangeTrackingList<AllocatedToSubscription>();
     }
 }

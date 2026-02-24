@@ -34,6 +34,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> Gets the MaintenanceWindows. </summary>
         [WirePath("maintenanceWindows")]
-        public IList<MaintenanceWindow> MaintenanceWindows { get; }
+        public IList<MaintenanceWindow> MaintenanceWindows { get; } = new ChangeTrackingList<MaintenanceWindow>();
     }
 }

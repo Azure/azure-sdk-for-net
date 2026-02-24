@@ -521,6 +521,8 @@ namespace Azure.Generator.Management.Visitors
             var innerProperty = innerProperties.Single(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Public));
             isFlattened = true;
 
+            UpdateFlattenTypeCollectionProperty(internalProperty, innerProperty, model);
+
             // flatten the single property to public and associate it with the internal property
             var (isFlattenedPropertyReadOnly, includeGetterNullCheck, includeSetterNullCheck) = PropertyHelpers.GetFlags(internalProperty, innerProperty);
             var flattenPropertyName = PropertyHelpers.GetCombinedPropertyName(innerProperty, internalProperty); // TODO: handle name conflicts
