@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(CloudPcResource))
+            if (options.Format != "W" && Optional.IsDefined(IsCloudPcResource))
             {
                 writer.WritePropertyName("cloudPcResource"u8);
-                writer.WriteBooleanValue(CloudPcResource.Value);
+                writer.WriteBooleanValue(IsCloudPcResource.Value);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -140,8 +140,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             string description = default;
             string friendlyName = default;
             IList<string> applicationGroupReferences = default;
-            bool? cloudPcResource = default;
-            PublicNetworkAccess? publicNetworkAccess = default;
+            bool? isCloudPcResource = default;
+            DesktopVirtualizationPublicNetworkAccess? publicNetworkAccess = default;
             IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections = default;
             string oboTenantId = default;
             DeploymentScope? deploymentScope = default;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    cloudPcResource = prop.Value.GetBoolean();
+                    isCloudPcResource = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("publicNetworkAccess"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    publicNetworkAccess = new PublicNetworkAccess(prop.Value.GetString());
+                    publicNetworkAccess = new DesktopVirtualizationPublicNetworkAccess(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("privateEndpointConnections"u8))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 description,
                 friendlyName,
                 applicationGroupReferences ?? new ChangeTrackingList<string>(),
-                cloudPcResource,
+                isCloudPcResource,
                 publicNetworkAccess,
                 privateEndpointConnections ?? new ChangeTrackingList<DesktopVirtualizationPrivateEndpointConnection>(),
                 oboTenantId,

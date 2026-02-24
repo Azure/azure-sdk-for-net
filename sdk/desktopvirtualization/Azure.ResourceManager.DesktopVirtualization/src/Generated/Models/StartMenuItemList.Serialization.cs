@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (StartMenuItem item in Value)
+            foreach (DesktopVirtualizationStartMenuItem item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -94,17 +94,17 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            IList<StartMenuItem> value = default;
+            IList<DesktopVirtualizationStartMenuItem> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<StartMenuItem> array = new List<StartMenuItem>();
+                    List<DesktopVirtualizationStartMenuItem> array = new List<DesktopVirtualizationStartMenuItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(StartMenuItem.DeserializeStartMenuItem(item, options));
+                        array.Add(DesktopVirtualizationStartMenuItem.DeserializeDesktopVirtualizationStartMenuItem(item, options));
                     }
                     value = array;
                     continue;

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="applicationGroupReferences"> List of applicationGroup links. </param>
         /// <param name="publicNetworkAccess"> Enabled to allow this resource to be access from the public network. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspacePatchProperties(string description, string friendlyName, IList<string> applicationGroupReferences, PublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkspacePatchProperties(string description, string friendlyName, IList<string> applicationGroupReferences, DesktopVirtualizationPublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             FriendlyName = friendlyName;
@@ -48,6 +48,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public IList<string> ApplicationGroupReferences { get; }
 
         /// <summary> Enabled to allow this resource to be access from the public network. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public DesktopVirtualizationPublicNetworkAccess? PublicNetworkAccess { get; set; }
     }
 }

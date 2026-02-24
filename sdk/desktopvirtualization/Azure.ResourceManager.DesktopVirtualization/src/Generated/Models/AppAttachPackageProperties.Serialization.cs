@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(KeyVaultURL))
+            if (Optional.IsDefined(KeyVaultUri))
             {
                 writer.WritePropertyName("keyVaultURL"u8);
-                writer.WriteStringValue(KeyVaultURL);
+                writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             }
             if (Optional.IsDefined(FailHealthCheckOnStagingFailure))
             {
@@ -131,10 +131,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            ProvisioningState? provisioningState = default;
+            AppAttachPackageProvisioningState? provisioningState = default;
             AppAttachPackageInfoProperties image = default;
             IList<string> hostPoolReferences = default;
-            string keyVaultURL = default;
+            Uri keyVaultUri = default;
             FailHealthCheckOnStagingFailure? failHealthCheckOnStagingFailure = default;
             string packageOwnerName = default;
             Uri packageLookbackUri = default;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new AppAttachPackageProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("image"u8))
@@ -184,7 +184,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 if (prop.NameEquals("keyVaultURL"u8))
                 {
-                    keyVaultURL = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keyVaultUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("failHealthCheckOnStagingFailure"u8))
@@ -233,7 +237,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 provisioningState,
                 image,
                 hostPoolReferences ?? new ChangeTrackingList<string>(),
-                keyVaultURL,
+                keyVaultUri,
                 failHealthCheckOnStagingFailure,
                 packageOwnerName,
                 packageLookbackUri,

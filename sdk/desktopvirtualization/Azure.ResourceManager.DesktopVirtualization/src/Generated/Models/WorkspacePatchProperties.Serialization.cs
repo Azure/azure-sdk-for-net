@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             string description = default;
             string friendlyName = default;
             IList<string> applicationGroupReferences = default;
-            PublicNetworkAccess? publicNetworkAccess = default;
+            DesktopVirtualizationPublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    publicNetworkAccess = new PublicNetworkAccess(prop.Value.GetString());
+                    publicNetworkAccess = new DesktopVirtualizationPublicNetworkAccess(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

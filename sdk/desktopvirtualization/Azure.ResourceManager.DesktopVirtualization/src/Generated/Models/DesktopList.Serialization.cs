@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (DesktopData item in Value)
+            foreach (VirtualDesktopData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -94,17 +94,17 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            IList<DesktopData> value = default;
+            IList<VirtualDesktopData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<DesktopData> array = new List<DesktopData>();
+                    List<VirtualDesktopData> array = new List<VirtualDesktopData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DesktopData.DeserializeDesktopData(item, options));
+                        array.Add(VirtualDesktopData.DeserializeVirtualDesktopData(item, options));
                     }
                     value = array;
                     continue;

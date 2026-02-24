@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             string objectId = default;
             string userPrincipalName = default;
-            ApplicationType? applicationType = default;
-            SessionState? sessionState = default;
+            VirtualApplicationType? applicationType = default;
+            UserSessionState? sessionState = default;
             string activeDirectoryUserName = default;
             DateTimeOffset? createOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    applicationType = new ApplicationType(prop.Value.GetString());
+                    applicationType = new VirtualApplicationType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("sessionState"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    sessionState = new SessionState(prop.Value.GetString());
+                    sessionState = new UserSessionState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("activeDirectoryUserName"u8))

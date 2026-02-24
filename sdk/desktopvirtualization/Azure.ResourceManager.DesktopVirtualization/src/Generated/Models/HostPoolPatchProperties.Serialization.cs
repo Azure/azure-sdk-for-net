@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("ring"u8);
                 writer.WriteNumberValue(Ring.Value);
             }
-            if (Optional.IsDefined(ValidationEnvironment))
+            if (Optional.IsDefined(IsValidationEnvironment))
             {
                 writer.WritePropertyName("validationEnvironment"u8);
-                writer.WriteBooleanValue(ValidationEnvironment.Value);
+                writer.WriteBooleanValue(IsValidationEnvironment.Value);
             }
             if (Optional.IsDefined(RegistrationInfo))
             {
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("vmTemplate"u8);
                 writer.WriteStringValue(VmTemplate);
             }
-            if (Optional.IsDefined(SsoadfsAuthority))
+            if (Optional.IsDefined(SsoAdfsAuthority))
             {
                 writer.WritePropertyName("ssoadfsAuthority"u8);
-                writer.WriteStringValue(SsoadfsAuthority);
+                writer.WriteStringValue(SsoAdfsAuthority);
             }
             if (Optional.IsDefined(SsoClientId))
             {
@@ -196,19 +196,19 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             string customRdpProperty = default;
             int? maxSessionLimit = default;
             PersonalDesktopAssignmentType? personalDesktopAssignmentType = default;
-            LoadBalancerType? loadBalancerType = default;
+            HostPoolLoadBalancerType? loadBalancerType = default;
             int? ring = default;
-            bool? validationEnvironment = default;
-            RegistrationInfoPatch registrationInfo = default;
+            bool? isValidationEnvironment = default;
+            HostPoolRegistrationInfoPatch registrationInfo = default;
             string vmTemplate = default;
-            string ssoadfsAuthority = default;
+            string ssoAdfsAuthority = default;
             string ssoClientId = default;
             string ssoClientSecretKeyVaultPath = default;
-            SSOSecretType? ssoSecretType = default;
+            HostPoolSsoSecretType? ssoSecretType = default;
             PreferredAppGroupType? preferredAppGroupType = default;
             bool? startVMOnConnect = default;
-            HostpoolPublicNetworkAccess? publicNetworkAccess = default;
-            AgentUpdatePatchProperties agentUpdate = default;
+            HostPoolPublicNetworkAccess? publicNetworkAccess = default;
+            SessionHostAgentUpdatePatchProperties agentUpdate = default;
             ManagedPrivateUDP? managedPrivateUDP = default;
             DirectUDP? directUDP = default;
             PublicUDP? publicUDP = default;
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    loadBalancerType = new LoadBalancerType(prop.Value.GetString());
+                    loadBalancerType = new HostPoolLoadBalancerType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("ring"u8))
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    validationEnvironment = prop.Value.GetBoolean();
+                    isValidationEnvironment = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("registrationInfo"u8))
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    registrationInfo = RegistrationInfoPatch.DeserializeRegistrationInfoPatch(prop.Value, options);
+                    registrationInfo = HostPoolRegistrationInfoPatch.DeserializeHostPoolRegistrationInfoPatch(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("vmTemplate"u8))
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 if (prop.NameEquals("ssoadfsAuthority"u8))
                 {
-                    ssoadfsAuthority = prop.Value.GetString();
+                    ssoAdfsAuthority = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("ssoClientId"u8))
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    ssoSecretType = new SSOSecretType(prop.Value.GetString());
+                    ssoSecretType = new HostPoolSsoSecretType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("preferredAppGroupType"u8))
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    publicNetworkAccess = new HostpoolPublicNetworkAccess(prop.Value.GetString());
+                    publicNetworkAccess = new HostPoolPublicNetworkAccess(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("agentUpdate"u8))
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    agentUpdate = AgentUpdatePatchProperties.DeserializeAgentUpdatePatchProperties(prop.Value, options);
+                    agentUpdate = SessionHostAgentUpdatePatchProperties.DeserializeSessionHostAgentUpdatePatchProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("managedPrivateUDP"u8))
@@ -409,10 +409,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 personalDesktopAssignmentType,
                 loadBalancerType,
                 ring,
-                validationEnvironment,
+                isValidationEnvironment,
                 registrationInfo,
                 vmTemplate,
-                ssoadfsAuthority,
+                ssoAdfsAuthority,
                 ssoClientId,
                 ssoClientSecretKeyVaultPath,
                 ssoSecretType,

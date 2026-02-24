@@ -27,16 +27,16 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of <see cref="AppAttachPackagePatchProperties"/>. </summary>
         /// <param name="image"> Detailed properties for App Attach Package. </param>
         /// <param name="hostPoolReferences"> List of Hostpool resource Ids. </param>
-        /// <param name="keyVaultURL"> URL path to certificate name located in keyVault. </param>
+        /// <param name="keyVaultUri"> URL path to certificate name located in keyVault. </param>
         /// <param name="failHealthCheckOnStagingFailure"> Parameter indicating how the health check should behave if this package fails staging. </param>
         /// <param name="packageLookbackUri"> Lookback url to third party control plane, is null for native app attach packages. </param>
         /// <param name="customData"> Field that can be populated with custom data and filtered on in list GET calls. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppAttachPackagePatchProperties(AppAttachPackageInfoProperties image, IList<ResourceIdentifier> hostPoolReferences, string keyVaultURL, FailHealthCheckOnStagingFailure? failHealthCheckOnStagingFailure, Uri packageLookbackUri, string customData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppAttachPackagePatchProperties(AppAttachPackageInfoProperties image, IList<ResourceIdentifier> hostPoolReferences, Uri keyVaultUri, FailHealthCheckOnStagingFailure? failHealthCheckOnStagingFailure, Uri packageLookbackUri, string customData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Image = image;
             HostPoolReferences = hostPoolReferences;
-            KeyVaultURL = keyVaultURL;
+            KeyVaultUri = keyVaultUri;
             FailHealthCheckOnStagingFailure = failHealthCheckOnStagingFailure;
             PackageLookbackUri = packageLookbackUri;
             CustomData = customData;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public IList<ResourceIdentifier> HostPoolReferences { get; }
 
         /// <summary> URL path to certificate name located in keyVault. </summary>
-        public string KeyVaultURL { get; set; }
+        public Uri KeyVaultUri { get; set; }
 
         /// <summary> Parameter indicating how the health check should behave if this package fails staging. </summary>
         public FailHealthCheckOnStagingFailure? FailHealthCheckOnStagingFailure { get; set; }

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (PrivateEndpointConnectionWithSystemData item in Value)
+            foreach (DesktopVirtualizationPrivateEndpointConnectionData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -94,17 +94,17 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            IList<PrivateEndpointConnectionWithSystemData> value = default;
+            IList<DesktopVirtualizationPrivateEndpointConnectionData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<PrivateEndpointConnectionWithSystemData> array = new List<PrivateEndpointConnectionWithSystemData>();
+                    List<DesktopVirtualizationPrivateEndpointConnectionData> array = new List<DesktopVirtualizationPrivateEndpointConnectionData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(PrivateEndpointConnectionWithSystemData.DeserializePrivateEndpointConnectionWithSystemData(item, options));
+                        array.Add(DesktopVirtualizationPrivateEndpointConnectionData.DeserializeDesktopVirtualizationPrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;

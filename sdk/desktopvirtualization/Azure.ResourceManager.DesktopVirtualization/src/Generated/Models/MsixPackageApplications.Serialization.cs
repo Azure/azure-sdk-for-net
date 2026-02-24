@@ -62,12 +62,26 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(RawIcon))
             {
                 writer.WritePropertyName("rawIcon"u8);
-                writer.WriteBase64StringValue(RawIcon.ToArray(), "D");
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(RawIcon);
+#else
+                using (JsonDocument document = JsonDocument.Parse(RawIcon))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(RawPng))
             {
                 writer.WritePropertyName("rawPng"u8);
-                writer.WriteBase64StringValue(RawPng.ToArray(), "D");
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(RawPng);
+#else
+                using (JsonDocument document = JsonDocument.Parse(RawPng))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -152,7 +166,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    rawIcon = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
+                    rawIcon = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("rawPng"u8))
@@ -161,7 +175,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    rawPng = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
+                    rawPng = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")

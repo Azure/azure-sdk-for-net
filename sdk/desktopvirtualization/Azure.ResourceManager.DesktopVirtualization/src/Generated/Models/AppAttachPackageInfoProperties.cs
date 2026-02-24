@@ -36,13 +36,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="isActive"> Make this version of the package the active one across the hostpool. </param>
         /// <param name="packageDependencies"> List of package dependencies. </param>
         /// <param name="version"> Package version found in the appxmanifest.xml. </param>
-        /// <param name="lastUpdated"> Date Package was last updated, found in the appxmanifest.xml. </param>
+        /// <param name="lastUpdatedOn"> Date Package was last updated, found in the appxmanifest.xml. </param>
         /// <param name="packageApplications"> List of package applications. </param>
         /// <param name="certificateName"> Certificate name found in the appxmanifest.xml. </param>
-        /// <param name="certificateExpiry"> Date certificate expires, found in the appxmanifest.xml. </param>
+        /// <param name="certificateExpireOn"> Date certificate expires, found in the appxmanifest.xml. </param>
         /// <param name="isPackageTimestamped"> Is package timestamped so it can ignore the certificate expiry date. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppAttachPackageInfoProperties(string packageAlias, string imagePath, string packageName, string packageFamilyName, string packageFullName, string displayName, string packageRelativePath, bool? isRegularRegistration, bool? isActive, IList<MsixPackageDependencies> packageDependencies, string version, DateTimeOffset? lastUpdated, IList<MsixPackageApplications> packageApplications, string certificateName, DateTimeOffset? certificateExpiry, PackageTimestamped? isPackageTimestamped, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppAttachPackageInfoProperties(string packageAlias, string imagePath, string packageName, string packageFamilyName, string packageFullName, string displayName, string packageRelativePath, bool? isRegularRegistration, bool? isActive, IList<MsixPackageDependencies> packageDependencies, string version, DateTimeOffset? lastUpdatedOn, IList<MsixPackageApplications> packageApplications, string certificateName, DateTimeOffset? certificateExpireOn, PackageTimestamped? isPackageTimestamped, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PackageAlias = packageAlias;
             ImagePath = imagePath;
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             IsActive = isActive;
             PackageDependencies = packageDependencies;
             Version = version;
-            LastUpdated = lastUpdated;
+            LastUpdatedOn = lastUpdatedOn;
             PackageApplications = packageApplications;
             CertificateName = certificateName;
-            CertificateExpiry = certificateExpiry;
+            CertificateExpireOn = certificateExpireOn;
             IsPackageTimestamped = isPackageTimestamped;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public string Version { get; set; }
 
         /// <summary> Date Package was last updated, found in the appxmanifest.xml. </summary>
-        public DateTimeOffset? LastUpdated { get; set; }
+        public DateTimeOffset? LastUpdatedOn { get; set; }
 
         /// <summary> List of package applications. </summary>
         public IList<MsixPackageApplications> PackageApplications { get; }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public string CertificateName { get; set; }
 
         /// <summary> Date certificate expires, found in the appxmanifest.xml. </summary>
-        public DateTimeOffset? CertificateExpiry { get; set; }
+        public DateTimeOffset? CertificateExpireOn { get; set; }
 
         /// <summary> Is package timestamped so it can ignore the certificate expiry date. </summary>
         public PackageTimestamped? IsPackageTimestamped { get; set; }

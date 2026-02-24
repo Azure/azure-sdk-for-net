@@ -147,11 +147,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
             return GetAppAttachPackages().Get(appAttachPackageName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ApplicationGroups in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of ApplicationGroups and their operations over a ApplicationGroupResource. </returns>
-        public virtual ApplicationGroupCollection GetApplicationGroups()
+        /// <summary> Gets a collection of VirtualApplicationGroups in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of VirtualApplicationGroups and their operations over a VirtualApplicationGroupResource. </returns>
+        public virtual VirtualApplicationGroupCollection GetVirtualApplicationGroups()
         {
-            return GetCachedClient(client => new ApplicationGroupCollection(client, Id));
+            return GetCachedClient(client => new VirtualApplicationGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -176,11 +176,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApplicationGroupResource>> GetApplicationGroupAsync(string applicationGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualApplicationGroupResource>> GetVirtualApplicationGroupAsync(string applicationGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationGroupName, nameof(applicationGroupName));
 
-            return await GetApplicationGroups().GetAsync(applicationGroupName, cancellationToken).ConfigureAwait(false);
+            return await GetVirtualApplicationGroups().GetAsync(applicationGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -205,11 +205,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ApplicationGroupResource> GetApplicationGroup(string applicationGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualApplicationGroupResource> GetVirtualApplicationGroup(string applicationGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationGroupName, nameof(applicationGroupName));
 
-            return GetApplicationGroups().Get(applicationGroupName, cancellationToken);
+            return GetVirtualApplicationGroups().Get(applicationGroupName, cancellationToken);
         }
 
         /// <summary> Gets a collection of HostPools in the <see cref="ResourceGroupResource"/>. </summary>
@@ -342,11 +342,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
             return GetScalingPlans().Get(scalingPlanName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Workspaces in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of Workspaces and their operations over a WorkspaceResource. </returns>
-        public virtual WorkspaceCollection GetWorkspaces()
+        /// <summary> Gets a collection of VirtualWorkspaces in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of VirtualWorkspaces and their operations over a VirtualWorkspaceResource. </returns>
+        public virtual VirtualWorkspaceCollection GetVirtualWorkspaces()
         {
-            return GetCachedClient(client => new WorkspaceCollection(client, Id));
+            return GetCachedClient(client => new VirtualWorkspaceCollection(client, Id));
         }
 
         /// <summary>
@@ -371,11 +371,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<WorkspaceResource>> GetWorkspaceAsync(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualWorkspaceResource>> GetVirtualWorkspaceAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            return await GetWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+            return await GetVirtualWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -400,11 +400,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WorkspaceResource> GetWorkspace(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualWorkspaceResource> GetVirtualWorkspace(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            return GetWorkspaces().Get(workspaceName, cancellationToken);
+            return GetVirtualWorkspaces().Get(workspaceName, cancellationToken);
         }
 
         /// <summary>
@@ -888,7 +888,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<RegistrationInfo>> RetrieveRegistrationTokenAsync(string hostPoolName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HostPoolRegistrationInfo>> RetrieveRegistrationTokenAsync(string hostPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
 
@@ -902,7 +902,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
                 };
                 HttpMessage message = HostPoolsRestClient.CreateRetrieveRegistrationTokenRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, hostPoolName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<RegistrationInfo> response = Response.FromValue(RegistrationInfo.FromResponse(result), result);
+                Response<HostPoolRegistrationInfo> response = Response.FromValue(HostPoolRegistrationInfo.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -937,7 +937,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<RegistrationInfo> RetrieveRegistrationToken(string hostPoolName, CancellationToken cancellationToken = default)
+        public virtual Response<HostPoolRegistrationInfo> RetrieveRegistrationToken(string hostPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
 
@@ -951,7 +951,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
                 };
                 HttpMessage message = HostPoolsRestClient.CreateRetrieveRegistrationTokenRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, hostPoolName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<RegistrationInfo> response = Response.FromValue(RegistrationInfo.FromResponse(result), result);
+                Response<HostPoolRegistrationInfo> response = Response.FromValue(HostPoolRegistrationInfo.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

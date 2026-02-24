@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             string description = default;
             string friendlyName = default;
             string filePath = default;
-            CommandLineSetting? commandLineSetting = default;
+            VirtualApplicationCommandLineSetting? commandLineSetting = default;
             string commandLineArguments = default;
             bool? showInPortal = default;
             string iconPath = default;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    commandLineSetting = new CommandLineSetting(prop.Value.GetString());
+                    commandLineSetting = new VirtualApplicationCommandLineSetting(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("commandLineArguments"u8))

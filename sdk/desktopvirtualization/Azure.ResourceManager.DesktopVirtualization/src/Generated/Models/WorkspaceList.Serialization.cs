@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (WorkspaceData item in Value)
+            foreach (VirtualWorkspaceData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -94,17 +94,17 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            IList<WorkspaceData> value = default;
+            IList<VirtualWorkspaceData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<WorkspaceData> array = new List<WorkspaceData>();
+                    List<VirtualWorkspaceData> array = new List<VirtualWorkspaceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(WorkspaceData.DeserializeWorkspaceData(item, options));
+                        array.Add(VirtualWorkspaceData.DeserializeVirtualWorkspaceData(item, options));
                     }
                     value = array;
                     continue;

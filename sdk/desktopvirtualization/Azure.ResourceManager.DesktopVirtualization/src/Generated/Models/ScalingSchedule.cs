@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -20,7 +19,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of <see cref="ScalingSchedule"/>. </summary>
         public ScalingSchedule()
         {
-            DaysOfWeek = new ChangeTrackingList<Models.ScalingScheduleDaysOfWeekItem>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ScalingSchedule"/>. </summary>
@@ -45,7 +43,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="offPeakStartTime"> Starting time for off-peak period. </param>
         /// <param name="offPeakLoadBalancingAlgorithm"> Load balancing algorithm for off-peak period. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScalingSchedule(string name, IList<Models.ScalingScheduleDaysOfWeekItem> daysOfWeek, ScalingMethodType? scalingMethod, CreateDeleteProperties createDelete, Time rampUpStartTime, SessionHostLoadBalancingAlgorithm? rampUpLoadBalancingAlgorithm, int? rampUpMinimumHostsPct, int? rampUpCapacityThresholdPct, Time peakStartTime, SessionHostLoadBalancingAlgorithm? peakLoadBalancingAlgorithm, Time rampDownStartTime, SessionHostLoadBalancingAlgorithm? rampDownLoadBalancingAlgorithm, int? rampDownMinimumHostsPct, int? rampDownCapacityThresholdPct, bool? rampDownForceLogoffUsers, StopHostsWhen? rampDownStopHostsWhen, int? rampDownWaitTimeMinutes, string rampDownNotificationMessage, Time offPeakStartTime, SessionHostLoadBalancingAlgorithm? offPeakLoadBalancingAlgorithm, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScalingSchedule(string name, ScalingScheduleDaysOfWeekItem? daysOfWeek, ScalingMethodType? scalingMethod, CreateDeleteProperties createDelete, ScalingActionTime rampUpStartTime, SessionHostLoadBalancingAlgorithm? rampUpLoadBalancingAlgorithm, int? rampUpMinimumHostsPct, int? rampUpCapacityThresholdPct, ScalingActionTime peakStartTime, SessionHostLoadBalancingAlgorithm? peakLoadBalancingAlgorithm, ScalingActionTime rampDownStartTime, SessionHostLoadBalancingAlgorithm? rampDownLoadBalancingAlgorithm, int? rampDownMinimumHostsPct, int? rampDownCapacityThresholdPct, bool? rampDownForceLogoffUsers, DesktopVirtualizationStopHostsWhen? rampDownStopHostsWhen, int? rampDownWaitTimeMinutes, string rampDownNotificationMessage, ScalingActionTime offPeakStartTime, SessionHostLoadBalancingAlgorithm? offPeakLoadBalancingAlgorithm, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             DaysOfWeek = daysOfWeek;
@@ -74,7 +72,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public string Name { get; set; }
 
         /// <summary> Set of days of the week on which this schedule is active. </summary>
-        public IList<Models.ScalingScheduleDaysOfWeekItem> DaysOfWeek { get; }
+        public ScalingScheduleDaysOfWeekItem? DaysOfWeek { get; set; }
 
         /// <summary> The desired scaling method to be used to scale the hosts in the assigned host pool. </summary>
         public ScalingMethodType? ScalingMethod { get; set; }
@@ -83,7 +81,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public CreateDeleteProperties CreateDelete { get; set; }
 
         /// <summary> Starting time for ramp up period. </summary>
-        public Time RampUpStartTime { get; set; }
+        public ScalingActionTime RampUpStartTime { get; set; }
 
         /// <summary> Load balancing algorithm for ramp up period. </summary>
         public SessionHostLoadBalancingAlgorithm? RampUpLoadBalancingAlgorithm { get; set; }
@@ -95,13 +93,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public int? RampUpCapacityThresholdPct { get; set; }
 
         /// <summary> Starting time for peak period. </summary>
-        public Time PeakStartTime { get; set; }
+        public ScalingActionTime PeakStartTime { get; set; }
 
         /// <summary> Load balancing algorithm for peak period. </summary>
         public SessionHostLoadBalancingAlgorithm? PeakLoadBalancingAlgorithm { get; set; }
 
         /// <summary> Starting time for ramp down period. </summary>
-        public Time RampDownStartTime { get; set; }
+        public ScalingActionTime RampDownStartTime { get; set; }
 
         /// <summary> Load balancing algorithm for ramp down period. </summary>
         public SessionHostLoadBalancingAlgorithm? RampDownLoadBalancingAlgorithm { get; set; }
@@ -116,7 +114,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public bool? RampDownForceLogoffUsers { get; set; }
 
         /// <summary> Specifies when to stop hosts during ramp down period. </summary>
-        public StopHostsWhen? RampDownStopHostsWhen { get; set; }
+        public DesktopVirtualizationStopHostsWhen? RampDownStopHostsWhen { get; set; }
 
         /// <summary> Number of minutes to wait to stop hosts during ramp down period. </summary>
         public int? RampDownWaitTimeMinutes { get; set; }
@@ -125,7 +123,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public string RampDownNotificationMessage { get; set; }
 
         /// <summary> Starting time for off-peak period. </summary>
-        public Time OffPeakStartTime { get; set; }
+        public ScalingActionTime OffPeakStartTime { get; set; }
 
         /// <summary> Load balancing algorithm for off-peak period. </summary>
         public SessionHostLoadBalancingAlgorithm? OffPeakLoadBalancingAlgorithm { get; set; }

@@ -1,0 +1,915 @@
+{
+  "name": "Azure.ClientGenerator.Core.@armProviderSchema",
+  "arguments": {
+    "resources": [
+      {
+        "resourceModelId": "Microsoft.DesktopVirtualization.AppAttachPackage",
+        "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/appAttachPackages/{appAttachPackageName}",
+        "resourceType": "Microsoft.DesktopVirtualization/appAttachPackages",
+        "methods": [
+          {
+            "$id": "2001",
+            "methodId": "Microsoft.DesktopVirtualization.AppAttachPackages.createOrUpdate",
+            "kind": "Create",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/appAttachPackages/{appAttachPackageName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/appAttachPackages/{appAttachPackageName}"
+          },
+          {
+            "$id": "2002",
+            "methodId": "Microsoft.DesktopVirtualization.AppAttachPackages.get",
+            "kind": "Read",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/appAttachPackages/{appAttachPackageName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/appAttachPackages/{appAttachPackageName}"
+          },
+          {
+            "$id": "2003",
+            "methodId": "Microsoft.DesktopVirtualization.AppAttachPackages.update",
+            "kind": "Update",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/appAttachPackages/{appAttachPackageName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/appAttachPackages/{appAttachPackageName}"
+          },
+          {
+            "$id": "2004",
+            "methodId": "Microsoft.DesktopVirtualization.AppAttachPackages.delete",
+            "kind": "Delete",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/appAttachPackages/{appAttachPackageName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/appAttachPackages/{appAttachPackageName}"
+          },
+          {
+            "$id": "2005",
+            "methodId": "Microsoft.DesktopVirtualization.AppAttachPackages.listByResourceGroup",
+            "kind": "List",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/appAttachPackages",
+            "operationScope": "ResourceGroup"
+          },
+          {
+            "$id": "2006",
+            "methodId": "Microsoft.DesktopVirtualization.AppAttachPackages.listBySubscription",
+            "kind": "List",
+            "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.DesktopVirtualization/appAttachPackages",
+            "operationScope": "Subscription"
+          }
+        ],
+        "resourceScope": "ResourceGroup",
+        "resourceName": "AppAttachPackage"
+      },
+      {
+        "resourceModelId": "Microsoft.DesktopVirtualization.ApplicationGroup",
+        "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}",
+        "resourceType": "Microsoft.DesktopVirtualization/applicationGroups",
+        "methods": [
+          {
+            "$id": "2007",
+            "methodId": "Microsoft.DesktopVirtualization.ApplicationGroups.createOrUpdate",
+            "kind": "Create",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}"
+          },
+          {
+            "$id": "2008",
+            "methodId": "Microsoft.DesktopVirtualization.ApplicationGroups.get",
+            "kind": "Read",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}"
+          },
+          {
+            "$id": "2009",
+            "methodId": "Microsoft.DesktopVirtualization.ApplicationGroups.update",
+            "kind": "Update",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}"
+          },
+          {
+            "$id": "2010",
+            "methodId": "Microsoft.DesktopVirtualization.ApplicationGroups.delete",
+            "kind": "Delete",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}"
+          },
+          {
+            "$id": "2011",
+            "methodId": "Microsoft.DesktopVirtualization.ApplicationGroups.listByResourceGroup",
+            "kind": "List",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups",
+            "operationScope": "ResourceGroup"
+          },
+          {
+            "$id": "2012",
+            "methodId": "Microsoft.DesktopVirtualization.ApplicationGroups.listBySubscription",
+            "kind": "List",
+            "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.DesktopVirtualization/applicationGroups",
+            "operationScope": "Subscription"
+          },
+          {
+            "$id": "2013",
+            "methodId": "Microsoft.DesktopVirtualization.StartMenuItems.list",
+            "kind": "Action",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/startMenuItems",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}"
+          }
+        ],
+        "resourceScope": "ResourceGroup",
+        "resourceName": "VirtualApplicationGroup"
+      },
+      {
+        "resourceModelId": "Microsoft.DesktopVirtualization.HostPool",
+        "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}",
+        "resourceType": "Microsoft.DesktopVirtualization/hostPools",
+        "methods": [
+          {
+            "$id": "2014",
+            "methodId": "Microsoft.DesktopVirtualization.HostPools.createOrUpdate",
+            "kind": "Create",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}"
+          },
+          {
+            "$id": "2015",
+            "methodId": "Microsoft.DesktopVirtualization.HostPools.get",
+            "kind": "Read",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}"
+          },
+          {
+            "$id": "2016",
+            "methodId": "Microsoft.DesktopVirtualization.HostPools.update",
+            "kind": "Update",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}"
+          },
+          {
+            "$id": "2017",
+            "methodId": "Microsoft.DesktopVirtualization.HostPools.delete",
+            "kind": "Delete",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}"
+          },
+          {
+            "$id": "2018",
+            "methodId": "Microsoft.DesktopVirtualization.HostPools.list",
+            "kind": "List",
+            "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.DesktopVirtualization/hostPools",
+            "operationScope": "Subscription"
+          },
+          {
+            "$id": "2019",
+            "methodId": "Microsoft.DesktopVirtualization.HostPools.listByResourceGroup",
+            "kind": "List",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools",
+            "operationScope": "ResourceGroup"
+          },
+          {
+            "$id": "2020",
+            "methodId": "Microsoft.DesktopVirtualization.ActiveSessionHostConfigurations.listByHostPool",
+            "kind": "Action",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/activeSessionHostConfigurations",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}"
+          },
+          {
+            "$id": "2021",
+            "methodId": "Microsoft.DesktopVirtualization.PrivateLinkResources.listByHostPool",
+            "kind": "Action",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/privateLinkResources",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}"
+          },
+          {
+            "$id": "2022",
+            "methodId": "Microsoft.DesktopVirtualization.ScalingPlans.listByHostPool",
+            "kind": "Action",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/scalingPlans",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}"
+          },
+          {
+            "$id": "2023",
+            "methodId": "Microsoft.DesktopVirtualization.UserSessions.listByHostPool",
+            "kind": "Action",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/userSessions",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}"
+          }
+        ],
+        "resourceScope": "ResourceGroup",
+        "resourceName": "HostPool"
+      },
+      {
+        "resourceModelId": "Microsoft.DesktopVirtualization.ScalingPlan",
+        "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}",
+        "resourceType": "Microsoft.DesktopVirtualization/scalingPlans",
+        "methods": [
+          {
+            "$id": "2024",
+            "methodId": "Microsoft.DesktopVirtualization.ScalingPlans.create",
+            "kind": "Create",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}"
+          },
+          {
+            "$id": "2025",
+            "methodId": "Microsoft.DesktopVirtualization.ScalingPlans.get",
+            "kind": "Read",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}"
+          },
+          {
+            "$id": "2026",
+            "methodId": "Microsoft.DesktopVirtualization.ScalingPlans.update",
+            "kind": "Update",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}"
+          },
+          {
+            "$id": "2027",
+            "methodId": "Microsoft.DesktopVirtualization.ScalingPlans.delete",
+            "kind": "Delete",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}"
+          },
+          {
+            "$id": "2028",
+            "methodId": "Microsoft.DesktopVirtualization.ScalingPlans.listByResourceGroup",
+            "kind": "List",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans",
+            "operationScope": "ResourceGroup"
+          },
+          {
+            "$id": "2029",
+            "methodId": "Microsoft.DesktopVirtualization.ScalingPlans.listBySubscription",
+            "kind": "List",
+            "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.DesktopVirtualization/scalingPlans",
+            "operationScope": "Subscription"
+          }
+        ],
+        "resourceScope": "ResourceGroup",
+        "resourceName": "ScalingPlan"
+      },
+      {
+        "resourceModelId": "Microsoft.DesktopVirtualization.Workspace",
+        "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/workspaces/{workspaceName}",
+        "resourceType": "Microsoft.DesktopVirtualization/workspaces",
+        "methods": [
+          {
+            "$id": "2030",
+            "methodId": "Microsoft.DesktopVirtualization.Workspaces.createOrUpdate",
+            "kind": "Create",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/workspaces/{workspaceName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/workspaces/{workspaceName}"
+          },
+          {
+            "$id": "2031",
+            "methodId": "Microsoft.DesktopVirtualization.Workspaces.get",
+            "kind": "Read",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/workspaces/{workspaceName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/workspaces/{workspaceName}"
+          },
+          {
+            "$id": "2032",
+            "methodId": "Microsoft.DesktopVirtualization.Workspaces.update",
+            "kind": "Update",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/workspaces/{workspaceName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/workspaces/{workspaceName}"
+          },
+          {
+            "$id": "2033",
+            "methodId": "Microsoft.DesktopVirtualization.Workspaces.delete",
+            "kind": "Delete",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/workspaces/{workspaceName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/workspaces/{workspaceName}"
+          },
+          {
+            "$id": "2034",
+            "methodId": "Microsoft.DesktopVirtualization.Workspaces.listByResourceGroup",
+            "kind": "List",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/workspaces",
+            "operationScope": "ResourceGroup"
+          },
+          {
+            "$id": "2035",
+            "methodId": "Microsoft.DesktopVirtualization.Workspaces.listBySubscription",
+            "kind": "List",
+            "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.DesktopVirtualization/workspaces",
+            "operationScope": "Subscription"
+          },
+          {
+            "$id": "2036",
+            "methodId": "Microsoft.DesktopVirtualization.PrivateLinkResources.listByWorkspace",
+            "kind": "Action",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/workspaces/{workspaceName}/privateLinkResources",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/workspaces/{workspaceName}"
+          }
+        ],
+        "resourceScope": "ResourceGroup",
+        "resourceName": "VirtualWorkspace"
+      },
+      {
+        "resourceModelId": "Microsoft.DesktopVirtualization.Application",
+        "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/applications/{applicationName}",
+        "resourceType": "Microsoft.DesktopVirtualization/applicationGroups/applications",
+        "methods": [
+          {
+            "$id": "2037",
+            "methodId": "Microsoft.DesktopVirtualization.Applications.createOrUpdate",
+            "kind": "Create",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/applications/{applicationName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/applications/{applicationName}"
+          },
+          {
+            "$id": "2038",
+            "methodId": "Microsoft.DesktopVirtualization.Applications.get",
+            "kind": "Read",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/applications/{applicationName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/applications/{applicationName}"
+          },
+          {
+            "$id": "2039",
+            "methodId": "Microsoft.DesktopVirtualization.Applications.update",
+            "kind": "Update",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/applications/{applicationName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/applications/{applicationName}"
+          },
+          {
+            "$id": "2040",
+            "methodId": "Microsoft.DesktopVirtualization.Applications.delete",
+            "kind": "Delete",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/applications/{applicationName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/applications/{applicationName}"
+          },
+          {
+            "$id": "2041",
+            "methodId": "Microsoft.DesktopVirtualization.Applications.list",
+            "kind": "List",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/applications",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}"
+          }
+        ],
+        "resourceScope": "ResourceGroup",
+        "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}",
+        "resourceName": "VirtualApplication"
+      },
+      {
+        "resourceModelId": "Microsoft.DesktopVirtualization.Desktop",
+        "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/desktops/{desktopName}",
+        "resourceType": "Microsoft.DesktopVirtualization/applicationGroups/desktops",
+        "methods": [
+          {
+            "$id": "2042",
+            "methodId": "Microsoft.DesktopVirtualization.Desktops.get",
+            "kind": "Read",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/desktops/{desktopName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/desktops/{desktopName}"
+          },
+          {
+            "$id": "2043",
+            "methodId": "Microsoft.DesktopVirtualization.Desktops.update",
+            "kind": "Update",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/desktops/{desktopName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/desktops/{desktopName}"
+          },
+          {
+            "$id": "2044",
+            "methodId": "Microsoft.DesktopVirtualization.Desktops.list",
+            "kind": "List",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/desktops",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}"
+          }
+        ],
+        "resourceScope": "ResourceGroup",
+        "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}",
+        "resourceName": "VirtualDesktop"
+      },
+      {
+        "resourceModelId": "Microsoft.DesktopVirtualization.PrivateEndpointConnectionWithSystemData",
+        "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/privateEndpointConnections/{privateEndpointConnectionName}",
+        "resourceType": "Microsoft.DesktopVirtualization/hostPools/privateEndpointConnections",
+        "methods": [
+          {
+            "$id": "2045",
+            "methodId": "Microsoft.DesktopVirtualization.CustomPrivateEndpointConnection.updateByHostPool",
+            "kind": "Create",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/privateEndpointConnections/{privateEndpointConnectionName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/privateEndpointConnections/{privateEndpointConnectionName}"
+          },
+          {
+            "$id": "2046",
+            "methodId": "Microsoft.DesktopVirtualization.CustomPrivateEndpointConnection.getByHostPool",
+            "kind": "Read",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/privateEndpointConnections/{privateEndpointConnectionName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/privateEndpointConnections/{privateEndpointConnectionName}"
+          },
+          {
+            "$id": "2047",
+            "methodId": "Microsoft.DesktopVirtualization.CustomPrivateEndpointConnection.deleteByHostPool",
+            "kind": "Delete",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/privateEndpointConnections/{privateEndpointConnectionName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/privateEndpointConnections/{privateEndpointConnectionName}"
+          },
+          {
+            "$id": "2048",
+            "methodId": "Microsoft.DesktopVirtualization.CustomPrivateEndpointConnection.listByHostPool",
+            "kind": "List",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/privateEndpointConnections",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}"
+          }
+        ],
+        "resourceScope": "ResourceGroup",
+        "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}",
+        "resourceName": "PrivateEndpointConnection"
+      },
+      {
+        "resourceModelId": "Microsoft.DesktopVirtualization.PrivateEndpointConnectionWithSystemData",
+        "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/workspaces/{workspaceName}/privateEndpointConnections/{privateEndpointConnectionName}",
+        "resourceType": "Microsoft.DesktopVirtualization/workspaces/privateEndpointConnections",
+        "methods": [
+          {
+            "$id": "2049",
+            "methodId": "Microsoft.DesktopVirtualization.CustomPrivateEndpointConnection.updateByWorkspace",
+            "kind": "Create",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/workspaces/{workspaceName}/privateEndpointConnections/{privateEndpointConnectionName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/workspaces/{workspaceName}/privateEndpointConnections/{privateEndpointConnectionName}"
+          },
+          {
+            "$id": "2050",
+            "methodId": "Microsoft.DesktopVirtualization.CustomPrivateEndpointConnection.getByWorkspace",
+            "kind": "Read",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/workspaces/{workspaceName}/privateEndpointConnections/{privateEndpointConnectionName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/workspaces/{workspaceName}/privateEndpointConnections/{privateEndpointConnectionName}"
+          },
+          {
+            "$id": "2051",
+            "methodId": "Microsoft.DesktopVirtualization.CustomPrivateEndpointConnection.deleteByWorkspace",
+            "kind": "Delete",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/workspaces/{workspaceName}/privateEndpointConnections/{privateEndpointConnectionName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/workspaces/{workspaceName}/privateEndpointConnections/{privateEndpointConnectionName}"
+          },
+          {
+            "$id": "2052",
+            "methodId": "Microsoft.DesktopVirtualization.CustomPrivateEndpointConnection.listByWorkspace",
+            "kind": "List",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/workspaces/{workspaceName}/privateEndpointConnections",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/workspaces/{workspaceName}"
+          }
+        ],
+        "resourceScope": "ResourceGroup",
+        "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/workspaces/{workspaceName}",
+        "resourceName": "PrivateEndpointConnection"
+      },
+      {
+        "resourceModelId": "Microsoft.DesktopVirtualization.SessionHost",
+        "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}",
+        "resourceType": "Microsoft.DesktopVirtualization/hostPools/sessionHosts",
+        "methods": [
+          {
+            "$id": "2053",
+            "methodId": "Microsoft.DesktopVirtualization.SessionHosts.create",
+            "kind": "Create",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}"
+          },
+          {
+            "$id": "2054",
+            "methodId": "Microsoft.DesktopVirtualization.SessionHosts.get",
+            "kind": "Read",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}"
+          },
+          {
+            "$id": "2055",
+            "methodId": "Microsoft.DesktopVirtualization.SessionHosts.update",
+            "kind": "Update",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}"
+          },
+          {
+            "$id": "2056",
+            "methodId": "Microsoft.DesktopVirtualization.SessionHosts.delete",
+            "kind": "Delete",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}"
+          },
+          {
+            "$id": "2057",
+            "methodId": "Microsoft.DesktopVirtualization.SessionHosts.list",
+            "kind": "List",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}"
+          }
+        ],
+        "resourceScope": "ResourceGroup",
+        "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}",
+        "resourceName": "SessionHost"
+      },
+      {
+        "resourceModelId": "Microsoft.DesktopVirtualization.UserSession",
+        "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}/userSessions/{userSessionId}",
+        "resourceType": "Microsoft.DesktopVirtualization/hostPools/sessionHosts/userSessions",
+        "methods": [
+          {
+            "$id": "2058",
+            "methodId": "Microsoft.DesktopVirtualization.UserSessions.get",
+            "kind": "Read",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}/userSessions/{userSessionId}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}/userSessions/{userSessionId}"
+          },
+          {
+            "$id": "2059",
+            "methodId": "Microsoft.DesktopVirtualization.UserSessions.delete",
+            "kind": "Delete",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}/userSessions/{userSessionId}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}/userSessions/{userSessionId}"
+          },
+          {
+            "$id": "2060",
+            "methodId": "Microsoft.DesktopVirtualization.UserSessions.list",
+            "kind": "List",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}/userSessions",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}"
+          }
+        ],
+        "resourceScope": "ResourceGroup",
+        "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}",
+        "resourceName": "UserSession"
+      },
+      {
+        "resourceModelId": "Microsoft.DesktopVirtualization.ScalingPlanPersonalSchedule",
+        "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}/personalSchedules/{scalingPlanScheduleName}",
+        "resourceType": "Microsoft.DesktopVirtualization/scalingPlans/personalSchedules",
+        "methods": [
+          {
+            "$id": "2061",
+            "methodId": "Microsoft.DesktopVirtualization.ScalingPlanPersonalSchedules.create",
+            "kind": "Create",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}/personalSchedules/{scalingPlanScheduleName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}/personalSchedules/{scalingPlanScheduleName}"
+          },
+          {
+            "$id": "2062",
+            "methodId": "Microsoft.DesktopVirtualization.ScalingPlanPersonalSchedules.get",
+            "kind": "Read",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}/personalSchedules/{scalingPlanScheduleName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}/personalSchedules/{scalingPlanScheduleName}"
+          },
+          {
+            "$id": "2063",
+            "methodId": "Microsoft.DesktopVirtualization.ScalingPlanPersonalSchedules.update",
+            "kind": "Update",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}/personalSchedules/{scalingPlanScheduleName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}/personalSchedules/{scalingPlanScheduleName}"
+          },
+          {
+            "$id": "2064",
+            "methodId": "Microsoft.DesktopVirtualization.ScalingPlanPersonalSchedules.delete",
+            "kind": "Delete",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}/personalSchedules/{scalingPlanScheduleName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}/personalSchedules/{scalingPlanScheduleName}"
+          },
+          {
+            "$id": "2065",
+            "methodId": "Microsoft.DesktopVirtualization.ScalingPlanPersonalSchedules.list",
+            "kind": "List",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}/personalSchedules",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}"
+          }
+        ],
+        "resourceScope": "ResourceGroup",
+        "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}",
+        "resourceName": "ScalingPlanPersonalSchedule"
+      },
+      {
+        "resourceModelId": "Microsoft.DesktopVirtualization.ScalingPlanPooledSchedule",
+        "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}/pooledSchedules/{scalingPlanScheduleName}",
+        "resourceType": "Microsoft.DesktopVirtualization/scalingPlans/pooledSchedules",
+        "methods": [
+          {
+            "$id": "2066",
+            "methodId": "Microsoft.DesktopVirtualization.ScalingPlanPooledSchedules.create",
+            "kind": "Create",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}/pooledSchedules/{scalingPlanScheduleName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}/pooledSchedules/{scalingPlanScheduleName}"
+          },
+          {
+            "$id": "2067",
+            "methodId": "Microsoft.DesktopVirtualization.ScalingPlanPooledSchedules.get",
+            "kind": "Read",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}/pooledSchedules/{scalingPlanScheduleName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}/pooledSchedules/{scalingPlanScheduleName}"
+          },
+          {
+            "$id": "2068",
+            "methodId": "Microsoft.DesktopVirtualization.ScalingPlanPooledSchedules.update",
+            "kind": "Update",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}/pooledSchedules/{scalingPlanScheduleName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}/pooledSchedules/{scalingPlanScheduleName}"
+          },
+          {
+            "$id": "2069",
+            "methodId": "Microsoft.DesktopVirtualization.ScalingPlanPooledSchedules.delete",
+            "kind": "Delete",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}/pooledSchedules/{scalingPlanScheduleName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}/pooledSchedules/{scalingPlanScheduleName}"
+          },
+          {
+            "$id": "2070",
+            "methodId": "Microsoft.DesktopVirtualization.ScalingPlanPooledSchedules.list",
+            "kind": "List",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}/pooledSchedules",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}"
+          }
+        ],
+        "resourceScope": "ResourceGroup",
+        "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}",
+        "resourceName": "ScalingPlanPooledSchedule"
+      },
+      {
+        "resourceModelId": "Microsoft.DesktopVirtualization.MSIXPackage",
+        "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/msixPackages/{msixPackageFullName}",
+        "resourceType": "Microsoft.DesktopVirtualization/hostPools/msixPackages",
+        "methods": [
+          {
+            "$id": "2071",
+            "methodId": "Microsoft.DesktopVirtualization.MSIXPackages.createOrUpdate",
+            "kind": "Create",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/msixPackages/{msixPackageFullName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/msixPackages/{msixPackageFullName}"
+          },
+          {
+            "$id": "2072",
+            "methodId": "Microsoft.DesktopVirtualization.MSIXPackages.get",
+            "kind": "Read",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/msixPackages/{msixPackageFullName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/msixPackages/{msixPackageFullName}"
+          },
+          {
+            "$id": "2073",
+            "methodId": "Microsoft.DesktopVirtualization.MSIXPackages.update",
+            "kind": "Update",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/msixPackages/{msixPackageFullName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/msixPackages/{msixPackageFullName}"
+          },
+          {
+            "$id": "2074",
+            "methodId": "Microsoft.DesktopVirtualization.MSIXPackages.delete",
+            "kind": "Delete",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/msixPackages/{msixPackageFullName}",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/msixPackages/{msixPackageFullName}"
+          },
+          {
+            "$id": "2075",
+            "methodId": "Microsoft.DesktopVirtualization.MSIXPackages.list",
+            "kind": "List",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/msixPackages",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}"
+          }
+        ],
+        "resourceScope": "ResourceGroup",
+        "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}",
+        "resourceName": "MSIXPackage"
+      },
+      {
+        "resourceModelId": "Microsoft.DesktopVirtualization.ActiveSessionHostConfiguration",
+        "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/activeSessionHostConfigurations/default",
+        "resourceType": "Microsoft.DesktopVirtualization/hostPools/activeSessionHostConfigurations",
+        "methods": [
+          {
+            "$id": "2076",
+            "methodId": "Microsoft.DesktopVirtualization.ActiveSessionHostConfigurations.get",
+            "kind": "Read",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/activeSessionHostConfigurations/default",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/activeSessionHostConfigurations/default"
+          }
+        ],
+        "resourceScope": "ResourceGroup",
+        "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}",
+        "singletonResourceName": "default",
+        "resourceName": "ActiveSessionHostConfiguration"
+      },
+      {
+        "resourceModelId": "Microsoft.DesktopVirtualization.SessionHostManagement",
+        "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHostManagements/default",
+        "resourceType": "Microsoft.DesktopVirtualization/hostPools/sessionHostManagements",
+        "methods": [
+          {
+            "$id": "2077",
+            "methodId": "Microsoft.DesktopVirtualization.SessionHostManagements.createOrUpdate",
+            "kind": "Create",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHostManagements/default",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHostManagements/default"
+          },
+          {
+            "$id": "2078",
+            "methodId": "Microsoft.DesktopVirtualization.SessionHostManagements.get",
+            "kind": "Read",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHostManagements/default",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHostManagements/default"
+          },
+          {
+            "$id": "2079",
+            "methodId": "Microsoft.DesktopVirtualization.SessionHostManagements.update",
+            "kind": "Update",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHostManagements/default",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHostManagements/default"
+          },
+          {
+            "$id": "2080",
+            "methodId": "Microsoft.DesktopVirtualization.SessionHostManagements.listByHostPool",
+            "kind": "List",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHostManagements",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}"
+          },
+          {
+            "$id": "2081",
+            "methodId": "Microsoft.DesktopVirtualization.ControlSessionHostProvisioning.post",
+            "kind": "Action",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHostManagements/default/controlSessionHostProvisioning",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHostManagements/default"
+          },
+          {
+            "$id": "2082",
+            "methodId": "Microsoft.DesktopVirtualization.ControlSessionHostUpdate.post",
+            "kind": "Action",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHostManagements/default/controlSessionHostUpdate",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHostManagements/default"
+          }
+        ],
+        "resourceScope": "ResourceGroup",
+        "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}",
+        "singletonResourceName": "default",
+        "resourceName": "SessionHostManagement"
+      },
+      {
+        "resourceModelId": "Microsoft.DesktopVirtualization.SessionHostConfiguration",
+        "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHostConfigurations/default",
+        "resourceType": "Microsoft.DesktopVirtualization/hostPools/sessionHostConfigurations",
+        "methods": [
+          {
+            "$id": "2083",
+            "methodId": "Microsoft.DesktopVirtualization.SessionHostConfigurations.createOrUpdate",
+            "kind": "Create",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHostConfigurations/default",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHostConfigurations/default"
+          },
+          {
+            "$id": "2084",
+            "methodId": "Microsoft.DesktopVirtualization.SessionHostConfigurations.get",
+            "kind": "Read",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHostConfigurations/default",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHostConfigurations/default"
+          },
+          {
+            "$id": "2085",
+            "methodId": "Microsoft.DesktopVirtualization.SessionHostConfigurations.update",
+            "kind": "Update",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHostConfigurations/default",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHostConfigurations/default"
+          },
+          {
+            "$id": "2086",
+            "methodId": "Microsoft.DesktopVirtualization.SessionHostConfigurations.listByHostPool",
+            "kind": "List",
+            "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHostConfigurations",
+            "operationScope": "ResourceGroup",
+            "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}"
+          }
+        ],
+        "resourceScope": "ResourceGroup",
+        "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}",
+        "singletonResourceName": "default",
+        "resourceName": "SessionHostConfiguration"
+      }
+    ],
+    "nonResourceMethods": [
+      {
+        "methodId": "Microsoft.DesktopVirtualization.SessionHostManagementUpdateStatuses.get",
+        "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHostManagements/default/sessionHostUpdateStatuses/default",
+        "operationScope": "ResourceGroup"
+      },
+      {
+        "methodId": "Microsoft.DesktopVirtualization.SessionHostManagementProvisioningStatuses.get",
+        "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHostManagements/default/sessionHostProvisioningStatuses/default",
+        "operationScope": "ResourceGroup"
+      },
+      {
+        "methodId": "Microsoft.DesktopVirtualization.Operations.list",
+        "operationPath": "/providers/Microsoft.DesktopVirtualization/operations",
+        "operationScope": "Tenant"
+      },
+      {
+        "methodId": "Microsoft.DesktopVirtualization.AppAttachPackageInfo.import",
+        "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/importAppAttachPackageInfo",
+        "operationScope": "ResourceGroup"
+      },
+      {
+        "methodId": "Microsoft.DesktopVirtualization.MSIXImages.expand",
+        "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/expandMsixImage",
+        "operationScope": "ResourceGroup"
+      },
+      {
+        "methodId": "Microsoft.DesktopVirtualization.HostPools.listRegistrationTokens",
+        "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/listRegistrationTokens",
+        "operationScope": "ResourceGroup"
+      },
+      {
+        "methodId": "Microsoft.DesktopVirtualization.HostPools.retrieveRegistrationToken",
+        "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/retrieveRegistrationToken",
+        "operationScope": "ResourceGroup"
+      },
+      {
+        "methodId": "Microsoft.DesktopVirtualization.SessionHosts.retryProvisioning",
+        "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}/retryProvisioning",
+        "operationScope": "ResourceGroup"
+      },
+      {
+        "methodId": "Microsoft.DesktopVirtualization.SessionHosts.listSingleSessionHostRegistrationTokens",
+        "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}/listSingleSessionHostRegistrationTokens",
+        "operationScope": "ResourceGroup"
+      },
+      {
+        "methodId": "Microsoft.DesktopVirtualization.UserSessions.disconnect",
+        "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}/userSessions/{userSessionId}/disconnect",
+        "operationScope": "ResourceGroup"
+      },
+      {
+        "methodId": "Microsoft.DesktopVirtualization.UserSessions.sendMessage",
+        "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}/userSessions/{userSessionId}/sendMessage",
+        "operationScope": "ResourceGroup"
+      },
+      {
+        "methodId": "Microsoft.DesktopVirtualization.InitiateSessionHostUpdate.post",
+        "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHostManagements/default/initiateSessionHostUpdate",
+        "operationScope": "ResourceGroup"
+      }
+    ]
+  }
+}

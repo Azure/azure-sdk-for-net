@@ -139,14 +139,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// </summary>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are applicationGroupType. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApplicationGroupResource> GetApplicationGroupsAsync(string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualApplicationGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualApplicationGroupResource> GetVirtualApplicationGroupsAsync(string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApplicationGroupData, ApplicationGroupResource>(new ApplicationGroupsGetBySubscriptionAsyncCollectionResultOfT(ApplicationGroupsRestClient, Guid.Parse(Id.SubscriptionId), filter, context), data => new ApplicationGroupResource(Client, data));
+            return new AsyncPageableWrapper<VirtualApplicationGroupData, VirtualApplicationGroupResource>(new ApplicationGroupsGetBySubscriptionAsyncCollectionResultOfT(ApplicationGroupsRestClient, Guid.Parse(Id.SubscriptionId), filter, context), data => new VirtualApplicationGroupResource(Client, data));
         }
 
         /// <summary>
@@ -168,14 +168,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// </summary>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are applicationGroupType. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApplicationGroupResource> GetApplicationGroups(string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualApplicationGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualApplicationGroupResource> GetVirtualApplicationGroups(string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApplicationGroupData, ApplicationGroupResource>(new ApplicationGroupsGetBySubscriptionCollectionResultOfT(ApplicationGroupsRestClient, Guid.Parse(Id.SubscriptionId), filter, context), data => new ApplicationGroupResource(Client, data));
+            return new PageableWrapper<VirtualApplicationGroupData, VirtualApplicationGroupResource>(new ApplicationGroupsGetBySubscriptionCollectionResultOfT(ApplicationGroupsRestClient, Guid.Parse(Id.SubscriptionId), filter, context), data => new VirtualApplicationGroupResource(Client, data));
         }
 
         /// <summary>
@@ -344,14 +344,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WorkspaceResource> GetWorkspacesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualWorkspaceResource> GetVirtualWorkspacesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkspaceData, WorkspaceResource>(new WorkspacesGetBySubscriptionAsyncCollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new WorkspaceResource(Client, data));
+            return new AsyncPageableWrapper<VirtualWorkspaceData, VirtualWorkspaceResource>(new WorkspacesGetBySubscriptionAsyncCollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new VirtualWorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -372,14 +372,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WorkspaceResource> GetWorkspaces(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualWorkspaceResource> GetVirtualWorkspaces(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkspaceData, WorkspaceResource>(new WorkspacesGetBySubscriptionCollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new WorkspaceResource(Client, data));
+            return new PageableWrapper<VirtualWorkspaceData, VirtualWorkspaceResource>(new WorkspacesGetBySubscriptionCollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new VirtualWorkspaceResource(Client, data));
         }
     }
 }

@@ -27,19 +27,19 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="provisioningState"> The provisioning state of the App Attach Package. </param>
         /// <param name="image"> Detailed properties for App Attach Package. </param>
         /// <param name="hostPoolReferences"> List of Hostpool resource Ids. </param>
-        /// <param name="keyVaultURL"> URL path to certificate name located in keyVault. </param>
+        /// <param name="keyVaultUri"> URL path to certificate name located in keyVault. </param>
         /// <param name="failHealthCheckOnStagingFailure"> Parameter indicating how the health check should behave if this package fails staging. </param>
         /// <param name="packageOwnerName"> Specific name of package owner, is "AppAttach" for native app attach packages. </param>
         /// <param name="packageLookbackUri"> Lookback url to third party control plane, is null for native app attach packages. </param>
         /// <param name="customData"> Field that can be populated with custom data and filtered on in list GET calls. </param>
         /// <param name="deploymentScope"> DeploymentScope type for AppAttachPackage. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppAttachPackageProperties(ProvisioningState? provisioningState, AppAttachPackageInfoProperties image, IList<string> hostPoolReferences, string keyVaultURL, FailHealthCheckOnStagingFailure? failHealthCheckOnStagingFailure, string packageOwnerName, Uri packageLookbackUri, string customData, DeploymentScope? deploymentScope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppAttachPackageProperties(AppAttachPackageProvisioningState? provisioningState, AppAttachPackageInfoProperties image, IList<string> hostPoolReferences, Uri keyVaultUri, FailHealthCheckOnStagingFailure? failHealthCheckOnStagingFailure, string packageOwnerName, Uri packageLookbackUri, string customData, DeploymentScope? deploymentScope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Image = image;
             HostPoolReferences = hostPoolReferences;
-            KeyVaultURL = keyVaultURL;
+            KeyVaultUri = keyVaultUri;
             FailHealthCheckOnStagingFailure = failHealthCheckOnStagingFailure;
             PackageOwnerName = packageOwnerName;
             PackageLookbackUri = packageLookbackUri;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> The provisioning state of the App Attach Package. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public AppAttachPackageProvisioningState? ProvisioningState { get; }
 
         /// <summary> Detailed properties for App Attach Package. </summary>
         public AppAttachPackageInfoProperties Image { get; set; }
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public IList<string> HostPoolReferences { get; }
 
         /// <summary> URL path to certificate name located in keyVault. </summary>
-        public string KeyVaultURL { get; set; }
+        public Uri KeyVaultUri { get; set; }
 
         /// <summary> Parameter indicating how the health check should behave if this package fails staging. </summary>
         public FailHealthCheckOnStagingFailure? FailHealthCheckOnStagingFailure { get; set; }

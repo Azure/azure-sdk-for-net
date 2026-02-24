@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Users get a new (random) SessionHost every time it connects to the HostPool. </summary>
         private const string PooledValue = "Pooled";
         /// <summary> Users assign their own machines, load balancing logic remains the same as Personal. PersonalDesktopAssignmentType must be Direct. </summary>
-        private const string BYODesktopValue = "BYODesktop";
+        private const string BringYourOwnDesktopValue = "BYODesktop";
 
         /// <summary> Initializes a new instance of <see cref="HostPoolType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static HostPoolType Pooled { get; } = new HostPoolType(PooledValue);
 
         /// <summary> Users assign their own machines, load balancing logic remains the same as Personal. PersonalDesktopAssignmentType must be Direct. </summary>
-        public static HostPoolType BYODesktop { get; } = new HostPoolType(BYODesktopValue);
+        public static HostPoolType BringYourOwnDesktop { get; } = new HostPoolType(BringYourOwnDesktopValue);
 
         /// <summary> Determines if two <see cref="HostPoolType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

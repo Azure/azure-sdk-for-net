@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(KeyVaultURL))
+            if (Optional.IsDefined(KeyVaultUri))
             {
                 writer.WritePropertyName("keyVaultURL"u8);
-                writer.WriteStringValue(KeyVaultURL);
+                writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             }
             if (Optional.IsDefined(FailHealthCheckOnStagingFailure))
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             AppAttachPackageInfoProperties image = default;
             IList<ResourceIdentifier> hostPoolReferences = default;
-            string keyVaultURL = default;
+            Uri keyVaultUri = default;
             FailHealthCheckOnStagingFailure? failHealthCheckOnStagingFailure = default;
             Uri packageLookbackUri = default;
             string customData = default;
@@ -158,7 +158,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 if (prop.NameEquals("keyVaultURL"u8))
                 {
-                    keyVaultURL = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keyVaultUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("failHealthCheckOnStagingFailure"u8))
@@ -192,7 +196,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new AppAttachPackagePatchProperties(
                 image,
                 hostPoolReferences ?? new ChangeTrackingList<ResourceIdentifier>(),
-                keyVaultURL,
+                keyVaultUri,
                 failHealthCheckOnStagingFailure,
                 packageLookbackUri,
                 customData,

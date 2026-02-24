@@ -15,7 +15,7 @@ using Azure.ResourceManager.DesktopVirtualization.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    internal partial class PrivateLinkResourcesGetByWorkspaceAsyncCollectionResultOfT : AsyncPageable<DesktopVirtualizationPrivateLinkResource>
+    internal partial class PrivateLinkResourcesGetByWorkspaceAsyncCollectionResultOfT : AsyncPageable<DesktopVirtualizationPrivateLinkResourceData>
     {
         private readonly PrivateLinkResources _client;
         private readonly Guid _subscriptionId;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of PrivateLinkResourcesGetByWorkspaceAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<DesktopVirtualizationPrivateLinkResource>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<DesktopVirtualizationPrivateLinkResourceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     yield break;
                 }
                 DesktopVirtualizationPrivateLinkResourceListResult result = DesktopVirtualizationPrivateLinkResourceListResult.FromResponse(response);
-                yield return Page<DesktopVirtualizationPrivateLinkResource>.FromValues((IReadOnlyList<DesktopVirtualizationPrivateLinkResource>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DesktopVirtualizationPrivateLinkResourceData>.FromValues((IReadOnlyList<DesktopVirtualizationPrivateLinkResourceData>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByWorkspaceRequest(nextLink, _subscriptionId, _resourceGroupName, _workspaceName, _pageSize, _isDescending, _initialSkip, _context) : _client.CreateGetByWorkspaceRequest(_subscriptionId, _resourceGroupName, _workspaceName, _pageSize, _isDescending, _initialSkip, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("WorkspaceResource.GetByWorkspace");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("VirtualWorkspaceResource.GetByWorkspace");
             scope.Start();
             try
             {

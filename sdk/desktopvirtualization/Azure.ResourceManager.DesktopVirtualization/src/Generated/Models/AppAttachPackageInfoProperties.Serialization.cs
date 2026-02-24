@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(LastUpdated))
+            if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdated"u8);
-                writer.WriteStringValue(LastUpdated.Value, "O");
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(PackageApplications))
             {
@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("certificateName"u8);
                 writer.WriteStringValue(CertificateName);
             }
-            if (Optional.IsDefined(CertificateExpiry))
+            if (Optional.IsDefined(CertificateExpireOn))
             {
                 writer.WritePropertyName("certificateExpiry"u8);
-                writer.WriteStringValue(CertificateExpiry.Value, "O");
+                writer.WriteStringValue(CertificateExpireOn.Value, "O");
             }
             if (Optional.IsDefined(IsPackageTimestamped))
             {
@@ -177,10 +177,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             bool? isActive = default;
             IList<MsixPackageDependencies> packageDependencies = default;
             string version = default;
-            DateTimeOffset? lastUpdated = default;
+            DateTimeOffset? lastUpdatedOn = default;
             IList<MsixPackageApplications> packageApplications = default;
             string certificateName = default;
-            DateTimeOffset? certificateExpiry = default;
+            DateTimeOffset? certificateExpireOn = default;
             PackageTimestamped? isPackageTimestamped = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    lastUpdated = prop.Value.GetDateTimeOffset("O");
+                    lastUpdatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("packageApplications"u8))
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    certificateExpiry = prop.Value.GetDateTimeOffset("O");
+                    certificateExpireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("isPackageTimestamped"u8))
@@ -320,10 +320,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 isActive,
                 packageDependencies ?? new ChangeTrackingList<MsixPackageDependencies>(),
                 version,
-                lastUpdated,
+                lastUpdatedOn,
                 packageApplications ?? new ChangeTrackingList<MsixPackageApplications>(),
                 certificateName,
-                certificateExpiry,
+                certificateExpireOn,
                 isPackageTimestamped,
                 additionalBinaryDataProperties);
         }

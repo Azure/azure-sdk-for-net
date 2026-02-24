@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Initializes a new instance of <see cref="ApplicationList"/>. </summary>
         /// <param name="value"> The Application items on this page. </param>
-        internal ApplicationList(IEnumerable<ApplicationData> value)
+        internal ApplicationList(IEnumerable<VirtualApplicationData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="value"> The Application items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationList(IList<ApplicationData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationList(IList<VirtualApplicationData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> The Application items on this page. </summary>
-        public IList<ApplicationData> Value { get; }
+        public IList<VirtualApplicationData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

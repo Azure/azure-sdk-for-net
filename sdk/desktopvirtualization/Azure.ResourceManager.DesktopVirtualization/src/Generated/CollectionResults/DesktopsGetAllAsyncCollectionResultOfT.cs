@@ -15,7 +15,7 @@ using Azure.ResourceManager.DesktopVirtualization.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    internal partial class DesktopsGetAllAsyncCollectionResultOfT : AsyncPageable<DesktopData>
+    internal partial class DesktopsGetAllAsyncCollectionResultOfT : AsyncPageable<VirtualDesktopData>
     {
         private readonly Desktops _client;
         private readonly Guid _subscriptionId;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of DesktopsGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<DesktopData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<VirtualDesktopData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     yield break;
                 }
                 DesktopList result = DesktopList.FromResponse(response);
-                yield return Page<DesktopData>.FromValues((IReadOnlyList<DesktopData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<VirtualDesktopData>.FromValues((IReadOnlyList<VirtualDesktopData>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _applicationGroupName, _pageSize, _isDescending, _initialSkip, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _applicationGroupName, _pageSize, _isDescending, _initialSkip, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DesktopCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("VirtualDesktopCollection.GetAll");
             scope.Start();
             try
             {

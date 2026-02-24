@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -22,20 +23,20 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ScalingHostPoolReference"/>. </summary>
-        /// <param name="hostPoolArmPath"> Arm path of referenced hostpool. </param>
-        /// <param name="scalingPlanEnabled"> Is the scaling plan enabled for this hostpool. </param>
+        /// <param name="hostPoolId"> Arm path of referenced hostpool. </param>
+        /// <param name="isScalingPlanEnabled"> Is the scaling plan enabled for this hostpool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScalingHostPoolReference(string hostPoolArmPath, bool? scalingPlanEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScalingHostPoolReference(ResourceIdentifier hostPoolId, bool? isScalingPlanEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            HostPoolArmPath = hostPoolArmPath;
-            ScalingPlanEnabled = scalingPlanEnabled;
+            HostPoolId = hostPoolId;
+            IsScalingPlanEnabled = isScalingPlanEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Arm path of referenced hostpool. </summary>
-        public string HostPoolArmPath { get; set; }
+        public ResourceIdentifier HostPoolId { get; set; }
 
         /// <summary> Is the scaling plan enabled for this hostpool. </summary>
-        public bool? ScalingPlanEnabled { get; set; }
+        public bool? IsScalingPlanEnabled { get; set; }
     }
 }

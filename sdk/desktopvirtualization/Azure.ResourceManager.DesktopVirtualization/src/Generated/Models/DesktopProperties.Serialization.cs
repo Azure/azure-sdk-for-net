@@ -57,7 +57,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (options.Format != "W" && Optional.IsDefined(IconContent))
             {
                 writer.WritePropertyName("iconContent"u8);
-                writer.WriteBase64StringValue(IconContent.ToArray(), "D");
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(IconContent);
+#else
+                using (JsonDocument document = JsonDocument.Parse(IconContent))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -135,7 +142,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    iconContent = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
+                    iconContent = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")

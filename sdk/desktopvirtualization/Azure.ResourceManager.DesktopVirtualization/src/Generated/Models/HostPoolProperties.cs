@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="hostPoolType"> HostPool type for desktop. </param>
         /// <param name="loadBalancerType"> The type of the load balancer. </param>
         /// <param name="preferredAppGroupType"> The type of preferred application group type, default to Desktop Application Group. </param>
-        public HostPoolProperties(HostPoolType hostPoolType, LoadBalancerType loadBalancerType, PreferredAppGroupType preferredAppGroupType)
+        public HostPoolProperties(HostPoolType hostPoolType, HostPoolLoadBalancerType loadBalancerType, PreferredAppGroupType preferredAppGroupType)
         {
             HostPoolType = hostPoolType;
             LoadBalancerType = loadBalancerType;
@@ -41,18 +41,18 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="maxSessionLimit"> The max session limit of HostPool. </param>
         /// <param name="loadBalancerType"> The type of the load balancer. </param>
         /// <param name="ring"> The ring number of HostPool. </param>
-        /// <param name="validationEnvironment"> Is validation environment. </param>
+        /// <param name="isValidationEnvironment"> Is validation environment. </param>
         /// <param name="registrationInfo"> The registration info of HostPool. </param>
         /// <param name="vmTemplate"> VM template for sessionhosts configuration within hostpool. </param>
         /// <param name="applicationGroupReferences"> List of applicationGroup links. </param>
         /// <param name="appAttachPackageReferences"> List of App Attach Package links. </param>
-        /// <param name="ssoadfsAuthority"> URL to customer ADFS server for signing WVD SSO certificates. </param>
+        /// <param name="ssoAdfsAuthority"> URL to customer ADFS server for signing WVD SSO certificates. </param>
         /// <param name="ssoClientId"> ClientId for the registered Relying Party used to issue WVD SSO certificates. </param>
         /// <param name="ssoClientSecretKeyVaultPath"> Path to Azure KeyVault storing the secret used for communication to ADFS. </param>
         /// <param name="ssoSecretType"> The type of single sign on Secret Type. </param>
         /// <param name="preferredAppGroupType"> The type of preferred application group type, default to Desktop Application Group. </param>
         /// <param name="startVMOnConnect"> The flag to turn on/off StartVMOnConnect feature. </param>
-        /// <param name="cloudPcResource"> Is cloud pc resource. </param>
+        /// <param name="isCloudPcResource"> Is cloud pc resource. </param>
         /// <param name="publicNetworkAccess"> Enabled allows this resource to be accessed from both public and private networks, Disabled allows this resource to only be accessed via private endpoints. </param>
         /// <param name="agentUpdate"> The session host configuration for updating agent, monitoring agent, and stack component. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connection associated with the specified resource. </param>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="oboTenantId"> Tenant that the resource is being requested on behalf of. </param>
         /// <param name="allowRDPShortPathWithPrivateLink"> Controls if the use of RDPShortPath transport is allowed, possibly bypassing Private Link routes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HostPoolProperties(string objectId, string friendlyName, string description, HostPoolType hostPoolType, PersonalDesktopAssignmentType? personalDesktopAssignmentType, string customRdpProperty, int? maxSessionLimit, LoadBalancerType loadBalancerType, int? ring, bool? validationEnvironment, RegistrationInfo registrationInfo, string vmTemplate, IReadOnlyList<string> applicationGroupReferences, IReadOnlyList<string> appAttachPackageReferences, string ssoadfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, SSOSecretType? ssoSecretType, PreferredAppGroupType preferredAppGroupType, bool? startVMOnConnect, bool? cloudPcResource, HostpoolPublicNetworkAccess? publicNetworkAccess, AgentUpdateProperties agentUpdate, IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections, ManagedPrivateUDP? managedPrivateUDP, DirectUDP? directUDP, PublicUDP? publicUDP, RelayUDP? relayUDP, ManagementType? managementType, DeploymentScope? deploymentScope, string oboTenantId, AllowRDPShortPathWithPrivateLink? allowRDPShortPathWithPrivateLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HostPoolProperties(string objectId, string friendlyName, string description, HostPoolType hostPoolType, PersonalDesktopAssignmentType? personalDesktopAssignmentType, string customRdpProperty, int? maxSessionLimit, HostPoolLoadBalancerType loadBalancerType, int? ring, bool? isValidationEnvironment, HostPoolRegistrationInfo registrationInfo, string vmTemplate, IReadOnlyList<string> applicationGroupReferences, IReadOnlyList<string> appAttachPackageReferences, string ssoAdfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, HostPoolSsoSecretType? ssoSecretType, PreferredAppGroupType preferredAppGroupType, bool? startVMOnConnect, bool? isCloudPcResource, HostPoolPublicNetworkAccess? publicNetworkAccess, SessionHostAgentUpdateProperties agentUpdate, IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections, ManagedPrivateUDP? managedPrivateUDP, DirectUDP? directUDP, PublicUDP? publicUDP, RelayUDP? relayUDP, ManagementType? managementType, DeploymentScope? deploymentScope, string oboTenantId, AllowRDPShortPathWithPrivateLink? allowRDPShortPathWithPrivateLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ObjectId = objectId;
             FriendlyName = friendlyName;
@@ -76,18 +76,18 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             MaxSessionLimit = maxSessionLimit;
             LoadBalancerType = loadBalancerType;
             Ring = ring;
-            ValidationEnvironment = validationEnvironment;
+            IsValidationEnvironment = isValidationEnvironment;
             RegistrationInfo = registrationInfo;
             VmTemplate = vmTemplate;
             ApplicationGroupReferences = applicationGroupReferences;
             AppAttachPackageReferences = appAttachPackageReferences;
-            SsoadfsAuthority = ssoadfsAuthority;
+            SsoAdfsAuthority = ssoAdfsAuthority;
             SsoClientId = ssoClientId;
             SsoClientSecretKeyVaultPath = ssoClientSecretKeyVaultPath;
             SsoSecretType = ssoSecretType;
             PreferredAppGroupType = preferredAppGroupType;
             StartVMOnConnect = startVMOnConnect;
-            CloudPcResource = cloudPcResource;
+            IsCloudPcResource = isCloudPcResource;
             PublicNetworkAccess = publicNetworkAccess;
             AgentUpdate = agentUpdate;
             PrivateEndpointConnections = privateEndpointConnections;
@@ -124,16 +124,16 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public int? MaxSessionLimit { get; set; }
 
         /// <summary> The type of the load balancer. </summary>
-        public LoadBalancerType LoadBalancerType { get; set; }
+        public HostPoolLoadBalancerType LoadBalancerType { get; set; }
 
         /// <summary> The ring number of HostPool. </summary>
         public int? Ring { get; set; }
 
         /// <summary> Is validation environment. </summary>
-        public bool? ValidationEnvironment { get; set; }
+        public bool? IsValidationEnvironment { get; set; }
 
         /// <summary> The registration info of HostPool. </summary>
-        public RegistrationInfo RegistrationInfo { get; set; }
+        public HostPoolRegistrationInfo RegistrationInfo { get; set; }
 
         /// <summary> VM template for sessionhosts configuration within hostpool. </summary>
         public string VmTemplate { get; set; }
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public IReadOnlyList<string> AppAttachPackageReferences { get; }
 
         /// <summary> URL to customer ADFS server for signing WVD SSO certificates. </summary>
-        public string SsoadfsAuthority { get; set; }
+        public string SsoAdfsAuthority { get; set; }
 
         /// <summary> ClientId for the registered Relying Party used to issue WVD SSO certificates. </summary>
         public string SsoClientId { get; set; }
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public string SsoClientSecretKeyVaultPath { get; set; }
 
         /// <summary> The type of single sign on Secret Type. </summary>
-        public SSOSecretType? SsoSecretType { get; set; }
+        public HostPoolSsoSecretType? SsoSecretType { get; set; }
 
         /// <summary> The type of preferred application group type, default to Desktop Application Group. </summary>
         public PreferredAppGroupType PreferredAppGroupType { get; set; }
@@ -163,13 +163,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public bool? StartVMOnConnect { get; set; }
 
         /// <summary> Is cloud pc resource. </summary>
-        public bool? CloudPcResource { get; }
+        public bool? IsCloudPcResource { get; }
 
         /// <summary> Enabled allows this resource to be accessed from both public and private networks, Disabled allows this resource to only be accessed via private endpoints. </summary>
-        public HostpoolPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public HostPoolPublicNetworkAccess? PublicNetworkAccess { get; set; }
 
         /// <summary> The session host configuration for updating agent, monitoring agent, and stack component. </summary>
-        public AgentUpdateProperties AgentUpdate { get; set; }
+        public SessionHostAgentUpdateProperties AgentUpdate { get; set; }
 
         /// <summary> List of private endpoint connection associated with the specified resource. </summary>
         public IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection> PrivateEndpointConnections { get; }

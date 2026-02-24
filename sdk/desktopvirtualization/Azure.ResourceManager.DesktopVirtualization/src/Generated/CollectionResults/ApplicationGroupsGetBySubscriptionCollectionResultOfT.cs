@@ -14,7 +14,7 @@ using Azure.ResourceManager.DesktopVirtualization.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    internal partial class ApplicationGroupsGetBySubscriptionCollectionResultOfT : Pageable<ApplicationGroupData>
+    internal partial class ApplicationGroupsGetBySubscriptionCollectionResultOfT : Pageable<VirtualApplicationGroupData>
     {
         private readonly ApplicationGroups _client;
         private readonly Guid _subscriptionId;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ApplicationGroupsGetBySubscriptionCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ApplicationGroupData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<VirtualApplicationGroupData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     yield break;
                 }
                 ApplicationGroupList result = ApplicationGroupList.FromResponse(response);
-                yield return Page<ApplicationGroupData>.FromValues((IReadOnlyList<ApplicationGroupData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<VirtualApplicationGroupData>.FromValues((IReadOnlyList<VirtualApplicationGroupData>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _filter, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableDesktopVirtualizationSubscriptionResource.GetApplicationGroups");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableDesktopVirtualizationSubscriptionResource.GetVirtualApplicationGroups");
             scope.Start();
             try
             {

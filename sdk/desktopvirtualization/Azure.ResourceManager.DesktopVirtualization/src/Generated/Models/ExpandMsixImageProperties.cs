@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="isActive"> Make this version of the package the active one across the hostpool. </param>
         /// <param name="packageDependencies"> List of package dependencies. </param>
         /// <param name="version"> Package version found in the appxmanifest.xml. </param>
-        /// <param name="lastUpdated"> Date Package was last updated, found in the appxmanifest.xml. </param>
+        /// <param name="lastUpdatedOn"> Date Package was last updated, found in the appxmanifest.xml. </param>
         /// <param name="packageApplications"> List of package applications. </param>
         /// <param name="certificateName"> Certificate name found in the appxmanifest.xml. </param>
         /// <param name="certificateExpiry"> Date certificate expires, found in the appxmanifest.xml. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExpandMsixImageProperties(string packageAlias, string imagePath, string packageName, string packageFamilyName, string packageFullName, string displayName, string packageRelativePath, bool? isRegularRegistration, bool? isActive, IList<MsixPackageDependencies> packageDependencies, string version, DateTimeOffset? lastUpdated, IList<MsixPackageApplications> packageApplications, string certificateName, DateTimeOffset? certificateExpiry, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExpandMsixImageProperties(string packageAlias, string imagePath, string packageName, string packageFamilyName, string packageFullName, string displayName, string packageRelativePath, bool? isRegularRegistration, bool? isActive, IList<MsixPackageDependencies> packageDependencies, string version, DateTimeOffset? lastUpdatedOn, IList<MsixPackageApplications> packageApplications, string certificateName, DateTimeOffset? certificateExpiry, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PackageAlias = packageAlias;
             ImagePath = imagePath;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             IsActive = isActive;
             PackageDependencies = packageDependencies;
             Version = version;
-            LastUpdated = lastUpdated;
+            LastUpdatedOn = lastUpdatedOn;
             PackageApplications = packageApplications;
             CertificateName = certificateName;
             CertificateExpiry = certificateExpiry;
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public string Version { get; }
 
         /// <summary> Date Package was last updated, found in the appxmanifest.xml. </summary>
-        public DateTimeOffset? LastUpdated { get; }
+        public DateTimeOffset? LastUpdatedOn { get; }
 
         /// <summary> List of package applications. </summary>
         public IList<MsixPackageApplications> PackageApplications { get; }

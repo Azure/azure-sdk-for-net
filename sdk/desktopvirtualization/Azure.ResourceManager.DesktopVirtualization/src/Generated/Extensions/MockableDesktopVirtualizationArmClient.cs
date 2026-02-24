@@ -35,13 +35,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
             return new AppAttachPackageResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ApplicationGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="VirtualApplicationGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplicationGroupResource"/> object. </returns>
-        public virtual ApplicationGroupResource GetApplicationGroupResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualApplicationGroupResource"/> object. </returns>
+        public virtual VirtualApplicationGroupResource GetVirtualApplicationGroupResource(ResourceIdentifier id)
         {
-            ApplicationGroupResource.ValidateResourceId(id);
-            return new ApplicationGroupResource(Client, id);
+            VirtualApplicationGroupResource.ValidateResourceId(id);
+            return new VirtualApplicationGroupResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="HostPoolResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -62,31 +62,31 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
             return new ScalingPlanResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WorkspaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="VirtualWorkspaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkspaceResource"/> object. </returns>
-        public virtual WorkspaceResource GetWorkspaceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualWorkspaceResource"/> object. </returns>
+        public virtual VirtualWorkspaceResource GetVirtualWorkspaceResource(ResourceIdentifier id)
         {
-            WorkspaceResource.ValidateResourceId(id);
-            return new WorkspaceResource(Client, id);
+            VirtualWorkspaceResource.ValidateResourceId(id);
+            return new VirtualWorkspaceResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ApplicationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="VirtualApplicationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplicationResource"/> object. </returns>
-        public virtual ApplicationResource GetApplicationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualApplicationResource"/> object. </returns>
+        public virtual VirtualApplicationResource GetVirtualApplicationResource(ResourceIdentifier id)
         {
-            ApplicationResource.ValidateResourceId(id);
-            return new ApplicationResource(Client, id);
+            VirtualApplicationResource.ValidateResourceId(id);
+            return new VirtualApplicationResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="DesktopResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="VirtualDesktopResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DesktopResource"/> object. </returns>
-        public virtual DesktopResource GetDesktopResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualDesktopResource"/> object. </returns>
+        public virtual VirtualDesktopResource GetVirtualDesktopResource(ResourceIdentifier id)
         {
-            DesktopResource.ValidateResourceId(id);
-            return new DesktopResource(Client, id);
+            VirtualDesktopResource.ValidateResourceId(id);
+            return new VirtualDesktopResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>

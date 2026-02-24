@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of <see cref="SendMessageParameterBody"/>. </summary>
         /// <param name="sendMessage"> Represents message sent to a UserSession. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SendMessageParameterBody(SendMessage sendMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SendMessageParameterBody(UserSessionMessage sendMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SendMessage = sendMessage;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Represents message sent to a UserSession. </summary>
-        public SendMessage SendMessage { get; set; }
+        public UserSessionMessage SendMessage { get; set; }
     }
 }

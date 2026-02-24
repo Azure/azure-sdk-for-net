@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
@@ -54,10 +55,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(ObjectId);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastHeartBeat))
+            if (options.Format != "W" && Optional.IsDefined(LastHeartBeatOn))
             {
                 writer.WritePropertyName("lastHeartBeat"u8);
-                writer.WriteStringValue(LastHeartBeat.Value, "O");
+                writer.WriteStringValue(LastHeartBeatOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Sessions))
             {
@@ -74,10 +75,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("allowNewSession"u8);
                 writer.WriteBooleanValue(AllowNewSession.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(VirtualMachineId))
+            if (options.Format != "W" && Optional.IsDefined(VmId))
             {
                 writer.WritePropertyName("virtualMachineId"u8);
-                writer.WriteStringValue(VirtualMachineId);
+                writer.WriteStringValue(VmId);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceId))
             {
@@ -119,10 +120,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("updateState"u8);
                 writer.WriteStringValue(UpdateState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdateOn))
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdateTime"u8);
-                writer.WriteStringValue(LastUpdateOn.Value, "O");
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(UpdateErrorMessage))
             {
@@ -195,20 +196,20 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             int? disconnectedSessions = default;
             int? pendingSessions = default;
             string objectId = default;
-            DateTimeOffset? lastHeartBeat = default;
+            DateTimeOffset? lastHeartBeatOn = default;
             int? sessions = default;
             string agentVersion = default;
             bool? allowNewSession = default;
-            string virtualMachineId = default;
-            string resourceId = default;
+            string vmId = default;
+            ResourceIdentifier resourceId = default;
             string assignedUser = default;
             string friendlyName = default;
-            Status? status = default;
+            SessionHostStatus? status = default;
             DateTimeOffset? statusTimestamp = default;
             string osVersion = default;
             string sxSStackVersion = default;
-            UpdateState? updateState = default;
-            DateTimeOffset? lastUpdateOn = default;
+            SessionHostUpdateState? updateState = default;
+            DateTimeOffset? lastUpdatedOn = default;
             string updateErrorMessage = default;
             DateTimeOffset? lastSessionHostUpdateOn = default;
             string sessionHostConfiguration = default;
@@ -254,7 +255,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    lastHeartBeat = prop.Value.GetDateTimeOffset("O");
+                    lastHeartBeatOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("sessions"u8))
@@ -282,12 +283,16 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 if (prop.NameEquals("virtualMachineId"u8))
                 {
-                    virtualMachineId = prop.Value.GetString();
+                    vmId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("resourceId"u8))
                 {
-                    resourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("assignedUser"u8))
@@ -306,7 +311,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    status = new Status(prop.Value.GetString());
+                    status = new SessionHostStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("statusTimestamp"u8))
@@ -334,7 +339,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    updateState = new UpdateState(prop.Value.GetString());
+                    updateState = new SessionHostUpdateState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("lastUpdateTime"u8))
@@ -343,7 +348,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    lastUpdateOn = prop.Value.GetDateTimeOffset("O");
+                    lastUpdatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("updateErrorMessage"u8))
@@ -389,11 +394,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 disconnectedSessions,
                 pendingSessions,
                 objectId,
-                lastHeartBeat,
+                lastHeartBeatOn,
                 sessions,
                 agentVersion,
                 allowNewSession,
-                virtualMachineId,
+                vmId,
                 resourceId,
                 assignedUser,
                 friendlyName,
@@ -402,7 +407,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 osVersion,
                 sxSStackVersion,
                 updateState,
-                lastUpdateOn,
+                lastUpdatedOn,
                 updateErrorMessage,
                 lastSessionHostUpdateOn,
                 sessionHostConfiguration,

@@ -91,8 +91,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            HealthCheckName? healthCheckName = default;
-            HealthCheckResult? healthCheckResult = default;
+            SessionHostHealthCheckName? healthCheckName = default;
+            SessionHostHealthCheckResult? healthCheckResult = default;
             SessionHostHealthCheckFailureDetails additionalFailureDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    healthCheckName = new HealthCheckName(prop.Value.GetString());
+                    healthCheckName = new SessionHostHealthCheckName(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("healthCheckResult"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    healthCheckResult = new HealthCheckResult(prop.Value.GetString());
+                    healthCheckResult = new SessionHostHealthCheckResult(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("additionalFailureDetails"u8))

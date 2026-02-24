@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGroupList"/>. </summary>
         /// <param name="value"> The ApplicationGroup items on this page. </param>
-        internal ApplicationGroupList(IEnumerable<ApplicationGroupData> value)
+        internal ApplicationGroupList(IEnumerable<VirtualApplicationGroupData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="value"> The ApplicationGroup items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGroupList(IList<ApplicationGroupData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationGroupList(IList<VirtualApplicationGroupData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> The ApplicationGroup items on this page. </summary>
-        public IList<ApplicationGroupData> Value { get; }
+        public IList<VirtualApplicationGroupData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

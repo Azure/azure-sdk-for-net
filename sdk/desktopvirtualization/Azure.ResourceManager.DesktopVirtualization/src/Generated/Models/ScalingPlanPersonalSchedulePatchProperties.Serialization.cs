@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 writer.WritePropertyName("daysOfWeek"u8);
                 writer.WriteStartArray();
-                foreach (DayOfWeek item in DaysOfWeek)
+                foreach (DesktopVirtualizationDayOfWeek item in DaysOfWeek)
                 {
                     writer.WriteStringValue(item.ToSerialString());
                 }
@@ -211,28 +211,28 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            IList<DayOfWeek> daysOfWeek = default;
-            Time rampUpStartTime = default;
+            IList<DesktopVirtualizationDayOfWeek> daysOfWeek = default;
+            ScalingActionTime rampUpStartTime = default;
             StartupBehavior? rampUpAutoStartHosts = default;
-            SetStartVMOnConnect? rampUpStartVMOnConnect = default;
+            SetStartVmOnConnect? rampUpStartVMOnConnect = default;
             SessionHandlingOperation? rampUpActionOnDisconnect = default;
             int? rampUpMinutesToWaitOnDisconnect = default;
             SessionHandlingOperation? rampUpActionOnLogoff = default;
             int? rampUpMinutesToWaitOnLogoff = default;
-            Time peakStartTime = default;
-            SetStartVMOnConnect? peakStartVMOnConnect = default;
+            ScalingActionTime peakStartTime = default;
+            SetStartVmOnConnect? peakStartVMOnConnect = default;
             SessionHandlingOperation? peakActionOnDisconnect = default;
             int? peakMinutesToWaitOnDisconnect = default;
             SessionHandlingOperation? peakActionOnLogoff = default;
             int? peakMinutesToWaitOnLogoff = default;
-            Time rampDownStartTime = default;
-            SetStartVMOnConnect? rampDownStartVMOnConnect = default;
+            ScalingActionTime rampDownStartTime = default;
+            SetStartVmOnConnect? rampDownStartVMOnConnect = default;
             SessionHandlingOperation? rampDownActionOnDisconnect = default;
             int? rampDownMinutesToWaitOnDisconnect = default;
             SessionHandlingOperation? rampDownActionOnLogoff = default;
             int? rampDownMinutesToWaitOnLogoff = default;
-            Time offPeakStartTime = default;
-            SetStartVMOnConnect? offPeakStartVMOnConnect = default;
+            ScalingActionTime offPeakStartTime = default;
+            SetStartVmOnConnect? offPeakStartVMOnConnect = default;
             SessionHandlingOperation? offPeakActionOnDisconnect = default;
             int? offPeakMinutesToWaitOnDisconnect = default;
             SessionHandlingOperation? offPeakActionOnLogoff = default;
@@ -246,10 +246,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    List<DayOfWeek> array = new List<DayOfWeek>();
+                    List<DesktopVirtualizationDayOfWeek> array = new List<DesktopVirtualizationDayOfWeek>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToDayOfWeek());
+                        array.Add(item.GetString().ToDesktopVirtualizationDayOfWeek());
                     }
                     daysOfWeek = array;
                     continue;
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    rampUpStartTime = Time.DeserializeTime(prop.Value, options);
+                    rampUpStartTime = ScalingActionTime.DeserializeScalingActionTime(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("rampUpAutoStartHosts"u8))
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    rampUpStartVMOnConnect = new SetStartVMOnConnect(prop.Value.GetString());
+                    rampUpStartVMOnConnect = new SetStartVmOnConnect(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("rampUpActionOnDisconnect"u8))
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    peakStartTime = Time.DeserializeTime(prop.Value, options);
+                    peakStartTime = ScalingActionTime.DeserializeScalingActionTime(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("peakStartVMOnConnect"u8))
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    peakStartVMOnConnect = new SetStartVMOnConnect(prop.Value.GetString());
+                    peakStartVMOnConnect = new SetStartVmOnConnect(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("peakActionOnDisconnect"u8))
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    rampDownStartTime = Time.DeserializeTime(prop.Value, options);
+                    rampDownStartTime = ScalingActionTime.DeserializeScalingActionTime(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("rampDownStartVMOnConnect"u8))
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    rampDownStartVMOnConnect = new SetStartVMOnConnect(prop.Value.GetString());
+                    rampDownStartVMOnConnect = new SetStartVmOnConnect(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("rampDownActionOnDisconnect"u8))
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    offPeakStartTime = Time.DeserializeTime(prop.Value, options);
+                    offPeakStartTime = ScalingActionTime.DeserializeScalingActionTime(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("offPeakStartVMOnConnect"u8))
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    offPeakStartVMOnConnect = new SetStartVMOnConnect(prop.Value.GetString());
+                    offPeakStartVMOnConnect = new SetStartVmOnConnect(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("offPeakActionOnDisconnect"u8))
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             return new ScalingPlanPersonalSchedulePatchProperties(
-                daysOfWeek ?? new ChangeTrackingList<DayOfWeek>(),
+                daysOfWeek ?? new ChangeTrackingList<DesktopVirtualizationDayOfWeek>(),
                 rampUpStartTime,
                 rampUpAutoStartHosts,
                 rampUpStartVMOnConnect,

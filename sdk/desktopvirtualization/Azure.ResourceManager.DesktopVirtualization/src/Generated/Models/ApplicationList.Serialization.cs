@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ApplicationData item in Value)
+            foreach (VirtualApplicationData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -94,17 +94,17 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            IList<ApplicationData> value = default;
+            IList<VirtualApplicationData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ApplicationData> array = new List<ApplicationData>();
+                    List<VirtualApplicationData> array = new List<VirtualApplicationData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationData.DeserializeApplicationData(item, options));
+                        array.Add(VirtualApplicationData.DeserializeVirtualApplicationData(item, options));
                     }
                     value = array;
                     continue;

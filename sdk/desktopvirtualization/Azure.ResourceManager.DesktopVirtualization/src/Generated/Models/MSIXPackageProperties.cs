@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="isActive"> Make this version of the package the active one across the hostpool. </param>
         /// <param name="packageDependencies"> List of package dependencies. </param>
         /// <param name="version"> Package version found in the appxmanifest.xml. </param>
-        /// <param name="lastUpdated"> Date Package was last updated, found in the appxmanifest.xml. </param>
+        /// <param name="lastUpdatedOn"> Date Package was last updated, found in the appxmanifest.xml. </param>
         /// <param name="packageApplications"> List of package applications. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MSIXPackageProperties(string imagePath, string packageName, string packageFamilyName, string displayName, string packageRelativePath, bool? isRegularRegistration, bool? isActive, IList<MsixPackageDependencies> packageDependencies, string version, DateTimeOffset? lastUpdated, IList<MsixPackageApplications> packageApplications, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MSIXPackageProperties(string imagePath, string packageName, string packageFamilyName, string displayName, string packageRelativePath, bool? isRegularRegistration, bool? isActive, IList<MsixPackageDependencies> packageDependencies, string version, DateTimeOffset? lastUpdatedOn, IList<MsixPackageApplications> packageApplications, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ImagePath = imagePath;
             PackageName = packageName;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             IsActive = isActive;
             PackageDependencies = packageDependencies;
             Version = version;
-            LastUpdated = lastUpdated;
+            LastUpdatedOn = lastUpdatedOn;
             PackageApplications = packageApplications;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public string Version { get; set; }
 
         /// <summary> Date Package was last updated, found in the appxmanifest.xml. </summary>
-        public DateTimeOffset? LastUpdated { get; set; }
+        public DateTimeOffset? LastUpdatedOn { get; set; }
 
         /// <summary> List of package applications. </summary>
         public IList<MsixPackageApplications> PackageApplications { get; }

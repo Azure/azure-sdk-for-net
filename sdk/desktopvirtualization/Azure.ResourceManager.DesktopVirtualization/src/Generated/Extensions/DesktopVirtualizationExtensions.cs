@@ -63,21 +63,21 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ApplicationGroupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="VirtualApplicationGroupResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationArmClient.GetApplicationGroupResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationArmClient.GetVirtualApplicationGroupResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApplicationGroupResource"/> object. </returns>
-        public static ApplicationGroupResource GetApplicationGroupResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualApplicationGroupResource"/> object. </returns>
+        public static VirtualApplicationGroupResource GetVirtualApplicationGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDesktopVirtualizationArmClient(client).GetApplicationGroupResource(id);
+            return GetMockableDesktopVirtualizationArmClient(client).GetVirtualApplicationGroupResource(id);
         }
 
         /// <summary>
@@ -117,57 +117,57 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="VirtualWorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationArmClient.GetWorkspaceResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationArmClient.GetVirtualWorkspaceResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WorkspaceResource"/> object. </returns>
-        public static WorkspaceResource GetWorkspaceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualWorkspaceResource"/> object. </returns>
+        public static VirtualWorkspaceResource GetVirtualWorkspaceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDesktopVirtualizationArmClient(client).GetWorkspaceResource(id);
+            return GetMockableDesktopVirtualizationArmClient(client).GetVirtualWorkspaceResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ApplicationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="VirtualApplicationResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationArmClient.GetApplicationResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationArmClient.GetVirtualApplicationResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApplicationResource"/> object. </returns>
-        public static ApplicationResource GetApplicationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualApplicationResource"/> object. </returns>
+        public static VirtualApplicationResource GetVirtualApplicationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDesktopVirtualizationArmClient(client).GetApplicationResource(id);
+            return GetMockableDesktopVirtualizationArmClient(client).GetVirtualApplicationResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DesktopResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="VirtualDesktopResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationArmClient.GetDesktopResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationArmClient.GetVirtualDesktopResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DesktopResource"/> object. </returns>
-        public static DesktopResource GetDesktopResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualDesktopResource"/> object. </returns>
+        public static VirtualDesktopResource GetVirtualDesktopResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDesktopVirtualizationArmClient(client).GetDesktopResource(id);
+            return GetMockableDesktopVirtualizationArmClient(client).GetVirtualDesktopResource(id);
         }
 
         /// <summary>
@@ -406,27 +406,27 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary>
-        /// Gets a collection of ApplicationGroups in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of VirtualApplicationGroups in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationResourceGroupResource.GetApplicationGroups()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationResourceGroupResource.GetVirtualApplicationGroups()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of ApplicationGroups and their operations over a ApplicationGroupResource. </returns>
-        public static ApplicationGroupCollection GetApplicationGroups(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of VirtualApplicationGroups and their operations over a VirtualApplicationGroupResource. </returns>
+        public static VirtualApplicationGroupCollection GetVirtualApplicationGroups(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableDesktopVirtualizationResourceGroupResource(resourceGroupResource).GetApplicationGroups();
+            return GetMockableDesktopVirtualizationResourceGroupResource(resourceGroupResource).GetVirtualApplicationGroups();
         }
 
         /// <summary>
         /// Get an application group.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationResourceGroupResource.GetApplicationGroupAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationResourceGroupResource.GetVirtualApplicationGroupAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -434,18 +434,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ApplicationGroupResource>> GetApplicationGroupAsync(this ResourceGroupResource resourceGroupResource, string applicationGroupName, CancellationToken cancellationToken = default)
+        public static async Task<Response<VirtualApplicationGroupResource>> GetVirtualApplicationGroupAsync(this ResourceGroupResource resourceGroupResource, string applicationGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableDesktopVirtualizationResourceGroupResource(resourceGroupResource).GetApplicationGroupAsync(applicationGroupName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDesktopVirtualizationResourceGroupResource(resourceGroupResource).GetVirtualApplicationGroupAsync(applicationGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get an application group.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationResourceGroupResource.GetApplicationGroup(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationResourceGroupResource.GetVirtualApplicationGroup(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -453,11 +453,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ApplicationGroupResource> GetApplicationGroup(this ResourceGroupResource resourceGroupResource, string applicationGroupName, CancellationToken cancellationToken = default)
+        public static Response<VirtualApplicationGroupResource> GetVirtualApplicationGroup(this ResourceGroupResource resourceGroupResource, string applicationGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableDesktopVirtualizationResourceGroupResource(resourceGroupResource).GetApplicationGroup(applicationGroupName, cancellationToken);
+            return GetMockableDesktopVirtualizationResourceGroupResource(resourceGroupResource).GetVirtualApplicationGroup(applicationGroupName, cancellationToken);
         }
 
         /// <summary>
@@ -571,27 +571,27 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary>
-        /// Gets a collection of Workspaces in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of VirtualWorkspaces in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationResourceGroupResource.GetWorkspaces()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationResourceGroupResource.GetVirtualWorkspaces()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of Workspaces and their operations over a WorkspaceResource. </returns>
-        public static WorkspaceCollection GetWorkspaces(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of VirtualWorkspaces and their operations over a VirtualWorkspaceResource. </returns>
+        public static VirtualWorkspaceCollection GetVirtualWorkspaces(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableDesktopVirtualizationResourceGroupResource(resourceGroupResource).GetWorkspaces();
+            return GetMockableDesktopVirtualizationResourceGroupResource(resourceGroupResource).GetVirtualWorkspaces();
         }
 
         /// <summary>
         /// Get a workspace.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationResourceGroupResource.GetWorkspaceAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationResourceGroupResource.GetVirtualWorkspaceAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -599,18 +599,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<WorkspaceResource>> GetWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<VirtualWorkspaceResource>> GetVirtualWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableDesktopVirtualizationResourceGroupResource(resourceGroupResource).GetWorkspaceAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDesktopVirtualizationResourceGroupResource(resourceGroupResource).GetVirtualWorkspaceAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a workspace.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationResourceGroupResource.GetWorkspace(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationResourceGroupResource.GetVirtualWorkspace(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -618,11 +618,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<WorkspaceResource> GetWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
+        public static Response<VirtualWorkspaceResource> GetVirtualWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableDesktopVirtualizationResourceGroupResource(resourceGroupResource).GetWorkspace(workspaceName, cancellationToken);
+            return GetMockableDesktopVirtualizationResourceGroupResource(resourceGroupResource).GetVirtualWorkspace(workspaceName, cancellationToken);
         }
 
         /// <summary>
@@ -826,7 +826,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<RegistrationInfo>> RetrieveRegistrationTokenAsync(this ResourceGroupResource resourceGroupResource, string hostPoolName, CancellationToken cancellationToken = default)
+        public static async Task<Response<HostPoolRegistrationInfo>> RetrieveRegistrationTokenAsync(this ResourceGroupResource resourceGroupResource, string hostPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -844,7 +844,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<RegistrationInfo> RetrieveRegistrationToken(this ResourceGroupResource resourceGroupResource, string hostPoolName, CancellationToken cancellationToken = default)
+        public static Response<HostPoolRegistrationInfo> RetrieveRegistrationToken(this ResourceGroupResource resourceGroupResource, string hostPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -1091,38 +1091,38 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// List applicationGroups in subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationSubscriptionResource.GetApplicationGroupsAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationSubscriptionResource.GetVirtualApplicationGroupsAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are applicationGroupType. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ApplicationGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ApplicationGroupResource> GetApplicationGroupsAsync(this SubscriptionResource subscriptionResource, string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualApplicationGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VirtualApplicationGroupResource> GetVirtualApplicationGroupsAsync(this SubscriptionResource subscriptionResource, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDesktopVirtualizationSubscriptionResource(subscriptionResource).GetApplicationGroupsAsync(filter, cancellationToken);
+            return GetMockableDesktopVirtualizationSubscriptionResource(subscriptionResource).GetVirtualApplicationGroupsAsync(filter, cancellationToken);
         }
 
         /// <summary>
         /// List applicationGroups in subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationSubscriptionResource.GetApplicationGroups(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationSubscriptionResource.GetVirtualApplicationGroups(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are applicationGroupType. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ApplicationGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ApplicationGroupResource> GetApplicationGroups(this SubscriptionResource subscriptionResource, string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualApplicationGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VirtualApplicationGroupResource> GetVirtualApplicationGroups(this SubscriptionResource subscriptionResource, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDesktopVirtualizationSubscriptionResource(subscriptionResource).GetApplicationGroups(filter, cancellationToken);
+            return GetMockableDesktopVirtualizationSubscriptionResource(subscriptionResource).GetVirtualApplicationGroups(filter, cancellationToken);
         }
 
         /// <summary>
@@ -1213,36 +1213,36 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// List workspaces in subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationSubscriptionResource.GetWorkspacesAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationSubscriptionResource.GetVirtualWorkspacesAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="WorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<WorkspaceResource> GetWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VirtualWorkspaceResource> GetVirtualWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDesktopVirtualizationSubscriptionResource(subscriptionResource).GetWorkspacesAsync(cancellationToken);
+            return GetMockableDesktopVirtualizationSubscriptionResource(subscriptionResource).GetVirtualWorkspacesAsync(cancellationToken);
         }
 
         /// <summary>
         /// List workspaces in subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationSubscriptionResource.GetWorkspaces(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationSubscriptionResource.GetVirtualWorkspaces(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="WorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<WorkspaceResource> GetWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VirtualWorkspaceResource> GetVirtualWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDesktopVirtualizationSubscriptionResource(subscriptionResource).GetWorkspaces(cancellationToken);
+            return GetMockableDesktopVirtualizationSubscriptionResource(subscriptionResource).GetVirtualWorkspaces(cancellationToken);
         }
 
         /// <summary>

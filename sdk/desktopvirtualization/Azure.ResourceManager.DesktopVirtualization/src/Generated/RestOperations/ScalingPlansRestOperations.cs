@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             return message;
         }
 
-        internal HttpMessage CreateGetByHostPoolRequest(Guid subscriptionId, string resourceGroupName, string hostPoolName, int? pageSize, bool? isDescending, int? initialSkip, RequestContext context)
+        internal HttpMessage CreateGetScalingPlansRequest(Guid subscriptionId, string resourceGroupName, string hostPoolName, int? pageSize, bool? isDescending, int? initialSkip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             return message;
         }
 
-        internal HttpMessage CreateNextGetByHostPoolRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string hostPoolName, int? pageSize, bool? isDescending, int? initialSkip, RequestContext context)
+        internal HttpMessage CreateNextGetScalingPlansRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string hostPoolName, int? pageSize, bool? isDescending, int? initialSkip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);

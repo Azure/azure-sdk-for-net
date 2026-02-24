@@ -496,8 +496,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="isDescending"> Indicates whether the collection is descending. </param>
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DesktopVirtualizationPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DesktopVirtualizationPrivateLinkResource> GetByHostPoolAsync(int? pageSize = default, bool? isDescending = default, int? initialSkip = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DesktopVirtualizationPrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DesktopVirtualizationPrivateLinkResourceData> GetByHostPoolAsync(int? pageSize = default, bool? isDescending = default, int? initialSkip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -539,8 +539,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="isDescending"> Indicates whether the collection is descending. </param>
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DesktopVirtualizationPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DesktopVirtualizationPrivateLinkResource> GetByHostPool(int? pageSize = default, bool? isDescending = default, int? initialSkip = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DesktopVirtualizationPrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DesktopVirtualizationPrivateLinkResourceData> GetByHostPool(int? pageSize = default, bool? isDescending = default, int? initialSkip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -583,13 +583,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ScalingPlanResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ScalingPlanResource> GetByHostPoolAsync(int? pageSize = default, bool? isDescending = default, int? initialSkip = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ScalingPlanResource> GetScalingPlansAsync(int? pageSize = default, bool? isDescending = default, int? initialSkip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScalingPlanData, ScalingPlanResource>(new ScalingPlansGetByHostPoolAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ScalingPlanData, ScalingPlanResource>(new ScalingPlansGetScalingPlansAsyncCollectionResultOfT(
                 _scalingPlansRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -626,13 +626,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ScalingPlanResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ScalingPlanResource> GetByHostPool(int? pageSize = default, bool? isDescending = default, int? initialSkip = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ScalingPlanResource> GetScalingPlans(int? pageSize = default, bool? isDescending = default, int? initialSkip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScalingPlanData, ScalingPlanResource>(new ScalingPlansGetByHostPoolCollectionResultOfT(
+            return new PageableWrapper<ScalingPlanData, ScalingPlanResource>(new ScalingPlansGetScalingPlansCollectionResultOfT(
                 _scalingPlansRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -670,13 +670,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="UserSessionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<UserSessionResource> GetByHostPoolAsync(string filter = default, int? pageSize = default, bool? isDescending = default, int? initialSkip = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<UserSessionResource> GetUserSessionsAsync(string filter = default, int? pageSize = default, bool? isDescending = default, int? initialSkip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<UserSessionData, UserSessionResource>(new UserSessionsGetByHostPoolAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<UserSessionData, UserSessionResource>(new UserSessionsGetUserSessionsAsyncCollectionResultOfT(
                 _userSessionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -715,13 +715,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="UserSessionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<UserSessionResource> GetByHostPool(string filter = default, int? pageSize = default, bool? isDescending = default, int? initialSkip = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<UserSessionResource> GetUserSessions(string filter = default, int? pageSize = default, bool? isDescending = default, int? initialSkip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<UserSessionData, UserSessionResource>(new UserSessionsGetByHostPoolCollectionResultOfT(
+            return new PageableWrapper<UserSessionData, UserSessionResource>(new UserSessionsGetUserSessionsCollectionResultOfT(
                 _userSessionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

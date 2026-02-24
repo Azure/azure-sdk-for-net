@@ -104,7 +104,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (options.Format != "W" && Optional.IsDefined(IconContent))
             {
                 writer.WritePropertyName("iconContent"u8);
-                writer.WriteBase64StringValue(IconContent.ToArray(), "D");
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(IconContent);
+#else
+                using (JsonDocument document = JsonDocument.Parse(IconContent))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -155,7 +162,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             string msixPackageFamilyName = default;
             string msixPackageApplicationId = default;
             RemoteApplicationType? applicationType = default;
-            CommandLineSetting commandLineSetting = default;
+            VirtualApplicationCommandLineSetting commandLineSetting = default;
             string commandLineArguments = default;
             bool? showInPortal = default;
             string iconPath = default;
@@ -206,7 +213,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 if (prop.NameEquals("commandLineSetting"u8))
                 {
-                    commandLineSetting = new CommandLineSetting(prop.Value.GetString());
+                    commandLineSetting = new VirtualApplicationCommandLineSetting(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("commandLineArguments"u8))
@@ -248,7 +255,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    iconContent = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
+                    iconContent = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")

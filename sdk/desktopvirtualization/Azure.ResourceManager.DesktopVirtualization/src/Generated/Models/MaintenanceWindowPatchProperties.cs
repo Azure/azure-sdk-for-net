@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="hour"> The update start hour of the day. (0 - 23). </param>
         /// <param name="dayOfWeek"> Day of the week. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MaintenanceWindowPatchProperties(int? hour, DayOfWeek? dayOfWeek, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MaintenanceWindowPatchProperties(int? hour, DesktopVirtualizationDayOfWeek? dayOfWeek, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Hour = hour;
             DayOfWeek = dayOfWeek;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public int? Hour { get; set; }
 
         /// <summary> Day of the week. </summary>
-        public DayOfWeek? DayOfWeek { get; set; }
+        public DesktopVirtualizationDayOfWeek? DayOfWeek { get; set; }
     }
 }

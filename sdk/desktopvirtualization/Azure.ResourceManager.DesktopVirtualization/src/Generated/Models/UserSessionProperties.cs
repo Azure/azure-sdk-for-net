@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="activeDirectoryUserName"> The active directory user name. </param>
         /// <param name="createOn"> The timestamp of the user session create. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UserSessionProperties(string objectId, string userPrincipalName, ApplicationType? applicationType, SessionState? sessionState, string activeDirectoryUserName, DateTimeOffset? createOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UserSessionProperties(string objectId, string userPrincipalName, VirtualApplicationType? applicationType, UserSessionState? sessionState, string activeDirectoryUserName, DateTimeOffset? createOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ObjectId = objectId;
             UserPrincipalName = userPrincipalName;
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public string UserPrincipalName { get; }
 
         /// <summary> Application type of application. </summary>
-        public ApplicationType? ApplicationType { get; }
+        public VirtualApplicationType? ApplicationType { get; }
 
         /// <summary> State of user session. </summary>
-        public SessionState? SessionState { get; }
+        public UserSessionState? SessionState { get; }
 
         /// <summary> The active directory user name. </summary>
         public string ActiveDirectoryUserName { get; }

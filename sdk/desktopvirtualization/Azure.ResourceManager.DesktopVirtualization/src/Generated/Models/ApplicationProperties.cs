@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Initializes a new instance of <see cref="ApplicationProperties"/>. </summary>
         /// <param name="commandLineSetting"> Specifies whether this published application can be launched with command line arguments provided by the client, command line arguments specified at publish time, or no command line arguments at all. </param>
-        public ApplicationProperties(CommandLineSetting commandLineSetting)
+        public ApplicationProperties(VirtualApplicationCommandLineSetting commandLineSetting)
         {
             CommandLineSetting = commandLineSetting;
         }
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="iconHash"> Hash of the icon. </param>
         /// <param name="iconContent"> the icon a 64 bit string as a byte array. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationProperties(string objectId, string description, string friendlyName, string filePath, string msixPackageFamilyName, string msixPackageApplicationId, RemoteApplicationType? applicationType, CommandLineSetting commandLineSetting, string commandLineArguments, bool? showInPortal, string iconPath, int? iconIndex, string iconHash, BinaryData iconContent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationProperties(string objectId, string description, string friendlyName, string filePath, string msixPackageFamilyName, string msixPackageApplicationId, RemoteApplicationType? applicationType, VirtualApplicationCommandLineSetting commandLineSetting, string commandLineArguments, bool? showInPortal, string iconPath, int? iconIndex, string iconHash, BinaryData iconContent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ObjectId = objectId;
             Description = description;
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public RemoteApplicationType? ApplicationType { get; set; }
 
         /// <summary> Specifies whether this published application can be launched with command line arguments provided by the client, command line arguments specified at publish time, or no command line arguments at all. </summary>
-        public CommandLineSetting CommandLineSetting { get; set; }
+        public VirtualApplicationCommandLineSetting CommandLineSetting { get; set; }
 
         /// <summary> Command Line Arguments for Application. </summary>
         public string CommandLineArguments { get; set; }
@@ -99,16 +100,26 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary>
         /// the icon a 64 bit string as a byte array.
-        /// <para>
-        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
-        /// The byte[] will be serialized to a Base64 encoded string.
-        /// </para>
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
-        /// <description> Creates a payload of "AQID". </description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>

@@ -78,10 +78,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("ring"u8);
                 writer.WriteNumberValue(Ring.Value);
             }
-            if (Optional.IsDefined(ValidationEnvironment))
+            if (Optional.IsDefined(IsValidationEnvironment))
             {
                 writer.WritePropertyName("validationEnvironment"u8);
-                writer.WriteBooleanValue(ValidationEnvironment.Value);
+                writer.WriteBooleanValue(IsValidationEnvironment.Value);
             }
             if (Optional.IsDefined(RegistrationInfo))
             {
@@ -123,10 +123,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SsoadfsAuthority))
+            if (Optional.IsDefined(SsoAdfsAuthority))
             {
                 writer.WritePropertyName("ssoadfsAuthority"u8);
-                writer.WriteStringValue(SsoadfsAuthority);
+                writer.WriteStringValue(SsoAdfsAuthority);
             }
             if (Optional.IsDefined(SsoClientId))
             {
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("startVMOnConnect"u8);
                 writer.WriteBooleanValue(StartVMOnConnect.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CloudPcResource))
+            if (options.Format != "W" && Optional.IsDefined(IsCloudPcResource))
             {
                 writer.WritePropertyName("cloudPcResource"u8);
-                writer.WriteBooleanValue(CloudPcResource.Value);
+                writer.WriteBooleanValue(IsCloudPcResource.Value);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -264,22 +264,22 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             PersonalDesktopAssignmentType? personalDesktopAssignmentType = default;
             string customRdpProperty = default;
             int? maxSessionLimit = default;
-            LoadBalancerType loadBalancerType = default;
+            HostPoolLoadBalancerType loadBalancerType = default;
             int? ring = default;
-            bool? validationEnvironment = default;
-            RegistrationInfo registrationInfo = default;
+            bool? isValidationEnvironment = default;
+            HostPoolRegistrationInfo registrationInfo = default;
             string vmTemplate = default;
             IReadOnlyList<string> applicationGroupReferences = default;
             IReadOnlyList<string> appAttachPackageReferences = default;
-            string ssoadfsAuthority = default;
+            string ssoAdfsAuthority = default;
             string ssoClientId = default;
             string ssoClientSecretKeyVaultPath = default;
-            SSOSecretType? ssoSecretType = default;
+            HostPoolSsoSecretType? ssoSecretType = default;
             PreferredAppGroupType preferredAppGroupType = default;
             bool? startVMOnConnect = default;
-            bool? cloudPcResource = default;
-            HostpoolPublicNetworkAccess? publicNetworkAccess = default;
-            AgentUpdateProperties agentUpdate = default;
+            bool? isCloudPcResource = default;
+            HostPoolPublicNetworkAccess? publicNetworkAccess = default;
+            SessionHostAgentUpdateProperties agentUpdate = default;
             IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections = default;
             ManagedPrivateUDP? managedPrivateUDP = default;
             DirectUDP? directUDP = default;
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 if (prop.NameEquals("loadBalancerType"u8))
                 {
-                    loadBalancerType = new LoadBalancerType(prop.Value.GetString());
+                    loadBalancerType = new HostPoolLoadBalancerType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("ring"u8))
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    validationEnvironment = prop.Value.GetBoolean();
+                    isValidationEnvironment = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("registrationInfo"u8))
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    registrationInfo = RegistrationInfo.DeserializeRegistrationInfo(prop.Value, options);
+                    registrationInfo = HostPoolRegistrationInfo.DeserializeHostPoolRegistrationInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("vmTemplate"u8))
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 if (prop.NameEquals("ssoadfsAuthority"u8))
                 {
-                    ssoadfsAuthority = prop.Value.GetString();
+                    ssoAdfsAuthority = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("ssoClientId"u8))
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    ssoSecretType = new SSOSecretType(prop.Value.GetString());
+                    ssoSecretType = new HostPoolSsoSecretType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("preferredAppGroupType"u8))
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    cloudPcResource = prop.Value.GetBoolean();
+                    isCloudPcResource = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("publicNetworkAccess"u8))
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    publicNetworkAccess = new HostpoolPublicNetworkAccess(prop.Value.GetString());
+                    publicNetworkAccess = new HostPoolPublicNetworkAccess(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("agentUpdate"u8))
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    agentUpdate = AgentUpdateProperties.DeserializeAgentUpdateProperties(prop.Value, options);
+                    agentUpdate = SessionHostAgentUpdateProperties.DeserializeSessionHostAgentUpdateProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("privateEndpointConnections"u8))
@@ -576,18 +576,18 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 maxSessionLimit,
                 loadBalancerType,
                 ring,
-                validationEnvironment,
+                isValidationEnvironment,
                 registrationInfo,
                 vmTemplate,
                 applicationGroupReferences ?? new ChangeTrackingList<string>(),
                 appAttachPackageReferences ?? new ChangeTrackingList<string>(),
-                ssoadfsAuthority,
+                ssoAdfsAuthority,
                 ssoClientId,
                 ssoClientSecretKeyVaultPath,
                 ssoSecretType,
                 preferredAppGroupType,
                 startVMOnConnect,
-                cloudPcResource,
+                isCloudPcResource,
                 publicNetworkAccess,
                 agentUpdate,
                 privateEndpointConnections ?? new ChangeTrackingList<DesktopVirtualizationPrivateEndpointConnection>(),

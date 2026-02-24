@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="msixPackageApplicationId"> Specifies the package application Id for MSIX applications. </param>
         /// <param name="applicationType"> Resource Type of Application. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationPatchProperties(string description, string friendlyName, string filePath, CommandLineSetting? commandLineSetting, string commandLineArguments, bool? showInPortal, string iconPath, int? iconIndex, string msixPackageFamilyName, string msixPackageApplicationId, RemoteApplicationType? applicationType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationPatchProperties(string description, string friendlyName, string filePath, VirtualApplicationCommandLineSetting? commandLineSetting, string commandLineArguments, bool? showInPortal, string iconPath, int? iconIndex, string msixPackageFamilyName, string msixPackageApplicationId, RemoteApplicationType? applicationType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             FriendlyName = friendlyName;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public string FilePath { get; set; }
 
         /// <summary> Specifies whether this published application can be launched with command line arguments provided by the client, command line arguments specified at publish time, or no command line arguments at all. </summary>
-        public CommandLineSetting? CommandLineSetting { get; set; }
+        public VirtualApplicationCommandLineSetting? CommandLineSetting { get; set; }
 
         /// <summary> Command Line Arguments for Application. </summary>
         public string CommandLineArguments { get; set; }

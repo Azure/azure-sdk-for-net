@@ -15,7 +15,7 @@ using Azure.ResourceManager.DesktopVirtualization.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    internal partial class PrivateLinkResourcesGetByHostPoolAsyncCollectionResultOfT : AsyncPageable<DesktopVirtualizationPrivateLinkResource>
+    internal partial class PrivateLinkResourcesGetByHostPoolAsyncCollectionResultOfT : AsyncPageable<DesktopVirtualizationPrivateLinkResourceData>
     {
         private readonly PrivateLinkResources _client;
         private readonly Guid _subscriptionId;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of PrivateLinkResourcesGetByHostPoolAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<DesktopVirtualizationPrivateLinkResource>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<DesktopVirtualizationPrivateLinkResourceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     yield break;
                 }
                 DesktopVirtualizationPrivateLinkResourceListResult result = DesktopVirtualizationPrivateLinkResourceListResult.FromResponse(response);
-                yield return Page<DesktopVirtualizationPrivateLinkResource>.FromValues((IReadOnlyList<DesktopVirtualizationPrivateLinkResource>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DesktopVirtualizationPrivateLinkResourceData>.FromValues((IReadOnlyList<DesktopVirtualizationPrivateLinkResourceData>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

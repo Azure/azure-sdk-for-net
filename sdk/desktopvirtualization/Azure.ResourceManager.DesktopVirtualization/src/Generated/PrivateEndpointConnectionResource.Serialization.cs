@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.DesktopVirtualization
 {
     /// <summary></summary>
-    public partial class PrivateEndpointConnectionResource : IJsonModel<PrivateEndpointConnectionWithSystemData>
+    public partial class PrivateEndpointConnectionResource : IJsonModel<DesktopVirtualizationPrivateEndpointConnectionData>
     {
-        private static IJsonModel<PrivateEndpointConnectionWithSystemData> s_dataDeserializationInstance;
+        private static IJsonModel<DesktopVirtualizationPrivateEndpointConnectionData> s_dataDeserializationInstance;
 
-        private static IJsonModel<PrivateEndpointConnectionWithSystemData> DataDeserializationInstance => s_dataDeserializationInstance ??= new PrivateEndpointConnectionWithSystemData();
+        private static IJsonModel<DesktopVirtualizationPrivateEndpointConnectionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DesktopVirtualizationPrivateEndpointConnectionData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PrivateEndpointConnectionWithSystemData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PrivateEndpointConnectionWithSystemData>)Data).Write(writer, options);
+        void IJsonModel<DesktopVirtualizationPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DesktopVirtualizationPrivateEndpointConnectionData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PrivateEndpointConnectionWithSystemData IJsonModel<PrivateEndpointConnectionWithSystemData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        DesktopVirtualizationPrivateEndpointConnectionData IJsonModel<DesktopVirtualizationPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PrivateEndpointConnectionWithSystemData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PrivateEndpointConnectionWithSystemData>(Data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
+        BinaryData IPersistableModel<DesktopVirtualizationPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DesktopVirtualizationPrivateEndpointConnectionData>(Data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PrivateEndpointConnectionWithSystemData IPersistableModel<PrivateEndpointConnectionWithSystemData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PrivateEndpointConnectionWithSystemData>(data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
+        DesktopVirtualizationPrivateEndpointConnectionData IPersistableModel<DesktopVirtualizationPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DesktopVirtualizationPrivateEndpointConnectionData>(data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PrivateEndpointConnectionWithSystemData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<DesktopVirtualizationPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

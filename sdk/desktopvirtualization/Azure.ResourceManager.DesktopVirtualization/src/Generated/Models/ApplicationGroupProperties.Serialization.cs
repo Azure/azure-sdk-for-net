@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
@@ -55,18 +56,18 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WriteStringValue(FriendlyName);
             }
             writer.WritePropertyName("hostPoolArmPath"u8);
-            writer.WriteStringValue(HostPoolArmPath);
-            if (options.Format != "W" && Optional.IsDefined(WorkspaceArmPath))
+            writer.WriteStringValue(HostPoolId);
+            if (options.Format != "W" && Optional.IsDefined(WorkspaceId))
             {
                 writer.WritePropertyName("workspaceArmPath"u8);
-                writer.WriteStringValue(WorkspaceArmPath);
+                writer.WriteStringValue(WorkspaceId);
             }
             writer.WritePropertyName("applicationGroupType"u8);
             writer.WriteStringValue(ApplicationGroupType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(CloudPcResource))
+            if (options.Format != "W" && Optional.IsDefined(IsCloudPcResource))
             {
                 writer.WritePropertyName("cloudPcResource"u8);
-                writer.WriteBooleanValue(CloudPcResource.Value);
+                writer.WriteBooleanValue(IsCloudPcResource.Value);
             }
             if (Optional.IsDefined(ShowInFeed))
             {
@@ -128,10 +129,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             string objectId = default;
             string description = default;
             string friendlyName = default;
-            string hostPoolArmPath = default;
-            string workspaceArmPath = default;
-            ApplicationGroupType applicationGroupType = default;
-            bool? cloudPcResource = default;
+            ResourceIdentifier hostPoolId = default;
+            ResourceIdentifier workspaceId = default;
+            VirtualApplicationGroupType applicationGroupType = default;
+            bool? isCloudPcResource = default;
             bool? showInFeed = default;
             string oboTenantId = default;
             DeploymentScope? deploymentScope = default;
@@ -155,17 +156,21 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 if (prop.NameEquals("hostPoolArmPath"u8))
                 {
-                    hostPoolArmPath = prop.Value.GetString();
+                    hostPoolId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("workspaceArmPath"u8))
                 {
-                    workspaceArmPath = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    workspaceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("applicationGroupType"u8))
                 {
-                    applicationGroupType = new ApplicationGroupType(prop.Value.GetString());
+                    applicationGroupType = new VirtualApplicationGroupType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("cloudPcResource"u8))
@@ -174,7 +179,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    cloudPcResource = prop.Value.GetBoolean();
+                    isCloudPcResource = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("showInFeed"u8))
@@ -209,10 +214,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 objectId,
                 description,
                 friendlyName,
-                hostPoolArmPath,
-                workspaceArmPath,
+                hostPoolId,
+                workspaceId,
                 applicationGroupType,
-                cloudPcResource,
+                isCloudPcResource,
                 showInFeed,
                 oboTenantId,
                 deploymentScope,

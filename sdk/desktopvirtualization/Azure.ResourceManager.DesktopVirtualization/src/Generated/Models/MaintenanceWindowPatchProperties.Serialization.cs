@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 return null;
             }
             int? hour = default;
-            DayOfWeek? dayOfWeek = default;
+            DesktopVirtualizationDayOfWeek? dayOfWeek = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    dayOfWeek = prop.Value.GetString().ToDayOfWeek();
+                    dayOfWeek = prop.Value.GetString().ToDesktopVirtualizationDayOfWeek();
                     continue;
                 }
                 if (options.Format != "W")

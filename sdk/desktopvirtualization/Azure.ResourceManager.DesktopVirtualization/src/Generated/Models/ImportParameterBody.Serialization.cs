@@ -83,13 +83,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            ImportPackageInfoRequest importPackageInfoRequest = default;
+            ImportPackageInfoContent importPackageInfoRequest = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("importPackageInfoRequest"u8))
                 {
-                    importPackageInfoRequest = ImportPackageInfoRequest.DeserializeImportPackageInfoRequest(prop.Value, options);
+                    importPackageInfoRequest = ImportPackageInfoContent.DeserializeImportPackageInfoContent(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Initializes a new instance of <see cref="DesktopList"/>. </summary>
         /// <param name="value"> The Desktop items on this page. </param>
-        internal DesktopList(IEnumerable<DesktopData> value)
+        internal DesktopList(IEnumerable<VirtualDesktopData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="value"> The Desktop items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DesktopList(IList<DesktopData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DesktopList(IList<VirtualDesktopData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> The Desktop items on this page. </summary>
-        public IList<DesktopData> Value { get; }
+        public IList<VirtualDesktopData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

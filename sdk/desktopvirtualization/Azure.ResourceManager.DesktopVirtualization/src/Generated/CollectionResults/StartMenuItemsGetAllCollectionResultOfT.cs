@@ -14,7 +14,7 @@ using Azure.ResourceManager.DesktopVirtualization.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    internal partial class StartMenuItemsGetAllCollectionResultOfT : Pageable<StartMenuItem>
+    internal partial class StartMenuItemsGetAllCollectionResultOfT : Pageable<DesktopVirtualizationStartMenuItem>
     {
         private readonly StartMenuItems _client;
         private readonly Guid _subscriptionId;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of StartMenuItemsGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<StartMenuItem>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<DesktopVirtualizationStartMenuItem>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     yield break;
                 }
                 StartMenuItemList result = StartMenuItemList.FromResponse(response);
-                yield return Page<StartMenuItem>.FromValues((IReadOnlyList<StartMenuItem>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DesktopVirtualizationStartMenuItem>.FromValues((IReadOnlyList<DesktopVirtualizationStartMenuItem>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _applicationGroupName, _pageSize, _isDescending, _initialSkip, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _applicationGroupName, _pageSize, _isDescending, _initialSkip, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ApplicationGroupResource.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("VirtualApplicationGroupResource.GetAll");
             scope.Start();
             try
             {

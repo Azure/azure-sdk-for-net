@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             writer.WritePropertyName("timeZone"u8);
             writer.WriteStringValue(TimeZone);
-            if (Optional.IsDefined(HostPoolType))
+            if (Optional.IsDefined(ScalingHostPoolType))
             {
                 writer.WritePropertyName("hostPoolType"u8);
-                writer.WriteStringValue(HostPoolType.Value.ToString());
+                writer.WriteStringValue(ScalingHostPoolType.Value.ToString());
             }
             if (Optional.IsDefined(ExclusionTag))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             string description = default;
             string friendlyName = default;
             string timeZone = default;
-            ScalingHostPoolType? hostPoolType = default;
+            ScalingHostPoolType? scalingHostPoolType = default;
             string exclusionTag = default;
             IList<ScalingSchedule> schedules = default;
             IList<ScalingHostPoolReference> hostPoolReferences = default;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    hostPoolType = new ScalingHostPoolType(prop.Value.GetString());
+                    scalingHostPoolType = new ScalingHostPoolType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("exclusionTag"u8))
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 description,
                 friendlyName,
                 timeZone,
-                hostPoolType,
+                scalingHostPoolType,
                 exclusionTag,
                 schedules ?? new ChangeTrackingList<ScalingSchedule>(),
                 hostPoolReferences ?? new ChangeTrackingList<ScalingHostPoolReference>(),

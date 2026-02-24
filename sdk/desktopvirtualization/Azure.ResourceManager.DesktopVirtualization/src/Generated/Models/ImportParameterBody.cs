@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of <see cref="ImportParameterBody"/>. </summary>
         /// <param name="importPackageInfoRequest"> Information to import app attach package. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="importPackageInfoRequest"/> is null. </exception>
-        public ImportParameterBody(ImportPackageInfoRequest importPackageInfoRequest)
+        public ImportParameterBody(ImportPackageInfoContent importPackageInfoRequest)
         {
             Argument.AssertNotNull(importPackageInfoRequest, nameof(importPackageInfoRequest));
 
@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of <see cref="ImportParameterBody"/>. </summary>
         /// <param name="importPackageInfoRequest"> Information to import app attach package. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImportParameterBody(ImportPackageInfoRequest importPackageInfoRequest, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImportParameterBody(ImportPackageInfoContent importPackageInfoRequest, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ImportPackageInfoRequest = importPackageInfoRequest;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Information to import app attach package. </summary>
-        public ImportPackageInfoRequest ImportPackageInfoRequest { get; }
+        public ImportPackageInfoContent ImportPackageInfoRequest { get; }
     }
 }

@@ -34,18 +34,18 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="description"> Description of scaling plan. </param>
         /// <param name="friendlyName"> User friendly name of scaling plan. </param>
         /// <param name="timeZone"> Timezone of the scaling plan. </param>
-        /// <param name="hostPoolType"> HostPool type for desktop. </param>
+        /// <param name="scalingHostPoolType"> HostPool type for desktop. </param>
         /// <param name="exclusionTag"> Exclusion tag for scaling plan. </param>
         /// <param name="schedules"> List of ScalingPlanPooledSchedule definitions. </param>
         /// <param name="hostPoolReferences"> List of ScalingHostPoolReference definitions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScalingPlanProperties(string objectId, string description, string friendlyName, string timeZone, ScalingHostPoolType? hostPoolType, string exclusionTag, IList<ScalingSchedule> schedules, IList<ScalingHostPoolReference> hostPoolReferences, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScalingPlanProperties(string objectId, string description, string friendlyName, string timeZone, ScalingHostPoolType? scalingHostPoolType, string exclusionTag, IList<ScalingSchedule> schedules, IList<ScalingHostPoolReference> hostPoolReferences, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ObjectId = objectId;
             Description = description;
             FriendlyName = friendlyName;
             TimeZone = timeZone;
-            HostPoolType = hostPoolType;
+            ScalingHostPoolType = scalingHostPoolType;
             ExclusionTag = exclusionTag;
             Schedules = schedules;
             HostPoolReferences = hostPoolReferences;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public string TimeZone { get; set; }
 
         /// <summary> HostPool type for desktop. </summary>
-        public ScalingHostPoolType? HostPoolType { get; set; }
+        public ScalingHostPoolType? ScalingHostPoolType { get; set; }
 
         /// <summary> Exclusion tag for scaling plan. </summary>
         public string ExclusionTag { get; set; }

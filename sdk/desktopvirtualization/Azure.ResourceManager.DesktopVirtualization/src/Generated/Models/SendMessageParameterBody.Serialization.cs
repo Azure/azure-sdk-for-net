@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            SendMessage sendMessage = default;
+            UserSessionMessage sendMessage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    sendMessage = SendMessage.DeserializeSendMessage(prop.Value, options);
+                    sendMessage = UserSessionMessage.DeserializeUserSessionMessage(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

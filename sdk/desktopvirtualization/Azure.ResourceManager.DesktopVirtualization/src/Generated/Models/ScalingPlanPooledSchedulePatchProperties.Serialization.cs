@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 writer.WritePropertyName("daysOfWeek"u8);
                 writer.WriteStartArray();
-                foreach (DayOfWeek item in DaysOfWeek)
+                foreach (DesktopVirtualizationDayOfWeek item in DaysOfWeek)
                 {
                     writer.WriteStringValue(item.ToSerialString());
                 }
@@ -182,24 +182,24 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 return null;
             }
             string name = default;
-            IList<DayOfWeek> daysOfWeek = default;
+            IList<DesktopVirtualizationDayOfWeek> daysOfWeek = default;
             ScalingMethodType? scalingMethod = default;
             CreateDeleteProperties createDelete = default;
-            Time rampUpStartTime = default;
+            ScalingActionTime rampUpStartTime = default;
             SessionHostLoadBalancingAlgorithm? rampUpLoadBalancingAlgorithm = default;
             int? rampUpMinimumHostsPct = default;
             int? rampUpCapacityThresholdPct = default;
-            Time peakStartTime = default;
+            ScalingActionTime peakStartTime = default;
             SessionHostLoadBalancingAlgorithm? peakLoadBalancingAlgorithm = default;
-            Time rampDownStartTime = default;
+            ScalingActionTime rampDownStartTime = default;
             SessionHostLoadBalancingAlgorithm? rampDownLoadBalancingAlgorithm = default;
             int? rampDownMinimumHostsPct = default;
             int? rampDownCapacityThresholdPct = default;
             bool? rampDownForceLogoffUsers = default;
-            StopHostsWhen? rampDownStopHostsWhen = default;
+            DesktopVirtualizationStopHostsWhen? rampDownStopHostsWhen = default;
             int? rampDownWaitTimeMinutes = default;
             string rampDownNotificationMessage = default;
-            Time offPeakStartTime = default;
+            ScalingActionTime offPeakStartTime = default;
             SessionHostLoadBalancingAlgorithm? offPeakLoadBalancingAlgorithm = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -215,10 +215,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    List<DayOfWeek> array = new List<DayOfWeek>();
+                    List<DesktopVirtualizationDayOfWeek> array = new List<DesktopVirtualizationDayOfWeek>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToDayOfWeek());
+                        array.Add(item.GetString().ToDesktopVirtualizationDayOfWeek());
                     }
                     daysOfWeek = array;
                     continue;
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    rampUpStartTime = Time.DeserializeTime(prop.Value, options);
+                    rampUpStartTime = ScalingActionTime.DeserializeScalingActionTime(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("rampUpLoadBalancingAlgorithm"u8))
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    peakStartTime = Time.DeserializeTime(prop.Value, options);
+                    peakStartTime = ScalingActionTime.DeserializeScalingActionTime(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("peakLoadBalancingAlgorithm"u8))
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    rampDownStartTime = Time.DeserializeTime(prop.Value, options);
+                    rampDownStartTime = ScalingActionTime.DeserializeScalingActionTime(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("rampDownLoadBalancingAlgorithm"u8))
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    rampDownStopHostsWhen = new StopHostsWhen(prop.Value.GetString());
+                    rampDownStopHostsWhen = new DesktopVirtualizationStopHostsWhen(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("rampDownWaitTimeMinutes"u8))
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    offPeakStartTime = Time.DeserializeTime(prop.Value, options);
+                    offPeakStartTime = ScalingActionTime.DeserializeScalingActionTime(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("offPeakLoadBalancingAlgorithm"u8))
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             return new ScalingPlanPooledSchedulePatchProperties(
                 name,
-                daysOfWeek ?? new ChangeTrackingList<DayOfWeek>(),
+                daysOfWeek ?? new ChangeTrackingList<DesktopVirtualizationDayOfWeek>(),
                 scalingMethod,
                 createDelete,
                 rampUpStartTime,

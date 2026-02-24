@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
@@ -34,15 +35,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 throw new FormatException($"The model {nameof(ScalingHostPoolReference)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(HostPoolArmPath))
+            if (Optional.IsDefined(HostPoolId))
             {
                 writer.WritePropertyName("hostPoolArmPath"u8);
-                writer.WriteStringValue(HostPoolArmPath);
+                writer.WriteStringValue(HostPoolId);
             }
-            if (Optional.IsDefined(ScalingPlanEnabled))
+            if (Optional.IsDefined(IsScalingPlanEnabled))
             {
                 writer.WritePropertyName("scalingPlanEnabled"u8);
-                writer.WriteBooleanValue(ScalingPlanEnabled.Value);
+                writer.WriteBooleanValue(IsScalingPlanEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -86,14 +87,18 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            string hostPoolArmPath = default;
-            bool? scalingPlanEnabled = default;
+            ResourceIdentifier hostPoolId = default;
+            bool? isScalingPlanEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("hostPoolArmPath"u8))
                 {
-                    hostPoolArmPath = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    hostPoolId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("scalingPlanEnabled"u8))
@@ -102,7 +107,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    scalingPlanEnabled = prop.Value.GetBoolean();
+                    isScalingPlanEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -110,7 +115,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ScalingHostPoolReference(hostPoolArmPath, scalingPlanEnabled, additionalBinaryDataProperties);
+            return new ScalingHostPoolReference(hostPoolId, isScalingPlanEnabled, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

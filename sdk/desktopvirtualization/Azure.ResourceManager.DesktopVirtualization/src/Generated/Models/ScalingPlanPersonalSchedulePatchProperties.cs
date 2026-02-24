@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of <see cref="ScalingPlanPersonalSchedulePatchProperties"/>. </summary>
         public ScalingPlanPersonalSchedulePatchProperties()
         {
-            DaysOfWeek = new ChangeTrackingList<DayOfWeek>();
+            DaysOfWeek = new ChangeTrackingList<DesktopVirtualizationDayOfWeek>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ScalingPlanPersonalSchedulePatchProperties"/>. </summary>
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="offPeakActionOnLogoff"> Action to be taken after a logoff during the off-peak period. </param>
         /// <param name="offPeakMinutesToWaitOnLogoff"> The time in minutes to wait before performing the desired session handling action when a user logs off during the off-peak period. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScalingPlanPersonalSchedulePatchProperties(IList<DayOfWeek> daysOfWeek, Time rampUpStartTime, StartupBehavior? rampUpAutoStartHosts, SetStartVMOnConnect? rampUpStartVMOnConnect, SessionHandlingOperation? rampUpActionOnDisconnect, int? rampUpMinutesToWaitOnDisconnect, SessionHandlingOperation? rampUpActionOnLogoff, int? rampUpMinutesToWaitOnLogoff, Time peakStartTime, SetStartVMOnConnect? peakStartVMOnConnect, SessionHandlingOperation? peakActionOnDisconnect, int? peakMinutesToWaitOnDisconnect, SessionHandlingOperation? peakActionOnLogoff, int? peakMinutesToWaitOnLogoff, Time rampDownStartTime, SetStartVMOnConnect? rampDownStartVMOnConnect, SessionHandlingOperation? rampDownActionOnDisconnect, int? rampDownMinutesToWaitOnDisconnect, SessionHandlingOperation? rampDownActionOnLogoff, int? rampDownMinutesToWaitOnLogoff, Time offPeakStartTime, SetStartVMOnConnect? offPeakStartVMOnConnect, SessionHandlingOperation? offPeakActionOnDisconnect, int? offPeakMinutesToWaitOnDisconnect, SessionHandlingOperation? offPeakActionOnLogoff, int? offPeakMinutesToWaitOnLogoff, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScalingPlanPersonalSchedulePatchProperties(IList<DesktopVirtualizationDayOfWeek> daysOfWeek, ScalingActionTime rampUpStartTime, StartupBehavior? rampUpAutoStartHosts, SetStartVmOnConnect? rampUpStartVMOnConnect, SessionHandlingOperation? rampUpActionOnDisconnect, int? rampUpMinutesToWaitOnDisconnect, SessionHandlingOperation? rampUpActionOnLogoff, int? rampUpMinutesToWaitOnLogoff, ScalingActionTime peakStartTime, SetStartVmOnConnect? peakStartVMOnConnect, SessionHandlingOperation? peakActionOnDisconnect, int? peakMinutesToWaitOnDisconnect, SessionHandlingOperation? peakActionOnLogoff, int? peakMinutesToWaitOnLogoff, ScalingActionTime rampDownStartTime, SetStartVmOnConnect? rampDownStartVMOnConnect, SessionHandlingOperation? rampDownActionOnDisconnect, int? rampDownMinutesToWaitOnDisconnect, SessionHandlingOperation? rampDownActionOnLogoff, int? rampDownMinutesToWaitOnLogoff, ScalingActionTime offPeakStartTime, SetStartVmOnConnect? offPeakStartVMOnConnect, SessionHandlingOperation? offPeakActionOnDisconnect, int? offPeakMinutesToWaitOnDisconnect, SessionHandlingOperation? offPeakActionOnLogoff, int? offPeakMinutesToWaitOnLogoff, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DaysOfWeek = daysOfWeek;
             RampUpStartTime = rampUpStartTime;
@@ -83,16 +83,16 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Set of days of the week on which this schedule is active. </summary>
-        public IList<DayOfWeek> DaysOfWeek { get; }
+        public IList<DesktopVirtualizationDayOfWeek> DaysOfWeek { get; }
 
         /// <summary> Starting time for ramp up period. </summary>
-        public Time RampUpStartTime { get; set; }
+        public ScalingActionTime RampUpStartTime { get; set; }
 
         /// <summary> The desired startup behavior during the ramp up period for personal vms in the hostpool. </summary>
         public StartupBehavior? RampUpAutoStartHosts { get; set; }
 
         /// <summary> The desired configuration of Start VM On Connect for the hostpool during the ramp up phase. If this is disabled, session hosts must be turned on using rampUpAutoStartHosts or by turning them on manually. </summary>
-        public SetStartVMOnConnect? RampUpStartVMOnConnect { get; set; }
+        public SetStartVmOnConnect? RampUpStartVMOnConnect { get; set; }
 
         /// <summary> Action to be taken after a user disconnect during the ramp up period. </summary>
         public SessionHandlingOperation? RampUpActionOnDisconnect { get; set; }
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public int? RampUpMinutesToWaitOnLogoff { get; set; }
 
         /// <summary> Starting time for peak period. </summary>
-        public Time PeakStartTime { get; set; }
+        public ScalingActionTime PeakStartTime { get; set; }
 
         /// <summary> The desired configuration of Start VM On Connect for the hostpool during the peak phase. </summary>
-        public SetStartVMOnConnect? PeakStartVMOnConnect { get; set; }
+        public SetStartVmOnConnect? PeakStartVMOnConnect { get; set; }
 
         /// <summary> Action to be taken after a user disconnect during the peak period. </summary>
         public SessionHandlingOperation? PeakActionOnDisconnect { get; set; }
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public int? PeakMinutesToWaitOnLogoff { get; set; }
 
         /// <summary> Starting time for ramp down period. </summary>
-        public Time RampDownStartTime { get; set; }
+        public ScalingActionTime RampDownStartTime { get; set; }
 
         /// <summary> The desired configuration of Start VM On Connect for the hostpool during the ramp down phase. </summary>
-        public SetStartVMOnConnect? RampDownStartVMOnConnect { get; set; }
+        public SetStartVmOnConnect? RampDownStartVMOnConnect { get; set; }
 
         /// <summary> Action to be taken after a user disconnect during the ramp down period. </summary>
         public SessionHandlingOperation? RampDownActionOnDisconnect { get; set; }
@@ -143,10 +143,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public int? RampDownMinutesToWaitOnLogoff { get; set; }
 
         /// <summary> Starting time for off-peak period. </summary>
-        public Time OffPeakStartTime { get; set; }
+        public ScalingActionTime OffPeakStartTime { get; set; }
 
         /// <summary> The desired configuration of Start VM On Connect for the hostpool during the off-peak phase. </summary>
-        public SetStartVMOnConnect? OffPeakStartVMOnConnect { get; set; }
+        public SetStartVmOnConnect? OffPeakStartVMOnConnect { get; set; }
 
         /// <summary> Action to be taken after a user disconnect during the off-peak period. </summary>
         public SessionHandlingOperation? OffPeakActionOnDisconnect { get; set; }

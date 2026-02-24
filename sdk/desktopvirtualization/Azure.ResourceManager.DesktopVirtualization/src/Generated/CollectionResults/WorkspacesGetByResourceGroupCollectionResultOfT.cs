@@ -14,7 +14,7 @@ using Azure.ResourceManager.DesktopVirtualization.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    internal partial class WorkspacesGetByResourceGroupCollectionResultOfT : Pageable<WorkspaceData>
+    internal partial class WorkspacesGetByResourceGroupCollectionResultOfT : Pageable<VirtualWorkspaceData>
     {
         private readonly Workspaces _client;
         private readonly Guid _subscriptionId;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of WorkspacesGetByResourceGroupCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<WorkspaceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<VirtualWorkspaceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     yield break;
                 }
                 WorkspaceList result = WorkspaceList.FromResponse(response);
-                yield return Page<WorkspaceData>.FromValues((IReadOnlyList<WorkspaceData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<VirtualWorkspaceData>.FromValues((IReadOnlyList<VirtualWorkspaceData>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceGroupRequest(nextLink, _subscriptionId, _resourceGroupName, _pageSize, _isDescending, _initialSkip, _context) : _client.CreateGetByResourceGroupRequest(_subscriptionId, _resourceGroupName, _pageSize, _isDescending, _initialSkip, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("WorkspaceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("VirtualWorkspaceCollection.GetAll");
             scope.Start();
             try
             {

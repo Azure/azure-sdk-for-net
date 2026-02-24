@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
@@ -18,14 +19,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGroupProperties"/>. </summary>
-        /// <param name="hostPoolArmPath"> HostPool arm path of ApplicationGroup. </param>
+        /// <param name="hostPoolId"> HostPool arm path of ApplicationGroup. </param>
         /// <param name="applicationGroupType"> Resource Type of ApplicationGroup. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostPoolArmPath"/> is null. </exception>
-        public ApplicationGroupProperties(string hostPoolArmPath, ApplicationGroupType applicationGroupType)
+        /// <exception cref="ArgumentNullException"> <paramref name="hostPoolId"/> is null. </exception>
+        public ApplicationGroupProperties(ResourceIdentifier hostPoolId, VirtualApplicationGroupType applicationGroupType)
         {
-            Argument.AssertNotNull(hostPoolArmPath, nameof(hostPoolArmPath));
+            Argument.AssertNotNull(hostPoolId, nameof(hostPoolId));
 
-            HostPoolArmPath = hostPoolArmPath;
+            HostPoolId = hostPoolId;
             ApplicationGroupType = applicationGroupType;
         }
 
@@ -33,23 +34,23 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="objectId"> ObjectId of ApplicationGroup. (internal use). </param>
         /// <param name="description"> Description of ApplicationGroup. </param>
         /// <param name="friendlyName"> Friendly name of ApplicationGroup. </param>
-        /// <param name="hostPoolArmPath"> HostPool arm path of ApplicationGroup. </param>
-        /// <param name="workspaceArmPath"> Workspace arm path of ApplicationGroup. </param>
+        /// <param name="hostPoolId"> HostPool arm path of ApplicationGroup. </param>
+        /// <param name="workspaceId"> Workspace arm path of ApplicationGroup. </param>
         /// <param name="applicationGroupType"> Resource Type of ApplicationGroup. </param>
-        /// <param name="cloudPcResource"> Is cloud pc resource. </param>
+        /// <param name="isCloudPcResource"> Is cloud pc resource. </param>
         /// <param name="showInFeed"> Boolean representing whether the applicationGroup is show in the feed. </param>
         /// <param name="oboTenantId"> Tenant that the resource is being requested on behalf of. </param>
         /// <param name="deploymentScope"> DeploymentScope type for ApplicationGroup. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGroupProperties(string objectId, string description, string friendlyName, string hostPoolArmPath, string workspaceArmPath, ApplicationGroupType applicationGroupType, bool? cloudPcResource, bool? showInFeed, string oboTenantId, DeploymentScope? deploymentScope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationGroupProperties(string objectId, string description, string friendlyName, ResourceIdentifier hostPoolId, ResourceIdentifier workspaceId, VirtualApplicationGroupType applicationGroupType, bool? isCloudPcResource, bool? showInFeed, string oboTenantId, DeploymentScope? deploymentScope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ObjectId = objectId;
             Description = description;
             FriendlyName = friendlyName;
-            HostPoolArmPath = hostPoolArmPath;
-            WorkspaceArmPath = workspaceArmPath;
+            HostPoolId = hostPoolId;
+            WorkspaceId = workspaceId;
             ApplicationGroupType = applicationGroupType;
-            CloudPcResource = cloudPcResource;
+            IsCloudPcResource = isCloudPcResource;
             ShowInFeed = showInFeed;
             OboTenantId = oboTenantId;
             DeploymentScope = deploymentScope;
@@ -66,16 +67,16 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public string FriendlyName { get; set; }
 
         /// <summary> HostPool arm path of ApplicationGroup. </summary>
-        public string HostPoolArmPath { get; set; }
+        public ResourceIdentifier HostPoolId { get; set; }
 
         /// <summary> Workspace arm path of ApplicationGroup. </summary>
-        public string WorkspaceArmPath { get; }
+        public ResourceIdentifier WorkspaceId { get; }
 
         /// <summary> Resource Type of ApplicationGroup. </summary>
-        public ApplicationGroupType ApplicationGroupType { get; set; }
+        public VirtualApplicationGroupType ApplicationGroupType { get; set; }
 
         /// <summary> Is cloud pc resource. </summary>
-        public bool? CloudPcResource { get; }
+        public bool? IsCloudPcResource { get; }
 
         /// <summary> Boolean representing whether the applicationGroup is show in the feed. </summary>
         public bool? ShowInFeed { get; set; }
