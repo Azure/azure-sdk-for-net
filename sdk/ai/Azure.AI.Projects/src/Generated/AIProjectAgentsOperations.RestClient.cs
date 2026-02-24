@@ -2,7 +2,6 @@
 
 #nullable disable
 
-using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 
@@ -29,7 +28,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateCreateAgentRequest(BinaryContent content, BinaryData foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateCreateAgentRequest(BinaryContent content, string foundryFeatures, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -39,7 +38,7 @@ namespace Azure.AI.Projects
             PipelineRequest request = message.Request;
             if (foundryFeatures != null)
             {
-                request.Headers.Set("Foundry-Features", TypeFormatters.ConvertToString(foundryFeatures));
+                request.Headers.Set("Foundry-Features", foundryFeatures);
             }
             request.Headers.Set("Content-Type", "application/json");
             request.Headers.Set("Accept", "application/json");
@@ -48,7 +47,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateUpdateAgentRequest(string agentName, BinaryContent content, BinaryData foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateUpdateAgentRequest(string agentName, BinaryContent content, string foundryFeatures, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -59,7 +58,7 @@ namespace Azure.AI.Projects
             PipelineRequest request = message.Request;
             if (foundryFeatures != null)
             {
-                request.Headers.Set("Foundry-Features", TypeFormatters.ConvertToString(foundryFeatures));
+                request.Headers.Set("Foundry-Features", foundryFeatures);
             }
             request.Headers.Set("Content-Type", "application/json");
             request.Headers.Set("Accept", "application/json");
@@ -147,7 +146,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateCreateAgentVersionRequest(string agentName, BinaryContent content, BinaryData foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateCreateAgentVersionRequest(string agentName, BinaryContent content, string foundryFeatures, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -159,7 +158,7 @@ namespace Azure.AI.Projects
             PipelineRequest request = message.Request;
             if (foundryFeatures != null)
             {
-                request.Headers.Set("Foundry-Features", TypeFormatters.ConvertToString(foundryFeatures));
+                request.Headers.Set("Foundry-Features", foundryFeatures);
             }
             request.Headers.Set("Content-Type", "application/json");
             request.Headers.Set("Accept", "application/json");
