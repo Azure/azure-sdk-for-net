@@ -105,47 +105,47 @@ namespace Azure.AI.ContentUnderstanding.Tests
         [Test]
         public void TimeRange_ValidRange_ReturnsCorrectValue()
         {
-            var range = ContentRange.TimeRange(0, 5000);
+            var range = ContentRange.TimeRange(TimeSpan.Zero, TimeSpan.FromMilliseconds(5000));
             Assert.AreEqual("0-5000", range.ToString());
         }
 
         [Test]
         public void TimeRange_SameStartAndEnd_ReturnsCorrectValue()
         {
-            var range = ContentRange.TimeRange(1000, 1000);
+            var range = ContentRange.TimeRange(TimeSpan.FromMilliseconds(1000), TimeSpan.FromMilliseconds(1000));
             Assert.AreEqual("1000-1000", range.ToString());
         }
 
         [Test]
         public void TimeRange_NegativeStart_ThrowsArgumentOutOfRangeException()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => ContentRange.TimeRange(-1, 5000));
+            Assert.Throws<ArgumentOutOfRangeException>(() => ContentRange.TimeRange(TimeSpan.FromMilliseconds(-1), TimeSpan.FromMilliseconds(5000)));
         }
 
         [Test]
         public void TimeRange_EndBeforeStart_ThrowsArgumentOutOfRangeException()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => ContentRange.TimeRange(5000, 1000));
+            Assert.Throws<ArgumentOutOfRangeException>(() => ContentRange.TimeRange(TimeSpan.FromMilliseconds(5000), TimeSpan.FromMilliseconds(1000)));
         }
 
         [Test]
         public void TimeRangeFrom_ValidStartTime_ReturnsCorrectValue()
         {
-            var range = ContentRange.TimeRangeFrom(5000);
+            var range = ContentRange.TimeRangeFrom(TimeSpan.FromMilliseconds(5000));
             Assert.AreEqual("5000-", range.ToString());
         }
 
         [Test]
         public void TimeRangeFrom_ZeroStartTime_ReturnsCorrectValue()
         {
-            var range = ContentRange.TimeRangeFrom(0);
+            var range = ContentRange.TimeRangeFrom(TimeSpan.Zero);
             Assert.AreEqual("0-", range.ToString());
         }
 
         [Test]
         public void TimeRangeFrom_NegativeStartTime_ThrowsArgumentOutOfRangeException()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => ContentRange.TimeRangeFrom(-1));
+            Assert.Throws<ArgumentOutOfRangeException>(() => ContentRange.TimeRangeFrom(TimeSpan.FromMilliseconds(-1)));
         }
 
         #endregion
@@ -266,6 +266,45 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var range1 = ContentRange.Pages(1, 3);
             var range2 = new ContentRange("1-3");
             Assert.AreEqual(range1.GetHashCode(), range2.GetHashCode());
+        }
+
+        #endregion
+
+        #region TimeSpan Factory Methods
+
+        [Test]
+        public void TimeRange_WithTimeSpan_ReturnsCorrectValue()
+        {
+            var range = ContentRange.TimeRange(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(5));
+            Assert.AreEqual("1000-5000", range.ToString());
+        }
+
+        [Test]
+        public void TimeRangeFrom_WithTimeSpan_ReturnsCorrectValue()
+        {
+            var range = ContentRange.TimeRangeFrom(TimeSpan.FromSeconds(5));
+            Assert.AreEqual("5000-", range.ToString());
+        }
+
+        [Test]
+        public void TimeRange_NegativeStartTimeSpan_ThrowsArgumentOutOfRangeException()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(
+                () => ContentRange.TimeRange(TimeSpan.FromMilliseconds(-1), TimeSpan.FromSeconds(5)));
+        }
+
+        [Test]
+        public void TimeRange_EndBeforeStartTimeSpan_ThrowsArgumentOutOfRangeException()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(
+                () => ContentRange.TimeRange(TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(1)));
+        }
+
+        [Test]
+        public void TimeRangeFrom_NegativeTimeSpan_ThrowsArgumentOutOfRangeException()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(
+                () => ContentRange.TimeRangeFrom(TimeSpan.FromMilliseconds(-1)));
         }
 
         #endregion

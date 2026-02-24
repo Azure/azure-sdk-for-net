@@ -26,8 +26,10 @@ namespace Azure.AI.ContentUnderstanding
     /// ContentRange openEnd = ContentRange.PagesFrom(9);        // "9-"
     ///
     /// // Audio/video time ranges (milliseconds)
-    /// ContentRange time = ContentRange.TimeRange(0, 5000);     // "0-5000"
-    /// ContentRange timeOpen = ContentRange.TimeRangeFrom(5000); // "5000-"
+    /// ContentRange time = ContentRange.TimeRange(
+    ///     TimeSpan.Zero, TimeSpan.FromMilliseconds(5000));       // "0-5000"
+    /// ContentRange timeOpen = ContentRange.TimeRangeFrom(
+    ///     TimeSpan.FromMilliseconds(5000));                      // "5000-"
     ///
     /// // Combine multiple ranges
     /// ContentRange combined = ContentRange.Combine(
@@ -89,7 +91,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="endMs"> The end time in milliseconds (inclusive). </param>
         /// <returns> A <see cref="ContentRange"/> representing the time range, e.g. <c>"0-5000"</c>. </returns>
         /// <exception cref="ArgumentOutOfRangeException"> <paramref name="startMs"/> is negative, or <paramref name="endMs"/> is less than <paramref name="startMs"/>. </exception>
-        public static ContentRange TimeRange(long startMs, long endMs)
+        internal static ContentRange TimeRange(long startMs, long endMs)
         {
             if (startMs < 0) throw new ArgumentOutOfRangeException(nameof(startMs), "Start time must be >= 0.");
             if (endMs < startMs) throw new ArgumentOutOfRangeException(nameof(endMs), "End time must be >= start time.");
@@ -100,10 +102,32 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="startMs"> The start time in milliseconds (inclusive). </param>
         /// <returns> A <see cref="ContentRange"/> representing the open-ended time range, e.g. <c>"5000-"</c>. </returns>
         /// <exception cref="ArgumentOutOfRangeException"> <paramref name="startMs"/> is negative. </exception>
-        public static ContentRange TimeRangeFrom(long startMs)
+        internal static ContentRange TimeRangeFrom(long startMs)
         {
             if (startMs < 0) throw new ArgumentOutOfRangeException(nameof(startMs), "Start time must be >= 0.");
             return new ContentRange($"{startMs}-");
+        }
+
+        /// <summary> Creates a <see cref="ContentRange"/> for a time range using <see cref="TimeSpan"/> values (for audio/video content). </summary>
+        /// <param name="start"> The start time (inclusive). </param>
+        /// <param name="end"> The end time (inclusive). </param>
+        /// <returns> A <see cref="ContentRange"/> representing the time range. </returns>
+        /// <exception cref="ArgumentOutOfRangeException"> <paramref name="start"/> is negative, or <paramref name="end"/> is less than <paramref name="start"/>. </exception>
+        public static ContentRange TimeRange(TimeSpan start, TimeSpan end)
+        {
+            if (start < TimeSpan.Zero) throw new ArgumentOutOfRangeException(nameof(start), "Start time must be non-negative.");
+            if (end < start) throw new ArgumentOutOfRangeException(nameof(end), "End time must be >= start time.");
+            return TimeRange((long)start.TotalMilliseconds, (long)end.TotalMilliseconds);
+        }
+
+        /// <summary> Creates a <see cref="ContentRange"/> for all content from a starting time to the end using a <see cref="TimeSpan"/> value (for audio/video content). </summary>
+        /// <param name="start"> The start time (inclusive). </param>
+        /// <returns> A <see cref="ContentRange"/> representing the open-ended time range. </returns>
+        /// <exception cref="ArgumentOutOfRangeException"> <paramref name="start"/> is negative. </exception>
+        public static ContentRange TimeRangeFrom(TimeSpan start)
+        {
+            if (start < TimeSpan.Zero) throw new ArgumentOutOfRangeException(nameof(start), "Start time must be non-negative.");
+            return TimeRangeFrom((long)start.TotalMilliseconds);
         }
 
         /// <summary> Combines multiple <see cref="ContentRange"/> values into a single comma-separated range. </summary>
