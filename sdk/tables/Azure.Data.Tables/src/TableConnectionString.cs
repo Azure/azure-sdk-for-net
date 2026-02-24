@@ -373,6 +373,11 @@ namespace Azure.Data.Tables
                 // This is most likely Azurite, which looks like this: https://127.0.0.1:10002/contoso/
                 // Insert the '-secondary' suffix after the 2nd segment (the first segment is '/')
                 var segments = primaryUri.Segments;
+                if (segments.Length < 2)
+                {
+                    // No account name segment in the path (e.g. http://localhost:8902/)
+                    return default;
+                }
                 var accountNameSegmentLength = segments[1].Length;
                 var insertIndex = segments[1].EndsWith("/", StringComparison.OrdinalIgnoreCase) ? accountNameSegmentLength - 1 : accountNameSegmentLength;
                 segments[1] = segments[1].Insert(insertIndex, TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix);

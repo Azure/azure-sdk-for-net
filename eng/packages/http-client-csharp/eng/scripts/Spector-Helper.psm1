@@ -5,6 +5,7 @@ $failingSpecs = @(
     Join-Path 'http' 'response' 'status-code-range' # Response namespace conflicts with Azure.Response
     Join-Path 'http' 'type' 'file'
 # Azure scenarios not yet buildable
+    Join-Path 'http' 'azure' 'client-generator-core' 'client-initialization' 'individuallyParent'
     Join-Path 'http' 'azure' 'client-generator-core' 'alternate-type'
     Join-Path 'http' 'azure' 'client-generator-core' 'deserialize-empty-string-as-null' # long path issue and also not needed for Azure emitter
 # These scenarios will be covered in Azure.Generator.Management

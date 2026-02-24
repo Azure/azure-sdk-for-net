@@ -41,7 +41,7 @@
       "$id": "5",
       "kind": "model",
       "name": "User",
-      "namespace": "Parameters.Basic",
+      "namespace": "Parameters.Basic.ExplicitBody",
       "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody.User",
       "usage": "Input,Json",
       "doc": "This is a simple model.",
@@ -83,7 +83,7 @@
       "$id": "8",
       "kind": "model",
       "name": "SimpleRequest",
-      "namespace": "Parameters.Basic",
+      "namespace": "Parameters.Basic.ImplicitBody",
       "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.simple.Request.anonymous",
       "usage": "Spread,Json",
       "decorators": [],
@@ -170,7 +170,7 @@
           "$id": "15",
           "kind": "client",
           "name": "ExplicitBody",
-          "namespace": "Parameters.Basic",
+          "namespace": "Parameters.Basic.ExplicitBody",
           "methods": [
             {
               "$id": "16",
@@ -280,7 +280,7 @@
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody.simple",
                 "decorators": [],
-                "namespace": "Parameters.Basic"
+                "namespace": "Parameters.Basic.ExplicitBody"
               },
               "parameters": [
                 {
@@ -342,7 +342,7 @@
           "$id": "25",
           "kind": "client",
           "name": "ImplicitBody",
-          "namespace": "Parameters.Basic",
+          "namespace": "Parameters.Basic.ImplicitBody",
           "methods": [
             {
               "$id": "26",
@@ -456,7 +456,7 @@
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.simple",
                 "decorators": [],
-                "namespace": "Parameters.Basic"
+                "namespace": "Parameters.Basic.ImplicitBody"
               },
               "parameters": [
                 {

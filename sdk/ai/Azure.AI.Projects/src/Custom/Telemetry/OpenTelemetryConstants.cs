@@ -67,10 +67,10 @@ namespace Azure.AI.Projects.Telemetry
         public const string EventNameAssistantMessage = "gen_ai.assistant.message";
 
         public const string ClientName = "Azure.AI.Projects.AIProjectAgentsOperations";
-        public const string EnableOpenTelemetrySwitch = "Azure.Experimental.EnableActivitySource";
+        public const string EnableOpenTelemetrySwitch = "Azure.Experimental.EnableGenAITracing";
         public const string TraceContentsSwitch = "Azure.Experimental.TraceGenAIMessageContent";
         public const string TraceContentsEnvironmentVariable = "OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT";
-        public const string EnableOpenTelemetryEnvironmentVariable = "AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE";
+        public const string EnableOpenTelemetryEnvironmentVariable = "AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING";
 
         public const string GenAiRequestReasoningEffort = "gen_ai.request.reasoning.effort";
         public const string GenAiRequestReasoningSummary = "gen_ai.request.reasoning.summary";

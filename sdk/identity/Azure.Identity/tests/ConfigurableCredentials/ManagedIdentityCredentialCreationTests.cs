@@ -13,8 +13,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.ManagedIdentity
     /// <summary>
     /// Validates that all <see cref="ManagedIdentityCredential"/> related properties can be set
     /// via IConfiguration and that the correct priority order is honoured.
-    /// Tests cover both the new ManagedIdentityIdKind/ManagedIdentityId config properties
-    /// and the legacy ManagedIdentityClientId/ManagedIdentityResourceId/ManagedIdentityObjectId properties.
+    /// Config uses ManagedIdentityIdKind/ManagedIdentityId properties.
     /// </summary>
     internal class ManagedIdentityCredentialCreationTests : CredentialCreationTestBase<ManagedIdentityCredential>
     {
@@ -103,13 +102,18 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.ManagedIdentity
 
         [Test]
         [NonParallelizable]
-        public void IdType_WinsOverLegacyClientId()
+        public void IdType_WinsOverEnvVarClientId()
         {
             string newId = Guid.NewGuid().ToString();
-            using (new TestEnvVar(AllNulledEnvVars()))
+            using (new TestEnvVar(new Dictionary<string, string>
+            {
+                { "AZURE_CLIENT_ID", "env-client-id" },
+                { "AZURE_TENANT_ID", null },
+                { "AZURE_ADDITIONALLY_ALLOWED_TENANTS", null },
+                { "AZURE_AUTHORITY_HOST", null },
+            }))
             {
                 IConfiguration config = Helper.GetConfiguration();
-                config["MyClient:Credential:ManagedIdentityClientId"] = "legacy-client-id";
                 config["MyClient:Credential:ManagedIdentityIdKind"] = "ClientId";
                 config["MyClient:Credential:ManagedIdentityId"] = newId;
 
@@ -175,29 +179,11 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.ManagedIdentity
 
         #endregion
 
-        #region Legacy config properties (ManagedIdentityClientId, ManagedIdentityResourceId, ManagedIdentityObjectId)
+        #region Environment variable fallback
 
         [Test]
         [NonParallelizable]
-        public void LegacyClientId_ConfigWinsOverEnvVar()
-        {
-            using (new TestEnvVar(new Dictionary<string, string>
-            {
-                { "AZURE_CLIENT_ID", "env-client-id" },
-                { "AZURE_TENANT_ID", null },
-                { "AZURE_ADDITIONALLY_ALLOWED_TENANTS", null },
-            }))
-            {
-                IConfiguration config = Helper.GetConfiguration();
-                config["MyClient:Credential:ManagedIdentityClientId"] = "config-client-id";
-
-                AssertManagedIdentityId(GetManagedIdentityId(config), ManagedIdentityIdType.ClientId, "config-client-id");
-            }
-        }
-
-        [Test]
-        [NonParallelizable]
-        public void LegacyClientId_FallsBackToEnvVar()
+        public void ManagedIdentityClientId_FallsBackToEnvVar()
         {
             using (new TestEnvVar(new Dictionary<string, string>
             {
@@ -214,56 +200,13 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.ManagedIdentity
 
         [Test]
         [NonParallelizable]
-        public void LegacyClientId_DefaultsToSystemAssigned()
+        public void ManagedIdentityClientId_DefaultsToSystemAssigned()
         {
             using (new TestEnvVar(AllNulledEnvVars()))
             {
                 IConfiguration config = Helper.GetConfiguration();
 
                 AssertManagedIdentityId(GetManagedIdentityId(config), ManagedIdentityIdType.SystemAssigned);
-            }
-        }
-
-        [Test]
-        [NonParallelizable]
-        public void LegacyResourceId_ConfigSetsValue()
-        {
-            var resourceId = $"/subscriptions/{Guid.NewGuid()}/resourceGroups/myRg/providers/Microsoft.Compute/virtualMachines/myVm";
-            using (new TestEnvVar(AllNulledEnvVars()))
-            {
-                IConfiguration config = Helper.GetConfiguration();
-                config["MyClient:Credential:ManagedIdentityResourceId"] = resourceId;
-
-                AssertManagedIdentityId(GetManagedIdentityId(config), ManagedIdentityIdType.ResourceId, resourceId);
-            }
-        }
-
-        [Test]
-        [NonParallelizable]
-        public void LegacyObjectId_ConfigSetsValue()
-        {
-            string objectId = Guid.NewGuid().ToString();
-            using (new TestEnvVar(AllNulledEnvVars()))
-            {
-                IConfiguration config = Helper.GetConfiguration();
-                config["MyClient:Credential:ManagedIdentityObjectId"] = objectId;
-
-                AssertManagedIdentityId(GetManagedIdentityId(config), ManagedIdentityIdType.ObjectId, objectId);
-            }
-        }
-
-        [Test]
-        [NonParallelizable]
-        public void LegacyClientId_And_ResourceId_BothSet_Throws()
-        {
-            var resourceId = $"/subscriptions/{Guid.NewGuid()}/resourceGroups/myRg/providers/Microsoft.Compute/virtualMachines/myVm";
-            using (new TestEnvVar(AllNulledEnvVars()))
-            {
-                IConfiguration config = Helper.GetConfiguration();
-                config["MyClient:Credential:ManagedIdentityClientId"] = "my-client-id";
-                config["MyClient:Credential:ManagedIdentityResourceId"] = resourceId;
-
-                Assert.Throws<ArgumentException>(() => CreateFromConfig(config));
             }
         }
 

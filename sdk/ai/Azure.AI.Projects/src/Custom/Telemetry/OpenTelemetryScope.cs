@@ -62,9 +62,7 @@ namespace Azure.AI.Projects.Telemetry
         private static bool s_traceContent = AppContextSwitchHelper.GetConfigValue(
             TraceContentsSwitch,
             TraceContentsEnvironmentVariable);
-        private static bool s_enableTelemetry = AppContextSwitchHelper.GetConfigValue(
-            EnableOpenTelemetrySwitch,
-            EnableOpenTelemetryEnvironmentVariable);
+        private static bool s_enableTelemetry = InitializeGenAITelemetry();
         private static bool s_useMessageEvents = AppContextSwitchHelper.GetConfigValue(
             UseMessageEventsSwitch,
             UseMessageEventsEnvironmentVariable);
@@ -74,15 +72,35 @@ namespace Azure.AI.Projects.Telemetry
 
         private int _hasEnded = 0;
         private readonly OpenTelemetryScopeType _scopeType;
+
+        /// <summary>
+        /// Initializes GenAI telemetry by checking the GenAI-specific feature flag and
+        /// enabling the underlying Azure.Core ActivitySource when GenAI tracing is enabled.
+        /// This allows GenAI tracing to remain experimental independently of when general
+        /// OpenTelemetry support becomes stable in Azure SDKs.
+        /// </summary>
+        private static bool InitializeGenAITelemetry()
+        {
+            bool isEnabled = AppContextSwitchHelper.GetConfigValue(
+                EnableOpenTelemetrySwitch,
+                EnableOpenTelemetryEnvironmentVariable);
+
+            // When GenAI tracing is enabled, also enable the underlying Azure.Core ActivitySource
+            if (isEnabled)
+            {
+                AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
+            }
+
+            return isEnabled;
+        }
+
         private static void ReinitializeConfiguration()
         {
             s_traceContent = AppContextSwitchHelper.GetConfigValue(
                 TraceContentsSwitch,
                 TraceContentsEnvironmentVariable);
 
-            s_enableTelemetry = AppContextSwitchHelper.GetConfigValue(
-                EnableOpenTelemetrySwitch,
-                EnableOpenTelemetryEnvironmentVariable);
+            s_enableTelemetry = InitializeGenAITelemetry();
 
             s_useMessageEvents = AppContextSwitchHelper.GetConfigValue(
                 UseMessageEventsSwitch,
@@ -590,7 +608,7 @@ namespace Azure.AI.Projects.Telemetry
         internal static void ResetEnvironmentForTests()
         {
             s_traceContent = AppContextSwitchHelper.GetConfigValue(TraceContentsSwitch, TraceContentsEnvironmentVariable);
-            s_enableTelemetry = AppContextSwitchHelper.GetConfigValue(EnableOpenTelemetrySwitch, EnableOpenTelemetryEnvironmentVariable);
+            s_enableTelemetry = InitializeGenAITelemetry();
             s_useMessageEvents = AppContextSwitchHelper.GetConfigValue(UseMessageEventsSwitch, UseMessageEventsEnvironmentVariable);
         }
     }

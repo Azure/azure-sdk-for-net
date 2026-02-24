@@ -26,7 +26,9 @@
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-location\move-to-new-sub-client\src\Specs.Azure.Tcgc.ClientLo.NewSub.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-location\move-to-root-client\src\Specs.Azure.Tcgc.ClientLo.Root.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\hierarchy-building\src\_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.csproj" />
-    <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-initialization\src\_Specs_.Azure.ClientGenerator.Core.ClientInitialization.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-initialization\default\src\Specs.Azure.Tcgc.ClientInit.Default.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-initialization\individually\src\Specs.Azure.Tcgc.ClientInit.Individually.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-initialization\individuallyParent\src\Specs.Azure.Tcgc.ClientInit.Both.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\override\src\_Specs_.Azure.ClientGenerator.Core.Override.csproj" />
     <ProjectReference Include="..\Spector\http\azure\special-headers\client-request-id\src\Azure.SpecialHeaders.XmsClientRequestId.csproj" />
     <ProjectReference Include="..\Spector\http\azure\core\lro\standard\src\_Specs_.Azure.Core.Lro.Standard.csproj" />

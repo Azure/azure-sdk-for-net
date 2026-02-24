@@ -8,17 +8,34 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    public partial class DirectPeeringProperties : IUtf8JsonSerializable, IJsonModel<DirectPeeringProperties>
+    /// <summary> The properties that define a direct peering. </summary>
+    public partial class DirectPeeringProperties : IJsonModel<DirectPeeringProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DirectPeeringProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DirectPeeringProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DirectPeeringProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDirectPeeringProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DirectPeeringProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DirectPeeringProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,17 +47,16 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DirectPeeringProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DirectPeeringProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DirectPeeringProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(Connections))
             {
                 writer.WritePropertyName("connections"u8);
                 writer.WriteStartArray();
-                foreach (var item in Connections)
+                foreach (PeeringDirectConnection item in Connections)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -51,25 +67,25 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WritePropertyName("useForPeeringService"u8);
                 writer.WriteBooleanValue(UseForPeeringService.Value);
             }
-            if (Optional.IsDefined(PeerAsn))
+            if (Optional.IsDefined(PeerAsnId))
             {
                 writer.WritePropertyName("peerAsn"u8);
-                ((IJsonModel<WritableSubResource>)PeerAsn).Write(writer, options);
+                writer.WriteStringValue(PeerAsnId);
             }
             if (Optional.IsDefined(DirectPeeringType))
             {
                 writer.WritePropertyName("directPeeringType"u8);
                 writer.WriteStringValue(DirectPeeringType.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -78,88 +94,94 @@ namespace Azure.ResourceManager.Peering.Models
             }
         }
 
-        DirectPeeringProperties IJsonModel<DirectPeeringProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DirectPeeringProperties IJsonModel<DirectPeeringProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DirectPeeringProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DirectPeeringProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DirectPeeringProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DirectPeeringProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDirectPeeringProperties(document.RootElement, options);
         }
 
-        internal static DirectPeeringProperties DeserializeDirectPeeringProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DirectPeeringProperties DeserializeDirectPeeringProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<PeeringDirectConnection> connections = default;
             bool? useForPeeringService = default;
-            WritableSubResource peerAsn = default;
+            ResourceIdentifier peerAsnId = default;
             DirectPeeringType? directPeeringType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("connections"u8))
+                if (prop.NameEquals("connections"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<PeeringDirectConnection> array = new List<PeeringDirectConnection>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(PeeringDirectConnection.DeserializePeeringDirectConnection(item, options));
                     }
                     connections = array;
                     continue;
                 }
-                if (property.NameEquals("useForPeeringService"u8))
+                if (prop.NameEquals("useForPeeringService"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    useForPeeringService = property.Value.GetBoolean();
+                    useForPeeringService = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("peerAsn"u8))
+                if (prop.NameEquals("peerAsn"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    peerAsn = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerPeeringContext.Default);
+                    peerAsnId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("directPeeringType"u8))
+                if (prop.NameEquals("directPeeringType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    directPeeringType = new DirectPeeringType(property.Value.GetString());
+                    directPeeringType = new DirectPeeringType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new DirectPeeringProperties(connections ?? new ChangeTrackingList<PeeringDirectConnection>(), useForPeeringService, peerAsn, directPeeringType, serializedAdditionalRawData);
+            return new DirectPeeringProperties(connections ?? new ChangeTrackingList<PeeringDirectConnection>(), useForPeeringService, peerAsnId, directPeeringType, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DirectPeeringProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DirectPeeringProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DirectPeeringProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DirectPeeringProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -169,22 +191,11 @@ namespace Azure.ResourceManager.Peering.Models
             }
         }
 
-        DirectPeeringProperties IPersistableModel<DirectPeeringProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DirectPeeringProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DirectPeeringProperties IPersistableModel<DirectPeeringProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDirectPeeringProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DirectPeeringProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DirectPeeringProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

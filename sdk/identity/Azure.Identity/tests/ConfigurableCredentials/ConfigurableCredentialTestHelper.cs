@@ -158,9 +158,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
                     configuration[$"MyClient:Credential:AdditionallyAllowedTenants:{i}"] = config.AdditionallyAllowedTenants[i];
                 }
             }
-            configuration["MyClient:Credential:InteractiveBrowserCredentialClientId"] = config.AuthenticationRecord?.ClientId;
-            configuration["MyClient:Credential:WorkloadIdentityClientId"] = config.AuthenticationRecord?.ClientId;
-            configuration["MyClient:Credential:ManagedIdentityClientId"] = config.AuthenticationRecord?.ClientId;
+            configuration["MyClient:Credential:ClientId"] = config.AuthenticationRecord?.ClientId;
             configuration["MyClient:Credential:DisableInstanceDiscovery"] = config.DisableInstanceDiscovery.ToString();
             configuration["MyClient:Credential:AuthorityHost"] = config.AuthorityHost?.ToString();
             configuration["MyClient:Credential:IsUnsafeSupportLoggingEnabled"] = config.IsUnsafeSupportLoggingEnabled.ToString();
