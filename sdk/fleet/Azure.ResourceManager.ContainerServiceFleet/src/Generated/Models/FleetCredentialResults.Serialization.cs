@@ -17,6 +17,30 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     /// <summary> The Credential results response. </summary>
     public partial class FleetCredentialResults : IJsonModel<FleetCredentialResults>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FleetCredentialResults PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FleetCredentialResults>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeFleetCredentialResults(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FleetCredentialResults)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="FleetCredentialResults"/> from. </param>
+        internal static FleetCredentialResults FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeFleetCredentialResults(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FleetCredentialResults>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -133,31 +157,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         FleetCredentialResults IPersistableModel<FleetCredentialResults>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FleetCredentialResults PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<FleetCredentialResults>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeFleetCredentialResults(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FleetCredentialResults)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FleetCredentialResults>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="FleetCredentialResults"/> from. </param>
-        internal static FleetCredentialResults FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeFleetCredentialResults(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     /// <summary> The FleetHubProfile configures the fleet hub. </summary>
     public partial class FleetHubProfile : IJsonModel<FleetHubProfile>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FleetHubProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FleetHubProfile>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeFleetHubProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FleetHubProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FleetHubProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -187,23 +204,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         FleetHubProfile IPersistableModel<FleetHubProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FleetHubProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<FleetHubProfile>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeFleetHubProfile(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FleetHubProfile)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FleetHubProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

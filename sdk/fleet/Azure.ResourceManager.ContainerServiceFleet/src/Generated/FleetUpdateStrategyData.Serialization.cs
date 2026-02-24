@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.ContainerServiceFleet
     /// <summary> Defines a multi-stage process to perform update operations across members of a Fleet. </summary>
     public partial class FleetUpdateStrategyData : ResourceData, IJsonModel<FleetUpdateStrategyData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FleetUpdateStrategyData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeFleetUpdateStrategyData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FleetUpdateStrategyData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="FleetUpdateStrategyData"/> from. </param>
+        internal static FleetUpdateStrategyData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeFleetUpdateStrategyData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FleetUpdateStrategyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -170,23 +194,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <param name="options"> The client options for reading and writing models. </param>
         FleetUpdateStrategyData IPersistableModel<FleetUpdateStrategyData>.Create(BinaryData data, ModelReaderWriterOptions options) => (FleetUpdateStrategyData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<FleetUpdateStrategyData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeFleetUpdateStrategyData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FleetUpdateStrategyData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FleetUpdateStrategyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -200,13 +207,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(fleetUpdateStrategyData, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="FleetUpdateStrategyData"/> from. </param>
-        internal static FleetUpdateStrategyData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeFleetUpdateStrategyData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

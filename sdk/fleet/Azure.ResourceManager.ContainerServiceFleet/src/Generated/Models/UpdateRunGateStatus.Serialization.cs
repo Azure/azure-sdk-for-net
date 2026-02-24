@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     /// <summary> The status of the Gate, as represented in the Update Run. </summary>
     public partial class UpdateRunGateStatus : IJsonModel<UpdateRunGateStatus>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual UpdateRunGateStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<UpdateRunGateStatus>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeUpdateRunGateStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(UpdateRunGateStatus)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<UpdateRunGateStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -148,23 +165,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         UpdateRunGateStatus IPersistableModel<UpdateRunGateStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UpdateRunGateStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<UpdateRunGateStatus>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeUpdateRunGateStatus(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(UpdateRunGateStatus)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<UpdateRunGateStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
