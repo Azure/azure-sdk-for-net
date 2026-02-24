@@ -75,9 +75,11 @@ namespace MgmtTypeSpec {
   @@alternateType(Azure.ResourceManager.CommonTypes.PrivateEndpointConnectionProperties.privateEndpoint, Azure.ResourceManager.Models.SubResource, "csharp");
   @@alternateType(FooProperties.writableSubResourceProp, Azure.ResourceManager.Models.WritableSubResource, "csharp");
 
-  // Override client names for legacy ARM types to resolve duplicate-client-name conflicts
-  // introduced by @azure-tools/typespec-client-generator-core@0.65.x stricter validation.
-  @@clientName(Azure.ResourceManager.Legacy.ExtendedLocationOptional, "ExtendedLocationOptional");
+  // Override @friendlyName for legacy ARM type to resolve duplicate-client-name error.
+  // ExtendedLocationOptional has @friendlyName("ExtendedLocation") in the ARM library,
+  // which conflicts with the actual ExtendedLocation type.
+  // Tracked upstream: https://github.com/Azure/typespec-azure/issues/3925
+  @@friendlyName(Azure.ResourceManager.Legacy.ExtendedLocationOptional, "ExtendedLocationOptional");
   @@clientName(Azure.ResourceManager.Legacy.ManagedServiceIdentityType, "ManagedServiceIdentityTypeV4", "csharp");
 }
 

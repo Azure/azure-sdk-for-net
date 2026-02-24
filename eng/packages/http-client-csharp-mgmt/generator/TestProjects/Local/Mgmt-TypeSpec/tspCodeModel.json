@@ -15044,7 +15044,7 @@
           "type": {
             "$id": "1186",
             "kind": "model",
-            "name": "ExtendedLocation1",
+            "name": "ExtendedLocationOptional",
             "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
             "crossLanguageDefinitionId": "Azure.ResourceManager.Legacy.ExtendedLocationOptional",
             "usage": "Input,Output,Json",

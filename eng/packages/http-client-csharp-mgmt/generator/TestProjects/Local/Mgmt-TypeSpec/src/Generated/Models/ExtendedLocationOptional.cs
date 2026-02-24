@@ -13,21 +13,21 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The complex type of the extended location. </summary>
-    public partial class ExtendedLocation1
+    public partial class ExtendedLocationOptional
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExtendedLocation1"/>. </summary>
-        public ExtendedLocation1()
+        /// <summary> Initializes a new instance of <see cref="ExtendedLocationOptional"/>. </summary>
+        public ExtendedLocationOptional()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExtendedLocation1"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedLocationOptional"/>. </summary>
         /// <param name="name"> The name of the extended location. </param>
         /// <param name="type"> The type of the extended location. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExtendedLocation1(string name, ExtendedLocationType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExtendedLocationOptional(string name, ExtendedLocationType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Type = @type;
