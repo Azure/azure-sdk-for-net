@@ -33,6 +33,24 @@ namespace Azure.AI.Projects.OpenAI
         private const string OauthConsentRequestValue = "oauth_consent_request";
         private const string MemorySearchCallValue = "memory_search_call";
         private const string WorkflowActionValue = "workflow_action";
+        private const string A2aPreviewCallValue = "a2a_preview_call";
+        private const string A2aPreviewCallOutputValue = "a2a_preview_call_output";
+        private const string BingGroundingCallValue = "bing_grounding_call";
+        private const string BingGroundingCallOutputValue = "bing_grounding_call_output";
+        private const string SharepointGroundingPreviewCallValue = "sharepoint_grounding_preview_call";
+        private const string SharepointGroundingPreviewCallOutputValue = "sharepoint_grounding_preview_call_output";
+        private const string AzureAiSearchCallValue = "azure_ai_search_call";
+        private const string AzureAiSearchCallOutputValue = "azure_ai_search_call_output";
+        private const string BingCustomSearchPreviewCallValue = "bing_custom_search_preview_call";
+        private const string BingCustomSearchPreviewCallOutputValue = "bing_custom_search_preview_call_output";
+        private const string OpenapiCallValue = "openapi_call";
+        private const string OpenapiCallOutputValue = "openapi_call_output";
+        private const string BrowserAutomationPreviewCallValue = "browser_automation_preview_call";
+        private const string BrowserAutomationPreviewCallOutputValue = "browser_automation_preview_call_output";
+        private const string FabricDataagentPreviewCallValue = "fabric_dataagent_preview_call";
+        private const string FabricDataagentPreviewCallOutputValue = "fabric_dataagent_preview_call_output";
+        private const string AzureFunctionCallValue = "azure_function_call";
+        private const string AzureFunctionCallOutputValue = "azure_function_call_output";
 
         /// <summary> Initializes a new instance of <see cref="AgentResponseItemKind"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -109,6 +127,60 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <summary> Gets the WorkflowAction. </summary>
         public static AgentResponseItemKind WorkflowAction { get; } = new AgentResponseItemKind(WorkflowActionValue);
+
+        /// <summary> Gets the A2aPreviewCall. </summary>
+        public static AgentResponseItemKind A2aPreviewCall { get; } = new AgentResponseItemKind(A2aPreviewCallValue);
+
+        /// <summary> Gets the A2aPreviewCallOutput. </summary>
+        public static AgentResponseItemKind A2aPreviewCallOutput { get; } = new AgentResponseItemKind(A2aPreviewCallOutputValue);
+
+        /// <summary> Gets the BingGroundingCall. </summary>
+        public static AgentResponseItemKind BingGroundingCall { get; } = new AgentResponseItemKind(BingGroundingCallValue);
+
+        /// <summary> Gets the BingGroundingCallOutput. </summary>
+        public static AgentResponseItemKind BingGroundingCallOutput { get; } = new AgentResponseItemKind(BingGroundingCallOutputValue);
+
+        /// <summary> Gets the SharepointGroundingPreviewCall. </summary>
+        public static AgentResponseItemKind SharepointGroundingPreviewCall { get; } = new AgentResponseItemKind(SharepointGroundingPreviewCallValue);
+
+        /// <summary> Gets the SharepointGroundingPreviewCallOutput. </summary>
+        public static AgentResponseItemKind SharepointGroundingPreviewCallOutput { get; } = new AgentResponseItemKind(SharepointGroundingPreviewCallOutputValue);
+
+        /// <summary> Gets the AzureAiSearchCall. </summary>
+        public static AgentResponseItemKind AzureAiSearchCall { get; } = new AgentResponseItemKind(AzureAiSearchCallValue);
+
+        /// <summary> Gets the AzureAiSearchCallOutput. </summary>
+        public static AgentResponseItemKind AzureAiSearchCallOutput { get; } = new AgentResponseItemKind(AzureAiSearchCallOutputValue);
+
+        /// <summary> Gets the BingCustomSearchPreviewCall. </summary>
+        public static AgentResponseItemKind BingCustomSearchPreviewCall { get; } = new AgentResponseItemKind(BingCustomSearchPreviewCallValue);
+
+        /// <summary> Gets the BingCustomSearchPreviewCallOutput. </summary>
+        public static AgentResponseItemKind BingCustomSearchPreviewCallOutput { get; } = new AgentResponseItemKind(BingCustomSearchPreviewCallOutputValue);
+
+        /// <summary> Gets the OpenapiCall. </summary>
+        public static AgentResponseItemKind OpenapiCall { get; } = new AgentResponseItemKind(OpenapiCallValue);
+
+        /// <summary> Gets the OpenapiCallOutput. </summary>
+        public static AgentResponseItemKind OpenapiCallOutput { get; } = new AgentResponseItemKind(OpenapiCallOutputValue);
+
+        /// <summary> Gets the BrowserAutomationPreviewCall. </summary>
+        public static AgentResponseItemKind BrowserAutomationPreviewCall { get; } = new AgentResponseItemKind(BrowserAutomationPreviewCallValue);
+
+        /// <summary> Gets the BrowserAutomationPreviewCallOutput. </summary>
+        public static AgentResponseItemKind BrowserAutomationPreviewCallOutput { get; } = new AgentResponseItemKind(BrowserAutomationPreviewCallOutputValue);
+
+        /// <summary> Gets the FabricDataagentPreviewCall. </summary>
+        public static AgentResponseItemKind FabricDataagentPreviewCall { get; } = new AgentResponseItemKind(FabricDataagentPreviewCallValue);
+
+        /// <summary> Gets the FabricDataagentPreviewCallOutput. </summary>
+        public static AgentResponseItemKind FabricDataagentPreviewCallOutput { get; } = new AgentResponseItemKind(FabricDataagentPreviewCallOutputValue);
+
+        /// <summary> Gets the AzureFunctionCall. </summary>
+        public static AgentResponseItemKind AzureFunctionCall { get; } = new AgentResponseItemKind(AzureFunctionCallValue);
+
+        /// <summary> Gets the AzureFunctionCallOutput. </summary>
+        public static AgentResponseItemKind AzureFunctionCallOutput { get; } = new AgentResponseItemKind(AzureFunctionCallOutputValue);
 
         /// <summary> Determines if two <see cref="AgentResponseItemKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

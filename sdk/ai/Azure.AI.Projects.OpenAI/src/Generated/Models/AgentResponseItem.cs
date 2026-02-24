@@ -9,7 +9,7 @@ namespace Azure.AI.Projects.OpenAI
 {
     /// <summary>
     /// The AgentResponseItem.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentStructuredOutputsResponseItem"/>, <see cref="AgentWorkflowPreviewActionResponseItem"/>, <see cref="OAuthConsentRequestResponseItem"/>, and <see cref="MemorySearchToolCallResponseItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentStructuredOutputsResponseItem"/>, <see cref="AgentWorkflowPreviewActionResponseItem"/>, <see cref="OAuthConsentRequestResponseItem"/>, <see cref="MemorySearchToolCallResponseItem"/>, <see cref="BingGroundingToolCall"/>, <see cref="BingGroundingToolCallOutput"/>, <see cref="SharepointGroundingToolCall"/>, <see cref="SharepointGroundingToolCallOutput"/>, <see cref="AzureAISearchToolCall"/>, <see cref="AzureAISearchToolCallOutput"/>, <see cref="BingCustomSearchToolCall"/>, <see cref="BingCustomSearchToolCallOutput"/>, <see cref="OpenApiToolCall"/>, <see cref="OpenApiToolCallOutput"/>, <see cref="BrowserAutomationToolCall"/>, <see cref="BrowserAutomationToolCallOutput"/>, <see cref="FabricDataAgentToolCall"/>, <see cref="FabricDataAgentToolCallOutput"/>, <see cref="AzureFunctionToolCall"/>, <see cref="AzureFunctionToolCallOutput"/>, <see cref="A2AToolCall"/>, and <see cref="A2AToolCallOutput"/>.
     /// </summary>
     public abstract partial class AgentResponseItem
     {
