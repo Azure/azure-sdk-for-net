@@ -170,12 +170,16 @@ if (analyzeResult.Contents?.FirstOrDefault() is DocumentContent content)
         var companyName = companyNameField is StringField sf ? sf.Value : null;
         Console.WriteLine($"Company Name (extract): {companyName ?? "(not found)"}");
         Console.WriteLine($"  Confidence: {companyNameField.Confidence?.ToString("F2") ?? "N/A"}");
-        if (companyNameField.GroundingSources != null)
+        // Polygon: precise rotated region around the text.
+        // BoundingBox: axis-aligned rectangle — convenient for drawing highlights.
+        if (companyNameField.Sources != null)
         {
-            foreach (var source in companyNameField.GroundingSources)
+            foreach (var source in companyNameField.Sources)
             {
                 if (source is DocumentSource docSource)
-                    Console.WriteLine($"  Grounding: page {docSource.PageNumber}");
+                {
+                    Console.WriteLine($"  Page {docSource.PageNumber}, BoundingBox: {docSource.BoundingBox}");
+                }
             }
         }
         if (companyNameField.Spans != null && companyNameField.Spans.Count > 0)
@@ -191,12 +195,14 @@ if (analyzeResult.Contents?.FirstOrDefault() is DocumentContent content)
         var totalAmount = totalAmountField is NumberField nf ? nf.Value : null;
         Console.WriteLine($"Total Amount (extract): {totalAmount?.ToString("F2") ?? "(not found)"}");
         Console.WriteLine($"  Confidence: {totalAmountField.Confidence?.ToString("F2") ?? "N/A"}");
-        if (totalAmountField.GroundingSources != null)
+        if (totalAmountField.Sources != null)
         {
-            foreach (var source in totalAmountField.GroundingSources)
+            foreach (var source in totalAmountField.Sources)
             {
                 if (source is DocumentSource docSource)
-                    Console.WriteLine($"  Grounding: page {docSource.PageNumber}");
+                {
+                    Console.WriteLine($"  Page {docSource.PageNumber}, BoundingBox: {docSource.BoundingBox}");
+                }
             }
         }
         if (totalAmountField.Spans != null && totalAmountField.Spans.Count > 0)
@@ -213,9 +219,9 @@ if (analyzeResult.Contents?.FirstOrDefault() is DocumentContent content)
         Console.WriteLine($"Document Summary (generate): {summary ?? "(not found)"}");
         Console.WriteLine($"  Confidence: {summaryField.Confidence?.ToString("F2") ?? "N/A"}");
         // Note: Generated fields may not have grounding source information
-        if (summaryField.GroundingSources != null)
+        if (summaryField.Sources != null)
         {
-            Console.WriteLine($"  Grounding sources: {summaryField.GroundingSources.Length}");
+            Console.WriteLine($"  Grounding sources: {summaryField.Sources.Length}");
         }
     }
 
@@ -226,9 +232,9 @@ if (analyzeResult.Contents?.FirstOrDefault() is DocumentContent content)
         Console.WriteLine($"Document Type (classify): {documentType ?? "(not found)"}");
         Console.WriteLine($"  Confidence: {documentTypeField.Confidence?.ToString("F2") ?? "N/A"}");
         // Note: Classified fields may not have grounding source information
-        if (documentTypeField.GroundingSources != null)
+        if (documentTypeField.Sources != null)
         {
-            Console.WriteLine($"  Grounding sources: {documentTypeField.GroundingSources.Length}");
+            Console.WriteLine($"  Grounding sources: {documentTypeField.Sources.Length}");
         }
     }
 }

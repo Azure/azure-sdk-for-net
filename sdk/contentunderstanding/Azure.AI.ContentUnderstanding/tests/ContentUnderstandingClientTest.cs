@@ -529,18 +529,18 @@ namespace Azure.AI.ContentUnderstanding.Tests
                         }
 
                         // Verify grounding sources are parsed as DocumentSource
-                        if (customerNameStr.GroundingSources != null)
+                        if (customerNameStr.Sources != null)
                         {
-                            Assert.IsTrue(customerNameStr.GroundingSources.Length > 0,
-                                "GroundingSources should have at least one element");
-                            Assert.IsInstanceOf<DocumentSource>(customerNameStr.GroundingSources[0],
+                            Assert.IsTrue(customerNameStr.Sources.Length > 0,
+                                "Sources should have at least one element");
+                            Assert.IsInstanceOf<DocumentSource>(customerNameStr.Sources[0],
                                 "CustomerName grounding source should be DocumentSource");
-                            var docSource = (DocumentSource)customerNameStr.GroundingSources[0];
+                            var docSource = (DocumentSource)customerNameStr.Sources[0];
                             Assert.AreEqual(1, docSource.PageNumber,
                                 "CustomerName should be on page 1");
-                            Assert.AreEqual(4, docSource.Polygon.Count,
+                            Assert.AreEqual(4, docSource.Polygon!.Count,
                                 "DocumentSource polygon should have 4 points");
-                            foreach (var point in docSource.Polygon)
+                            foreach (var point in docSource.Polygon!)
                             {
                                 Assert.IsTrue(point.X >= 0, $"Polygon X coordinate should be >= 0, but was {point.X}");
                                 Assert.IsTrue(point.Y >= 0, $"Polygon Y coordinate should be >= 0, but was {point.Y}");
