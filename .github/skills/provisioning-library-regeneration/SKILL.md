@@ -66,6 +66,23 @@ dotnet run --framework net10.0 -- --filter {ServiceName}
 
 **Important:** The generator reads from NuGet packages, NOT local source code. The version in `eng/Packages.Data.props` determines which package version is used.
 
+### Verify Only Target Library Changed
+
+After running the generator, verify that only the target provisioning library was modified:
+
+```shell
+git status --short -- sdk/provisioning/
+```
+
+The generator may regenerate other libraries (e.g., `Azure.Provisioning`) due to shared dependencies. **Revert any changes to libraries other than the target:**
+
+```shell
+# Example: If you're adding features to Azure.Provisioning.Network, revert changes to Azure.Provisioning
+git checkout main -- sdk/provisioning/Azure.Provisioning/
+```
+
+Only keep changes to `Azure.Provisioning.{TargetService}/`.
+
 ### Generator Errors
 
 If the generator fails with errors:
