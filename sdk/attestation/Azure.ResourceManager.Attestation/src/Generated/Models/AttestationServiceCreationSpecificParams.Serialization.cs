@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.Attestation.Models
     /// <summary> Client supplied parameters used to create a new attestation provider. </summary>
     public partial class AttestationServiceCreationSpecificParams : IJsonModel<AttestationServiceCreationSpecificParams>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AttestationServiceCreationSpecificParams PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AttestationServiceCreationSpecificParams>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAttestationServiceCreationSpecificParams(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AttestationServiceCreationSpecificParams)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AttestationServiceCreationSpecificParams>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -151,23 +168,6 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AttestationServiceCreationSpecificParams IPersistableModel<AttestationServiceCreationSpecificParams>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AttestationServiceCreationSpecificParams PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AttestationServiceCreationSpecificParams>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAttestationServiceCreationSpecificParams(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AttestationServiceCreationSpecificParams)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AttestationServiceCreationSpecificParams>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
