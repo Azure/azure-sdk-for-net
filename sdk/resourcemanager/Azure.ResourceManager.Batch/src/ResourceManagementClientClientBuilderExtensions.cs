@@ -19,7 +19,7 @@ namespace Microsoft.Extensions.Azure
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        public static IAzureClientBuilder<BatchClient, BatchClientOptions> AddBatchClient<TBuilder>(this TBuilder builder, Uri endpoint, Guid subscriptionId)
+        public static IAzureClientBuilder<BatchClient, BatchClientOptions> AddBatchClient<TBuilder>(this TBuilder builder, Uri endpoint, string subscriptionId)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
             return builder.RegisterClientFactory<BatchClient, BatchClientOptions>((options, cred) => new BatchClient(endpoint, subscriptionId, cred, options));
