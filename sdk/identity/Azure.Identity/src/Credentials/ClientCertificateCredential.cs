@@ -51,7 +51,12 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
-        /// <param name="clientCertificatePath">The path to a file which contains both the client certificate and private key.</param>
+        /// <param name="clientCertificatePath">The file system or certificate store path to the client certificate and private key. 
+        /// For example:
+        /// * c:\data\certificate.pfx
+        /// * /etc/app/cert.pem
+        /// * cert:/CurrentUser/My/E661583E8FABEF4C0BEF694CBC41C28FB81CD870 
+        /// </param>
         public ClientCertificateCredential(string tenantId, string clientId, string clientCertificatePath)
             : this(tenantId, clientId, clientCertificatePath, null, null, null, null)
         { }
@@ -61,7 +66,12 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
-        /// <param name="clientCertificatePath">The path to a file which contains both the client certificate and private key.</param>
+        /// <param name="clientCertificatePath">The file system or certificate store path to the client certificate and private key. 
+        /// For example:
+        /// * c:\data\certificate.pfx
+        /// * /etc/this_app/cert.pem
+        /// * cert:/CurrentUser/My/E661583E8FABEF4C0BEF694CBC41C28FB81CD870 
+        /// </param>
         /// <param name="options">Options that allow to configure the management of the requests sent to Microsoft Entra ID.</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ClientCertificateCredential(string tenantId, string clientId, string clientCertificatePath, TokenCredentialOptions options)
@@ -73,7 +83,12 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
-        /// <param name="clientCertificatePath">The path to a file which contains both the client certificate and private key.</param>
+        /// <param name="clientCertificatePath">The file system or certificate store path to the client certificate and private key. 
+        /// For example:
+        /// * c:\data\certificate.pfx
+        /// * /etc/app/cert.pem
+        /// * cert:/CurrentUser/My/E661583E8FABEF4C0BEF694CBC41C28FB81CD870 
+        /// </param>
         /// <param name="options">Options that allow to configure the management of the requests sent to Microsoft Entra ID.</param>
         public ClientCertificateCredential(string tenantId, string clientId, string clientCertificatePath, ClientCertificateCredentialOptions options)
             : this(tenantId, clientId, clientCertificatePath, null, options, null, null)
