@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace ResourceManagementClient
+namespace Azure.ResourceManager.Batch
 {
     /// <summary> Client options for BatchClient. </summary>
     public partial class BatchClientOptions : ClientOptions
