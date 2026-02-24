@@ -51,7 +51,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.WorkloadIdentity
             {
                 config["MyClient:Credential:TenantId"] = tenantId;
             }
-            config["MyClient:Credential:WorkloadIdentityClientId"] = ClientId;
+            config["MyClient:Credential:ClientId"] = ClientId;
             configureExtra?.Invoke(config);
 
             ConfigurableCredential credential;
@@ -103,7 +103,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.WorkloadIdentity
                 config.AuthorityHost ?? AzureAuthorityHosts.AzurePublicCloud);
 
             IConfiguration configuration = _helper.GetConfigurationFromCommonCredentialTestConfig<WorkloadIdentityCredentialOptions>(config);
-            configuration["MyClient:Credential:WorkloadIdentityClientId"] = ClientId;
+            configuration["MyClient:Credential:ClientId"] = ClientId;
 
             ConfigurableCredential credential;
             using (new TestEnvVar(new Dictionary<string, string>
@@ -132,7 +132,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.WorkloadIdentity
             }
             if (clientId != null)
             {
-                config["MyClient:Credential:WorkloadIdentityClientId"] = clientId;
+                config["MyClient:Credential:ClientId"] = clientId;
             }
 
             ConfigurableCredential credential;
@@ -153,7 +153,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.WorkloadIdentity
         {
             IConfiguration config = _helper.GetConfiguration();
             config["MyClient:Credential:TenantId"] = TenantId;
-            config["MyClient:Credential:WorkloadIdentityClientId"] = ClientId;
+            config["MyClient:Credential:ClientId"] = ClientId;
             config["MyClient:Credential:IsAzureProxyEnabled"] = isAzureProxyEnabled.ToString();
 
             // The factory creates WorkloadIdentityCredentialOptions whose TokenFilePath defaults to

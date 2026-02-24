@@ -25,12 +25,12 @@ namespace Azure.AI.Projects.Tests;
 public partial class AgentsTelemetryTests : AgentsTestBase
 {
     public const string TraceContentsEnvironmentVariable = "OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT";
-    public const string EnableOpenTelemetryEnvironmentVariable = "AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE";
+    public const string EnableOpenTelemetryEnvironmentVariable = "AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING";
     public const string UseMessageEventsEnvironmentVariable = "AZURE_EXPERIMENTAL_TRACING_GEN_AI_USE_MESSAGE_EVENTS";
     private MemoryTraceExporter _exporter;
     private TracerProvider _tracerProvider;
-    private bool _contentRecordingEnabledInitialValue = false;
-    private bool _tracesEnabledInitialValue = false;
+    private string _contentRecordingEnabledInitialValue;
+    private string _tracesEnabledInitialValue;
     private string _useMessageEventsInitialValue;
 
     public AgentsTelemetryTests(bool isAsync) : base(isAsync)
@@ -42,17 +42,9 @@ public partial class AgentsTelemetryTests : AgentsTestBase
     {
         _exporter = new MemoryTraceExporter();
 
-        _tracesEnabledInitialValue = string.Equals(
-            Environment.GetEnvironmentVariable(EnableOpenTelemetryEnvironmentVariable),
-            "true",
-            StringComparison.OrdinalIgnoreCase);
-
-        _contentRecordingEnabledInitialValue = string.Equals(
-            Environment.GetEnvironmentVariable(TraceContentsEnvironmentVariable),
-            "true",
-            StringComparison.OrdinalIgnoreCase);
-
-        _useMessageEventsInitialValue = Environment.GetEnvironmentVariable(UseMessageEventsEnvironmentVariable);
+        _tracesEnabledInitialValue = Environment.GetEnvironmentVariable(EnableOpenTelemetryEnvironmentVariable, EnvironmentVariableTarget.Process);
+        _contentRecordingEnabledInitialValue = Environment.GetEnvironmentVariable(TraceContentsEnvironmentVariable, EnvironmentVariableTarget.Process);
+        _useMessageEventsInitialValue = Environment.GetEnvironmentVariable(UseMessageEventsEnvironmentVariable, EnvironmentVariableTarget.Process);
 
         Environment.SetEnvironmentVariable(EnableOpenTelemetryEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
 
@@ -71,11 +63,11 @@ public partial class AgentsTelemetryTests : AgentsTestBase
         _exporter.Clear();
         Environment.SetEnvironmentVariable(
             TraceContentsEnvironmentVariable,
-            _contentRecordingEnabledInitialValue.ToString(),
+            _contentRecordingEnabledInitialValue,
             EnvironmentVariableTarget.Process);
         Environment.SetEnvironmentVariable(
             EnableOpenTelemetryEnvironmentVariable,
-            _tracesEnabledInitialValue.ToString(),
+            _tracesEnabledInitialValue,
             EnvironmentVariableTarget.Process);
         Environment.SetEnvironmentVariable(
             UseMessageEventsEnvironmentVariable,
@@ -100,6 +92,36 @@ public partial class AgentsTelemetryTests : AgentsTestBase
         AIProjectClient projectClient = GetTestProjectClient();
         var modelDeploymentName = GetModelDeploymentName();
         var agentName = "agentsTelemetryTests1";
+
+        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        {
+            Instructions = "You are a prompt agent."
+        };
+
+        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+            agentName,
+            new AgentVersionCreationOptions(agentDefinition));
+
+        await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentName, agentVersion: agentVersion.Version);
+
+        // Force flush spans
+        _exporter.ForceFlush();
+
+        var createAgentSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == $"create_agent {agentName}");
+        Assert.That(createAgentSpan, Is.Null);
+    }
+
+    [RecordedTest]
+    public async Task TestAgentCreateWithTracingVariableNotSet()
+    {
+        // Test that no spans are emitted when the env var is completely absent (null),
+        // as opposed to explicitly set to "false".
+        Environment.SetEnvironmentVariable(EnableOpenTelemetryEnvironmentVariable, null, EnvironmentVariableTarget.Process);
+        ReinitializeOpenTelemetryScopeConfiguration();
+
+        AIProjectClient projectClient = GetTestProjectClient();
+        var modelDeploymentName = GetModelDeploymentName();
+        var agentName = "agentsTelemetryTests1b";
 
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {

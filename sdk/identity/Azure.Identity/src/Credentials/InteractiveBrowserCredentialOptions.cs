@@ -81,7 +81,7 @@ namespace Azure.Identity
                 ibcoClone.TenantId = _tenantId;
                 ibcoClone.AdditionallyAllowedTenants = AdditionallyAllowedTenants;
                 ibcoClone.ClientId = ClientId;
-                ibcoClone.TokenCachePersistenceOptions = TokenCachePersistenceOptions?.Clone();
+                ibcoClone.TokenCachePersistenceOptions = TokenCachePersistenceOptions;
                 ibcoClone.RedirectUri = RedirectUri;
                 ibcoClone.AuthenticationRecord = AuthenticationRecord;
                 ibcoClone.LoginHint = LoginHint;
@@ -106,7 +106,7 @@ namespace Azure.Identity
         internal virtual void CopyFromDacOptions(DefaultAzureCredentialOptions source)
         {
             DisableAutomaticAuthentication = source.DisableAutomaticAuthentication;
-            TokenCachePersistenceOptions = source.TokenCachePersistenceOptions?.Clone();
+            TokenCachePersistenceOptions = source.TokenCachePersistenceOptions;
             AuthenticationRecord = source.AuthenticationRecord;
             RedirectUri = source.RedirectUri;
 

@@ -220,7 +220,7 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.Broker
             using (new TestEnvVar(AllNulledEnvVars()))
             {
                 IConfiguration config = Helper.GetConfiguration();
-                config["MyClient:Credential:InteractiveBrowserCredentialClientId"] = "my-client-id";
+                config["MyClient:Credential:ClientId"] = "my-client-id";
 
                 var broker = GetUnderlying(CreateFromConfig(config));
                 Assert.AreEqual("my-client-id", ReadProperty<string>(broker, "ClientId"));
@@ -726,7 +726,7 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.Broker
             {
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:TenantId"] = configTenant;
-                config["MyClient:Credential:InteractiveBrowserCredentialClientId"] = "my-client-id";
+                config["MyClient:Credential:ClientId"] = "my-client-id";
                 config["MyClient:Credential:AdditionallyAllowedTenants:0"] = "*";
                 config["MyClient:Credential:DisableAutomaticAuthentication"] = "true";
 #if !IDENTITY_TESTS
