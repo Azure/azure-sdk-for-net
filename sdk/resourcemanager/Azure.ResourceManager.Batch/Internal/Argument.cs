@@ -9,7 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace ResourceManagementClient
+namespace Azure.ResourceManager.Batch
 {
     internal static class Argument
     {
