@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Solution WarmUpRequest body. </summary>
     public partial class SolutionWarmUpContent : IJsonModel<SolutionWarmUpContent>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SolutionWarmUpContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SolutionWarmUpContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSolutionWarmUpContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SolutionWarmUpContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SolutionWarmUpContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -145,23 +162,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         SolutionWarmUpContent IPersistableModel<SolutionWarmUpContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SolutionWarmUpContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SolutionWarmUpContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSolutionWarmUpContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SolutionWarmUpContent)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SolutionWarmUpContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

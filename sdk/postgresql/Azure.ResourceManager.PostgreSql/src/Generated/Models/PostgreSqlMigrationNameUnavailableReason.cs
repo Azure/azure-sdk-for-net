@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Migration name availability reason.
-    /// Serialized Name: MigrationNameAvailabilityReason
-    /// </summary>
+    /// <summary> Migration name availability reason. </summary>
     public readonly partial struct PostgreSqlMigrationNameUnavailableReason : IEquatable<PostgreSqlMigrationNameUnavailableReason>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string InvalidValue = "Invalid";
         private const string AlreadyExistsValue = "AlreadyExists";
 
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: MigrationNameAvailabilityReason.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         public static PostgreSqlMigrationNameUnavailableReason Invalid { get; } = new PostgreSqlMigrationNameUnavailableReason(InvalidValue);
-        /// <summary>
-        /// AlreadyExists
-        /// Serialized Name: MigrationNameAvailabilityReason.AlreadyExists
-        /// </summary>
+        /// <summary> AlreadyExists. </summary>
         public static PostgreSqlMigrationNameUnavailableReason AlreadyExists { get; } = new PostgreSqlMigrationNameUnavailableReason(AlreadyExistsValue);
         /// <summary> Determines if two <see cref="PostgreSqlMigrationNameUnavailableReason"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlMigrationNameUnavailableReason left, PostgreSqlMigrationNameUnavailableReason right) => left.Equals(right);

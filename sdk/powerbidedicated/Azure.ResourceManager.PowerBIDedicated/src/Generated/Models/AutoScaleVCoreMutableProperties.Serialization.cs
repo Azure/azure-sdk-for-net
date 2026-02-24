@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
     /// <summary> An object that represents a set of mutable auto scale v-core resource properties. </summary>
     internal partial class AutoScaleVCoreMutableProperties : IJsonModel<AutoScaleVCoreMutableProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AutoScaleVCoreMutableProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AutoScaleVCoreMutableProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAutoScaleVCoreMutableProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AutoScaleVCoreMutableProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AutoScaleVCoreMutableProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -121,23 +138,6 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AutoScaleVCoreMutableProperties IPersistableModel<AutoScaleVCoreMutableProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AutoScaleVCoreMutableProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AutoScaleVCoreMutableProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAutoScaleVCoreMutableProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AutoScaleVCoreMutableProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AutoScaleVCoreMutableProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

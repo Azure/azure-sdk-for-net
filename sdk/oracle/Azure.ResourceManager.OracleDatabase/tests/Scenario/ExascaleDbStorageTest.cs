@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
             return exaScaleStorage;
         }
 
-          private ExascaleDBStorageVaultData GetDefaultExascaleDbStorageVaultData(string vaultName)
+        private ExascaleDBStorageVaultData GetDefaultExascaleDbStorageVaultData(string vaultName)
         {
             return new ExascaleDBStorageVaultData(_location)
             {

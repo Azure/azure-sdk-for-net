@@ -25,6 +25,23 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesVaultPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRecoveryServicesVaultPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RecoveryServicesVaultPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RecoveryServicesVaultPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -236,23 +253,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         RecoveryServicesVaultPatch IPersistableModel<RecoveryServicesVaultPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (RecoveryServicesVaultPatch)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesVaultPatch>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeRecoveryServicesVaultPatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RecoveryServicesVaultPatch)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RecoveryServicesVaultPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> NSX Public IP Block Properties. </summary>
     internal partial class WorkloadNetworkPublicIPProperties : IJsonModel<WorkloadNetworkPublicIPProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual WorkloadNetworkPublicIPProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WorkloadNetworkPublicIPProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeWorkloadNetworkPublicIPProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WorkloadNetworkPublicIPProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WorkloadNetworkPublicIPProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -158,23 +175,6 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         WorkloadNetworkPublicIPProperties IPersistableModel<WorkloadNetworkPublicIPProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual WorkloadNetworkPublicIPProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkloadNetworkPublicIPProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeWorkloadNetworkPublicIPProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(WorkloadNetworkPublicIPProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<WorkloadNetworkPublicIPProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

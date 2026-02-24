@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.Network.Models
             get => ProtectionMode == DdosSettingsProtectionMode.Disabled ? false : true;
             set
             {
-                    if (value is true)
-                    {
-                        ProtectionMode = DdosSettingsProtectionMode.Enabled;
-                    }
-                    else
-                    {
-                        ProtectionMode = DdosSettingsProtectionMode.Disabled;
-                    }
+                if (value is true)
+                {
+                    ProtectionMode = DdosSettingsProtectionMode.Enabled;
+                }
+                else
+                {
+                    ProtectionMode = DdosSettingsProtectionMode.Disabled;
+                }
             }
         }
     }

@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.EdgeOrder
     /// <summary> Specifies the properties or parameters for an order. Order is a grouping of one or more order items. </summary>
     public partial class EdgeOrderData : ResourceData, IJsonModel<EdgeOrderData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeOrderData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeEdgeOrderData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EdgeOrderData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EdgeOrderData"/> from. </param>
+        internal static EdgeOrderData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeEdgeOrderData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EdgeOrderData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -147,31 +171,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="options"> The client options for reading and writing models. </param>
         EdgeOrderData IPersistableModel<EdgeOrderData>.Create(BinaryData data, ModelReaderWriterOptions options) => (EdgeOrderData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeOrderData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeEdgeOrderData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EdgeOrderData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<EdgeOrderData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EdgeOrderData"/> from. </param>
-        internal static EdgeOrderData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeEdgeOrderData(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

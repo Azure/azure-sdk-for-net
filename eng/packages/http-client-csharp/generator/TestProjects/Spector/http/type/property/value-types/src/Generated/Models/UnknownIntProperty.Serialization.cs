@@ -17,21 +17,13 @@ namespace _Type.Property.ValueTypes
     {
         internal UnknownIntProperty() => throw null;
 
-        void IJsonModel<UnknownIntProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        UnknownIntProperty IJsonModel<UnknownIntProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual UnknownIntProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<UnknownIntProperty>.Write(ModelReaderWriterOptions options) => throw null;
+        protected virtual UnknownIntProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        UnknownIntProperty IPersistableModel<UnknownIntProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<UnknownIntProperty>.Write(ModelReaderWriterOptions options) => throw null;
 
-        protected virtual UnknownIntProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        UnknownIntProperty IPersistableModel<UnknownIntProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<UnknownIntProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
@@ -39,5 +31,13 @@ namespace _Type.Property.ValueTypes
         public static implicit operator RequestContent(UnknownIntProperty unknownIntProperty) => throw null;
 
         public static explicit operator UnknownIntProperty(Response response) => throw null;
+
+        void IJsonModel<UnknownIntProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        UnknownIntProperty IJsonModel<UnknownIntProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual UnknownIntProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }
 }

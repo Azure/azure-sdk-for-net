@@ -25,6 +25,30 @@ namespace Azure.ResourceManager.VirtualEnclaves
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveWorkloadData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeVirtualEnclaveWorkloadData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualEnclaveWorkloadData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="VirtualEnclaveWorkloadData"/> from. </param>
+        internal static VirtualEnclaveWorkloadData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeVirtualEnclaveWorkloadData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VirtualEnclaveWorkloadData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -189,23 +213,6 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// <param name="options"> The client options for reading and writing models. </param>
         VirtualEnclaveWorkloadData IPersistableModel<VirtualEnclaveWorkloadData>.Create(BinaryData data, ModelReaderWriterOptions options) => (VirtualEnclaveWorkloadData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveWorkloadData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeVirtualEnclaveWorkloadData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(VirtualEnclaveWorkloadData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<VirtualEnclaveWorkloadData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -219,13 +226,6 @@ namespace Azure.ResourceManager.VirtualEnclaves
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(virtualEnclaveWorkloadData, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="VirtualEnclaveWorkloadData"/> from. </param>
-        internal static VirtualEnclaveWorkloadData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeVirtualEnclaveWorkloadData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

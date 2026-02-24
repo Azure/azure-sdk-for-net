@@ -21,6 +21,23 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MongoDBAtlasPartnerProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasPartnerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMongoDBAtlasPartnerProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MongoDBAtlasPartnerProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MongoDBAtlasPartnerProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -141,23 +158,6 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         MongoDBAtlasPartnerProperties IPersistableModel<MongoDBAtlasPartnerProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MongoDBAtlasPartnerProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasPartnerProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeMongoDBAtlasPartnerProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MongoDBAtlasPartnerProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MongoDBAtlasPartnerProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

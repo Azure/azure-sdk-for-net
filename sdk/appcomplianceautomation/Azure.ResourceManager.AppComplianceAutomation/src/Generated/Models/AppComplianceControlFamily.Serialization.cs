@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     /// <summary> A class represent the control family. </summary>
     public partial class AppComplianceControlFamily : IJsonModel<AppComplianceControlFamily>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AppComplianceControlFamily PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AppComplianceControlFamily>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAppComplianceControlFamily(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppComplianceControlFamily)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AppComplianceControlFamily>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -157,23 +174,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AppComplianceControlFamily IPersistableModel<AppComplianceControlFamily>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AppComplianceControlFamily PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AppComplianceControlFamily>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAppComplianceControlFamily(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AppComplianceControlFamily)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AppComplianceControlFamily>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

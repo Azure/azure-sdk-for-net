@@ -25,6 +25,30 @@ namespace Azure.ResourceManager.ConnectedCache
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IspCacheNodeData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeIspCacheNodeData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IspCacheNodeData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="IspCacheNodeData"/> from. </param>
+        internal static IspCacheNodeData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeIspCacheNodeData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IspCacheNodeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -189,23 +213,6 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <param name="options"> The client options for reading and writing models. </param>
         IspCacheNodeData IPersistableModel<IspCacheNodeData>.Create(BinaryData data, ModelReaderWriterOptions options) => (IspCacheNodeData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<IspCacheNodeData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeIspCacheNodeData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(IspCacheNodeData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<IspCacheNodeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -219,13 +226,6 @@ namespace Azure.ResourceManager.ConnectedCache
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(ispCacheNodeData, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="IspCacheNodeData"/> from. </param>
-        internal static IspCacheNodeData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeIspCacheNodeData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

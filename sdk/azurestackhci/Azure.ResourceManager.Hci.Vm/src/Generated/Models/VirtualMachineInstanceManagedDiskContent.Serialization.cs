@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     /// <summary> The parameters of a managed disk. </summary>
     internal partial class VirtualMachineInstanceManagedDiskContent : IJsonModel<VirtualMachineInstanceManagedDiskContent>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual VirtualMachineInstanceManagedDiskContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstanceManagedDiskContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeVirtualMachineInstanceManagedDiskContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachineInstanceManagedDiskContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VirtualMachineInstanceManagedDiskContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -121,23 +138,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         VirtualMachineInstanceManagedDiskContent IPersistableModel<VirtualMachineInstanceManagedDiskContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VirtualMachineInstanceManagedDiskContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstanceManagedDiskContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeVirtualMachineInstanceManagedDiskContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(VirtualMachineInstanceManagedDiskContent)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<VirtualMachineInstanceManagedDiskContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

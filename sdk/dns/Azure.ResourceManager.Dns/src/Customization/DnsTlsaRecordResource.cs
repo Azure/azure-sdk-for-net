@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Dns
             TryGetApiVersion(ResourceType, out string dnsTlsaRecordRecordSetsApiVersion);
             _dnsTlsaRecordRecordSetsRestClient = new DnsTlsaRecordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dnsTlsaRecordRecordSetsApiVersion);
 #if DEBUG
-			ValidateResourceId(Id);
+            ValidateResourceId(Id);
 #endif
         }
 

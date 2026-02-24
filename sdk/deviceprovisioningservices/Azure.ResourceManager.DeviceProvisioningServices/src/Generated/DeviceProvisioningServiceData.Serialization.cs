@@ -25,6 +25,30 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeviceProvisioningServiceData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDeviceProvisioningServiceData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DeviceProvisioningServiceData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DeviceProvisioningServiceData"/> from. </param>
+        internal static DeviceProvisioningServiceData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDeviceProvisioningServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeviceProvisioningServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -247,23 +271,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="options"> The client options for reading and writing models. </param>
         DeviceProvisioningServiceData IPersistableModel<DeviceProvisioningServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DeviceProvisioningServiceData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DeviceProvisioningServiceData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDeviceProvisioningServiceData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DeviceProvisioningServiceData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DeviceProvisioningServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -277,13 +284,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(deviceProvisioningServiceData, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DeviceProvisioningServiceData"/> from. </param>
-        internal static DeviceProvisioningServiceData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDeviceProvisioningServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

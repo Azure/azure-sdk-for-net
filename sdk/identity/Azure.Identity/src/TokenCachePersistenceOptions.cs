@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Microsoft.Extensions.Configuration;
+
 namespace Azure.Identity
 {
     /// <summary>
@@ -57,6 +59,13 @@ namespace Azure.Identity
     public class TokenCachePersistenceOptions
     {
         /// <summary>
+        /// Creates a new instance of <see cref="TokenCachePersistenceOptions"/>.
+        /// </summary>
+        public TokenCachePersistenceOptions()
+        {
+        }
+
+        /// <summary>
         /// Name uniquely identifying the <see cref="TokenCachePersistenceOptions"/>.
         /// </summary>
         public string Name { get; set; }
@@ -67,15 +76,22 @@ namespace Azure.Identity
         /// </summary>
         public bool UnsafeAllowUnencryptedStorage { get; set; }
 
-        /// <summary>
-        /// Creates a copy of the <see cref="TokenCachePersistenceOptions"/>.
-        /// </summary>
-        /// <returns></returns>
-        internal TokenCachePersistenceOptions Clone() {
-            return new TokenCachePersistenceOptions {
-                Name = Name,
-                UnsafeAllowUnencryptedStorage = UnsafeAllowUnencryptedStorage
-            };
+        internal TokenCachePersistenceOptions(IConfigurationSection section)
+        {
+            if (section == null || !section.Exists())
+            {
+                return;
+            }
+
+            if (section[nameof(Name)] is string name)
+            {
+                Name = name;
+            }
+
+            if (bool.TryParse(section[nameof(UnsafeAllowUnencryptedStorage)], out bool unsafeAllow))
+            {
+                UnsafeAllowUnencryptedStorage = unsafeAllow;
+            }
         }
     }
 }

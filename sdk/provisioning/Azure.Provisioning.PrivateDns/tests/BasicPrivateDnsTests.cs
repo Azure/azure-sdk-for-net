@@ -21,39 +21,39 @@ public class BasicPrivateDnsTests
                 #region Snippet:PrivateDnsZoneBasic
                 Infrastructure infra = new();
                 ProvisioningParameter privateDnsZoneName = new(nameof(privateDnsZoneName), typeof(string))
-                    {
-                        Description = "Private DNS zone name"
-                    };
+                {
+                    Description = "Private DNS zone name"
+                };
                 infra.Add(privateDnsZoneName);
                 ProvisioningParameter vmRegistration = new(nameof(vmRegistration), typeof(bool))
-                    {
-                        Description = "Enable automatic VM DNS registration in the zone",
-                        Value = true
-                    };
+                {
+                    Description = "Enable automatic VM DNS registration in the zone",
+                    Value = true
+                };
                 infra.Add(vmRegistration);
                 ProvisioningParameter vnetName = new(nameof(vnetName), typeof(string))
-                    {
-                        Description = "VNet name",
-                        Value = "VNet"
-                    };
+                {
+                    Description = "VNet name",
+                    Value = "VNet"
+                };
                 infra.Add(vnetName);
                 ProvisioningParameter vnetAddressPrefix = new(nameof(vnetAddressPrefix), typeof(string))
-                    {
-                        Description = "VNet Address prefix",
-                        Value = "10.0.0.0/16"
-                    };
+                {
+                    Description = "VNet Address prefix",
+                    Value = "10.0.0.0/16"
+                };
                 infra.Add(vnetAddressPrefix);
                 ProvisioningParameter subnetPrefix = new(nameof(subnetPrefix), typeof(string))
-                    {
-                        Description = "Subnet Prefix",
-                        Value = "10.0.0.0/24"
-                    };
+                {
+                    Description = "Subnet Prefix",
+                    Value = "10.0.0.0/24"
+                };
                 infra.Add(subnetPrefix);
                 ProvisioningParameter subnetName = new(nameof(subnetName), typeof(string))
-                    {
-                        Description = "Subnet Name",
-                        Value = "App"
-                    };
+                {
+                    Description = "Subnet Name",
+                    Value = "App"
+                };
                 infra.Add(subnetName);
                 VirtualNetwork vnet =
                     new(nameof(vnet), VirtualNetwork.ResourceVersions.V2021_03_01)

@@ -15,6 +15,16 @@ namespace Payload.Pageable
     {
         internal Pet() => throw null;
 
+        protected virtual Pet PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        BinaryData IPersistableModel<Pet>.Write(ModelReaderWriterOptions options) => throw null;
+
+        Pet IPersistableModel<Pet>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        string IPersistableModel<Pet>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
         void IJsonModel<Pet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -22,15 +32,5 @@ namespace Payload.Pageable
         Pet IJsonModel<Pet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual Pet JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<Pet>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
-        Pet IPersistableModel<Pet>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual Pet PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        string IPersistableModel<Pet>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
     }
 }

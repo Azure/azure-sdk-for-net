@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Contains all the secrets of a Disk. </summary>
     public partial class DataBoxDiskSecret : IJsonModel<DataBoxDiskSecret>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataBoxDiskSecret PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxDiskSecret>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataBoxDiskSecret(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxDiskSecret)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataBoxDiskSecret>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -128,23 +145,6 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         DataBoxDiskSecret IPersistableModel<DataBoxDiskSecret>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DataBoxDiskSecret PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataBoxDiskSecret>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDataBoxDiskSecret(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataBoxDiskSecret)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataBoxDiskSecret>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

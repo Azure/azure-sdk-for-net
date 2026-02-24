@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.Quota.Models
     /// <summary> Quota allocated to a subscription for the specific Resource Provider, Location, ResourceName. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota. </summary>
     public partial class SubscriptionQuotaAllocations : IJsonModel<SubscriptionQuotaAllocations>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SubscriptionQuotaAllocations PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SubscriptionQuotaAllocations>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSubscriptionQuotaAllocations(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SubscriptionQuotaAllocations)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SubscriptionQuotaAllocations>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -121,23 +138,6 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         SubscriptionQuotaAllocations IPersistableModel<SubscriptionQuotaAllocations>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SubscriptionQuotaAllocations PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SubscriptionQuotaAllocations>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSubscriptionQuotaAllocations(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SubscriptionQuotaAllocations)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SubscriptionQuotaAllocations>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

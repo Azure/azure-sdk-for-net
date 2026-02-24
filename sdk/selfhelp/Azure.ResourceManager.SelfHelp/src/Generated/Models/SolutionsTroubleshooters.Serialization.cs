@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Troubleshooters in Solutions. </summary>
     public partial class SolutionsTroubleshooters : IJsonModel<SolutionsTroubleshooters>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SolutionsTroubleshooters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SolutionsTroubleshooters>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSolutionsTroubleshooters(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SolutionsTroubleshooters)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SolutionsTroubleshooters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -139,23 +156,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         SolutionsTroubleshooters IPersistableModel<SolutionsTroubleshooters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SolutionsTroubleshooters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SolutionsTroubleshooters>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSolutionsTroubleshooters(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SolutionsTroubleshooters)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SolutionsTroubleshooters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -24,5 +24,5 @@ namespace Azure.ResourceManager.Network
                 return LocalNetworkAddressSpace.AddressPrefixes;
             }
         }
-   }
+    }
 }

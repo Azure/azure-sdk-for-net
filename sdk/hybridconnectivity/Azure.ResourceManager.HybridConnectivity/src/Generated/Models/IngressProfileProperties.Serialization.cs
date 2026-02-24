@@ -21,6 +21,23 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IngressProfileProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IngressProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeIngressProfileProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IngressProfileProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IngressProfileProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -127,23 +144,6 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         IngressProfileProperties IPersistableModel<IngressProfileProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IngressProfileProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<IngressProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeIngressProfileProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(IngressProfileProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<IngressProfileProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

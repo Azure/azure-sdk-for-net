@@ -29,14 +29,18 @@ var data = new
     displayName = "SDK's Test Profile",
     testId = testId,
     targetResourceId = targetResourceId,
-    targetResourceConfigurations = new {
+    targetResourceConfigurations = new
+    {
         kind = "FunctionsFlexConsumption",
-        configurations = new {
-            config1 = new {
+        configurations = new
+        {
+            config1 = new
+            {
                 instanceMemoryMB = 2048,
                 httpConcurrency = 20
             },
-            config2 = new {
+            config2 = new
+            {
                 instanceMemoryMB = 4096,
                 httpConcurrency = 20
             }

@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> schedule a maintenance. </summary>
     public partial class AvsMaintenanceSchedule : IJsonModel<AvsMaintenanceSchedule>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AvsMaintenanceSchedule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AvsMaintenanceSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAvsMaintenanceSchedule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AvsMaintenanceSchedule)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AvsMaintenanceSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -133,23 +150,6 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AvsMaintenanceSchedule IPersistableModel<AvsMaintenanceSchedule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AvsMaintenanceSchedule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AvsMaintenanceSchedule>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAvsMaintenanceSchedule(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AvsMaintenanceSchedule)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AvsMaintenanceSchedule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

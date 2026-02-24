@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     /// <summary> The resource name object where the specified values will be full resource names of the corresponding resources in a single server SAP system. </summary>
     public partial class SingleServerFullResourceNames : SingleServerCustomResourceNames, IJsonModel<SingleServerFullResourceNames>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SingleServerCustomResourceNames PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SingleServerFullResourceNames>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSingleServerFullResourceNames(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SingleServerFullResourceNames)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SingleServerFullResourceNames>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -113,23 +130,6 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         SingleServerFullResourceNames IPersistableModel<SingleServerFullResourceNames>.Create(BinaryData data, ModelReaderWriterOptions options) => (SingleServerFullResourceNames)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SingleServerCustomResourceNames PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SingleServerFullResourceNames>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSingleServerFullResourceNames(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SingleServerFullResourceNames)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SingleServerFullResourceNames>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

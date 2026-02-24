@@ -12,7 +12,7 @@ namespace Azure.AI.Projects
     {
         private static PipelineMessageClassifier _pipelineMessageClassifier200;
 
-        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
+        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 
         internal PipelineMessage CreateGetDeploymentRequest(string name, RequestOptions options)
         {
@@ -58,7 +58,14 @@ namespace Azure.AI.Projects
         internal PipelineMessage CreateNextGetDeploymentsRequest(Uri nextPage, string modelPublisher, string modelName, string deploymentType, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
             uri.UpdateQuery("api-version", _apiVersion);
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;

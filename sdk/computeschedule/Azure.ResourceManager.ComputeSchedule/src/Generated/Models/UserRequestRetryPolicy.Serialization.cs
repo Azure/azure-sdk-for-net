@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     /// <summary> The retry policy for the user request. </summary>
     public partial class UserRequestRetryPolicy : IJsonModel<UserRequestRetryPolicy>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual UserRequestRetryPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<UserRequestRetryPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeUserRequestRetryPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(UserRequestRetryPolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<UserRequestRetryPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -151,23 +168,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         UserRequestRetryPolicy IPersistableModel<UserRequestRetryPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UserRequestRetryPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<UserRequestRetryPolicy>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeUserRequestRetryPolicy(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(UserRequestRetryPolicy)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<UserRequestRetryPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

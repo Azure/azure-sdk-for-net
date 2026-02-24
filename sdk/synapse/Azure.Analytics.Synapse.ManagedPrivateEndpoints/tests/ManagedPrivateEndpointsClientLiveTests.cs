@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Azure.Analytics.Synapse.ManagedPrivateEndpoints;
 using Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models;
 using Azure.Analytics.Synapse.Tests;

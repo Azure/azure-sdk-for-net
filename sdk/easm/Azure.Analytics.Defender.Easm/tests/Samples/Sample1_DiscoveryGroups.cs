@@ -16,31 +16,31 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
         {
             #region Snippet:Sample2_DiscoveryGroups_Create_Client
 
-            #if SNIPPET
+#if SNIPPET
             string endpoint = "https://<region>.easm.defender.microsoft.com/subscriptions/<Your_Subscription_Id>/resourceGroups/<Your_Resource_Group_Name>/workspaces/<Your_Workspace_Name>";
             EasmClient client = new EasmClient(new System.Uri(endpoint),
                             new DefaultAzureCredential());
-            #else
+#else
             string endpoint = $"https://{TestEnvironment.Region}.easm.defender.microsoft.com/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroupName}/workspaces/{TestEnvironment.WorkspaceName}";
             EasmClient client = new EasmClient(new System.Uri(endpoint),
                 TestEnvironment.Credential);
-            #endif
+#endif
             #endregion
 
             #region Snippet:Sample2_DiscoveryGroups_Create_Discovery_Group
             string discoveryGroupName = "Sample Disco From C#";
             string discoveryGroupDescription = "This is a sample discovery group generated from C#";
-            #if SNIPPET
+#if SNIPPET
             string[] hosts = new string[2];
             hosts[0] = "<host1>.com";
             hosts[1] = "<host2>.com";
             string[] domains = new string[2];
             domains[0] = "<domain1>.com";
             domains[1] = "<domain2>.com";
-            #else
+#else
             string[] hosts = TestEnvironment.Hosts.Split(',');
             string[] domains = TestEnvironment.Domains.Split(',');
-            #endif
+#endif
             DiscoveryGroupPayload request = new DiscoveryGroupPayload();
             foreach (var host in hosts)
             {
@@ -72,7 +72,8 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
                 foreach (DiscoveryRunResult discoRun in discoRunPageResponse)
                 {
                     Console.WriteLine($" - started: {discoRun.StartedDate}, finished: {discoRun.CompletedDate}, assets found: {discoRun.TotalAssetsFoundCount}, status: {discoRun.State}");
-                    if (++index == 5){
+                    if (++index == 5)
+                    {
                         break;
                     }
                 }

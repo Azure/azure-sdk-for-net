@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// The reason why the given name is not available.
-    /// Serialized Name: CheckNameAvailabilityReason
-    /// </summary>
+    /// <summary> The reason why the given name is not available. </summary>
     public readonly partial struct PostgreSqlFlexibleServerNameUnavailableReason : IEquatable<PostgreSqlFlexibleServerNameUnavailableReason>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string InvalidValue = "Invalid";
         private const string AlreadyExistsValue = "AlreadyExists";
 
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: CheckNameAvailabilityReason.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         public static PostgreSqlFlexibleServerNameUnavailableReason Invalid { get; } = new PostgreSqlFlexibleServerNameUnavailableReason(InvalidValue);
-        /// <summary>
-        /// AlreadyExists
-        /// Serialized Name: CheckNameAvailabilityReason.AlreadyExists
-        /// </summary>
+        /// <summary> AlreadyExists. </summary>
         public static PostgreSqlFlexibleServerNameUnavailableReason AlreadyExists { get; } = new PostgreSqlFlexibleServerNameUnavailableReason(AlreadyExistsValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerNameUnavailableReason"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerNameUnavailableReason left, PostgreSqlFlexibleServerNameUnavailableReason right) => left.Equals(right);

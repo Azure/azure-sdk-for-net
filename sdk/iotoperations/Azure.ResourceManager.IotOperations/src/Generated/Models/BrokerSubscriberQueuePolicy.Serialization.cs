@@ -19,6 +19,23 @@ namespace Azure.ResourceManager.IotOperations.Models
     [PersistableModelProxy(typeof(UnknownBrokerSubscriberQueuePolicy))]
     public abstract partial class BrokerSubscriberQueuePolicy : IJsonModel<BrokerSubscriberQueuePolicy>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BrokerSubscriberQueuePolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BrokerSubscriberQueuePolicy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBrokerSubscriberQueuePolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BrokerSubscriberQueuePolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BrokerSubscriberQueuePolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -111,23 +128,6 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         BrokerSubscriberQueuePolicy IPersistableModel<BrokerSubscriberQueuePolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BrokerSubscriberQueuePolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BrokerSubscriberQueuePolicy>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBrokerSubscriberQueuePolicy(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BrokerSubscriberQueuePolicy)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BrokerSubscriberQueuePolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

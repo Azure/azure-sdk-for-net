@@ -21,7 +21,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="shortDescription"> MSFT Short Description. </param>
         /// <param name="stacExtensions"> URLs to STAC extensions implemented by this STAC resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownStacItemOrStacItemCollection(StacModelType @type, string stacVersion, IList<StacLink> links, string createdOn, string updatedOn, string shortDescription, IList<string> stacExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", stacVersion, links, createdOn, updatedOn, shortDescription, stacExtensions, additionalBinaryDataProperties)
+        internal UnknownStacItemOrStacItemCollection(StacModelType @type, string stacVersion, IList<StacLink> links, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string shortDescription, IList<string> stacExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", stacVersion, links, createdOn, updatedOn, shortDescription, stacExtensions, additionalBinaryDataProperties)
         {
         }
     }

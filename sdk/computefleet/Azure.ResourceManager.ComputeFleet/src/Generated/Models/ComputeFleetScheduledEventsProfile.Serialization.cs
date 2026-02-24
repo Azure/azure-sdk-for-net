@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     /// <summary> Specifies Scheduled Event related configurations. </summary>
     public partial class ComputeFleetScheduledEventsProfile : IJsonModel<ComputeFleetScheduledEventsProfile>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ComputeFleetScheduledEventsProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetScheduledEventsProfile>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeComputeFleetScheduledEventsProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ComputeFleetScheduledEventsProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ComputeFleetScheduledEventsProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -136,23 +153,6 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ComputeFleetScheduledEventsProfile IPersistableModel<ComputeFleetScheduledEventsProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ComputeFleetScheduledEventsProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetScheduledEventsProfile>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeComputeFleetScheduledEventsProfile(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ComputeFleetScheduledEventsProfile)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ComputeFleetScheduledEventsProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -141,7 +141,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
             uri.UpdateQuery("api-version", _apiVersion);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -174,7 +181,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         internal HttpMessage CreateNextGetBySubscriptionRequest(Uri nextPage, Guid subscriptionId, int? top, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
             uri.UpdateQuery("api-version", _apiVersion);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;

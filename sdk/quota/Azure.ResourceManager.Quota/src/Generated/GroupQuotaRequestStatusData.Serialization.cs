@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.Quota
     /// <summary> Status of a single GroupQuota request. </summary>
     public partial class GroupQuotaRequestStatusData : ResourceData, IJsonModel<GroupQuotaRequestStatusData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotaRequestStatusData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeGroupQuotaRequestStatusData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GroupQuotaRequestStatusData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GroupQuotaRequestStatusData"/> from. </param>
+        internal static GroupQuotaRequestStatusData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeGroupQuotaRequestStatusData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GroupQuotaRequestStatusData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -154,31 +178,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="options"> The client options for reading and writing models. </param>
         GroupQuotaRequestStatusData IPersistableModel<GroupQuotaRequestStatusData>.Create(BinaryData data, ModelReaderWriterOptions options) => (GroupQuotaRequestStatusData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotaRequestStatusData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeGroupQuotaRequestStatusData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(GroupQuotaRequestStatusData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<GroupQuotaRequestStatusData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GroupQuotaRequestStatusData"/> from. </param>
-        internal static GroupQuotaRequestStatusData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeGroupQuotaRequestStatusData(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

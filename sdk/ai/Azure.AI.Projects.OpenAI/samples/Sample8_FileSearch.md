@@ -1,0 +1,131 @@
+# Sample file search with agent in Azure.AI.Projects.OpenAI.
+
+In this example we will create the local file, upload it to Azure and will use it in the newly created `VectorStore` for file search.
+
+1. First, we need to create project client and read the environment variables, which will be used in the next steps.
+
+```C# Snippet:Sample_CreateAgentClient_FileSearch
+var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+```
+
+2. We will create a toy example file and upload it using OpenAI mechanism.
+
+Synchronous sample: 
+```C# Snippet:Sample_UploadFile_FileSearch_Sync
+string filePath = "sample_file_for_upload.txt";
+File.WriteAllText(
+    path: filePath,
+    contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
+OpenAIFileClient fileClient = projectClient.OpenAI.GetOpenAIFileClient();
+OpenAIFile uploadedFile = fileClient.UploadFile(filePath: filePath, purpose: FileUploadPurpose.Assistants);
+File.Delete(filePath);
+```
+
+Asynchronous sample:
+```C# Snippet:Sample_UploadFile_FileSearch_Async
+string filePath = "sample_file_for_upload.txt";
+File.WriteAllText(
+    path: filePath,
+    contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
+OpenAIFileClient fileClient = projectClient.OpenAI.GetOpenAIFileClient();
+OpenAIFile uploadedFile = await fileClient.UploadFileAsync(filePath: filePath, purpose: FileUploadPurpose.Assistants);
+File.Delete(filePath);
+```
+
+3. Create the `VectorStore` and provide it with uploaded file ID.
+
+Synchronous sample:
+```C# Snippet:Sample_CreateVectorStore_FileSearch_Sync
+VectorStoreClient vctStoreClient = projectClient.OpenAI.GetVectorStoreClient();
+VectorStoreCreationOptions options = new()
+{
+    Name = "MySampleStore",
+    FileIds = { uploadedFile.Id }
+};
+VectorStore vectorStore = vctStoreClient.CreateVectorStore(options: options);
+```
+
+Asynchronous sample:
+```C# Snippet:Sample_CreateVectorStore_FileSearch_Async
+VectorStoreClient vctStoreClient = projectClient.OpenAI.GetVectorStoreClient();
+VectorStoreCreationOptions options = new()
+{
+    Name = "MySampleStore",
+    FileIds = { uploadedFile.Id }
+};
+VectorStore vectorStore = await vctStoreClient.CreateVectorStoreAsync(options);
+```
+
+2. Now we can create an Agent capable of using File search. 
+
+Synchronous sample:
+```C# Snippet:Sample_CreateAgent_FileSearch_Sync
+PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "You are a helpful agent that can help fetch data from files you know about.",
+    Tools = { ResponseTool.CreateFileSearchTool(vectorStoreIds: [vectorStore.Id]), }
+};
+AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+    agentName: "myAgent",
+    options: new(agentDefinition));
+```
+
+Asynchronous sample:
+```C# Snippet:Sample_CreateAgent_FileSearch_Async
+PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "You are a helpful agent that can help fetch data from files you know about.",
+    Tools = { ResponseTool.CreateFileSearchTool(vectorStoreIds: [vectorStore.Id]), }
+};
+AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+    agentName: "myAgent",
+    options: new(agentDefinition));
+```
+
+3. In this example we will ask a question to the file contents.
+
+Synchronous sample:
+```C# Snippet:Sample_CreateResponse_FileSearch_Sync
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+
+ResponseResult response = responseClient.CreateResponse("Can you give me the documented codes for 'banana' and 'orange'?");
+```
+
+Asynchronous sample:
+```C# Snippet:Sample_CreateResponse_FileSearch_Async
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+
+ResponseResult response = await responseClient.CreateResponseAsync("Can you give me the documented codes for 'banana' and 'orange'?");
+```
+
+4. Create the response and throw an exception if the response contains the error.
+
+Synchronous sample:
+```C# Snippet:Sample_WaitForResponse_FileSearch_Sync
+Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
+Console.WriteLine(response.GetOutputText());
+```
+
+Asynchronous sample:
+```C# Snippet:Sample_WaitForResponse_FileSearch_Async
+Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
+Console.WriteLine(response.GetOutputText());
+```
+
+5. Finally, delete all the resources, we have created in this sample.
+
+Synchronous sample:
+```C# Snippet:Sample_Cleanup_FileSearch_Sync
+projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+vctStoreClient.DeleteVectorStore(vectorStoreId: vectorStore.Id);
+fileClient.DeleteFile(uploadedFile.Id);
+```
+
+Asynchronous sample:
+```C# Snippet:Sample_Cleanup_FileSearch_Async
+await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+await vctStoreClient.DeleteVectorStoreAsync(vectorStoreId: vectorStore.Id);
+await fileClient.DeleteFileAsync(uploadedFile.Id);
+```

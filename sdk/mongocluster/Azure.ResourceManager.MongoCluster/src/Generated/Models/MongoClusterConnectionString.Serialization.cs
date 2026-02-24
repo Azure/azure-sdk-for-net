@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.MongoCluster.Models
     /// <summary> Connection string for the mongo cluster. </summary>
     public partial class MongoClusterConnectionString : IJsonModel<MongoClusterConnectionString>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MongoClusterConnectionString PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MongoClusterConnectionString>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMongoClusterConnectionString(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MongoClusterConnectionString)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MongoClusterConnectionString>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -139,23 +156,6 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         MongoClusterConnectionString IPersistableModel<MongoClusterConnectionString>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MongoClusterConnectionString PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MongoClusterConnectionString>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeMongoClusterConnectionString(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MongoClusterConnectionString)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MongoClusterConnectionString>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

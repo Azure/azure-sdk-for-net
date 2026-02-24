@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     /// <summary> DhcpOptions contains an array of DNS servers available to VMs deployed in the logical network. Standard DHCP option for a subnet overrides logical network DHCP options. </summary>
     internal partial class HciVmLogicalNetworkDhcpOptions : IJsonModel<HciVmLogicalNetworkDhcpOptions>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HciVmLogicalNetworkDhcpOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmLogicalNetworkDhcpOptions>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHciVmLogicalNetworkDhcpOptions(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HciVmLogicalNetworkDhcpOptions)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciVmLogicalNetworkDhcpOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -143,23 +160,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         HciVmLogicalNetworkDhcpOptions IPersistableModel<HciVmLogicalNetworkDhcpOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HciVmLogicalNetworkDhcpOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HciVmLogicalNetworkDhcpOptions>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeHciVmLogicalNetworkDhcpOptions(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HciVmLogicalNetworkDhcpOptions)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<HciVmLogicalNetworkDhcpOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

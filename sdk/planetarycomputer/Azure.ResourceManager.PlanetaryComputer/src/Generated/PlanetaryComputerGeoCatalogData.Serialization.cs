@@ -25,6 +25,30 @@ namespace Azure.ResourceManager.PlanetaryComputer
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PlanetaryComputerGeoCatalogData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePlanetaryComputerGeoCatalogData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PlanetaryComputerGeoCatalogData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PlanetaryComputerGeoCatalogData"/> from. </param>
+        internal static PlanetaryComputerGeoCatalogData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializePlanetaryComputerGeoCatalogData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PlanetaryComputerGeoCatalogData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -205,23 +229,6 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         PlanetaryComputerGeoCatalogData IPersistableModel<PlanetaryComputerGeoCatalogData>.Create(BinaryData data, ModelReaderWriterOptions options) => (PlanetaryComputerGeoCatalogData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PlanetaryComputerGeoCatalogData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePlanetaryComputerGeoCatalogData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PlanetaryComputerGeoCatalogData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PlanetaryComputerGeoCatalogData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -235,13 +242,6 @@ namespace Azure.ResourceManager.PlanetaryComputer
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(planetaryComputerGeoCatalogData, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PlanetaryComputerGeoCatalogData"/> from. </param>
-        internal static PlanetaryComputerGeoCatalogData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializePlanetaryComputerGeoCatalogData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

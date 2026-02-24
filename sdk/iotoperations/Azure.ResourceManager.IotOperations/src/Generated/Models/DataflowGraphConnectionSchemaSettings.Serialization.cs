@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.IotOperations.Models
     /// <summary> DataflowGraph connection node output schema settings. </summary>
     public partial class DataflowGraphConnectionSchemaSettings : IJsonModel<DataflowGraphConnectionSchemaSettings>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataflowGraphConnectionSchemaSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataflowGraphConnectionSchemaSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataflowGraphConnectionSchemaSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataflowGraphConnectionSchemaSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataflowGraphConnectionSchemaSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -132,23 +149,6 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         DataflowGraphConnectionSchemaSettings IPersistableModel<DataflowGraphConnectionSchemaSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DataflowGraphConnectionSchemaSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataflowGraphConnectionSchemaSettings>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDataflowGraphConnectionSchemaSettings(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataflowGraphConnectionSchemaSettings)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataflowGraphConnectionSchemaSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -1,24 +1,24 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
-using Azure.Core.TestFramework;
-using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Network;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.TestFramework;
-using NUnit.Framework;
-using System.Threading.Tasks;
-using Azure.ResourceManager.Compute.Models;
-using Azure.ResourceManager.Compute;
-using System.Linq;
-using Azure.ResourceManager.Logic.Models;
-using Azure.ResourceManager.Logic;
 using System;
 using System.IO;
-using Azure.ResourceManager.IotHub.Models;
+using System.Linq;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.IotHub;
+using Azure.ResourceManager.IotHub.Models;
+using Azure.ResourceManager.Logic;
+using Azure.ResourceManager.Logic.Models;
+using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.SecurityCenter.Models;
+using Azure.ResourceManager.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.SecurityCenter.Tests
 {

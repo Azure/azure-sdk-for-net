@@ -16,6 +16,58 @@ namespace Azure.Analytics.PlanetaryComputer
     /// <summary> The RegisterMosaicsSearchRequest. </summary>
     internal partial class RegisterMosaicsSearchRequest : IJsonModel<RegisterMosaicsSearchRequest>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RegisterMosaicsSearchRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RegisterMosaicsSearchRequest>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRegisterMosaicsSearchRequest(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RegisterMosaicsSearchRequest)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RegisterMosaicsSearchRequest>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RegisterMosaicsSearchRequest)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RegisterMosaicsSearchRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RegisterMosaicsSearchRequest IPersistableModel<RegisterMosaicsSearchRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RegisterMosaicsSearchRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="registerMosaicsSearchRequest"> The <see cref="RegisterMosaicsSearchRequest"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(RegisterMosaicsSearchRequest registerMosaicsSearchRequest)
+        {
+            if (registerMosaicsSearchRequest == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(registerMosaicsSearchRequest, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RegisterMosaicsSearchRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -64,10 +116,15 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(BoundingBox))
+            if (Optional.IsCollectionDefined(BoundingBox))
             {
                 writer.WritePropertyName("bbox"u8);
-                writer.WriteNumberValue(BoundingBox.Value);
+                writer.WriteStartArray();
+                foreach (float item in BoundingBox)
+                {
+                    writer.WriteNumberValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(Intersects))
             {
@@ -189,7 +246,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             IList<string> collections = default;
             IList<string> ids = default;
-            float? boundingBox = default;
+            IList<float> boundingBox = default;
             GeoJsonGeometry intersects = default;
             IDictionary<string, BinaryData> query = default;
             IDictionary<string, BinaryData> filter = default;
@@ -248,7 +305,12 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    boundingBox = prop.Value.GetSingle();
+                    List<float> array = new List<float>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetSingle());
+                    }
+                    boundingBox = array;
                     continue;
                 }
                 if (prop.NameEquals("intersects"u8))
@@ -347,7 +409,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return new RegisterMosaicsSearchRequest(
                 collections ?? new ChangeTrackingList<string>(),
                 ids ?? new ChangeTrackingList<string>(),
-                boundingBox,
+                boundingBox ?? new ChangeTrackingList<float>(),
                 intersects,
                 query ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 filter ?? new ChangeTrackingDictionary<string, BinaryData>(),
@@ -356,58 +418,6 @@ namespace Azure.Analytics.PlanetaryComputer
                 filterLanguage,
                 metadata,
                 additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RegisterMosaicsSearchRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RegisterMosaicsSearchRequest>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(RegisterMosaicsSearchRequest)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        RegisterMosaicsSearchRequest IPersistableModel<RegisterMosaicsSearchRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RegisterMosaicsSearchRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RegisterMosaicsSearchRequest>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeRegisterMosaicsSearchRequest(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RegisterMosaicsSearchRequest)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RegisterMosaicsSearchRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="registerMosaicsSearchRequest"> The <see cref="RegisterMosaicsSearchRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(RegisterMosaicsSearchRequest registerMosaicsSearchRequest)
-        {
-            if (registerMosaicsSearchRequest == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(registerMosaicsSearchRequest, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

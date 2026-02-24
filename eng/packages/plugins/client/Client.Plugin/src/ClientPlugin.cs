@@ -20,6 +20,10 @@ namespace Client.Plugin
             // Rest of the visitors can be added in any order.
             generator.AddVisitor(new NamespaceVisitor());
             generator.AddVisitor(new ClientRequestIdHeaderVisitor(includeXmsClientRequestIdInRequest: true));
+            // Note the shared source TaskExtensions must be added manually to the csproj currently as plugins
+            // don't support modifying the shared source files currently.
+            // https://github.com/Azure/azure-sdk-for-net/issues/55574
+            generator.AddVisitor(new MultiPartFormDataVisitor());
         }
     }
 }

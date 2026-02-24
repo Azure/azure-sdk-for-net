@@ -467,7 +467,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(expectedSequence, Is.EqualTo(blobCheckpoint.SequenceNumber), "Checkpoint sequence number did not have the correct value.");
         }
 
-         /// <summary>
+        /// <summary>
         ///   Verifies basic functionality of GetCheckpointAsync and ensures the starting position is set correctly.
         /// </summary>
         ///

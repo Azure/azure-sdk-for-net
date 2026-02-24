@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.LargeInstance.Models
     /// <summary> Specifies the network settings for the Azure Large Instance disks. </summary>
     public partial class LargeInstanceNetworkProfile : IJsonModel<LargeInstanceNetworkProfile>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual LargeInstanceNetworkProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LargeInstanceNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeLargeInstanceNetworkProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LargeInstanceNetworkProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LargeInstanceNetworkProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -142,23 +159,6 @@ namespace Azure.ResourceManager.LargeInstance.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         LargeInstanceNetworkProfile IPersistableModel<LargeInstanceNetworkProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LargeInstanceNetworkProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LargeInstanceNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeLargeInstanceNetworkProfile(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(LargeInstanceNetworkProfile)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<LargeInstanceNetworkProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> Endpoint addresses. </summary>
     public partial class AvsPrivateCloudEndpoints : IJsonModel<AvsPrivateCloudEndpoints>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AvsPrivateCloudEndpoints PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudEndpoints>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAvsPrivateCloudEndpoints(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AvsPrivateCloudEndpoints)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AvsPrivateCloudEndpoints>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -179,23 +196,6 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AvsPrivateCloudEndpoints IPersistableModel<AvsPrivateCloudEndpoints>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AvsPrivateCloudEndpoints PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudEndpoints>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAvsPrivateCloudEndpoints(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AvsPrivateCloudEndpoints)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AvsPrivateCloudEndpoints>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

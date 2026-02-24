@@ -21,6 +21,23 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual InformaticaRuntimeResourceFetchMetadata PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InformaticaRuntimeResourceFetchMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeInformaticaRuntimeResourceFetchMetadata(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InformaticaRuntimeResourceFetchMetadata)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InformaticaRuntimeResourceFetchMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -223,23 +240,6 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         InformaticaRuntimeResourceFetchMetadata IPersistableModel<InformaticaRuntimeResourceFetchMetadata>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual InformaticaRuntimeResourceFetchMetadata PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<InformaticaRuntimeResourceFetchMetadata>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeInformaticaRuntimeResourceFetchMetadata(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(InformaticaRuntimeResourceFetchMetadata)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<InformaticaRuntimeResourceFetchMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

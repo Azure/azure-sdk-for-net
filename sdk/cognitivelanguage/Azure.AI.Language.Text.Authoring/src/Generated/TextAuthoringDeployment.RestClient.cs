@@ -16,9 +16,9 @@ namespace Azure.AI.Language.Text.Authoring
         private static ResponseClassifier _pipelineMessageClassifier200;
         private static ResponseClassifier _pipelineMessageClassifier202;
 
-        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
-        private static ResponseClassifier PipelineMessageClassifier202 => _pipelineMessageClassifier202 = new StatusCodeClassifier(stackalloc ushort[] { 202 });
+        private static ResponseClassifier PipelineMessageClassifier202 => _pipelineMessageClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
 
         internal HttpMessage CreateGetDeploymentRequest(string projectName, string deploymentName, RequestContext context)
         {
@@ -29,7 +29,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/deployments/", false);
             uri.AppendPath(deploymentName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -47,7 +50,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/deployments/", false);
             uri.AppendPath(deploymentName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
@@ -65,7 +71,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath("/deployments/", false);
             uri.AppendPath(deploymentName, true);
             uri.AppendPath("/:delete-from-resources", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
@@ -86,7 +95,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath(deploymentName, true);
             uri.AppendPath("/delete-from-resources/jobs/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -106,7 +118,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath(deploymentName, true);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -124,7 +139,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/deployments/", false);
             uri.AppendPath(deploymentName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;

@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     /// <summary> virtualNetworkAddress resource properties. </summary>
     public partial class CloudVmClusterVirtualNetworkAddressProperties : IJsonModel<CloudVmClusterVirtualNetworkAddressProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CloudVmClusterVirtualNetworkAddressProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CloudVmClusterVirtualNetworkAddressProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCloudVmClusterVirtualNetworkAddressProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CloudVmClusterVirtualNetworkAddressProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CloudVmClusterVirtualNetworkAddressProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -215,23 +232,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         CloudVmClusterVirtualNetworkAddressProperties IPersistableModel<CloudVmClusterVirtualNetworkAddressProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CloudVmClusterVirtualNetworkAddressProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CloudVmClusterVirtualNetworkAddressProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeCloudVmClusterVirtualNetworkAddressProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CloudVmClusterVirtualNetworkAddressProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<CloudVmClusterVirtualNetworkAddressProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

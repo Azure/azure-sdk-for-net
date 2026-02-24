@@ -13,6 +13,16 @@ namespace Specs.Azure.Example.Basic
 {
     public partial class Model : IJsonModel<Model>
     {
+        protected virtual Model PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        BinaryData IPersistableModel<Model>.Write(ModelReaderWriterOptions options) => throw null;
+
+        Model IPersistableModel<Model>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        string IPersistableModel<Model>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
         void IJsonModel<Model>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -20,15 +30,5 @@ namespace Specs.Azure.Example.Basic
         Model IJsonModel<Model>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual Model JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<Model>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
-        Model IPersistableModel<Model>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual Model PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        string IPersistableModel<Model>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
     }
 }

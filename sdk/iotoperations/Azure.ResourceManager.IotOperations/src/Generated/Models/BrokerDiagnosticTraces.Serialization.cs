@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.IotOperations.Models
     /// <summary> Broker Diagnostic Trace properties. </summary>
     public partial class BrokerDiagnosticTraces : IJsonModel<BrokerDiagnosticTraces>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BrokerDiagnosticTraces PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BrokerDiagnosticTraces>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBrokerDiagnosticTraces(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BrokerDiagnosticTraces)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BrokerDiagnosticTraces>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -166,23 +183,6 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         BrokerDiagnosticTraces IPersistableModel<BrokerDiagnosticTraces>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BrokerDiagnosticTraces PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BrokerDiagnosticTraces>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBrokerDiagnosticTraces(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BrokerDiagnosticTraces)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BrokerDiagnosticTraces>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

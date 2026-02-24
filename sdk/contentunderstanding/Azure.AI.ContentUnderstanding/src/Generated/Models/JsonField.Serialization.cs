@@ -15,6 +15,46 @@ namespace Azure.AI.ContentUnderstanding
     /// <summary> JSON field extracted from the content. </summary>
     public partial class JsonField : ContentField, IJsonModel<JsonField>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ContentField PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<JsonField>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeJsonField(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(JsonField)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<JsonField>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIContentUnderstandingContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(JsonField)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<JsonField>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        JsonField IPersistableModel<JsonField>.Create(BinaryData data, ModelReaderWriterOptions options) => (JsonField)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<JsonField>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<JsonField>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -34,8 +74,6 @@ namespace Azure.AI.ContentUnderstanding
                 throw new FormatException($"The model {nameof(JsonField)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(FieldType.ToString());
             if (Optional.IsDefined(ValueJson))
             {
                 writer.WritePropertyName("valueJson"u8);
@@ -80,7 +118,6 @@ namespace Azure.AI.ContentUnderstanding
             float? confidence = default;
             string source = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ContentFieldType fieldType = default;
             BinaryData valueJson = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -117,11 +154,6 @@ namespace Azure.AI.ContentUnderstanding
                     source = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("type"u8))
-                {
-                    fieldType = new ContentFieldType(prop.Value.GetString());
-                    continue;
-                }
                 if (prop.NameEquals("valueJson"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -142,48 +174,7 @@ namespace Azure.AI.ContentUnderstanding
                 confidence,
                 source,
                 additionalBinaryDataProperties,
-                fieldType,
                 valueJson);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<JsonField>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<JsonField>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIContentUnderstandingContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(JsonField)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        JsonField IPersistableModel<JsonField>.Create(BinaryData data, ModelReaderWriterOptions options) => (JsonField)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ContentField PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<JsonField>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeJsonField(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(JsonField)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<JsonField>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -21,6 +21,30 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
     /// <summary> Represents a location capability set. </summary>
     public partial class MySqlFlexibleServersCapabilityData : ResourceData, IJsonModel<MySqlFlexibleServersCapabilityData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServersCapabilityData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMySqlFlexibleServersCapabilityData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServersCapabilityData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MySqlFlexibleServersCapabilityData"/> from. </param>
+        internal static MySqlFlexibleServersCapabilityData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeMySqlFlexibleServersCapabilityData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MySqlFlexibleServersCapabilityData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -155,31 +179,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="options"> The client options for reading and writing models. </param>
         MySqlFlexibleServersCapabilityData IPersistableModel<MySqlFlexibleServersCapabilityData>.Create(BinaryData data, ModelReaderWriterOptions options) => (MySqlFlexibleServersCapabilityData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServersCapabilityData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeMySqlFlexibleServersCapabilityData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServersCapabilityData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MySqlFlexibleServersCapabilityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MySqlFlexibleServersCapabilityData"/> from. </param>
-        internal static MySqlFlexibleServersCapabilityData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeMySqlFlexibleServersCapabilityData(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

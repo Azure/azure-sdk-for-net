@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.Elastic.Models
     /// <summary> The properties of a resource currently being monitored by the Elastic monitor resource. </summary>
     public partial class MonitoredResourceInfo : IJsonModel<MonitoredResourceInfo>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MonitoredResourceInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MonitoredResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMonitoredResourceInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MonitoredResourceInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MonitoredResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -148,23 +165,6 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         MonitoredResourceInfo IPersistableModel<MonitoredResourceInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MonitoredResourceInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MonitoredResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeMonitoredResourceInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MonitoredResourceInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MonitoredResourceInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

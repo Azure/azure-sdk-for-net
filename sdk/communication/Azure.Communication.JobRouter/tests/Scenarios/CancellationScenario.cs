@@ -27,7 +27,8 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             var distributionPolicyId = GenerateUniqueId($"{IdPrefix}-dist-policy");
             var distributionPolicyResponse = await administrationClient.CreateDistributionPolicyAsync(
                 new CreateDistributionPolicyOptions(distributionPolicyId, TimeSpan.FromMinutes(10),
-                    new LongestIdleMode()) { Name = "test", });
+                    new LongestIdleMode())
+                { Name = "test", });
             AddForCleanup(new Task(async () => await administrationClient.DeleteDistributionPolicyAsync(distributionPolicyId)));
 
             var queueResponse = await administrationClient.CreateQueueAsync(

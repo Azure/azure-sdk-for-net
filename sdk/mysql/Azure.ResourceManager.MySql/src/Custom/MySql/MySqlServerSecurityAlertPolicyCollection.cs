@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MySql
             TryGetApiVersion(MySqlServerSecurityAlertPolicyResource.ResourceType, out string mySqlServerSecurityAlertPolicyServerSecurityAlertPoliciesApiVersion);
             _mySqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient = new ServerSecurityAlertPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mySqlServerSecurityAlertPolicyServerSecurityAlertPoliciesApiVersion);
 #if DEBUG
-			ValidateResourceId(Id);
+            ValidateResourceId(Id);
 #endif
         }
 

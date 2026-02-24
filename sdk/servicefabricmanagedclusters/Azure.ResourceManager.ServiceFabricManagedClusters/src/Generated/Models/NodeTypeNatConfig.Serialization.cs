@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Provides information about NAT configuration on the default public Load Balancer for the node type. </summary>
     public partial class NodeTypeNatConfig : IJsonModel<NodeTypeNatConfig>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NodeTypeNatConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NodeTypeNatConfig>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNodeTypeNatConfig(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NodeTypeNatConfig)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NodeTypeNatConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -151,23 +168,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         NodeTypeNatConfig IPersistableModel<NodeTypeNatConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NodeTypeNatConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NodeTypeNatConfig>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeNodeTypeNatConfig(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NodeTypeNatConfig)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<NodeTypeNatConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

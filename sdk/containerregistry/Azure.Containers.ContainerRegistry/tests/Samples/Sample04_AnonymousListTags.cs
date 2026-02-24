@@ -3,8 +3,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using Azure.Containers.ContainerRegistry;
+using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
 

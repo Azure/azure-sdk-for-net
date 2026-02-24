@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.LargeInstance.Models
     /// <summary> Specifies the disk information fo the Azure Large Instance. </summary>
     public partial class LargeInstanceDisk : IJsonModel<LargeInstanceDisk>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual LargeInstanceDisk PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LargeInstanceDisk>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeLargeInstanceDisk(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LargeInstanceDisk)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LargeInstanceDisk>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -147,23 +164,6 @@ namespace Azure.ResourceManager.LargeInstance.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         LargeInstanceDisk IPersistableModel<LargeInstanceDisk>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LargeInstanceDisk PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LargeInstanceDisk>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeLargeInstanceDisk(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(LargeInstanceDisk)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<LargeInstanceDisk>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

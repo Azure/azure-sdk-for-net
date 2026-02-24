@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.Chaos
     /// <summary> Model that represents the execution of a Experiment. </summary>
     public partial class ChaosExperimentExecutionData : ResourceData, IJsonModel<ChaosExperimentExecutionData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ChaosExperimentExecutionData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeChaosExperimentExecutionData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ChaosExperimentExecutionData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ChaosExperimentExecutionData"/> from. </param>
+        internal static ChaosExperimentExecutionData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeChaosExperimentExecutionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ChaosExperimentExecutionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -154,31 +178,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="options"> The client options for reading and writing models. </param>
         ChaosExperimentExecutionData IPersistableModel<ChaosExperimentExecutionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ChaosExperimentExecutionData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ChaosExperimentExecutionData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeChaosExperimentExecutionData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ChaosExperimentExecutionData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ChaosExperimentExecutionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ChaosExperimentExecutionData"/> from. </param>
-        internal static ChaosExperimentExecutionData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeChaosExperimentExecutionData(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

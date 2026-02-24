@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Updates order item parameters. </summary>
     public partial class EdgeOrderItemPatch : IJsonModel<EdgeOrderItemPatch>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EdgeOrderItemPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeOrderItemPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeEdgeOrderItemPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EdgeOrderItemPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EdgeOrderItemPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -175,23 +192,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         EdgeOrderItemPatch IPersistableModel<EdgeOrderItemPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EdgeOrderItemPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeOrderItemPatch>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeEdgeOrderItemPatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EdgeOrderItemPatch)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<EdgeOrderItemPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

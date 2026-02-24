@@ -3,7 +3,6 @@
 
 extern alias BaseShares;
 extern alias DMShare;
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +10,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using BaseShares::Azure.Storage.Files.Shares;
 using BaseShares::Azure.Storage.Files.Shares.Models;
+using DMShare::Azure.Storage.DataMovement.Files.Shares;
 using Moq;
 using Moq.Protected;
 using NUnit.Framework;
-using DMShare::Azure.Storage.DataMovement.Files.Shares;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
@@ -142,9 +141,9 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                     cancellationToken: default))
             {
                 if (storageResource is ShareFileStorageResource)
-                    files.Add((ShareFileStorageResource) storageResource);
+                    files.Add((ShareFileStorageResource)storageResource);
                 else if (storageResource is ShareDirectoryStorageResourceContainer)
-                    directories.Add((ShareDirectoryStorageResourceContainer) storageResource);
+                    directories.Add((ShareDirectoryStorageResourceContainer)storageResource);
             }
 
             Assert.That(files.Select(f => f.Uri.PathAndQuery.Substring(shareName.Length + 2)), Is.EquivalentTo(expectedFilePaths));

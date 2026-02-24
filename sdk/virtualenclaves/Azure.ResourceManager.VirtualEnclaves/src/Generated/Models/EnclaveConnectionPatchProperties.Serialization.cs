@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
     /// <summary> Enclave Connection patchable Properties. </summary>
     internal partial class EnclaveConnectionPatchProperties : IJsonModel<EnclaveConnectionPatchProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EnclaveConnectionPatchProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EnclaveConnectionPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeEnclaveConnectionPatchProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EnclaveConnectionPatchProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EnclaveConnectionPatchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -117,23 +134,6 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         EnclaveConnectionPatchProperties IPersistableModel<EnclaveConnectionPatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EnclaveConnectionPatchProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EnclaveConnectionPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeEnclaveConnectionPatchProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EnclaveConnectionPatchProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<EnclaveConnectionPatchProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -55,7 +55,7 @@ import {
   getOperationScopeFromPath
 } from "./resolve-arm-resources-converter.js";
 import { AzureMgmtEmitterOptions } from "./options.js";
-import { isPrefix } from "./utils.js";
+import { getSharedSegmentCount, isPrefix } from "./utils.js";
 import { getAllSdkClients, traverseClient } from "./sdk-client-utils.js";
 
 export async function updateClients(
@@ -63,11 +63,13 @@ export async function updateClients(
   sdkContext: CSharpEmitterContext,
   options: AzureMgmtEmitterOptions
 ) {
-  // Check if the use-legacy-resource-detection flag is disabled (i.e., use new resolveArmResources API)
-  const armProviderSchema =
-    options?.["use-legacy-resource-detection"] === false
-      ? resolveArmResources(sdkContext.program, sdkContext)
-      : buildArmProviderSchema(sdkContext, codeModel);
+  let armProviderSchema: ArmProviderSchema;
+
+  if (options?.["use-legacy-resource-detection"] === false) {
+    armProviderSchema = resolveArmResources(sdkContext.program, sdkContext);
+  } else {
+    armProviderSchema = buildArmProviderSchema(sdkContext, codeModel);
+  }
 
   applyArmProviderSchemaDecorator(codeModel, armProviderSchema);
 }
@@ -378,6 +380,9 @@ export function buildArmProviderSchema(
   // This is also specific to legacy resource detection
   for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
     if (!metadata.parentResourceId && metadata.resourceIdPattern) {
+      // Find the longest matching parent path (most specific parent)
+      let longestParentPath: string | undefined;
+      let longestParentSegmentCount = 0;
       // Check if this resource's path is a child of another resource's path
       for (const [otherKey, otherMetadata] of resourcePathToMetadataMap) {
         if (otherKey !== metadataKey && otherMetadata.resourceIdPattern) {
@@ -389,11 +394,21 @@ export function buildArmProviderSchema(
             isPrefix(potentialParentPath, thisPath) &&
             !isPrefix(thisPath, potentialParentPath)
           ) {
-            metadata.parentResourceId = potentialParentPath;
-            // Note: we don't set parentResourceModelId here since they share the same model
-            break;
+            // Use getSharedSegmentCount to get the segment count without redundant splitting
+            const segmentCount = getSharedSegmentCount(
+              potentialParentPath,
+              thisPath
+            );
+            if (segmentCount > longestParentSegmentCount) {
+              longestParentSegmentCount = segmentCount;
+              longestParentPath = potentialParentPath;
+            }
           }
         }
+      }
+      if (longestParentPath) {
+        metadata.parentResourceId = longestParentPath;
+        // Note: we don't set parentResourceModelId here since they share the same model
       }
     }
   }
@@ -489,7 +504,7 @@ export function buildArmProviderSchema(
             if (explicitName) {
               resource.metadata.resourceName = explicitName;
             } else {
-              // Fallback: derive from client name using pluralize.singular
+              // Try to derive from client name using pluralize.singular
               const clientName = resourcePathToClientName.get(metadataKey);
               if (clientName) {
                 resource.metadata.resourceName = pluralize.singular(clientName);
@@ -576,7 +591,10 @@ function parseResourceOperation(
                 decorator.args[1].value as Model,
                 decorator.definition?.name
               ),
-              explicitResourceName: undefined
+              explicitResourceName:
+                decorator.args.length > 3
+                  ? (decorator.args[3].jsValue as string)
+                  : undefined
             };
           case "createOrUpdate":
             return {
@@ -586,7 +604,10 @@ function parseResourceOperation(
                 decorator.args[1].value as Model,
                 decorator.definition?.name
               ),
-              explicitResourceName: undefined
+              explicitResourceName:
+                decorator.args.length > 3
+                  ? (decorator.args[3].jsValue as string)
+                  : undefined
             };
           case "update":
             return {
@@ -596,7 +617,10 @@ function parseResourceOperation(
                 decorator.args[1].value as Model,
                 decorator.definition?.name
               ),
-              explicitResourceName: undefined
+              explicitResourceName:
+                decorator.args.length > 3
+                  ? (decorator.args[3].jsValue as string)
+                  : undefined
             };
           case "delete":
             return {
@@ -606,7 +630,10 @@ function parseResourceOperation(
                 decorator.args[1].value as Model,
                 decorator.definition?.name
               ),
-              explicitResourceName: undefined
+              explicitResourceName:
+                decorator.args.length > 3
+                  ? (decorator.args[3].jsValue as string)
+                  : undefined
             };
           case "list":
             return {
@@ -616,7 +643,10 @@ function parseResourceOperation(
                 decorator.args[1].value as Model,
                 decorator.definition?.name
               ),
-              explicitResourceName: undefined
+              explicitResourceName:
+                decorator.args.length > 3
+                  ? (decorator.args[3].jsValue as string)
+                  : undefined
             };
           case "action":
             return {
@@ -626,7 +656,10 @@ function parseResourceOperation(
                 decorator.args[1].value as Model,
                 decorator.definition?.name
               ),
-              explicitResourceName: undefined
+              explicitResourceName:
+                decorator.args.length > 3
+                  ? (decorator.args[3].jsValue as string)
+                  : undefined
             };
         }
         break;
@@ -641,10 +674,10 @@ function parseResourceOperation(
                 decorator.args[0].value as Model,
                 decorator.definition?.name
               ),
-              // Extract the explicit resource name if available (4th parameter in LegacyOperations)
+              // Extract the explicit resource name if available (3rd parameter: Resource, kind, ResourceName)
               explicitResourceName:
-                decorator.args.length > 3
-                  ? (decorator.args[3].jsValue as string)
+                decorator.args.length > 2
+                  ? (decorator.args[2].jsValue as string)
                   : undefined
             };
           case "createOrUpdate":
@@ -656,8 +689,8 @@ function parseResourceOperation(
                 decorator.definition?.name
               ),
               explicitResourceName:
-                decorator.args.length > 3
-                  ? (decorator.args[3].jsValue as string)
+                decorator.args.length > 2
+                  ? (decorator.args[2].jsValue as string)
                   : undefined
             };
           case "update":
@@ -669,8 +702,8 @@ function parseResourceOperation(
                 decorator.definition?.name
               ),
               explicitResourceName:
-                decorator.args.length > 3
-                  ? (decorator.args[3].jsValue as string)
+                decorator.args.length > 2
+                  ? (decorator.args[2].jsValue as string)
                   : undefined
             };
           case "delete":
@@ -682,8 +715,8 @@ function parseResourceOperation(
                 decorator.definition?.name
               ),
               explicitResourceName:
-                decorator.args.length > 3
-                  ? (decorator.args[3].jsValue as string)
+                decorator.args.length > 2
+                  ? (decorator.args[2].jsValue as string)
                   : undefined
             };
           case "list":
@@ -695,8 +728,8 @@ function parseResourceOperation(
                 decorator.definition?.name
               ),
               explicitResourceName:
-                decorator.args.length > 3
-                  ? (decorator.args[3].jsValue as string)
+                decorator.args.length > 2
+                  ? (decorator.args[2].jsValue as string)
                   : undefined
             };
           case "action":
@@ -708,8 +741,8 @@ function parseResourceOperation(
                 decorator.definition?.name
               ),
               explicitResourceName:
-                decorator.args.length > 3
-                  ? (decorator.args[3].jsValue as string)
+                decorator.args.length > 2
+                  ? (decorator.args[2].jsValue as string)
                   : undefined
             };
         }
@@ -839,6 +872,7 @@ export function getAllClients(codeModel: CodeModel): InputClient[] {
 function getAllResourceModels(codeModel: CodeModel): InputModelType[] {
   const resourceModels: InputModelType[] = [];
   for (const model of codeModel.models) {
+    // Check for armResource decorators
     if (
       model.decorators?.some(
         (d) =>

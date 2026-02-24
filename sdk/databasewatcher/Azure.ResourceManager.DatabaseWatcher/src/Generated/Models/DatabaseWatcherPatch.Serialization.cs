@@ -19,6 +19,23 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
     /// <summary> The type used for update operations of the Watcher. </summary>
     public partial class DatabaseWatcherPatch : IJsonModel<DatabaseWatcherPatch>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DatabaseWatcherPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DatabaseWatcherPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDatabaseWatcherPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DatabaseWatcherPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DatabaseWatcherPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -177,23 +194,6 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         DatabaseWatcherPatch IPersistableModel<DatabaseWatcherPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DatabaseWatcherPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DatabaseWatcherPatch>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDatabaseWatcherPatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DatabaseWatcherPatch)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DatabaseWatcherPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

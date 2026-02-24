@@ -16,31 +16,26 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> Initializes a new instance of <see cref="TemperatureResolution"/>. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> The temperature Unit of measurement. </param>
-        internal TemperatureResolution(double value, TemperatureUnit unit)
+        internal TemperatureResolution(double value, TemperatureUnit unit) : base(ResolutionKind.TemperatureResolution)
         {
-            ResolutionKind = ResolutionKind.TemperatureResolution;
             Value = value;
             Unit = unit;
         }
 
         /// <summary> Initializes a new instance of <see cref="TemperatureResolution"/>. </summary>
         /// <param name="resolutionKind"> The entity resolution object kind. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> The temperature Unit of measurement. </param>
-        internal TemperatureResolution(ResolutionKind resolutionKind, IDictionary<string, BinaryData> serializedAdditionalRawData, double value, TemperatureUnit unit) : base(resolutionKind, serializedAdditionalRawData)
+        internal TemperatureResolution(ResolutionKind resolutionKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, double value, TemperatureUnit unit) : base(resolutionKind, additionalBinaryDataProperties)
         {
             Value = value;
             Unit = unit;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TemperatureResolution"/> for deserialization. </summary>
-        internal TemperatureResolution()
-        {
-        }
-
         /// <summary> The numeric value that the extracted text denotes. </summary>
         public double Value { get; }
+
         /// <summary> The temperature Unit of measurement. </summary>
         public TemperatureUnit Unit { get; }
     }

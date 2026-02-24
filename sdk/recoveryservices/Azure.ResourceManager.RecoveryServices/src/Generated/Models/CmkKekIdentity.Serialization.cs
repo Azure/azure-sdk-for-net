@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> The details of the identity used for CMK. </summary>
     public partial class CmkKekIdentity : IJsonModel<CmkKekIdentity>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CmkKekIdentity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CmkKekIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCmkKekIdentity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CmkKekIdentity)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CmkKekIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -137,23 +154,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         CmkKekIdentity IPersistableModel<CmkKekIdentity>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CmkKekIdentity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CmkKekIdentity>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeCmkKekIdentity(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CmkKekIdentity)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<CmkKekIdentity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

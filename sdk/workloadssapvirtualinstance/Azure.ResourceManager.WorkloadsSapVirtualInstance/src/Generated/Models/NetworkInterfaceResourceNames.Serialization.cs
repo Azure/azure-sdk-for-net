@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     /// <summary> The resource names object for network interface and related resources. </summary>
     public partial class NetworkInterfaceResourceNames : IJsonModel<NetworkInterfaceResourceNames>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NetworkInterfaceResourceNames PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkInterfaceResourceNames>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNetworkInterfaceResourceNames(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkInterfaceResourceNames)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkInterfaceResourceNames>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -117,23 +134,6 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         NetworkInterfaceResourceNames IPersistableModel<NetworkInterfaceResourceNames>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NetworkInterfaceResourceNames PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkInterfaceResourceNames>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeNetworkInterfaceResourceNames(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NetworkInterfaceResourceNames)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<NetworkInterfaceResourceNames>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

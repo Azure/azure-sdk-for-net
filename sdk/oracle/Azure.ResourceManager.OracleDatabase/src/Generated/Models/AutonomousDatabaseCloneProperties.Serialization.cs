@@ -22,6 +22,23 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AutonomousDatabaseBaseProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AutonomousDatabaseCloneProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAutonomousDatabaseCloneProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AutonomousDatabaseCloneProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AutonomousDatabaseCloneProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -1071,23 +1088,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AutonomousDatabaseCloneProperties IPersistableModel<AutonomousDatabaseCloneProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (AutonomousDatabaseCloneProperties)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AutonomousDatabaseBaseProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AutonomousDatabaseCloneProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAutonomousDatabaseCloneProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AutonomousDatabaseCloneProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AutonomousDatabaseCloneProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

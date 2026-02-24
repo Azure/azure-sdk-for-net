@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="supportedVersionsToUpgrade"> Supported servers versions to upgrade. </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerServerVersionCapability"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PostgreSqlFlexibleServerServerVersionCapability PostgreSqlFlexibleServerServerVersionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus , string reason, string name, IEnumerable<string> supportedVersionsToUpgrade)
+        public static PostgreSqlFlexibleServerServerVersionCapability PostgreSqlFlexibleServerServerVersionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, string name, IEnumerable<string> supportedVersionsToUpgrade)
             => PostgreSqlFlexibleServerServerVersionCapability(capabilityStatus, reason, name, supportedVersionsToUpgrade, default);
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerCapabilityProperties"/>. </summary>
@@ -244,9 +244,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 defaultSkuName: default,
                 supportedStorageEditions: supportedStorageEditions.ToList(),
                 supportedServerSkus: default)
-                {
-                    SupportedServerVersionsInternal = supportedServerVersions.ToList()
-                };
+            {
+                SupportedServerVersionsInternal = supportedServerVersions.ToList()
+            };
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerFastProvisioningEditionCapability"/>. </summary>

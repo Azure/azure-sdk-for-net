@@ -22,9 +22,9 @@ public partial class AzureOpenAISamples
 
         // Generate a single image from a text prompt
         string prompt = "A serene mountain landscape at sunset with a crystal-clear lake reflecting the sky";
-        
+
         GeneratedImage image = imageClient.GenerateImage(prompt);
-        
+
         Console.WriteLine($"Generated image URL: {image.ImageUri}");
         Console.WriteLine($"Revised prompt: {image.RevisedPrompt}");
         #endregion
@@ -50,7 +50,7 @@ public partial class AzureOpenAISamples
         };
 
         GeneratedImage image = imageClient.GenerateImage(prompt, options);
-        
+
         Console.WriteLine($"High-quality image generated: {image.ImageUri}");
         Console.WriteLine($"Revised prompt: {image.RevisedPrompt}");
         Console.WriteLine($"Size: {options.Size}");
@@ -78,12 +78,12 @@ public partial class AzureOpenAISamples
         GeneratedImage image1 = imageClient.GenerateImage(prompt, options);
         GeneratedImage image2 = imageClient.GenerateImage(prompt, options);
         GeneratedImage image3 = imageClient.GenerateImage(prompt, options);
-        
+
         Console.WriteLine($"Generated 3 image variations:");
         Console.WriteLine($"Image 1: {image1.ImageUri}");
         Console.WriteLine($"Image 2: {image2.ImageUri}");
         Console.WriteLine($"Image 3: {image3.ImageUri}");
-        
+
         // All images use the same base prompt
         Console.WriteLine($"Base prompt used: {prompt}");
         #endregion
@@ -108,12 +108,12 @@ public partial class AzureOpenAISamples
         };
 
         GeneratedImage image = imageClient.GenerateImage(prompt, options);
-        
+
         // Save bytes directly to file
         byte[] imageBytes = image.ImageBytes.ToArray();
         string filename = $"generated_headshot_{DateTime.Now:yyyyMMdd_HHmmss}.png";
         File.WriteAllBytes(filename, imageBytes);
-        
+
         Console.WriteLine($"Image saved locally as: {filename}");
         Console.WriteLine($"Image size: {imageBytes.Length} bytes");
         #endregion
@@ -137,7 +137,7 @@ public partial class AzureOpenAISamples
         string[] contexts = { "product", "lifestyle", "artistic" };
 
         Console.WriteLine("Generating marketing image set...");
-        
+
         for (int i = 0; i < prompts.Length; i++)
         {
             ImageGenerationOptions options = new()
@@ -149,17 +149,17 @@ public partial class AzureOpenAISamples
             };
 
             GeneratedImage image = imageClient.GenerateImage(prompts[i], options);
-            
+
             // Save each image with descriptive naming
             byte[] imageBytes = image.ImageBytes.ToArray();
             string filename = $"marketing_{contexts[i]}_{DateTime.Now:yyyyMMdd_HHmmss}.png";
             File.WriteAllBytes(filename, imageBytes);
-            
+
             Console.WriteLine($"Generated {contexts[i]} image: {filename}");
             Console.WriteLine($"  Revised prompt: {image.RevisedPrompt}");
             Console.WriteLine();
         }
-        
+
         Console.WriteLine("Marketing image set complete! Use these images for:");
         Console.WriteLine("- Product catalog (product image)");
         Console.WriteLine("- Website hero section (lifestyle image)");
@@ -176,7 +176,7 @@ public partial class AzureOpenAISamples
 
         #region Snippet:ImageGenerationBestPractices
         // Best practices for prompt engineering and image generation
-        
+
         // 1. Detailed and specific prompts yield better results
         string detailedPrompt = "A macro photograph of a dewdrop on a green leaf, " +
                                "shot with shallow depth of field, golden hour lighting, " +
@@ -191,10 +191,10 @@ public partial class AzureOpenAISamples
         };
 
         GeneratedImage professionalImage = imageClient.GenerateImage(detailedPrompt, qualityOptions);
-        
+
         // 3. For social media or web use, standard quality may suffice
         string socialPrompt = "A cheerful illustration of people enjoying coffee together, cartoon style";
-        
+
         ImageGenerationOptions webOptions = new()
         {
             Quality = GeneratedImageQuality.Standard, // Standard quality for web
@@ -203,15 +203,15 @@ public partial class AzureOpenAISamples
         };
 
         GeneratedImage socialImage = imageClient.GenerateImage(socialPrompt, webOptions);
-        
+
         Console.WriteLine("Professional image (HD quality):");
         Console.WriteLine($"  URL: {professionalImage.ImageUri}");
         Console.WriteLine($"  Revised: {professionalImage.RevisedPrompt}");
-        
+
         Console.WriteLine("\nSocial media image (Standard quality):");
         Console.WriteLine($"  URL: {socialImage.ImageUri}");
         Console.WriteLine($"  Revised: {socialImage.RevisedPrompt}");
-        
+
         Console.WriteLine("\nTips for better image generation:");
         Console.WriteLine("- Be specific about style, lighting, and composition");
         Console.WriteLine("- Include art/photography terminology for desired aesthetic");

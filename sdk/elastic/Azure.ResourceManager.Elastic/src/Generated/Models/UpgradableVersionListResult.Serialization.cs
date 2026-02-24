@@ -17,6 +17,30 @@ namespace Azure.ResourceManager.Elastic.Models
     /// <summary> Stack Versions that this version can upgrade to. </summary>
     public partial class UpgradableVersionListResult : IJsonModel<UpgradableVersionListResult>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual UpgradableVersionListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<UpgradableVersionListResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeUpgradableVersionListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(UpgradableVersionListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="UpgradableVersionListResult"/> from. </param>
+        internal static UpgradableVersionListResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeUpgradableVersionListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<UpgradableVersionListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -156,31 +180,7 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         UpgradableVersionListResult IPersistableModel<UpgradableVersionListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UpgradableVersionListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<UpgradableVersionListResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeUpgradableVersionListResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(UpgradableVersionListResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<UpgradableVersionListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="UpgradableVersionListResult"/> from. </param>
-        internal static UpgradableVersionListResult FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeUpgradableVersionListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

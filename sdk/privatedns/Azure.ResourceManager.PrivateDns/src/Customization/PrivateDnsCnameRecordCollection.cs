@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.PrivateDns
             TryGetApiVersion(PrivateDnsCnameRecordResource.ResourceType, out string cnameRecordInfoRecordSetsApiVersion);
             _cnameRecordInfoRecordSetsRestClient = new PrivateDnsCnameRecordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cnameRecordInfoRecordSetsApiVersion);
 #if DEBUG
-			ValidateResourceId(Id);
+            ValidateResourceId(Id);
 #endif
         }
 
