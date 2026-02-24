@@ -172,7 +172,7 @@ If a type is removed from the management library:
 If a property type changes:
 1. In the specification file, use `CustomizeProperty` to rename the new property:
    ```csharp
-   CustomizeProperty("ResourceName", "PropertyName", p => p.PropertyName = "NewPropertyName");
+   CustomizeProperty("ResourceName", "PropertyName", p => p.Name = "NewPropertyName");
    ```
 2. Use `CustomizeResource` with `GeneratePartialPropertyDefinition = true`:
    ```csharp
@@ -188,24 +188,29 @@ If enum member ordering changes (affecting implicit numeric values):
   ```
 
 ### DataMember Attribute Removed
-If `[DataMember]` attributes are removed from enums:
-- Create `ApiCompatBaseline.txt` in the package's `src/` directory to suppress the compatibility errors:
-  ```
-  CP0002:M:Azure.Provisioning.{Service}.{EnumType}.{Member}.get->System.Runtime.Serialization.DataMemberAttribute
-  ```
+If `[DataMember]` attributes are removed from enums, ApiCompat will report `CP0002` errors.
+
+To resolve these errors:
+- Prefer restoring `[DataMember]` attributes on the affected enum members to preserve backward compatibility.
+- If the removal is an intentional breaking change, follow the normal breaking-change review and versioning process for the package.
+
+> Note: The specific suppression mechanism may vary. Check if the package supports `ApiCompatBaseline.txt` or similar baseline files, or consult with the team for the appropriate approach.
 
 ## Step 6: Fix Spell Check Issues
 
-If CI fails with "Unknown word" errors, add the words to `sdk/provisioning/cspell.yaml`:
+If CI fails with "Unknown word" errors, add the words to `.vscode/cspell.json` in the `words` array:
 
-```yaml
-  - filename: '**/sdk/provisioning/Azure.Provisioning.{Service}/**/*.cs'
-    words:
-      - newword1
-      - newword2
+```json
+{
+  "words": [
+    "existingword",
+    "newword1",
+    "newword2"
+  ]
+}
 ```
 
-**Important:** Use `sdk/provisioning/cspell.yaml`, NOT `.vscode/cspell.json`.
+Alternatively, if there's a service-specific override in `sdk/provisioning/cspell.yaml`, you can add words there for the specific package.
 
 ## Step 7: Export API and Update Snippets
 
@@ -226,7 +231,6 @@ This runs:
 - Code generation verification
 - API export
 - Snippet updates
-- Spell check
 - Installation instruction validation
 
 All checks must pass with 0 errors.
@@ -285,8 +289,7 @@ The requirement was to add NetworkSecurityPerimeter support. The resources alrea
 | `sdk/provisioning/Generator/src/Specifications/{Service}Specification.cs` | Generator customizations and resource whitelist |
 | `sdk/provisioning/Generator/src/Model/Specification.Customize.cs` | Customization API (`OrderEnum`, `CustomizeResource`, etc.) |
 | `sdk/provisioning/Azure.Provisioning.{Service}/src/BackwardCompatible/` | Backward-compatible customizations |
-| `sdk/provisioning/Azure.Provisioning.{Service}/src/ApiCompatBaseline.txt` | API compatibility suppressions |
-| `sdk/provisioning/cspell.yaml` | Spell check configuration |
+| `.vscode/cspell.json` | Spell check configuration (CI uses this) |
 
 ## Troubleshooting
 
@@ -300,7 +303,7 @@ The requirement was to add NetworkSecurityPerimeter support. The resources alrea
 - Try running `dotnet restore` before the generator
 
 ### API compatibility errors
-- Use `ApiCompatBaseline.txt` to suppress expected breaking changes
+- Prefer restoring removed attributes to maintain backward compatibility
 - Or create backward-compatible stubs/properties
 
 ### Enum values in wrong order
