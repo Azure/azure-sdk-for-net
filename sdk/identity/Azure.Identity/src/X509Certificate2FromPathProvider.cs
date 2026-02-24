@@ -37,8 +37,8 @@ namespace Azure.Identity
                 return new ValueTask<X509Certificate2>(Certificate);
             }
 
-            // not compiled or cached because this should be a rare operation
-            Regex certStorePathRegex = new(@"^cert:[\\/]+(\w+)[\\/]+(\w+)[\\/]+(\w+)$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+            // not compiled or cached because this should be a rare operation, and the source generator is not supported on all targets
+            Regex certStorePathRegex = new(@"^cert:[\\/]{1,2}(\w+)[\\/](\w+)[\\/](\w+)$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
 
             // if path is in format cert:/StoreLocation/StoreName/Thumbprint, attempt to load from cert store.  Otherwise, treat as file path.
             // windows style paths are supported: cert:\CurrentUser\My\THUMBPRINT
