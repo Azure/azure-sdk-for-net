@@ -127,6 +127,11 @@ namespace Azure.Identity
                 AzurePipelinesSystemAccessToken = azurePipelinesSystemAccessToken;
             }
 
+            if (section[nameof(AzureCloud)] is string azureCloud)
+            {
+                AzureCloud = azureCloud;
+            }
+
             if (bool.TryParse(section[nameof(DisableAutomaticAuthentication)], out bool disableAutomaticAuthentication))
             {
                 DisableAutomaticAuthentication = disableAutomaticAuthentication;
@@ -205,6 +210,7 @@ namespace Azure.Identity
             "InteractiveBrowser" => Constants.InteractiveBrowserCredential,
             "Broker" => Constants.BrokerCredential,
             "AzurePipelines" => Constants.AzurePipelinesCredential,
+            "ManagedIdentityAsFederatedIdentity" => Constants.ManagedIdentityAsFederatedIdentityCredential,
             "ApiKey" => Constants.ApiKeyCredential,
             // Accept already-converted values (e.g. from Clone)
             Constants.VisualStudioCredential or
@@ -218,6 +224,7 @@ namespace Azure.Identity
             Constants.InteractiveBrowserCredential or
             Constants.BrokerCredential or
             Constants.AzurePipelinesCredential or
+            Constants.ManagedIdentityAsFederatedIdentityCredential or
             Constants.ApiKeyCredential => value,
             _ => throw new InvalidOperationException($"Unsupported CredentialSource found in configuration: {value}."),
         };
@@ -517,6 +524,11 @@ namespace Azure.Identity
         /// </summary>
         internal string AzurePipelinesSystemAccessToken { get; set; }
 
+        /// <summary>
+        /// Specifies the Azure cloud environment for Managed Identity as FIC. Valid values are "public", "usgov", "china".
+        /// </summary>
+        internal string AzureCloud { get; set; }
+
         internal bool DisableAutomaticAuthentication { get; set; }
 
         internal string LoginHint { get; set; }
@@ -581,6 +593,7 @@ namespace Azure.Identity
                 dacClone.ClientId = ClientId;
                 dacClone.AzurePipelinesServiceConnectionId = AzurePipelinesServiceConnectionId;
                 dacClone.AzurePipelinesSystemAccessToken = AzurePipelinesSystemAccessToken;
+                dacClone.AzureCloud = AzureCloud;
                 dacClone.DisableAutomaticAuthentication = DisableAutomaticAuthentication;
                 dacClone.LoginHint = LoginHint;
                 if (BrowserCustomization != null)
