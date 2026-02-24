@@ -29,7 +29,7 @@ public static class ResponseConverterExtensions
     /// <param name="request">The create response request.</param>
     /// <param name="context">The agent run context.</param>
     /// <returns>A response contract object.</returns>
-    public static Contracts.Generated.Responses.Response ToResponse(this AgentRunResponse agentRunResponse,
+    public static Contracts.Generated.Responses.Response ToResponse(this AgentResponse agentRunResponse,
         CreateResponseRequest request,
         AgentRunContext context)
     {

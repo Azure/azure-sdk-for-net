@@ -31,7 +31,7 @@ internal sealed class FoundryToolAgent : DelegatingAIAgent, IAsyncDisposable
         return await InnerAgent.RunAsync(messages, thread, runOptions, cancellationToken).ConfigureAwait(false);
     }
 
-    public override async IAsyncEnumerable<AgentRunResponseUpdate> RunStreamingAsync(
+    public override async IAsyncEnumerable<AgentResponseUpdate> RunStreamingAsync(
         IEnumerable<ChatMessage> messages,
         AgentThread? thread = null,
         AgentRunOptions? options = null,
