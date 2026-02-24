@@ -117,7 +117,7 @@ namespace Azure.AI.ContentUnderstanding
             }
             writer.WritePropertyName("contents"u8);
             writer.WriteStartArray();
-            foreach (MediaContent item in Contents)
+            foreach (AnalysisContent item in Contents)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -169,7 +169,7 @@ namespace Azure.AI.ContentUnderstanding
             DateTimeOffset? createdAt = default;
             IList<ResponseError> warnings = default;
             string stringEncoding = default;
-            IList<MediaContent> contents = default;
+            IList<AnalysisContent> contents = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -220,10 +220,10 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("contents"u8))
                 {
-                    List<MediaContent> array = new List<MediaContent>();
+                    List<AnalysisContent> array = new List<AnalysisContent>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MediaContent.DeserializeMediaContent(item, options));
+                        array.Add(AnalysisContent.DeserializeAnalysisContent(item, options));
                     }
                     contents = array;
                     continue;

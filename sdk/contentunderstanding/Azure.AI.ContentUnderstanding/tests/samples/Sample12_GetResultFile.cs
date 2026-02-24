@@ -101,7 +101,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // 3. Call GetResultFileAsync with the operation ID and path
 
             // For video analysis, keyframes would be found in AudioVisualContent.KeyFrameTimes
-            // Cast MediaContent to AudioVisualContent to access video-specific properties
+            // Cast AnalysisContent to AudioVisualContent to access video-specific properties
             AudioVisualContent videoContent = (AudioVisualContent)result.Contents!.First();
 #if SNIPPET
             // Print keyframe information
