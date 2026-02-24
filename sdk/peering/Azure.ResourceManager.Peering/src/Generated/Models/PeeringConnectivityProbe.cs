@@ -17,18 +17,18 @@ namespace Azure.ResourceManager.Peering.Models
     /// IP address given by the customer. This data will be emitted such that the peer can view these metrics in the Azure portal in the
     /// Connectivity probe blade of their peering.
     /// </summary>
-    public partial class ConnectivityProbe
+    public partial class PeeringConnectivityProbe
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConnectivityProbe"/>. </summary>
-        public ConnectivityProbe()
+        /// <summary> Initializes a new instance of <see cref="PeeringConnectivityProbe"/>. </summary>
+        public PeeringConnectivityProbe()
         {
             PrefixesToAccesslist = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectivityProbe"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringConnectivityProbe"/>. </summary>
         /// <param name="endpoint"> The endpoint IP address where traffic will be sent to from Azure for the connectivity probe. </param>
         /// <param name="azureRegion"> The Azure region where traffic will originate from for the connectivity probe. </param>
         /// <param name="protocol"> The protocol of the traffic that will be sent for the connectivity probe. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// network the connectivity probe traffic can reach their endpoint for the connectivity probe.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectivityProbe(string endpoint, string azureRegion, Protocol? protocol, IReadOnlyList<string> prefixesToAccesslist, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PeeringConnectivityProbe(string endpoint, string azureRegion, PeeringProtocol? protocol, IReadOnlyList<string> prefixesToAccesslist, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Endpoint = endpoint;
             AzureRegion = azureRegion;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Peering.Models
         public string AzureRegion { get; set; }
 
         /// <summary> The protocol of the traffic that will be sent for the connectivity probe. </summary>
-        public Protocol? Protocol { get; set; }
+        public PeeringProtocol? Protocol { get; set; }
 
         /// <summary>
         /// Set to contain the prefixes that agents in Azure will send traffic from. For peers to allow into their

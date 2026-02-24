@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <summary> Initializes a new instance of <see cref="PeeringProperties"/>. </summary>
         public PeeringProperties()
         {
-            ConnectivityProbes = new ChangeTrackingList<ConnectivityProbe>();
+            ConnectivityProbes = new ChangeTrackingList<PeeringConnectivityProbe>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PeeringProperties"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="peeringLocation"> The location of the peering. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PeeringProperties(DirectPeeringProperties direct, ExchangePeeringProperties exchange, IList<ConnectivityProbe> connectivityProbes, string peeringLocation, PeeringProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PeeringProperties(DirectPeeringProperties direct, ExchangePeeringProperties exchange, IList<PeeringConnectivityProbe> connectivityProbes, string peeringLocation, PeeringProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Direct = direct;
             Exchange = exchange;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Peering.Models
         public ExchangePeeringProperties Exchange { get; set; }
 
         /// <summary> The connectivity probes associated with the peering. </summary>
-        public IList<ConnectivityProbe> ConnectivityProbes { get; } = new ChangeTrackingList<ConnectivityProbe>();
+        public IList<PeeringConnectivityProbe> ConnectivityProbes { get; } = new ChangeTrackingList<PeeringConnectivityProbe>();
 
         /// <summary> The location of the peering. </summary>
         public string PeeringLocation { get; set; }

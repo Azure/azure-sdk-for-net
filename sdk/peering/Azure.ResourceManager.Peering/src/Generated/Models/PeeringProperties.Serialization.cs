@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 writer.WritePropertyName("connectivityProbes"u8);
                 writer.WriteStartArray();
-                foreach (ConnectivityProbe item in ConnectivityProbes)
+                foreach (PeeringConnectivityProbe item in ConnectivityProbes)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Peering.Models
             }
             DirectPeeringProperties direct = default;
             ExchangePeeringProperties exchange = default;
-            IList<ConnectivityProbe> connectivityProbes = default;
+            IList<PeeringConnectivityProbe> connectivityProbes = default;
             string peeringLocation = default;
             PeeringProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -138,10 +138,10 @@ namespace Azure.ResourceManager.Peering.Models
                     {
                         continue;
                     }
-                    List<ConnectivityProbe> array = new List<ConnectivityProbe>();
+                    List<PeeringConnectivityProbe> array = new List<PeeringConnectivityProbe>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ConnectivityProbe.DeserializeConnectivityProbe(item, options));
+                        array.Add(PeeringConnectivityProbe.DeserializePeeringConnectivityProbe(item, options));
                     }
                     connectivityProbes = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Peering.Models
             return new PeeringProperties(
                 direct,
                 exchange,
-                connectivityProbes ?? new ChangeTrackingList<ConnectivityProbe>(),
+                connectivityProbes ?? new ChangeTrackingList<PeeringConnectivityProbe>(),
                 peeringLocation,
                 provisioningState,
                 additionalBinaryDataProperties);

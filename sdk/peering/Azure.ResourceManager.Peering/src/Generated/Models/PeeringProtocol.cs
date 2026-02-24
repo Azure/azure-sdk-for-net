@@ -12,17 +12,17 @@ using Azure.ResourceManager.Peering;
 namespace Azure.ResourceManager.Peering.Models
 {
     /// <summary> The protocol of the traffic that will be sent for the connectivity probe. </summary>
-    public readonly partial struct Protocol : IEquatable<Protocol>
+    public readonly partial struct PeeringProtocol : IEquatable<PeeringProtocol>
     {
         private readonly string _value;
         private const string NoneValue = "None";
         private const string ICMPValue = "ICMP";
         private const string TCPValue = "TCP";
 
-        /// <summary> Initializes a new instance of <see cref="Protocol"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public Protocol(string value)
+        public PeeringProtocol(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -30,38 +30,38 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> Gets the None. </summary>
-        public static Protocol None { get; } = new Protocol(NoneValue);
+        public static PeeringProtocol None { get; } = new PeeringProtocol(NoneValue);
 
         /// <summary> Gets the ICMP. </summary>
-        public static Protocol ICMP { get; } = new Protocol(ICMPValue);
+        public static PeeringProtocol ICMP { get; } = new PeeringProtocol(ICMPValue);
 
         /// <summary> Gets the TCP. </summary>
-        public static Protocol TCP { get; } = new Protocol(TCPValue);
+        public static PeeringProtocol TCP { get; } = new PeeringProtocol(TCPValue);
 
-        /// <summary> Determines if two <see cref="Protocol"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="PeeringProtocol"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(Protocol left, Protocol right) => left.Equals(right);
+        public static bool operator ==(PeeringProtocol left, PeeringProtocol right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="Protocol"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="PeeringProtocol"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(Protocol left, Protocol right) => !left.Equals(right);
+        public static bool operator !=(PeeringProtocol left, PeeringProtocol right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="Protocol"/>. </summary>
+        /// <summary> Converts a string to a <see cref="PeeringProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Protocol(string value) => new Protocol(value);
+        public static implicit operator PeeringProtocol(string value) => new PeeringProtocol(value);
 
-        /// <summary> Converts a string to a <see cref="Protocol"/>. </summary>
+        /// <summary> Converts a string to a <see cref="PeeringProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Protocol?(string value) => value == null ? null : new Protocol(value);
+        public static implicit operator PeeringProtocol?(string value) => value == null ? null : new PeeringProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is Protocol other && Equals(other);
+        public override bool Equals(object obj) => obj is PeeringProtocol other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(Protocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(PeeringProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

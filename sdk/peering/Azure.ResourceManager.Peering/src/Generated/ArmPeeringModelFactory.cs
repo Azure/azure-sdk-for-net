@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="sku"> The SKU that defines the tier and kind of the peering. </param>
         /// <param name="kind"> The kind of the peering. </param>
         /// <returns> A new <see cref="Peering.PeeringData"/> instance for mocking. </returns>
-        public static PeeringData PeeringData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DirectPeeringProperties direct = default, ExchangePeeringProperties exchange = default, IEnumerable<ConnectivityProbe> connectivityProbes = default, string peeringLocation = default, PeeringProvisioningState? provisioningState = default, PeeringSku sku = default, PeeringKind kind = default)
+        public static PeeringData PeeringData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DirectPeeringProperties direct = default, ExchangePeeringProperties exchange = default, IEnumerable<PeeringConnectivityProbe> connectivityProbes = default, string peeringLocation = default, PeeringProvisioningState? provisioningState = default, PeeringSku sku = default, PeeringKind kind = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Peering.Models
                 direct is null && exchange is null && connectivityProbes is null && peeringLocation is null && provisioningState is null ? default : new PeeringProperties(
                     direct,
                     exchange,
-                    (connectivityProbes ?? new ChangeTrackingList<ConnectivityProbe>()).ToList(),
+                    (connectivityProbes ?? new ChangeTrackingList<PeeringConnectivityProbe>()).ToList(),
                     peeringLocation,
                     provisioningState,
                     null),
@@ -198,12 +198,12 @@ namespace Azure.ResourceManager.Peering.Models
         /// Set to contain the prefixes that agents in Azure will send traffic from. For peers to allow into their
         /// network the connectivity probe traffic can reach their endpoint for the connectivity probe.
         /// </param>
-        /// <returns> A new <see cref="Models.ConnectivityProbe"/> instance for mocking. </returns>
-        public static ConnectivityProbe ConnectivityProbe(string endpoint = default, string azureRegion = default, Protocol? protocol = default, IEnumerable<string> prefixesToAccesslist = default)
+        /// <returns> A new <see cref="Models.PeeringConnectivityProbe"/> instance for mocking. </returns>
+        public static PeeringConnectivityProbe PeeringConnectivityProbe(string endpoint = default, string azureRegion = default, PeeringProtocol? protocol = default, IEnumerable<string> prefixesToAccesslist = default)
         {
             prefixesToAccesslist ??= new ChangeTrackingList<string>();
 
-            return new ConnectivityProbe(endpoint, azureRegion, protocol, prefixesToAccesslist.ToList(), additionalBinaryDataProperties: null);
+            return new PeeringConnectivityProbe(endpoint, azureRegion, protocol, prefixesToAccesslist.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The SKU that defines the tier and kind of the peering. </summary>

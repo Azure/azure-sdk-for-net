@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary> The connectivity probes associated with the peering. </summary>
-        public IList<ConnectivityProbe> ConnectivityProbes
+        public IList<PeeringConnectivityProbe> ConnectivityProbes
         {
             get
             {
