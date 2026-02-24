@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>This is the Azure.ResourceManager.CommonProperties client library for developing .NET applications with rich experience.</Description>
+    <AssemblyTitle>SDK Code Generation Azure.ResourceManager.CommonProperties</AssemblyTitle>
+    <Version>1.0.0-beta.1</Version>
+    <PackageTags>Azure.ResourceManager.CommonProperties</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+</Project>
