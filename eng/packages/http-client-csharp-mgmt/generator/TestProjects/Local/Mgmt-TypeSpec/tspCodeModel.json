@@ -511,7 +511,7 @@
     {
       "$id": "41",
       "kind": "enum",
-      "name": "ManagedServiceIdentityTypeV4",
+      "name": "ManagedServiceIdentityType",
       "crossLanguageDefinitionId": "Azure.ResourceManager.Legacy.ManagedServiceIdentityType",
       "valueType": {
         "$id": "42",
@@ -15044,7 +15044,7 @@
           "type": {
             "$id": "1186",
             "kind": "model",
-            "name": "ExtendedLocationOptional",
+            "name": "ExtendedLocationOptionalModel",
             "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
             "crossLanguageDefinitionId": "Azure.ResourceManager.Legacy.ExtendedLocationOptional",
             "usage": "Input,Output,Json",
@@ -19462,7 +19462,7 @@
                       },
                       "value": "2024-05-01"
                     },
-                    "optional": true,
+                    "optional": false,
                     "scope": "Method",
                     "crossLanguageDefinitionId": "MgmtTypeSpec.previewActions.apiVersion",
                     "readOnly": false,

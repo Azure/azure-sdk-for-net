@@ -49,10 +49,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/MgmtTypeSpec/selfHelps/", false);
             uri.AppendPath(selfHelpName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

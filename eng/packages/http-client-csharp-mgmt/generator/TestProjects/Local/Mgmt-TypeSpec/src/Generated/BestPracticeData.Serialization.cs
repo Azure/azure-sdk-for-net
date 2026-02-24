@@ -141,7 +141,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             BestPracticeProperties properties = default;
-            ExtendedLocationOptional extendedLocation = default;
+            ExtendedLocationOptionalModel extendedLocation = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -191,7 +191,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         continue;
                     }
-                    extendedLocation = ExtendedLocationOptional.DeserializeExtendedLocationOptional(prop.Value, options);
+                    extendedLocation = ExtendedLocationOptionalModel.DeserializeExtendedLocationOptionalModel(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

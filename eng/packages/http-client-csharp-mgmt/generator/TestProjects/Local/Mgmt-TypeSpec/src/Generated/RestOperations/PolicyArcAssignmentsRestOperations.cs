@@ -53,10 +53,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath(machineName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/policyAssignments/", false);
             uri.AppendPath(policyAssignmentName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,10 +74,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath(machineName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/policyAssignments/", false);
             uri.AppendPath(policyAssignmentName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -103,10 +97,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath(machineName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/policyAssignments/", false);
             uri.AppendPath(policyAssignmentName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -125,10 +116,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath("/providers/Microsoft.HybridCompute/machines/", false);
             uri.AppendPath(machineName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/policyAssignments", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -148,10 +136,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
