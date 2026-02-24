@@ -347,7 +347,7 @@
     <PackageReference Update="Microsoft.Extensions.Http" Version="10.0.1" />
     <PackageReference Update="Microsoft.Extensions.Logging.Configuration" Version="10.0.1" />
     <PackageReference Update="System.Formats.Asn1" Version="10.0.1" />
-    <PackageReference Update="System.IO.Pipelines" Version="10.0.1" />
+    <PackageReference Update="System.IO.Pipelines" Version="$(SystemIOPipelinesVersion)" />
     <PackageReference Update="System.Security.Cryptography.Pkcs" Version="10.0.1" />
     <PackageReference Update="System.ServiceModel.Primitives" Version="6.2.0" />
   </ItemGroup>
