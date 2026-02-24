@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The properties that define connectivity to the Microsoft Cloud Edge. </summary>
     internal partial class PeeringProperties : IJsonModel<PeeringProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PeeringProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PeeringProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePeeringProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PeeringProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PeeringProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -193,23 +210,6 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         PeeringProperties IPersistableModel<PeeringProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PeeringProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PeeringProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePeeringProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PeeringProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PeeringProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

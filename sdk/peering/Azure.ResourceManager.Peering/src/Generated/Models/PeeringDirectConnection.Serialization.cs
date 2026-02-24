@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The properties that define a direct connection. </summary>
     public partial class PeeringDirectConnection : IJsonModel<PeeringDirectConnection>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PeeringDirectConnection PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PeeringDirectConnection>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePeeringDirectConnection(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PeeringDirectConnection)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PeeringDirectConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -255,23 +272,6 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         PeeringDirectConnection IPersistableModel<PeeringDirectConnection>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PeeringDirectConnection PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PeeringDirectConnection>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePeeringDirectConnection(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PeeringDirectConnection)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PeeringDirectConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

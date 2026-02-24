@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The properties that define a registered prefix. </summary>
     internal partial class PeeringRegisteredPrefixProperties : IJsonModel<PeeringRegisteredPrefixProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PeeringRegisteredPrefixProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PeeringRegisteredPrefixProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePeeringRegisteredPrefixProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PeeringRegisteredPrefixProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PeeringRegisteredPrefixProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -175,23 +192,6 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         PeeringRegisteredPrefixProperties IPersistableModel<PeeringRegisteredPrefixProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PeeringRegisteredPrefixProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PeeringRegisteredPrefixProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePeeringRegisteredPrefixProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PeeringRegisteredPrefixProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PeeringRegisteredPrefixProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

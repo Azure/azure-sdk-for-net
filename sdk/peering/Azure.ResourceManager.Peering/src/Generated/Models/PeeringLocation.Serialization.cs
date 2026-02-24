@@ -19,6 +19,23 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> Peering location is where connectivity could be established to the Microsoft Cloud Edge. </summary>
     public partial class PeeringLocation : ResourceData, IJsonModel<PeeringLocation>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PeeringLocation>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePeeringLocation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PeeringLocation)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PeeringLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -168,23 +185,6 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         PeeringLocation IPersistableModel<PeeringLocation>.Create(BinaryData data, ModelReaderWriterOptions options) => (PeeringLocation)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PeeringLocation>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePeeringLocation(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PeeringLocation)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PeeringLocation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
