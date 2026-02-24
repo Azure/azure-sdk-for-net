@@ -114,15 +114,7 @@ If CI fails with "Unknown word" errors, add the words to `sdk/provisioning/cspel
 
 **Important:** Use `sdk/provisioning/cspell.yaml`, NOT `.vscode/cspell.json`.
 
-## Step 5: Fix README Issues
-
-If CI fails with "No beta installation instructions found":
-- Ensure the README has `--prerelease` flag if the package has a beta changelog entry:
-  ```
-  dotnet add package Azure.Provisioning.{Service} --prerelease
-  ```
-
-## Step 6: Run Pre-Commit Checks
+## Step 5: Run Pre-Commit Checks
 
 Before committing, run:
 
@@ -139,14 +131,14 @@ This runs:
 
 All checks must pass with 0 errors.
 
-## Step 7: Export API and Update Snippets
+## Step 6: Export API and Update Snippets
 
 ```shell
 pwsh eng\scripts\Export-API.ps1 provisioning
 pwsh eng\scripts\Update-Snippets.ps1 provisioning
 ```
 
-## Step 8: Commit and Push
+## Step 7: Commit and Push
 
 Stage all changes and commit with a descriptive message:
 
