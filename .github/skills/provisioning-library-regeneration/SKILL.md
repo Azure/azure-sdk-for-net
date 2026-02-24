@@ -199,19 +199,16 @@ CP0002:M:Azure.Provisioning.{Service}.{EnumType}.{Member}.get->System.Runtime.Se
 
 ## Step 6: Fix Spell Check Issues
 
-If CI fails with "Unknown word" errors, add the words to `.vscode/cspell.json` in the `words` array:
+If CI fails with "Unknown word" errors, add the words to `sdk/provisioning/cspell.yaml`:
 
-```json
-{
-  "words": [
-    "existingword",
-    "newword1",
-    "newword2"
-  ]
-}
+```yaml
+  - filename: '**/sdk/provisioning/Azure.Provisioning.{Service}/**/*.cs'
+    words:
+      - newword1
+      - newword2
 ```
 
-Alternatively, if there's a service-specific override in `sdk/provisioning/cspell.yaml`, you can add words there for the specific package.
+**Important:** Use `sdk/provisioning/cspell.yaml`, NOT `.vscode/cspell.json`.
 
 ## Step 7: Export API and Update Snippets
 
@@ -291,7 +288,7 @@ The requirement was to add NetworkSecurityPerimeter support. The resources alrea
 | `sdk/provisioning/Generator/src/Model/Specification.Customize.cs` | Customization API (`OrderEnum`, `CustomizeResource`, etc.) |
 | `sdk/provisioning/Azure.Provisioning.{Service}/src/BackwardCompatible/` | Backward-compatible customizations |
 | `sdk/provisioning/Azure.Provisioning.{Service}/src/ApiCompatBaseline.txt` | API compatibility suppressions (provisioning only) |
-| `.vscode/cspell.json` | Spell check configuration (CI uses this) |
+| `sdk/provisioning/cspell.yaml` | Spell check configuration for provisioning |
 
 ## Troubleshooting
 
