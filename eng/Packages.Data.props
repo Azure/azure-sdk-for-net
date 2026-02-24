@@ -14,10 +14,17 @@
     <MicrosoftExtensionsAzureVersion>1.13.1</MicrosoftExtensionsAzureVersion>
     <MicrosoftExtensionsConfigurationAbstractionsVersion>10.0.3</MicrosoftExtensionsConfigurationAbstractionsVersion>
     <MicrosoftExtensionsConfigurationBinderVersion>10.0.3</MicrosoftExtensionsConfigurationBinderVersion>
+    <MicrosoftExtensionsConfigurationEnvironmentVariablesVersion>10.0.3</MicrosoftExtensionsConfigurationEnvironmentVariablesVersion>
+    <MicrosoftExtensionsConfigurationJsonVersion>10.0.3</MicrosoftExtensionsConfigurationJsonVersion>
     <MicrosoftExtensionsConfigurationVersion>10.0.3</MicrosoftExtensionsConfigurationVersion>
     <MicrosoftExtensionsDependencyInjectionAbstractionsVersion>10.0.3</MicrosoftExtensionsDependencyInjectionAbstractionsVersion>
+    <MicrosoftExtensionsDependencyInjectionVersion>10.0.3</MicrosoftExtensionsDependencyInjectionVersion>
     <MicrosoftExtensionsHostingVersion>10.0.3</MicrosoftExtensionsHostingVersion>
+    <MicrosoftExtensionsHttpVersion>10.0.3</MicrosoftExtensionsHttpVersion>
+    <MicrosoftExtensionsLoggingConfigurationVersion>10.0.3</MicrosoftExtensionsLoggingConfigurationVersion>
+    <MicrosoftExtensionsLoggingConsoleVersion>10.0.3</MicrosoftExtensionsLoggingConsoleVersion>
     <MicrosoftExtensionsLoggingVersion>10.0.3</MicrosoftExtensionsLoggingVersion>
+    <MicrosoftExtensionsPrimitivesVersion>10.0.3</MicrosoftExtensionsPrimitivesVersion>
     <SystemIOPipelinesVersion>10.0.3</SystemIOPipelinesVersion>
     <MicrosoftSpatialVersion>7.5.3</MicrosoftSpatialVersion>
     <NewtonsoftJsonVersion>13.0.4</NewtonsoftJsonVersion>
@@ -471,16 +478,16 @@
     <PackageReference Update="Microsoft.Extensions.Configuration" Version="$(MicrosoftExtensionsConfigurationVersion)" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="$(MicrosoftExtensionsConfigurationAbstractionsVersion)" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Binder" Version="$(MicrosoftExtensionsConfigurationBinderVersion)" />
-    <PackageReference Update="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="10.0.2" />
-    <PackageReference Update="Microsoft.Extensions.Configuration.Json" Version="10.0.2" />
-    <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="10.0.2" />
+    <PackageReference Update="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="$(MicrosoftExtensionsConfigurationEnvironmentVariablesVersion)" />
+    <PackageReference Update="Microsoft.Extensions.Configuration.Json" Version="$(MicrosoftExtensionsConfigurationJsonVersion)" />
+    <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="$(MicrosoftExtensionsDependencyInjectionVersion)" />
     <PackageReference Update="Microsoft.Extensions.Hosting" Version="$(MicrosoftExtensionsHostingVersion)" />
-    <PackageReference Update="Microsoft.Extensions.Http" Version="10.0.1" />
+    <PackageReference Update="Microsoft.Extensions.Http" Version="$(MicrosoftExtensionsHttpVersion)" />
     <PackageReference Update="Microsoft.Extensions.Logging" Version="$(MicrosoftExtensionsLoggingVersion)" />
-    <PackageReference Update="Microsoft.Extensions.Logging.Configuration" Version="10.0.2" />
-    <PackageReference Update="Microsoft.Extensions.Logging.Console" Version="10.0.2"/>
+    <PackageReference Update="Microsoft.Extensions.Logging.Configuration" Version="$(MicrosoftExtensionsLoggingConfigurationVersion)" />
+    <PackageReference Update="Microsoft.Extensions.Logging.Console" Version="$(MicrosoftExtensionsLoggingConsoleVersion)" />
     <PackageReference Update="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
-    <PackageReference Update="Microsoft.Extensions.Primitives" Version="10.0.2"/>
+    <PackageReference Update="Microsoft.Extensions.Primitives" Version="$(MicrosoftExtensionsPrimitivesVersion)"/>
     <PackageReference Update="Microsoft.Graph" Version="5.100.0" />
     <PackageReference Update="Microsoft.Spatial" Version="$(MicrosoftSpatialVersion)" />
     <PackageReference Update="Mono.Posix" Version="7.0.0-alpha8.21302.6" />
