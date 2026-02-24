@@ -34,6 +34,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> Specifies the gallery applications that should be made available. </summary>
         [WirePath("galleryApplications")]
-        public IList<string> GalleryApplications { get; } = new ChangeTrackingList<string>();
+        public IList<string> GalleryApplications { get; }
     }
 }

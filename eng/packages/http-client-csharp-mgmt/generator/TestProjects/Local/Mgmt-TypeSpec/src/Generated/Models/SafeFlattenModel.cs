@@ -34,6 +34,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> Gets the FlattenedProperty. </summary>
         [WirePath("flattenedProperty")]
-        public IList<string> FlattenedProperty { get; } = new ChangeTrackingList<string>();
+        public IList<string> FlattenedProperty { get; }
     }
 }

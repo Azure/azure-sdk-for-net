@@ -34,6 +34,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> Gets the HistoricalData. </summary>
         [WirePath("historicalData")]
-        public IReadOnlyList<long> HistoricalData { get; } = new ChangeTrackingList<long>();
+        public IReadOnlyList<long> HistoricalData { get; }
     }
 }
