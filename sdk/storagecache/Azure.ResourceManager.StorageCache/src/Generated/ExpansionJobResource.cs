@@ -17,53 +17,53 @@ using Azure.ResourceManager.StorageCache.Models;
 namespace Azure.ResourceManager.StorageCache
 {
     /// <summary>
-    /// A Class representing an AutoExportJob along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AutoExportJobResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetAutoExportJobResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AmlFileSystemResource"/> using the GetAutoExportJob method.
+    /// A Class representing an ExpansionJob along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ExpansionJobResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetExpansionJobResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AmlFileSystemResource"/> using the GetExpansionJob method.
     /// </summary>
-    public partial class AutoExportJobResource : ArmResource
+    public partial class ExpansionJobResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="AutoExportJobResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ExpansionJobResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="amlFileSystemName"> The amlFileSystemName. </param>
-        /// <param name="autoExportJobName"> The autoExportJobName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string amlFileSystemName, string autoExportJobName)
+        /// <param name="expansionJobName"> The expansionJobName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string amlFileSystemName, string expansionJobName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFileSystemName}/autoExportJobs/{autoExportJobName}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFileSystemName}/expansionJobs/{expansionJobName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _autoExportJobautoExportJobsClientDiagnostics;
-        private readonly AutoExportJobsRestOperations _autoExportJobautoExportJobsRestClient;
-        private readonly AutoExportJobData _data;
+        private readonly ClientDiagnostics _expansionJobexpansionJobsClientDiagnostics;
+        private readonly ExpansionJobsRestOperations _expansionJobexpansionJobsRestClient;
+        private readonly ExpansionJobData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.StorageCache/amlFilesystems/autoExportJobs";
+        public static readonly ResourceType ResourceType = "Microsoft.StorageCache/amlFilesystems/expansionJobs";
 
-        /// <summary> Initializes a new instance of the <see cref="AutoExportJobResource"/> class for mocking. </summary>
-        protected AutoExportJobResource()
+        /// <summary> Initializes a new instance of the <see cref="ExpansionJobResource"/> class for mocking. </summary>
+        protected ExpansionJobResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AutoExportJobResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ExpansionJobResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AutoExportJobResource(ArmClient client, AutoExportJobData data) : this(client, data.Id)
+        internal ExpansionJobResource(ArmClient client, ExpansionJobData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AutoExportJobResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ExpansionJobResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AutoExportJobResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ExpansionJobResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _autoExportJobautoExportJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageCache", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string autoExportJobautoExportJobsApiVersion);
-            _autoExportJobautoExportJobsRestClient = new AutoExportJobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, autoExportJobautoExportJobsApiVersion);
+            _expansionJobexpansionJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageCache", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string expansionJobexpansionJobsApiVersion);
+            _expansionJobexpansionJobsRestClient = new ExpansionJobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, expansionJobexpansionJobsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.StorageCache
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual AutoExportJobData Data
+        public virtual ExpansionJobData Data
         {
             get
             {
@@ -91,15 +91,15 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Returns an auto export job.
+        /// Returns an expansion job.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/autoExportJobs/{autoExportJobName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/expansionJobs/{expansionJobName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>autoExportJobs_Get</description>
+        /// <description>expansionJobs_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -107,21 +107,21 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AutoExportJobResource"/></description>
+        /// <description><see cref="ExpansionJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AutoExportJobResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExpansionJobResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _autoExportJobautoExportJobsClientDiagnostics.CreateScope("AutoExportJobResource.Get");
+            using var scope = _expansionJobexpansionJobsClientDiagnostics.CreateScope("ExpansionJobResource.Get");
             scope.Start();
             try
             {
-                var response = await _autoExportJobautoExportJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _expansionJobexpansionJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AutoExportJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpansionJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -131,15 +131,15 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Returns an auto export job.
+        /// Returns an expansion job.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/autoExportJobs/{autoExportJobName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/expansionJobs/{expansionJobName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>autoExportJobs_Get</description>
+        /// <description>expansionJobs_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -147,21 +147,21 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AutoExportJobResource"/></description>
+        /// <description><see cref="ExpansionJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AutoExportJobResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ExpansionJobResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _autoExportJobautoExportJobsClientDiagnostics.CreateScope("AutoExportJobResource.Get");
+            using var scope = _expansionJobexpansionJobsClientDiagnostics.CreateScope("ExpansionJobResource.Get");
             scope.Start();
             try
             {
-                var response = _autoExportJobautoExportJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _expansionJobexpansionJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AutoExportJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpansionJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -171,15 +171,15 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Schedules an auto export job for deletion.
+        /// Schedules an expansion job for deletion.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/autoExportJobs/{autoExportJobName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/expansionJobs/{expansionJobName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>autoExportJobs_Delete</description>
+        /// <description>expansionJobs_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AutoExportJobResource"/></description>
+        /// <description><see cref="ExpansionJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,12 +195,12 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _autoExportJobautoExportJobsClientDiagnostics.CreateScope("AutoExportJobResource.Delete");
+            using var scope = _expansionJobexpansionJobsClientDiagnostics.CreateScope("ExpansionJobResource.Delete");
             scope.Start();
             try
             {
-                var response = await _autoExportJobautoExportJobsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageCacheArmOperation(_autoExportJobautoExportJobsClientDiagnostics, Pipeline, _autoExportJobautoExportJobsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _expansionJobexpansionJobsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new StorageCacheArmOperation(_expansionJobexpansionJobsClientDiagnostics, Pipeline, _expansionJobexpansionJobsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -213,15 +213,15 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Schedules an auto export job for deletion.
+        /// Schedules an expansion job for deletion.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/autoExportJobs/{autoExportJobName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/expansionJobs/{expansionJobName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>autoExportJobs_Delete</description>
+        /// <description>expansionJobs_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AutoExportJobResource"/></description>
+        /// <description><see cref="ExpansionJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,12 +237,12 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _autoExportJobautoExportJobsClientDiagnostics.CreateScope("AutoExportJobResource.Delete");
+            using var scope = _expansionJobexpansionJobsClientDiagnostics.CreateScope("ExpansionJobResource.Delete");
             scope.Start();
             try
             {
-                var response = _autoExportJobautoExportJobsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new StorageCacheArmOperation(_autoExportJobautoExportJobsClientDiagnostics, Pipeline, _autoExportJobautoExportJobsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _expansionJobexpansionJobsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new StorageCacheArmOperation(_expansionJobexpansionJobsClientDiagnostics, Pipeline, _expansionJobexpansionJobsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -255,15 +255,15 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Update an auto export job instance.
+        /// Update an expansion job instance.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/autoExportJobs/{autoExportJobName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/expansionJobs/{expansionJobName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>autoExportJobs_Update</description>
+        /// <description>expansionJobs_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -271,24 +271,24 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AutoExportJobResource"/></description>
+        /// <description><see cref="ExpansionJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> Object containing the user-selectable properties of the auto export job. If read-only properties are included, they must match the existing values of those properties. </param>
+        /// <param name="patch"> Object containing the user-selectable properties of the expansion job. If read-only properties are included, they must match the existing values of those properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<AutoExportJobResource>> UpdateAsync(WaitUntil waitUntil, AutoExportJobPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ExpansionJobResource>> UpdateAsync(WaitUntil waitUntil, ExpansionJobPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _autoExportJobautoExportJobsClientDiagnostics.CreateScope("AutoExportJobResource.Update");
+            using var scope = _expansionJobexpansionJobsClientDiagnostics.CreateScope("ExpansionJobResource.Update");
             scope.Start();
             try
             {
-                var response = await _autoExportJobautoExportJobsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageCacheArmOperation<AutoExportJobResource>(new AutoExportJobOperationSource(Client), _autoExportJobautoExportJobsClientDiagnostics, Pipeline, _autoExportJobautoExportJobsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _expansionJobexpansionJobsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new StorageCacheArmOperation<ExpansionJobResource>(new ExpansionJobOperationSource(Client), _expansionJobexpansionJobsClientDiagnostics, Pipeline, _expansionJobexpansionJobsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -301,15 +301,15 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Update an auto export job instance.
+        /// Update an expansion job instance.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/autoExportJobs/{autoExportJobName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/expansionJobs/{expansionJobName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>autoExportJobs_Update</description>
+        /// <description>expansionJobs_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -317,24 +317,24 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AutoExportJobResource"/></description>
+        /// <description><see cref="ExpansionJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> Object containing the user-selectable properties of the auto export job. If read-only properties are included, they must match the existing values of those properties. </param>
+        /// <param name="patch"> Object containing the user-selectable properties of the expansion job. If read-only properties are included, they must match the existing values of those properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<AutoExportJobResource> Update(WaitUntil waitUntil, AutoExportJobPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ExpansionJobResource> Update(WaitUntil waitUntil, ExpansionJobPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _autoExportJobautoExportJobsClientDiagnostics.CreateScope("AutoExportJobResource.Update");
+            using var scope = _expansionJobexpansionJobsClientDiagnostics.CreateScope("ExpansionJobResource.Update");
             scope.Start();
             try
             {
-                var response = _autoExportJobautoExportJobsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new StorageCacheArmOperation<AutoExportJobResource>(new AutoExportJobOperationSource(Client), _autoExportJobautoExportJobsClientDiagnostics, Pipeline, _autoExportJobautoExportJobsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _expansionJobexpansionJobsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                var operation = new StorageCacheArmOperation<ExpansionJobResource>(new ExpansionJobOperationSource(Client), _expansionJobexpansionJobsClientDiagnostics, Pipeline, _expansionJobexpansionJobsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -351,11 +351,11 @@ namespace Azure.ResourceManager.StorageCache
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/autoExportJobs/{autoExportJobName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/expansionJobs/{expansionJobName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>autoExportJobs_Get</description>
+        /// <description>expansionJobs_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AutoExportJobResource"/></description>
+        /// <description><see cref="ExpansionJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -371,12 +371,12 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<AutoExportJobResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExpansionJobResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _autoExportJobautoExportJobsClientDiagnostics.CreateScope("AutoExportJobResource.AddTag");
+            using var scope = _expansionJobexpansionJobsClientDiagnostics.CreateScope("ExpansionJobResource.AddTag");
             scope.Start();
             try
             {
@@ -385,13 +385,13 @@ namespace Azure.ResourceManager.StorageCache
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _autoExportJobautoExportJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new AutoExportJobResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _expansionJobexpansionJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new ExpansionJobResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new AutoExportJobPatch();
+                    var patch = new ExpansionJobPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -413,11 +413,11 @@ namespace Azure.ResourceManager.StorageCache
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/autoExportJobs/{autoExportJobName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/expansionJobs/{expansionJobName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>autoExportJobs_Get</description>
+        /// <description>expansionJobs_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AutoExportJobResource"/></description>
+        /// <description><see cref="ExpansionJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -433,12 +433,12 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<AutoExportJobResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<ExpansionJobResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _autoExportJobautoExportJobsClientDiagnostics.CreateScope("AutoExportJobResource.AddTag");
+            using var scope = _expansionJobexpansionJobsClientDiagnostics.CreateScope("ExpansionJobResource.AddTag");
             scope.Start();
             try
             {
@@ -447,13 +447,13 @@ namespace Azure.ResourceManager.StorageCache
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _autoExportJobautoExportJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new AutoExportJobResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _expansionJobexpansionJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new ExpansionJobResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new AutoExportJobPatch();
+                    var patch = new ExpansionJobPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -475,11 +475,11 @@ namespace Azure.ResourceManager.StorageCache
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/autoExportJobs/{autoExportJobName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/expansionJobs/{expansionJobName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>autoExportJobs_Get</description>
+        /// <description>expansionJobs_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -487,18 +487,18 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AutoExportJobResource"/></description>
+        /// <description><see cref="ExpansionJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<AutoExportJobResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExpansionJobResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _autoExportJobautoExportJobsClientDiagnostics.CreateScope("AutoExportJobResource.SetTags");
+            using var scope = _expansionJobexpansionJobsClientDiagnostics.CreateScope("ExpansionJobResource.SetTags");
             scope.Start();
             try
             {
@@ -508,13 +508,13 @@ namespace Azure.ResourceManager.StorageCache
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _autoExportJobautoExportJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new AutoExportJobResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _expansionJobexpansionJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new ExpansionJobResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new AutoExportJobPatch();
+                    var patch = new ExpansionJobPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -532,11 +532,11 @@ namespace Azure.ResourceManager.StorageCache
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/autoExportJobs/{autoExportJobName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/expansionJobs/{expansionJobName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>autoExportJobs_Get</description>
+        /// <description>expansionJobs_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -544,18 +544,18 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AutoExportJobResource"/></description>
+        /// <description><see cref="ExpansionJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<AutoExportJobResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<ExpansionJobResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _autoExportJobautoExportJobsClientDiagnostics.CreateScope("AutoExportJobResource.SetTags");
+            using var scope = _expansionJobexpansionJobsClientDiagnostics.CreateScope("ExpansionJobResource.SetTags");
             scope.Start();
             try
             {
@@ -565,13 +565,13 @@ namespace Azure.ResourceManager.StorageCache
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _autoExportJobautoExportJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new AutoExportJobResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _expansionJobexpansionJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new ExpansionJobResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new AutoExportJobPatch();
+                    var patch = new ExpansionJobPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -589,11 +589,11 @@ namespace Azure.ResourceManager.StorageCache
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/autoExportJobs/{autoExportJobName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/expansionJobs/{expansionJobName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>autoExportJobs_Get</description>
+        /// <description>expansionJobs_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -601,18 +601,18 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AutoExportJobResource"/></description>
+        /// <description><see cref="ExpansionJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<AutoExportJobResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExpansionJobResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _autoExportJobautoExportJobsClientDiagnostics.CreateScope("AutoExportJobResource.RemoveTag");
+            using var scope = _expansionJobexpansionJobsClientDiagnostics.CreateScope("ExpansionJobResource.RemoveTag");
             scope.Start();
             try
             {
@@ -621,13 +621,13 @@ namespace Azure.ResourceManager.StorageCache
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _autoExportJobautoExportJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new AutoExportJobResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _expansionJobexpansionJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new ExpansionJobResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new AutoExportJobPatch();
+                    var patch = new ExpansionJobPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -649,11 +649,11 @@ namespace Azure.ResourceManager.StorageCache
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/autoExportJobs/{autoExportJobName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/expansionJobs/{expansionJobName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>autoExportJobs_Get</description>
+        /// <description>expansionJobs_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -661,18 +661,18 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AutoExportJobResource"/></description>
+        /// <description><see cref="ExpansionJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<AutoExportJobResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<ExpansionJobResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _autoExportJobautoExportJobsClientDiagnostics.CreateScope("AutoExportJobResource.RemoveTag");
+            using var scope = _expansionJobexpansionJobsClientDiagnostics.CreateScope("ExpansionJobResource.RemoveTag");
             scope.Start();
             try
             {
@@ -681,13 +681,13 @@ namespace Azure.ResourceManager.StorageCache
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _autoExportJobautoExportJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new AutoExportJobResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _expansionJobexpansionJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new ExpansionJobResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new AutoExportJobPatch();
+                    var patch = new ExpansionJobPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

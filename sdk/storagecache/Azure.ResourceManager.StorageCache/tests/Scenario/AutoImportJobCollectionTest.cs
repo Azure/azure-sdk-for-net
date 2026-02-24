@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
-        [Ignore("Skip test as the StorageCache service is end-of-lifed.")]
         public async Task CreateOrUpdate()
         {
             string name = Recording.GenerateAssetName("testautoimportjob");
@@ -67,7 +66,6 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
-        [Ignore("Skip test as the StorageCache service is end-of-lifed.")]
         public async Task Get()
         {
             string job = "testautoimportjob";
@@ -102,7 +100,6 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
-        [Ignore("Skip test as the StorageCache service is end-of-lifed.")]
         public async Task Exists()
         {
             string name = Recording.GenerateAssetName("testAutoImportJob");

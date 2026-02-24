@@ -15,20 +15,20 @@ using Azure.ResourceManager.StorageCache.Models;
 
 namespace Azure.ResourceManager.StorageCache
 {
-    internal partial class ImportJobsRestOperations
+    internal partial class ExpansionJobsRestOperations
     {
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of ImportJobsRestOperations. </summary>
+        /// <summary> Initializes a new instance of ExpansionJobsRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ImportJobsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        public ExpansionJobsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StorageCache
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string amlFileSystemName, string importJobName)
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string amlFileSystemName, string expansionJobName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -46,13 +46,13 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.StorageCache/amlFilesystems/", false);
             uri.AppendPath(amlFileSystemName, true);
-            uri.AppendPath("/importJobs/", false);
-            uri.AppendPath(importJobName, true);
+            uri.AppendPath("/expansionJobs/", false);
+            uri.AppendPath(expansionJobName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string amlFileSystemName, string importJobName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string amlFileSystemName, string expansionJobName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.StorageCache/amlFilesystems/", false);
             uri.AppendPath(amlFileSystemName, true);
-            uri.AppendPath("/importJobs/", false);
-            uri.AppendPath(importJobName, true);
+            uri.AppendPath("/expansionJobs/", false);
+            uri.AppendPath(expansionJobName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -74,22 +74,22 @@ namespace Azure.ResourceManager.StorageCache
             return message;
         }
 
-        /// <summary> Schedules an import job for deletion. </summary>
+        /// <summary> Schedules an expansion job for deletion. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
-        /// <param name="importJobName"> Name for the import job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="expansionJobName"> Name for the expansion job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/> or <paramref name="importJobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/> or <paramref name="importJobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string amlFileSystemName, string importJobName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/> or <paramref name="expansionJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/> or <paramref name="expansionJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string amlFileSystemName, string expansionJobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(amlFileSystemName, nameof(amlFileSystemName));
-            Argument.AssertNotNullOrEmpty(importJobName, nameof(importJobName));
+            Argument.AssertNotNullOrEmpty(expansionJobName, nameof(expansionJobName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, amlFileSystemName, importJobName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, amlFileSystemName, expansionJobName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -101,22 +101,22 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
-        /// <summary> Schedules an import job for deletion. </summary>
+        /// <summary> Schedules an expansion job for deletion. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
-        /// <param name="importJobName"> Name for the import job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="expansionJobName"> Name for the expansion job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/> or <paramref name="importJobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/> or <paramref name="importJobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string amlFileSystemName, string importJobName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/> or <paramref name="expansionJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/> or <paramref name="expansionJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string amlFileSystemName, string expansionJobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(amlFileSystemName, nameof(amlFileSystemName));
-            Argument.AssertNotNullOrEmpty(importJobName, nameof(importJobName));
+            Argument.AssertNotNullOrEmpty(expansionJobName, nameof(expansionJobName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, amlFileSystemName, importJobName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, amlFileSystemName, expansionJobName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string amlFileSystemName, string importJobName)
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string amlFileSystemName, string expansionJobName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -138,13 +138,13 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.StorageCache/amlFilesystems/", false);
             uri.AppendPath(amlFileSystemName, true);
-            uri.AppendPath("/importJobs/", false);
-            uri.AppendPath(importJobName, true);
+            uri.AppendPath("/expansionJobs/", false);
+            uri.AppendPath(expansionJobName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string amlFileSystemName, string importJobName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string amlFileSystemName, string expansionJobName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -157,8 +157,8 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.StorageCache/amlFilesystems/", false);
             uri.AppendPath(amlFileSystemName, true);
-            uri.AppendPath("/importJobs/", false);
-            uri.AppendPath(importJobName, true);
+            uri.AppendPath("/expansionJobs/", false);
+            uri.AppendPath(expansionJobName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -166,73 +166,73 @@ namespace Azure.ResourceManager.StorageCache
             return message;
         }
 
-        /// <summary> Returns an import job. </summary>
+        /// <summary> Returns an expansion job. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
-        /// <param name="importJobName"> Name for the import job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="expansionJobName"> Name for the expansion job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/> or <paramref name="importJobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/> or <paramref name="importJobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StorageCacheImportJobData>> GetAsync(string subscriptionId, string resourceGroupName, string amlFileSystemName, string importJobName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/> or <paramref name="expansionJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/> or <paramref name="expansionJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ExpansionJobData>> GetAsync(string subscriptionId, string resourceGroupName, string amlFileSystemName, string expansionJobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(amlFileSystemName, nameof(amlFileSystemName));
-            Argument.AssertNotNullOrEmpty(importJobName, nameof(importJobName));
+            Argument.AssertNotNullOrEmpty(expansionJobName, nameof(expansionJobName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, amlFileSystemName, importJobName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, amlFileSystemName, expansionJobName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        StorageCacheImportJobData value = default;
+                        ExpansionJobData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = StorageCacheImportJobData.DeserializeStorageCacheImportJobData(document.RootElement);
+                        value = ExpansionJobData.DeserializeExpansionJobData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((StorageCacheImportJobData)null, message.Response);
+                    return Response.FromValue((ExpansionJobData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Returns an import job. </summary>
+        /// <summary> Returns an expansion job. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
-        /// <param name="importJobName"> Name for the import job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="expansionJobName"> Name for the expansion job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/> or <paramref name="importJobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/> or <paramref name="importJobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StorageCacheImportJobData> Get(string subscriptionId, string resourceGroupName, string amlFileSystemName, string importJobName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/> or <paramref name="expansionJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/> or <paramref name="expansionJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ExpansionJobData> Get(string subscriptionId, string resourceGroupName, string amlFileSystemName, string expansionJobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(amlFileSystemName, nameof(amlFileSystemName));
-            Argument.AssertNotNullOrEmpty(importJobName, nameof(importJobName));
+            Argument.AssertNotNullOrEmpty(expansionJobName, nameof(expansionJobName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, amlFileSystemName, importJobName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, amlFileSystemName, expansionJobName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        StorageCacheImportJobData value = default;
+                        ExpansionJobData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = StorageCacheImportJobData.DeserializeStorageCacheImportJobData(document.RootElement);
+                        value = ExpansionJobData.DeserializeExpansionJobData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((StorageCacheImportJobData)null, message.Response);
+                    return Response.FromValue((ExpansionJobData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string amlFileSystemName, string importJobName, StorageCacheImportJobData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string amlFileSystemName, string expansionJobName, ExpansionJobData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -242,13 +242,13 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.StorageCache/amlFilesystems/", false);
             uri.AppendPath(amlFileSystemName, true);
-            uri.AppendPath("/importJobs/", false);
-            uri.AppendPath(importJobName, true);
+            uri.AppendPath("/expansionJobs/", false);
+            uri.AppendPath(expansionJobName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string amlFileSystemName, string importJobName, StorageCacheImportJobData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string amlFileSystemName, string expansionJobName, ExpansionJobData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -261,8 +261,8 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.StorageCache/amlFilesystems/", false);
             uri.AppendPath(amlFileSystemName, true);
-            uri.AppendPath("/importJobs/", false);
-            uri.AppendPath(importJobName, true);
+            uri.AppendPath("/expansionJobs/", false);
+            uri.AppendPath(expansionJobName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -274,24 +274,24 @@ namespace Azure.ResourceManager.StorageCache
             return message;
         }
 
-        /// <summary> Create or update an import job. </summary>
+        /// <summary> Create or update an expansion job. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
-        /// <param name="importJobName"> Name for the import job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
-        /// <param name="data"> Object containing the user-selectable properties of the import job. If read-only properties are included, they must match the existing values of those properties. </param>
+        /// <param name="expansionJobName"> Name for the expansion job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="data"> Object containing the user-selectable properties of the expansion job. If read-only properties are included, they must match the existing values of those properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/>, <paramref name="importJobName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/> or <paramref name="importJobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string amlFileSystemName, string importJobName, StorageCacheImportJobData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/>, <paramref name="expansionJobName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/> or <paramref name="expansionJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string amlFileSystemName, string expansionJobName, ExpansionJobData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(amlFileSystemName, nameof(amlFileSystemName));
-            Argument.AssertNotNullOrEmpty(importJobName, nameof(importJobName));
+            Argument.AssertNotNullOrEmpty(expansionJobName, nameof(expansionJobName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, amlFileSystemName, importJobName, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, amlFileSystemName, expansionJobName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -303,24 +303,24 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
-        /// <summary> Create or update an import job. </summary>
+        /// <summary> Create or update an expansion job. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
-        /// <param name="importJobName"> Name for the import job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
-        /// <param name="data"> Object containing the user-selectable properties of the import job. If read-only properties are included, they must match the existing values of those properties. </param>
+        /// <param name="expansionJobName"> Name for the expansion job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="data"> Object containing the user-selectable properties of the expansion job. If read-only properties are included, they must match the existing values of those properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/>, <paramref name="importJobName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/> or <paramref name="importJobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string amlFileSystemName, string importJobName, StorageCacheImportJobData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/>, <paramref name="expansionJobName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/> or <paramref name="expansionJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string amlFileSystemName, string expansionJobName, ExpansionJobData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(amlFileSystemName, nameof(amlFileSystemName));
-            Argument.AssertNotNullOrEmpty(importJobName, nameof(importJobName));
+            Argument.AssertNotNullOrEmpty(expansionJobName, nameof(expansionJobName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, amlFileSystemName, importJobName, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, amlFileSystemName, expansionJobName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string amlFileSystemName, string importJobName, StorageCacheImportJobPatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string amlFileSystemName, string expansionJobName, ExpansionJobPatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -342,13 +342,13 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.StorageCache/amlFilesystems/", false);
             uri.AppendPath(amlFileSystemName, true);
-            uri.AppendPath("/importJobs/", false);
-            uri.AppendPath(importJobName, true);
+            uri.AppendPath("/expansionJobs/", false);
+            uri.AppendPath(expansionJobName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string amlFileSystemName, string importJobName, StorageCacheImportJobPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string amlFileSystemName, string expansionJobName, ExpansionJobPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -361,8 +361,8 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.StorageCache/amlFilesystems/", false);
             uri.AppendPath(amlFileSystemName, true);
-            uri.AppendPath("/importJobs/", false);
-            uri.AppendPath(importJobName, true);
+            uri.AppendPath("/expansionJobs/", false);
+            uri.AppendPath(expansionJobName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -374,24 +374,24 @@ namespace Azure.ResourceManager.StorageCache
             return message;
         }
 
-        /// <summary> Update an import job instance. </summary>
+        /// <summary> Update an expansion job instance. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
-        /// <param name="importJobName"> Name for the import job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
-        /// <param name="patch"> Object containing the user-selectable properties of the import job. If read-only properties are included, they must match the existing values of those properties. </param>
+        /// <param name="expansionJobName"> Name for the expansion job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="patch"> Object containing the user-selectable properties of the expansion job. If read-only properties are included, they must match the existing values of those properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/>, <paramref name="importJobName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/> or <paramref name="importJobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string amlFileSystemName, string importJobName, StorageCacheImportJobPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/>, <paramref name="expansionJobName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/> or <paramref name="expansionJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string amlFileSystemName, string expansionJobName, ExpansionJobPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(amlFileSystemName, nameof(amlFileSystemName));
-            Argument.AssertNotNullOrEmpty(importJobName, nameof(importJobName));
+            Argument.AssertNotNullOrEmpty(expansionJobName, nameof(expansionJobName));
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, amlFileSystemName, importJobName, patch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, amlFileSystemName, expansionJobName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -403,24 +403,24 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
-        /// <summary> Update an import job instance. </summary>
+        /// <summary> Update an expansion job instance. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
-        /// <param name="importJobName"> Name for the import job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
-        /// <param name="patch"> Object containing the user-selectable properties of the import job. If read-only properties are included, they must match the existing values of those properties. </param>
+        /// <param name="expansionJobName"> Name for the expansion job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="patch"> Object containing the user-selectable properties of the expansion job. If read-only properties are included, they must match the existing values of those properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/>, <paramref name="importJobName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/> or <paramref name="importJobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string amlFileSystemName, string importJobName, StorageCacheImportJobPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/>, <paramref name="expansionJobName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/> or <paramref name="expansionJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Update(string subscriptionId, string resourceGroupName, string amlFileSystemName, string expansionJobName, ExpansionJobPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(amlFileSystemName, nameof(amlFileSystemName));
-            Argument.AssertNotNullOrEmpty(importJobName, nameof(importJobName));
+            Argument.AssertNotNullOrEmpty(expansionJobName, nameof(expansionJobName));
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, amlFileSystemName, importJobName, patch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, amlFileSystemName, expansionJobName, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.StorageCache/amlFilesystems/", false);
             uri.AppendPath(amlFileSystemName, true);
-            uri.AppendPath("/importJobs", false);
+            uri.AppendPath("/expansionJobs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.StorageCache/amlFilesystems/", false);
             uri.AppendPath(amlFileSystemName, true);
-            uri.AppendPath("/importJobs", false);
+            uri.AppendPath("/expansionJobs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -468,14 +468,14 @@ namespace Azure.ResourceManager.StorageCache
             return message;
         }
 
-        /// <summary> Returns all import jobs the user has access to under an AML File System. </summary>
+        /// <summary> Returns all the expansion jobs the user has access to under an AML File System. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFileSystemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ImportJobsListResult>> ListByAmlFileSystemAsync(string subscriptionId, string resourceGroupName, string amlFileSystemName, CancellationToken cancellationToken = default)
+        public async Task<Response<ExpansionJobsListResult>> ListByAmlFileSystemAsync(string subscriptionId, string resourceGroupName, string amlFileSystemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -487,9 +487,9 @@ namespace Azure.ResourceManager.StorageCache
             {
                 case 200:
                     {
-                        ImportJobsListResult value = default;
+                        ExpansionJobsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ImportJobsListResult.DeserializeImportJobsListResult(document.RootElement);
+                        value = ExpansionJobsListResult.DeserializeExpansionJobsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -497,14 +497,14 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
-        /// <summary> Returns all import jobs the user has access to under an AML File System. </summary>
+        /// <summary> Returns all the expansion jobs the user has access to under an AML File System. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFileSystemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ImportJobsListResult> ListByAmlFileSystem(string subscriptionId, string resourceGroupName, string amlFileSystemName, CancellationToken cancellationToken = default)
+        public Response<ExpansionJobsListResult> ListByAmlFileSystem(string subscriptionId, string resourceGroupName, string amlFileSystemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -516,9 +516,9 @@ namespace Azure.ResourceManager.StorageCache
             {
                 case 200:
                     {
-                        ImportJobsListResult value = default;
+                        ExpansionJobsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ImportJobsListResult.DeserializeImportJobsListResult(document.RootElement);
+                        value = ExpansionJobsListResult.DeserializeExpansionJobsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.StorageCache
             return message;
         }
 
-        /// <summary> Returns all import jobs the user has access to under an AML File System. </summary>
+        /// <summary> Returns all the expansion jobs the user has access to under an AML File System. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFileSystemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ImportJobsListResult>> ListByAmlFileSystemNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string amlFileSystemName, CancellationToken cancellationToken = default)
+        public async Task<Response<ExpansionJobsListResult>> ListByAmlFileSystemNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string amlFileSystemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -569,9 +569,9 @@ namespace Azure.ResourceManager.StorageCache
             {
                 case 200:
                     {
-                        ImportJobsListResult value = default;
+                        ExpansionJobsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ImportJobsListResult.DeserializeImportJobsListResult(document.RootElement);
+                        value = ExpansionJobsListResult.DeserializeExpansionJobsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
-        /// <summary> Returns all import jobs the user has access to under an AML File System. </summary>
+        /// <summary> Returns all the expansion jobs the user has access to under an AML File System. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFileSystemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ImportJobsListResult> ListByAmlFileSystemNextPage(string nextLink, string subscriptionId, string resourceGroupName, string amlFileSystemName, CancellationToken cancellationToken = default)
+        public Response<ExpansionJobsListResult> ListByAmlFileSystemNextPage(string nextLink, string subscriptionId, string resourceGroupName, string amlFileSystemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -600,9 +600,9 @@ namespace Azure.ResourceManager.StorageCache
             {
                 case 200:
                     {
-                        ImportJobsListResult value = default;
+                        ExpansionJobsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ImportJobsListResult.DeserializeImportJobsListResult(document.RootElement);
+                        value = ExpansionJobsListResult.DeserializeExpansionJobsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

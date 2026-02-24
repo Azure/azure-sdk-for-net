@@ -9,20 +9,18 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.StorageCache.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.StorageCache.Samples
 {
-    public partial class Sample_AmlFileSystemResource
+    public partial class Sample_ExpansionJobCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_AmlFilesystemsGet()
+        public async Task CreateOrUpdate_ExpansionJobsCreateOrUpdate()
         {
-            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/StorageCache/stable/2026-01-01/examples/amlFilesystems_Get.json
-            // this example is just showing the usage of "amlFilesystems_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/StorageCache/stable/2026-01-01/examples/expansionJobs_CreateOrUpdate.json
+            // this example is just showing the usage of "expansionJobs_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -37,102 +35,35 @@ namespace Azure.ResourceManager.StorageCache.Samples
             ResourceIdentifier amlFileSystemResourceId = AmlFileSystemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFileSystemName);
             AmlFileSystemResource amlFileSystem = client.GetAmlFileSystemResource(amlFileSystemResourceId);
 
-            // invoke the operation
-            AmlFileSystemResource result = await amlFileSystem.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            AmlFileSystemData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_AmlFilesystemsDelete()
-        {
-            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/StorageCache/stable/2026-01-01/examples/amlFilesystems_Delete.json
-            // this example is just showing the usage of "amlFilesystems_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AmlFileSystemResource created on azure
-            // for more information of creating AmlFileSystemResource, please refer to the document of AmlFileSystemResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "scgroup";
-            string amlFileSystemName = "fs1";
-            ResourceIdentifier amlFileSystemResourceId = AmlFileSystemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFileSystemName);
-            AmlFileSystemResource amlFileSystem = client.GetAmlFileSystemResource(amlFileSystemResourceId);
+            // get the collection of this ExpansionJobResource
+            ExpansionJobCollection collection = amlFileSystem.GetExpansionJobs();
 
             // invoke the operation
-            await amlFileSystem.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Update_AmlFilesystemsUpdate()
-        {
-            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/StorageCache/stable/2026-01-01/examples/amlFilesystems_Update.json
-            // this example is just showing the usage of "amlFilesystems_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AmlFileSystemResource created on azure
-            // for more information of creating AmlFileSystemResource, please refer to the document of AmlFileSystemResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "scgroup";
-            string amlFileSystemName = "fs1";
-            ResourceIdentifier amlFileSystemResourceId = AmlFileSystemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFileSystemName);
-            AmlFileSystemResource amlFileSystem = client.GetAmlFileSystemResource(amlFileSystemResourceId);
-
-            // invoke the operation
-            AmlFileSystemPatch patch = new AmlFileSystemPatch
+            string expansionJobName = "expansionjob1";
+            ExpansionJobData data = new ExpansionJobData(new AzureLocation("eastus"))
             {
+                NewStorageCapacityTiB = 16,
                 Tags =
 {
 ["Dept"] = "ContosoAds"
 },
-                KeyEncryptionKey = new StorageCacheEncryptionKeyVaultKeyReference(new Uri("https://examplekv.vault.azure.net/keys/kvk/3540a47df75541378d3518c6a4bdf5af"), new WritableSubResource
-                {
-                    Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/scgroup/providers/Microsoft.KeyVault/vaults/keyvault-cmk"),
-                }),
-                MaintenanceWindow = new AmlFileSystemUpdatePropertiesMaintenanceWindow
-                {
-                    DayOfWeek = MaintenanceDayOfWeekType.Friday,
-                    TimeOfDayUTC = "22:00",
-                },
-                RootSquashSettings = new AmlFileSystemRootSquashSettings
-                {
-                    Mode = AmlFileSystemSquashMode.All,
-                    NoSquashNidLists = "10.0.0.[5-6]@tcp;10.0.1.2@tcp",
-                    SquashUID = 99L,
-                    SquashGID = 99L,
-                },
             };
-            ArmOperation<AmlFileSystemResource> lro = await amlFileSystem.UpdateAsync(WaitUntil.Completed, patch);
-            AmlFileSystemResource result = lro.Value;
+            ArmOperation<ExpansionJobResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, expansionJobName, data);
+            ExpansionJobResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AmlFileSystemData resourceData = result.Data;
+            ExpansionJobData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Archive_AmlFilesystemsArchive()
+        public async Task Get_ExpansionJobsGet()
         {
-            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/StorageCache/stable/2026-01-01/examples/amlFilesystems_Archive.json
-            // this example is just showing the usage of "amlFilesystems_Archive" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/StorageCache/stable/2026-01-01/examples/expansionJobs_Get.json
+            // this example is just showing the usage of "expansionJobs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -143,26 +74,66 @@ namespace Azure.ResourceManager.StorageCache.Samples
             // for more information of creating AmlFileSystemResource, please refer to the document of AmlFileSystemResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "scgroup";
-            string amlFileSystemName = "sc";
+            string amlFileSystemName = "fs1";
             ResourceIdentifier amlFileSystemResourceId = AmlFileSystemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFileSystemName);
             AmlFileSystemResource amlFileSystem = client.GetAmlFileSystemResource(amlFileSystemResourceId);
 
+            // get the collection of this ExpansionJobResource
+            ExpansionJobCollection collection = amlFileSystem.GetExpansionJobs();
+
             // invoke the operation
-            AmlFileSystemArchiveContent content = new AmlFileSystemArchiveContent
+            string expansionJobName = "expansionjob1";
+            ExpansionJobResource result = await collection.GetAsync(expansionJobName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ExpansionJobData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ExpansionJobsListByAmlFilesystem()
+        {
+            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/StorageCache/stable/2026-01-01/examples/expansionJobs_ListByAmlFilesystem.json
+            // this example is just showing the usage of "expansionJobs_ListByAmlFileSystem" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AmlFileSystemResource created on azure
+            // for more information of creating AmlFileSystemResource, please refer to the document of AmlFileSystemResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "scgroup";
+            string amlFileSystemName = "fs1";
+            ResourceIdentifier amlFileSystemResourceId = AmlFileSystemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFileSystemName);
+            AmlFileSystemResource amlFileSystem = client.GetAmlFileSystemResource(amlFileSystemResourceId);
+
+            // get the collection of this ExpansionJobResource
+            ExpansionJobCollection collection = amlFileSystem.GetExpansionJobs();
+
+            // invoke the operation and iterate over the result
+            await foreach (ExpansionJobResource item in collection.GetAllAsync())
             {
-                FilesystemPath = "/",
-            };
-            await amlFileSystem.ArchiveAsync(content: content);
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ExpansionJobData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
 
             Console.WriteLine("Succeeded");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CancelArchive_AmlFilesystemsCancelArchive()
+        public async Task Exists_ExpansionJobsGet()
         {
-            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/StorageCache/stable/2026-01-01/examples/amlFilesystems_CancelArchive.json
-            // this example is just showing the usage of "amlFilesystems_CancelArchive" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/StorageCache/stable/2026-01-01/examples/expansionJobs_Get.json
+            // this example is just showing the usage of "expansionJobs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -173,14 +144,60 @@ namespace Azure.ResourceManager.StorageCache.Samples
             // for more information of creating AmlFileSystemResource, please refer to the document of AmlFileSystemResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "scgroup";
-            string amlFileSystemName = "sc";
+            string amlFileSystemName = "fs1";
             ResourceIdentifier amlFileSystemResourceId = AmlFileSystemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFileSystemName);
             AmlFileSystemResource amlFileSystem = client.GetAmlFileSystemResource(amlFileSystemResourceId);
 
-            // invoke the operation
-            await amlFileSystem.CancelArchiveAsync();
+            // get the collection of this ExpansionJobResource
+            ExpansionJobCollection collection = amlFileSystem.GetExpansionJobs();
 
-            Console.WriteLine("Succeeded");
+            // invoke the operation
+            string expansionJobName = "expansionjob1";
+            bool result = await collection.ExistsAsync(expansionJobName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_ExpansionJobsGet()
+        {
+            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/StorageCache/stable/2026-01-01/examples/expansionJobs_Get.json
+            // this example is just showing the usage of "expansionJobs_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AmlFileSystemResource created on azure
+            // for more information of creating AmlFileSystemResource, please refer to the document of AmlFileSystemResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "scgroup";
+            string amlFileSystemName = "fs1";
+            ResourceIdentifier amlFileSystemResourceId = AmlFileSystemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFileSystemName);
+            AmlFileSystemResource amlFileSystem = client.GetAmlFileSystemResource(amlFileSystemResourceId);
+
+            // get the collection of this ExpansionJobResource
+            ExpansionJobCollection collection = amlFileSystem.GetExpansionJobs();
+
+            // invoke the operation
+            string expansionJobName = "expansionjob1";
+            NullableResponse<ExpansionJobResource> response = await collection.GetIfExistsAsync(expansionJobName);
+            ExpansionJobResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ExpansionJobData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }
