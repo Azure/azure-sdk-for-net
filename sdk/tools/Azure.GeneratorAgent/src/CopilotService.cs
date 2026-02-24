@@ -66,7 +66,9 @@ public sealed class CopilotService : IAsyncDisposable
 
             var normalizedProjectPath = Path.GetFullPath(projectPath);
             if (!normalizedProjectPath.EndsWith(Path.DirectorySeparatorChar))
+            {
                 normalizedProjectPath += Path.DirectorySeparatorChar;
+            }
 
             session = await client.CreateSessionAsync(new SessionConfig
             {
