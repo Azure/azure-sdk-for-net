@@ -1443,12 +1443,12 @@ namespace Azure.AI.ContentUnderstanding.Tests
             // Find video content with keyframes
             var videoContent = result.Contents?.FirstOrDefault(c => c is AudioVisualContent) as AudioVisualContent;
             Assert.IsNotNull(videoContent, "Test requires AudioVisualContent (video content) for GetResultFile");
-            Assert.IsNotNull(videoContent!.KeyFrameTimesMs, "KeyFrameTimesMs should not be null");
-            Assert.IsTrue(videoContent.KeyFrameTimesMs!.Count > 0,
-                $"Video content should have at least one keyframe, but found {videoContent.KeyFrameTimesMs.Count}");
+            Assert.IsNotNull(videoContent!.KeyFrameTimes, "KeyFrameTimes should not be null");
+            Assert.IsTrue(videoContent.KeyFrameTimes!.Count > 0,
+                $"Video content should have at least one keyframe, but found {videoContent.KeyFrameTimes.Count}");
 
             // Get the first keyframe
-            long firstFrameTimeMs = videoContent.KeyFrameTimesMs[0];
+            long firstFrameTimeMs = (long)videoContent.KeyFrameTimes[0].TotalMilliseconds;
             string framePath = $"keyframes/{firstFrameTimeMs}";
 
             // Get the result file (keyframe image)
