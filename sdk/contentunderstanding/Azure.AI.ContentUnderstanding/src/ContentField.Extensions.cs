@@ -21,7 +21,7 @@ namespace Azure.AI.ContentUnderstanding
 
 #nullable enable
         /// <summary>
-        /// Gets the parsed grounding sources that identify the position of the field value in the content.
+        /// Gets the parsed sources that identify the position of the field value in the content.
         /// Returns <c>null</c> if no source information is available.
         /// </summary>
         /// <remarks>
@@ -37,9 +37,9 @@ namespace Azure.AI.ContentUnderstanding
         /// <example>
         /// <code>
         /// ContentField field = result.Fields["CustomerName"];
-        /// if (field.GroundingSources != null)
+        /// if (field.Sources != null)
         /// {
-        ///     foreach (var source in field.GroundingSources)
+        ///     foreach (var source in field.Sources)
         ///     {
         ///         if (source is DocumentSource doc)
         ///             Console.WriteLine($"Page {doc.PageNumber}, polygon: {string.Join(", ", doc.Polygon)}");
@@ -48,7 +48,7 @@ namespace Azure.AI.ContentUnderstanding
         /// </code>
         /// </example>
         /// <exception cref="FormatException"> The source string has an unrecognized prefix or is malformed. </exception>
-        public ContentSource[]? GroundingSources =>
+        public ContentSource[]? Sources =>
             string.IsNullOrEmpty(SourceValue) ? null : ContentSource.ParseAll(SourceValue);
 #nullable disable
 

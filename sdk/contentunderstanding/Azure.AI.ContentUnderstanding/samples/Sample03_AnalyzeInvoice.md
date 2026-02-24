@@ -97,14 +97,21 @@ var customerNameField = documentContent.Fields["CustomerName"];
 Console.WriteLine($"Customer Name: {customerNameField.Value ?? "(None)"}");
 Console.WriteLine($"  Confidence: {customerNameField.Confidence?.ToString("F2") ?? "N/A"}");
 
-// Access parsed grounding sources to get page number and polygon coordinates
-if (customerNameField.GroundingSources != null)
+// Access parsed sources to find where the field value appears in the original document.
+// Polygon: the precise region (rotated quadrilateral) around the extracted text.
+// BoundingBox: an axis-aligned rectangle computed from the polygon — useful for
+//              drawing highlight overlays without handling rotation.
+if (customerNameField.Sources != null)
 {
-    foreach (var source in customerNameField.GroundingSources)
+    foreach (var source in customerNameField.Sources)
     {
         if (source is DocumentSource docSource)
         {
-            Console.WriteLine($"  Grounding: page {docSource.PageNumber}, polygon: [{string.Join(", ", docSource.Polygon.Select(p => $"({p.X:F4},{p.Y:F4})"))}]");
+            Console.WriteLine($"  Page {docSource.PageNumber}");
+            Console.WriteLine($"  Polygon: [{string.Join(", ", docSource.Polygon!.Select(p => $"({p.X:F4},{p.Y:F4})"))}]");
+
+            RectangleF bbox = docSource.BoundingBox!.Value;
+            Console.WriteLine($"  BoundingBox: x={bbox.X:F4}, y={bbox.Y:F4}, w={bbox.Width:F4}, h={bbox.Height:F4}");
         }
     }
 }
@@ -120,14 +127,15 @@ var invoiceDateField = documentContent.Fields.GetFieldOrDefault("InvoiceDate");
 Console.WriteLine($"Invoice Date: {invoiceDateField?.Value ?? "(None)"}");
 Console.WriteLine($"  Confidence: {invoiceDateField?.Confidence?.ToString("F2") ?? "N/A"}");
 
-// Access parsed grounding sources for date field
-if (invoiceDateField?.GroundingSources != null)
+// Access parsed sources for date field
+if (invoiceDateField?.Sources != null)
 {
-    foreach (var source in invoiceDateField.GroundingSources)
+    foreach (var source in invoiceDateField.Sources)
     {
         if (source is DocumentSource docSource)
         {
-            Console.WriteLine($"  Grounding: page {docSource.PageNumber}, polygon: [{string.Join(", ", docSource.Polygon.Select(p => $"({p.X:F4},{p.Y:F4})"))}]");
+            Console.WriteLine($"  Page {docSource.PageNumber}");
+            Console.WriteLine($"  BoundingBox: {docSource.BoundingBox}");
         }
     }
 }
@@ -146,14 +154,15 @@ if (documentContent.Fields.GetFieldOrDefault("TotalAmount") is ObjectField total
     Console.WriteLine($"Total: {currency ?? "$"}{amount?.ToString("F2") ?? "(None)"}");
     Console.WriteLine($"  Confidence: {totalAmountObj.Confidence?.ToString("F2") ?? "N/A"}");
 
-    // Access parsed grounding sources for object field
-    if (totalAmountObj.GroundingSources != null)
+    // Access parsed sources for object field
+    if (totalAmountObj.Sources != null)
     {
-        foreach (var source in totalAmountObj.GroundingSources)
+        foreach (var source in totalAmountObj.Sources)
         {
             if (source is DocumentSource docSource)
             {
-                Console.WriteLine($"  Grounding: page {docSource.PageNumber}, polygon: [{string.Join(", ", docSource.Polygon.Select(p => $"({p.X:F4},{p.Y:F4})"))}]");
+                Console.WriteLine($"  Page {docSource.PageNumber}");
+                Console.WriteLine($"  BoundingBox: {docSource.BoundingBox}");
             }
         }
     }
@@ -215,14 +224,15 @@ For **array fields**, access elements via `ArrayField.Value` (returns `IList<Con
 Each extracted field provides metadata to help you understand the extraction quality:
 
 - **Confidence**: A float value between 0.0 and 1.0 indicating how certain the analyzer is about the extracted value. Higher values indicate higher confidence. Use this to filter or flag low-confidence extractions for manual review.
-- **GroundingSources**: Parsed grounding source objects that identify the position of the field value in the original content. The `GroundingSources` property returns a `ContentSource[]?` — each element is a `DocumentSource` (for documents) or `AudioVisualSource` (for audio/video). For documents, `DocumentSource` provides:
+- **Sources**: Parsed source objects that identify where the field value appears in the original content. The `Sources` property returns a `ContentSource[]?` — each element is a `DocumentSource` (for documents) or `AudioVisualSource` (for audio/video). For documents, `DocumentSource` provides:
   - `PageNumber`: The page number (1-indexed) where the field was found
-  - `Polygon`: Four `PointF` coordinates defining the bounding quadrilateral
+  - `Polygon`: The precise region around the extracted text as `PointF` coordinates (typically 4 points forming a quadrilateral that may be rotated to match the text orientation)
+  - `BoundingBox`: An axis-aligned `RectangleF` computed from the polygon — useful for drawing highlight overlays without handling rotation
   - Coordinates are in the document's unit (typically "inch" for US documents, as indicated by `DocumentContent.Unit`)
 
-  For example, a field on page 1 with bounding box corners at (1.265, 1.0836), (2.4972, 1.0816), (2.4964, 1.4117), and (1.2645, 1.4117) — all in inches (since `DocumentContent.Unit` is "inch").
+  Use `Polygon` when you need the exact text region (e.g., for precise cropping or OCR verification). Use `BoundingBox` when you need a simple rectangle (e.g., for drawing highlights in a document viewer).
 
-  The grounding source can be used to trace back to the exact location where the value was found in the original document. For more information, see the [Source documentation][source-docs].
+  The source can be used to trace back to the exact location where the value was found in the original document. For more information, see the [Source documentation][source-docs].
 - **Spans**: A list of `ContentSpan` objects that indicate the position of the field value in the markdown content. Each span contains:
   - `Offset`: The starting position (0-indexed) in characters
   - `Length`: The length of the text in characters
