@@ -73,14 +73,21 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Console.WriteLine($"Customer Name: {customerNameField.Value ?? "(None)"}");
             Console.WriteLine($"  Confidence: {customerNameField.Confidence?.ToString("F2") ?? "N/A"}");
 
-            // Access parsed grounding sources to get page number and polygon coordinates
-            if (customerNameField.GroundingSources != null)
+            // Access parsed sources to find where the field value appears in the original document.
+            // Polygon: the precise region (rotated quadrilateral) around the extracted text.
+            // BoundingBox: an axis-aligned rectangle computed from the polygon — useful for
+            //              drawing highlight overlays without handling rotation.
+            if (customerNameField.Sources != null)
             {
-                foreach (var source in customerNameField.GroundingSources)
+                foreach (var source in customerNameField.Sources)
                 {
                     if (source is DocumentSource docSource)
                     {
-                        Console.WriteLine($"  Grounding: page {docSource.PageNumber}, polygon: [{string.Join(", ", docSource.Polygon.Select(p => $"({p.X:F4},{p.Y:F4})"))}]");
+                        Console.WriteLine($"  Page {docSource.PageNumber}");
+                        Console.WriteLine($"  Polygon: [{string.Join(", ", docSource.Polygon!.Select(p => $"({p.X:F4},{p.Y:F4})"))}]");
+
+                        RectangleF bbox = docSource.BoundingBox!.Value;
+                        Console.WriteLine($"  BoundingBox: x={bbox.X:F4}, y={bbox.Y:F4}, w={bbox.Width:F4}, h={bbox.Height:F4}");
                     }
                 }
             }
@@ -96,14 +103,15 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Console.WriteLine($"Invoice Date: {invoiceDateField?.Value ?? "(None)"}");
             Console.WriteLine($"  Confidence: {invoiceDateField?.Confidence?.ToString("F2") ?? "N/A"}");
 
-            // Access parsed grounding sources for date field
-            if (invoiceDateField?.GroundingSources != null)
+            // Access parsed sources for date field
+            if (invoiceDateField?.Sources != null)
             {
-                foreach (var source in invoiceDateField.GroundingSources)
+                foreach (var source in invoiceDateField.Sources)
                 {
                     if (source is DocumentSource docSource)
                     {
-                        Console.WriteLine($"  Grounding: page {docSource.PageNumber}, polygon: [{string.Join(", ", docSource.Polygon.Select(p => $"({p.X:F4},{p.Y:F4})"))}]");
+                        Console.WriteLine($"  Page {docSource.PageNumber}");
+                        Console.WriteLine($"  BoundingBox: {docSource.BoundingBox}");
                     }
                 }
             }
@@ -122,14 +130,15 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Console.WriteLine($"Total: {currency ?? "$"}{amount?.ToString("F2") ?? "(None)"}");
                 Console.WriteLine($"  Confidence: {totalAmountObj.Confidence?.ToString("F2") ?? "N/A"}");
 
-                // Access parsed grounding sources for object field
-                if (totalAmountObj.GroundingSources != null)
+                // Access parsed sources for object field
+                if (totalAmountObj.Sources != null)
                 {
-                    foreach (var source in totalAmountObj.GroundingSources)
+                    foreach (var source in totalAmountObj.Sources)
                     {
                         if (source is DocumentSource docSource)
                         {
-                            Console.WriteLine($"  Grounding: page {docSource.PageNumber}, polygon: [{string.Join(", ", docSource.Polygon.Select(p => $"({p.X:F4},{p.Y:F4})"))}]");
+                            Console.WriteLine($"  Page {docSource.PageNumber}");
+                            Console.WriteLine($"  BoundingBox: {docSource.BoundingBox}");
                         }
                     }
                 }
@@ -184,15 +193,15 @@ namespace Azure.AI.ContentUnderstanding.Samples
             }
 
             // Verify grounding sources are parsed as DocumentSource
-            if (customerNameFieldAssert.GroundingSources != null)
+            if (customerNameFieldAssert.Sources != null)
             {
-                Assert.IsTrue(customerNameFieldAssert.GroundingSources.Length > 0,
-                    "GroundingSources should have at least one element");
-                Assert.IsInstanceOf<DocumentSource>(customerNameFieldAssert.GroundingSources[0],
+                Assert.IsTrue(customerNameFieldAssert.Sources.Length > 0,
+                    "Sources should have at least one element");
+                Assert.IsInstanceOf<DocumentSource>(customerNameFieldAssert.Sources[0],
                     "Grounding source should be DocumentSource for document fields");
-                var docSource = (DocumentSource)customerNameFieldAssert.GroundingSources[0];
+                var docSource = (DocumentSource)customerNameFieldAssert.Sources[0];
                 Assert.IsTrue(docSource.PageNumber >= 1, "PageNumber should be >= 1");
-                Assert.AreEqual(4, docSource.Polygon.Count, "Polygon should have 4 points");
+                Assert.AreEqual(4, docSource.Polygon!.Count, "Polygon should have 4 points");
             }
 
             // Spans are expected to exist and have at least one span
@@ -221,13 +230,13 @@ namespace Azure.AI.ContentUnderstanding.Samples
             }
 
             // Verify grounding sources are parsed as DocumentSource
-            if (invoiceDateFieldAssert.GroundingSources != null)
+            if (invoiceDateFieldAssert.Sources != null)
             {
-                Assert.IsInstanceOf<DocumentSource>(invoiceDateFieldAssert.GroundingSources[0],
+                Assert.IsInstanceOf<DocumentSource>(invoiceDateFieldAssert.Sources[0],
                     "Grounding source should be DocumentSource for document fields");
-                var docSource = (DocumentSource)invoiceDateFieldAssert.GroundingSources[0];
+                var docSource = (DocumentSource)invoiceDateFieldAssert.Sources[0];
                 Assert.IsTrue(docSource.PageNumber >= 1, "PageNumber should be >= 1");
-                Assert.AreEqual(4, docSource.Polygon.Count, "Polygon should have 4 points");
+                Assert.AreEqual(4, docSource.Polygon!.Count, "Polygon should have 4 points");
             }
 
             // Spans are expected to exist and have at least one span

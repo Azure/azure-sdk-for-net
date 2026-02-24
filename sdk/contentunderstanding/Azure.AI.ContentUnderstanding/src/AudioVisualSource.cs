@@ -11,25 +11,19 @@ using System.Globalization;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary>
-    /// Represents a parsed audio/visual grounding source in the format <c>AV(time[,x,y,w,h])</c>.
+    /// Represents a parsed audio/visual source in the format <c>AV(time[,x,y,w,h])</c>.
     /// </summary>
     /// <remarks>
-    /// <para>
-    /// The time is in milliseconds. The bounding box (x, y, width, height) is optional and
-    /// present only when spatial information is available (e.g., face detection).
-    /// </para>
-    /// <para>
-    /// Face tracklet pairs use the format <c>AV(...)-AV(...)</c>. When parsing with
-    /// <see cref="ContentSource.Parse(string)"/> or <see cref="ContentSource.ParseAll(string)"/>,
-    /// tracklet pairs are automatically detected and returned as <see cref="TrackletSource"/> instances.
-    /// </para>
+    /// The time is in milliseconds on the wire but exposed as a <see cref="TimeSpan"/>.
+    /// The bounding box (x, y, width, height) is optional and present only when spatial
+    /// information is available (e.g., face detection).
     /// </remarks>
     public class AudioVisualSource : ContentSource
     {
         private const string Prefix = "AV(";
 
-        /// <summary> Gets the time in milliseconds. </summary>
-        public int TimeMs { get; }
+        /// <summary> Gets the timestamp. </summary>
+        public TimeSpan Time { get; }
 
         /// <summary>
         /// Gets the bounding box (x, y, width, height) in pixel coordinates,
@@ -44,8 +38,8 @@ namespace Azure.AI.ContentUnderstanding
         /// <exception cref="FormatException"> The source string is not in the expected format. </exception>
         internal AudioVisualSource(string source) : base(source)
         {
-            ParseCore(source, out int time, out Rectangle? bbox);
-            TimeMs = time;
+            ParseCore(source, out int timeMs, out Rectangle? bbox);
+            Time = TimeSpan.FromMilliseconds(timeMs);
             BoundingBox = bbox;
         }
 

@@ -11,7 +11,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
 {
     /// <summary>
     /// Unit tests for <see cref="ContentSource"/>, <see cref="DocumentSource"/>,
-    /// <see cref="AudioVisualSource"/>, and the <see cref="ContentField.GroundingSources"/> property.
+    /// <see cref="AudioVisualSource"/>, and the <see cref="ContentField.Sources"/> property.
     /// </summary>
     [TestFixture]
     public class ContentSourceTests
@@ -24,7 +24,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var source = DocumentSource.Parse("D(1,0.5712,1.4062,2.1087,1.4088,2.1084,1.5762,0.5709,1.5736)");
 
             Assert.AreEqual(1, source.PageNumber);
-            Assert.AreEqual(4, source.Polygon.Count);
+            Assert.IsNotNull(source.Polygon);
+            Assert.AreEqual(4, source.Polygon!.Count);
             AssertPointApproximate(new PointF(0.5712f, 1.4062f), source.Polygon[0]);
             AssertPointApproximate(new PointF(2.1087f, 1.4088f), source.Polygon[1]);
             AssertPointApproximate(new PointF(2.1084f, 1.5762f), source.Polygon[2]);
@@ -68,6 +69,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
         [Test]
         public void DocumentSource_Parse_MalformedInput_ThrowsFormatException()
         {
+            // 3 params: page + 1 coordinate pair (too few — need at least 3 pairs)
             Assert.Throws<FormatException>(() => DocumentSource.Parse("D(1,2,3)"));
         }
 
@@ -88,7 +90,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
         {
             var source = DocumentSource.Parse("D(1,0.5712,1.4062,2.1087,1.4088,2.1084,1.5762,0.5709,1.5736)");
 
-            var bbox = source.BoundingBox;
+            Assert.IsNotNull(source.BoundingBox);
+            var bbox = source.BoundingBox!.Value;
             // Min X = 0.5709, Min Y = 1.4062, Max X = 2.1087, Max Y = 1.5762
             Assert.AreEqual(0.5709f, bbox.X, 0.0001f);
             Assert.AreEqual(1.4062f, bbox.Y, 0.0001f);
@@ -102,6 +105,46 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.Throws<FormatException>(() => DocumentSource.Parse("D(0,0.0,0.0,1.0,0.0,1.0,1.0,0.0,1.0)"));
         }
 
+        [Test]
+        public void DocumentSource_Parse_PageOnly_HasNullPolygonAndBoundingBox()
+        {
+            var source = DocumentSource.Parse("D(1)");
+
+            Assert.AreEqual(1, source.PageNumber);
+            Assert.IsNull(source.Polygon);
+            Assert.IsNull(source.BoundingBox);
+        }
+
+        [Test]
+        public void DocumentSource_Parse_TrianglePolygon_Accepts3Points()
+        {
+            var source = DocumentSource.Parse("D(1,0.0,0.0,1.0,0.0,0.5,1.0)");
+
+            Assert.AreEqual(1, source.PageNumber);
+            Assert.IsNotNull(source.Polygon);
+            Assert.AreEqual(3, source.Polygon!.Count);
+            AssertPointApproximate(new PointF(0.0f, 0.0f), source.Polygon[0]);
+            AssertPointApproximate(new PointF(1.0f, 0.0f), source.Polygon[1]);
+            AssertPointApproximate(new PointF(0.5f, 1.0f), source.Polygon[2]);
+        }
+
+        [Test]
+        public void DocumentSource_Parse_Pentagon_Accepts5Points()
+        {
+            var source = DocumentSource.Parse("D(1,0.0,0.0,1.0,0.0,1.5,0.5,0.5,1.0,0.0,0.5)");
+
+            Assert.AreEqual(1, source.PageNumber);
+            Assert.IsNotNull(source.Polygon);
+            Assert.AreEqual(5, source.Polygon!.Count);
+        }
+
+        [Test]
+        public void DocumentSource_Parse_OddCoordCount_ThrowsFormatException()
+        {
+            // page + 3 coords (odd number of coords after page)
+            Assert.Throws<FormatException>(() => DocumentSource.Parse("D(1,0.0,0.0,1.0)"));
+        }
+
         #endregion
 
         #region AudioVisualSource Parsing
@@ -111,7 +154,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
         {
             var source = AudioVisualSource.Parse("AV(5000,100,200,50,60)");
 
-            Assert.AreEqual(5000, source.TimeMs);
+            Assert.AreEqual(TimeSpan.FromMilliseconds(5000), source.Time);
             Assert.IsNotNull(source.BoundingBox);
             Assert.AreEqual(100, source.BoundingBox!.Value.X);
             Assert.AreEqual(200, source.BoundingBox.Value.Y);
@@ -124,7 +167,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
         {
             var source = AudioVisualSource.Parse("AV(5000)");
 
-            Assert.AreEqual(5000, source.TimeMs);
+            Assert.AreEqual(TimeSpan.FromMilliseconds(5000), source.Time);
             Assert.IsNull(source.BoundingBox);
         }
 
@@ -162,44 +205,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var sources = AudioVisualSource.ParseAll(input);
 
             Assert.AreEqual(2, sources.Length);
-            Assert.AreEqual(0, sources[0].TimeMs);
-            Assert.AreEqual(1000, sources[1].TimeMs);
-        }
-
-        #endregion
-
-        #region TrackletSource Parsing
-
-        [Test]
-        public void TrackletSource_Parse_SplitsPairCorrectly()
-        {
-            var tracklet = TrackletSource.Parse("AV(0,100,200,50,60)-AV(1000,105,205,50,60)");
-
-            Assert.AreEqual(0, tracklet.Start.TimeMs);
-            Assert.AreEqual(100, tracklet.Start.BoundingBox!.Value.X);
-            Assert.AreEqual(1000, tracklet.End.TimeMs);
-            Assert.AreEqual(105, tracklet.End.BoundingBox!.Value.X);
-        }
-
-        [Test]
-        public void TrackletSource_Parse_PreservesRawValue()
-        {
-            string raw = "AV(0,100,200,50,60)-AV(1000,105,205,50,60)";
-            var tracklet = TrackletSource.Parse(raw);
-            Assert.AreEqual(raw, tracklet.RawValue);
-            Assert.AreEqual(raw, tracklet.ToString());
-        }
-
-        [Test]
-        public void TrackletSource_Parse_InvalidFormat_ThrowsFormatException()
-        {
-            Assert.Throws<FormatException>(() => TrackletSource.Parse("AV(5000)"));
-        }
-
-        [Test]
-        public void TrackletSource_Parse_Null_ThrowsArgumentException()
-        {
-            Assert.Throws<ArgumentNullException>(() => TrackletSource.Parse(null!));
+            Assert.AreEqual(TimeSpan.Zero, sources[0].Time);
+            Assert.AreEqual(TimeSpan.FromMilliseconds(1000), sources[1].Time);
         }
 
         #endregion
@@ -218,17 +225,6 @@ namespace Azure.AI.ContentUnderstanding.Tests
         {
             var source = ContentSource.Parse("AV(5000,100,200,50,60)");
             Assert.IsInstanceOf<AudioVisualSource>(source);
-        }
-
-        [Test]
-        public void ContentSource_Parse_TrackletPair_ReturnsTrackletSource()
-        {
-            var source = ContentSource.Parse("AV(0,100,200,50,60)-AV(1000,105,205,50,60)");
-            Assert.IsInstanceOf<TrackletSource>(source);
-
-            var tracklet = (TrackletSource)source;
-            Assert.AreEqual(0, tracklet.Start.TimeMs);
-            Assert.AreEqual(1000, tracklet.End.TimeMs);
         }
 
         [Test]
@@ -266,83 +262,81 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.IsInstanceOf<AudioVisualSource>(sources[0]);
         }
 
-        [Test]
-        public void ContentSource_ParseAll_MultiTracklet_ReturnsTrackletSources()
-        {
-            string input = "AV(0,100,200,50,60)-AV(1000,105,205,50,60);AV(5000,200,180,50,60)-AV(7000,210,190,50,60)";
-            var sources = ContentSource.ParseAll(input);
-
-            Assert.AreEqual(2, sources.Length);
-            Assert.IsInstanceOf<TrackletSource>(sources[0]);
-            Assert.IsInstanceOf<TrackletSource>(sources[1]);
-
-            var t1 = (TrackletSource)sources[0];
-            var t2 = (TrackletSource)sources[1];
-            Assert.AreEqual(0, t1.Start.TimeMs);
-            Assert.AreEqual(1000, t1.End.TimeMs);
-            Assert.AreEqual(5000, t2.Start.TimeMs);
-            Assert.AreEqual(7000, t2.End.TimeMs);
-        }
-
-        [Test]
-        public void ContentField_GroundingSources_TrackletPair_ReturnsTrackletSource()
-        {
-            var field = ContentUnderstandingModelFactory.StringField(
-                source: "AV(0,100,200,50,60)-AV(1000,105,205,50,60)");
-
-            var sources = field.GroundingSources;
-            Assert.IsNotNull(sources);
-            Assert.AreEqual(1, sources!.Length);
-            Assert.IsInstanceOf<TrackletSource>(sources[0]);
-
-            var tracklet = (TrackletSource)sources[0];
-            Assert.AreEqual(0, tracklet.Start.TimeMs);
-            Assert.AreEqual(1000, tracklet.End.TimeMs);
-        }
-
         #endregion
 
-        #region ContentField.GroundingSources Integration
+        #region ContentField.Sources Integration
 
         [Test]
-        public void ContentField_GroundingSources_NullSource_ReturnsNull()
+        public void ContentField_Sources_NullSource_ReturnsNull()
         {
             var field = ContentUnderstandingModelFactory.StringField(source: null);
-            Assert.IsNull(field.GroundingSources);
+            Assert.IsNull(field.Sources);
         }
 
         [Test]
-        public void ContentField_GroundingSources_EmptySource_ReturnsNull()
+        public void ContentField_Sources_EmptySource_ReturnsNull()
         {
             var field = ContentUnderstandingModelFactory.StringField(source: "");
-            Assert.IsNull(field.GroundingSources);
+            Assert.IsNull(field.Sources);
         }
 
         [Test]
-        public void ContentField_GroundingSources_ValidDocumentSource_ReturnsParsedArray()
+        public void ContentField_Sources_ValidDocumentSource_ReturnsParsedArray()
         {
             var field = ContentUnderstandingModelFactory.StringField(
                 source: "D(1,0.5712,1.4062,2.1087,1.4088,2.1084,1.5762,0.5709,1.5736)");
 
-            var sources = field.GroundingSources;
+            var sources = field.Sources;
             Assert.IsNotNull(sources);
             Assert.AreEqual(1, sources!.Length);
             Assert.IsInstanceOf<DocumentSource>(sources[0]);
 
             var doc = (DocumentSource)sources[0];
             Assert.AreEqual(1, doc.PageNumber);
-            Assert.AreEqual(4, doc.Polygon.Count);
+            Assert.IsNotNull(doc.Polygon);
+            Assert.AreEqual(4, doc.Polygon!.Count);
         }
 
         [Test]
-        public void ContentField_GroundingSources_MultiRegion_ReturnsMultipleSources()
+        public void ContentField_Sources_MultiRegion_ReturnsMultipleSources()
         {
             var field = ContentUnderstandingModelFactory.StringField(
                 source: "D(1,0.0,0.0,1.0,0.0,1.0,1.0,0.0,1.0);D(2,0.0,0.0,1.0,0.0,1.0,1.0,0.0,1.0)");
 
-            var sources = field.GroundingSources;
+            var sources = field.Sources;
             Assert.IsNotNull(sources);
             Assert.AreEqual(2, sources!.Length);
+        }
+
+        #endregion
+
+        #region ToRawString Extension
+
+        [Test]
+        public void ContentSourceExtensions_ToRawString_JoinsSources()
+        {
+            string input = "D(1,0.0,0.0,1.0,0.0,1.0,1.0,0.0,1.0);D(2,0.0,0.0,1.0,0.0,1.0,1.0,0.0,1.0)";
+            var sources = ContentSource.ParseAll(input);
+
+            string result = sources.ToRawString();
+            Assert.AreEqual(input, result);
+        }
+
+        [Test]
+        public void ContentSourceExtensions_ToRawString_SingleSource()
+        {
+            string input = "D(1,0.0,0.0,1.0,0.0,1.0,1.0,0.0,1.0)";
+            var sources = ContentSource.ParseAll(input);
+
+            string result = sources.ToRawString();
+            Assert.AreEqual(input, result);
+        }
+
+        [Test]
+        public void ContentSourceExtensions_ToRawString_Null_ThrowsArgumentNullException()
+        {
+            ContentSource[]? sources = null;
+            Assert.Throws<ArgumentNullException>(() => sources!.ToRawString());
         }
 
         #endregion
@@ -356,7 +350,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var source = DocumentSource.Parse("D(1,0.5712,1.4062,2.1087,1.4088,2.1084,1.5762,0.5709,1.5736)");
 
             Assert.AreEqual(1, source.PageNumber);
-            Assert.AreEqual(4, source.Polygon.Count);
+            Assert.IsNotNull(source.Polygon);
+            Assert.AreEqual(4, source.Polygon!.Count);
 
             // Verify the coordinates match the real data
             Assert.AreEqual(0.5712f, source.Polygon[0].X, 0.0001f);
