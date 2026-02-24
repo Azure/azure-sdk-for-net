@@ -44,10 +44,10 @@ namespace Azure.AI.ContentUnderstanding
         /// </param>
         /// <param name="contents"> The extracted content. </param>
         /// <returns> A new <see cref="ContentUnderstanding.AnalysisResult"/> instance for mocking. </returns>
-        public static AnalysisResult AnalysisResult(string analyzerId = default, string apiVersion = default, DateTimeOffset? createdAt = default, IEnumerable<ResponseError> warnings = default, string stringEncoding = default, IEnumerable<MediaContent> contents = default)
+        public static AnalysisResult AnalysisResult(string analyzerId = default, string apiVersion = default, DateTimeOffset? createdAt = default, IEnumerable<ResponseError> warnings = default, string stringEncoding = default, IEnumerable<AnalysisContent> contents = default)
         {
             warnings ??= new ChangeTrackingList<ResponseError>();
-            contents ??= new ChangeTrackingList<MediaContent>();
+            contents ??= new ChangeTrackingList<AnalysisContent>();
 
             return new AnalysisResult(
                 analyzerId,
@@ -70,12 +70,12 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="path"> The path of the content in the input. </param>
         /// <param name="markdown"> Markdown representation of the content. </param>
         /// <param name="fields"> Extracted fields from the content. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.MediaContent"/> instance for mocking. </returns>
-        public static MediaContent MediaContent(string kind = default, string mimeType = default, string analyzerId = default, string category = default, string path = default, string markdown = default, IDictionary<string, ContentField> fields = default)
+        /// <returns> A new <see cref="ContentUnderstanding.AnalysisContent"/> instance for mocking. </returns>
+        public static AnalysisContent AnalysisContent(string kind = default, string mimeType = default, string analyzerId = default, string category = default, string path = default, string markdown = default, IDictionary<string, ContentField> fields = default)
         {
             fields ??= new ChangeTrackingDictionary<string, ContentField>();
 
-            return new UnknownMediaContent(
+            return new UnknownAnalysisContent(
                 new MediaContentKind(kind),
                 mimeType,
                 analyzerId,
@@ -88,7 +88,7 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary>
         /// Field extracted from the content.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContentUnderstanding.StringField"/>, <see cref="ContentUnderstanding.DateTimeOffsetField"/>, <see cref="ContentUnderstanding.TimeField"/>, <see cref="ContentUnderstanding.NumberField"/>, <see cref="ContentUnderstanding.IntegerField"/>, <see cref="ContentUnderstanding.BooleanField"/>, <see cref="ContentUnderstanding.ArrayField"/>, <see cref="ContentUnderstanding.ObjectField"/>, and <see cref="ContentUnderstanding.JsonField"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContentUnderstanding.ContentStringField"/>, <see cref="ContentUnderstanding.ContentDateTimeOffsetField"/>, <see cref="ContentUnderstanding.ContentTimeField"/>, <see cref="ContentUnderstanding.ContentNumberField"/>, <see cref="ContentUnderstanding.ContentIntegerField"/>, <see cref="ContentUnderstanding.ContentBooleanField"/>, <see cref="ContentUnderstanding.ContentArrayField"/>, <see cref="ContentUnderstanding.ContentObjectField"/>, and <see cref="ContentUnderstanding.ContentJsonField"/>.
         /// </summary>
         /// <param name="type"> Semantic data type of the field value. </param>
         /// <param name="spans"> Span(s) associated with the field value in the markdown content. </param>

@@ -55,15 +55,15 @@ namespace Azure.AI.ContentUnderstanding
         /// <summary>
         /// Gets the value of the field, regardless of its type.
         /// Returns the appropriate typed value for each field type:
-        /// - <see cref="StringField"/>: returns <see cref="StringField.Value"/>
-        /// - <see cref="NumberField"/>: returns <see cref="NumberField.Value"/>
-        /// - <see cref="IntegerField"/>: returns <see cref="IntegerField.Value"/>
-        /// - <see cref="DateTimeOffsetField"/>: returns <see cref="DateTimeOffsetField.Value"/>
-        /// - <see cref="TimeField"/>: returns <see cref="TimeField.Value"/>
-        /// - <see cref="BooleanField"/>: returns <see cref="BooleanField.Value"/>
-        /// - <see cref="ObjectField"/>: returns <see cref="ObjectField.Value"/>
-        /// - <see cref="ArrayField"/>: returns <see cref="ArrayField.Value"/>
-        /// - <see cref="JsonField"/>: returns <see cref="JsonField.Value"/>
+        /// - <see cref="ContentStringField"/>: returns <see cref="ContentStringField.Value"/>
+        /// - <see cref="ContentNumberField"/>: returns <see cref="ContentNumberField.Value"/>
+        /// - <see cref="ContentIntegerField"/>: returns <see cref="ContentIntegerField.Value"/>
+        /// - <see cref="ContentDateTimeOffsetField"/>: returns <see cref="ContentDateTimeOffsetField.Value"/>
+        /// - <see cref="ContentTimeField"/>: returns <see cref="ContentTimeField.Value"/>
+        /// - <see cref="ContentBooleanField"/>: returns <see cref="ContentBooleanField.Value"/>
+        /// - <see cref="ContentObjectField"/>: returns <see cref="ContentObjectField.Value"/>
+        /// - <see cref="ContentArrayField"/>: returns <see cref="ContentArrayField.Value"/>
+        /// - <see cref="ContentJsonField"/>: returns <see cref="ContentJsonField.Value"/>
         /// </summary>
         /// <example>
         /// <code>
@@ -72,22 +72,22 @@ namespace Azure.AI.ContentUnderstanding
         ///
         /// // Nested object access
         /// // Note: Use Value (not this Value) to access nested fields because this Value returns object,
-        /// // which cannot be indexed with []. ObjectField.Value is the IDictionary&lt;string, ContentField&gt;.
-        /// var totalAmountObj = (ObjectField)documentContent.Fields["TotalAmount"];
+        /// // which cannot be indexed with []. ContentObjectField.Value is the IDictionary&lt;string, ContentField&gt;.
+        /// var totalAmountObj = (ContentObjectField)documentContent.Fields["TotalAmount"];
         /// var amount = totalAmountObj.Value["Amount"].Value;
         /// </code>
         /// </example>
         public object Value => this switch
         {
-            StringField sf => sf.Value,
-            NumberField nf => nf.Value,
-            IntegerField inf => inf.Value,
-            DateTimeOffsetField df => df.Value,
-            TimeField tf => tf.Value,
-            BooleanField bf => bf.Value,
-            ObjectField of => of.Value,
-            ArrayField af => af.Value,
-            JsonField jf => jf.Value,
+            ContentStringField sf => sf.Value,
+            ContentNumberField nf => nf.Value,
+            ContentIntegerField inf => inf.Value,
+            ContentDateTimeOffsetField df => df.Value,
+            ContentTimeField tf => tf.Value,
+            ContentBooleanField bf => bf.Value,
+            ContentObjectField of => of.Value,
+            ContentArrayField af => af.Value,
+            ContentJsonField jf => jf.Value,
             _ => null
         };
     }

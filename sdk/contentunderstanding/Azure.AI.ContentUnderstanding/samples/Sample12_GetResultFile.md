@@ -71,7 +71,7 @@ Retrieve a result file (keyframe image) using the operation ID and file path:
 // 3. Call GetResultFileAsync with the operation ID and path
 
 // For video analysis, keyframes would be found in AudioVisualContent.KeyFrameTimes
-// Cast MediaContent to AudioVisualContent to access video-specific properties
+// Cast AnalysisContent to AudioVisualContent to access video-specific properties
 AudioVisualContent videoContent = (AudioVisualContent)result.Contents!.First();
 // Print keyframe information
 int totalKeyframes = videoContent.KeyFrameTimes!.Count;

@@ -123,7 +123,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             }
 
             // Extract object fields (nested structures)
-            if (documentContent.Fields.GetFieldOrDefault("TotalAmount") is ObjectField totalAmountObj)
+            if (documentContent.Fields.GetFieldOrDefault("TotalAmount") is ContentObjectField totalAmountObj)
             {
                 var amount = totalAmountObj.Value?.GetFieldOrDefault("Amount")?.Value as double?;
                 var currency = totalAmountObj.Value?.GetFieldOrDefault("CurrencyCode")?.Value;
@@ -145,12 +145,12 @@ namespace Azure.AI.ContentUnderstanding.Samples
             }
 
             // Extract array fields (collections like line items)
-            if (documentContent.Fields.GetFieldOrDefault("LineItems") is ArrayField lineItems)
+            if (documentContent.Fields.GetFieldOrDefault("LineItems") is ContentArrayField lineItems)
             {
                 Console.WriteLine($"Line Items ({lineItems.Count}):");
                 for (int i = 0; i < lineItems.Count; i++)
                 {
-                    if (lineItems[i] is ObjectField item)
+                    if (lineItems[i] is ContentObjectField item)
                     {
                         var description = item.Value?.GetFieldOrDefault("Description")?.Value;
                         var quantity = item.Value?.GetFieldOrDefault("Quantity")?.Value as double?;
@@ -250,8 +250,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             // Verify TotalAmount object field - expected to exist
             var totalAmountFieldAssert = docContent.Fields["TotalAmount"];
-            Assert.IsInstanceOf<ObjectField>(totalAmountFieldAssert, "TotalAmount should be an ObjectField");
-            var totalAmountObjAssert = (ObjectField)totalAmountFieldAssert;
+            Assert.IsInstanceOf<ContentObjectField>(totalAmountFieldAssert, "TotalAmount should be a ContentObjectField");
+            var totalAmountObjAssert = (ContentObjectField)totalAmountFieldAssert;
 
             if (totalAmountObjAssert.Confidence.HasValue)
             {
@@ -263,7 +263,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsNotNull(totalAmountObjAssert.Value, "TotalAmount.Value should not be null");
             var amountFieldAssert = totalAmountObjAssert.Value!["Amount"];
             Assert.IsNotNull(amountFieldAssert, "Amount field should exist");
-            Assert.IsInstanceOf<NumberField>(amountFieldAssert, "Amount should be a NumberField");
+            Assert.IsInstanceOf<ContentNumberField>(amountFieldAssert, "Amount should be a ContentNumberField");
             if (amountFieldAssert.Value is double amountValue)
             {
                 Assert.IsTrue(amountValue >= 0, $"Amount should be >= 0, but was {amountValue}");
@@ -284,14 +284,14 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             // Verify LineItems array field - expected to exist
             var lineItemsFieldAssert = docContent.Fields["LineItems"];
-            Assert.IsInstanceOf<ArrayField>(lineItemsFieldAssert, "LineItems should be an ArrayField");
-            var lineItemsAssert = (ArrayField)lineItemsFieldAssert;
+            Assert.IsInstanceOf<ContentArrayField>(lineItemsFieldAssert, "LineItems should be a ContentArrayField");
+            var lineItemsAssert = (ContentArrayField)lineItemsFieldAssert;
             Assert.IsTrue(lineItemsAssert.Count >= 0, "LineItems count should be >= 0");
 
             for (int i = 0; i < lineItemsAssert.Count; i++)
             {
-                Assert.IsInstanceOf<ObjectField>(lineItemsAssert[i], $"Line item {i + 1} should be an ObjectField");
-                var item = (ObjectField)lineItemsAssert[i];
+                Assert.IsInstanceOf<ContentObjectField>(lineItemsAssert[i], $"Line item {i + 1} should be a ContentObjectField");
+                var item = (ContentObjectField)lineItemsAssert[i];
 
                 if (item.Confidence.HasValue)
                 {
@@ -312,7 +312,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 // Verify Quantity field - expected to exist
                 var quantityField = item.Value["Quantity"];
                 Assert.IsNotNull(quantityField, $"Line item {i + 1} Quantity field should exist");
-                Assert.IsInstanceOf<NumberField>(quantityField, $"Line item {i + 1} Quantity should be a NumberField");
+                Assert.IsInstanceOf<ContentNumberField>(quantityField, $"Line item {i + 1} Quantity should be a ContentNumberField");
                 if (quantityField.Value is double quantity)
                 {
                     Assert.IsTrue(quantity >= 0, $"Line item {i + 1} quantity should be >= 0, but was {quantity}");

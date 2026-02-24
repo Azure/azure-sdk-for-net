@@ -8,7 +8,7 @@ Content Understanding supports both local binary inputs (see [Sample01_AnalyzeBi
 
 **Important**: For URL inputs, use `AnalyzeAsync()` with `AnalysisInput` objects that wrap the URL. For binary data (local files), use `AnalyzeBinaryAsync()` instead. This sample demonstrates `AnalyzeAsync()` with URL inputs.
 
-Documents, HTML, and images with text are returned as `DocumentContent` (derived from `MediaContent`), while audio and video are returned as `AudioVisualContent` (also derived from `MediaContent`). These prebuilt RAG analyzers return markdown and a one-paragraph `Summary` for each content item; `prebuilt-videoSearch` can return multiple segments, so iterate over all contents rather than just the first.
+Documents, HTML, and images with text are returned as `DocumentContent` (derived from `AnalysisContent`), while audio and video are returned as `AudioVisualContent` (also derived from `AnalysisContent`). These prebuilt RAG analyzers return markdown and a one-paragraph `Summary` for each content item; `prebuilt-videoSearch` can return multiple segments, so iterate over all contents rather than just the first.
 
 ## Prerequisites
 
@@ -40,7 +40,7 @@ Use the `prebuilt-documentSearch` analyzer with a public document URL. Note that
 
 For a list of supported document types for `prebuilt-documentSearch`, see [Service limits][cu-service-limits].
 
-Use `AnalyzeAsync()` with `AnalysisInput` objects that wrap the URL. The result contains `MediaContent` items that expose markdown and detailed properties. For documents, cast to `DocumentContent` to access document-specific properties such as pages and tables.
+Use `AnalyzeAsync()` with `AnalysisInput` objects that wrap the URL. The result contains `AnalysisContent` items that expose markdown and detailed properties. For documents, cast to `DocumentContent` to access document-specific properties such as pages and tables.
 
 ```C# Snippet:ContentUnderstandingAnalyzeUrlAsync
 // You can replace this URL with your own publicly accessible document URL.
@@ -52,12 +52,12 @@ Operation<AnalysisResult> operation = await client.AnalyzeAsync(
     inputs: new[] { new AnalysisInput { Uri = uriSource } });
 
 AnalysisResult result = operation.Value;
-MediaContent content = result.Contents!.First();
+AnalysisContent content = result.Contents!.First();
 Console.WriteLine("Markdown:");
 Console.WriteLine(content.Markdown);
 
-// Cast MediaContent to DocumentContent to access document-specific properties
-// DocumentContent derives from MediaContent and provides additional properties
+// Cast AnalysisContent to DocumentContent to access document-specific properties
+// DocumentContent derives from AnalysisContent and provides additional properties
 // to access full information about document, including Pages, Tables and many others
 DocumentContent documentContent = (DocumentContent)content;
 Console.WriteLine($"Pages: {documentContent.StartPageNumber} - {documentContent.EndPageNumber}");
@@ -78,7 +78,7 @@ if (documentContent.Pages != null && documentContent.Pages.Count > 0)
 
 Analyze video content (with transcript, shots, and segments enabled) using `prebuilt-videoSearch`. Markdown output follows the video markdown schema described in [Video markdown][cu-video-markdown]. The analyzer divides the video into topic- or scene-based segments rather than returning one long segment.
 
-For video content, cast `MediaContent` to `AudioVisualContent` to access video-specific properties such as timing information, transcript phrases, and frame dimensions. Iterate through all segments as `prebuilt-videoSearch` can return multiple segments.
+For video content, cast `AnalysisContent` to `AudioVisualContent` to access video-specific properties such as timing information, transcript phrases, and frame dimensions. Iterate through all segments as `prebuilt-videoSearch` can return multiple segments.
 
 ```C# Snippet:ContentUnderstandingAnalyzeVideoUrlAsync
 Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/videos/sdk_samples/FlightSimulator.mp4");
@@ -91,10 +91,10 @@ AnalysisResult result = operation.Value;
 
 // prebuilt-videoSearch can detect video segments, so we should iterate through all segments
 int segmentIndex = 1;
-foreach (MediaContent media in result.Contents!)
+foreach (AnalysisContent media in result.Contents!)
 {
-    // Cast MediaContent to AudioVisualContent to access audio/visual-specific properties
-    // AudioVisualContent derives from MediaContent and provides additional properties
+    // Cast AnalysisContent to AudioVisualContent to access audio/visual-specific properties
+    // AudioVisualContent derives from AnalysisContent and provides additional properties
     // to access full information about audio/video, including timing, transcript phrases, and many others
     AudioVisualContent videoContent = (AudioVisualContent)media;
     Console.WriteLine($"--- Segment {segmentIndex} ---");
@@ -116,7 +116,7 @@ foreach (MediaContent media in result.Contents!)
 
 Analyze audio content with `prebuilt-audioSearch`. The returned markdown captures transcript and structure similar to video markdown, and you can read summaries.
 
-For audio content, cast `MediaContent` to `AudioVisualContent` to access audio-specific properties such as transcript phrases with speaker diarization and timing information.
+For audio content, cast `AnalysisContent` to `AudioVisualContent` to access audio-specific properties such as transcript phrases with speaker diarization and timing information.
 
 ```C# Snippet:ContentUnderstandingAnalyzeAudioUrlAsync
 Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/audio/callCenterRecording.mp3");
@@ -127,8 +127,8 @@ Operation<AnalysisResult> operation = await client.AnalyzeAsync(
 
 AnalysisResult result = operation.Value;
 
-// Cast MediaContent to AudioVisualContent to access audio/visual-specific properties
-// AudioVisualContent derives from MediaContent and provides additional properties
+// Cast AnalysisContent to AudioVisualContent to access audio/visual-specific properties
+// AudioVisualContent derives from AnalysisContent and provides additional properties
 // to access full information about audio/video, including timing, transcript phrases, and many others
 AudioVisualContent audioContent = (AudioVisualContent)result.Contents!.First();
 Console.WriteLine("Markdown:");
@@ -163,7 +163,7 @@ Operation<AnalysisResult> operation = await client.AnalyzeAsync(
 
 AnalysisResult result = operation.Value;
 
-MediaContent content = result.Contents!.First();
+AnalysisContent content = result.Contents!.First();
 Console.WriteLine("Markdown:");
 Console.WriteLine(content.Markdown);
 

@@ -36,12 +36,12 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 inputs: new[] { new AnalysisInput { Uri = uriSource } });
 
             AnalysisResult result = operation.Value;
-            MediaContent content = result.Contents!.First();
+            AnalysisContent content = result.Contents!.First();
             Console.WriteLine("Markdown:");
             Console.WriteLine(content.Markdown);
 
-            // Cast MediaContent to DocumentContent to access document-specific properties
-            // DocumentContent derives from MediaContent and provides additional properties
+            // Cast AnalysisContent to DocumentContent to access document-specific properties
+            // DocumentContent derives from AnalysisContent and provides additional properties
             // to access full information about document, including Pages, Tables and many others
             DocumentContent documentContent = (DocumentContent)content;
             Console.WriteLine($"Pages: {documentContent.StartPageNumber} - {documentContent.EndPageNumber}");
@@ -79,8 +79,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsTrue(result.Contents!.Count > 0, "Result should have at least one content");
             Assert.AreEqual(1, result.Contents.Count, "PDF file should have exactly one content element");
             Assert.IsNotNull(content, "Content should not be null");
-            Assert.IsInstanceOf<MediaContent>(content, "Content should be of type MediaContent");
-            if (content is MediaContent mediaContent)
+            Assert.IsInstanceOf<AnalysisContent>(content, "Content should be of type AnalysisContent");
+            if (content is AnalysisContent mediaContent)
             {
                 Assert.IsNotNull(mediaContent.Markdown, "Markdown content should not be null");
                 Assert.IsTrue(mediaContent.Markdown.Length > 0, "Markdown content should not be empty");
@@ -187,10 +187,10 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             // prebuilt-videoSearch can detect video segments, so we should iterate through all segments
             int segmentIndex = 1;
-            foreach (MediaContent media in result.Contents!)
+            foreach (AnalysisContent media in result.Contents!)
             {
-                // Cast MediaContent to AudioVisualContent to access audio/visual-specific properties
-                // AudioVisualContent derives from MediaContent and provides additional properties
+                // Cast AnalysisContent to AudioVisualContent to access audio/visual-specific properties
+                // AudioVisualContent derives from AnalysisContent and provides additional properties
                 // to access full information about audio/video, including timing, transcript phrases, and many others
                 AudioVisualContent videoContent = (AudioVisualContent)media;
                 Console.WriteLine($"--- Segment {segmentIndex} ---");
@@ -237,8 +237,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             AnalysisResult result = operation.Value;
 
-            // Cast MediaContent to AudioVisualContent to access audio/visual-specific properties
-            // AudioVisualContent derives from MediaContent and provides additional properties
+            // Cast AnalysisContent to AudioVisualContent to access audio/visual-specific properties
+            // AudioVisualContent derives from AnalysisContent and provides additional properties
             // to access full information about audio/video, including timing, transcript phrases, and many others
             AudioVisualContent audioContent = (AudioVisualContent)result.Contents!.First();
             Console.WriteLine("Markdown:");
@@ -288,7 +288,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             AnalysisResult result = operation.Value;
 
-            MediaContent content = result.Contents!.First();
+            AnalysisContent content = result.Contents!.First();
             Console.WriteLine("Markdown:");
             Console.WriteLine(content.Markdown);
 
