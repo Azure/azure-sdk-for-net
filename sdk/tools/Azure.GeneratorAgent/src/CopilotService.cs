@@ -94,23 +94,15 @@ public sealed class CopilotService : IAsyncDisposable
 
                         // Extract file path from tool arguments
                         string? filePath = null;
-                        try
+                        var args = input.ToolArgs?.ToString();
+                        if (!string.IsNullOrEmpty(args))
                         {
-                            var args = input.ToolArgs?.ToString();
-                            if (!string.IsNullOrEmpty(args))
+                            using var document = JsonDocument.Parse(args);
+                            var root = document.RootElement;
+                            if (root.TryGetProperty("path", out var pathElement) && pathElement.ValueKind == JsonValueKind.String)
                             {
-                                using var document = JsonDocument.Parse(args);
-                                var root = document.RootElement;
-                                if (root.TryGetProperty("path", out var pathElement) && pathElement.ValueKind == JsonValueKind.String)
-                                {
-                                    filePath = pathElement.GetString();
-                                }
+                                filePath = pathElement.GetString();
                             }
-                        }
-                        catch (Exception ex)
-                        {
-                            throw new InvalidOperationException(
-                                $"Failed to parse tool arguments for {input.ToolName}. Aborting execution.", ex);
                         }
 
                         if (string.IsNullOrEmpty(filePath))
@@ -120,18 +112,9 @@ public sealed class CopilotService : IAsyncDisposable
                         }
 
                         // Validate file path is within project directory
-                        string absoluteFilePath;
-                        try
-                        {
-                            absoluteFilePath = Path.IsPathFullyQualified(filePath)
-                                ? Path.GetFullPath(filePath)
-                                : Path.GetFullPath(Path.Combine(projectPath, filePath));
-                        }
-                        catch (Exception ex)
-                        {
-                            throw new InvalidOperationException(
-                                $"Security violation: path validation failed for '{filePath}' in {input.ToolName}. Aborting execution.", ex);
-                        }
+                        var absoluteFilePath = Path.IsPathFullyQualified(filePath)
+                            ? Path.GetFullPath(filePath)
+                            : Path.GetFullPath(Path.Combine(projectPath, filePath));
 
                         if (!absoluteFilePath.StartsWith(normalizedProjectPath, StringComparison.Ordinal))
                         {
