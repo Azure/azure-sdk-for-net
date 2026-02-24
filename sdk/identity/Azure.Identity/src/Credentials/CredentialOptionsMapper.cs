@@ -131,7 +131,7 @@ internal class CredentialOptionsMapper
                 target.RedirectUri = ibcOptions.RedirectUri;
             }
 
-            target.TokenCachePersistenceOptions = ibcOptions.TokenCachePersistenceOptions?.Clone()
+            target.TokenCachePersistenceOptions = ibcOptions.TokenCachePersistenceOptions
                 ?? new TokenCachePersistenceOptions();
         }
     }
