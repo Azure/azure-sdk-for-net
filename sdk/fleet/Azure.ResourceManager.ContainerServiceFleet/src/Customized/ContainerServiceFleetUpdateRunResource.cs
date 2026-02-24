@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<ContainerServiceFleetUpdateRunResource>> StartAsync(WaitUntil waitUntil, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            return await StartAsync(waitUntil, new ETag(ifMatch), cancellationToken).ConfigureAwait(false);
+            return await StartAsync(waitUntil, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<ContainerServiceFleetUpdateRunResource> Start(WaitUntil waitUntil, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            return Start(waitUntil, new ETag(ifMatch), cancellationToken);
+            return Start(waitUntil, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken);
         }
 
         /// <summary>

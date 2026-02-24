@@ -150,14 +150,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             var updateRunData = new ContainerServiceFleetUpdateRunData
             {
                 ManagedClusterUpdate = new ContainerServiceFleetManagedClusterUpdate(
-                    new ContainerServiceFleetManagedClusterUpgradeSpec(
-                        ContainerServiceFleetManagedClusterUpgradeType.Full,
-                        "1.33.0", // Kubernetes version
-                        null
-                    ),
-                    new NodeImageSelection(NodeImageSelectionType.Latest),
-                    null
-                ),
+                    new ContainerServiceFleetManagedClusterUpgradeSpec(ContainerServiceFleetManagedClusterUpgradeType.Full)
+                    {
+                        KubernetesVersion = "1.33.0", // Kubernetes version
+                    })
+                {
+                    NodeImageSelection = new NodeImageSelection(NodeImageSelectionType.Latest)
+                },
                 StrategyStages = new List<ContainerServiceFleetUpdateStage>()
             };
 
