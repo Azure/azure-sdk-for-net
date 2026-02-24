@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
     /// <summary> The image properties. </summary>
     public partial class DisconnectedOperationsImageProperties : IJsonModel<DisconnectedOperationsImageProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DisconnectedOperationsImageProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DisconnectedOperationsImageProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDisconnectedOperationsImageProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DisconnectedOperationsImageProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DisconnectedOperationsImageProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -221,23 +238,6 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         DisconnectedOperationsImageProperties IPersistableModel<DisconnectedOperationsImageProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DisconnectedOperationsImageProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DisconnectedOperationsImageProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDisconnectedOperationsImageProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DisconnectedOperationsImageProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DisconnectedOperationsImageProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

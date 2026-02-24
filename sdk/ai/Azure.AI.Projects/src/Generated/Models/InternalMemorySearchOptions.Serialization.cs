@@ -47,6 +47,26 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InternalMemorySearchOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InternalMemorySearchOptions IPersistableModel<InternalMemorySearchOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InternalMemorySearchOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="internalMemorySearchOptions"> The <see cref="InternalMemorySearchOptions"/> to serialize into <see cref="BinaryContent"/>. </param>
+        public static implicit operator BinaryContent(InternalMemorySearchOptions internalMemorySearchOptions)
+        {
+            if (internalMemorySearchOptions == null)
+            {
+                return null;
+            }
+            return BinaryContent.Create(internalMemorySearchOptions, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InternalMemorySearchOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -175,26 +195,6 @@ namespace Azure.AI.Projects
                 }
             }
             return new InternalMemorySearchOptions(scope, items ?? new ChangeTrackingList<InputItem>(), previousSearchId, options0, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalMemorySearchOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InternalMemorySearchOptions IPersistableModel<InternalMemorySearchOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalMemorySearchOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="internalMemorySearchOptions"> The <see cref="InternalMemorySearchOptions"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(InternalMemorySearchOptions internalMemorySearchOptions)
-        {
-            if (internalMemorySearchOptions == null)
-            {
-                return null;
-            }
-            return BinaryContent.Create(internalMemorySearchOptions, ModelSerializationExtensions.WireOptions);
         }
     }
 }

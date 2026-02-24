@@ -1,5 +1,15 @@
 # Sample for use of Agents with Custom Bing search in Azure.AI.Projects.OpenAI.
 
+<<<<<<< HEAD
+=======
+## Warning
+Grounding with Bing Custom Search tool uses Grounding with Bing, which has additional costs and terms: [terms of use](https://www.microsoft.com/bing/apis/grounding-legal-enterprise) and [privacy statement](https://go.microsoft.com/fwlink/?LinkId=521839&clcid=0x409). Customer data will flow outside the Azure compliance boundary. Learn more [here](https://learn.microsoft.com/azure/ai-foundry/agents/how-to/tools/web-search).
+
+## Samples
+
+To enable your Agent to use Custom Bing search, we need to use `BingCustomSearchPreviewTool`.
+
+>>>>>>> b2df40989dea4c3b694308aa22af944998072143
 **Note:** This feature is in the preview.
 To enable your Agent to use Custom Bing search, we need to use `BingCustomSearchPreviewTool`.
 

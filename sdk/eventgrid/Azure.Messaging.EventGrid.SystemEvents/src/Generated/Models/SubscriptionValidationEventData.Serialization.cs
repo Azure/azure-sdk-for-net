@@ -52,6 +52,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SubscriptionValidationEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SubscriptionValidationEventData IPersistableModel<SubscriptionValidationEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SubscriptionValidationEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SubscriptionValidationEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -138,16 +148,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             return new SubscriptionValidationEventData(validationCode, validationUrl, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SubscriptionValidationEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SubscriptionValidationEventData IPersistableModel<SubscriptionValidationEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SubscriptionValidationEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class SubscriptionValidationEventDataConverter : JsonConverter<SubscriptionValidationEventData>
         {

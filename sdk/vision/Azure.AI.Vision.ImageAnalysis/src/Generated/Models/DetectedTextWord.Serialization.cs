@@ -53,6 +53,16 @@ namespace Azure.AI.Vision.ImageAnalysis
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DetectedTextWord>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DetectedTextWord IPersistableModel<DetectedTextWord>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DetectedTextWord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DetectedTextWord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -157,15 +167,5 @@ namespace Azure.AI.Vision.ImageAnalysis
             }
             return new DetectedTextWord(text, boundingPolygon, confidence, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DetectedTextWord>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DetectedTextWord IPersistableModel<DetectedTextWord>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DetectedTextWord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -46,6 +46,16 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<EntityMutationResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EntityMutationResult IPersistableModel<EntityMutationResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EntityMutationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EntityMutationResult"/> from. </param>
         public static explicit operator EntityMutationResult(Response response)
         {
@@ -234,15 +244,5 @@ namespace Azure.Analytics.Purview.DataMap
             }
             return new EntityMutationResult(guidAssignments ?? new ChangeTrackingDictionary<string, string>(), mutatedEntities ?? new ChangeTrackingDictionary<string, IList<AtlasEntityHeader>>(), partialUpdatedEntities ?? new ChangeTrackingList<AtlasEntityHeader>(), additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EntityMutationResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        EntityMutationResult IPersistableModel<EntityMutationResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EntityMutationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

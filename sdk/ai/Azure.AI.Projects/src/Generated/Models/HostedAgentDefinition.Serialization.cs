@@ -47,6 +47,16 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HostedAgentDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HostedAgentDefinition IPersistableModel<HostedAgentDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => (HostedAgentDefinition)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HostedAgentDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HostedAgentDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -236,15 +246,5 @@ namespace Azure.AI.Projects
                 environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
                 image);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HostedAgentDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HostedAgentDefinition IPersistableModel<HostedAgentDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => (HostedAgentDefinition)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HostedAgentDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -49,6 +49,16 @@ namespace Azure.AI.VoiceLive
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ClientEventConversationItemTruncate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ClientEventConversationItemTruncate IPersistableModel<ClientEventConversationItemTruncate>.Create(BinaryData data, ModelReaderWriterOptions options) => (ClientEventConversationItemTruncate)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ClientEventConversationItemTruncate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ClientEventConversationItemTruncate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -147,15 +157,5 @@ namespace Azure.AI.VoiceLive
                 contentIndex,
                 audioEndMs);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ClientEventConversationItemTruncate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ClientEventConversationItemTruncate IPersistableModel<ClientEventConversationItemTruncate>.Create(BinaryData data, ModelReaderWriterOptions options) => (ClientEventConversationItemTruncate)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ClientEventConversationItemTruncate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

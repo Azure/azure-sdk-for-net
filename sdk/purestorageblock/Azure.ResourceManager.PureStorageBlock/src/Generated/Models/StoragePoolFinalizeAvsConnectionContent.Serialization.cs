@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
     /// <summary> FinalizeAvsConnection payload information, either encoded or explicit. </summary>
     public partial class StoragePoolFinalizeAvsConnectionContent : IJsonModel<StoragePoolFinalizeAvsConnectionContent>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual StoragePoolFinalizeAvsConnectionContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StoragePoolFinalizeAvsConnectionContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeStoragePoolFinalizeAvsConnectionContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StoragePoolFinalizeAvsConnectionContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StoragePoolFinalizeAvsConnectionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -133,23 +150,6 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         StoragePoolFinalizeAvsConnectionContent IPersistableModel<StoragePoolFinalizeAvsConnectionContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StoragePoolFinalizeAvsConnectionContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<StoragePoolFinalizeAvsConnectionContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeStoragePoolFinalizeAvsConnectionContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(StoragePoolFinalizeAvsConnectionContent)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<StoragePoolFinalizeAvsConnectionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

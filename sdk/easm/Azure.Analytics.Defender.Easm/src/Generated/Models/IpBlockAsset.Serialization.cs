@@ -45,6 +45,16 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<IpBlockAsset>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IpBlockAsset IPersistableModel<IpBlockAsset>.Create(BinaryData data, ModelReaderWriterOptions options) => (IpBlockAsset)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IpBlockAsset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IpBlockAsset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -806,15 +816,5 @@ namespace Azure.Analytics.Defender.Easm
                 ipv4,
                 ipv6);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IpBlockAsset>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        IpBlockAsset IPersistableModel<IpBlockAsset>.Create(BinaryData data, ModelReaderWriterOptions options) => (IpBlockAsset)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IpBlockAsset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

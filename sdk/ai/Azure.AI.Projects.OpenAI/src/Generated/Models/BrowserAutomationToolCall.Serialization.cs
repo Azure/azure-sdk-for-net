@@ -47,6 +47,16 @@ namespace Azure.AI.Projects.OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BrowserAutomationToolCall>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BrowserAutomationToolCall IPersistableModel<BrowserAutomationToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => (BrowserAutomationToolCall)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BrowserAutomationToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BrowserAutomationToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -163,15 +173,5 @@ namespace Azure.AI.Projects.OpenAI
                 arguments,
                 status);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BrowserAutomationToolCall>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BrowserAutomationToolCall IPersistableModel<BrowserAutomationToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => (BrowserAutomationToolCall)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BrowserAutomationToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

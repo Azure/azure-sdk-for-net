@@ -48,6 +48,26 @@ namespace Azure.AI.Projects.OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<UpdateConversationRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        UpdateConversationRequest IPersistableModel<UpdateConversationRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<UpdateConversationRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="updateConversationRequest"> The <see cref="UpdateConversationRequest"/> to serialize into <see cref="BinaryContent"/>. </param>
+        public static implicit operator BinaryContent(UpdateConversationRequest updateConversationRequest)
+        {
+            if (updateConversationRequest == null)
+            {
+                return null;
+            }
+            return BinaryContent.Create(updateConversationRequest, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<UpdateConversationRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -137,26 +157,6 @@ namespace Azure.AI.Projects.OpenAI
                 }
             }
             return new UpdateConversationRequest(metadata, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<UpdateConversationRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        UpdateConversationRequest IPersistableModel<UpdateConversationRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<UpdateConversationRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="updateConversationRequest"> The <see cref="UpdateConversationRequest"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(UpdateConversationRequest updateConversationRequest)
-        {
-            if (updateConversationRequest == null)
-            {
-                return null;
-            }
-            return BinaryContent.Create(updateConversationRequest, ModelSerializationExtensions.WireOptions);
         }
     }
 }

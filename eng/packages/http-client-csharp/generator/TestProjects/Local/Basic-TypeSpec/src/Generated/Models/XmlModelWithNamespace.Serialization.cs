@@ -11,11 +11,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace BasicTypeSpec
 {
     /// <summary> The XmlModelWithNamespace. </summary>
-    public partial class XmlModelWithNamespace
+    public partial class XmlModelWithNamespace : IPersistableModel<XmlModelWithNamespace>, IXmlSerializable
     {
         /// <summary> Initializes a new instance of <see cref="XmlModelWithNamespace"/> for deserialization. </summary>
         internal XmlModelWithNamespace()
@@ -50,7 +51,7 @@ namespace BasicTypeSpec
                     {
                         using (XmlWriter writer = XmlWriter.Create(stream, ModelSerializationExtensions.XmlWriterSettings))
                         {
-                            Write(writer, options, "XmlModelWithNamespace");
+                            WriteXml(writer, options, "XmlModelWithNamespace");
                         }
                         if (stream.Position > int.MaxValue)
                         {
@@ -66,10 +67,20 @@ namespace BasicTypeSpec
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<XmlModelWithNamespace>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        XmlModelWithNamespace IPersistableModel<XmlModelWithNamespace>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<XmlModelWithNamespace>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
+
         /// <param name="writer"> The XML writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         /// <param name="nameHint"> An optional name hint. </param>
-        private void Write(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
+        private void WriteXml(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
         {
             if (nameHint != null)
             {
@@ -122,5 +133,9 @@ namespace BasicTypeSpec
             }
             return new XmlModelWithNamespace(foo, additionalBinaryDataProperties);
         }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteXml(writer, ModelSerializationExtensions.WireOptions, nameHint);
     }
 }

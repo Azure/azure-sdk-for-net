@@ -52,6 +52,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<IotHubDeviceConnectedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IotHubDeviceConnectedEventData IPersistableModel<IotHubDeviceConnectedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (IotHubDeviceConnectedEventData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IotHubDeviceConnectedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IotHubDeviceConnectedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -132,16 +142,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             return new IotHubDeviceConnectedEventData(deviceId, moduleId, hubName, deviceConnectionStateEventInfo, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IotHubDeviceConnectedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        IotHubDeviceConnectedEventData IPersistableModel<IotHubDeviceConnectedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (IotHubDeviceConnectedEventData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IotHubDeviceConnectedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class IotHubDeviceConnectedEventDataConverter : JsonConverter<IotHubDeviceConnectedEventData>
         {

@@ -21,6 +21,15 @@ namespace _Type.Property.ValueTypes
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
+        BinaryData IPersistableModel<CollectionsStringProperty>.Write(ModelReaderWriterOptions options) => throw null;
+
+        CollectionsStringProperty IPersistableModel<CollectionsStringProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        string IPersistableModel<CollectionsStringProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
+        /// <param name="collectionsStringProperty"> The <see cref="CollectionsStringProperty"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(CollectionsStringProperty collectionsStringProperty) => throw null;
+
         public static explicit operator CollectionsStringProperty(Response response) => throw null;
 
         void IJsonModel<CollectionsStringProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -30,14 +39,5 @@ namespace _Type.Property.ValueTypes
         CollectionsStringProperty IJsonModel<CollectionsStringProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual CollectionsStringProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<CollectionsStringProperty>.Write(ModelReaderWriterOptions options) => throw null;
-
-        CollectionsStringProperty IPersistableModel<CollectionsStringProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        string IPersistableModel<CollectionsStringProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        /// <param name="collectionsStringProperty"> The <see cref="CollectionsStringProperty"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(CollectionsStringProperty collectionsStringProperty) => throw null;
     }
 }

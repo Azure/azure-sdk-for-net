@@ -62,24 +62,49 @@ namespace Azure.AI.Projects.Telemetry
         private static bool s_traceContent = AppContextSwitchHelper.GetConfigValue(
             TraceContentsSwitch,
             TraceContentsEnvironmentVariable);
-        private static bool s_enableTelemetry = AppContextSwitchHelper.GetConfigValue(
-            EnableOpenTelemetrySwitch,
-            EnableOpenTelemetryEnvironmentVariable);
+        private static bool s_enableTelemetry = InitializeGenAITelemetry();
+        private static bool s_useMessageEvents = AppContextSwitchHelper.GetConfigValue(
+            UseMessageEventsSwitch,
+            UseMessageEventsEnvironmentVariable);
         private RecordedResponse _response;
         private string _errorType;
         private Exception _exception;
 
         private int _hasEnded = 0;
         private readonly OpenTelemetryScopeType _scopeType;
+
+        /// <summary>
+        /// Initializes GenAI telemetry by checking the GenAI-specific feature flag and
+        /// enabling the underlying Azure.Core ActivitySource when GenAI tracing is enabled.
+        /// This allows GenAI tracing to remain experimental independently of when general
+        /// OpenTelemetry support becomes stable in Azure SDKs.
+        /// </summary>
+        private static bool InitializeGenAITelemetry()
+        {
+            bool isEnabled = AppContextSwitchHelper.GetConfigValue(
+                EnableOpenTelemetrySwitch,
+                EnableOpenTelemetryEnvironmentVariable);
+
+            // When GenAI tracing is enabled, also enable the underlying Azure.Core ActivitySource
+            if (isEnabled)
+            {
+                AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
+            }
+
+            return isEnabled;
+        }
+
         private static void ReinitializeConfiguration()
         {
             s_traceContent = AppContextSwitchHelper.GetConfigValue(
                 TraceContentsSwitch,
                 TraceContentsEnvironmentVariable);
 
-            s_enableTelemetry = AppContextSwitchHelper.GetConfigValue(
-                EnableOpenTelemetrySwitch,
-                EnableOpenTelemetryEnvironmentVariable);
+            s_enableTelemetry = InitializeGenAITelemetry();
+
+            s_useMessageEvents = AppContextSwitchHelper.GetConfigValue(
+                UseMessageEventsSwitch,
+                UseMessageEventsEnvironmentVariable);
         }
 
         /// <summary>
@@ -223,22 +248,30 @@ namespace Azure.AI.Projects.Telemetry
                     scope.SetTagMaybe(GenAiRequestReasoningSummary, reasoningOptions.ReasoningSummaryVerbosity);
                 }
 
-                // Add instructions event (if instructions exist)
+                // Add instructions event or attribute (if instructions exist)
                 if (!string.IsNullOrEmpty(promptAgentDefinition.Instructions))
                 {
-                    string traceEvent = s_traceContent ? JsonSerializer.Serialize(
-                        new[] { new EventContent(promptAgentDefinition.Instructions) },
+                    string instructionsJson = JsonSerializer.Serialize(
+                        new[] { new EventContent(s_traceContent ? promptAgentDefinition.Instructions : null) },
                         EventsContext.Default.EventContentArray
-                    ) : JsonSerializer.Serialize("", EventsContext.Default.String);
-
-                    ActivityTagsCollection messageTags = new() {
-                        { GenAiProviderNameKey, GenAiProviderNameValue},
-                        { GenAiEventContent, traceEvent }
-                    };
-
-                    scope._activity?.AddEvent(
-                        new ActivityEvent(EventNameSystemMessage, tags: messageTags)
                     );
+
+                    if (s_useMessageEvents)
+                    {
+                        ActivityTagsCollection messageTags = new() {
+                            { GenAiProviderNameKey, GenAiProviderNameValue},
+                            { GenAiEventContent, instructionsJson }
+                        };
+
+                        scope._activity?.AddEvent(
+                            new ActivityEvent(EventNameSystemMessage, tags: messageTags)
+                        );
+                    }
+                    else
+                    {
+                        // Attribute-based: set system instructions as a span attribute
+                        scope._activity?.SetTag(EventNameSystemMessage, instructionsJson);
+                    }
                 }
             }
             else if (agentDefinition is Azure.AI.Projects.OpenAI.WorkflowAgentDefinition workflowAgentDefinition)
@@ -576,7 +609,8 @@ namespace Azure.AI.Projects.Telemetry
         internal static void ResetEnvironmentForTests()
         {
             s_traceContent = AppContextSwitchHelper.GetConfigValue(TraceContentsSwitch, TraceContentsEnvironmentVariable);
-            s_enableTelemetry = AppContextSwitchHelper.GetConfigValue(EnableOpenTelemetrySwitch, EnableOpenTelemetryEnvironmentVariable);
+            s_enableTelemetry = InitializeGenAITelemetry();
+            s_useMessageEvents = AppContextSwitchHelper.GetConfigValue(UseMessageEventsSwitch, UseMessageEventsEnvironmentVariable);
         }
     }
 }

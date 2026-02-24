@@ -47,6 +47,16 @@ namespace Azure.AI.Projects.OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InternalOutputMessageContentOutputTextContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InternalOutputMessageContentOutputTextContent IPersistableModel<InternalOutputMessageContentOutputTextContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalOutputMessageContentOutputTextContent)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InternalOutputMessageContentOutputTextContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InternalOutputMessageContentOutputTextContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -160,15 +170,5 @@ namespace Azure.AI.Projects.OpenAI
             }
             return new InternalOutputMessageContentOutputTextContent(@type, additionalBinaryDataProperties, text, annotations, logprobs ?? new ChangeTrackingList<InternalLogProb>());
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalOutputMessageContentOutputTextContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InternalOutputMessageContentOutputTextContent IPersistableModel<InternalOutputMessageContentOutputTextContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalOutputMessageContentOutputTextContent)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalOutputMessageContentOutputTextContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

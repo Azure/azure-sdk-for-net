@@ -50,6 +50,26 @@ namespace Azure.AI.DocumentIntelligence
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BoundingRegion>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BoundingRegion IPersistableModel<BoundingRegion>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BoundingRegion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<object>.Write(ModelReaderWriterOptions options) => ((IPersistableModel<BoundingRegion>)this).Write(options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<object>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BoundingRegion>)this).GetFormatFromOptions(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        object IPersistableModel<object>.Create(BinaryData data, ModelReaderWriterOptions options) => ((IPersistableModel<BoundingRegion>)this).Create(data, options);
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BoundingRegion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -147,16 +167,6 @@ namespace Azure.AI.DocumentIntelligence
             return new BoundingRegion(pageNumber, polygon, additionalBinaryDataProperties);
         }
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BoundingRegion>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BoundingRegion IPersistableModel<BoundingRegion>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BoundingRegion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<object>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BoundingRegion>)this).Write(writer, options);
@@ -164,15 +174,5 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         object IJsonModel<object>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BoundingRegion>)this).Create(ref reader, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<object>.Write(ModelReaderWriterOptions options) => ((IPersistableModel<BoundingRegion>)this).Write(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<object>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BoundingRegion>)this).GetFormatFromOptions(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        object IPersistableModel<object>.Create(BinaryData data, ModelReaderWriterOptions options) => ((IPersistableModel<BoundingRegion>)this).Create(data, options);
     }
 }

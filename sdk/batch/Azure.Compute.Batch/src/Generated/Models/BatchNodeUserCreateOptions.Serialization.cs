@@ -51,6 +51,28 @@ namespace Azure.Compute.Batch
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BatchNodeUserCreateOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchNodeUserCreateOptions IPersistableModel<BatchNodeUserCreateOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BatchNodeUserCreateOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="batchNodeUserCreateOptions"> The <see cref="BatchNodeUserCreateOptions"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(BatchNodeUserCreateOptions batchNodeUserCreateOptions)
+        {
+            if (batchNodeUserCreateOptions == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(batchNodeUserCreateOptions, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BatchNodeUserCreateOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -186,28 +208,6 @@ namespace Azure.Compute.Batch
                 password,
                 sshPublicKey,
                 additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BatchNodeUserCreateOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BatchNodeUserCreateOptions IPersistableModel<BatchNodeUserCreateOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BatchNodeUserCreateOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="batchNodeUserCreateOptions"> The <see cref="BatchNodeUserCreateOptions"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(BatchNodeUserCreateOptions batchNodeUserCreateOptions)
-        {
-            if (batchNodeUserCreateOptions == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(batchNodeUserCreateOptions, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

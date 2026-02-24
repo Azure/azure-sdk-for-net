@@ -45,6 +45,16 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<QnaPrompt>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        QnaPrompt IPersistableModel<QnaPrompt>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<QnaPrompt>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<QnaPrompt>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -171,15 +181,5 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
             return new QnaPrompt(displayOrder, qnaId, qna, displayText, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<QnaPrompt>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        QnaPrompt IPersistableModel<QnaPrompt>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<QnaPrompt>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

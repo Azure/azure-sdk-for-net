@@ -51,6 +51,28 @@ namespace Azure.Communication.ProgrammableConnectivity
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SimSwapRetrievalContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SimSwapRetrievalContent IPersistableModel<SimSwapRetrievalContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SimSwapRetrievalContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="simSwapRetrievalContent"> The <see cref="SimSwapRetrievalContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(SimSwapRetrievalContent simSwapRetrievalContent)
+        {
+            if (simSwapRetrievalContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(simSwapRetrievalContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SimSwapRetrievalContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -139,28 +161,6 @@ namespace Azure.Communication.ProgrammableConnectivity
                 }
             }
             return new SimSwapRetrievalContent(phoneNumber, networkIdentifier, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SimSwapRetrievalContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SimSwapRetrievalContent IPersistableModel<SimSwapRetrievalContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SimSwapRetrievalContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="simSwapRetrievalContent"> The <see cref="SimSwapRetrievalContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(SimSwapRetrievalContent simSwapRetrievalContent)
-        {
-            if (simSwapRetrievalContent == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(simSwapRetrievalContent, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

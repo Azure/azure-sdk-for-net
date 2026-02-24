@@ -42,6 +42,16 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BlobReferenceSasCredential>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BlobReferenceSasCredential IPersistableModel<BlobReferenceSasCredential>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BlobReferenceSasCredential>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BlobReferenceSasCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -119,7 +129,7 @@ namespace Azure.AI.Projects
             {
                 if (prop.NameEquals("sasUri"u8))
                 {
-                    sasUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    sasUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
@@ -134,15 +144,5 @@ namespace Azure.AI.Projects
             }
             return new BlobReferenceSasCredential(sasUri, @type, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BlobReferenceSasCredential>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BlobReferenceSasCredential IPersistableModel<BlobReferenceSasCredential>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BlobReferenceSasCredential>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

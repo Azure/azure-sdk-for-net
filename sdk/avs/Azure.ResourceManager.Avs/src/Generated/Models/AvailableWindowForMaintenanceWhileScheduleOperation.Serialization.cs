@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> Time window in which Customer can to schedule maintenance. </summary>
     public partial class AvailableWindowForMaintenanceWhileScheduleOperation : AvsScheduleOperationConstraint, IJsonModel<AvailableWindowForMaintenanceWhileScheduleOperation>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AvsScheduleOperationConstraint PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AvailableWindowForMaintenanceWhileScheduleOperation>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAvailableWindowForMaintenanceWhileScheduleOperation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AvailableWindowForMaintenanceWhileScheduleOperation)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AvailableWindowForMaintenanceWhileScheduleOperation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -120,23 +137,6 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AvailableWindowForMaintenanceWhileScheduleOperation IPersistableModel<AvailableWindowForMaintenanceWhileScheduleOperation>.Create(BinaryData data, ModelReaderWriterOptions options) => (AvailableWindowForMaintenanceWhileScheduleOperation)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AvsScheduleOperationConstraint PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AvailableWindowForMaintenanceWhileScheduleOperation>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAvailableWindowForMaintenanceWhileScheduleOperation(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AvailableWindowForMaintenanceWhileScheduleOperation)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AvailableWindowForMaintenanceWhileScheduleOperation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

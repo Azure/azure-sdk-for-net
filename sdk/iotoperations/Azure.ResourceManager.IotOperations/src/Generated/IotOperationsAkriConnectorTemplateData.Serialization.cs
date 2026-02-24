@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.IotOperations
     /// <summary> AkriConnectorTemplate resource. </summary>
     public partial class IotOperationsAkriConnectorTemplateData : ResourceData, IJsonModel<IotOperationsAkriConnectorTemplateData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IotOperationsAkriConnectorTemplateData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeIotOperationsAkriConnectorTemplateData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IotOperationsAkriConnectorTemplateData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="IotOperationsAkriConnectorTemplateData"/> from. </param>
+        internal static IotOperationsAkriConnectorTemplateData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeIotOperationsAkriConnectorTemplateData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IotOperationsAkriConnectorTemplateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -170,23 +194,6 @@ namespace Azure.ResourceManager.IotOperations
         /// <param name="options"> The client options for reading and writing models. </param>
         IotOperationsAkriConnectorTemplateData IPersistableModel<IotOperationsAkriConnectorTemplateData>.Create(BinaryData data, ModelReaderWriterOptions options) => (IotOperationsAkriConnectorTemplateData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<IotOperationsAkriConnectorTemplateData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeIotOperationsAkriConnectorTemplateData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(IotOperationsAkriConnectorTemplateData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<IotOperationsAkriConnectorTemplateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -200,13 +207,6 @@ namespace Azure.ResourceManager.IotOperations
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(iotOperationsAkriConnectorTemplateData, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="IotOperationsAkriConnectorTemplateData"/> from. </param>
-        internal static IotOperationsAkriConnectorTemplateData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeIotOperationsAkriConnectorTemplateData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

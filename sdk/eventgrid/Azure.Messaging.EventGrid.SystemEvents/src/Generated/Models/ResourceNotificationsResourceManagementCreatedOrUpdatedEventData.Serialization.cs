@@ -55,6 +55,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ResourceNotificationsResourceManagementCreatedOrUpdatedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ResourceNotificationsResourceManagementCreatedOrUpdatedEventData IPersistableModel<ResourceNotificationsResourceManagementCreatedOrUpdatedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ResourceNotificationsResourceManagementCreatedOrUpdatedEventData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ResourceNotificationsResourceManagementCreatedOrUpdatedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResourceNotificationsResourceManagementCreatedOrUpdatedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -129,16 +139,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             return new ResourceNotificationsResourceManagementCreatedOrUpdatedEventData(resourceDetails, operationalDetails, apiVersion, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResourceNotificationsResourceManagementCreatedOrUpdatedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceNotificationsResourceManagementCreatedOrUpdatedEventData IPersistableModel<ResourceNotificationsResourceManagementCreatedOrUpdatedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ResourceNotificationsResourceManagementCreatedOrUpdatedEventData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResourceNotificationsResourceManagementCreatedOrUpdatedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class ResourceNotificationsResourceManagementCreatedOrUpdatedEventDataConverter : JsonConverter<ResourceNotificationsResourceManagementCreatedOrUpdatedEventData>
         {

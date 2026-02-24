@@ -42,6 +42,16 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AgenticIdentityPreviewCredentials>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AgenticIdentityPreviewCredentials IPersistableModel<AgenticIdentityPreviewCredentials>.Create(BinaryData data, ModelReaderWriterOptions options) => (AgenticIdentityPreviewCredentials)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AgenticIdentityPreviewCredentials>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AgenticIdentityPreviewCredentials>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -104,15 +114,5 @@ namespace Azure.AI.Projects
             }
             return new AgenticIdentityPreviewCredentials(@type, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AgenticIdentityPreviewCredentials>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AgenticIdentityPreviewCredentials IPersistableModel<AgenticIdentityPreviewCredentials>.Create(BinaryData data, ModelReaderWriterOptions options) => (AgenticIdentityPreviewCredentials)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AgenticIdentityPreviewCredentials>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

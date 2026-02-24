@@ -50,6 +50,16 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DailyDeltaTypeResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DailyDeltaTypeResult IPersistableModel<DailyDeltaTypeResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (DailyDeltaTypeResult)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DailyDeltaTypeResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DailyDeltaTypeResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -144,15 +154,5 @@ namespace Azure.Analytics.Defender.Easm
                 additionalBinaryDataProperties,
                 count);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DailyDeltaTypeResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DailyDeltaTypeResult IPersistableModel<DailyDeltaTypeResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (DailyDeltaTypeResult)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DailyDeltaTypeResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

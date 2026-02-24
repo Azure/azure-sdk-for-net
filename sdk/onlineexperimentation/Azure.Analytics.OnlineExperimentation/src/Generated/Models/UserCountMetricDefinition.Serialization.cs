@@ -50,6 +50,16 @@ namespace Azure.Analytics.OnlineExperimentation
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<UserCountMetricDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        UserCountMetricDefinition IPersistableModel<UserCountMetricDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => (UserCountMetricDefinition)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<UserCountMetricDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<UserCountMetricDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -120,15 +130,5 @@ namespace Azure.Analytics.OnlineExperimentation
             }
             return new UserCountMetricDefinition(@type, additionalBinaryDataProperties, @event);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<UserCountMetricDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        UserCountMetricDefinition IPersistableModel<UserCountMetricDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => (UserCountMetricDefinition)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<UserCountMetricDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -47,6 +47,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<WebSlotSwapWithPreviewCancelledEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WebSlotSwapWithPreviewCancelledEventData IPersistableModel<WebSlotSwapWithPreviewCancelledEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WebSlotSwapWithPreviewCancelledEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WebSlotSwapWithPreviewCancelledEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -206,16 +216,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 verb,
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WebSlotSwapWithPreviewCancelledEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        WebSlotSwapWithPreviewCancelledEventData IPersistableModel<WebSlotSwapWithPreviewCancelledEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<WebSlotSwapWithPreviewCancelledEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class WebSlotSwapWithPreviewCancelledEventDataConverter : JsonConverter<WebSlotSwapWithPreviewCancelledEventData>
         {

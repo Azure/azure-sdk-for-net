@@ -45,6 +45,16 @@ namespace Azure.AI.Projects.OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ToolChoiceWebSearchPreview>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ToolChoiceWebSearchPreview IPersistableModel<ToolChoiceWebSearchPreview>.Create(BinaryData data, ModelReaderWriterOptions options) => (ToolChoiceWebSearchPreview)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ToolChoiceWebSearchPreview>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ToolChoiceWebSearchPreview>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -107,15 +117,5 @@ namespace Azure.AI.Projects.OpenAI
             }
             return new ToolChoiceWebSearchPreview(@type, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ToolChoiceWebSearchPreview>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ToolChoiceWebSearchPreview IPersistableModel<ToolChoiceWebSearchPreview>.Create(BinaryData data, ModelReaderWriterOptions options) => (ToolChoiceWebSearchPreview)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ToolChoiceWebSearchPreview>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

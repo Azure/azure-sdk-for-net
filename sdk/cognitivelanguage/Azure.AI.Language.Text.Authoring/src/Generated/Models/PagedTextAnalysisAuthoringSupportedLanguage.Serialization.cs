@@ -51,6 +51,16 @@ namespace Azure.AI.Language.Text.Authoring
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PagedTextAnalysisAuthoringSupportedLanguage>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PagedTextAnalysisAuthoringSupportedLanguage IPersistableModel<PagedTextAnalysisAuthoringSupportedLanguage>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PagedTextAnalysisAuthoringSupportedLanguage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PagedTextAnalysisAuthoringSupportedLanguage"/> from. </param>
         public static explicit operator PagedTextAnalysisAuthoringSupportedLanguage(Response response)
         {
@@ -151,7 +161,7 @@ namespace Azure.AI.Language.Text.Authoring
                     {
                         continue;
                     }
-                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")
@@ -161,15 +171,5 @@ namespace Azure.AI.Language.Text.Authoring
             }
             return new PagedTextAnalysisAuthoringSupportedLanguage(value, nextLink, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PagedTextAnalysisAuthoringSupportedLanguage>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PagedTextAnalysisAuthoringSupportedLanguage IPersistableModel<PagedTextAnalysisAuthoringSupportedLanguage>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PagedTextAnalysisAuthoringSupportedLanguage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

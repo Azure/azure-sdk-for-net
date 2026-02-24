@@ -47,6 +47,16 @@ namespace Azure.AI.Projects.OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AzureFunctionToolCallOutput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureFunctionToolCallOutput IPersistableModel<AzureFunctionToolCallOutput>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureFunctionToolCallOutput)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AzureFunctionToolCallOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AzureFunctionToolCallOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -186,15 +196,5 @@ namespace Azure.AI.Projects.OpenAI
                 output,
                 status);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AzureFunctionToolCallOutput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AzureFunctionToolCallOutput IPersistableModel<AzureFunctionToolCallOutput>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureFunctionToolCallOutput)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AzureFunctionToolCallOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

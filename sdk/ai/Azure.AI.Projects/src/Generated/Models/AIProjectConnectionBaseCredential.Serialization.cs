@@ -45,6 +45,16 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AIProjectConnectionBaseCredential>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AIProjectConnectionBaseCredential IPersistableModel<AIProjectConnectionBaseCredential>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AIProjectConnectionBaseCredential>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AIProjectConnectionBaseCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -130,15 +140,5 @@ namespace Azure.AI.Projects
             }
             return UnknownAIProjectConnectionBaseCredential.DeserializeUnknownAIProjectConnectionBaseCredential(element, options);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AIProjectConnectionBaseCredential>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AIProjectConnectionBaseCredential IPersistableModel<AIProjectConnectionBaseCredential>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AIProjectConnectionBaseCredential>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

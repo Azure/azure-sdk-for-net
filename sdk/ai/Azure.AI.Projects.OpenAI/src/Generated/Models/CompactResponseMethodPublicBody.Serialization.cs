@@ -48,6 +48,26 @@ namespace Azure.AI.Projects.OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CompactResponseMethodPublicBody>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CompactResponseMethodPublicBody IPersistableModel<CompactResponseMethodPublicBody>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CompactResponseMethodPublicBody>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="compactResponseMethodPublicBody"> The <see cref="CompactResponseMethodPublicBody"/> to serialize into <see cref="BinaryContent"/>. </param>
+        public static implicit operator BinaryContent(CompactResponseMethodPublicBody compactResponseMethodPublicBody)
+        {
+            if (compactResponseMethodPublicBody == null)
+            {
+                return null;
+            }
+            return BinaryContent.Create(compactResponseMethodPublicBody, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CompactResponseMethodPublicBody>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -192,26 +212,6 @@ namespace Azure.AI.Projects.OpenAI
                 }
             }
             return new CompactResponseMethodPublicBody(model, input, previousResponseId, instructions, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CompactResponseMethodPublicBody>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CompactResponseMethodPublicBody IPersistableModel<CompactResponseMethodPublicBody>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CompactResponseMethodPublicBody>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="compactResponseMethodPublicBody"> The <see cref="CompactResponseMethodPublicBody"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(CompactResponseMethodPublicBody compactResponseMethodPublicBody)
-        {
-            if (compactResponseMethodPublicBody == null)
-            {
-                return null;
-            }
-            return BinaryContent.Create(compactResponseMethodPublicBody, ModelSerializationExtensions.WireOptions);
         }
     }
 }

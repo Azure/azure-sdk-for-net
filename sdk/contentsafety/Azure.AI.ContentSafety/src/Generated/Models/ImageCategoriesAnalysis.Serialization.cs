@@ -50,6 +50,16 @@ namespace Azure.AI.ContentSafety
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ImageCategoriesAnalysis>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ImageCategoriesAnalysis IPersistableModel<ImageCategoriesAnalysis>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ImageCategoriesAnalysis>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ImageCategoriesAnalysis>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -143,15 +153,5 @@ namespace Azure.AI.ContentSafety
             }
             return new ImageCategoriesAnalysis(category, severity, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ImageCategoriesAnalysis>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ImageCategoriesAnalysis IPersistableModel<ImageCategoriesAnalysis>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ImageCategoriesAnalysis>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

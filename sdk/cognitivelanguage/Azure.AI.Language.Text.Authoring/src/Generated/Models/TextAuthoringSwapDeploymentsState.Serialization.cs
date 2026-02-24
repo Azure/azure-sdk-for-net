@@ -52,6 +52,16 @@ namespace Azure.AI.Language.Text.Authoring
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TextAuthoringSwapDeploymentsState>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TextAuthoringSwapDeploymentsState IPersistableModel<TextAuthoringSwapDeploymentsState>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TextAuthoringSwapDeploymentsState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TextAuthoringSwapDeploymentsState"/> from. </param>
         public static explicit operator TextAuthoringSwapDeploymentsState(Response response)
         {
@@ -261,15 +271,5 @@ namespace Azure.AI.Language.Text.Authoring
                 errors ?? new ChangeTrackingList<ResponseError>(),
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TextAuthoringSwapDeploymentsState>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        TextAuthoringSwapDeploymentsState IPersistableModel<TextAuthoringSwapDeploymentsState>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TextAuthoringSwapDeploymentsState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

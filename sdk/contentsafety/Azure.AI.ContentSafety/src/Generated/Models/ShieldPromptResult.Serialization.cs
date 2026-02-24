@@ -46,6 +46,16 @@ namespace Azure.AI.ContentSafety
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ShieldPromptResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ShieldPromptResult IPersistableModel<ShieldPromptResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ShieldPromptResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ShieldPromptResult"/> from. </param>
         public static explicit operator ShieldPromptResult(Response response)
         {
@@ -163,15 +173,5 @@ namespace Azure.AI.ContentSafety
             }
             return new ShieldPromptResult(userPromptAnalysis, documentsAnalysis ?? new ChangeTrackingList<DocumentInjectionAnalysisResult>(), additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ShieldPromptResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ShieldPromptResult IPersistableModel<ShieldPromptResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ShieldPromptResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

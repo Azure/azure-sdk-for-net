@@ -51,6 +51,16 @@ namespace Azure.Analytics.PlanetaryComputer
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TilerInfoGeoJsonFeature>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TilerInfoGeoJsonFeature IPersistableModel<TilerInfoGeoJsonFeature>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TilerInfoGeoJsonFeature>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TilerInfoGeoJsonFeature"/> from. </param>
         public static explicit operator TilerInfoGeoJsonFeature(Response response)
         {
@@ -93,10 +103,15 @@ namespace Azure.Analytics.PlanetaryComputer
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(BoundingBox))
+            if (Optional.IsCollectionDefined(BoundingBox))
             {
                 writer.WritePropertyName("bbox"u8);
-                writer.WriteNumberValue(BoundingBox.Value);
+                writer.WriteStartArray();
+                foreach (float item in BoundingBox)
+                {
+                    writer.WriteNumberValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -144,7 +159,7 @@ namespace Azure.Analytics.PlanetaryComputer
             GeoJsonGeometry geometry = default;
             IDictionary<string, TilerInfo> properties = default;
             string id = default;
-            float? boundingBox = default;
+            IList<float> boundingBox = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -179,7 +194,12 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    boundingBox = prop.Value.GetSingle();
+                    List<float> array = new List<float>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetSingle());
+                    }
+                    boundingBox = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -192,18 +212,8 @@ namespace Azure.Analytics.PlanetaryComputer
                 geometry,
                 properties,
                 id,
-                boundingBox,
+                boundingBox ?? new ChangeTrackingList<float>(),
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TilerInfoGeoJsonFeature>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        TilerInfoGeoJsonFeature IPersistableModel<TilerInfoGeoJsonFeature>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TilerInfoGeoJsonFeature>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

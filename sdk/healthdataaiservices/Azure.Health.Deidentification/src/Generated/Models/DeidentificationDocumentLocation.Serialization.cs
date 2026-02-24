@@ -51,6 +51,16 @@ namespace Azure.Health.Deidentification
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DeidentificationDocumentLocation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeidentificationDocumentLocation IPersistableModel<DeidentificationDocumentLocation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DeidentificationDocumentLocation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeidentificationDocumentLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -125,7 +135,7 @@ namespace Azure.Health.Deidentification
             {
                 if (prop.NameEquals("location"u8))
                 {
-                    location = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    location = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("etag"u8))
@@ -140,15 +150,5 @@ namespace Azure.Health.Deidentification
             }
             return new DeidentificationDocumentLocation(location, etag, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DeidentificationDocumentLocation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DeidentificationDocumentLocation IPersistableModel<DeidentificationDocumentLocation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DeidentificationDocumentLocation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

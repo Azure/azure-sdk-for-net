@@ -45,6 +45,16 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HostAsset>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HostAsset IPersistableModel<HostAsset>.Create(BinaryData data, ModelReaderWriterOptions options) => (HostAsset)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HostAsset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HostAsset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -882,15 +892,5 @@ namespace Azure.Analytics.Defender.Easm
                 ipv4 ?? new ChangeTrackingList<ObservedBoolean>(),
                 ipv6 ?? new ChangeTrackingList<ObservedBoolean>());
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HostAsset>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HostAsset IPersistableModel<HostAsset>.Create(BinaryData data, ModelReaderWriterOptions options) => (HostAsset)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HostAsset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

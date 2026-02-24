@@ -47,6 +47,16 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<OpenApiManagedSecurityScheme>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OpenApiManagedSecurityScheme IPersistableModel<OpenApiManagedSecurityScheme>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<OpenApiManagedSecurityScheme>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OpenApiManagedSecurityScheme>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -125,15 +135,5 @@ namespace Azure.AI.Projects
             }
             return new OpenApiManagedSecurityScheme(audience, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OpenApiManagedSecurityScheme>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        OpenApiManagedSecurityScheme IPersistableModel<OpenApiManagedSecurityScheme>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OpenApiManagedSecurityScheme>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

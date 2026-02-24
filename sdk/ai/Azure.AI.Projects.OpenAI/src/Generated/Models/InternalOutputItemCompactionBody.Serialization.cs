@@ -46,6 +46,16 @@ namespace Azure.AI.Projects.OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InternalOutputItemCompactionBody>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InternalOutputItemCompactionBody IPersistableModel<InternalOutputItemCompactionBody>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalOutputItemCompactionBody)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InternalOutputItemCompactionBody>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InternalOutputItemCompactionBody>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -156,15 +166,5 @@ namespace Azure.AI.Projects.OpenAI
                 encryptedContent,
                 createdBy);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalOutputItemCompactionBody>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InternalOutputItemCompactionBody IPersistableModel<InternalOutputItemCompactionBody>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalOutputItemCompactionBody)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalOutputItemCompactionBody>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -50,6 +50,16 @@ namespace Azure.AI.VoiceLive
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SessionUpdateResponseMcpCallFailed>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SessionUpdateResponseMcpCallFailed IPersistableModel<SessionUpdateResponseMcpCallFailed>.Create(BinaryData data, ModelReaderWriterOptions options) => (SessionUpdateResponseMcpCallFailed)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SessionUpdateResponseMcpCallFailed>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SessionUpdateResponseMcpCallFailed>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -134,15 +144,5 @@ namespace Azure.AI.VoiceLive
             }
             return new SessionUpdateResponseMcpCallFailed(@type, eventId, additionalBinaryDataProperties, itemId, outputIndex);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SessionUpdateResponseMcpCallFailed>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SessionUpdateResponseMcpCallFailed IPersistableModel<SessionUpdateResponseMcpCallFailed>.Create(BinaryData data, ModelReaderWriterOptions options) => (SessionUpdateResponseMcpCallFailed)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SessionUpdateResponseMcpCallFailed>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

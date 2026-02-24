@@ -52,6 +52,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AcsChatTypingIndicatorReceivedInThreadEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AcsChatTypingIndicatorReceivedInThreadEventData IPersistableModel<AcsChatTypingIndicatorReceivedInThreadEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AcsChatTypingIndicatorReceivedInThreadEventData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AcsChatTypingIndicatorReceivedInThreadEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AcsChatTypingIndicatorReceivedInThreadEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -221,16 +231,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 messageBody,
                 metadata ?? new ChangeTrackingDictionary<string, string>());
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AcsChatTypingIndicatorReceivedInThreadEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AcsChatTypingIndicatorReceivedInThreadEventData IPersistableModel<AcsChatTypingIndicatorReceivedInThreadEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AcsChatTypingIndicatorReceivedInThreadEventData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AcsChatTypingIndicatorReceivedInThreadEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class AcsChatTypingIndicatorReceivedInThreadEventDataConverter : JsonConverter<AcsChatTypingIndicatorReceivedInThreadEventData>
         {

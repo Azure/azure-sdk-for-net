@@ -51,6 +51,16 @@ namespace Azure.AI.ContentSafety
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TextBlocklistItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TextBlocklistItem IPersistableModel<TextBlocklistItem>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TextBlocklistItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TextBlocklistItem"/> from. </param>
         public static explicit operator TextBlocklistItem(Response response)
         {
@@ -173,15 +183,5 @@ namespace Azure.AI.ContentSafety
             }
             return new TextBlocklistItem(blocklistItemId, description, text, isRegex, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TextBlocklistItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        TextBlocklistItem IPersistableModel<TextBlocklistItem>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TextBlocklistItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

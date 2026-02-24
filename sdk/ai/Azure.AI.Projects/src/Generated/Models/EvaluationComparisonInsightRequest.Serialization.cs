@@ -47,6 +47,16 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<EvaluationComparisonInsightRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EvaluationComparisonInsightRequest IPersistableModel<EvaluationComparisonInsightRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => (EvaluationComparisonInsightRequest)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EvaluationComparisonInsightRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EvaluationComparisonInsightRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -155,15 +165,5 @@ namespace Azure.AI.Projects
             }
             return new EvaluationComparisonInsightRequest(@type, additionalBinaryDataProperties, evalId, baselineRunId, treatmentRunIds);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EvaluationComparisonInsightRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        EvaluationComparisonInsightRequest IPersistableModel<EvaluationComparisonInsightRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => (EvaluationComparisonInsightRequest)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EvaluationComparisonInsightRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

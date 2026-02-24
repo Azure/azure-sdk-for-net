@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     /// <summary> The CertificateVerificationCodeProperties. </summary>
     public partial class CertificateVerificationCodeProperties : IJsonModel<CertificateVerificationCodeProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CertificateVerificationCodeProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CertificateVerificationCodeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCertificateVerificationCodeProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CertificateVerificationCodeProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CertificateVerificationCodeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -241,23 +258,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         CertificateVerificationCodeProperties IPersistableModel<CertificateVerificationCodeProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CertificateVerificationCodeProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CertificateVerificationCodeProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeCertificateVerificationCodeProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CertificateVerificationCodeProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<CertificateVerificationCodeProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

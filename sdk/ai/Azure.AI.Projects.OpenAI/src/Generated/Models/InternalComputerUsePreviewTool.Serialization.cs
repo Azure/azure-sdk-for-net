@@ -46,6 +46,16 @@ namespace Azure.AI.Projects.OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InternalComputerUsePreviewTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InternalComputerUsePreviewTool IPersistableModel<InternalComputerUsePreviewTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalComputerUsePreviewTool)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InternalComputerUsePreviewTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InternalComputerUsePreviewTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -132,15 +142,5 @@ namespace Azure.AI.Projects.OpenAI
             }
             return new InternalComputerUsePreviewTool(@type, additionalBinaryDataProperties, environment, displayWidth, displayHeight);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalComputerUsePreviewTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InternalComputerUsePreviewTool IPersistableModel<InternalComputerUsePreviewTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalComputerUsePreviewTool)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalComputerUsePreviewTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

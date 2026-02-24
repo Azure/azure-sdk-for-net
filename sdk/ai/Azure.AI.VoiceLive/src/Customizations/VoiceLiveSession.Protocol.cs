@@ -46,7 +46,7 @@ namespace Azure.AI.VoiceLive
                 }
                 else if (_tokenCredential != null)
                 {
-                    var tokenOptions = new TokenRequestContext(new string[] { "https://cognitiveservices.azure.com/.default" });
+                    var tokenOptions = new TokenRequestContext(new string[] { "https://ai.azure.com/.default" });
 
                     var token = await _tokenCredential.GetTokenAsync(tokenOptions, cancellationToken).ConfigureAwait(false);
                     clientWebSocket.Options.SetRequestHeader("Authorization", $"{token.TokenType} {token.Token}");

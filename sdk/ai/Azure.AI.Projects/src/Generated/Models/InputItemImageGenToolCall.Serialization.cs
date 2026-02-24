@@ -47,6 +47,16 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InputItemImageGenToolCall>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InputItemImageGenToolCall IPersistableModel<InputItemImageGenToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => (InputItemImageGenToolCall)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InputItemImageGenToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InputItemImageGenToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -145,15 +155,5 @@ namespace Azure.AI.Projects
             }
             return new InputItemImageGenToolCall(@type, additionalBinaryDataProperties, id, status, result);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InputItemImageGenToolCall>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InputItemImageGenToolCall IPersistableModel<InputItemImageGenToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => (InputItemImageGenToolCall)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InputItemImageGenToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

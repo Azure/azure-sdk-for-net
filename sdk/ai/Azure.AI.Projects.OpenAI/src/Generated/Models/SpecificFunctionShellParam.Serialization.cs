@@ -42,6 +42,16 @@ namespace Azure.AI.Projects.OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SpecificFunctionShellParam>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SpecificFunctionShellParam IPersistableModel<SpecificFunctionShellParam>.Create(BinaryData data, ModelReaderWriterOptions options) => (SpecificFunctionShellParam)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SpecificFunctionShellParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SpecificFunctionShellParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -104,15 +114,5 @@ namespace Azure.AI.Projects.OpenAI
             }
             return new SpecificFunctionShellParam(@type, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SpecificFunctionShellParam>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SpecificFunctionShellParam IPersistableModel<SpecificFunctionShellParam>.Create(BinaryData data, ModelReaderWriterOptions options) => (SpecificFunctionShellParam)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SpecificFunctionShellParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

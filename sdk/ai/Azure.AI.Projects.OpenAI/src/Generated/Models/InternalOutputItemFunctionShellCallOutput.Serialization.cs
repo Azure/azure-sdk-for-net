@@ -46,6 +46,16 @@ namespace Azure.AI.Projects.OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InternalOutputItemFunctionShellCallOutput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InternalOutputItemFunctionShellCallOutput IPersistableModel<InternalOutputItemFunctionShellCallOutput>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalOutputItemFunctionShellCallOutput)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InternalOutputItemFunctionShellCallOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InternalOutputItemFunctionShellCallOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -196,15 +206,5 @@ namespace Azure.AI.Projects.OpenAI
                 maxOutputLength,
                 createdBy);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalOutputItemFunctionShellCallOutput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InternalOutputItemFunctionShellCallOutput IPersistableModel<InternalOutputItemFunctionShellCallOutput>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalOutputItemFunctionShellCallOutput)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalOutputItemFunctionShellCallOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

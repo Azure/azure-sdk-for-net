@@ -50,6 +50,16 @@ namespace Azure.AI.Language.Text.Authoring
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DocumentTextSentimentEvalResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DocumentTextSentimentEvalResult IPersistableModel<DocumentTextSentimentEvalResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DocumentTextSentimentEvalResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DocumentTextSentimentEvalResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -156,15 +166,5 @@ namespace Azure.AI.Language.Text.Authoring
             }
             return new DocumentTextSentimentEvalResult(expectedSentimentSpans, predictedSentimentSpans, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DocumentTextSentimentEvalResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentTextSentimentEvalResult IPersistableModel<DocumentTextSentimentEvalResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DocumentTextSentimentEvalResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

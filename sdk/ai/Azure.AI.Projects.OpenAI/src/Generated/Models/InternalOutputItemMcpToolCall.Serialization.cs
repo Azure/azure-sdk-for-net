@@ -46,6 +46,16 @@ namespace Azure.AI.Projects.OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InternalOutputItemMcpToolCall>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InternalOutputItemMcpToolCall IPersistableModel<InternalOutputItemMcpToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalOutputItemMcpToolCall)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InternalOutputItemMcpToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InternalOutputItemMcpToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -258,15 +268,5 @@ namespace Azure.AI.Projects.OpenAI
                 status,
                 approvalRequestId);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalOutputItemMcpToolCall>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InternalOutputItemMcpToolCall IPersistableModel<InternalOutputItemMcpToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalOutputItemMcpToolCall)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalOutputItemMcpToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.Avs
     /// <summary> A provisioned network resource. </summary>
     public partial class AvsProvisionedNetworkData : ResourceData, IJsonModel<AvsProvisionedNetworkData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AvsProvisionedNetworkData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAvsProvisionedNetworkData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AvsProvisionedNetworkData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AvsProvisionedNetworkData"/> from. </param>
+        internal static AvsProvisionedNetworkData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAvsProvisionedNetworkData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AvsProvisionedNetworkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -154,31 +178,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="options"> The client options for reading and writing models. </param>
         AvsProvisionedNetworkData IPersistableModel<AvsProvisionedNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AvsProvisionedNetworkData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AvsProvisionedNetworkData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAvsProvisionedNetworkData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AvsProvisionedNetworkData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AvsProvisionedNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AvsProvisionedNetworkData"/> from. </param>
-        internal static AvsProvisionedNetworkData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAvsProvisionedNetworkData(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }
