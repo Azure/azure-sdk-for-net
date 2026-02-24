@@ -5,8 +5,12 @@
 ### Features Added
 - Added support for `CodeInterpreterToolCallContent` from `Microsoft.Extensions.AI` abstractions when executing `HostedCodeInterpreterTool` tool.
 
+### Breaking Changes
+
 ### Bugs Fixed
 - Fixed a performance issue in `PersistentAgentsChatClient.GetStreamingResponseAsync` [issue](https://github.com/Azure/azure-sdk-for-net/issues/54326).
+
+### Other Changes
 
 ## 1.2.0-beta.8 (2025-12-01)
 
