@@ -1,0 +1,115 @@
+====================================================================================================
+RESOURCE DIFF ANALYSIS
+Comparing HEAD (pre-generated) vs Current (post-generated)
+====================================================================================================
+
+--------------------------------------------------------------------------------
+ADDED RESOURCES (in current but not in HEAD)
+--------------------------------------------------------------------------------
+
+  NewRegionFrontloadReleaseResource
+    Resource ID: 
+    File: NewRegionFrontloadReleaseResource.cs
+    Has 5 public methods
+
+  OperationsPutContentResource
+    Resource ID: 
+    File: OperationsPutContentResource.cs
+    Has 7 public methods
+
+  SkusResource
+    Resource ID: 
+    File: SkusResource.cs
+    Has 7 public methods
+
+--------------------------------------------------------------------------------
+MODIFIED RESOURCES (method changes)
+--------------------------------------------------------------------------------
+
+ProviderAuthorizedApplicationResource
+  File: ProviderAuthorizedApplicationResource.cs
+
+  ~ Changed methods (1):
+      ~ CreateResourceIdentifier
+        OLD: public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerNamespace, Guid applicationId)
+        NEW: public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerNamespace, string applicationId)
+
+ProviderMonitorSettingResource
+  File: ProviderMonitorSettingResource.cs
+
+  + Added methods (6):
+      + public Response<ProviderMonitorSettingResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+      + public async Task<Response<ProviderMonitorSettingResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+      + public Response<ProviderMonitorSettingResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+      + public async Task<Response<ProviderMonitorSettingResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+      + public Response<ProviderMonitorSettingResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+      + public async Task<Response<ProviderMonitorSettingResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+
+ProviderRegistrationResource
+  File: ProviderRegistrationResource.cs
+
+  + Added methods (8):
+      + public ArmOperation DeleteResources(WaitUntil waitUntil, string resourceActionName, ResourceManagementAction properties, CancellationToken cancellationToken = default)
+      + public async Task<ArmOperation> DeleteResourcesAsync(WaitUntil waitUntil, string resourceActionName, ResourceManagementAction properties, CancellationToken cancellationToken = default)
+      + public Pageable<OperationsDefinition> GenerateOperations(CancellationToken cancellationToken = default)
+      + public AsyncPageable<OperationsDefinition> GenerateOperationsAsync(CancellationToken cancellationToken = default)
+      + public Response<NewRegionFrontloadReleaseResource> GetNewRegionFrontloadRelease(string releaseName, CancellationToken cancellationToken = default)
+      + public async Task<Response<NewRegionFrontloadReleaseResource>> GetNewRegionFrontloadReleaseAsync(string releaseName, CancellationToken cancellationToken = default)
+      + public NewRegionFrontloadReleaseCollection GetNewRegionFrontloadReleases()
+      + public OperationsPutContentResource GetOperationsPutContent()
+
+  - Removed methods (7):
+      - public ArmOperation DeleteResourcesResourceAction(WaitUntil waitUntil, string resourceActionName, ResourceManagementAction properties, CancellationToken cancellationToken = default)
+      - public async Task<ArmOperation> DeleteResourcesResourceActionAsync(WaitUntil waitUntil, string resourceActionName, ResourceManagementAction properties, CancellationToken cancellationToken = default)
+      - public Response<ResourceProviderManifest> GenerateManifestNewRegionFrontloadRelease(ProviderFrontloadPayload properties, CancellationToken cancellationToken = default)
+      - public async Task<Response<ResourceProviderManifest>> GenerateManifestNewRegionFrontloadReleaseAsync(ProviderFrontloadPayload properties, CancellationToken cancellationToken = default)
+      - public Response<RegistrationNewRegionFrontloadReleaseResource> GetRegistrationNewRegionFrontloadRelease(string releaseName, CancellationToken cancellationToken = default)
+      - public async Task<Response<RegistrationNewRegionFrontloadReleaseResource>> GetRegistrationNewRegionFrontloadReleaseAsync(string releaseName, CancellationToken cancellationToken = default)
+      - public RegistrationNewRegionFrontloadReleaseCollection GetRegistrationNewRegionFrontloadReleases()
+
+  ~ Changed methods (4):
+      ~ GetProviderAuthorizedApplicationAsync
+        OLD: public async Task<Response<ProviderAuthorizedApplicationResource>> GetProviderAuthorizedApplicationAsync(Guid applicationId, CancellationToken cancellationToken = default)
+        NEW: public async Task<Response<ProviderAuthorizedApplicationResource>> GetProviderAuthorizedApplicationAsync(string applicationId, CancellationToken cancellationToken = default)
+      ~ GetProviderAuthorizedApplication
+        OLD: public Response<ProviderAuthorizedApplicationResource> GetProviderAuthorizedApplication(Guid applicationId, CancellationToken cancellationToken = default)
+        NEW: public Response<ProviderAuthorizedApplicationResource> GetProviderAuthorizedApplication(string applicationId, CancellationToken cancellationToken = default)
+      ~ GenerateManifest
+        OLD: public Response<ResourceProviderManifest> GenerateManifest(CancellationToken cancellationToken = default)
+        NEW: public Response<ResourceProviderManifest> GenerateManifest(ProviderFrontloadPayload properties, CancellationToken cancellationToken = default)
+      ~ GenerateManifestAsync
+        OLD: public async Task<Response<ResourceProviderManifest>> GenerateManifestAsync(CancellationToken cancellationToken = default)
+        NEW: public async Task<Response<ResourceProviderManifest>> GenerateManifestAsync(ProviderFrontloadPayload properties, CancellationToken cancellationToken = default)
+
+ResourceTypeRegistrationResource
+  File: ResourceTypeRegistrationResource.cs
+
+  + Added methods (3):
+      + public SkusCollection GetAllSkus(string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird)
+      + public Response<SkusResource> GetSkus(string sku, CancellationToken cancellationToken = default)
+      + public async Task<Response<SkusResource>> GetSkusAsync(string sku, CancellationToken cancellationToken = default)
+
+  - Removed methods (12):
+      - public Response<NestedResourceTypeFirstSkuResource> GetNestedResourceTypeFirstSku(string nestedResourceTypeFirst, string sku, CancellationToken cancellationToken = default)
+      - public async Task<Response<NestedResourceTypeFirstSkuResource>> GetNestedResourceTypeFirstSkuAsync(string nestedResourceTypeFirst, string sku, CancellationToken cancellationToken = default)
+      - public NestedResourceTypeFirstSkuCollection GetNestedResourceTypeFirstSkus(string nestedResourceTypeFirst)
+      - public Response<NestedResourceTypeSecondSkuResource> GetNestedResourceTypeSecondSku(string nestedResourceTypeFirst, string nestedResourceTypeSecond, string sku, CancellationToken cancellationToken = default)
+      - public async Task<Response<NestedResourceTypeSecondSkuResource>> GetNestedResourceTypeSecondSkuAsync(string nestedResourceTypeFirst, string nestedResourceTypeSecond, string sku, CancellationToken cancellationToken = default)
+      - public NestedResourceTypeSecondSkuCollection GetNestedResourceTypeSecondSkus(string nestedResourceTypeFirst, string nestedResourceTypeSecond)
+      - public Response<NestedResourceTypeThirdSkuResource> GetNestedResourceTypeThirdSku(string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird, string sku, CancellationToken cancellationToken = default)
+      - public async Task<Response<NestedResourceTypeThirdSkuResource>> GetNestedResourceTypeThirdSkuAsync(string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird, string sku, CancellationToken cancellationToken = default)
+      - public NestedResourceTypeThirdSkuCollection GetNestedResourceTypeThirdSkus(string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird)
+      - public Response<ResourceTypeSkuResource> GetResourceTypeSku(string sku, CancellationToken cancellationToken = default)
+      - public async Task<Response<ResourceTypeSkuResource>> GetResourceTypeSkuAsync(string sku, CancellationToken cancellationToken = default)
+      - public ResourceTypeSkuCollection GetResourceTypeSkus()
+
+====================================================================================================
+SUMMARY
+====================================================================================================
+Resources in HEAD:      7
+Resources in current:   10
+
+Removed resources:      0
+Added resources:        3
+Modified resources:     4
+Unchanged resources:    3
