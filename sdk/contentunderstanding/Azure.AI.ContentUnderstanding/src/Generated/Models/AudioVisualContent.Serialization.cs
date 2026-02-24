@@ -79,9 +79,9 @@ namespace Azure.AI.ContentUnderstanding
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("startTimeMs"u8);
-            writer.WriteNumberValue(StartTimeMs);
+            writer.WriteNumberValue(StartTimeMsValue);
             writer.WritePropertyName("endTimeMs"u8);
-            writer.WriteNumberValue(EndTimeMs);
+            writer.WriteNumberValue(EndTimeMsValue);
             if (Optional.IsDefined(Width))
             {
                 writer.WritePropertyName("width"u8);
@@ -92,21 +92,21 @@ namespace Azure.AI.ContentUnderstanding
                 writer.WritePropertyName("height"u8);
                 writer.WriteNumberValue(Height.Value);
             }
-            if (Optional.IsCollectionDefined(CameraShotTimesMs))
+            if (Optional.IsCollectionDefined(CameraShotTimesMsValues))
             {
                 writer.WritePropertyName("cameraShotTimesMs"u8);
                 writer.WriteStartArray();
-                foreach (long item in CameraShotTimesMs)
+                foreach (long item in CameraShotTimesMsValues)
                 {
                     writer.WriteNumberValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(KeyFrameTimesMs))
+            if (Optional.IsCollectionDefined(KeyFrameTimesMsValues))
             {
                 writer.WritePropertyName("keyFrameTimesMs"u8);
                 writer.WriteStartArray();
-                foreach (long item in KeyFrameTimesMs)
+                foreach (long item in KeyFrameTimesMsValues)
                 {
                     writer.WriteNumberValue(item);
                 }

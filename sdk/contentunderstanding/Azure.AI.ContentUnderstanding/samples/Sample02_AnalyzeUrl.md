@@ -104,7 +104,7 @@ foreach (MediaContent media in result.Contents!)
     string summary = videoContent.Fields["Summary"].Value?.ToString() ?? string.Empty;
     Console.WriteLine($"Summary: {summary}");
 
-    Console.WriteLine($"Start: {videoContent.StartTimeMs} ms, End: {videoContent.EndTimeMs} ms");
+    Console.WriteLine($"Start: {videoContent.StartTime.TotalMilliseconds} ms, End: {videoContent.EndTime.TotalMilliseconds} ms");
     Console.WriteLine($"Frame size: {videoContent.Width} x {videoContent.Height}");
 
     Console.WriteLine("---------------------");
@@ -143,7 +143,7 @@ if (audioContent.TranscriptPhrases != null && audioContent.TranscriptPhrases.Cou
     Console.WriteLine("Transcript (first two phrases):");
     foreach (TranscriptPhrase phrase in audioContent.TranscriptPhrases.Take(2))
     {
-        Console.WriteLine($"  [{phrase.Speaker}] {phrase.StartTimeMs} ms: {phrase.Text}");
+        Console.WriteLine($"  [{phrase.Speaker}] {phrase.StartTime.TotalMilliseconds} ms: {phrase.Text}");
     }
 }
 ```

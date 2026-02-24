@@ -549,20 +549,20 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="path"> The path of the content in the input. </param>
         /// <param name="markdown"> Markdown representation of the content. </param>
         /// <param name="fields"> Extracted fields from the content. </param>
-        /// <param name="startTimeMs"> Start time of the content in milliseconds. </param>
-        /// <param name="endTimeMs"> End time of the content in milliseconds. </param>
+        /// <param name="startTimeMsValue"> Start time of the content in milliseconds. </param>
+        /// <param name="endTimeMsValue"> End time of the content in milliseconds. </param>
         /// <param name="width"> Width of each video frame in pixels, if applicable. </param>
         /// <param name="height"> Height of each video frame in pixels, if applicable. </param>
-        /// <param name="cameraShotTimesMs"> List of camera shot changes in the video, represented by its timestamp in milliseconds.  Only if returnDetails is true. </param>
-        /// <param name="keyFrameTimesMs"> List of key frames in the video, represented by its timestamp in milliseconds.  Only if returnDetails is true. </param>
+        /// <param name="cameraShotTimesMsValues"> List of camera shot changes in the video, represented by its timestamp in milliseconds.  Only if returnDetails is true. </param>
+        /// <param name="keyFrameTimesMsValues"> List of key frames in the video, represented by its timestamp in milliseconds.  Only if returnDetails is true. </param>
         /// <param name="transcriptPhrases"> List of transcript phrases.  Only if returnDetails is true. </param>
         /// <param name="segments"> List of detected content segments.  Only if enableSegment is true. </param>
         /// <returns> A new <see cref="ContentUnderstanding.AudioVisualContent"/> instance for mocking. </returns>
-        public static AudioVisualContent AudioVisualContent(string mimeType = default, string analyzerId = default, string category = default, string path = default, string markdown = default, IDictionary<string, ContentField> fields = default, long startTimeMs = default, long endTimeMs = default, int? width = default, int? height = default, IEnumerable<long> cameraShotTimesMs = default, IEnumerable<long> keyFrameTimesMs = default, IEnumerable<TranscriptPhrase> transcriptPhrases = default, IEnumerable<AudioVisualContentSegment> segments = default)
+        public static AudioVisualContent AudioVisualContent(string mimeType = default, string analyzerId = default, string category = default, string path = default, string markdown = default, IDictionary<string, ContentField> fields = default, long startTimeMsValue = default, long endTimeMsValue = default, int? width = default, int? height = default, IEnumerable<long> cameraShotTimesMsValues = default, IEnumerable<long> keyFrameTimesMsValues = default, IEnumerable<TranscriptPhrase> transcriptPhrases = default, IEnumerable<AudioVisualContentSegment> segments = default)
         {
             fields ??= new ChangeTrackingDictionary<string, ContentField>();
-            cameraShotTimesMs ??= new ChangeTrackingList<long>();
-            keyFrameTimesMs ??= new ChangeTrackingList<long>();
+            cameraShotTimesMsValues ??= new ChangeTrackingList<long>();
+            keyFrameTimesMsValues ??= new ChangeTrackingList<long>();
             transcriptPhrases ??= new ChangeTrackingList<TranscriptPhrase>();
             segments ??= new ChangeTrackingList<AudioVisualContentSegment>();
 
@@ -575,34 +575,34 @@ namespace Azure.AI.ContentUnderstanding
                 markdown,
                 fields,
                 additionalBinaryDataProperties: null,
-                startTimeMs,
-                endTimeMs,
+                startTimeMsValue,
+                endTimeMsValue,
                 width,
                 height,
-                cameraShotTimesMs.ToList(),
-                keyFrameTimesMs.ToList(),
+                cameraShotTimesMsValues.ToList(),
+                keyFrameTimesMsValues.ToList(),
                 transcriptPhrases.ToList(),
                 segments.ToList());
         }
 
         /// <summary> Transcript phrase. </summary>
         /// <param name="speaker"> Speaker index or name. </param>
-        /// <param name="startTimeMs"> Start time of the phrase in milliseconds. </param>
-        /// <param name="endTimeMs"> End time of the phrase in milliseconds. </param>
+        /// <param name="startTimeMsValue"> Start time of the phrase in milliseconds. </param>
+        /// <param name="endTimeMsValue"> End time of the phrase in milliseconds. </param>
         /// <param name="locale"> Detected locale of the phrase.  Ex. en-US. </param>
         /// <param name="text"> Transcript text. </param>
         /// <param name="confidence"> Confidence of predicting the phrase. </param>
         /// <param name="span"> Span of the phrase in the markdown content. </param>
         /// <param name="words"> List of words in the phrase. </param>
         /// <returns> A new <see cref="ContentUnderstanding.TranscriptPhrase"/> instance for mocking. </returns>
-        public static TranscriptPhrase TranscriptPhrase(string speaker = default, long startTimeMs = default, long endTimeMs = default, string locale = default, string text = default, float? confidence = default, ContentSpan span = default, IEnumerable<TranscriptWord> words = default)
+        public static TranscriptPhrase TranscriptPhrase(string speaker = default, long startTimeMsValue = default, long endTimeMsValue = default, string locale = default, string text = default, float? confidence = default, ContentSpan span = default, IEnumerable<TranscriptWord> words = default)
         {
             words ??= new ChangeTrackingList<TranscriptWord>();
 
             return new TranscriptPhrase(
                 speaker,
-                startTimeMs,
-                endTimeMs,
+                startTimeMsValue,
+                endTimeMsValue,
                 locale,
                 text,
                 confidence,
@@ -612,31 +612,31 @@ namespace Azure.AI.ContentUnderstanding
         }
 
         /// <summary> Transcript word. </summary>
-        /// <param name="startTimeMs"> Start time of the word in milliseconds. </param>
-        /// <param name="endTimeMs"> End time of the word in milliseconds. </param>
+        /// <param name="startTimeMsValue"> Start time of the word in milliseconds. </param>
+        /// <param name="endTimeMsValue"> End time of the word in milliseconds. </param>
         /// <param name="text"> Transcript text. </param>
         /// <param name="span"> Span of the word in the markdown content. </param>
         /// <returns> A new <see cref="ContentUnderstanding.TranscriptWord"/> instance for mocking. </returns>
-        public static TranscriptWord TranscriptWord(long startTimeMs = default, long endTimeMs = default, string text = default, ContentSpan span = default)
+        public static TranscriptWord TranscriptWord(long startTimeMsValue = default, long endTimeMsValue = default, string text = default, ContentSpan span = default)
         {
-            return new TranscriptWord(startTimeMs, endTimeMs, text, span, additionalBinaryDataProperties: null);
+            return new TranscriptWord(startTimeMsValue, endTimeMsValue, text, span, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Detected audio/visual content segment. </summary>
         /// <param name="segmentId"> Segment identifier. </param>
         /// <param name="category"> Classified content category. </param>
         /// <param name="span"> Span of the segment in the markdown content. </param>
-        /// <param name="startTimeMs"> Start time of the segment in milliseconds. </param>
-        /// <param name="endTimeMs"> End time of the segment in milliseconds. </param>
+        /// <param name="startTimeMsValue"> Start time of the segment in milliseconds. </param>
+        /// <param name="endTimeMsValue"> End time of the segment in milliseconds. </param>
         /// <returns> A new <see cref="ContentUnderstanding.AudioVisualContentSegment"/> instance for mocking. </returns>
-        public static AudioVisualContentSegment AudioVisualContentSegment(string segmentId = default, string category = default, ContentSpan span = default, long startTimeMs = default, long endTimeMs = default)
+        public static AudioVisualContentSegment AudioVisualContentSegment(string segmentId = default, string category = default, ContentSpan span = default, long startTimeMsValue = default, long endTimeMsValue = default)
         {
             return new AudioVisualContentSegment(
                 segmentId,
                 category,
                 span,
-                startTimeMs,
-                endTimeMs,
+                startTimeMsValue,
+                endTimeMsValue,
                 additionalBinaryDataProperties: null);
         }
 
