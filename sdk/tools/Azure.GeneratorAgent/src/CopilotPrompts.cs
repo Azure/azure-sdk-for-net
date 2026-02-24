@@ -122,7 +122,7 @@ internal static class CopilotPrompts
             4. ACTUALLY WRITE the file using your edit tool - do not just provide instructions
             5. Preserve all existing fields and formatting in the file
 
-            CRITICAL: You have access to an edit tool. Use it to physically update the tsp-location.yaml file. Do not just analyze and respond with what should be done - actually perform the file edit operation.
+            CRITICAL: You do NOT have access to a local clone of the {targetRepository} repository. Do not try to browse or search for it. You have access to an edit tool. Use it to physically update the tsp-location.yaml file. Do not just analyze and respond with what should be done - actually perform the file edit operation.
 
             EXAMPLES:
             - For Azure AI Vision services: directory: specification/ai/ImageAnalysis/

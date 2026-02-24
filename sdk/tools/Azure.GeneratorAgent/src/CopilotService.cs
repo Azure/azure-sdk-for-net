@@ -3,6 +3,7 @@
 
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using GitHub.Copilot.SDK;
 using Microsoft.Extensions.Logging;
 
@@ -14,21 +15,31 @@ namespace Azure.GeneratorAgent;
 /// </summary>
 public sealed class CopilotService : IAsyncDisposable
 {
+    private static readonly Regex s_windowsAbsolutePathRegex = new(
+        @"[A-Za-z]:[\\/][^\s;|&'""]*",
+        RegexOptions.Compiled);
+
+    private static readonly Regex s_unixAbsolutePathRegex = new(
+        @"(?<!\w)/(?!dev/null)[^\s;|&'""]+",
+        RegexOptions.Compiled);
+
     private readonly ILogger<CopilotService> _logger;
     private readonly AppSettings _settings;
     private readonly CopilotClient _client;
     private readonly CopilotSession _session;
+    private readonly CancellationTokenSource _accessDeniedCts;
     private bool _isDisposed;
 
     /// <summary>
     /// Private constructor — use <see cref="CreateAsync"/> instead.
     /// </summary>
-    private CopilotService(ILogger<CopilotService> logger, AppSettings settings, CopilotClient client, CopilotSession session)
+    private CopilotService(ILogger<CopilotService> logger, AppSettings settings, CopilotClient client, CopilotSession session, CancellationTokenSource accessDeniedCts)
     {
         _logger = logger;
         _settings = settings;
         _client = client;
         _session = session;
+        _accessDeniedCts = accessDeniedCts;
     }
 
     /// <summary>
@@ -70,6 +81,11 @@ public sealed class CopilotService : IAsyncDisposable
                 normalizedProjectPath += Path.DirectorySeparatorChar;
             }
 
+            var normalizedRepoRoot = FindRepoRoot(normalizedProjectPath);
+            logger.LogDebug("Repository root resolved to: {RepoRoot}", normalizedRepoRoot);
+
+            var accessDeniedCts = new CancellationTokenSource();
+
             session = await client.CreateSessionAsync(new SessionConfig
             {
                 Model = settings.Model,
@@ -85,43 +101,21 @@ public sealed class CopilotService : IAsyncDisposable
                 {
                     OnPreToolUse = async (input, invocation) =>
                     {
-                        if (input.ToolName?.ToLowerInvariant() is not ("edit" or "create"))
+                        try
                         {
-                            return new PreToolUseHookOutput
+                            var denial = ValidateToolAccess(input.ToolName, input.ToolArgs?.ToString(), projectPath, normalizedProjectPath, normalizedRepoRoot);
+                            if (denial is not null)
                             {
-                                PermissionDecision = "allow",
-                                ModifiedArgs = input.ToolArgs
-                            };
-                        }
-
-                        // Extract file path from tool arguments
-                        string? filePath = null;
-                        var args = input.ToolArgs?.ToString();
-                        if (!string.IsNullOrEmpty(args))
-                        {
-                            using var document = JsonDocument.Parse(args);
-                            var root = document.RootElement;
-                            if (root.TryGetProperty("path", out var pathElement) && pathElement.ValueKind == JsonValueKind.String)
-                            {
-                                filePath = pathElement.GetString();
+                                logger.LogWarning("Tool access denied for {ToolName}: {Reason}", input.ToolName, denial);
+                                accessDeniedCts.Cancel();
+                                return new PreToolUseHookOutput { PermissionDecision = "deny" };
                             }
                         }
-
-                        if (string.IsNullOrEmpty(filePath))
+                        catch (Exception ex)
                         {
-                            throw new InvalidOperationException(
-                                $"No file path found in {input.ToolName} arguments. Aborting execution.");
-                        }
-
-                        // Validate file path is within project directory
-                        var absoluteFilePath = Path.IsPathFullyQualified(filePath)
-                            ? Path.GetFullPath(filePath)
-                            : Path.GetFullPath(Path.Combine(projectPath, filePath));
-
-                        if (!absoluteFilePath.StartsWith(normalizedProjectPath, StringComparison.Ordinal))
-                        {
-                            throw new UnauthorizedAccessException(
-                                $"Security violation: {input.ToolName} attempted to access '{filePath}' which is outside the project directory '{normalizedProjectPath}'. Aborting execution.");
+                            logger.LogError(ex, "Unexpected error validating tool access for {ToolName}", input.ToolName);
+                            accessDeniedCts.Cancel();
+                            return new PreToolUseHookOutput { PermissionDecision = "deny" };
                         }
 
                         return new PreToolUseHookOutput
@@ -135,7 +129,7 @@ public sealed class CopilotService : IAsyncDisposable
 
             logger.LogInformation("Using model: {Model}", settings.Model);
 
-            return new CopilotService(logger, settings, client, session);
+            return new CopilotService(logger, settings, client, session, accessDeniedCts);
         }
         catch (Exception ex)
         {
@@ -161,6 +155,129 @@ public sealed class CopilotService : IAsyncDisposable
 
             throw new InvalidOperationException($"Failed to initialize Copilot service: {ex.Message}", ex);
         }
+    }
+
+    private static string FindRepoRoot(string startPath)
+    {
+        var dir = startPath.TrimEnd(Path.DirectorySeparatorChar);
+        while (!string.IsNullOrEmpty(dir))
+        {
+            if (Directory.Exists(Path.Combine(dir, ".git")))
+            {
+                return dir.EndsWith(Path.DirectorySeparatorChar) ? dir : dir + Path.DirectorySeparatorChar;
+            }
+
+            var parent = Path.GetDirectoryName(dir);
+            if (parent == dir)
+            {
+                break;
+            }
+
+            dir = parent;
+        }
+
+        throw new InvalidOperationException(
+            $"Unable to find repository root from path '{startPath}'. No '.git' directory found in any parent directory.");
+    }
+
+    /// <summary>
+    /// Validates that a tool invocation only accesses allowed paths.
+    /// Returns null if access is allowed, or a denial reason string if access should be blocked.
+    /// </summary>
+    internal static string? ValidateToolAccess(
+        string? toolName,
+        string? toolArgs,
+        string projectPath,
+        string normalizedProjectPath,
+        string normalizedRepoRoot)
+    {
+        var normalizedToolName = toolName?.ToLowerInvariant();
+        var resolvedPath = ResolveToolPath(normalizedToolName!, toolArgs, projectPath);
+
+        switch (normalizedToolName)
+        {
+            case "edit" or "create":
+                if (resolvedPath is null)
+                {
+                    return $"No file path found in {toolName} arguments.";
+                }
+
+                var editPathWithSeparator = resolvedPath.EndsWith(Path.DirectorySeparatorChar)
+                    ? resolvedPath
+                    : resolvedPath + Path.DirectorySeparatorChar;
+
+                if (!editPathWithSeparator.StartsWith(normalizedProjectPath, StringComparison.Ordinal))
+                {
+                    return $"{toolName} attempted to access '{resolvedPath}' which is outside the project directory '{normalizedProjectPath}'.";
+                }
+                break;
+
+            case "view" or "grep" or "glob" or "powershell":
+                if (resolvedPath is not null)
+                {
+                    var pathWithSeparator = resolvedPath.EndsWith(Path.DirectorySeparatorChar)
+                        ? resolvedPath
+                        : resolvedPath + Path.DirectorySeparatorChar;
+
+                    if (!pathWithSeparator.StartsWith(normalizedRepoRoot, StringComparison.Ordinal)
+                        && !resolvedPath.StartsWith(Path.GetTempPath(), StringComparison.OrdinalIgnoreCase))
+                    {
+                        return $"{toolName} attempted to access '{resolvedPath}' which is outside the repository directory '{normalizedRepoRoot}' and system temp directory.";
+                    }
+                }
+                break;
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// Resolves the primary file path from tool arguments based on the tool type.
+    /// For file-based tools (view, grep, glob, edit, create), extracts the "path" JSON property.
+    /// For powershell, extracts the first absolute path found anywhere in the command string.
+    /// Returns null if no path is found (e.g. powershell with no absolute paths).
+    /// </summary>
+    internal static string? ResolveToolPath(string toolName, string? args, string projectPath)
+    {
+        if (toolName is "edit" or "create" or "view" or "grep" or "glob")
+        {
+            if (string.IsNullOrEmpty(args))
+            {
+                return null;
+            }
+
+            using var document = JsonDocument.Parse(args);
+            var root = document.RootElement;
+            if (!root.TryGetProperty("path", out var pathElement) || pathElement.ValueKind != JsonValueKind.String)
+            {
+                return null;
+            }
+
+            var filePath = pathElement.GetString()!;
+            return Path.IsPathFullyQualified(filePath)
+                ? Path.GetFullPath(filePath)
+                : Path.GetFullPath(Path.Combine(projectPath, filePath));
+        }
+
+        if (toolName is "powershell" && !string.IsNullOrEmpty(args))
+        {
+            using var document = JsonDocument.Parse(args);
+            var root = document.RootElement;
+            if (root.TryGetProperty("command", out var commandElement) && commandElement.ValueKind == JsonValueKind.String)
+            {
+                var command = commandElement.GetString();
+                if (!string.IsNullOrEmpty(command))
+                {
+                    var match = (OperatingSystem.IsWindows() ? s_windowsAbsolutePathRegex : s_unixAbsolutePathRegex).Match(command);
+                    if (match.Success)
+                    {
+                        return Path.GetFullPath(match.Value.Trim());
+                    }
+                }
+            }
+        }
+
+        return null;
     }
 
     /// <summary>
@@ -246,7 +363,8 @@ public sealed class CopilotService : IAsyncDisposable
 
             var timeout = _settings.DefaultTimeout;
             using var timeoutCts = new CancellationTokenSource(timeout);
-            using var combinedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, timeoutCts.Token);
+            using var combinedCts = CancellationTokenSource.CreateLinkedTokenSource(
+                cancellationToken, timeoutCts.Token, _accessDeniedCts.Token);
 
             await completionTcs.Task.WaitAsync(combinedCts.Token).ConfigureAwait(false);
 
@@ -259,6 +377,11 @@ public sealed class CopilotService : IAsyncDisposable
             }
 
             return response;
+        }
+        catch (OperationCanceledException) when (_accessDeniedCts.IsCancellationRequested)
+        {
+            throw new UnauthorizedAccessException(
+                "Permission denied: a tool attempted to access a path outside the allowed directories. Aborting execution.");
         }
         catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
         {
@@ -288,6 +411,15 @@ public sealed class CopilotService : IAsyncDisposable
         }
 
         _isDisposed = true;
+
+        try
+        {
+            _accessDeniedCts.Dispose();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Error disposing access-denied CTS");
+        }
 
         try
         {
