@@ -9,15 +9,23 @@ using Azure.ResourceManager.ContainerServiceFleet.Models;
 
 namespace Azure.ResourceManager.ContainerServiceFleet
 {
+    // TODO -- fix the getter when https://github.com/Azure/azure-sdk-for-net/issues/56421 is resolved.
     // Because of a breaking change, it was manually added back to ensure compatibility.
     public partial class FleetUpdateStrategyData
     {
         /// <summary> The list of stages that compose this update run. Min size: 1. </summary>
         public IList<ContainerServiceFleetUpdateStage> StrategyStages
         {
-            get => Properties is null ? default : Properties.Strategy.Stages;
+            get => Properties is null ? default : Properties.StrategyStages;
             [EditorBrowsable(EditorBrowsableState.Never)]
-            set => Properties = new FleetUpdateStrategyProperties { Strategy = new ContainerServiceFleetUpdateRunStrategy(value)  };
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FleetUpdateStrategyProperties();
+                }
+                Properties.Strategy = new ContainerServiceFleetUpdateRunStrategy(value);
+            }
         }
     }
 }
