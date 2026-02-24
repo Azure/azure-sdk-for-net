@@ -8,12 +8,11 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Extensions;
-using Specs.Azure.ClientGenerator.Core.ClientInitialization;
-using Specs.Azure.ClientGenerator.Core.ClientInitialization._ParentClient;
+using Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient;
 
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class _Specs_AzureClientGeneratorCoreClientInitializationClientBuilderExtensions
+    public static partial class SpecsAzureTcgcClientInitDefaultClientBuilderExtensions
     {
         public static IAzureClientBuilder<HeaderParamClient, HeaderParamClientOptions> AddHeaderParamClient<TBuilder>(this TBuilder builder, string name)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
@@ -70,15 +69,15 @@ namespace Microsoft.Extensions.Azure
         public static IAzureClientBuilder<ParamAliasClient, ParamAliasClientOptions> AddParamAliasClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
 
-        public static IAzureClientBuilder<ParentClient, _Specs_AzureClientGeneratorCoreClientInitializationClientOptions> AddParentClient<TBuilder>(this TBuilder builder, string blobName)
+        public static IAzureClientBuilder<QueryParamClient, QueryParamClientOptions> AddQueryParamClient<TBuilder>(this TBuilder builder, string blobName)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
-        public static IAzureClientBuilder<ParentClient, _Specs_AzureClientGeneratorCoreClientInitializationClientOptions> AddParentClient<TBuilder>(this TBuilder builder, Uri endpoint, string blobName)
+        public static IAzureClientBuilder<QueryParamClient, QueryParamClientOptions> AddQueryParamClient<TBuilder>(this TBuilder builder, Uri endpoint, string blobName)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<ParentClient, _Specs_AzureClientGeneratorCoreClientInitializationClientOptions> AddParentClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<QueryParamClient, QueryParamClientOptions> AddQueryParamClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
     }
 }

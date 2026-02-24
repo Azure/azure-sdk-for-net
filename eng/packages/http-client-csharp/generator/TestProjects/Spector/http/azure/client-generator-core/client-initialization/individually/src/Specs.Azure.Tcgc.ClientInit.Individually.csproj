@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the _Specs_.ClientInit.IndividParent client library for developing .NET applications with rich experience.</Description>
-    <AssemblyTitle>SDK Code Generation _Specs_.ClientInit.IndividParent</AssemblyTitle>
+    <Description>This is the Specs.Azure.Tcgc.ClientInit.Individually client library for developing .NET applications with rich experience.</Description>
+    <AssemblyTitle>SDK Code Generation Specs.Azure.Tcgc.ClientInit.Individually</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
-    <PackageTags>Specs.ClientInit.IndividParent</PackageTags>
+    <PackageTags>Specs.Azure.Tcgc.ClientInit.Individually</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 

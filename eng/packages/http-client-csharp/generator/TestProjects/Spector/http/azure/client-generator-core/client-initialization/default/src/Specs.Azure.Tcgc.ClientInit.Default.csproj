@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the _Specs_.ClientInitialization.Individually client library for developing .NET applications with rich experience.</Description>
-    <AssemblyTitle>SDK Code Generation _Specs_.ClientInitialization.Individually</AssemblyTitle>
+    <Description>This is the Specs.Azure.Tcgc.ClientInit.Default client library for developing .NET applications with rich experience.</Description>
+    <AssemblyTitle>SDK Code Generation Specs.Azure.Tcgc.ClientInit.Default</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
-    <PackageTags>Specs.ClientInitialization.Individually</PackageTags>
+    <PackageTags>Specs.Azure.Tcgc.ClientInit.Default</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 

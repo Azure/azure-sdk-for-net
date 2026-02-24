@@ -12,7 +12,7 @@ using Specs.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyClient;
 
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class _Specs_ClientInitializationIndividuallyClientBuilderExtensions
+    public static partial class SpecsAzureTcgcClientInitIndividuallyClientBuilderExtensions
     {
         public static IAzureClientBuilder<IndividuallyNestedWithPathClient, IndividuallyNestedWithPathClientOptions> AddIndividuallyNestedWithPathClient<TBuilder>(this TBuilder builder, string blobName)
             where TBuilder : IAzureClientFactoryBuilder => throw null;

@@ -8,9 +8,9 @@
 using System;
 using Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient;
 
-namespace Specs.ClientInitialization.Default
+namespace Specs.Azure.Tcgc.ClientInit.Default
 {
-    public static partial class _Specs_ClientInitializationDefaultModelFactory
+    public static partial class SpecsAzureTcgcClientInitDefaultModelFactory
     {
         public static Input Input(string name = default) => throw null;
 
