@@ -124,7 +124,7 @@ public partial class ProjectConversationUpdateOptions : IJsonModel<ProjectConver
                 additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
         }
-        return new ProjectConversationUpdateOptions(internalMetadata.AdditionalProperties, additionalBinaryDataProperties);
+        return new ProjectConversationUpdateOptions(internalMetadata?.AdditionalProperties, additionalBinaryDataProperties);
     }
 
     /// <param name="options"> The client options for reading and writing models. </param>
