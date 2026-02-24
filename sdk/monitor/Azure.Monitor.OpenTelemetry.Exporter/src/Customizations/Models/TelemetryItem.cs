@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 
 using OpenTelemetry.Logs;
 
@@ -14,6 +15,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     internal partial class TelemetryItem
     {
+        private static volatile string? s_cloudRoleNameOverride;
+        private static volatile string? s_cloudRoleInstanceOverride;
+
         public TelemetryItem(Activity activity, ref ActivityTagsProcessor activityTagsProcessor, AzureMonitorResource? resource, string instrumentationKey, float sampleRate) :
             this(activity.GetTelemetryType() == TelemetryType.Request ? "Request" : "RemoteDependency", FormatUtcTimestamp(activity.StartTimeUtc))
         {
@@ -156,6 +160,27 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = resource?.RoleInstance_Truncated;
             Tags[ContextTagKeys.AiApplicationVer.ToString()] = resource?.ServiceVersion_Truncated;
             Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.s_sdkVersion.Truncate(SchemaConstants.Tags_AiInternalSdkVersion_MaxLength);
+
+            var roleName = s_cloudRoleNameOverride ?? (s_cloudRoleNameOverride = Environment.GetEnvironmentVariable(EnvironmentVariableConstants.APPLICATIONINSIGHTS_CLOUD_ROLE_NAME) ?? string.Empty);
+            if (roleName.Length > 0)
+            {
+                Tags[ContextTagKeys.AiCloudRole.ToString()] = roleName.Truncate(SchemaConstants.Tags_AiCloudRole_MaxLength);
+            }
+
+            var roleInstance = s_cloudRoleInstanceOverride ?? (s_cloudRoleInstanceOverride = Environment.GetEnvironmentVariable(EnvironmentVariableConstants.APPLICATIONINSIGHTS_CLOUD_ROLE_INSTANCE) ?? string.Empty);
+            if (roleInstance.Length > 0)
+            {
+                Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = roleInstance.Truncate(SchemaConstants.Tags_AiCloudRoleInstance_MaxLength);
+            }
+        }
+
+        /// <summary>
+        /// Resets the cached environment variable overrides. For testing only.
+        /// </summary>
+        internal static void ResetEnvironmentVariableOverrides()
+        {
+            s_cloudRoleNameOverride = null;
+            s_cloudRoleInstanceOverride = null;
         }
 
         internal static DateTimeOffset FormatUtcTimestamp(System.DateTime utcTimestamp)

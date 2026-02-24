@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Parameters.Spread
+namespace Parameters.Spread._Alias
 {
     public partial class Alias
     {
