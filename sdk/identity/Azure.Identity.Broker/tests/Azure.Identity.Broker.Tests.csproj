@@ -26,6 +26,9 @@
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" LinkBase="Shared" />
     <Compile Include="..\..\Azure.Identity\tests\ConfigurableCredentials\ConfigurableCredentialTestHelper.cs" LinkBase="ConfigurableCredentials" />
+    <Compile Include="..\..\Azure.Identity\tests\ConfigurableCredentials\CredentialCreationTestBase.cs" LinkBase="ConfigurableCredentials" />
+    <Compile Include="..\..\Azure.Identity\tests\ConfigurableCredentials\BrokerCredentialCreationTests.cs" LinkBase="ConfigurableCredentials" />
+    <Compile Include="..\..\Azure.Identity\tests\ConfigurableCredentials\InteractiveBrowserCredentialCreationTests.cs" LinkBase="ConfigurableCredentials" />
     <Compile Include="*.cs" Exclude="*Manual*.cs" />
     <Compile Include="ConfigurableCredentials\*.cs" />
     <Compile Include="ManualInteractiveBrowserCredentialBrokerTests.cs" Condition="$([MSBuild]::IsOsPlatform('Windows'))" />

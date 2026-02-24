@@ -218,7 +218,7 @@ namespace Azure.Identity.Tests
         {
             var apiKey = "test-api-key-12345";
             var mockSection = new Moq.Mock<IConfigurationSection>();
-            mockSection.Setup(s => s["CredentialSource"]).Returns((string)null);
+            mockSection.Setup(s => s["CredentialSource"]).Returns("ApiKey");
             mockSection.Setup(s => s["Key"]).Returns(apiKey);
             mockSection.Setup(s => s.GetSection("AdditionalProperties")).Returns(Moq.Mock.Of<IConfigurationSection>());
 
@@ -245,7 +245,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void ConstructorWithCredentialSettings_HandlesNullValues()
+        public void ConstructorWithCredentialSettings_NullCredentialSourceThrows()
         {
             var mockSection = new Moq.Mock<IConfigurationSection>();
             mockSection.Setup(s => s["CredentialSource"]).Returns((string)null);
@@ -253,14 +253,12 @@ namespace Azure.Identity.Tests
             mockSection.Setup(s => s.GetSection("AdditionalProperties")).Returns(Moq.Mock.Of<IConfigurationSection>());
 
             var credentialSettings = new CredentialSettings(mockSection.Object);
-            var options = new DefaultAzureCredentialOptions(credentialSettings, mockSection.Object);
-
-            Assert.IsNull(options.CredentialSource);
-            Assert.IsNull(options.ApiKey);
+            var ex = Assert.Throws<InvalidOperationException>(() => new DefaultAzureCredentialOptions(credentialSettings, mockSection.Object));
+            Assert.That(ex.Message, Does.Contain("CredentialSource is required"));
         }
 
         [Test]
-        public void ConstructorWithCredentialSettings_UnmappedCredentialSourcePassesThrough()
+        public void ConstructorWithCredentialSettings_UnmappedCredentialSourceThrows()
         {
             var credentialSource = "CustomCredential";
             var mockSection = new Moq.Mock<IConfigurationSection>();
@@ -269,9 +267,9 @@ namespace Azure.Identity.Tests
             mockSection.Setup(s => s.GetSection("AdditionalProperties")).Returns(Moq.Mock.Of<IConfigurationSection>());
 
             var credentialSettings = new CredentialSettings(mockSection.Object);
-            var options = new DefaultAzureCredentialOptions(credentialSettings, mockSection.Object);
-
-            Assert.AreEqual(credentialSource, options.CredentialSource);
+            var ex = Assert.Throws<InvalidOperationException>(() => new DefaultAzureCredentialOptions(credentialSettings, mockSection.Object));
+            Assert.That(ex.Message, Does.Contain("Unsupported CredentialSource"));
+            Assert.That(ex.Message, Does.Contain(credentialSource));
         }
 
         [Test]
@@ -286,7 +284,6 @@ namespace Azure.Identity.Tests
         [TestCase("InteractiveBrowser", "interactivebrowsercredential")]
         [TestCase("Broker", "brokercredential")]
         [TestCase("ApiKey", "ApiKey")]
-        [TestCase("UnknownCredential", "UnknownCredential")] // Fallthrough case
         public void CredentialSourceMapping_CorrectlyMapsKnownValues(string input, string expected)
         {
             var mockSection = new Moq.Mock<IConfigurationSection>();
@@ -304,7 +301,7 @@ namespace Azure.Identity.Tests
         public void ConstructorWithCredentialSettings_EmptyStringApiKey()
         {
             var mockSection = new Moq.Mock<IConfigurationSection>();
-            mockSection.Setup(s => s["CredentialSource"]).Returns((string)null);
+            mockSection.Setup(s => s["CredentialSource"]).Returns("ApiKey");
             mockSection.Setup(s => s["Key"]).Returns(string.Empty);
             mockSection.Setup(s => s.GetSection("AdditionalProperties")).Returns(Moq.Mock.Of<IConfigurationSection>());
 
@@ -315,7 +312,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void ConstructorWithCredentialSettings_EmptyStringCredentialSource()
+        public void ConstructorWithCredentialSettings_EmptyStringCredentialSourceThrows()
         {
             var mockSection = new Moq.Mock<IConfigurationSection>();
             mockSection.Setup(s => s["CredentialSource"]).Returns(string.Empty);
@@ -323,9 +320,8 @@ namespace Azure.Identity.Tests
             mockSection.Setup(s => s.GetSection("AdditionalProperties")).Returns(Moq.Mock.Of<IConfigurationSection>());
 
             var credentialSettings = new CredentialSettings(mockSection.Object);
-            var options = new DefaultAzureCredentialOptions(credentialSettings, mockSection.Object);
-
-            Assert.AreEqual(string.Empty, options.CredentialSource);
+            var ex = Assert.Throws<InvalidOperationException>(() => new DefaultAzureCredentialOptions(credentialSettings, mockSection.Object));
+            Assert.That(ex.Message, Does.Contain("Unsupported CredentialSource"));
         }
 
         [Test]

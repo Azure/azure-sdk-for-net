@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Parameters.Basic.Models
+namespace Parameters.Basic._ExplicitBody
 {
     public partial class User : IJsonModel<User>
     {

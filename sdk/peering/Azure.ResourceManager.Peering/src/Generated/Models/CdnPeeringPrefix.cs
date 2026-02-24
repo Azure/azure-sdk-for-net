@@ -15,73 +15,68 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The CDN peering prefix. </summary>
     public partial class CdnPeeringPrefix : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CdnPeeringPrefix"/>. </summary>
-        public CdnPeeringPrefix()
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties that define a cdn peering prefix. </param>
+        internal CdnPeeringPrefix(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CdnPeeringPrefixProperties properties) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CdnPeeringPrefix"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="prefix"> The prefix. </param>
-        /// <param name="azureRegion"> The Azure region. </param>
-        /// <param name="azureService"> The Azure service. </param>
-        /// <param name="isPrimaryRegion"> The flag that indicates whether or not this is the primary region. </param>
-        /// <param name="bgpCommunity"> The BGP Community. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CdnPeeringPrefix(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string prefix, AzureLocation? azureRegion, string azureService, bool? isPrimaryRegion, string bgpCommunity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
-        {
-            Prefix = prefix;
-            AzureRegion = azureRegion;
-            AzureService = azureService;
-            IsPrimaryRegion = isPrimaryRegion;
-            BgpCommunity = bgpCommunity;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
+        /// <summary> The properties that define a cdn peering prefix. </summary>
+        internal CdnPeeringPrefixProperties Properties { get; }
 
         /// <summary> The prefix. </summary>
-        public string Prefix { get; }
+        public string Prefix
+        {
+            get
+            {
+                return Properties.Prefix;
+            }
+        }
+
         /// <summary> The Azure region. </summary>
-        public AzureLocation? AzureRegion { get; }
+        public AzureLocation? AzureRegion
+        {
+            get
+            {
+                return Properties.AzureRegion;
+            }
+        }
+
         /// <summary> The Azure service. </summary>
-        public string AzureService { get; }
+        public string AzureService
+        {
+            get
+            {
+                return Properties.AzureService;
+            }
+        }
+
         /// <summary> The flag that indicates whether or not this is the primary region. </summary>
-        public bool? IsPrimaryRegion { get; }
+        public bool? IsPrimaryRegion
+        {
+            get
+            {
+                return Properties.IsPrimaryRegion;
+            }
+        }
+
         /// <summary> The BGP Community. </summary>
-        public string BgpCommunity { get; }
+        public string BgpCommunity
+        {
+            get
+            {
+                return Properties.BgpCommunity;
+            }
+        }
     }
 }

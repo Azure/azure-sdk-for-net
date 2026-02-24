@@ -103,10 +103,15 @@ namespace Azure.Analytics.PlanetaryComputer
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(BoundingBox))
+            if (Optional.IsCollectionDefined(BoundingBox))
             {
                 writer.WritePropertyName("bbox"u8);
-                writer.WriteNumberValue(BoundingBox.Value);
+                writer.WriteStartArray();
+                foreach (float item in BoundingBox)
+                {
+                    writer.WriteNumberValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -154,7 +159,7 @@ namespace Azure.Analytics.PlanetaryComputer
             GeoJsonGeometry geometry = default;
             IDictionary<string, TilerInfo> properties = default;
             string id = default;
-            float? boundingBox = default;
+            IList<float> boundingBox = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -189,7 +194,12 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    boundingBox = prop.Value.GetSingle();
+                    List<float> array = new List<float>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetSingle());
+                    }
+                    boundingBox = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -202,7 +212,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 geometry,
                 properties,
                 id,
-                boundingBox,
+                boundingBox ?? new ChangeTrackingList<float>(),
                 additionalBinaryDataProperties);
         }
     }

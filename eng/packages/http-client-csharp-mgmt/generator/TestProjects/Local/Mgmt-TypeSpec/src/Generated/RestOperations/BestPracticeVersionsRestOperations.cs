@@ -49,7 +49,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath(bestPracticeName, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(versionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -66,7 +69,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath(bestPracticeName, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(versionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -85,7 +91,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath(bestPracticeName, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(versionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -104,7 +113,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath(bestPracticeName, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(versionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -119,7 +131,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath("/providers/MgmtTypeSpec/bestPractices/", false);
             uri.AppendPath(bestPracticeName, true);
             uri.AppendPath("/versions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -139,7 +154,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

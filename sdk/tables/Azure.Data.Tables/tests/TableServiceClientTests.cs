@@ -91,6 +91,11 @@ namespace Azure.Data.Tables.Tests
                 "The constructor should accept an http url.");
 
             Assert.That(
+                () => new TableServiceClient(new Uri("http://localhost:8902/"), new TableSharedKeyCredential("localhost", string.Empty)),
+                Throws.Nothing,
+                "The constructor should accept a loopback url without account name in path.");
+
+            Assert.That(
                 () => new TableServiceClient((string)null),
                 Throws.InstanceOf<ArgumentNullException>(),
                 "The constructor should validate the connectionString");
