@@ -24,6 +24,7 @@
     <MicrosoftExtensionsLoggingConfigurationVersion>10.0.3</MicrosoftExtensionsLoggingConfigurationVersion>
     <MicrosoftExtensionsLoggingConsoleVersion>10.0.3</MicrosoftExtensionsLoggingConsoleVersion>
     <MicrosoftExtensionsLoggingVersion>10.0.3</MicrosoftExtensionsLoggingVersion>
+    <MicrosoftExtensionsConfigurationUserSecretsVersion>10.0.3</MicrosoftExtensionsConfigurationUserSecretsVersion>
     <MicrosoftExtensionsPrimitivesVersion>10.0.3</MicrosoftExtensionsPrimitivesVersion>
     <SystemIOPipelinesVersion>10.0.3</SystemIOPipelinesVersion>
     <MicrosoftSpatialVersion>7.5.3</MicrosoftSpatialVersion>
@@ -141,7 +142,7 @@
     <!-- BCL packages -->
     <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="10.0.3" />
     <PackageReference Update="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.3" />
+    <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="$(MicrosoftExtensionsConfigurationAbstractionsVersion)" />
     <PackageReference Update="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.3" />
     <PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="10.0.3" />
     <PackageReference Update="System.Buffers" Version="4.6.1" />
@@ -343,9 +344,9 @@
     <PackageReference Update="CoreWCF.Primitives" Version="1.7.0" />
     <PackageReference Update="CoreWCF.Queue" Version="1.7.0" />
     <PackageReference Update="Microsoft.AspNetCore" Version="$(MicrosoftAspNetCoreVersion)" />
-    <PackageReference Update="Microsoft.Extensions.Configuration.UserSecrets" Version="10.0.2" />
-    <PackageReference Update="Microsoft.Extensions.Http" Version="10.0.1" />
-    <PackageReference Update="Microsoft.Extensions.Logging.Configuration" Version="10.0.1" />
+    <PackageReference Update="Microsoft.Extensions.Configuration.UserSecrets" Version="$(MicrosoftExtensionsConfigurationUserSecretsVersion)" />
+    <PackageReference Update="Microsoft.Extensions.Http" Version="$(MicrosoftExtensionsHttpVersion)" />
+    <PackageReference Update="Microsoft.Extensions.Logging.Configuration" Version="$(MicrosoftExtensionsLoggingConfigurationVersion)" />
     <PackageReference Update="System.Formats.Asn1" Version="10.0.1" />
     <PackageReference Update="System.IO.Pipelines" Version="$(SystemIOPipelinesVersion)" />
     <PackageReference Update="System.Security.Cryptography.Pkcs" Version="10.0.1" />
