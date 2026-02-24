@@ -190,11 +190,12 @@ If enum member ordering changes (affecting implicit numeric values):
 ### DataMember Attribute Removed
 If `[DataMember]` attributes are removed from enums, ApiCompat will report `CP0002` errors.
 
-To resolve these errors:
-- Prefer restoring `[DataMember]` attributes on the affected enum members to preserve backward compatibility.
-- If the removal is an intentional breaking change, follow the normal breaking-change review and versioning process for the package.
+For provisioning packages, create `ApiCompatBaseline.txt` in the package's `src/` directory to suppress the compatibility errors:
+```
+CP0002:M:Azure.Provisioning.{Service}.{EnumType}.{Member}.get->System.Runtime.Serialization.DataMemberAttribute
+```
 
-> Note: The specific suppression mechanism may vary. Check if the package supports `ApiCompatBaseline.txt` or similar baseline files, or consult with the team for the appropriate approach.
+> Note: This baseline file approach is specifically supported for provisioning packages and is the only option for suppressing these particular ApiCompat errors.
 
 ## Step 6: Fix Spell Check Issues
 
@@ -289,6 +290,7 @@ The requirement was to add NetworkSecurityPerimeter support. The resources alrea
 | `sdk/provisioning/Generator/src/Specifications/{Service}Specification.cs` | Generator customizations and resource whitelist |
 | `sdk/provisioning/Generator/src/Model/Specification.Customize.cs` | Customization API (`OrderEnum`, `CustomizeResource`, etc.) |
 | `sdk/provisioning/Azure.Provisioning.{Service}/src/BackwardCompatible/` | Backward-compatible customizations |
+| `sdk/provisioning/Azure.Provisioning.{Service}/src/ApiCompatBaseline.txt` | API compatibility suppressions (provisioning only) |
 | `.vscode/cspell.json` | Spell check configuration (CI uses this) |
 
 ## Troubleshooting
@@ -303,7 +305,7 @@ The requirement was to add NetworkSecurityPerimeter support. The resources alrea
 - Try running `dotnet restore` before the generator
 
 ### API compatibility errors
-- Prefer restoring removed attributes to maintain backward compatibility
+- Use `ApiCompatBaseline.txt` to suppress expected breaking changes (provisioning packages only)
 - Or create backward-compatible stubs/properties
 
 ### Enum values in wrong order
