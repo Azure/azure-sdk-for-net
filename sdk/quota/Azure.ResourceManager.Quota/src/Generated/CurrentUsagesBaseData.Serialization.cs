@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.Quota
     /// <summary> Resource usage. </summary>
     public partial class CurrentUsagesBaseData : ResourceData, IJsonModel<CurrentUsagesBaseData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CurrentUsagesBaseData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCurrentUsagesBaseData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CurrentUsagesBaseData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CurrentUsagesBaseData"/> from. </param>
+        internal static CurrentUsagesBaseData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeCurrentUsagesBaseData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CurrentUsagesBaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -154,31 +178,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="options"> The client options for reading and writing models. </param>
         CurrentUsagesBaseData IPersistableModel<CurrentUsagesBaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => (CurrentUsagesBaseData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CurrentUsagesBaseData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeCurrentUsagesBaseData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CurrentUsagesBaseData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<CurrentUsagesBaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CurrentUsagesBaseData"/> from. </param>
-        internal static CurrentUsagesBaseData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeCurrentUsagesBaseData(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

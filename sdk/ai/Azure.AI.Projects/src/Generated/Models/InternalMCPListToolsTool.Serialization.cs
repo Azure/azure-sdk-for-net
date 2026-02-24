@@ -47,6 +47,16 @@ namespace OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InternalMCPListToolsTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InternalMCPListToolsTool IPersistableModel<InternalMCPListToolsTool>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InternalMCPListToolsTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InternalMCPListToolsTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -165,15 +175,5 @@ namespace OpenAI
             }
             return new InternalMCPListToolsTool(name, description, inputSchema, annotations, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalMCPListToolsTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InternalMCPListToolsTool IPersistableModel<InternalMCPListToolsTool>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalMCPListToolsTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> Describes a  resource type that has been onboarded to private link service. </summary>
     public partial class ShareablePrivateLinkResourceType : IJsonModel<ShareablePrivateLinkResourceType>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ShareablePrivateLinkResourceType PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ShareablePrivateLinkResourceType>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeShareablePrivateLinkResourceType(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ShareablePrivateLinkResourceType)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ShareablePrivateLinkResourceType>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -132,23 +149,6 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ShareablePrivateLinkResourceType IPersistableModel<ShareablePrivateLinkResourceType>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ShareablePrivateLinkResourceType PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ShareablePrivateLinkResourceType>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeShareablePrivateLinkResourceType(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ShareablePrivateLinkResourceType)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ShareablePrivateLinkResourceType>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

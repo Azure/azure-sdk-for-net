@@ -43,13 +43,13 @@ namespace Azure.Analytics.PlanetaryComputer
                 {
                     yield break;
                 }
-                PageManagedIdentityMetadata result = (PageManagedIdentityMetadata)response;
+                ManagedIdentityMetadataPagedResponse result = (ManagedIdentityMetadataPagedResponse)response;
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Value)
                 {
                     items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureAnalyticsPlanetaryComputerContext.Default));
                 }
-                yield return Page<BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
+                yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -47,6 +47,16 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InputItemCompactionSummaryItemParam>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InputItemCompactionSummaryItemParam IPersistableModel<InputItemCompactionSummaryItemParam>.Create(BinaryData data, ModelReaderWriterOptions options) => (InputItemCompactionSummaryItemParam)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InputItemCompactionSummaryItemParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InputItemCompactionSummaryItemParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -133,15 +143,5 @@ namespace Azure.AI.Projects
             }
             return new InputItemCompactionSummaryItemParam(@type, additionalBinaryDataProperties, id, encryptedContent);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InputItemCompactionSummaryItemParam>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InputItemCompactionSummaryItemParam IPersistableModel<InputItemCompactionSummaryItemParam>.Create(BinaryData data, ModelReaderWriterOptions options) => (InputItemCompactionSummaryItemParam)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InputItemCompactionSummaryItemParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

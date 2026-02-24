@@ -15,9 +15,9 @@ namespace Azure.Core
     /// </summary>
     public class DiagnosticsOptions
     {
-        private const int MaxApplicationIdLength = 24;
-
         private string? _applicationId;
+        private int _maxApplicationIdLength = DefaultMaxApplicationIdLength;
+        private const int DefaultMaxApplicationIdLength = 24;
 
         /// <summary>
         /// Creates a new instance of <see cref="DiagnosticsOptions"/> with default values.
@@ -102,6 +102,7 @@ namespace Azure.Core
         {
             if (diagnosticsOptions != null)
             {
+                _maxApplicationIdLength = diagnosticsOptions.MaxApplicationIdLength;
                 ApplicationId = diagnosticsOptions.ApplicationId;
                 IsLoggingEnabled = diagnosticsOptions.IsLoggingEnabled;
                 IsTelemetryEnabled = diagnosticsOptions.IsTelemetryEnabled;
@@ -198,19 +199,36 @@ namespace Azure.Core
         public IList<string> LoggedQueryParameters { get; internal set; }
 
         /// <summary>
+        /// Gets or sets the maximum allowed length for <see cref="ApplicationId"/>.
+        /// </summary>
+        /// <remarks>
+        /// The default value is 24 characters. This can be increased to accommodate longer
+        /// application identifiers. Values less than 24 are not permitted.
+        /// </remarks>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when the value is less than 24.</exception>
+        internal int MaxApplicationIdLength
+        {
+            get => _maxApplicationIdLength;
+            set
+            {
+                if (value < DefaultMaxApplicationIdLength)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value), value, $"{nameof(MaxApplicationIdLength)} must be at least {DefaultMaxApplicationIdLength}.");
+                }
+                _maxApplicationIdLength = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the value sent as the first part of "User-Agent" headers for all requests issues by this client. Defaults to <see cref="DefaultApplicationId"/>.
         /// </summary>
+        /// <remarks>
+        /// The length of <see cref="ApplicationId"/> is validated against <see cref="MaxApplicationIdLength"/> when the HTTP pipeline is built.
+        /// </remarks>
         public string? ApplicationId
         {
             get => _applicationId;
-            set
-            {
-                if (value != null && value.Length > MaxApplicationIdLength)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(value), $"{nameof(ApplicationId)} must be shorter than {MaxApplicationIdLength + 1} characters");
-                }
-                _applicationId = value;
-            }
+            set => _applicationId = value;
         }
 
         /// <summary>

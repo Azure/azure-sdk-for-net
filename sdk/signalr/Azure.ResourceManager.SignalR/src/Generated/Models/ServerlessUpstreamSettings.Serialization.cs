@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> The settings for the Upstream when the service is in server-less mode. </summary>
     internal partial class ServerlessUpstreamSettings : IJsonModel<ServerlessUpstreamSettings>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ServerlessUpstreamSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServerlessUpstreamSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeServerlessUpstreamSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServerlessUpstreamSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServerlessUpstreamSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -131,23 +148,6 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ServerlessUpstreamSettings IPersistableModel<ServerlessUpstreamSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ServerlessUpstreamSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ServerlessUpstreamSettings>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeServerlessUpstreamSettings(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ServerlessUpstreamSettings)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ServerlessUpstreamSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

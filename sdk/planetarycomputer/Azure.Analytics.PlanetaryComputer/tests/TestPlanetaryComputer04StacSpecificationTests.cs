@@ -399,13 +399,13 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Testing GetCollectionQueryables for collection: {collectionId}");
 
             // Act
-            Response<IReadOnlyDictionary<string, BinaryData>> response = await stacClient.GetCollectionQueryablesAsync(collectionId);
+            Response<QueryableDefinitionsResponse> response = await stacClient.GetCollectionQueryablesAsync(collectionId);
 
             // Assert
             ValidateResponse(response.GetRawResponse(), "GetCollectionQueryables");
             Assert.AreEqual(200, response.GetRawResponse().Status, "Expected successful response");
 
-            IReadOnlyDictionary<string, BinaryData> queryables = response.Value;
+            IReadOnlyDictionary<string, BinaryData> queryables = response.Value.AdditionalProperties;
             Assert.IsNotNull(queryables, "Queryables should not be null");
 
             TestContext.WriteLine($"Retrieved queryables for collection: {collectionId}");

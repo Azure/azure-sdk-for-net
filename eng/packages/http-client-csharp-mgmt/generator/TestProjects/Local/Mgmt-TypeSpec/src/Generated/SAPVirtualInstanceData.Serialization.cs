@@ -42,6 +42,41 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SAPVirtualInstanceData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SAPVirtualInstanceData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SAPVirtualInstanceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SAPVirtualInstanceData IPersistableModel<SAPVirtualInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (SAPVirtualInstanceData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SAPVirtualInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="sapVirtualInstanceData"> The <see cref="SAPVirtualInstanceData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(SAPVirtualInstanceData sapVirtualInstanceData)
+        {
+            if (sapVirtualInstanceData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(sapVirtualInstanceData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SAPVirtualInstanceData"/> from. </param>
         internal static SAPVirtualInstanceData FromResponse(Response response)
         {
@@ -191,41 +226,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SAPVirtualInstanceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SAPVirtualInstanceData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SAPVirtualInstanceData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SAPVirtualInstanceData IPersistableModel<SAPVirtualInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (SAPVirtualInstanceData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SAPVirtualInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="sapVirtualInstanceData"> The <see cref="SAPVirtualInstanceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(SAPVirtualInstanceData sapVirtualInstanceData)
-        {
-            if (sapVirtualInstanceData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(sapVirtualInstanceData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

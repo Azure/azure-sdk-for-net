@@ -50,7 +50,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     yield break;
                 }
                 IssueTestResourceListResult result = IssueTestResourceListResult.FromResponse(response);
-                yield return Page<IssueTestResourceData>.FromValues((IReadOnlyList<IssueTestResourceData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<IssueTestResourceData>.FromValues((IReadOnlyList<IssueTestResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -65,7 +65,7 @@ namespace Azure.Developer.LoadTesting
                     yield break;
                 }
                 PagedTest result = (PagedTest)response;
-                yield return Page<LoadTest>.FromValues((IReadOnlyList<LoadTest>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<LoadTest>.FromValues((IReadOnlyList<LoadTest>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

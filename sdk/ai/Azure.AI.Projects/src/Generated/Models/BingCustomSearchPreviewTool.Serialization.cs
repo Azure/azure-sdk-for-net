@@ -47,6 +47,16 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BingCustomSearchPreviewTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BingCustomSearchPreviewTool IPersistableModel<BingCustomSearchPreviewTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (BingCustomSearchPreviewTool)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BingCustomSearchPreviewTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BingCustomSearchPreviewTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -117,15 +127,5 @@ namespace Azure.AI.Projects
             }
             return new BingCustomSearchPreviewTool(@type, additionalBinaryDataProperties, bingCustomSearchPreview);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BingCustomSearchPreviewTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BingCustomSearchPreviewTool IPersistableModel<BingCustomSearchPreviewTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (BingCustomSearchPreviewTool)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BingCustomSearchPreviewTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

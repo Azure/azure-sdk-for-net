@@ -27,8 +27,8 @@
 
     <!-- Internal tooling from the Azure Development Feed -->
     <TestProxyVersion>1.0.0-dev.20260128.1</TestProxyVersion>
-    <UnbrandedGeneratorVersion>1.0.0-alpha.20260210.1</UnbrandedGeneratorVersion>
-    <AzureGeneratorVersion>1.0.0-alpha.20260209.2</AzureGeneratorVersion>
+    <UnbrandedGeneratorVersion>1.0.0-alpha.20260220.2</UnbrandedGeneratorVersion>
+    <AzureGeneratorVersion>1.0.0-alpha.20260213.2</AzureGeneratorVersion>
 
     <!-- Legacy package use only -->
     <MicrosoftRestClientRuntimeVersion>[2.3.24, 3.0.0)</MicrosoftRestClientRuntimeVersion>
@@ -123,6 +123,7 @@
   -->
   <ItemGroup Condition="'$(IsClientLibrary)' == 'true'
       or '$(IsGeneratorLibrary)' == 'true'
+      or '$(IsToolProject)' == 'true'
       or '$(IsSamplesProject)' == 'true'
       or '$(IsTestProject)' == 'true'
       or '$(IsTestSupportProject)' == 'true'
@@ -242,7 +243,7 @@
   <!-- Conditionally approved packages; these are approved only for the scoped projects -->
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.AI.AgentServer'))">
     <PackageReference Update="Azure.Monitor.OpenTelemetry.AspNetCore" Version="1.3.0"/>
-    <PackageReference Update="Microsoft.Agents.AI" Version="1.0.0-preview.251104.1" />
+    <PackageReference Update="Microsoft.Agents.AI" Version="1.0.0-rc1" />
     <PackageReference Update="ModelContextProtocol" Version="0.4.0-preview.3" />
     <PackageReference Update="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.12.0"/>
   </ItemGroup>
@@ -393,7 +394,8 @@
       or '$(IsTestSupportProject)' == 'true'
       or '$(IsPerfProject)' == 'true'
       or '$(IsStressProject)' == 'true'
-      or '$(IsSamplesProject)' == 'true'">
+      or '$(IsSamplesProject)' == 'true'
+      or '$(IsToolProject)' == 'true'">
 
     <!-- General testing infrastructure  -->
     <PackageReference Update="Moq" Version="[4.18.2]" /><!-- This version should not be changed without team discussion. -->
@@ -418,6 +420,7 @@
     <PackageReference Update="Castle.Core" Version="$(CastleCoreVersion)" />
     <PackageReference Update="CloudNative.CloudEvents.SystemTextJson" Version="$(CloudNativeCloudEventsSystemTextJsonVersion)" />
     <PackageReference Update="CommandLineParser" Version="2.9.1" />
+    <PackageReference Update="GitHub.Copilot.SDK" Version="0.1.24" />
     <PackageReference Update="Microsoft.ApplicationInsights" Version="2.23.0" />
     <PackageReference Update="Microsoft.AspNetCore" Version="$(MicrosoftAspNetCoreVersion)" />
     <PackageReference Update="Microsoft.AspNetCore.Http" Version="$(MicrosoftAspNetCoreHttpVersion)" />
@@ -471,6 +474,7 @@
     <PackageReference Update="Microsoft.Extensions.Configuration.Json" Version="10.0.2" />
     <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="10.0.2" />
     <PackageReference Update="Microsoft.Extensions.Hosting" Version="$(MicrosoftExtensionsHostingVersion)" />
+    <PackageReference Update="Microsoft.Extensions.Http" Version="10.0.1" />
     <PackageReference Update="Microsoft.Extensions.Logging" Version="$(MicrosoftExtensionsLoggingVersion)" />
     <PackageReference Update="Microsoft.Extensions.Logging.Configuration" Version="10.0.2" />
     <PackageReference Update="Microsoft.Extensions.Logging.Console" Version="10.0.2"/>

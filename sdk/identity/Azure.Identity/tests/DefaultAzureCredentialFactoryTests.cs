@@ -583,6 +583,24 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        public void AzurePipelinesCredentialViaEnvVar_ThrowsHelpfulError()
+        {
+            using (new TestEnvVar(new Dictionary<string, string>
+            {
+                { "AZURE_CLIENT_ID", null },
+                { "AZURE_USERNAME", null },
+                { "AZURE_TENANT_ID", null },
+                { "AZURE_TOKEN_CREDENTIALS", "azurepipelinescredential" }
+            }))
+            {
+                var factory = new DefaultAzureCredentialFactory(null);
+                var ex = Assert.Throws<InvalidOperationException>(() => factory.CreateCredentialChain());
+                Assert.That(ex.Message, Does.Contain("AzurePipelinesCredential is not supported via the AZURE_TOKEN_CREDENTIALS environment variable"));
+                Assert.That(ex.Message, Does.Contain("IConfiguration"));
+            }
+        }
+
+        [Test]
         [TestCaseSource(nameof(ExcludeCredOptions))]
         public void ValidateExcludeOptionsHonoredWithAZURE_TOKEN_CREDENTIALS_DevMode(
             bool excludeEnvironmentCredential,

@@ -47,6 +47,16 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InputItemMcpToolCall>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InputItemMcpToolCall IPersistableModel<InputItemMcpToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => (InputItemMcpToolCall)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InputItemMcpToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InputItemMcpToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -214,15 +224,5 @@ namespace Azure.AI.Projects
                 status,
                 approvalRequestId);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InputItemMcpToolCall>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InputItemMcpToolCall IPersistableModel<InputItemMcpToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => (InputItemMcpToolCall)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InputItemMcpToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

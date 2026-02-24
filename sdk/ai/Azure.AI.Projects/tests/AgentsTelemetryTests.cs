@@ -25,11 +25,13 @@ namespace Azure.AI.Projects.Tests;
 public partial class AgentsTelemetryTests : AgentsTestBase
 {
     public const string TraceContentsEnvironmentVariable = "OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT";
-    public const string EnableOpenTelemetryEnvironmentVariable = "AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE";
+    public const string EnableOpenTelemetryEnvironmentVariable = "AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING";
+    public const string UseMessageEventsEnvironmentVariable = "AZURE_EXPERIMENTAL_TRACING_GEN_AI_USE_MESSAGE_EVENTS";
     private MemoryTraceExporter _exporter;
     private TracerProvider _tracerProvider;
-    private bool _contentRecordingEnabledInitialValue = false;
-    private bool _tracesEnabledInitialValue = false;
+    private string _contentRecordingEnabledInitialValue;
+    private string _tracesEnabledInitialValue;
+    private string _useMessageEventsInitialValue;
 
     public AgentsTelemetryTests(bool isAsync) : base(isAsync)
     {
@@ -40,15 +42,9 @@ public partial class AgentsTelemetryTests : AgentsTestBase
     {
         _exporter = new MemoryTraceExporter();
 
-        _tracesEnabledInitialValue = string.Equals(
-            Environment.GetEnvironmentVariable(TraceContentsEnvironmentVariable),
-            "true",
-            StringComparison.OrdinalIgnoreCase);
-
-        _contentRecordingEnabledInitialValue = string.Equals(
-            Environment.GetEnvironmentVariable(TraceContentsEnvironmentVariable),
-            "true",
-            StringComparison.OrdinalIgnoreCase);
+        _tracesEnabledInitialValue = Environment.GetEnvironmentVariable(EnableOpenTelemetryEnvironmentVariable, EnvironmentVariableTarget.Process);
+        _contentRecordingEnabledInitialValue = Environment.GetEnvironmentVariable(TraceContentsEnvironmentVariable, EnvironmentVariableTarget.Process);
+        _useMessageEventsInitialValue = Environment.GetEnvironmentVariable(UseMessageEventsEnvironmentVariable, EnvironmentVariableTarget.Process);
 
         Environment.SetEnvironmentVariable(EnableOpenTelemetryEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
 
@@ -67,11 +63,15 @@ public partial class AgentsTelemetryTests : AgentsTestBase
         _exporter.Clear();
         Environment.SetEnvironmentVariable(
             TraceContentsEnvironmentVariable,
-            _contentRecordingEnabledInitialValue.ToString(),
+            _contentRecordingEnabledInitialValue,
             EnvironmentVariableTarget.Process);
         Environment.SetEnvironmentVariable(
-            TraceContentsEnvironmentVariable,
-            _tracesEnabledInitialValue.ToString(),
+            EnableOpenTelemetryEnvironmentVariable,
+            _tracesEnabledInitialValue,
+            EnvironmentVariableTarget.Process);
+        Environment.SetEnvironmentVariable(
+            UseMessageEventsEnvironmentVariable,
+            _useMessageEventsInitialValue,
             EnvironmentVariableTarget.Process);
     }
 
@@ -92,6 +92,36 @@ public partial class AgentsTelemetryTests : AgentsTestBase
         AIProjectClient projectClient = GetTestProjectClient();
         var modelDeploymentName = GetModelDeploymentName();
         var agentName = "agentsTelemetryTests1";
+
+        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        {
+            Instructions = "You are a prompt agent."
+        };
+
+        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+            agentName,
+            new AgentVersionCreationOptions(agentDefinition));
+
+        await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentName, agentVersion: agentVersion.Version);
+
+        // Force flush spans
+        _exporter.ForceFlush();
+
+        var createAgentSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == $"create_agent {agentName}");
+        Assert.That(createAgentSpan, Is.Null);
+    }
+
+    [RecordedTest]
+    public async Task TestAgentCreateWithTracingVariableNotSet()
+    {
+        // Test that no spans are emitted when the env var is completely absent (null),
+        // as opposed to explicitly set to "false".
+        Environment.SetEnvironmentVariable(EnableOpenTelemetryEnvironmentVariable, null, EnvironmentVariableTarget.Process);
+        ReinitializeOpenTelemetryScopeConfiguration();
+
+        AIProjectClient projectClient = GetTestProjectClient();
+        var modelDeploymentName = GetModelDeploymentName();
+        var agentName = "agentsTelemetryTests1b";
 
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
@@ -138,7 +168,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
 
         var createAgentSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == $"create_agent {agentName}");
         Assert.That(createAgentSpan, Is.Not.Null);
-        CheckCreateAgentTrace(createAgentSpan, modelDeploymentName, agentName, "[{\"type\":\"text\", \"content\":\"You are a prompt agent.\"}]");
+        CheckCreateAgentTrace(createAgentSpan, modelDeploymentName, agentName, "[{\"type\":\"text\",\"content\":\"You are a prompt agent.\"}]");
     }
 
     [RecordedTest]
@@ -168,7 +198,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
 
         var createAgentSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == $"create_agent {agentName}");
         Assert.That(createAgentSpan, Is.Not.Null);
-        CheckCreateAgentTrace(createAgentSpan, modelDeploymentName, agentName, "\"\"");
+        CheckCreateAgentTrace(createAgentSpan, modelDeploymentName, agentName, "[{\"type\":\"text\"}]");
     }
 
     [RecordedTest]
@@ -230,7 +260,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
         Assert.That(createAgentSpan, Is.Not.Null);
         Assert.That(updateAgentSpan, Is.Not.Null);
 
-        CheckCreateAgentTrace(updateAgentSpan, modelDeploymentName, agentName, "[{\"type\":\"text\", \"content\":\"You are a helpful prompt agent.\"}]", versionNumber);
+        CheckCreateAgentTrace(updateAgentSpan, modelDeploymentName, agentName, "[{\"type\":\"text\",\"content\":\"You are a helpful prompt agent.\"}]", versionNumber);
     }
 
     [RecordedTest]
@@ -288,7 +318,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
         Assert.That(createAgentSpan, Is.Not.Null);
         Assert.That(updateAgentSpan, Is.Not.Null);
 
-        CheckCreateAgentTrace(updateAgentSpan, modelDeploymentName, agentName, "\"\"");
+        CheckCreateAgentTrace(updateAgentSpan, modelDeploymentName, agentName, "[{\"type\":\"text\"}]");
     }
 
     [RecordedTest]
@@ -318,7 +348,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
 
         var createAgentVersionSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == $"create_agent {agentName}");
         Assert.That(createAgentVersionSpan, Is.Not.Null);
-        CheckCreateAgentVersionTrace(createAgentVersionSpan, modelDeploymentName, agentName, "[{\"type\":\"text\", \"content\":\"You are a prompt agent.\"}]");
+        CheckCreateAgentVersionTrace(createAgentVersionSpan, modelDeploymentName, agentName, "[{\"type\":\"text\",\"content\":\"You are a prompt agent.\"}]");
     }
 
     [RecordedTest]
@@ -348,7 +378,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
 
         var createAgentVersionSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == $"create_agent {agentName}");
         Assert.That(createAgentVersionSpan, Is.Not.Null);
-        CheckCreateAgentVersionTrace(createAgentVersionSpan, modelDeploymentName, agentName, "\"\"");
+        CheckCreateAgentVersionTrace(createAgentVersionSpan, modelDeploymentName, agentName, "[{\"type\":\"text\"}]");
     }
 
     private static void ReinitializeOpenTelemetryScopeConfiguration()
@@ -373,12 +403,13 @@ public partial class AgentsTelemetryTests : AgentsTestBase
         float? temperature = null,
         float? topP = null,
         string reasoningEffort = null,
-        string reasoningSummary = null)
+        string reasoningSummary = null,
+        bool useMessageEvents = false)
     {
         Assert.That(createAgentSpan, Is.Not.Null);
         var expectedCreateAgentAttributes = new Dictionary<string, object>
         {
-            { "gen_ai.provider.name", "azure.ai.agents" },
+            { "gen_ai.provider.name", "microsoft.foundry" },
             { "gen_ai.operation.name", "create_agent" },
             { "server.address", "*" },
             { "az.namespace", "Microsoft.CognitiveServices" },
@@ -388,6 +419,11 @@ public partial class AgentsTelemetryTests : AgentsTestBase
             { "gen_ai.agent.id", "*" },
             { "gen_ai.agent.type", agentType }
         };
+
+        if (!useMessageEvents)
+        {
+            expectedCreateAgentAttributes["gen_ai.system_instructions"] = content;
+        }
 
         if (temperature.HasValue)
         {
@@ -424,15 +460,26 @@ public partial class AgentsTelemetryTests : AgentsTestBase
         Assert.That(unexpectedAttributes, Is.Empty,
             $"Found unexpected attributes in create_agent span: {string.Join(", ", unexpectedAttributes)}");
 
-        var expectedCreateAgentEvents = new List<(string, Dictionary<string, object>)>
+        if (useMessageEvents)
         {
-            ("gen_ai.system.message", new Dictionary<string, object>
+            // Event-based: instructions should be emitted as an event
+            var expectedCreateAgentEvents = new List<(string, Dictionary<string, object>)>
             {
-                { "gen_ai.provider.name", "azure.ai.agents" },
-                { "gen_ai.event.content", content }
-            })
-        };
-        GenAiTraceVerifier.ValidateSpanEvents(createAgentSpan, expectedCreateAgentEvents);
+                ("gen_ai.system_instructions", new Dictionary<string, object>
+                {
+                    { "gen_ai.provider.name", "microsoft.foundry" },
+                    { "gen_ai.event.content", content }
+                })
+            };
+            GenAiTraceVerifier.ValidateSpanEvents(createAgentSpan, expectedCreateAgentEvents);
+        }
+        else
+        {
+            // Attribute-based: no events expected for system instructions
+            var events = createAgentSpan.Events.ToList();
+            Assert.That(events.Count, Is.EqualTo(0),
+                $"Expected no events in attribute-based mode, but found {events.Count}");
+        }
     }
 
     private void CheckCreateAgentVersionTrace(
@@ -444,12 +491,13 @@ public partial class AgentsTelemetryTests : AgentsTestBase
         float? temperature = null,
         float? topP = null,
         string reasoningEffort = null,
-        string reasoningSummary = null)
+        string reasoningSummary = null,
+        bool useMessageEvents = false)
     {
         Assert.That(createAgentSpan, Is.Not.Null);
         var expectedCreateAgentAttributes = new Dictionary<string, object>
         {
-            { "gen_ai.provider.name", "azure.ai.agents" },
+            { "gen_ai.provider.name", "microsoft.foundry" },
             { "gen_ai.operation.name", "create_agent" },
             { "server.address", "*" },
             { "az.namespace", "Microsoft.CognitiveServices" },
@@ -459,6 +507,11 @@ public partial class AgentsTelemetryTests : AgentsTestBase
             { "gen_ai.agent.id", "*" },
             { "gen_ai.agent.type", agentType }
         };
+
+        if (!useMessageEvents)
+        {
+            expectedCreateAgentAttributes["gen_ai.system_instructions"] = content;
+        }
 
         if (temperature.HasValue)
         {
@@ -495,15 +548,150 @@ public partial class AgentsTelemetryTests : AgentsTestBase
         Assert.That(unexpectedAttributes, Is.Empty,
             $"Found unexpected attributes in create_agent span: {string.Join(", ", unexpectedAttributes)}");
 
-        var expectedCreateAgentEvents = new List<(string, Dictionary<string, object>)>
+        if (useMessageEvents)
         {
-            ("gen_ai.system.message", new Dictionary<string, object>
+            // Event-based: instructions should be emitted as an event
+            var expectedCreateAgentEvents = new List<(string, Dictionary<string, object>)>
             {
-                { "gen_ai.provider.name", "azure.ai.agents" },
-                { "gen_ai.event.content", content }
-            })
+                ("gen_ai.system_instructions", new Dictionary<string, object>
+                {
+                    { "gen_ai.provider.name", "microsoft.foundry" },
+                    { "gen_ai.event.content", content }
+                })
+            };
+            GenAiTraceVerifier.ValidateSpanEvents(createAgentSpan, expectedCreateAgentEvents);
+        }
+        else
+        {
+            // Attribute-based: no events expected for system instructions
+            var events = createAgentSpan.Events.ToList();
+            Assert.That(events.Count, Is.EqualTo(0),
+                $"Expected no events in attribute-based mode, but found {events.Count}");
+        }
+    }
+
+    [RecordedTest]
+    public async Task TestAgentCreateWithMessageEventsContentRecordingEnabled()
+    {
+        Environment.SetEnvironmentVariable(TraceContentsEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
+        Environment.SetEnvironmentVariable(EnableOpenTelemetryEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
+        Environment.SetEnvironmentVariable(UseMessageEventsEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
+        ReinitializeOpenTelemetryScopeConfiguration();
+
+        AIProjectClient projectClient = GetTestProjectClient();
+        var modelDeploymentName = GetModelDeploymentName();
+        var agentName = "agentsTelemetryTestsEvents1";
+
+        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        {
+            Instructions = "You are a prompt agent."
         };
-        GenAiTraceVerifier.ValidateSpanEvents(createAgentSpan, expectedCreateAgentEvents);
+
+        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+            agentName: agentName,
+            options: new(agentDefinition));
+
+        await projectClient.Agents.DeleteAgentAsync(agentName: agentName);
+
+        // Force flush spans
+        _exporter.ForceFlush();
+
+        var createAgentSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == $"create_agent {agentName}");
+        Assert.That(createAgentSpan, Is.Not.Null);
+        CheckCreateAgentTrace(createAgentSpan, modelDeploymentName, agentName, "[{\"type\":\"text\",\"content\":\"You are a prompt agent.\"}]", useMessageEvents: true);
+    }
+
+    [RecordedTest]
+    public async Task TestAgentCreateWithMessageEventsContentRecordingDisabled()
+    {
+        Environment.SetEnvironmentVariable(TraceContentsEnvironmentVariable, "false", EnvironmentVariableTarget.Process);
+        Environment.SetEnvironmentVariable(EnableOpenTelemetryEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
+        Environment.SetEnvironmentVariable(UseMessageEventsEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
+        ReinitializeOpenTelemetryScopeConfiguration();
+
+        AIProjectClient projectClient = GetTestProjectClient();
+        var modelDeploymentName = GetModelDeploymentName();
+        var agentName = "agentsTelemetryTestsEvents2";
+
+        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        {
+            Instructions = "You are a prompt agent."
+        };
+
+        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+            agentName: agentName,
+            options: new(agentDefinition));
+
+        await projectClient.Agents.DeleteAgentAsync(agentName: agentName);
+
+        // Force flush spans
+        _exporter.ForceFlush();
+
+        var createAgentSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == $"create_agent {agentName}");
+        Assert.That(createAgentSpan, Is.Not.Null);
+        CheckCreateAgentTrace(createAgentSpan, modelDeploymentName, agentName, "[{\"type\":\"text\"}]", useMessageEvents: true);
+    }
+
+    [RecordedTest]
+    public async Task TestAgentVersionCreateWithMessageEventsContentRecordingEnabled()
+    {
+        Environment.SetEnvironmentVariable(TraceContentsEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
+        Environment.SetEnvironmentVariable(EnableOpenTelemetryEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
+        Environment.SetEnvironmentVariable(UseMessageEventsEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
+        ReinitializeOpenTelemetryScopeConfiguration();
+
+        AIProjectClient projectClient = GetTestProjectClient();
+        var modelDeploymentName = GetModelDeploymentName();
+        var agentName = "agentsTelemetryTestsEvents3";
+
+        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        {
+            Instructions = "You are a prompt agent."
+        };
+
+        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+            agentName: agentName,
+            options: new AgentVersionCreationOptions(agentDefinition));
+
+        await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentName, agentVersion: agentVersion.Version);
+
+        // Force flush spans
+        _exporter.ForceFlush();
+
+        var createAgentVersionSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == $"create_agent {agentName}");
+        Assert.That(createAgentVersionSpan, Is.Not.Null);
+        CheckCreateAgentVersionTrace(createAgentVersionSpan, modelDeploymentName, agentName, "[{\"type\":\"text\",\"content\":\"You are a prompt agent.\"}]", useMessageEvents: true);
+    }
+
+    [RecordedTest]
+    public async Task TestAgentVersionCreateWithMessageEventsContentRecordingDisabled()
+    {
+        Environment.SetEnvironmentVariable(TraceContentsEnvironmentVariable, "false", EnvironmentVariableTarget.Process);
+        Environment.SetEnvironmentVariable(EnableOpenTelemetryEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
+        Environment.SetEnvironmentVariable(UseMessageEventsEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
+        ReinitializeOpenTelemetryScopeConfiguration();
+
+        AIProjectClient projectClient = GetTestProjectClient();
+        var modelDeploymentName = GetModelDeploymentName();
+        var agentName = "agentsTelemetryTestsEvents4";
+
+        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        {
+            Instructions = "You are a prompt agent."
+        };
+
+        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+            agentName: agentName,
+            options: new(agentDefinition));
+
+        await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentName, agentVersion: agentVersion.Version);
+
+        // Force flush spans
+        _exporter.ForceFlush();
+
+        var createAgentVersionSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == $"create_agent {agentName}");
+        Assert.That(createAgentVersionSpan, Is.Not.Null);
+        CheckCreateAgentVersionTrace(createAgentVersionSpan, modelDeploymentName, agentName, "[{\"type\":\"text\"}]", useMessageEvents: true);
     }
 
     [RecordedTest]
@@ -545,7 +733,7 @@ trigger:
         // Verify attributes
         var expectedAttributes = new Dictionary<string, object>
         {
-            { "gen_ai.provider.name", "azure.ai.agents" },
+            { "gen_ai.provider.name", "microsoft.foundry" },
             { "gen_ai.operation.name", "create_agent" },
             { "server.address", "*" },
             { "az.namespace", "Microsoft.CognitiveServices" },
@@ -629,7 +817,7 @@ trigger:
         // Verify attributes
         var expectedAttributes = new Dictionary<string, object>
         {
-            { "gen_ai.provider.name", "azure.ai.agents" },
+            { "gen_ai.provider.name", "microsoft.foundry" },
             { "gen_ai.operation.name", "create_agent" },
             { "server.address", "*" },
             { "az.namespace", "Microsoft.CognitiveServices" },

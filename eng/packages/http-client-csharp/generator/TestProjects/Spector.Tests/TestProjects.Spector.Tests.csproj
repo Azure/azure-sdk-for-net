@@ -71,6 +71,7 @@
     <ProjectReference Include="..\Spector\http\payload\media-type\src\Payload.MediaType.csproj" />
     <ProjectReference Include="..\Spector\http\payload\multipart\src\Payload.MultiPart.csproj" />
     <ProjectReference Include="..\Spector\http\payload\pageable\src\Payload.Pageable.csproj" />
+    <ProjectReference Include="..\Spector\http\payload\xml\src\Payload.Xml.csproj" />
     <ProjectReference Include="..\Spector\http\resiliency\srv-driven\v1\src\Resiliency.SrvDriven.V1.csproj" Aliases="SrvDrivenV1" />
     <ProjectReference Include="..\Spector\http\resiliency\srv-driven\v2\src\Resiliency.SrvDriven.V2.csproj" Aliases="SrvDrivenV2" />
     <ProjectReference Include="..\Spector\http\routes\src\Routes.csproj" />

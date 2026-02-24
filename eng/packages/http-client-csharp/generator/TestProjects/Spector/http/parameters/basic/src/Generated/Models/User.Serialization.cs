@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Parameters.Basic.Models
+namespace Parameters.Basic._ExplicitBody
 {
     public partial class User : IJsonModel<User>
     {
@@ -20,14 +20,6 @@ namespace Parameters.Basic.Models
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        void IJsonModel<User>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        User IJsonModel<User>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual User JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
         BinaryData IPersistableModel<User>.Write(ModelReaderWriterOptions options) => throw null;
 
         User IPersistableModel<User>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
@@ -36,5 +28,13 @@ namespace Parameters.Basic.Models
 
         /// <param name="user"> The <see cref="User"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(User user) => throw null;
+
+        void IJsonModel<User>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        User IJsonModel<User>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual User JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }
 }

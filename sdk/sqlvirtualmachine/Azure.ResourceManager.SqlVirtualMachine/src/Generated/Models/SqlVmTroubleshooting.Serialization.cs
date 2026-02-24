@@ -18,6 +18,30 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     /// <summary> Details required for SQL VM troubleshooting. </summary>
     public partial class SqlVmTroubleshooting : IJsonModel<SqlVmTroubleshooting>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SqlVmTroubleshooting PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SqlVmTroubleshooting>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSqlVmTroubleshooting(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SqlVmTroubleshooting)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SqlVmTroubleshooting"/> from. </param>
+        internal static SqlVmTroubleshooting FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSqlVmTroubleshooting(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlVmTroubleshooting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -186,23 +210,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         SqlVmTroubleshooting IPersistableModel<SqlVmTroubleshooting>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SqlVmTroubleshooting PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SqlVmTroubleshooting>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSqlVmTroubleshooting(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SqlVmTroubleshooting)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SqlVmTroubleshooting>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -216,13 +223,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(sqlVmTroubleshooting, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SqlVmTroubleshooting"/> from. </param>
-        internal static SqlVmTroubleshooting FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSqlVmTroubleshooting(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

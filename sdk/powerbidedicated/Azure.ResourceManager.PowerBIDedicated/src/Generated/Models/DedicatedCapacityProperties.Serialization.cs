@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
     /// <summary> Properties of Dedicated Capacity resource. </summary>
     internal partial class DedicatedCapacityProperties : DedicatedCapacityMutableProperties, IJsonModel<DedicatedCapacityProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DedicatedCapacityMutableProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DedicatedCapacityProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDedicatedCapacityProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DedicatedCapacityProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DedicatedCapacityProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -165,23 +182,6 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         DedicatedCapacityProperties IPersistableModel<DedicatedCapacityProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (DedicatedCapacityProperties)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DedicatedCapacityMutableProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DedicatedCapacityProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDedicatedCapacityProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DedicatedCapacityProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DedicatedCapacityProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

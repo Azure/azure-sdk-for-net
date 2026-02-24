@@ -19,6 +19,23 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
     /// <summary> The resourceId extended model. This is used to document failed resources with a resourceId and a corresponding error. </summary>
     public partial class DeploymentStackResourceReferenceExtended : IJsonModel<DeploymentStackResourceReferenceExtended>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DeploymentStackResourceReferenceExtended PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentStackResourceReferenceExtended>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDeploymentStackResourceReferenceExtended(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DeploymentStackResourceReferenceExtended)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeploymentStackResourceReferenceExtended>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -209,23 +226,6 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         DeploymentStackResourceReferenceExtended IPersistableModel<DeploymentStackResourceReferenceExtended>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DeploymentStackResourceReferenceExtended PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DeploymentStackResourceReferenceExtended>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDeploymentStackResourceReferenceExtended(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DeploymentStackResourceReferenceExtended)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DeploymentStackResourceReferenceExtended>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

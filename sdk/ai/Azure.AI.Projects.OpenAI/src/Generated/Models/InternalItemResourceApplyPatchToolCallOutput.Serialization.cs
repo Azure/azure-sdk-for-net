@@ -46,6 +46,16 @@ namespace Azure.AI.Projects.OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InternalItemResourceApplyPatchToolCallOutput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InternalItemResourceApplyPatchToolCallOutput IPersistableModel<InternalItemResourceApplyPatchToolCallOutput>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalItemResourceApplyPatchToolCallOutput)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InternalItemResourceApplyPatchToolCallOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InternalItemResourceApplyPatchToolCallOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -181,15 +191,5 @@ namespace Azure.AI.Projects.OpenAI
                 status,
                 output);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalItemResourceApplyPatchToolCallOutput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InternalItemResourceApplyPatchToolCallOutput IPersistableModel<InternalItemResourceApplyPatchToolCallOutput>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalItemResourceApplyPatchToolCallOutput)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalItemResourceApplyPatchToolCallOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

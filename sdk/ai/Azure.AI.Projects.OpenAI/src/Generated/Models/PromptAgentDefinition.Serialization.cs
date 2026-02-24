@@ -48,6 +48,16 @@ namespace Azure.AI.Projects.OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PromptAgentDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PromptAgentDefinition IPersistableModel<PromptAgentDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => (PromptAgentDefinition)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PromptAgentDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PromptAgentDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -274,15 +284,5 @@ namespace Azure.AI.Projects.OpenAI
                 textOptions,
                 structuredInputs ?? new ChangeTrackingDictionary<string, StructuredInputDefinition>());
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PromptAgentDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PromptAgentDefinition IPersistableModel<PromptAgentDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => (PromptAgentDefinition)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PromptAgentDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

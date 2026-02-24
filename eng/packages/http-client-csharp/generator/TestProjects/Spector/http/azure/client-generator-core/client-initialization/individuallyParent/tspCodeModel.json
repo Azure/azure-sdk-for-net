@@ -1,0 +1,2314 @@
+{
+  "name": "_Specs_.ClientInit.IndividParent",
+  "apiVersions": [],
+  "enums": [],
+  "constants": [
+    {
+      "$id": "1",
+      "kind": "constant",
+      "name": "getStandaloneContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "2",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "3",
+      "kind": "constant",
+      "name": "getStandaloneContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "4",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    }
+  ],
+  "models": [
+    {
+      "$id": "5",
+      "kind": "model",
+      "name": "BlobProperties",
+      "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient",
+      "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.BlobProperties",
+      "usage": "Output,Json",
+      "doc": "Properties of a blob",
+      "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "BlobProperties"
+        }
+      },
+      "properties": [
+        {
+          "$id": "6",
+          "kind": "property",
+          "name": "name",
+          "serializedName": "name",
+          "type": {
+            "$id": "7",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.BlobProperties.name",
+          "serializationOptions": {
+            "json": {
+              "name": "name"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "8",
+          "kind": "property",
+          "name": "size",
+          "serializedName": "size",
+          "type": {
+            "$id": "9",
+            "kind": "int64",
+            "name": "int64",
+            "crossLanguageDefinitionId": "TypeSpec.int64",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.BlobProperties.size",
+          "serializationOptions": {
+            "json": {
+              "name": "size"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "10",
+          "kind": "property",
+          "name": "contentType",
+          "serializedName": "contentType",
+          "type": {
+            "$id": "11",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.BlobProperties.contentType",
+          "serializationOptions": {
+            "json": {
+              "name": "contentType"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "12",
+          "kind": "property",
+          "name": "createdOn",
+          "serializedName": "createdOn",
+          "type": {
+            "$id": "13",
+            "kind": "utcDateTime",
+            "name": "utcDateTime",
+            "encode": "rfc3339",
+            "wireType": {
+              "$id": "14",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string",
+              "decorators": []
+            },
+            "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.BlobProperties.createdOn",
+          "serializationOptions": {
+            "json": {
+              "name": "createdOn"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    }
+  ],
+  "clients": [
+    {
+      "$id": "15",
+      "kind": "client",
+      "name": "IndividuallyParentClient",
+      "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient",
+      "doc": "Test for client initialization decorator - moving parameters from method to client level",
+      "methods": [],
+      "parameters": [
+        {
+          "$id": "16",
+          "kind": "endpoint",
+          "name": "endpoint",
+          "serializedName": "endpoint",
+          "doc": "Service host",
+          "type": {
+            "$id": "17",
+            "kind": "url",
+            "name": "endpoint",
+            "crossLanguageDefinitionId": "TypeSpec.url"
+          },
+          "isApiVersion": false,
+          "optional": false,
+          "scope": "Client",
+          "isEndpoint": true,
+          "defaultValue": {
+            "type": {
+              "$id": "18",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "http://localhost:3000"
+          },
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.endpoint"
+        }
+      ],
+      "initializedBy": 1,
+      "decorators": [],
+      "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient",
+      "apiVersions": [],
+      "children": [
+        {
+          "$id": "19",
+          "kind": "client",
+          "name": "IndividuallyParentNestedWithPathClient",
+          "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient",
+          "doc": "Operations for nested default -> individually and parent",
+          "methods": [
+            {
+              "$id": "20",
+              "kind": "basic",
+              "name": "withQuery",
+              "accessibility": "public",
+              "apiVersions": [],
+              "operation": {
+                "$id": "21",
+                "name": "withQuery",
+                "resourceName": "IndividuallyParentNestedWithPathClient",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "22",
+                    "kind": "path",
+                    "name": "blobName",
+                    "serializedName": "blobName",
+                    "type": {
+                      "$id": "23",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithPathClient.withQuery.blobName",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "24",
+                        "kind": "method",
+                        "name": "blobName",
+                        "serializedName": "blobName",
+                        "doc": "The blob name to use for operations",
+                        "type": {
+                          "$id": "25",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.PathParamClientOptions.blobName",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  },
+                  {
+                    "$id": "26",
+                    "kind": "query",
+                    "name": "format",
+                    "serializedName": "format",
+                    "type": {
+                      "$id": "27",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "optional": true,
+                    "scope": "Method",
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithPathClient.withQuery.format",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$id": "28",
+                        "kind": "method",
+                        "name": "format",
+                        "serializedName": "format",
+                        "type": {
+                          "$id": "29",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Query",
+                        "isApiVersion": false,
+                        "optional": true,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithPathClient.withQuery.format",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      204
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/azure/client-generator-core/client-initialization/individually-parent/nested-default-individually-parent/{blobName}/with-query",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithPathClient.withQuery",
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient"
+              },
+              "parameters": [
+                {
+                  "$ref": "28"
+                }
+              ],
+              "response": {},
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithPathClient.withQuery"
+            },
+            {
+              "$id": "30",
+              "kind": "basic",
+              "name": "getStandalone",
+              "accessibility": "public",
+              "apiVersions": [],
+              "operation": {
+                "$id": "31",
+                "name": "getStandalone",
+                "resourceName": "IndividuallyParentNestedWithPathClient",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "32",
+                    "kind": "path",
+                    "name": "blobName",
+                    "serializedName": "blobName",
+                    "type": {
+                      "$id": "33",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithPathClient.getStandalone.blobName",
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "24"
+                      }
+                    ]
+                  },
+                  {
+                    "$id": "34",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "1"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithPathClient.getStandalone.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "35",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "1"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithPathClient.getStandalone.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "5"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ]
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/azure/client-generator-core/client-initialization/individually-parent/nested-default-individually-parent/{blobName}/get-standalone",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithPathClient.getStandalone",
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient"
+              },
+              "parameters": [
+                {
+                  "$ref": "35"
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "5"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithPathClient.getStandalone"
+            },
+            {
+              "$id": "36",
+              "kind": "basic",
+              "name": "deleteStandalone",
+              "accessibility": "public",
+              "apiVersions": [],
+              "operation": {
+                "$id": "37",
+                "name": "deleteStandalone",
+                "resourceName": "IndividuallyParentNestedWithPathClient",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "38",
+                    "kind": "path",
+                    "name": "blobName",
+                    "serializedName": "blobName",
+                    "type": {
+                      "$id": "39",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithPathClient.deleteStandalone.blobName",
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "24"
+                      }
+                    ]
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      204
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false
+                  }
+                ],
+                "httpMethod": "DELETE",
+                "uri": "{endpoint}",
+                "path": "/azure/client-generator-core/client-initialization/individually-parent/nested-default-individually-parent/{blobName}",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithPathClient.deleteStandalone",
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient"
+              },
+              "parameters": [],
+              "response": {},
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithPathClient.deleteStandalone"
+            }
+          ],
+          "parameters": [
+            {
+              "$id": "40",
+              "kind": "endpoint",
+              "name": "endpoint",
+              "serializedName": "endpoint",
+              "doc": "Service host",
+              "type": {
+                "$id": "41",
+                "kind": "url",
+                "name": "endpoint",
+                "crossLanguageDefinitionId": "TypeSpec.url"
+              },
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Client",
+              "isEndpoint": true,
+              "defaultValue": {
+                "type": {
+                  "$id": "42",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string"
+                },
+                "value": "http://localhost:3000"
+              },
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithPathClient.endpoint"
+            },
+            {
+              "$ref": "24"
+            }
+          ],
+          "initializedBy": 3,
+          "decorators": [],
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithPathClient",
+          "apiVersions": [],
+          "parent": {
+            "$ref": "15"
+          },
+          "isMultiServiceClient": false
+        },
+        {
+          "$id": "43",
+          "kind": "client",
+          "name": "IndividuallyParentNestedWithQueryClient",
+          "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient",
+          "doc": "Operations for nested default -> individually and parent with query parameters",
+          "methods": [
+            {
+              "$id": "44",
+              "kind": "basic",
+              "name": "withQuery",
+              "accessibility": "public",
+              "apiVersions": [],
+              "operation": {
+                "$id": "45",
+                "name": "withQuery",
+                "resourceName": "IndividuallyParentNestedWithQueryClient",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "46",
+                    "kind": "query",
+                    "name": "blobName",
+                    "serializedName": "blobName",
+                    "type": {
+                      "$id": "47",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithQueryClient.withQuery.blobName",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$id": "48",
+                        "kind": "method",
+                        "name": "blobName",
+                        "serializedName": "blobName",
+                        "doc": "The blob name to use for operations",
+                        "type": {
+                          "$id": "49",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.BlobQueryParamClientOptions.blobName",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  },
+                  {
+                    "$id": "50",
+                    "kind": "query",
+                    "name": "format",
+                    "serializedName": "format",
+                    "type": {
+                      "$id": "51",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "optional": true,
+                    "scope": "Method",
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithQueryClient.withQuery.format",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$id": "52",
+                        "kind": "method",
+                        "name": "format",
+                        "serializedName": "format",
+                        "type": {
+                          "$id": "53",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Query",
+                        "isApiVersion": false,
+                        "optional": true,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithQueryClient.withQuery.format",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      204
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/azure/client-generator-core/client-initialization/individually-parent/nested-default-individually-parent-query/with-query",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithQueryClient.withQuery",
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient"
+              },
+              "parameters": [
+                {
+                  "$ref": "52"
+                }
+              ],
+              "response": {},
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithQueryClient.withQuery"
+            },
+            {
+              "$id": "54",
+              "kind": "basic",
+              "name": "getStandalone",
+              "accessibility": "public",
+              "apiVersions": [],
+              "operation": {
+                "$id": "55",
+                "name": "getStandalone",
+                "resourceName": "IndividuallyParentNestedWithQueryClient",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "56",
+                    "kind": "query",
+                    "name": "blobName",
+                    "serializedName": "blobName",
+                    "type": {
+                      "$id": "57",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithQueryClient.getStandalone.blobName",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "48"
+                      }
+                    ]
+                  },
+                  {
+                    "$id": "58",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "3"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithQueryClient.getStandalone.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "59",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "3"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithQueryClient.getStandalone.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "5"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ]
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/azure/client-generator-core/client-initialization/individually-parent/nested-default-individually-parent-query/get-standalone",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithQueryClient.getStandalone",
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient"
+              },
+              "parameters": [
+                {
+                  "$ref": "59"
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "5"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithQueryClient.getStandalone"
+            },
+            {
+              "$id": "60",
+              "kind": "basic",
+              "name": "deleteStandalone",
+              "accessibility": "public",
+              "apiVersions": [],
+              "operation": {
+                "$id": "61",
+                "name": "deleteStandalone",
+                "resourceName": "IndividuallyParentNestedWithQueryClient",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "62",
+                    "kind": "query",
+                    "name": "blobName",
+                    "serializedName": "blobName",
+                    "type": {
+                      "$id": "63",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithQueryClient.deleteStandalone.blobName",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "48"
+                      }
+                    ]
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      204
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false
+                  }
+                ],
+                "httpMethod": "DELETE",
+                "uri": "{endpoint}",
+                "path": "/azure/client-generator-core/client-initialization/individually-parent/nested-default-individually-parent-query/delete-resource",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithQueryClient.deleteStandalone",
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient"
+              },
+              "parameters": [],
+              "response": {},
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithQueryClient.deleteStandalone"
+            }
+          ],
+          "parameters": [
+            {
+              "$id": "64",
+              "kind": "endpoint",
+              "name": "endpoint",
+              "serializedName": "endpoint",
+              "doc": "Service host",
+              "type": {
+                "$id": "65",
+                "kind": "url",
+                "name": "endpoint",
+                "crossLanguageDefinitionId": "TypeSpec.url"
+              },
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Client",
+              "isEndpoint": true,
+              "defaultValue": {
+                "type": {
+                  "$id": "66",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string"
+                },
+                "value": "http://localhost:3000"
+              },
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithQueryClient.endpoint"
+            },
+            {
+              "$ref": "48"
+            }
+          ],
+          "initializedBy": 3,
+          "decorators": [],
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithQueryClient",
+          "apiVersions": [],
+          "parent": {
+            "$ref": "15"
+          },
+          "isMultiServiceClient": false
+        },
+        {
+          "$id": "67",
+          "kind": "client",
+          "name": "IndividuallyParentNestedWithHeaderClient",
+          "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient",
+          "doc": "Operations for nested default -> individually and parent header parameters",
+          "methods": [
+            {
+              "$id": "68",
+              "kind": "basic",
+              "name": "withQuery",
+              "accessibility": "public",
+              "apiVersions": [],
+              "operation": {
+                "$id": "69",
+                "name": "withQuery",
+                "resourceName": "IndividuallyParentNestedWithHeaderClient",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "70",
+                    "kind": "header",
+                    "name": "name",
+                    "serializedName": "name",
+                    "type": {
+                      "$id": "71",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Client",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithHeaderClient.withQuery.name",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "72",
+                        "kind": "method",
+                        "name": "name",
+                        "serializedName": "name",
+                        "doc": "The name to use for operations",
+                        "type": {
+                          "$id": "73",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.HeaderParamClientOptions.name",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  },
+                  {
+                    "$id": "74",
+                    "kind": "query",
+                    "name": "format",
+                    "serializedName": "format",
+                    "type": {
+                      "$id": "75",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "optional": true,
+                    "scope": "Method",
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithHeaderClient.withQuery.format",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$id": "76",
+                        "kind": "method",
+                        "name": "format",
+                        "serializedName": "format",
+                        "type": {
+                          "$id": "77",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Query",
+                        "isApiVersion": false,
+                        "optional": true,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithHeaderClient.withQuery.format",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      204
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/azure/client-generator-core/client-initialization/individually-parent/nested-default-individually-parent-header/with-query",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithHeaderClient.withQuery",
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient"
+              },
+              "parameters": [
+                {
+                  "$ref": "76"
+                }
+              ],
+              "response": {},
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithHeaderClient.withQuery"
+            },
+            {
+              "$id": "78",
+              "kind": "basic",
+              "name": "getStandalone",
+              "accessibility": "public",
+              "apiVersions": [],
+              "operation": {
+                "$id": "79",
+                "name": "getStandalone",
+                "resourceName": "IndividuallyParentNestedWithHeaderClient",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "80",
+                    "kind": "header",
+                    "name": "name",
+                    "serializedName": "name",
+                    "type": {
+                      "$id": "81",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Client",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithHeaderClient.getStandalone.name",
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "72"
+                      }
+                    ]
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      204
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/azure/client-generator-core/client-initialization/individually-parent/nested-default-individually-parent-header/get-standalone",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithHeaderClient.getStandalone",
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient"
+              },
+              "parameters": [],
+              "response": {},
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithHeaderClient.getStandalone"
+            },
+            {
+              "$id": "82",
+              "kind": "basic",
+              "name": "deleteStandalone",
+              "accessibility": "public",
+              "apiVersions": [],
+              "operation": {
+                "$id": "83",
+                "name": "deleteStandalone",
+                "resourceName": "IndividuallyParentNestedWithHeaderClient",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "84",
+                    "kind": "header",
+                    "name": "name",
+                    "serializedName": "name",
+                    "type": {
+                      "$id": "85",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Client",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithHeaderClient.deleteStandalone.name",
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "72"
+                      }
+                    ]
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      204
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false
+                  }
+                ],
+                "httpMethod": "DELETE",
+                "uri": "{endpoint}",
+                "path": "/azure/client-generator-core/client-initialization/individually-parent/nested-default-individually-parent-header/delete-standalone",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithHeaderClient.deleteStandalone",
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient"
+              },
+              "parameters": [],
+              "response": {},
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithHeaderClient.deleteStandalone"
+            }
+          ],
+          "parameters": [
+            {
+              "$id": "86",
+              "kind": "endpoint",
+              "name": "endpoint",
+              "serializedName": "endpoint",
+              "doc": "Service host",
+              "type": {
+                "$id": "87",
+                "kind": "url",
+                "name": "endpoint",
+                "crossLanguageDefinitionId": "TypeSpec.url"
+              },
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Client",
+              "isEndpoint": true,
+              "defaultValue": {
+                "type": {
+                  "$id": "88",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string"
+                },
+                "value": "http://localhost:3000"
+              },
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithHeaderClient.endpoint"
+            },
+            {
+              "$ref": "72"
+            }
+          ],
+          "initializedBy": 3,
+          "decorators": [],
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithHeaderClient",
+          "apiVersions": [],
+          "parent": {
+            "$ref": "15"
+          },
+          "isMultiServiceClient": false
+        },
+        {
+          "$id": "89",
+          "kind": "client",
+          "name": "IndividuallyParentNestedWithMultipleClient",
+          "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient",
+          "doc": "Operations for nested default -> individually and parent multiple parameters",
+          "methods": [
+            {
+              "$id": "90",
+              "kind": "basic",
+              "name": "withQuery",
+              "accessibility": "public",
+              "apiVersions": [],
+              "operation": {
+                "$id": "91",
+                "name": "withQuery",
+                "resourceName": "IndividuallyParentNestedWithMultipleClient",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "92",
+                    "kind": "header",
+                    "name": "name",
+                    "serializedName": "name",
+                    "type": {
+                      "$id": "93",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Client",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithMultipleClient.withQuery.name",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "94",
+                        "kind": "method",
+                        "name": "name",
+                        "serializedName": "name",
+                        "doc": "The name to use for operations",
+                        "type": {
+                          "$id": "95",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.MultipleParamsClientOptions.name",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  },
+                  {
+                    "$id": "96",
+                    "kind": "query",
+                    "name": "region",
+                    "serializedName": "region",
+                    "type": {
+                      "$id": "97",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithMultipleClient.withQuery.region",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$id": "98",
+                        "kind": "method",
+                        "name": "region",
+                        "serializedName": "region",
+                        "doc": "The region to use for operations",
+                        "type": {
+                          "$id": "99",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.MultipleParamsClientOptions.region",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  },
+                  {
+                    "$id": "100",
+                    "kind": "query",
+                    "name": "format",
+                    "serializedName": "format",
+                    "type": {
+                      "$id": "101",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "optional": true,
+                    "scope": "Method",
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithMultipleClient.withQuery.format",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$id": "102",
+                        "kind": "method",
+                        "name": "format",
+                        "serializedName": "format",
+                        "type": {
+                          "$id": "103",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Query",
+                        "isApiVersion": false,
+                        "optional": true,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithMultipleClient.withQuery.format",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      204
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/azure/client-generator-core/client-initialization/individually-parent/nested-default-individually-parent-multiple/with-query",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithMultipleClient.withQuery",
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient"
+              },
+              "parameters": [
+                {
+                  "$ref": "102"
+                }
+              ],
+              "response": {},
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithMultipleClient.withQuery"
+            },
+            {
+              "$id": "104",
+              "kind": "basic",
+              "name": "getStandalone",
+              "accessibility": "public",
+              "apiVersions": [],
+              "operation": {
+                "$id": "105",
+                "name": "getStandalone",
+                "resourceName": "IndividuallyParentNestedWithMultipleClient",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "106",
+                    "kind": "header",
+                    "name": "name",
+                    "serializedName": "name",
+                    "type": {
+                      "$id": "107",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Client",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithMultipleClient.getStandalone.name",
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "94"
+                      }
+                    ]
+                  },
+                  {
+                    "$id": "108",
+                    "kind": "query",
+                    "name": "region",
+                    "serializedName": "region",
+                    "type": {
+                      "$id": "109",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithMultipleClient.getStandalone.region",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "98"
+                      }
+                    ]
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      204
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/azure/client-generator-core/client-initialization/individually-parent/nested-default-individually-parent-multiple/get-standalone",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithMultipleClient.getStandalone",
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient"
+              },
+              "parameters": [],
+              "response": {},
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithMultipleClient.getStandalone"
+            },
+            {
+              "$id": "110",
+              "kind": "basic",
+              "name": "deleteStandalone",
+              "accessibility": "public",
+              "apiVersions": [],
+              "operation": {
+                "$id": "111",
+                "name": "deleteStandalone",
+                "resourceName": "IndividuallyParentNestedWithMultipleClient",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "112",
+                    "kind": "header",
+                    "name": "name",
+                    "serializedName": "name",
+                    "type": {
+                      "$id": "113",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Client",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithMultipleClient.deleteStandalone.name",
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "94"
+                      }
+                    ]
+                  },
+                  {
+                    "$id": "114",
+                    "kind": "query",
+                    "name": "region",
+                    "serializedName": "region",
+                    "type": {
+                      "$id": "115",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithMultipleClient.deleteStandalone.region",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "98"
+                      }
+                    ]
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      204
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false
+                  }
+                ],
+                "httpMethod": "DELETE",
+                "uri": "{endpoint}",
+                "path": "/azure/client-generator-core/client-initialization/individually-parent/nested-default-individually-parent-multiple/delete-standalone",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithMultipleClient.deleteStandalone",
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient"
+              },
+              "parameters": [],
+              "response": {},
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithMultipleClient.deleteStandalone"
+            }
+          ],
+          "parameters": [
+            {
+              "$id": "116",
+              "kind": "endpoint",
+              "name": "endpoint",
+              "serializedName": "endpoint",
+              "doc": "Service host",
+              "type": {
+                "$id": "117",
+                "kind": "url",
+                "name": "endpoint",
+                "crossLanguageDefinitionId": "TypeSpec.url"
+              },
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Client",
+              "isEndpoint": true,
+              "defaultValue": {
+                "type": {
+                  "$id": "118",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string"
+                },
+                "value": "http://localhost:3000"
+              },
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithMultipleClient.endpoint"
+            },
+            {
+              "$ref": "94"
+            },
+            {
+              "$ref": "98"
+            }
+          ],
+          "initializedBy": 3,
+          "decorators": [],
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithMultipleClient",
+          "apiVersions": [],
+          "parent": {
+            "$ref": "15"
+          },
+          "isMultiServiceClient": false
+        },
+        {
+          "$id": "119",
+          "kind": "client",
+          "name": "IndividuallyParentNestedWithMixedClient",
+          "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient",
+          "doc": "Operations for nested default -> individually and parent mixed parameters",
+          "methods": [
+            {
+              "$id": "120",
+              "kind": "basic",
+              "name": "withQuery",
+              "accessibility": "public",
+              "apiVersions": [],
+              "operation": {
+                "$id": "121",
+                "name": "withQuery",
+                "resourceName": "IndividuallyParentNestedWithMixedClient",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "122",
+                    "kind": "header",
+                    "name": "name",
+                    "serializedName": "name",
+                    "type": {
+                      "$id": "123",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Client",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithMixedClient.withQuery.name",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "124",
+                        "kind": "method",
+                        "name": "name",
+                        "serializedName": "name",
+                        "doc": "The name to use for operations",
+                        "type": {
+                          "$id": "125",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.MixedParamsClientOptions.name",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  },
+                  {
+                    "$id": "126",
+                    "kind": "query",
+                    "name": "region",
+                    "serializedName": "region",
+                    "type": {
+                      "$id": "127",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithMixedClient.withQuery.region",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$id": "128",
+                        "kind": "method",
+                        "name": "region",
+                        "serializedName": "region",
+                        "type": {
+                          "$id": "129",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Query",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithMixedClient.withQuery.region",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  },
+                  {
+                    "$id": "130",
+                    "kind": "query",
+                    "name": "format",
+                    "serializedName": "format",
+                    "type": {
+                      "$id": "131",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "optional": true,
+                    "scope": "Method",
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithMixedClient.withQuery.format",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$id": "132",
+                        "kind": "method",
+                        "name": "format",
+                        "serializedName": "format",
+                        "type": {
+                          "$id": "133",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Query",
+                        "isApiVersion": false,
+                        "optional": true,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithMixedClient.withQuery.format",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      204
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/azure/client-generator-core/client-initialization/individually-parent/nested-default-individually-parent-mixed/with-query",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithMixedClient.withQuery",
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient"
+              },
+              "parameters": [
+                {
+                  "$ref": "128"
+                },
+                {
+                  "$ref": "132"
+                }
+              ],
+              "response": {},
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithMixedClient.withQuery"
+            },
+            {
+              "$id": "134",
+              "kind": "basic",
+              "name": "getStandalone",
+              "accessibility": "public",
+              "apiVersions": [],
+              "operation": {
+                "$id": "135",
+                "name": "getStandalone",
+                "resourceName": "IndividuallyParentNestedWithMixedClient",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "136",
+                    "kind": "header",
+                    "name": "name",
+                    "serializedName": "name",
+                    "type": {
+                      "$id": "137",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Client",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithMixedClient.getStandalone.name",
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "124"
+                      }
+                    ]
+                  },
+                  {
+                    "$id": "138",
+                    "kind": "query",
+                    "name": "region",
+                    "serializedName": "region",
+                    "type": {
+                      "$id": "139",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithMixedClient.getStandalone.region",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$id": "140",
+                        "kind": "method",
+                        "name": "region",
+                        "serializedName": "region",
+                        "type": {
+                          "$id": "141",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Query",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithMixedClient.getStandalone.region",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      204
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/azure/client-generator-core/client-initialization/individually-parent/nested-default-individually-parent-mixed/get-standalone",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithMixedClient.getStandalone",
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient"
+              },
+              "parameters": [
+                {
+                  "$ref": "140"
+                }
+              ],
+              "response": {},
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithMixedClient.getStandalone"
+            },
+            {
+              "$id": "142",
+              "kind": "basic",
+              "name": "deleteStandalone",
+              "accessibility": "public",
+              "apiVersions": [],
+              "operation": {
+                "$id": "143",
+                "name": "deleteStandalone",
+                "resourceName": "IndividuallyParentNestedWithMixedClient",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "144",
+                    "kind": "header",
+                    "name": "name",
+                    "serializedName": "name",
+                    "type": {
+                      "$id": "145",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Client",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithMixedClient.deleteStandalone.name",
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "124"
+                      }
+                    ]
+                  },
+                  {
+                    "$id": "146",
+                    "kind": "query",
+                    "name": "region",
+                    "serializedName": "region",
+                    "type": {
+                      "$id": "147",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithMixedClient.deleteStandalone.region",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$id": "148",
+                        "kind": "method",
+                        "name": "region",
+                        "serializedName": "region",
+                        "type": {
+                          "$id": "149",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Query",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithMixedClient.deleteStandalone.region",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      204
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false
+                  }
+                ],
+                "httpMethod": "DELETE",
+                "uri": "{endpoint}",
+                "path": "/azure/client-generator-core/client-initialization/individually-parent/nested-default-individually-parent-mixed/delete-standalone",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithMixedClient.deleteStandalone",
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient"
+              },
+              "parameters": [
+                {
+                  "$ref": "148"
+                }
+              ],
+              "response": {},
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithMixedClient.deleteStandalone"
+            }
+          ],
+          "parameters": [
+            {
+              "$id": "150",
+              "kind": "endpoint",
+              "name": "endpoint",
+              "serializedName": "endpoint",
+              "doc": "Service host",
+              "type": {
+                "$id": "151",
+                "kind": "url",
+                "name": "endpoint",
+                "crossLanguageDefinitionId": "TypeSpec.url"
+              },
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Client",
+              "isEndpoint": true,
+              "defaultValue": {
+                "type": {
+                  "$id": "152",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string"
+                },
+                "value": "http://localhost:3000"
+              },
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithMixedClient.endpoint"
+            },
+            {
+              "$ref": "124"
+            }
+          ],
+          "initializedBy": 3,
+          "decorators": [],
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithMixedClient",
+          "apiVersions": [],
+          "parent": {
+            "$ref": "15"
+          },
+          "isMultiServiceClient": false
+        },
+        {
+          "$id": "153",
+          "kind": "client",
+          "name": "IndividuallyParentNestedWithParamAliasClient",
+          "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient",
+          "doc": "Operations for nested default -> individually and parent param alias",
+          "methods": [
+            {
+              "$id": "154",
+              "kind": "basic",
+              "name": "withAliasedName",
+              "accessibility": "public",
+              "apiVersions": [],
+              "operation": {
+                "$id": "155",
+                "name": "withAliasedName",
+                "resourceName": "IndividuallyParentNestedWithParamAliasClient",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "156",
+                    "kind": "path",
+                    "name": "blob",
+                    "serializedName": "blob",
+                    "type": {
+                      "$id": "157",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithParamAliasClient.withAliasedName.blob",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "158",
+                        "kind": "method",
+                        "name": "blobName",
+                        "serializedName": "blobName",
+                        "doc": "Blob name for the client.",
+                        "type": {
+                          "$id": "159",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.ParamAliasClientOptions.blobName",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      204
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/azure/client-generator-core/client-initialization/individually-parent/nested-default-individually-parent-param-alias/{blob}/with-aliased-name",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithParamAliasClient.withAliasedName",
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient"
+              },
+              "parameters": [],
+              "response": {},
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithParamAliasClient.withAliasedName"
+            },
+            {
+              "$id": "160",
+              "kind": "basic",
+              "name": "withOriginalName",
+              "accessibility": "public",
+              "apiVersions": [],
+              "operation": {
+                "$id": "161",
+                "name": "withOriginalName",
+                "resourceName": "IndividuallyParentNestedWithParamAliasClient",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "162",
+                    "kind": "path",
+                    "name": "blobName",
+                    "serializedName": "blobName",
+                    "type": {
+                      "$id": "163",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithParamAliasClient.withOriginalName.blobName",
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "158"
+                      }
+                    ]
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      204
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/azure/client-generator-core/client-initialization/individually-parent/nested-default-individually-parent-param-alias/{blobName}/with-original-name",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithParamAliasClient.withOriginalName",
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient"
+              },
+              "parameters": [],
+              "response": {},
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithParamAliasClient.withOriginalName"
+            }
+          ],
+          "parameters": [
+            {
+              "$id": "164",
+              "kind": "endpoint",
+              "name": "endpoint",
+              "serializedName": "endpoint",
+              "doc": "Service host",
+              "type": {
+                "$id": "165",
+                "kind": "url",
+                "name": "endpoint",
+                "crossLanguageDefinitionId": "TypeSpec.url"
+              },
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Client",
+              "isEndpoint": true,
+              "defaultValue": {
+                "type": {
+                  "$id": "166",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string"
+                },
+                "value": "http://localhost:3000"
+              },
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithParamAliasClient.endpoint"
+            },
+            {
+              "$ref": "158"
+            }
+          ],
+          "initializedBy": 3,
+          "decorators": [],
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.IndividuallyParentNestedWithParamAliasClient",
+          "apiVersions": [],
+          "parent": {
+            "$ref": "15"
+          },
+          "isMultiServiceClient": false
+        }
+      ],
+      "isMultiServiceClient": false
+    }
+  ]
+}

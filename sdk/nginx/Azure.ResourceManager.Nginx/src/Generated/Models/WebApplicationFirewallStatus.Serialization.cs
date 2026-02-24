@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.Nginx.Models
     /// <summary> The status of the NGINX App Protect Web Application Firewall. </summary>
     public partial class WebApplicationFirewallStatus : IJsonModel<WebApplicationFirewallStatus>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual WebApplicationFirewallStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WebApplicationFirewallStatus>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeWebApplicationFirewallStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WebApplicationFirewallStatus)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WebApplicationFirewallStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -183,23 +200,6 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         WebApplicationFirewallStatus IPersistableModel<WebApplicationFirewallStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual WebApplicationFirewallStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WebApplicationFirewallStatus>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeWebApplicationFirewallStatus(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(WebApplicationFirewallStatus)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<WebApplicationFirewallStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

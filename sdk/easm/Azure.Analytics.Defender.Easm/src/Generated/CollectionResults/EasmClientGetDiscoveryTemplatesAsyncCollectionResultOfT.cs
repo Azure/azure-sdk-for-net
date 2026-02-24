@@ -52,7 +52,7 @@ namespace Azure.Analytics.Defender.Easm
                     yield break;
                 }
                 PagedDiscoTemplate result = (PagedDiscoTemplate)response;
-                yield return Page<DiscoveryTemplate>.FromValues((IReadOnlyList<DiscoveryTemplate>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DiscoveryTemplate>.FromValues((IReadOnlyList<DiscoveryTemplate>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

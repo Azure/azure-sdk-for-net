@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.OracleDatabase
     /// <summary> DbSystemShape resource definition. </summary>
     public partial class OracleDBSystemShapeData : ResourceData, IJsonModel<OracleDBSystemShapeData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OracleDBSystemShapeData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeOracleDBSystemShapeData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OracleDBSystemShapeData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="OracleDBSystemShapeData"/> from. </param>
+        internal static OracleDBSystemShapeData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeOracleDBSystemShapeData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OracleDBSystemShapeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -154,31 +178,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="options"> The client options for reading and writing models. </param>
         OracleDBSystemShapeData IPersistableModel<OracleDBSystemShapeData>.Create(BinaryData data, ModelReaderWriterOptions options) => (OracleDBSystemShapeData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<OracleDBSystemShapeData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeOracleDBSystemShapeData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(OracleDBSystemShapeData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<OracleDBSystemShapeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="OracleDBSystemShapeData"/> from. </param>
-        internal static OracleDBSystemShapeData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeOracleDBSystemShapeData(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }
