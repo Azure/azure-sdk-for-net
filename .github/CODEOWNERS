@@ -871,7 +871,7 @@
 # ServiceOwners:                                                   @giakas
 
 # PRLabel: %Voice Live
-/sdk/voicelive/Azure.AI.VoiceLive/                                        @rhurey @xitzhang
+/sdk/voicelive/Azure.AI.VoiceLive/                                 @amber-yujueWang @emilyjiji @pankopon @rhurey @xitzhang
 
 # ServiceLabel: %Voice Live
 # ServiceOwners:                                                   @rhurey @xitzhang
