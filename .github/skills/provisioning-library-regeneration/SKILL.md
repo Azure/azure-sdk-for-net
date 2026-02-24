@@ -1,33 +1,33 @@
 ---
 name: provisioning-library-regeneration
-description: Regenerate Azure.Provisioning.* libraries when the underlying Azure.ResourceManager.* management library is updated. Use when adding new features (e.g., new enum values, API versions) to provisioning libraries.
+description: Regenerate Azure.Provisioning.* libraries to add new resources or features. Use when adding new resource types, enum values, or API versions to provisioning libraries.
 ---
 
 # Provisioning Library Regeneration
 
-This skill guides the process of regenerating `Azure.Provisioning.*` libraries when the underlying `Azure.ResourceManager.*` management library is updated. This is typically needed when:
+This skill guides the process of regenerating `Azure.Provisioning.*` libraries to add new resources or features. This is typically needed when:
 
+- New resource types need to be added to provisioning (e.g., NetworkSecurityPerimeter)
 - New enum values are added (e.g., new PostgreSQL server versions)
 - New API versions bring new properties or types
 - The management library has a new release with features needed in provisioning
 
-## Summary of the Process
+## Step 1: Determine If Management Library Version Update Is Needed
 
-The provisioning libraries (`sdk/provisioning/Azure.Provisioning.*`) are generated from the management libraries (`sdk/*/Azure.ResourceManager.*`). When a management library is updated, you need to:
+**Key principle**: Only update the management library version if explicitly requested or if the feature doesn't exist in the current version. Prefer not updating to reduce the amount of changes.
 
-1. Update the management library version in `eng/Packages.Data.props`
-2. Run the provisioning generator
-3. Handle any breaking changes via backward-compatible customizations
-4. Fix any spell check, API compatibility, or CI issues
-5. Run pre-commit checks
+1. **If the requirement explicitly says "update the version"** → Update the version (proceed to Step 2A)
 
-## Prerequisites
+2. **If the requirement does NOT explicitly request a version update**:
+   - Check if the feature already exists in the current management library:
+     ```shell
+     # Search for the resource/feature in the management library
+     grep -r "NetworkSecurityPerimeterResource" sdk/{service}/Azure.ResourceManager.{Service}/
+     ```
+   - If the feature exists → Skip version update, proceed to Step 2B
+   - If the feature doesn't exist → You'll need to update the version (proceed to Step 2A)
 
-- .NET 10 SDK installed
-- PowerShell 7+ installed
-- The management library update must already be published to NuGet (or the version must be available in `eng/Packages.Data.props`)
-
-## Step 1: Update Management Library Version
+## Step 2A: Update Management Library Version (If Needed)
 
 Edit `eng/Packages.Data.props` to update the management library version:
 
@@ -35,23 +35,33 @@ Edit `eng/Packages.Data.props` to update the management library version:
 <PackageReference Update="Azure.ResourceManager.{ServiceName}" Version="{NewVersion}" />
 ```
 
-For example, to update PostgreSql from 1.3.1 to 1.4.1:
-```xml
-<PackageReference Update="Azure.ResourceManager.PostgreSql" Version="1.4.1" />
+## Step 2B: Check for Resource Whitelist (If Applicable)
+
+Some specifications (like Network) use a whitelist to limit which resources are generated. Check the specification file:
+
+```shell
+cat sdk/provisioning/Generator/src/Specifications/{Service}Specification.cs
 ```
 
-## Step 2: Run the Provisioning Generator
+If you see a `_generatedResources` HashSet, add the new resource types to it:
+
+```csharp
+private readonly HashSet<Type> _generatedResources = new()
+{
+    // ... existing resources ...
+    typeof(NetworkSecurityPerimeterResource),
+    typeof(NetworkSecurityPerimeterAccessRuleResource),
+    // ... add all related resource types ...
+};
+```
+
+## Step 3: Run the Provisioning Generator
 
 Navigate to the generator directory and run:
 
 ```shell
 cd sdk/provisioning/Generator/src
 dotnet run --framework net10.0 -- --filter {ServiceName}
-```
-
-For example:
-```shell
-dotnet run --framework net10.0 -- --filter PostgreSql
 ```
 
 **Important:** The generator reads from NuGet packages, NOT local source code. The version in `eng/Packages.Data.props` determines which package version is used.
@@ -66,9 +76,9 @@ If the generator fails with errors:
 
 Do NOT attempt to automatically fix generator errors without user guidance.
 
-## Step 3: Handle Breaking Changes
+## Step 4: Handle Breaking Changes (Version Updates Only)
 
-Compare the generated code with the previous version. Common breaking changes include:
+When updating management library versions, compare the generated code with the previous version. Common breaking changes include:
 
 ### Type Removed
 If a type is removed from the management library:
@@ -101,7 +111,7 @@ If `[DataMember]` attributes are removed from enums:
   CP0002:M:Azure.Provisioning.{Service}.{EnumType}.{Member}.get->System.Runtime.Serialization.DataMemberAttribute
   ```
 
-## Step 4: Fix Spell Check Issues
+## Step 5: Fix Spell Check Issues
 
 If CI fails with "Unknown word" errors, add the words to `sdk/provisioning/cspell.yaml`:
 
@@ -114,14 +124,14 @@ If CI fails with "Unknown word" errors, add the words to `sdk/provisioning/cspel
 
 **Important:** Use `sdk/provisioning/cspell.yaml`, NOT `.vscode/cspell.json`.
 
-## Step 5: Export API and Update Snippets
+## Step 6: Export API and Update Snippets
 
 ```shell
 pwsh eng\scripts\Export-API.ps1 provisioning
 pwsh eng\scripts\Update-Snippets.ps1 provisioning
 ```
 
-## Step 6: Run Pre-Commit Checks
+## Step 7: Run Pre-Commit Checks
 
 Before committing, run:
 
@@ -138,53 +148,69 @@ This runs:
 
 All checks must pass with 0 errors.
 
-## Step 7: Commit and Push
+## Step 8: Update CHANGELOG and Commit
 
-Stage all changes and commit with a descriptive message:
+1. Update the CHANGELOG at `sdk/provisioning/Azure.Provisioning.{Service}/CHANGELOG.md`:
+   ```markdown
+   ## X.X.X-beta.X (Unreleased)
 
-```shell
-git add -A
-git commit -m "Regenerate Azure.Provisioning.{Service} from updated management library"
-```
+   ### Features Added
 
-## Example: PostgreSQL Server Versions 17 and 18
+   - Added support for `{NewResource}` resources and related types.
+   ```
 
-Here's what was done to add PostgreSQL versions 17 and 18:
+2. Stage all changes and commit:
+   ```shell
+   git add -A
+   git commit -m "Add {Feature} to Azure.Provisioning.{Service}"
+   ```
+
+## Example A: PostgreSQL Server Versions 17 and 18 (Version Update Required)
+
+The requirement was to add PostgreSQL versions 17 and 18, which required updating the management library.
 
 1. **Updated `eng/Packages.Data.props`**: Changed `Azure.ResourceManager.PostgreSql` from 1.3.1 to 1.4.1
-
 2. **Ran generator**: `dotnet run --framework net10.0 -- --filter PostgreSql`
+3. **Handled breaking changes**: Property renames, obsolete stubs, enum ordering, ApiCompatBaseline
+4. **Fixed CI issues**: Added spell check words to `cspell.yaml`
+5. **Ran pre-commit checks**: `pwsh eng\scripts\CodeChecks.ps1 -ServiceDirectory provisioning`
 
-3. **Fixed generator issues**:
-   - Added `#pragma warning disable CS0618` for obsolete `ActiveDirectoryAdministratorResource`
-   - Fixed schema tree conflict in `Specification.Schema.cs`
+## Example B: NetworkSecurityPerimeter Resources (No Version Update Needed)
 
-4. **Handled breaking changes**:
-   - Renamed `PrivateEndpointConnections` property via `CustomizeProperty`
-   - Created backward-compatible old property via `DefineAdditionalProperties()`
-   - Created obsolete stub for removed `PostgreSqlFlexibleServersPrivateEndpointConnectionData` type
-   - Used `OrderEnum<PostgreSqlFlexibleServerVersion>()` to preserve enum ordinal values
-   - Created `ApiCompatBaseline.txt` to suppress DataMember removal errors
+The requirement was to add NetworkSecurityPerimeter support. The resources already existed in the current management library but weren't being generated due to a whitelist.
 
-5. **Fixed CI issues**:
-   - Added "apsara", "dbrds", "ssdlrs" to `sdk/provisioning/cspell.yaml`
-   - Fixed Kusto README missing `--prerelease` flag
-
-6. **Ran pre-commit checks**: `pwsh eng\scripts\CodeChecks.ps1 -ServiceDirectory provisioning`
+1. **Checked management library**: Resources already existed in `Azure.ResourceManager.Network`
+2. **Updated `NetworkSpecification.cs`**: Added 7 resource types to `_generatedResources`:
+   ```csharp
+   typeof(NetworkSecurityPerimeterResource),
+   typeof(NetworkSecurityPerimeterAccessRuleResource),
+   typeof(NetworkSecurityPerimeterAssociationResource),
+   typeof(NetworkSecurityPerimeterLinkResource),
+   typeof(NetworkSecurityPerimeterLinkReferenceResource),
+   typeof(NetworkSecurityPerimeterLoggingConfigurationResource),
+   typeof(NetworkSecurityPerimeterProfileResource),
+   ```
+3. **Ran generator**: `dotnet run --framework net10.0 -- --filter Network`
+4. **Ran pre-commit checks**: No breaking changes (new resources only)
+5. **Updated CHANGELOG**: Documented new NetworkSecurityPerimeter support
 
 ## Key Files
 
 | File | Purpose |
 |------|---------|
 | `eng/Packages.Data.props` | Management library version |
-| `sdk/provisioning/Generator/src/Specifications/{Service}Specification.cs` | Generator customizations |
-| `sdk/provisioning/Generator/src/Model/Specification.Schema.cs` | Schema tree builder |
+| `sdk/provisioning/Generator/src/Specifications/{Service}Specification.cs` | Generator customizations and resource whitelist |
 | `sdk/provisioning/Generator/src/Model/Specification.Customize.cs` | Customization API (`OrderEnum`, `CustomizeResource`, etc.) |
 | `sdk/provisioning/Azure.Provisioning.{Service}/src/BackwardCompatible/` | Backward-compatible customizations |
 | `sdk/provisioning/Azure.Provisioning.{Service}/src/ApiCompatBaseline.txt` | API compatibility suppressions |
 | `sdk/provisioning/cspell.yaml` | Spell check configuration |
 
 ## Troubleshooting
+
+### Resources not being generated
+- Check if the specification uses a whitelist (`_generatedResources`)
+- Verify the resource types are added to the whitelist
+- Ensure the management library version is correct
 
 ### Generator fails to find types
 - Ensure the management library version in `eng/Packages.Data.props` is correct and published
