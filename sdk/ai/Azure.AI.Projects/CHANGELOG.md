@@ -8,14 +8,11 @@
 
 ### Breaking Changes
 
-<<<<<<< HEAD
 **Transitive from Azure.AI.Projects.OpenAI**:
 * `ImageBasedHostedAgentDefinition` has been merged into `HostedAgentDefinition`
   * `Image` is now an optional property on `HostedAgentDefinition`; no other net change
-=======
 - Tracing: gen_ai.system.instructions event changed to gen_ai.system_instructions attribute.
 - Tracing: provider name change from "azure.ai.agents" to "microsoft.foundry".
->>>>>>> b2df40989dea4c3b694308aa22af944998072143
 
 ### Sample Updates
 - Added Evaluation sample.
