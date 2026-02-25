@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -31,6 +32,43 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Detailed properties for Desktop. </summary>
-        public DesktopPatchProperties Properties { get; set; }
+        [WirePath("properties")]
+        internal DesktopPatchProperties Properties { get; set; }
+
+        /// <summary> Description of Desktop. </summary>
+        [WirePath("properties.description")]
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DesktopPatchProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
+        /// <summary> Friendly name of Desktop. </summary>
+        [WirePath("properties.friendlyName")]
+        public string FriendlyName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FriendlyName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DesktopPatchProperties();
+                }
+                Properties.FriendlyName = value;
+            }
+        }
     }
 }

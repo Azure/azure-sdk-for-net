@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> SessionHost's domain trust relationship lost. </summary>
         private const string DomainTrustRelationshipLostValue = "DomainTrustRelationshipLost";
         /// <summary> SxS stack installed on the SessionHost is not ready to receive connections. </summary>
-        private const string SxSStackListenerNotReadyValue = "SxSStackListenerNotReady";
+        private const string SxsStackListenerNotReadyValue = "SxSStackListenerNotReady";
         /// <summary> FSLogix is in an unhealthy state on the session host. </summary>
         private const string FSLogixNotHealthyValue = "FSLogixNotHealthy";
         /// <summary> New status to inform admins that the health on their endpoint needs to be fixed. The connections might not fail, as these issues are not fatal. </summary>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static SessionHostStatus DomainTrustRelationshipLost { get; } = new SessionHostStatus(DomainTrustRelationshipLostValue);
 
         /// <summary> SxS stack installed on the SessionHost is not ready to receive connections. </summary>
-        public static SessionHostStatus SxSStackListenerNotReady { get; } = new SessionHostStatus(SxSStackListenerNotReadyValue);
+        public static SessionHostStatus SxsStackListenerNotReady { get; } = new SessionHostStatus(SxsStackListenerNotReadyValue);
 
         /// <summary> FSLogix is in an unhealthy state on the session host. </summary>
         public static SessionHostStatus FSLogixNotHealthy { get; } = new SessionHostStatus(FSLogixNotHealthyValue);

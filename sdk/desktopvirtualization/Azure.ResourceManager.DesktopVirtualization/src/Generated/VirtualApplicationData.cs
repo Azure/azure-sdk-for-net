@@ -20,13 +20,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualApplicationData"/>. </summary>
-        /// <param name="properties"> Detailed properties for Application. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public VirtualApplicationData(ApplicationProperties properties)
+        /// <param name="commandLineSetting"> Specifies whether this published application can be launched with command line arguments provided by the client, command line arguments specified at publish time, or no command line arguments at all. </param>
+        public VirtualApplicationData(VirtualApplicationCommandLineSetting commandLineSetting)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
 
-            Properties = properties;
+            Properties = new ApplicationProperties(commandLineSetting);
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualApplicationData"/>. </summary>
@@ -43,6 +41,235 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> Detailed properties for Application. </summary>
-        public ApplicationProperties Properties { get; set; }
+        [WirePath("properties")]
+        internal ApplicationProperties Properties { get; set; }
+
+        /// <summary> ObjectId of Application. (internal use). </summary>
+        [WirePath("properties.objectId")]
+        public string ObjectId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ObjectId;
+            }
+        }
+
+        /// <summary> Description of Application. </summary>
+        [WirePath("properties.description")]
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
+        /// <summary> Friendly name of Application. </summary>
+        [WirePath("properties.friendlyName")]
+        public string FriendlyName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FriendlyName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationProperties();
+                }
+                Properties.FriendlyName = value;
+            }
+        }
+
+        /// <summary> Specifies a path for the executable file for the application. </summary>
+        [WirePath("properties.filePath")]
+        public string FilePath
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FilePath;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationProperties();
+                }
+                Properties.FilePath = value;
+            }
+        }
+
+        /// <summary> Specifies the package family name for MSIX applications. </summary>
+        [WirePath("properties.msixPackageFamilyName")]
+        public string MsixPackageFamilyName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MsixPackageFamilyName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationProperties();
+                }
+                Properties.MsixPackageFamilyName = value;
+            }
+        }
+
+        /// <summary> Specifies the package application Id for MSIX applications. </summary>
+        [WirePath("properties.msixPackageApplicationId")]
+        public string MsixPackageApplicationId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MsixPackageApplicationId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationProperties();
+                }
+                Properties.MsixPackageApplicationId = value;
+            }
+        }
+
+        /// <summary> Resource Type of Application. </summary>
+        [WirePath("properties.applicationType")]
+        public RemoteApplicationType? ApplicationType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ApplicationType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationProperties();
+                }
+                Properties.ApplicationType = value.Value;
+            }
+        }
+
+        /// <summary> Specifies whether this published application can be launched with command line arguments provided by the client, command line arguments specified at publish time, or no command line arguments at all. </summary>
+        [WirePath("properties.commandLineSetting")]
+        public VirtualApplicationCommandLineSetting CommandLineSetting
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CommandLineSetting;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationProperties();
+                }
+                Properties.CommandLineSetting = value;
+            }
+        }
+
+        /// <summary> Command Line Arguments for Application. </summary>
+        [WirePath("properties.commandLineArguments")]
+        public string CommandLineArguments
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CommandLineArguments;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationProperties();
+                }
+                Properties.CommandLineArguments = value;
+            }
+        }
+
+        /// <summary> Specifies whether to show the RemoteApp program in the RD Web Access server. </summary>
+        [WirePath("properties.showInPortal")]
+        public bool? ShowInPortal
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ShowInPortal;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationProperties();
+                }
+                Properties.ShowInPortal = value.Value;
+            }
+        }
+
+        /// <summary> Path to icon. </summary>
+        [WirePath("properties.iconPath")]
+        public string IconPath
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IconPath;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationProperties();
+                }
+                Properties.IconPath = value;
+            }
+        }
+
+        /// <summary> Index of the icon. </summary>
+        [WirePath("properties.iconIndex")]
+        public int? IconIndex
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IconIndex;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationProperties();
+                }
+                Properties.IconIndex = value.Value;
+            }
+        }
+
+        /// <summary> Hash of the icon. </summary>
+        [WirePath("properties.iconHash")]
+        public string IconHash
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IconHash;
+            }
+        }
+
+        /// <summary> the icon a 64 bit string as a byte array. </summary>
+        [WirePath("properties.iconContent")]
+        public BinaryData IconContent
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IconContent;
+            }
+        }
     }
 }

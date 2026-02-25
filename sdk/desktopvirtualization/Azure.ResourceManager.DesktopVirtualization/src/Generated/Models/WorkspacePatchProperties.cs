@@ -12,7 +12,7 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Workspace properties that can be patched. </summary>
-    public partial class WorkspacePatchProperties
+    internal partial class WorkspacePatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -39,15 +39,19 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Description of Workspace. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> Friendly name of Workspace. </summary>
+        [WirePath("friendlyName")]
         public string FriendlyName { get; set; }
 
         /// <summary> List of applicationGroup links. </summary>
-        public IList<string> ApplicationGroupReferences { get; }
+        [WirePath("applicationGroupReferences")]
+        public IList<string> ApplicationGroupReferences { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Enabled to allow this resource to be access from the public network. </summary>
+        [WirePath("publicNetworkAccess")]
         public DesktopVirtualizationPublicNetworkAccess? PublicNetworkAccess { get; set; }
     }
 }

@@ -37,9 +37,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> The ScalingPlanPersonalSchedule items on this page. </summary>
+        [WirePath("value")]
         public IList<ScalingPlanPersonalScheduleData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

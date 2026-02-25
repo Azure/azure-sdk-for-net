@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> ApplicationGroup properties that can be patched. </summary>
-    public partial class ApplicationGroupPatchProperties
+    internal partial class ApplicationGroupPatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Description of ApplicationGroup. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> Friendly name of ApplicationGroup. </summary>
+        [WirePath("friendlyName")]
         public string FriendlyName { get; set; }
 
         /// <summary> Boolean representing whether the applicationGroup is show in the feed. </summary>
+        [WirePath("showInFeed")]
         public bool? ShowInFeed { get; set; }
     }
 }

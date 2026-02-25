@@ -15,7 +15,7 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Schema for SessionHost properties. </summary>
-    public partial class SessionHostProperties : IJsonModel<SessionHostProperties>
+    internal partial class SessionHostProperties : IJsonModel<SessionHostProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -105,15 +105,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("statusTimestamp"u8);
                 writer.WriteStringValue(StatusTimestamp.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(OsVersion))
+            if (options.Format != "W" && Optional.IsDefined(OSVersion))
             {
                 writer.WritePropertyName("osVersion"u8);
-                writer.WriteStringValue(OsVersion);
+                writer.WriteStringValue(OSVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(SxSStackVersion))
+            if (options.Format != "W" && Optional.IsDefined(SxsStackVersion))
             {
                 writer.WritePropertyName("sxSStackVersion"u8);
-                writer.WriteStringValue(SxSStackVersion);
+                writer.WriteStringValue(SxsStackVersion);
             }
             if (options.Format != "W" && Optional.IsDefined(UpdateState))
             {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             SessionHostStatus? status = default;
             DateTimeOffset? statusTimestamp = default;
             string osVersion = default;
-            string sxSStackVersion = default;
+            string sxsStackVersion = default;
             SessionHostUpdateState? updateState = default;
             DateTimeOffset? lastUpdatedOn = default;
             string updateErrorMessage = default;
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 if (prop.NameEquals("sxSStackVersion"u8))
                 {
-                    sxSStackVersion = prop.Value.GetString();
+                    sxsStackVersion = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("updateState"u8))
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 status,
                 statusTimestamp,
                 osVersion,
-                sxSStackVersion,
+                sxsStackVersion,
                 updateState,
                 lastUpdatedOn,
                 updateErrorMessage,

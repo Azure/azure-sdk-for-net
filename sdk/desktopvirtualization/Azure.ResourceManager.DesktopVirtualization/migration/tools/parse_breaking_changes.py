@@ -5,6 +5,7 @@ Produces a human-readable, grouped summary with actionable fix suggestions.
 """
 
 import re
+import subprocess
 import sys
 from collections import defaultdict
 from pathlib import Path
@@ -311,13 +312,53 @@ def print_report(by_type):
     print("=" * 80)
 
 
+def _find_sdk_root() -> Path:
+    """Walk up from this script's directory to find the SDK package root.
+
+    The SDK root is identified as the directory that contains the ``src/``
+    subfolder with a ``.csproj`` file.  Starting from the ``migration/tools``
+    directory, that is two levels up.
+    """
+    current = Path(__file__).resolve().parent
+    for _ in range(5):
+        if (current / "src").is_dir() and list((current / "src").glob("*.csproj")):
+            return current
+        current = current.parent
+    return None
+
+
+def generate_breaking_txt(sdk_root: Path, output: Path) -> None:
+    """Run ``dotnet build`` under *sdk_root* and write combined stdout+stderr
+    to *output*.  The build is expected to fail when there are breaking
+    changes, so a non-zero exit code is **not** treated as an error."""
+    print(f"Running 'dotnet build' in {sdk_root} ...")
+    result = subprocess.run(
+        ["dotnet", "build"],
+        cwd=str(sdk_root),
+        capture_output=True,
+        text=True,
+    )
+    combined = result.stdout + "\n" + result.stderr
+    output.write_text(combined, encoding="utf-8")
+    print(f"Build output written to {output}  (exit code {result.returncode})")
+
+
 def main():
-    path = sys.argv[1] if len(sys.argv) > 1 else "breaking.txt"
-    if not Path(path).exists():
+    path = Path(sys.argv[1]) if len(sys.argv) > 1 else None
+
+    if path is None:
+        # No file supplied – auto-generate breaking.txt via dotnet build.
+        sdk_root = _find_sdk_root()
+        if sdk_root is None:
+            print("Error: could not locate the SDK package root.", file=sys.stderr)
+            sys.exit(1)
+        path = Path(__file__).resolve().parent / "breaking.txt"
+        generate_breaking_txt(sdk_root, path)
+    elif not path.exists():
         print(f"Error: file '{path}' not found.", file=sys.stderr)
         sys.exit(1)
 
-    errors = parse_file(path)
+    errors = parse_file(str(path))
     if not errors:
         print("No ApiCompat errors found in the file.")
         sys.exit(0)

@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.DesktopVirtualization
 {
     /// <summary></summary>
-    public partial class PrivateEndpointConnectionResource : IJsonModel<DesktopVirtualizationPrivateEndpointConnectionData>
+    public partial class WorkspacePrivateEndpointConnectionResource : IJsonModel<DesktopVirtualizationPrivateEndpointConnectionData>
     {
         private static IJsonModel<DesktopVirtualizationPrivateEndpointConnectionData> s_dataDeserializationInstance;
 

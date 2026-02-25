@@ -12,7 +12,7 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Properties of the private endpoint connection. </summary>
-    public partial class PrivateEndpointConnectionProperties
+    internal partial class PrivateEndpointConnectionProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -44,18 +44,23 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> The group ids for the private endpoint resource. </summary>
-        public IReadOnlyList<string> GroupIds { get; }
+        [WirePath("groupIds")]
+        public IReadOnlyList<string> GroupIds { get; } = new ChangeTrackingList<string>();
 
         /// <summary> The private endpoint resource. </summary>
+        [WirePath("privateEndpoint")]
         internal PrivateEndpoint PrivateEndpoint { get; set; }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
+        [WirePath("privateLinkServiceConnectionState")]
         public DesktopVirtualizationPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
 
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
+        [WirePath("provisioningState")]
         public DesktopVirtualizationPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
 
         /// <summary> The ARM identifier for private endpoint. </summary>
+        [WirePath("privateEndpoint.id")]
         public string PrivateEndpointId
         {
             get

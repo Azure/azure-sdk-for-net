@@ -14,7 +14,7 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Schema for Expand MSIX Image properties. </summary>
-    public partial class ExpandMsixImageProperties : IJsonModel<ExpandMsixImageProperties>
+    internal partial class ExpandMsixImageProperties : IJsonModel<ExpandMsixImageProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -7,17 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Schema for StartMenuItem properties. </summary>
-    public partial class StartMenuItemProperties
+    internal partial class StartMenuItemProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StartMenuItemProperties"/>. </summary>
-        internal StartMenuItemProperties()
+        public StartMenuItemProperties()
         {
         }
 
@@ -39,18 +40,23 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Alias of StartMenuItem. </summary>
-        public string AppAlias { get; }
+        [WirePath("appAlias")]
+        public string AppAlias { get; set; }
 
         /// <summary> Path to the file of StartMenuItem. </summary>
-        public string FilePath { get; }
+        [WirePath("filePath")]
+        public string FilePath { get; set; }
 
         /// <summary> Command line arguments for StartMenuItem. </summary>
-        public string CommandLineArguments { get; }
+        [WirePath("commandLineArguments")]
+        public string CommandLineArguments { get; set; }
 
         /// <summary> Path to the icon. </summary>
-        public string IconPath { get; }
+        [WirePath("iconPath")]
+        public string IconPath { get; set; }
 
         /// <summary> Index of the icon. </summary>
-        public int? IconIndex { get; }
+        [WirePath("iconIndex")]
+        public int? IconIndex { get; set; }
     }
 }

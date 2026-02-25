@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -33,6 +34,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Expiration time of the registration token in UTC. </summary>
+        [WirePath("expirationTimeInUtc")]
         public DateTimeOffset ExpirationTimeInUtc { get; }
     }
 }

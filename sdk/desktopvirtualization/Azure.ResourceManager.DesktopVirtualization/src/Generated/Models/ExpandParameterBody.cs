@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -19,16 +20,18 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of <see cref="ExpandParameterBody"/>. </summary>
         /// <param name="msixImageURI"> Represents URI referring to MSIX Image. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExpandParameterBody(MSIXImageURI msixImageURI, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExpandParameterBody(MsixImageUri msixImageURI, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MsixImageURI = msixImageURI;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Represents URI referring to MSIX Image. </summary>
-        internal MSIXImageURI MsixImageURI { get; }
+        [WirePath("msixImageURI")]
+        internal MsixImageUri MsixImageURI { get; }
 
         /// <summary> URI to Image. </summary>
+        [WirePath("msixImageURI.uri")]
         public Uri MsixImageURIUri
         {
             get

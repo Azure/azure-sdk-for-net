@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Specifications of the Log for Azure Monitoring. </summary>
+        [WirePath("logSpecifications")]
         public IList<LogSpecification> LogSpecifications { get; }
     }
 }

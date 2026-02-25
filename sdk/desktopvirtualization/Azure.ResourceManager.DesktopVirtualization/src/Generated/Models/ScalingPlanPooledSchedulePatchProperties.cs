@@ -12,7 +12,7 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> A ScalingPlanPooledSchedule that can be patched. </summary>
-    public partial class ScalingPlanPooledSchedulePatchProperties
+    internal partial class ScalingPlanPooledSchedulePatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ScalingPlanPooledSchedulePatchProperties"/>. </summary>
-        /// <param name="name"> Name of the ScalingPlanPooledSchedule. </param>
+        /// <param name="scheduleName"> Name of the ScalingPlanPooledSchedule. </param>
         /// <param name="daysOfWeek"> Set of days of the week on which this schedule is active. </param>
         /// <param name="scalingMethod"> The desired scaling method to be used to scale the hosts in the assigned host pool. </param>
         /// <param name="createDelete"> The properties that control how Scaling will manage the size of the hostpool by creating and deleting hosts. </param>
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="offPeakStartTime"> Starting time for off-peak period. </param>
         /// <param name="offPeakLoadBalancingAlgorithm"> Load balancing algorithm for off-peak period. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScalingPlanPooledSchedulePatchProperties(string name, IList<DesktopVirtualizationDayOfWeek> daysOfWeek, ScalingMethodType? scalingMethod, CreateDeleteProperties createDelete, ScalingActionTime rampUpStartTime, SessionHostLoadBalancingAlgorithm? rampUpLoadBalancingAlgorithm, int? rampUpMinimumHostsPct, int? rampUpCapacityThresholdPct, ScalingActionTime peakStartTime, SessionHostLoadBalancingAlgorithm? peakLoadBalancingAlgorithm, ScalingActionTime rampDownStartTime, SessionHostLoadBalancingAlgorithm? rampDownLoadBalancingAlgorithm, int? rampDownMinimumHostsPct, int? rampDownCapacityThresholdPct, bool? rampDownForceLogoffUsers, DesktopVirtualizationStopHostsWhen? rampDownStopHostsWhen, int? rampDownWaitTimeMinutes, string rampDownNotificationMessage, ScalingActionTime offPeakStartTime, SessionHostLoadBalancingAlgorithm? offPeakLoadBalancingAlgorithm, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScalingPlanPooledSchedulePatchProperties(string scheduleName, IList<DesktopVirtualizationDayOfWeek> daysOfWeek, ScalingMethodType? scalingMethod, CreateDeleteProperties createDelete, ScalingActionTime rampUpStartTime, SessionHostLoadBalancingAlgorithm? rampUpLoadBalancingAlgorithm, int? rampUpMinimumHostsPct, int? rampUpCapacityThresholdPct, ScalingActionTime peakStartTime, SessionHostLoadBalancingAlgorithm? peakLoadBalancingAlgorithm, ScalingActionTime rampDownStartTime, SessionHostLoadBalancingAlgorithm? rampDownLoadBalancingAlgorithm, int? rampDownMinimumHostsPct, int? rampDownCapacityThresholdPct, bool? rampDownForceLogoffUsers, DesktopVirtualizationStopHostsWhen? rampDownStopHostsWhen, int? rampDownWaitTimeMinutes, string rampDownNotificationMessage, ScalingActionTime offPeakStartTime, SessionHostLoadBalancingAlgorithm? offPeakLoadBalancingAlgorithm, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Name = name;
+            ScheduleName = scheduleName;
             DaysOfWeek = daysOfWeek;
             ScalingMethod = scalingMethod;
             CreateDelete = createDelete;
@@ -71,63 +71,83 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Name of the ScalingPlanPooledSchedule. </summary>
-        public string Name { get; }
+        [WirePath("scheduleName")]
+        public string ScheduleName { get; }
 
         /// <summary> Set of days of the week on which this schedule is active. </summary>
-        public IList<DesktopVirtualizationDayOfWeek> DaysOfWeek { get; }
+        [WirePath("daysOfWeek")]
+        public IList<DesktopVirtualizationDayOfWeek> DaysOfWeek { get; } = new ChangeTrackingList<DesktopVirtualizationDayOfWeek>();
 
         /// <summary> The desired scaling method to be used to scale the hosts in the assigned host pool. </summary>
+        [WirePath("scalingMethod")]
         public ScalingMethodType? ScalingMethod { get; set; }
 
         /// <summary> The properties that control how Scaling will manage the size of the hostpool by creating and deleting hosts. </summary>
+        [WirePath("createDelete")]
         public CreateDeleteProperties CreateDelete { get; set; }
 
         /// <summary> Starting time for ramp up period. </summary>
+        [WirePath("rampUpStartTime")]
         public ScalingActionTime RampUpStartTime { get; set; }
 
         /// <summary> Load balancing algorithm for ramp up period. </summary>
+        [WirePath("rampUpLoadBalancingAlgorithm")]
         public SessionHostLoadBalancingAlgorithm? RampUpLoadBalancingAlgorithm { get; set; }
 
         /// <summary> Minimum host percentage for ramp up period. </summary>
+        [WirePath("rampUpMinimumHostsPct")]
         public int? RampUpMinimumHostsPct { get; set; }
 
         /// <summary> Capacity threshold for ramp up period. </summary>
+        [WirePath("rampUpCapacityThresholdPct")]
         public int? RampUpCapacityThresholdPct { get; set; }
 
         /// <summary> Starting time for peak period. </summary>
+        [WirePath("peakStartTime")]
         public ScalingActionTime PeakStartTime { get; set; }
 
         /// <summary> Load balancing algorithm for peak period. </summary>
+        [WirePath("peakLoadBalancingAlgorithm")]
         public SessionHostLoadBalancingAlgorithm? PeakLoadBalancingAlgorithm { get; set; }
 
         /// <summary> Starting time for ramp down period. </summary>
+        [WirePath("rampDownStartTime")]
         public ScalingActionTime RampDownStartTime { get; set; }
 
         /// <summary> Load balancing algorithm for ramp down period. </summary>
+        [WirePath("rampDownLoadBalancingAlgorithm")]
         public SessionHostLoadBalancingAlgorithm? RampDownLoadBalancingAlgorithm { get; set; }
 
         /// <summary> Minimum host percentage for ramp down period. </summary>
+        [WirePath("rampDownMinimumHostsPct")]
         public int? RampDownMinimumHostsPct { get; set; }
 
         /// <summary> Capacity threshold for ramp down period. </summary>
+        [WirePath("rampDownCapacityThresholdPct")]
         public int? RampDownCapacityThresholdPct { get; set; }
 
         /// <summary> Should users be logged off forcefully from hosts. </summary>
+        [WirePath("rampDownForceLogoffUsers")]
         public bool? RampDownForceLogoffUsers { get; set; }
 
         /// <summary> Specifies when to stop hosts during ramp down period. </summary>
+        [WirePath("rampDownStopHostsWhen")]
         public DesktopVirtualizationStopHostsWhen? RampDownStopHostsWhen { get; set; }
 
         /// <summary> Number of minutes to wait to stop hosts during ramp down period. </summary>
+        [WirePath("rampDownWaitTimeMinutes")]
         public int? RampDownWaitTimeMinutes { get; set; }
 
         /// <summary> Notification message for users during ramp down period. </summary>
+        [WirePath("rampDownNotificationMessage")]
         public string RampDownNotificationMessage { get; set; }
 
         /// <summary> Starting time for off-peak period. </summary>
+        [WirePath("offPeakStartTime")]
         public ScalingActionTime OffPeakStartTime { get; set; }
 
         /// <summary> Load balancing algorithm for off-peak period. </summary>
+        [WirePath("offPeakLoadBalancingAlgorithm")]
         public SessionHostLoadBalancingAlgorithm? OffPeakLoadBalancingAlgorithm { get; set; }
     }
 }

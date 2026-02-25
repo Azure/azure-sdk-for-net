@@ -64,51 +64,67 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Alias of App Attach Package. Assigned at import time. </summary>
+        [WirePath("packageAlias")]
         public string PackageAlias { get; set; }
 
         /// <summary> VHD/CIM image path on Network Share. </summary>
+        [WirePath("imagePath")]
         public string ImagePath { get; set; }
 
         /// <summary> Package Name from appxmanifest.xml. </summary>
+        [WirePath("packageName")]
         public string PackageName { get; set; }
 
         /// <summary> Package Family Name from appxmanifest.xml. Contains Package Name and Publisher name. </summary>
+        [WirePath("packageFamilyName")]
         public string PackageFamilyName { get; set; }
 
         /// <summary> Package Full Name from appxmanifest.xml. </summary>
+        [WirePath("packageFullName")]
         public string PackageFullName { get; set; }
 
         /// <summary> User friendly Name to be displayed in the portal. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
 
         /// <summary> Relative Path to the package inside the image. </summary>
+        [WirePath("packageRelativePath")]
         public string PackageRelativePath { get; set; }
 
         /// <summary> Specifies how to register Package in feed. </summary>
+        [WirePath("isRegularRegistration")]
         public bool? IsRegularRegistration { get; set; }
 
         /// <summary> Make this version of the package the active one across the hostpool. </summary>
+        [WirePath("isActive")]
         public bool? IsActive { get; set; }
 
         /// <summary> List of package dependencies. </summary>
+        [WirePath("packageDependencies")]
         public IList<MsixPackageDependencies> PackageDependencies { get; }
 
         /// <summary> Package version found in the appxmanifest.xml. </summary>
+        [WirePath("version")]
         public string Version { get; set; }
 
         /// <summary> Date Package was last updated, found in the appxmanifest.xml. </summary>
+        [WirePath("lastUpdated")]
         public DateTimeOffset? LastUpdatedOn { get; set; }
 
         /// <summary> List of package applications. </summary>
+        [WirePath("packageApplications")]
         public IList<MsixPackageApplications> PackageApplications { get; }
 
         /// <summary> Certificate name found in the appxmanifest.xml. </summary>
+        [WirePath("certificateName")]
         public string CertificateName { get; set; }
 
         /// <summary> Date certificate expires, found in the appxmanifest.xml. </summary>
+        [WirePath("certificateExpiry")]
         public DateTimeOffset? CertificateExpireOn { get; set; }
 
         /// <summary> Is package timestamped so it can ignore the certificate expiry date. </summary>
+        [WirePath("isPackageTimestamped")]
         public PackageTimestamped? IsPackageTimestamped { get; set; }
     }
 }

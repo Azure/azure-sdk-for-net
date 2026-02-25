@@ -427,12 +427,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="hostPoolProvisioningControlParameter"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostPoolProvisioningControlParameter"/> is null. </exception>
-        public virtual async Task<ArmOperation> PostAsync(WaitUntil waitUntil, HostPoolProvisioningControlParameter hostPoolProvisioningControlParameter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> PostAsync(WaitUntil waitUntil, HostPoolProvisioningControlContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(hostPoolProvisioningControlParameter, nameof(hostPoolProvisioningControlParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _controlSessionHostProvisioningClientDiagnostics.CreateScope("SessionHostManagementResource.Post");
             scope.Start();
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _controlSessionHostProvisioningRestClient.CreatePostRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, HostPoolProvisioningControlParameter.ToRequestContent(hostPoolProvisioningControlParameter), context);
+                HttpMessage message = _controlSessionHostProvisioningRestClient.CreatePostRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, HostPoolProvisioningControlContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DesktopVirtualizationArmOperation operation = new DesktopVirtualizationArmOperation(_controlSessionHostProvisioningClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -480,12 +480,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="hostPoolProvisioningControlParameter"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostPoolProvisioningControlParameter"/> is null. </exception>
-        public virtual ArmOperation Post(WaitUntil waitUntil, HostPoolProvisioningControlParameter hostPoolProvisioningControlParameter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation Post(WaitUntil waitUntil, HostPoolProvisioningControlContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(hostPoolProvisioningControlParameter, nameof(hostPoolProvisioningControlParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _controlSessionHostProvisioningClientDiagnostics.CreateScope("SessionHostManagementResource.Post");
             scope.Start();
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _controlSessionHostProvisioningRestClient.CreatePostRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, HostPoolProvisioningControlParameter.ToRequestContent(hostPoolProvisioningControlParameter), context);
+                HttpMessage message = _controlSessionHostProvisioningRestClient.CreatePostRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, HostPoolProvisioningControlContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DesktopVirtualizationArmOperation operation = new DesktopVirtualizationArmOperation(_controlSessionHostProvisioningClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -533,12 +533,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="hostPoolUpdateControlParameter"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostPoolUpdateControlParameter"/> is null. </exception>
-        public virtual async Task<ArmOperation> PostAsync(WaitUntil waitUntil, HostPoolUpdateControlParameter hostPoolUpdateControlParameter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> PostAsync(WaitUntil waitUntil, HostPoolUpdateControlContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(hostPoolUpdateControlParameter, nameof(hostPoolUpdateControlParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _controlSessionHostUpdateClientDiagnostics.CreateScope("SessionHostManagementResource.Post");
             scope.Start();
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _controlSessionHostUpdateRestClient.CreatePostRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, HostPoolUpdateControlParameter.ToRequestContent(hostPoolUpdateControlParameter), context);
+                HttpMessage message = _controlSessionHostUpdateRestClient.CreatePostRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, HostPoolUpdateControlContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DesktopVirtualizationArmOperation operation = new DesktopVirtualizationArmOperation(_controlSessionHostUpdateClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -586,12 +586,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="hostPoolUpdateControlParameter"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostPoolUpdateControlParameter"/> is null. </exception>
-        public virtual ArmOperation Post(WaitUntil waitUntil, HostPoolUpdateControlParameter hostPoolUpdateControlParameter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation Post(WaitUntil waitUntil, HostPoolUpdateControlContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(hostPoolUpdateControlParameter, nameof(hostPoolUpdateControlParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _controlSessionHostUpdateClientDiagnostics.CreateScope("SessionHostManagementResource.Post");
             scope.Start();
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _controlSessionHostUpdateRestClient.CreatePostRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, HostPoolUpdateControlParameter.ToRequestContent(hostPoolUpdateControlParameter), context);
+                HttpMessage message = _controlSessionHostUpdateRestClient.CreatePostRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, HostPoolUpdateControlContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DesktopVirtualizationArmOperation operation = new DesktopVirtualizationArmOperation(_controlSessionHostUpdateClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

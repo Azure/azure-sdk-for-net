@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> The Mobile Device Management(MDM) guid. </summary>
+        [WirePath("mdmProviderGuid")]
         public string MdmProviderGuid { get; set; }
     }
 }

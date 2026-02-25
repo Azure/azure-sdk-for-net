@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -34,9 +35,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> The resource ID of the subnet. </summary>
+        [WirePath("subnetId")]
         public ResourceIdentifier SubnetId { get; set; }
 
         /// <summary> The resource ID of the security group. Any allowable/open ports should be specified in the Network Security Group(NSG). </summary>
+        [WirePath("securityGroupId")]
         public string SecurityGroupId { get; set; }
     }
 }

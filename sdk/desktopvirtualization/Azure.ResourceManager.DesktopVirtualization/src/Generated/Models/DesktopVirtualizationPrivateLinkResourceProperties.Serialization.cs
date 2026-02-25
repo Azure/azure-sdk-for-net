@@ -14,7 +14,7 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Properties of a private link resource. </summary>
-    public partial class DesktopVirtualizationPrivateLinkResourceProperties : IJsonModel<DesktopVirtualizationPrivateLinkResourceProperties>
+    internal partial class DesktopVirtualizationPrivateLinkResourceProperties : IJsonModel<DesktopVirtualizationPrivateLinkResourceProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

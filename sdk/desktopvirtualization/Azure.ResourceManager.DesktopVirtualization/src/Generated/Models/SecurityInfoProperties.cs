@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> The security type used by virtual machine in hostpool session host. Default is Standard. </summary>
+        [WirePath("type")]
         public VirtualMachineSecurityType? Type { get; set; }
 
         /// <summary> Whether to use secureBoot on the virtual machine. </summary>
+        [WirePath("secureBootEnabled")]
         public bool? SecureBootEnabled { get; set; }
 
         /// <summary> Whether to use vTpm on the virtual machine. </summary>
+        [WirePath("vTpmEnabled")]
         public bool? VTpmEnabled { get; set; }
     }
 }

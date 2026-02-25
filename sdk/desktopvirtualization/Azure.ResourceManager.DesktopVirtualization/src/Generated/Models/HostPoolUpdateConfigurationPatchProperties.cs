@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Whether not to save original disk. False by default. </summary>
+        [WirePath("deleteOriginalVm")]
         public bool? DeleteOriginalVm { get; set; }
 
         /// <summary> The maximum number of virtual machines to be removed during hostpool update. </summary>
+        [WirePath("maxVmsRemoved")]
         public int? MaxVmsRemoved { get; set; }
 
         /// <summary> Grace period before logging off users in minutes. </summary>
+        [WirePath("logOffDelayMinutes")]
         public int? LogOffDelayMinutes { get; set; }
 
         /// <summary> Log off message sent to user for logoff. Default value is an empty string. </summary>
+        [WirePath("logOffMessage")]
         public string LogOffMessage { get; set; }
     }
 }

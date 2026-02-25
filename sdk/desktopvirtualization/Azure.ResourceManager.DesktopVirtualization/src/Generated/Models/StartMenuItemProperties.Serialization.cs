@@ -14,7 +14,7 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Schema for StartMenuItem properties. </summary>
-    public partial class StartMenuItemProperties : IJsonModel<StartMenuItemProperties>
+    internal partial class StartMenuItemProperties : IJsonModel<StartMenuItemProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

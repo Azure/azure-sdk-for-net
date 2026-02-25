@@ -38,15 +38,19 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> The correlation Id for Log Analytics.. </summary>
+        [WirePath("correlationId")]
         public string CorrelationId { get; }
 
         /// <summary> Progress information on the sessionHostManagement operation. </summary>
+        [WirePath("progress")]
         public SessionHostManagementOperationProgress Progress { get; }
 
         /// <summary> The timestamp that the update is scheduled for. </summary>
+        [WirePath("scheduledDateTime")]
         public DateTimeOffset? ScheduledOn { get; }
 
         /// <summary> SessionHostManagement properties used for the operation. </summary>
+        [WirePath("sessionHostManagement")]
         public SessionHostManagementData SessionHostManagement { get; }
     }
 }

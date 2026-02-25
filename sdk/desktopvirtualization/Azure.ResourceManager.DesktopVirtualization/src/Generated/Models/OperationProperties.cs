@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -31,9 +32,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Service specification payload. </summary>
+        [WirePath("serviceSpecification")]
         internal ServiceSpecification ServiceSpecification { get; }
 
         /// <summary> Specifications of the Log for Azure Monitoring. </summary>
+        [WirePath("serviceSpecification.logSpecifications")]
         public IList<LogSpecification> ServiceSpecificationLogSpecifications
         {
             get

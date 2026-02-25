@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Represents the name of the health check operation performed. </summary>
+        [WirePath("healthCheckName")]
         public SessionHostHealthCheckName? HealthCheckName { get; }
 
         /// <summary> Represents the Health state of the health check we performed. </summary>
+        [WirePath("healthCheckResult")]
         public SessionHostHealthCheckResult? HealthCheckResult { get; }
 
         /// <summary> Additional detailed information on the failure. </summary>
+        [WirePath("additionalFailureDetails")]
         public SessionHostHealthCheckFailureDetails AdditionalFailureDetails { get; }
     }
 }

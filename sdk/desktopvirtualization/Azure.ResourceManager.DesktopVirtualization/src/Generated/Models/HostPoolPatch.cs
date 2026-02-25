@@ -43,12 +43,429 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> tags to be updated. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> HostPool properties that can be patched. </summary>
-        public HostPoolPatchProperties Properties { get; set; }
+        [WirePath("properties")]
+        internal HostPoolPatchProperties Properties { get; set; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
+
+        /// <summary> Friendly name of HostPool. </summary>
+        [WirePath("properties.friendlyName")]
+        public string FriendlyName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FriendlyName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostPoolPatchProperties();
+                }
+                Properties.FriendlyName = value;
+            }
+        }
+
+        /// <summary> Description of HostPool. </summary>
+        [WirePath("properties.description")]
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostPoolPatchProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
+        /// <summary> Custom rdp property of HostPool. </summary>
+        [WirePath("properties.customRdpProperty")]
+        public string CustomRdpProperty
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomRdpProperty;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostPoolPatchProperties();
+                }
+                Properties.CustomRdpProperty = value;
+            }
+        }
+
+        /// <summary> The max session limit of HostPool. </summary>
+        [WirePath("properties.maxSessionLimit")]
+        public int? MaxSessionLimit
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaxSessionLimit;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostPoolPatchProperties();
+                }
+                Properties.MaxSessionLimit = value.Value;
+            }
+        }
+
+        /// <summary> PersonalDesktopAssignment type for HostPool. </summary>
+        [WirePath("properties.personalDesktopAssignmentType")]
+        public PersonalDesktopAssignmentType? PersonalDesktopAssignmentType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PersonalDesktopAssignmentType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostPoolPatchProperties();
+                }
+                Properties.PersonalDesktopAssignmentType = value.Value;
+            }
+        }
+
+        /// <summary> The type of the load balancer. </summary>
+        [WirePath("properties.loadBalancerType")]
+        public HostPoolLoadBalancerType? LoadBalancerType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LoadBalancerType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostPoolPatchProperties();
+                }
+                Properties.LoadBalancerType = value.Value;
+            }
+        }
+
+        /// <summary> The ring number of HostPool. </summary>
+        [WirePath("properties.ring")]
+        public int? Ring
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Ring;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostPoolPatchProperties();
+                }
+                Properties.Ring = value.Value;
+            }
+        }
+
+        /// <summary> Is validation environment. </summary>
+        [WirePath("properties.validationEnvironment")]
+        public bool? IsValidationEnvironment
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsValidationEnvironment;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostPoolPatchProperties();
+                }
+                Properties.IsValidationEnvironment = value.Value;
+            }
+        }
+
+        /// <summary> The registration info of HostPool. </summary>
+        [WirePath("properties.registrationInfo")]
+        public HostPoolRegistrationInfoPatch RegistrationInfo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RegistrationInfo;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostPoolPatchProperties();
+                }
+                Properties.RegistrationInfo = value;
+            }
+        }
+
+        /// <summary> VM template for sessionhosts configuration within hostpool. </summary>
+        [WirePath("properties.vmTemplate")]
+        public string VmTemplate
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VmTemplate;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostPoolPatchProperties();
+                }
+                Properties.VmTemplate = value;
+            }
+        }
+
+        /// <summary> URL to customer ADFS server for signing WVD SSO certificates. </summary>
+        [WirePath("properties.ssoadfsAuthority")]
+        public string SsoAdfsAuthority
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SsoAdfsAuthority;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostPoolPatchProperties();
+                }
+                Properties.SsoAdfsAuthority = value;
+            }
+        }
+
+        /// <summary> ClientId for the registered Relying Party used to issue WVD SSO certificates. </summary>
+        [WirePath("properties.ssoClientId")]
+        public string SsoClientId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SsoClientId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostPoolPatchProperties();
+                }
+                Properties.SsoClientId = value;
+            }
+        }
+
+        /// <summary> Path to Azure KeyVault storing the secret used for communication to ADFS. </summary>
+        [WirePath("properties.ssoClientSecretKeyVaultPath")]
+        public string SsoClientSecretKeyVaultPath
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SsoClientSecretKeyVaultPath;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostPoolPatchProperties();
+                }
+                Properties.SsoClientSecretKeyVaultPath = value;
+            }
+        }
+
+        /// <summary> The type of single sign on Secret Type. </summary>
+        [WirePath("properties.ssoSecretType")]
+        public HostPoolSsoSecretType? SsoSecretType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SsoSecretType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostPoolPatchProperties();
+                }
+                Properties.SsoSecretType = value.Value;
+            }
+        }
+
+        /// <summary> The type of preferred application group type, default to Desktop Application Group. </summary>
+        [WirePath("properties.preferredAppGroupType")]
+        public PreferredAppGroupType? PreferredAppGroupType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PreferredAppGroupType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostPoolPatchProperties();
+                }
+                Properties.PreferredAppGroupType = value.Value;
+            }
+        }
+
+        /// <summary> The flag to turn on/off StartVMOnConnect feature. </summary>
+        [WirePath("properties.startVMOnConnect")]
+        public bool? StartVmOnConnect
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StartVmOnConnect;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostPoolPatchProperties();
+                }
+                Properties.StartVmOnConnect = value.Value;
+            }
+        }
+
+        /// <summary> Enabled to allow this resource to be access from the public network. </summary>
+        [WirePath("properties.publicNetworkAccess")]
+        public HostPoolPublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostPoolPatchProperties();
+                }
+                Properties.PublicNetworkAccess = value.Value;
+            }
+        }
+
+        /// <summary> The session host configuration for updating agent, monitoring agent, and stack component. </summary>
+        [WirePath("properties.agentUpdate")]
+        public SessionHostAgentUpdatePatchProperties AgentUpdate
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AgentUpdate;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostPoolPatchProperties();
+                }
+                Properties.AgentUpdate = value;
+            }
+        }
+
+        /// <summary> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </summary>
+        [WirePath("properties.managedPrivateUDP")]
+        public ManagedPrivateUDP? ManagedPrivateUDP
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManagedPrivateUDP;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostPoolPatchProperties();
+                }
+                Properties.ManagedPrivateUDP = value.Value;
+            }
+        }
+
+        /// <summary> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </summary>
+        [WirePath("properties.directUDP")]
+        public DirectUDP? DirectUDP
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DirectUDP;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostPoolPatchProperties();
+                }
+                Properties.DirectUDP = value.Value;
+            }
+        }
+
+        /// <summary> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </summary>
+        [WirePath("properties.publicUDP")]
+        public PublicUDP? PublicUDP
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicUDP;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostPoolPatchProperties();
+                }
+                Properties.PublicUDP = value.Value;
+            }
+        }
+
+        /// <summary> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </summary>
+        [WirePath("properties.relayUDP")]
+        public RelayUDP? RelayUDP
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RelayUDP;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostPoolPatchProperties();
+                }
+                Properties.RelayUDP = value.Value;
+            }
+        }
+
+        /// <summary> Controls if the use of RDPShortPath transport is allowed, possibly bypassing Private Link routes. </summary>
+        [WirePath("properties.allowRDPShortPathWithPrivateLink")]
+        public AllowRDPShortPathWithPrivateLink? AllowRDPShortPathWithPrivateLink
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllowRDPShortPathWithPrivateLink;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostPoolPatchProperties();
+                }
+                Properties.AllowRDPShortPathWithPrivateLink = value.Value;
+            }
+        }
     }
 }

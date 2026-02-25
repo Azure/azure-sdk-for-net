@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> The timestamp that the update validation is scheduled for. If none is provided, the update will be executed immediately. </summary>
+        [WirePath("scheduledDateTime")]
         public DateTimeOffset? ScheduledOn { get; set; }
 
         /// <summary> The timeZone as defined in https://docs.microsoft.com/dotnet/api/system.timezoneinfo.findsystemtimezonebyid. </summary>
+        [WirePath("scheduledDateTimeZone")]
         public string ScheduledDateTimeZone { get; set; }
 
         /// <summary> settings for management information for the hostpool update operation. If none is provided the update will use the settings saved in the sessionHostManagement object. </summary>
+        [WirePath("update")]
         public HostPoolUpdateConfigurationPatchProperties Update { get; set; }
     }
 }

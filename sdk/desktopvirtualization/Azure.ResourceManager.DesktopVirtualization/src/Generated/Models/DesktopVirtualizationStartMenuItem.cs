@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DesktopVirtualization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationStartMenuItem"/>. </summary>
-        internal DesktopVirtualizationStartMenuItem()
+        public DesktopVirtualizationStartMenuItem()
         {
         }
 
@@ -37,6 +38,97 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Detailed properties for StartMenuItem. </summary>
-        public StartMenuItemProperties Properties { get; }
+        [WirePath("properties")]
+        internal StartMenuItemProperties Properties { get; set; }
+
+        /// <summary> Alias of StartMenuItem. </summary>
+        [WirePath("properties.appAlias")]
+        public string AppAlias
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AppAlias;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StartMenuItemProperties();
+                }
+                Properties.AppAlias = value;
+            }
+        }
+
+        /// <summary> Path to the file of StartMenuItem. </summary>
+        [WirePath("properties.filePath")]
+        public string FilePath
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FilePath;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StartMenuItemProperties();
+                }
+                Properties.FilePath = value;
+            }
+        }
+
+        /// <summary> Command line arguments for StartMenuItem. </summary>
+        [WirePath("properties.commandLineArguments")]
+        public string CommandLineArguments
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CommandLineArguments;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StartMenuItemProperties();
+                }
+                Properties.CommandLineArguments = value;
+            }
+        }
+
+        /// <summary> Path to the icon. </summary>
+        [WirePath("properties.iconPath")]
+        public string IconPath
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IconPath;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StartMenuItemProperties();
+                }
+                Properties.IconPath = value;
+            }
+        }
+
+        /// <summary> Index of the icon. </summary>
+        [WirePath("properties.iconIndex")]
+        public int? IconIndex
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IconIndex;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StartMenuItemProperties();
+                }
+                Properties.IconIndex = value.Value;
+            }
+        }
     }
 }

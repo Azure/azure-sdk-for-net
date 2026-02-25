@@ -14,7 +14,7 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Properties of HostPool. </summary>
-    public partial class HostPoolProperties : IJsonModel<HostPoolProperties>
+    internal partial class HostPoolProperties : IJsonModel<HostPoolProperties>
     {
         /// <summary> Initializes a new instance of <see cref="HostPoolProperties"/> for deserialization. </summary>
         internal HostPoolProperties()
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             writer.WritePropertyName("preferredAppGroupType"u8);
             writer.WriteStringValue(PreferredAppGroupType.ToString());
-            if (Optional.IsDefined(StartVMOnConnect))
+            if (Optional.IsDefined(StartVmOnConnect))
             {
                 writer.WritePropertyName("startVMOnConnect"u8);
-                writer.WriteBooleanValue(StartVMOnConnect.Value);
+                writer.WriteBooleanValue(StartVmOnConnect.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(IsCloudPcResource))
             {
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             string ssoClientSecretKeyVaultPath = default;
             HostPoolSsoSecretType? ssoSecretType = default;
             PreferredAppGroupType preferredAppGroupType = default;
-            bool? startVMOnConnect = default;
+            bool? startVmOnConnect = default;
             bool? isCloudPcResource = default;
             HostPoolPublicNetworkAccess? publicNetworkAccess = default;
             SessionHostAgentUpdateProperties agentUpdate = default;
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    startVMOnConnect = prop.Value.GetBoolean();
+                    startVmOnConnect = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("cloudPcResource"u8))
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 ssoClientSecretKeyVaultPath,
                 ssoSecretType,
                 preferredAppGroupType,
-                startVMOnConnect,
+                startVmOnConnect,
                 isCloudPcResource,
                 publicNetworkAccess,
                 agentUpdate,

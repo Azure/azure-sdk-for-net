@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (MSIXPackageData item in Value)
+            foreach (MsixPackageData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -94,17 +94,17 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            IList<MSIXPackageData> value = default;
+            IList<MsixPackageData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<MSIXPackageData> array = new List<MSIXPackageData>();
+                    List<MsixPackageData> array = new List<MsixPackageData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MSIXPackageData.DeserializeMSIXPackageData(item, options));
+                        array.Add(MsixPackageData.DeserializeMsixPackageData(item, options));
                     }
                     value = array;
                     continue;

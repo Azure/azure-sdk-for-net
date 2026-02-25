@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -31,6 +32,471 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Detailed properties for ScalingPlanPersonalSchedule. </summary>
-        public ScalingPlanPersonalSchedulePatchProperties Properties { get; set; }
+        [WirePath("properties")]
+        internal ScalingPlanPersonalSchedulePatchProperties Properties { get; set; }
+
+        /// <summary> Set of days of the week on which this schedule is active. </summary>
+        [WirePath("properties.daysOfWeek")]
+        public IList<DesktopVirtualizationDayOfWeek> DaysOfWeek
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPersonalSchedulePatchProperties();
+                }
+                return Properties.DaysOfWeek;
+            }
+        }
+
+        /// <summary> Starting time for ramp up period. </summary>
+        [WirePath("properties.rampUpStartTime")]
+        public ScalingActionTime RampUpStartTime
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RampUpStartTime;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPersonalSchedulePatchProperties();
+                }
+                Properties.RampUpStartTime = value;
+            }
+        }
+
+        /// <summary> The desired startup behavior during the ramp up period for personal vms in the hostpool. </summary>
+        [WirePath("properties.rampUpAutoStartHosts")]
+        public StartupBehavior? RampUpAutoStartHosts
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RampUpAutoStartHosts;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPersonalSchedulePatchProperties();
+                }
+                Properties.RampUpAutoStartHosts = value.Value;
+            }
+        }
+
+        /// <summary> The desired configuration of Start VM On Connect for the hostpool during the ramp up phase. If this is disabled, session hosts must be turned on using rampUpAutoStartHosts or by turning them on manually. </summary>
+        [WirePath("properties.rampUpStartVMOnConnect")]
+        public SetStartVmOnConnect? RampUpStartVmOnConnect
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RampUpStartVmOnConnect;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPersonalSchedulePatchProperties();
+                }
+                Properties.RampUpStartVmOnConnect = value.Value;
+            }
+        }
+
+        /// <summary> Action to be taken after a user disconnect during the ramp up period. </summary>
+        [WirePath("properties.rampUpActionOnDisconnect")]
+        public SessionHandlingOperation? RampUpActionOnDisconnect
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RampUpActionOnDisconnect;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPersonalSchedulePatchProperties();
+                }
+                Properties.RampUpActionOnDisconnect = value.Value;
+            }
+        }
+
+        /// <summary> The time in minutes to wait before performing the desired session handling action when a user disconnects during the ramp up period. </summary>
+        [WirePath("properties.rampUpMinutesToWaitOnDisconnect")]
+        public int? RampUpMinutesToWaitOnDisconnect
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RampUpMinutesToWaitOnDisconnect;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPersonalSchedulePatchProperties();
+                }
+                Properties.RampUpMinutesToWaitOnDisconnect = value.Value;
+            }
+        }
+
+        /// <summary> Action to be taken after a logoff during the ramp up period. </summary>
+        [WirePath("properties.rampUpActionOnLogoff")]
+        public SessionHandlingOperation? RampUpActionOnLogoff
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RampUpActionOnLogoff;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPersonalSchedulePatchProperties();
+                }
+                Properties.RampUpActionOnLogoff = value.Value;
+            }
+        }
+
+        /// <summary> The time in minutes to wait before performing the desired session handling action when a user logs off during the ramp up period. </summary>
+        [WirePath("properties.rampUpMinutesToWaitOnLogoff")]
+        public int? RampUpMinutesToWaitOnLogoff
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RampUpMinutesToWaitOnLogoff;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPersonalSchedulePatchProperties();
+                }
+                Properties.RampUpMinutesToWaitOnLogoff = value.Value;
+            }
+        }
+
+        /// <summary> Starting time for peak period. </summary>
+        [WirePath("properties.peakStartTime")]
+        public ScalingActionTime PeakStartTime
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PeakStartTime;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPersonalSchedulePatchProperties();
+                }
+                Properties.PeakStartTime = value;
+            }
+        }
+
+        /// <summary> The desired configuration of Start VM On Connect for the hostpool during the peak phase. </summary>
+        [WirePath("properties.peakStartVMOnConnect")]
+        public SetStartVmOnConnect? PeakStartVmOnConnect
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PeakStartVmOnConnect;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPersonalSchedulePatchProperties();
+                }
+                Properties.PeakStartVmOnConnect = value.Value;
+            }
+        }
+
+        /// <summary> Action to be taken after a user disconnect during the peak period. </summary>
+        [WirePath("properties.peakActionOnDisconnect")]
+        public SessionHandlingOperation? PeakActionOnDisconnect
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PeakActionOnDisconnect;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPersonalSchedulePatchProperties();
+                }
+                Properties.PeakActionOnDisconnect = value.Value;
+            }
+        }
+
+        /// <summary> The time in minutes to wait before performing the desired session handling action when a user disconnects during the peak period. </summary>
+        [WirePath("properties.peakMinutesToWaitOnDisconnect")]
+        public int? PeakMinutesToWaitOnDisconnect
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PeakMinutesToWaitOnDisconnect;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPersonalSchedulePatchProperties();
+                }
+                Properties.PeakMinutesToWaitOnDisconnect = value.Value;
+            }
+        }
+
+        /// <summary> Action to be taken after a logoff during the peak period. </summary>
+        [WirePath("properties.peakActionOnLogoff")]
+        public SessionHandlingOperation? PeakActionOnLogoff
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PeakActionOnLogoff;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPersonalSchedulePatchProperties();
+                }
+                Properties.PeakActionOnLogoff = value.Value;
+            }
+        }
+
+        /// <summary> The time in minutes to wait before performing the desired session handling action when a user logs off during the peak period. </summary>
+        [WirePath("properties.peakMinutesToWaitOnLogoff")]
+        public int? PeakMinutesToWaitOnLogoff
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PeakMinutesToWaitOnLogoff;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPersonalSchedulePatchProperties();
+                }
+                Properties.PeakMinutesToWaitOnLogoff = value.Value;
+            }
+        }
+
+        /// <summary> Starting time for ramp down period. </summary>
+        [WirePath("properties.rampDownStartTime")]
+        public ScalingActionTime RampDownStartTime
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RampDownStartTime;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPersonalSchedulePatchProperties();
+                }
+                Properties.RampDownStartTime = value;
+            }
+        }
+
+        /// <summary> The desired configuration of Start VM On Connect for the hostpool during the ramp down phase. </summary>
+        [WirePath("properties.rampDownStartVMOnConnect")]
+        public SetStartVmOnConnect? RampDownStartVmOnConnect
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RampDownStartVmOnConnect;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPersonalSchedulePatchProperties();
+                }
+                Properties.RampDownStartVmOnConnect = value.Value;
+            }
+        }
+
+        /// <summary> Action to be taken after a user disconnect during the ramp down period. </summary>
+        [WirePath("properties.rampDownActionOnDisconnect")]
+        public SessionHandlingOperation? RampDownActionOnDisconnect
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RampDownActionOnDisconnect;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPersonalSchedulePatchProperties();
+                }
+                Properties.RampDownActionOnDisconnect = value.Value;
+            }
+        }
+
+        /// <summary> The time in minutes to wait before performing the desired session handling action when a user disconnects during the ramp down period. </summary>
+        [WirePath("properties.rampDownMinutesToWaitOnDisconnect")]
+        public int? RampDownMinutesToWaitOnDisconnect
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RampDownMinutesToWaitOnDisconnect;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPersonalSchedulePatchProperties();
+                }
+                Properties.RampDownMinutesToWaitOnDisconnect = value.Value;
+            }
+        }
+
+        /// <summary> Action to be taken after a logoff during the ramp down period. </summary>
+        [WirePath("properties.rampDownActionOnLogoff")]
+        public SessionHandlingOperation? RampDownActionOnLogoff
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RampDownActionOnLogoff;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPersonalSchedulePatchProperties();
+                }
+                Properties.RampDownActionOnLogoff = value.Value;
+            }
+        }
+
+        /// <summary> The time in minutes to wait before performing the desired session handling action when a user logs off during the ramp down period. </summary>
+        [WirePath("properties.rampDownMinutesToWaitOnLogoff")]
+        public int? RampDownMinutesToWaitOnLogoff
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RampDownMinutesToWaitOnLogoff;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPersonalSchedulePatchProperties();
+                }
+                Properties.RampDownMinutesToWaitOnLogoff = value.Value;
+            }
+        }
+
+        /// <summary> Starting time for off-peak period. </summary>
+        [WirePath("properties.offPeakStartTime")]
+        public ScalingActionTime OffPeakStartTime
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OffPeakStartTime;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPersonalSchedulePatchProperties();
+                }
+                Properties.OffPeakStartTime = value;
+            }
+        }
+
+        /// <summary> The desired configuration of Start VM On Connect for the hostpool during the off-peak phase. </summary>
+        [WirePath("properties.offPeakStartVMOnConnect")]
+        public SetStartVmOnConnect? OffPeakStartVmOnConnect
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OffPeakStartVmOnConnect;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPersonalSchedulePatchProperties();
+                }
+                Properties.OffPeakStartVmOnConnect = value.Value;
+            }
+        }
+
+        /// <summary> Action to be taken after a user disconnect during the off-peak period. </summary>
+        [WirePath("properties.offPeakActionOnDisconnect")]
+        public SessionHandlingOperation? OffPeakActionOnDisconnect
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OffPeakActionOnDisconnect;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPersonalSchedulePatchProperties();
+                }
+                Properties.OffPeakActionOnDisconnect = value.Value;
+            }
+        }
+
+        /// <summary> The time in minutes to wait before performing the desired session handling action when a user disconnects during the off-peak period. </summary>
+        [WirePath("properties.offPeakMinutesToWaitOnDisconnect")]
+        public int? OffPeakMinutesToWaitOnDisconnect
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OffPeakMinutesToWaitOnDisconnect;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPersonalSchedulePatchProperties();
+                }
+                Properties.OffPeakMinutesToWaitOnDisconnect = value.Value;
+            }
+        }
+
+        /// <summary> Action to be taken after a logoff during the off-peak period. </summary>
+        [WirePath("properties.offPeakActionOnLogoff")]
+        public SessionHandlingOperation? OffPeakActionOnLogoff
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OffPeakActionOnLogoff;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPersonalSchedulePatchProperties();
+                }
+                Properties.OffPeakActionOnLogoff = value.Value;
+            }
+        }
+
+        /// <summary> The time in minutes to wait before performing the desired session handling action when a user logs off during the off-peak period. </summary>
+        [WirePath("properties.offPeakMinutesToWaitOnLogoff")]
+        public int? OffPeakMinutesToWaitOnLogoff
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OffPeakMinutesToWaitOnLogoff;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPersonalSchedulePatchProperties();
+                }
+                Properties.OffPeakMinutesToWaitOnLogoff = value.Value;
+            }
+        }
     }
 }

@@ -13,7 +13,7 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Schema for ApplicationGroup properties. </summary>
-    public partial class ApplicationGroupProperties
+    internal partial class ApplicationGroupProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -58,33 +58,43 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> ObjectId of ApplicationGroup. (internal use). </summary>
+        [WirePath("objectId")]
         public string ObjectId { get; }
 
         /// <summary> Description of ApplicationGroup. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> Friendly name of ApplicationGroup. </summary>
+        [WirePath("friendlyName")]
         public string FriendlyName { get; set; }
 
         /// <summary> HostPool arm path of ApplicationGroup. </summary>
+        [WirePath("hostPoolArmPath")]
         public ResourceIdentifier HostPoolId { get; set; }
 
         /// <summary> Workspace arm path of ApplicationGroup. </summary>
+        [WirePath("workspaceArmPath")]
         public ResourceIdentifier WorkspaceId { get; }
 
         /// <summary> Resource Type of ApplicationGroup. </summary>
+        [WirePath("applicationGroupType")]
         public VirtualApplicationGroupType ApplicationGroupType { get; set; }
 
         /// <summary> Is cloud pc resource. </summary>
+        [WirePath("cloudPcResource")]
         public bool? IsCloudPcResource { get; }
 
         /// <summary> Boolean representing whether the applicationGroup is show in the feed. </summary>
+        [WirePath("showInFeed")]
         public bool? ShowInFeed { get; set; }
 
         /// <summary> Tenant that the resource is being requested on behalf of. </summary>
+        [WirePath("oboTenantId")]
         public string OboTenantId { get; set; }
 
         /// <summary> DeploymentScope type for ApplicationGroup. </summary>
+        [WirePath("deploymentScope")]
         public DeploymentScope? DeploymentScope { get; }
     }
 }

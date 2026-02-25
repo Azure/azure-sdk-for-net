@@ -14,7 +14,7 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> A ScalingPlanPooledSchedule that can be patched. </summary>
-    public partial class ScalingPlanPooledSchedulePatchProperties : IJsonModel<ScalingPlanPooledSchedulePatchProperties>
+    internal partial class ScalingPlanPooledSchedulePatchProperties : IJsonModel<ScalingPlanPooledSchedulePatchProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 throw new FormatException($"The model {nameof(ScalingPlanPooledSchedulePatchProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Optional.IsDefined(ScheduleName))
             {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
+                writer.WritePropertyName("scheduleName"u8);
+                writer.WriteStringValue(ScheduleName);
             }
             if (Optional.IsCollectionDefined(DaysOfWeek))
             {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            string name = default;
+            string scheduleName = default;
             IList<DesktopVirtualizationDayOfWeek> daysOfWeek = default;
             ScalingMethodType? scalingMethod = default;
             CreateDeleteProperties createDelete = default;
@@ -204,9 +204,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("name"u8))
+                if (prop.NameEquals("scheduleName"u8))
                 {
-                    name = prop.Value.GetString();
+                    scheduleName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("daysOfWeek"u8))
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             return new ScalingPlanPooledSchedulePatchProperties(
-                name,
+                scheduleName,
                 daysOfWeek ?? new ChangeTrackingList<DesktopVirtualizationDayOfWeek>(),
                 scalingMethod,
                 createDelete,

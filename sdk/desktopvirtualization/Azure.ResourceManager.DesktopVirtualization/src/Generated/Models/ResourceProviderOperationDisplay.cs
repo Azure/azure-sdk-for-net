@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Resource provider: Microsoft Desktop Virtualization. </summary>
+        [WirePath("provider")]
         public string Provider { get; }
 
         /// <summary> Resource on which the operation is performed. </summary>
+        [WirePath("resource")]
         public string Resource { get; }
 
         /// <summary> Type of operation: get, read, delete, etc. </summary>
+        [WirePath("operation")]
         public string Operation { get; }
 
         /// <summary> Description of this operation. </summary>
+        [WirePath("description")]
         public string Description { get; }
     }
 }

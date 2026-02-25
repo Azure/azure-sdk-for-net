@@ -17,41 +17,41 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DesktopVirtualization
 {
     /// <summary>
-    /// A class representing a PrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PrivateEndpointConnectionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="VirtualWorkspaceResource"/> using the GetPrivateEndpointConnections method.
+    /// A class representing a HostPoolPrivateEndpointConnection along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HostPoolPrivateEndpointConnectionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HostPoolResource"/> using the GetHostPoolPrivateEndpointConnections method.
     /// </summary>
-    public partial class PrivateEndpointConnectionResource : ArmResource
+    public partial class HostPoolPrivateEndpointConnectionResource : ArmResource
     {
         private readonly ClientDiagnostics _privateEndpointConnectionsClientDiagnostics;
         private readonly PrivateEndpointConnections _privateEndpointConnectionsRestClient;
         private readonly DesktopVirtualizationPrivateEndpointConnectionData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DesktopVirtualization/workspaces/privateEndpointConnections";
+        public static readonly ResourceType ResourceType = "Microsoft.DesktopVirtualization/hostPools/privateEndpointConnections";
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionResource for mocking. </summary>
-        protected PrivateEndpointConnectionResource()
+        /// <summary> Initializes a new instance of HostPoolPrivateEndpointConnectionResource for mocking. </summary>
+        protected HostPoolPrivateEndpointConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostPoolPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PrivateEndpointConnectionResource(ArmClient client, DesktopVirtualizationPrivateEndpointConnectionData data) : this(client, data.Id)
+        internal HostPoolPrivateEndpointConnectionResource(ArmClient client, DesktopVirtualizationPrivateEndpointConnectionData data) : this(client, data.Id)
         {
-            this.HasData = true;
+            HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostPoolPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PrivateEndpointConnectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal HostPoolPrivateEndpointConnectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            this.TryGetApiVersion(ResourceType, out string privateEndpointConnectionApiVersion);
+            TryGetApiVersion(ResourceType, out string hostPoolPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, privateEndpointConnectionApiVersion ?? "2026-01-01-preview");
-            PrivateEndpointConnectionResource.ValidateResourceId(id);
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, hostPoolPrivateEndpointConnectionApiVersion ?? "2026-01-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="hostPoolName"> The hostPoolName. </param>
         /// <param name="privateEndpointConnectionName"> The privateEndpointConnectionName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string privateEndpointConnectionName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string hostPoolName, string privateEndpointConnectionName)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/workspaces/{workspaceName}/privateEndpointConnections/{privateEndpointConnectionName}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/privateEndpointConnections/{privateEndpointConnectionName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/workspaces/{workspaceName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CustomPrivateEndpointConnection_GetByWorkspace. </description>
+        /// <description> CustomPrivateEndpointConnection_GetByHostPool. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PrivateEndpointConnectionResource"/>. </description>
+        /// <description> <see cref="HostPoolPrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PrivateEndpointConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HostPoolPrivateEndpointConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("PrivateEndpointConnectionResource.Get");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("HostPoolPrivateEndpointConnectionResource.Get");
             scope.Start();
             try
             {
@@ -123,14 +123,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetByWorkspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetByHostPoolRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DesktopVirtualizationPrivateEndpointConnectionData> response = Response.FromValue(DesktopVirtualizationPrivateEndpointConnectionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HostPoolPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,11 +144,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/workspaces/{workspaceName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CustomPrivateEndpointConnection_GetByWorkspace. </description>
+        /// <description> CustomPrivateEndpointConnection_GetByHostPool. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PrivateEndpointConnectionResource"/>. </description>
+        /// <description> <see cref="HostPoolPrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PrivateEndpointConnectionResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<HostPoolPrivateEndpointConnectionResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("PrivateEndpointConnectionResource.Get");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("HostPoolPrivateEndpointConnectionResource.Get");
             scope.Start();
             try
             {
@@ -171,14 +171,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetByWorkspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetByHostPoolRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DesktopVirtualizationPrivateEndpointConnectionData> response = Response.FromValue(DesktopVirtualizationPrivateEndpointConnectionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HostPoolPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -192,11 +192,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/workspaces/{workspaceName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CustomPrivateEndpointConnection_DeleteByWorkspace. </description>
+        /// <description> CustomPrivateEndpointConnection_DeleteByHostPool. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PrivateEndpointConnectionResource"/>. </description>
+        /// <description> <see cref="HostPoolPrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("PrivateEndpointConnectionResource.Delete");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("HostPoolPrivateEndpointConnectionResource.Delete");
             scope.Start();
             try
             {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateDeleteByWorkspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateDeleteByHostPoolRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -243,11 +243,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/workspaces/{workspaceName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CustomPrivateEndpointConnection_DeleteByWorkspace. </description>
+        /// <description> CustomPrivateEndpointConnection_DeleteByHostPool. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PrivateEndpointConnectionResource"/>. </description>
+        /// <description> <see cref="HostPoolPrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("PrivateEndpointConnectionResource.Delete");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("HostPoolPrivateEndpointConnectionResource.Delete");
             scope.Start();
             try
             {
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateDeleteByWorkspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateDeleteByHostPoolRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -290,15 +290,15 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary>
-        /// Update a PrivateEndpointConnection.
+        /// Update a HostPoolPrivateEndpointConnection.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/workspaces/{workspaceName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CustomPrivateEndpointConnection_UpdateByWorkspace. </description>
+        /// <description> CustomPrivateEndpointConnection_UpdateByHostPool. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PrivateEndpointConnectionResource"/>. </description>
+        /// <description> <see cref="HostPoolPrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -314,11 +314,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<PrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, DesktopVirtualizationPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HostPoolPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, DesktopVirtualizationPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("PrivateEndpointConnectionResource.Update");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("HostPoolPrivateEndpointConnectionResource.Update");
             scope.Start();
             try
             {
@@ -326,12 +326,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateUpdateByWorkspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DesktopVirtualizationPrivateEndpointConnectionData.ToRequestContent(data), context);
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateUpdateByHostPoolRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DesktopVirtualizationPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DesktopVirtualizationPrivateEndpointConnectionData> response = Response.FromValue(DesktopVirtualizationPrivateEndpointConnectionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                DesktopVirtualizationArmOperation<PrivateEndpointConnectionResource> operation = new DesktopVirtualizationArmOperation<PrivateEndpointConnectionResource>(Response.FromValue(new PrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                DesktopVirtualizationArmOperation<HostPoolPrivateEndpointConnectionResource> operation = new DesktopVirtualizationArmOperation<HostPoolPrivateEndpointConnectionResource>(Response.FromValue(new HostPoolPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -346,15 +346,15 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary>
-        /// Update a PrivateEndpointConnection.
+        /// Update a HostPoolPrivateEndpointConnection.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/workspaces/{workspaceName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CustomPrivateEndpointConnection_UpdateByWorkspace. </description>
+        /// <description> CustomPrivateEndpointConnection_UpdateByHostPool. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PrivateEndpointConnectionResource"/>. </description>
+        /// <description> <see cref="HostPoolPrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -370,11 +370,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<PrivateEndpointConnectionResource> Update(WaitUntil waitUntil, DesktopVirtualizationPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HostPoolPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, DesktopVirtualizationPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("PrivateEndpointConnectionResource.Update");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("HostPoolPrivateEndpointConnectionResource.Update");
             scope.Start();
             try
             {
@@ -382,12 +382,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateUpdateByWorkspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DesktopVirtualizationPrivateEndpointConnectionData.ToRequestContent(data), context);
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateUpdateByHostPoolRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DesktopVirtualizationPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DesktopVirtualizationPrivateEndpointConnectionData> response = Response.FromValue(DesktopVirtualizationPrivateEndpointConnectionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                DesktopVirtualizationArmOperation<PrivateEndpointConnectionResource> operation = new DesktopVirtualizationArmOperation<PrivateEndpointConnectionResource>(Response.FromValue(new PrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                DesktopVirtualizationArmOperation<HostPoolPrivateEndpointConnectionResource> operation = new DesktopVirtualizationArmOperation<HostPoolPrivateEndpointConnectionResource>(Response.FromValue(new HostPoolPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

@@ -15,7 +15,7 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Schema for ApplicationGroup properties. </summary>
-    public partial class ApplicationGroupProperties : IJsonModel<ApplicationGroupProperties>
+    internal partial class ApplicationGroupProperties : IJsonModel<ApplicationGroupProperties>
     {
         /// <summary> Initializes a new instance of <see cref="ApplicationGroupProperties"/> for deserialization. </summary>
         internal ApplicationGroupProperties()

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> URI to Image. </summary>
+        [WirePath("path")]
         public string Path { get; set; }
 
         /// <summary> Possible device architectures that an app attach package can be configured for. </summary>
+        [WirePath("packageArchitecture")]
         public AppAttachPackageArchitecture? PackageArchitecture { get; set; }
     }
 }

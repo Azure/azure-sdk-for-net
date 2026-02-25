@@ -13,7 +13,7 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Schema for SessionHost properties. </summary>
-    public partial class SessionHostProperties
+    internal partial class SessionHostProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="status"> Status for a SessionHost. </param>
         /// <param name="statusTimestamp"> The timestamp of the status. </param>
         /// <param name="osVersion"> The version of the OS on the session host. </param>
-        /// <param name="sxSStackVersion"> The version of the side by side stack on the session host. </param>
+        /// <param name="sxsStackVersion"> The version of the side by side stack on the session host. </param>
         /// <param name="updateState"> Update state of a SessionHost. </param>
         /// <param name="lastUpdatedOn"> The timestamp of the last update. </param>
         /// <param name="updateErrorMessage"> The error message. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="sessionHostConfiguration"> SessionHostConfiguration version reference at the time the update is initiated, in the format of date time. Example: 2024-04-26T04:56:45Z. </param>
         /// <param name="sessionHostHealthCheckResults"> List of SessionHostHealthCheckReports. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SessionHostProperties(int? activeSessions, int? disconnectedSessions, int? pendingSessions, string objectId, DateTimeOffset? lastHeartBeatOn, int? sessions, string agentVersion, bool? allowNewSession, string vmId, ResourceIdentifier resourceId, string assignedUser, string friendlyName, SessionHostStatus? status, DateTimeOffset? statusTimestamp, string osVersion, string sxSStackVersion, SessionHostUpdateState? updateState, DateTimeOffset? lastUpdatedOn, string updateErrorMessage, DateTimeOffset? lastSessionHostUpdateOn, string sessionHostConfiguration, IReadOnlyList<SessionHostHealthCheckReport> sessionHostHealthCheckResults, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SessionHostProperties(int? activeSessions, int? disconnectedSessions, int? pendingSessions, string objectId, DateTimeOffset? lastHeartBeatOn, int? sessions, string agentVersion, bool? allowNewSession, string vmId, ResourceIdentifier resourceId, string assignedUser, string friendlyName, SessionHostStatus? status, DateTimeOffset? statusTimestamp, string osVersion, string sxsStackVersion, SessionHostUpdateState? updateState, DateTimeOffset? lastUpdatedOn, string updateErrorMessage, DateTimeOffset? lastSessionHostUpdateOn, string sessionHostConfiguration, IReadOnlyList<SessionHostHealthCheckReport> sessionHostHealthCheckResults, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActiveSessions = activeSessions;
             DisconnectedSessions = disconnectedSessions;
@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             FriendlyName = friendlyName;
             Status = status;
             StatusTimestamp = statusTimestamp;
-            OsVersion = osVersion;
-            SxSStackVersion = sxSStackVersion;
+            OSVersion = osVersion;
+            SxsStackVersion = sxsStackVersion;
             UpdateState = updateState;
             LastUpdatedOn = lastUpdatedOn;
             UpdateErrorMessage = updateErrorMessage;
@@ -76,69 +76,91 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Number of active sessions on SessionHost. </summary>
+        [WirePath("activeSessions")]
         public int? ActiveSessions { get; }
 
         /// <summary> Number of disconnected sessions on SessionHost. </summary>
+        [WirePath("disconnectedSessions")]
         public int? DisconnectedSessions { get; }
 
         /// <summary> Number of pending sessions on SessionHost. </summary>
+        [WirePath("pendingSessions")]
         public int? PendingSessions { get; }
 
         /// <summary> ObjectId of SessionHost. (internal use). </summary>
+        [WirePath("objectId")]
         public string ObjectId { get; }
 
         /// <summary> Last heart beat from SessionHost. </summary>
+        [WirePath("lastHeartBeat")]
         public DateTimeOffset? LastHeartBeatOn { get; }
 
         /// <summary> Number of sessions on SessionHost. </summary>
+        [WirePath("sessions")]
         public int? Sessions { get; }
 
         /// <summary> Version of agent on SessionHost. </summary>
+        [WirePath("agentVersion")]
         public string AgentVersion { get; }
 
         /// <summary> Allow a new session. </summary>
+        [WirePath("allowNewSession")]
         public bool? AllowNewSession { get; set; }
 
         /// <summary> Virtual Machine Id of SessionHost's underlying virtual machine. </summary>
+        [WirePath("virtualMachineId")]
         public string VmId { get; }
 
         /// <summary> Resource Id of SessionHost's underlying virtual machine. </summary>
+        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; }
 
         /// <summary> User assigned to SessionHost. </summary>
+        [WirePath("assignedUser")]
         public string AssignedUser { get; set; }
 
         /// <summary> Friendly name of SessionHost. </summary>
+        [WirePath("friendlyName")]
         public string FriendlyName { get; set; }
 
         /// <summary> Status for a SessionHost. </summary>
+        [WirePath("status")]
         public SessionHostStatus? Status { get; }
 
         /// <summary> The timestamp of the status. </summary>
+        [WirePath("statusTimestamp")]
         public DateTimeOffset? StatusTimestamp { get; }
 
         /// <summary> The version of the OS on the session host. </summary>
-        public string OsVersion { get; }
+        [WirePath("osVersion")]
+        public string OSVersion { get; }
 
         /// <summary> The version of the side by side stack on the session host. </summary>
-        public string SxSStackVersion { get; }
+        [WirePath("sxSStackVersion")]
+        public string SxsStackVersion { get; }
 
         /// <summary> Update state of a SessionHost. </summary>
+        [WirePath("updateState")]
         public SessionHostUpdateState? UpdateState { get; }
 
         /// <summary> The timestamp of the last update. </summary>
+        [WirePath("lastUpdateTime")]
         public DateTimeOffset? LastUpdatedOn { get; }
 
         /// <summary> The error message. </summary>
+        [WirePath("updateErrorMessage")]
         public string UpdateErrorMessage { get; }
 
         /// <summary> The last time update was completed. </summary>
+        [WirePath("lastSessionHostUpdateTime")]
         public DateTimeOffset? LastSessionHostUpdateOn { get; }
 
         /// <summary> SessionHostConfiguration version reference at the time the update is initiated, in the format of date time. Example: 2024-04-26T04:56:45Z. </summary>
+        [WirePath("sessionHostConfiguration")]
         public string SessionHostConfiguration { get; }
 
         /// <summary> List of SessionHostHealthCheckReports. </summary>
-        public IReadOnlyList<SessionHostHealthCheckReport> SessionHostHealthCheckResults { get; }
+        [WirePath("sessionHostHealthCheckResults")]
+        public IReadOnlyList<SessionHostHealthCheckReport> SessionHostHealthCheckResults { get; } = new ChangeTrackingList<SessionHostHealthCheckReport>();
     }
 }

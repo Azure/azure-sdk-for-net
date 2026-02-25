@@ -18,16 +18,16 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DesktopVirtualization
 {
     /// <summary> Schema for MSIX Package properties. </summary>
-    public partial class MSIXPackageData : ResourceData, IJsonModel<MSIXPackageData>
+    public partial class MsixPackageData : ResourceData, IJsonModel<MsixPackageData>
     {
-        /// <summary> Initializes a new instance of <see cref="MSIXPackageData"/> for deserialization. </summary>
-        internal MSIXPackageData()
+        /// <summary> Initializes a new instance of <see cref="MsixPackageData"/> for deserialization. </summary>
+        internal MsixPackageData()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MSIXPackageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MsixPackageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MSIXPackageData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MsixPackageData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MSIXPackageData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MsixPackageData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
@@ -50,24 +50,24 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MSIXPackageData IJsonModel<MSIXPackageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MSIXPackageData)JsonModelCreateCore(ref reader, options);
+        MsixPackageData IJsonModel<MsixPackageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MsixPackageData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MSIXPackageData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MsixPackageData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MSIXPackageData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MsixPackageData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMSIXPackageData(document.RootElement, options);
+            return DeserializeMsixPackageData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MSIXPackageData DeserializeMSIXPackageData(JsonElement element, ModelReaderWriterOptions options)
+        internal static MsixPackageData DeserializeMsixPackageData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MSIXPackageData(
+            return new MsixPackageData(
                 id,
                 name,
                 resourceType,
@@ -133,47 +133,47 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MSIXPackageData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MsixPackageData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MSIXPackageData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MsixPackageData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDesktopVirtualizationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MSIXPackageData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MsixPackageData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MSIXPackageData IPersistableModel<MSIXPackageData>.Create(BinaryData data, ModelReaderWriterOptions options) => (MSIXPackageData)PersistableModelCreateCore(data, options);
+        MsixPackageData IPersistableModel<MsixPackageData>.Create(BinaryData data, ModelReaderWriterOptions options) => (MsixPackageData)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MSIXPackageData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MsixPackageData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMSIXPackageData(document.RootElement, options);
+                        return DeserializeMsixPackageData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MSIXPackageData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MsixPackageData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MSIXPackageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MsixPackageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="msixPackageData"> The <see cref="MSIXPackageData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(MSIXPackageData msixPackageData)
+        /// <param name="msixPackageData"> The <see cref="MsixPackageData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(MsixPackageData msixPackageData)
         {
             if (msixPackageData == null)
             {
@@ -184,11 +184,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
             return content;
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MSIXPackageData"/> from. </param>
-        internal static MSIXPackageData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MsixPackageData"/> from. </param>
+        internal static MsixPackageData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeMSIXPackageData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeMsixPackageData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

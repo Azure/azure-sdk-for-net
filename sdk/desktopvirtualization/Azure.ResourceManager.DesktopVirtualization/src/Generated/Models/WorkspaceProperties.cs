@@ -12,7 +12,7 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Schema for Workspace properties. </summary>
-    public partial class WorkspaceProperties
+    internal partial class WorkspaceProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -50,30 +50,39 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> ObjectId of Workspace. (internal use). </summary>
+        [WirePath("objectId")]
         public string ObjectId { get; }
 
         /// <summary> Description of Workspace. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> Friendly name of Workspace. </summary>
+        [WirePath("friendlyName")]
         public string FriendlyName { get; set; }
 
         /// <summary> List of applicationGroup resource Ids. </summary>
-        public IList<string> ApplicationGroupReferences { get; }
+        [WirePath("applicationGroupReferences")]
+        public IList<string> ApplicationGroupReferences { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Is cloud pc resource. </summary>
+        [WirePath("cloudPcResource")]
         public bool? IsCloudPcResource { get; }
 
         /// <summary> Enabled allows this resource to be accessed from both public and private networks, Disabled allows this resource to only be accessed via private endpoints. </summary>
+        [WirePath("publicNetworkAccess")]
         public DesktopVirtualizationPublicNetworkAccess? PublicNetworkAccess { get; set; }
 
         /// <summary> List of private endpoint connection associated with the specified resource. </summary>
-        public IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection> PrivateEndpointConnections { get; }
+        [WirePath("privateEndpointConnections")]
+        public IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection> PrivateEndpointConnections { get; } = new ChangeTrackingList<DesktopVirtualizationPrivateEndpointConnection>();
 
         /// <summary> Tenant that the resource is being requested on behalf of. </summary>
+        [WirePath("oboTenantId")]
         public string OboTenantId { get; set; }
 
         /// <summary> DeploymentScope type for Workspace. </summary>
+        [WirePath("deploymentScope")]
         public DeploymentScope? DeploymentScope { get; set; }
     }
 }

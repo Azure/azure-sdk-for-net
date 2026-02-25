@@ -46,15 +46,19 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Time zone for sessionHostManagement operations as defined in https://docs.microsoft.com/dotnet/api/system.timezoneinfo.findsystemtimezonebyid. Must be set if useLocalTime is true. </summary>
+        [WirePath("scheduledDateTimeZone")]
         public string ScheduledDateTimeZone { get; set; }
 
         /// <summary> Parameters for a hostpool update. </summary>
+        [WirePath("update")]
         public HostPoolUpdateConfigurationProperties Update { get; set; }
 
         /// <summary> Parameters that apply when session hosts are provisioned. </summary>
+        [WirePath("provisioning")]
         public SessionHostProvisioningConfigurationProperties Provisioning { get; set; }
 
         /// <summary> The policy that should be applied when the Session Host provisioning operation fails. </summary>
+        [WirePath("failedSessionHostCleanupPolicy")]
         public FailedSessionHostCleanupPolicySHC? FailedSessionHostCleanupPolicy { get; set; }
     }
 }

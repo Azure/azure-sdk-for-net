@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ResourceProviderOperation item in Value)
+            foreach (ResourceProviderOperationInfo item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -94,17 +94,17 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            IList<ResourceProviderOperation> value = default;
+            IList<ResourceProviderOperationInfo> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ResourceProviderOperation> array = new List<ResourceProviderOperation>();
+                    List<ResourceProviderOperationInfo> array = new List<ResourceProviderOperationInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResourceProviderOperation.DeserializeResourceProviderOperation(item, options));
+                        array.Add(ResourceProviderOperationInfo.DeserializeResourceProviderOperationInfo(item, options));
                     }
                     value = array;
                     continue;

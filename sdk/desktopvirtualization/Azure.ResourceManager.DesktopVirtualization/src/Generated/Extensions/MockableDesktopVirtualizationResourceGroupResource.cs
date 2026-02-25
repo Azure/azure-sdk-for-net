@@ -526,11 +526,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<SessionHostManagementProvisioningStatus>> GetAsync(string hostPoolName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SessionHostManagementProvisioningStatus>> GetProvisioningStatusAsync(string hostPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
 
-            using DiagnosticScope scope = SessionHostManagementProvisioningStatusesClientDiagnostics.CreateScope("MockableDesktopVirtualizationResourceGroupResource.Get");
+            using DiagnosticScope scope = SessionHostManagementProvisioningStatusesClientDiagnostics.CreateScope("MockableDesktopVirtualizationResourceGroupResource.GetProvisioningStatus");
             scope.Start();
             try
             {
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SessionHostManagementProvisioningStatusesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, hostPoolName, context);
+                HttpMessage message = SessionHostManagementProvisioningStatusesRestClient.CreateGetProvisioningStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, hostPoolName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SessionHostManagementProvisioningStatus> response = Response.FromValue(SessionHostManagementProvisioningStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -575,11 +575,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<SessionHostManagementProvisioningStatus> Get(string hostPoolName, CancellationToken cancellationToken = default)
+        public virtual Response<SessionHostManagementProvisioningStatus> GetProvisioningStatus(string hostPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
 
-            using DiagnosticScope scope = SessionHostManagementProvisioningStatusesClientDiagnostics.CreateScope("MockableDesktopVirtualizationResourceGroupResource.Get");
+            using DiagnosticScope scope = SessionHostManagementProvisioningStatusesClientDiagnostics.CreateScope("MockableDesktopVirtualizationResourceGroupResource.GetProvisioningStatus");
             scope.Start();
             try
             {
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SessionHostManagementProvisioningStatusesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, hostPoolName, context);
+                HttpMessage message = SessionHostManagementProvisioningStatusesRestClient.CreateGetProvisioningStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, hostPoolName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SessionHostManagementProvisioningStatus> response = Response.FromValue(SessionHostManagementProvisioningStatus.FromResponse(result), result);
                 if (response.Value == null)

@@ -12,13 +12,13 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Schema for Expand MSIX Image properties. </summary>
-    public partial class ExpandMsixImageProperties
+    internal partial class ExpandMsixImageProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExpandMsixImageProperties"/>. </summary>
-        internal ExpandMsixImageProperties()
+        public ExpandMsixImageProperties()
         {
             PackageDependencies = new ChangeTrackingList<MsixPackageDependencies>();
             PackageApplications = new ChangeTrackingList<MsixPackageApplications>();
@@ -62,48 +62,63 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Alias of MSIX Package. </summary>
-        public string PackageAlias { get; }
+        [WirePath("packageAlias")]
+        public string PackageAlias { get; set; }
 
         /// <summary> VHD/CIM image path on Network Share. </summary>
-        public string ImagePath { get; }
+        [WirePath("imagePath")]
+        public string ImagePath { get; set; }
 
         /// <summary> Package Name from appxmanifest.xml. </summary>
-        public string PackageName { get; }
+        [WirePath("packageName")]
+        public string PackageName { get; set; }
 
         /// <summary> Package Family Name from appxmanifest.xml. Contains Package Name and Publisher name. </summary>
-        public string PackageFamilyName { get; }
+        [WirePath("packageFamilyName")]
+        public string PackageFamilyName { get; set; }
 
         /// <summary> Package Full Name from appxmanifest.xml. </summary>
-        public string PackageFullName { get; }
+        [WirePath("packageFullName")]
+        public string PackageFullName { get; set; }
 
         /// <summary> User friendly Name to be displayed in the portal. </summary>
-        public string DisplayName { get; }
+        [WirePath("displayName")]
+        public string DisplayName { get; set; }
 
         /// <summary> Relative Path to the package inside the image. </summary>
-        public string PackageRelativePath { get; }
+        [WirePath("packageRelativePath")]
+        public string PackageRelativePath { get; set; }
 
         /// <summary> Specifies how to register Package in feed. </summary>
-        public bool? IsRegularRegistration { get; }
+        [WirePath("isRegularRegistration")]
+        public bool? IsRegularRegistration { get; set; }
 
         /// <summary> Make this version of the package the active one across the hostpool. </summary>
-        public bool? IsActive { get; }
+        [WirePath("isActive")]
+        public bool? IsActive { get; set; }
 
         /// <summary> List of package dependencies. </summary>
-        public IList<MsixPackageDependencies> PackageDependencies { get; }
+        [WirePath("packageDependencies")]
+        public IList<MsixPackageDependencies> PackageDependencies { get; } = new ChangeTrackingList<MsixPackageDependencies>();
 
         /// <summary> Package version found in the appxmanifest.xml. </summary>
-        public string Version { get; }
+        [WirePath("version")]
+        public string Version { get; set; }
 
         /// <summary> Date Package was last updated, found in the appxmanifest.xml. </summary>
-        public DateTimeOffset? LastUpdatedOn { get; }
+        [WirePath("lastUpdated")]
+        public DateTimeOffset? LastUpdatedOn { get; set; }
 
         /// <summary> List of package applications. </summary>
-        public IList<MsixPackageApplications> PackageApplications { get; }
+        [WirePath("packageApplications")]
+        public IList<MsixPackageApplications> PackageApplications { get; } = new ChangeTrackingList<MsixPackageApplications>();
 
         /// <summary> Certificate name found in the appxmanifest.xml. </summary>
-        public string CertificateName { get; }
+        [WirePath("certificateName")]
+        public string CertificateName { get; set; }
 
         /// <summary> Date certificate expires, found in the appxmanifest.xml. </summary>
-        public DateTimeOffset? CertificateExpiry { get; }
+        [WirePath("certificateExpiry")]
+        public DateTimeOffset? CertificateExpiry { get; set; }
     }
 }

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByWorkspaceRequest(nextLink, _subscriptionId, _resourceGroupName, _workspaceName, _context) : _client.CreateGetByWorkspaceRequest(_subscriptionId, _resourceGroupName, _workspaceName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("WorkspacePrivateEndpointConnectionCollection.GetAll");
             scope.Start();
             try
             {

@@ -171,39 +171,39 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="HostPoolPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationArmClient.GetPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationArmClient.GetHostPoolPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
-        public static PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HostPoolPrivateEndpointConnectionResource"/> object. </returns>
+        public static HostPoolPrivateEndpointConnectionResource GetHostPoolPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDesktopVirtualizationArmClient(client).GetPrivateEndpointConnectionResource(id);
+            return GetMockableDesktopVirtualizationArmClient(client).GetHostPoolPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="WorkspacePrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationArmClient.GetPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationArmClient.GetWorkspacePrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
-        public static PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WorkspacePrivateEndpointConnectionResource"/> object. </returns>
+        public static WorkspacePrivateEndpointConnectionResource GetWorkspacePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDesktopVirtualizationArmClient(client).GetPrivateEndpointConnectionResource(id);
+            return GetMockableDesktopVirtualizationArmClient(client).GetWorkspacePrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
@@ -279,21 +279,21 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MSIXPackageResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="MsixPackageResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationArmClient.GetMSIXPackageResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationArmClient.GetMsixPackageResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MSIXPackageResource"/> object. </returns>
-        public static MSIXPackageResource GetMSIXPackageResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MsixPackageResource"/> object. </returns>
+        public static MsixPackageResource GetMsixPackageResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDesktopVirtualizationArmClient(client).GetMSIXPackageResource(id);
+            return GetMockableDesktopVirtualizationArmClient(client).GetMsixPackageResource(id);
         }
 
         /// <summary>
@@ -665,36 +665,36 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Get the session host provisioning status for a given hostpool.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationResourceGroupResource.GetAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationResourceGroupResource.GetProvisioningStatusAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<SessionHostManagementProvisioningStatus>> GetAsync(this ResourceGroupResource resourceGroupResource, string hostPoolName, CancellationToken cancellationToken = default)
+        public static async Task<Response<SessionHostManagementProvisioningStatus>> GetProvisioningStatusAsync(this ResourceGroupResource resourceGroupResource, string hostPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableDesktopVirtualizationResourceGroupResource(resourceGroupResource).GetAsync(hostPoolName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDesktopVirtualizationResourceGroupResource(resourceGroupResource).GetProvisioningStatusAsync(hostPoolName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get the session host provisioning status for a given hostpool.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationResourceGroupResource.Get(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationResourceGroupResource.GetProvisioningStatus(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<SessionHostManagementProvisioningStatus> Get(this ResourceGroupResource resourceGroupResource, string hostPoolName, CancellationToken cancellationToken = default)
+        public static Response<SessionHostManagementProvisioningStatus> GetProvisioningStatus(this ResourceGroupResource resourceGroupResource, string hostPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableDesktopVirtualizationResourceGroupResource(resourceGroupResource).Get(hostPoolName, cancellationToken);
+            return GetMockableDesktopVirtualizationResourceGroupResource(resourceGroupResource).GetProvisioningStatus(hostPoolName, cancellationToken);
         }
 
         /// <summary>
@@ -1255,8 +1255,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ResourceProviderOperation"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ResourceProviderOperation> GetAllAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceProviderOperationInfo"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ResourceProviderOperationInfo> GetAllAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -1273,8 +1273,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ResourceProviderOperation"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ResourceProviderOperation> GetAll(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceProviderOperationInfo"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ResourceProviderOperationInfo> GetAll(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 

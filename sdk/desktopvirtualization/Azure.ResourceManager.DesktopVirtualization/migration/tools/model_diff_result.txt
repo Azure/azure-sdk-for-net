@@ -1,0 +1,830 @@
+====================================================================================================
+MODEL DIFF ANALYSIS
+Comparing baseline (76a1981de09009736808bc6a80fdd10d73f0097b) vs Current (post-generated)
+====================================================================================================
+
+--------------------------------------------------------------------------------
+REMOVED MODELS (in baseline but not in current)
+--------------------------------------------------------------------------------
+
+  DesktopVirtualizationPrivateEndpointConnectionDataData (class)
+    File: DesktopVirtualizationPrivateEndpointConnectionDataData.cs
+
+  MsixImageUri (class)
+    File: MsixImageUri.cs
+
+--------------------------------------------------------------------------------
+ADDED MODELS (in current but not in baseline)
+--------------------------------------------------------------------------------
+
+  ActiveDirectoryInfoProperties (class)
+    File: ActiveDirectoryInfoProperties.cs
+
+  ActiveSessionHostConfigurationData (class)
+    File: ActiveSessionHostConfigurationData.cs
+
+  ActiveSessionHostConfigurationProperties (class)
+    File: ActiveSessionHostConfigurationProperties.cs
+
+  AllowRDPShortPathWithPrivateLink (struct)
+    File: AllowRDPShortPathWithPrivateLink.cs
+
+  BootDiagnosticsInfoPatchProperties (class)
+    File: BootDiagnosticsInfoPatchProperties.cs
+
+  BootDiagnosticsInfoProperties (class)
+    File: BootDiagnosticsInfoProperties.cs
+
+  CanaryPolicy (struct)
+    File: CanaryPolicy.cs
+
+  CreateDeleteProperties (class)
+    File: CreateDeleteProperties.cs
+
+  DeploymentScope (struct)
+    File: DeploymentScope.cs
+
+  DesktopVirtualizationPrivateEndpointConnectionData (class)
+    File: DesktopVirtualizationPrivateEndpointConnectionData.cs
+
+  DiffDiskOption (struct)
+    File: DiffDiskOption.cs
+
+  DiffDiskPlacement (struct)
+    File: DiffDiskPlacement.cs
+
+  DiffDiskProperties (class)
+    File: DiffDiskProperties.cs
+
+  DirectUDP (struct)
+    File: DirectUDP.cs
+
+  DiskInfoProperties (class)
+    File: DiskInfoProperties.cs
+
+  DomainInfoProperties (class)
+    File: DomainInfoProperties.cs
+
+  DomainJoinType (struct)
+    File: DomainJoinType.cs
+
+  ExpandParameterBody (class)
+    File: ExpandParameterBody.cs
+
+  FailedSessionHostCleanupPolicySHC (struct)
+    File: FailedSessionHostCleanupPolicySHC.cs
+
+  HostPoolProvisioningAction (struct)
+    File: HostPoolProvisioningAction.cs
+
+  HostPoolProvisioningControlContent (class)
+    File: HostPoolProvisioningControlContent.cs
+
+  HostPoolUpdateAction (struct)
+    File: HostPoolUpdateAction.cs
+
+  HostPoolUpdateConfigurationPatchProperties (class)
+    File: HostPoolUpdateConfigurationPatchProperties.cs
+
+  HostPoolUpdateConfigurationProperties (class)
+    File: HostPoolUpdateConfigurationProperties.cs
+
+  HostPoolUpdateControlContent (class)
+    File: HostPoolUpdateControlContent.cs
+
+  ImageInfoPatchProperties (class)
+    File: ImageInfoPatchProperties.cs
+
+  ImageInfoProperties (class)
+    File: ImageInfoProperties.cs
+
+  ImportParameterBody (class)
+    File: ImportParameterBody.cs
+
+  KeyVaultCredentialsPatchProperties (class)
+    File: KeyVaultCredentialsPatchProperties.cs
+
+  KeyVaultCredentialsProperties (class)
+    File: KeyVaultCredentialsProperties.cs
+
+  LogSpecification (class)
+    File: LogSpecification.cs
+
+  ManagedPrivateUDP (struct)
+    File: ManagedPrivateUDP.cs
+
+  ManagementType (struct)
+    File: ManagementType.cs
+
+  MarketplaceInfoPatchProperties (class)
+    File: MarketplaceInfoPatchProperties.cs
+
+  MarketplaceInfoProperties (class)
+    File: MarketplaceInfoProperties.cs
+
+  NetworkInfoPatchProperties (class)
+    File: NetworkInfoPatchProperties.cs
+
+  NetworkInfoProperties (class)
+    File: NetworkInfoProperties.cs
+
+  PostParameterBody (class)
+    File: PostParameterBody.cs
+
+  ProvisioningStateSHC (struct)
+    File: ProvisioningStateSHC.cs
+
+  PublicUDP (struct)
+    File: PublicUDP.cs
+
+  RegistrationTokenList (class)
+    File: RegistrationTokenList.cs
+
+  RegistrationTokenMinimal (class)
+    File: RegistrationTokenMinimal.cs
+
+  RelayUDP (struct)
+    File: RelayUDP.cs
+
+  ResourceProviderOperationDisplay (class)
+    File: ResourceProviderOperationDisplay.cs
+
+  ResourceProviderOperationInfo (class)
+    File: ResourceProviderOperationInfo.cs
+
+  ScalingMethodType (struct)
+    File: ScalingMethodType.cs
+
+  ScopedRegistrationTokenProperties (class)
+    File: ScopedRegistrationTokenProperties.cs
+
+  SecurityInfoPatchProperties (class)
+    File: SecurityInfoPatchProperties.cs
+
+  SecurityInfoProperties (class)
+    File: SecurityInfoProperties.cs
+
+  SendMessageParameterBody (class)
+    File: SendMessageParameterBody.cs
+
+  SessionHostConfigurationData (class)
+    File: SessionHostConfigurationData.cs
+
+  SessionHostConfigurationPatch (class)
+    File: SessionHostConfigurationPatch.cs
+
+  SessionHostConfigurationPatchProperties (class)
+    File: SessionHostConfigurationPatchProperties.cs
+
+  SessionHostConfigurationProperties (class)
+    File: SessionHostConfigurationProperties.cs
+
+  SessionHostManagementData (class)
+    File: SessionHostManagementData.cs
+
+  SessionHostManagementOperationProgress (class)
+    File: SessionHostManagementOperationProgress.cs
+
+  SessionHostManagementPatch (class)
+    File: SessionHostManagementPatch.cs
+
+  SessionHostManagementPatchProperties (class)
+    File: SessionHostManagementPatchProperties.cs
+
+  SessionHostManagementProperties (class)
+    File: SessionHostManagementProperties.cs
+
+  SessionHostManagementProvisioningOperationProgress (class)
+    File: SessionHostManagementProvisioningOperationProgress.cs
+
+  SessionHostManagementProvisioningOperationStatus (struct)
+    File: SessionHostManagementProvisioningOperationStatus.cs
+
+  SessionHostManagementProvisioningStatus (class)
+    File: SessionHostManagementProvisioningStatus.cs
+
+  SessionHostManagementProvisioningStatusProperties (class)
+    File: SessionHostManagementProvisioningStatusProperties.cs
+
+  SessionHostManagementUpdateStatus (class)
+    File: SessionHostManagementUpdateStatus.cs
+
+  SessionHostManagementUpdateStatusProperties (class)
+    File: SessionHostManagementUpdateStatusProperties.cs
+
+  SessionHostProvisioningConfigurationPatchProperties (class)
+    File: SessionHostProvisioningConfigurationPatchProperties.cs
+
+  SessionHostProvisioningConfigurationProperties (class)
+    File: SessionHostProvisioningConfigurationProperties.cs
+
+  Type (struct)
+    File: Type.cs
+
+  UpdateSessionHostsRequestBody (class)
+    File: UpdateSessionHostsRequestBody.cs
+
+  UpdateStatus (struct)
+    File: UpdateStatus.cs
+
+  VirtualMachineDiskType (struct)
+    File: VirtualMachineDiskType.cs
+
+  VirtualMachineSecurityType (struct)
+    File: VirtualMachineSecurityType.cs
+
+--------------------------------------------------------------------------------
+MODIFIED MODELS (public member changes)
+--------------------------------------------------------------------------------
+
+AppAttachPackageInfoProperties
+  File: AppAttachPackageInfoProperties.cs
+
+  ~ Changed members (1):
+      ~ property PackageDependencies
+        OLD:
+          - public IList<MsixPackageDependencies> PackageDependencies { get; set; }
+        NEW:
+          + public IList<MsixPackageDependencies> PackageDependencies { get; }
+
+--------------------------------------------------------------------------------
+MODIFIED MODELS (public member changes)
+--------------------------------------------------------------------------------
+
+AppAttachPackagePatch
+  File: AppAttachPackagePatch.cs
+
+  + Added members (1):
+      + public IDictionary<string, string> Tags { get; }
+
+--------------------------------------------------------------------------------
+MODIFIED MODELS (public member changes)
+--------------------------------------------------------------------------------
+
+AppAttachPackagePatchProperties
+  File: AppAttachPackagePatchProperties.cs
+
+  + Added members (2):
+      + public string CustomData { get; set; }
+      + public Uri PackageLookbackUri { get; set; }
+
+--------------------------------------------------------------------------------
+MODIFIED MODELS (public member changes)
+--------------------------------------------------------------------------------
+
+AppAttachPackageProperties
+  File: AppAttachPackageProperties.cs
+
+  + Added members (4):
+      + public string CustomData { get; set; }
+      + public DeploymentScope? DeploymentScope { get; set; }
+      + public Uri PackageLookbackUri { get; set; }
+      + public string PackageOwnerName { get; set; }
+
+--------------------------------------------------------------------------------
+MODIFIED MODELS (public member changes)
+--------------------------------------------------------------------------------
+
+DesktopVirtualizationPrivateEndpointConnection
+  File: DesktopVirtualizationPrivateEndpointConnection.cs
+
+  + Added members (1):
+      + public DesktopVirtualizationPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; }
+
+  - Removed members (2):
+      - public DesktopVirtualizationPrivateEndpointConnection()
+      - public DesktopVirtualizationPrivateLinkServiceConnectionState ConnectionState { get; set; }
+
+  ~ Changed members (1):
+      ~ property PrivateEndpointId
+        OLD:
+          - public ResourceIdentifier PrivateEndpointId { get; }
+        NEW:
+          + public string PrivateEndpointId { get; }
+
+--------------------------------------------------------------------------------
+MODIFIED MODELS (public member changes)
+--------------------------------------------------------------------------------
+
+DesktopVirtualizationPrivateLinkResourceData
+  File: DesktopVirtualizationPrivateLinkResourceData.cs
+
+  - Removed members (1):
+      - public DesktopVirtualizationPrivateLinkResourceData()
+
+--------------------------------------------------------------------------------
+MODIFIED MODELS (public member changes)
+--------------------------------------------------------------------------------
+
+ExpandMsixImage
+  File: ExpandMsixImage.cs
+
+  ~ Changed members (1):
+      ~ property PackageDependencies
+        OLD:
+          - public IList<MsixPackageDependencies> PackageDependencies { get; set; }
+        NEW:
+          + public IList<MsixPackageDependencies> PackageDependencies { get; }
+
+--------------------------------------------------------------------------------
+MODIFIED MODELS (public member changes)
+--------------------------------------------------------------------------------
+
+HostPoolData
+  File: HostPoolData.cs
+
+  + Added members (9):
+      + public AllowRDPShortPathWithPrivateLink? AllowRDPShortPathWithPrivateLink { get; set; }
+      + public DeploymentScope? DeploymentScope { get; set; }
+      + public DirectUDP? DirectUDP { get; set; }
+      + public bool? IsCloudPcResource { get; }
+      + public ManagedPrivateUDP? ManagedPrivateUDP { get; set; }
+      + public ManagementType? ManagementType { get; set; }
+      + public string OboTenantId { get; set; }
+      + public PublicUDP? PublicUDP { get; set; }
+      + public RelayUDP? RelayUDP { get; set; }
+
+  - Removed members (1):
+      - public bool? IsCloudPCResource { get; }
+
+  ~ Changed members (1):
+      ~ property ETag
+        OLD:
+          - public ETag? ETag { get; }
+        NEW:
+          + public string ETag { get; }
+
+--------------------------------------------------------------------------------
+MODIFIED MODELS (public member changes)
+--------------------------------------------------------------------------------
+
+HostPoolLoadBalancerType
+  File: HostPoolLoadBalancerType.cs
+
+  + Added members (1):
+      + public HostPoolLoadBalancerType MultiplePersistent { get; }
+
+--------------------------------------------------------------------------------
+MODIFIED MODELS (public member changes)
+--------------------------------------------------------------------------------
+
+HostPoolPatch
+  File: HostPoolPatch.cs
+
+  + Added members (6):
+      + public AllowRDPShortPathWithPrivateLink? AllowRDPShortPathWithPrivateLink { get; set; }
+      + public DirectUDP? DirectUDP { get; set; }
+      + public ManagedServiceIdentity Identity { get; set; }
+      + public ManagedPrivateUDP? ManagedPrivateUDP { get; set; }
+      + public PublicUDP? PublicUDP { get; set; }
+      + public RelayUDP? RelayUDP { get; set; }
+
+  ~ Changed members (1):
+      ~ property Tags
+        OLD:
+          - public IDictionary<string, string> Tags { get; set; }
+        NEW:
+          + public IDictionary<string, string> Tags { get; }
+
+--------------------------------------------------------------------------------
+MODIFIED MODELS (public member changes)
+--------------------------------------------------------------------------------
+
+MsixPackageData
+  File: MsixPackageData.cs
+
+  - Removed members (1):
+      - public MsixPackageData()
+
+--------------------------------------------------------------------------------
+MODIFIED MODELS (public member changes)
+--------------------------------------------------------------------------------
+
+ScalingHostPoolType
+  File: ScalingHostPoolType.cs
+
+  + Added members (1):
+      + public ScalingHostPoolType Personal { get; }
+
+--------------------------------------------------------------------------------
+MODIFIED MODELS (public member changes)
+--------------------------------------------------------------------------------
+
+ScalingPlanData
+  File: ScalingPlanData.cs
+
+  ~ Changed members (1):
+      ~ property ETag
+        OLD:
+          - public ETag? ETag { get; }
+        NEW:
+          + public string ETag { get; }
+
+--------------------------------------------------------------------------------
+MODIFIED MODELS (public member changes)
+--------------------------------------------------------------------------------
+
+ScalingPlanPatch
+  File: ScalingPlanPatch.cs
+
+  ~ Changed members (1):
+      ~ property Tags
+        OLD:
+          - public IDictionary<string, string> Tags { get; set; }
+        NEW:
+          + public IDictionary<string, string> Tags { get; }
+
+--------------------------------------------------------------------------------
+MODIFIED MODELS (public member changes)
+--------------------------------------------------------------------------------
+
+ScalingPlanPersonalScheduleData
+  File: ScalingPlanPersonalScheduleData.cs
+
+  - Removed members (1):
+      - public ScalingPlanPersonalScheduleData()
+
+--------------------------------------------------------------------------------
+MODIFIED MODELS (public member changes)
+--------------------------------------------------------------------------------
+
+ScalingPlanPooledScheduleData
+  File: ScalingPlanPooledScheduleData.cs
+
+  + Added members (3):
+      + public CreateDeleteProperties CreateDelete { get; set; }
+      + public ScalingMethodType? ScalingMethod { get; set; }
+      + public string ScheduleName { get; }
+
+  - Removed members (1):
+      - public ScalingPlanPooledScheduleData()
+
+--------------------------------------------------------------------------------
+MODIFIED MODELS (public member changes)
+--------------------------------------------------------------------------------
+
+ScalingPlanPooledSchedulePatch
+  File: ScalingPlanPooledSchedulePatch.cs
+
+  + Added members (3):
+      + public CreateDeleteProperties CreateDelete { get; set; }
+      + public ScalingMethodType? ScalingMethod { get; set; }
+      + public string ScheduleName { get; }
+
+--------------------------------------------------------------------------------
+MODIFIED MODELS (public member changes)
+--------------------------------------------------------------------------------
+
+ScalingSchedule
+  File: ScalingSchedule.cs
+
+  + Added members (2):
+      + public CreateDeleteProperties CreateDelete { get; set; }
+      + public ScalingMethodType? ScalingMethod { get; set; }
+
+  ~ Changed members (1):
+      ~ property DaysOfWeek
+        OLD:
+          - public IList<ScalingScheduleDaysOfWeekItem> DaysOfWeek { get; }
+        NEW:
+          + public ScalingScheduleDaysOfWeekItem? DaysOfWeek { get; set; }
+
+--------------------------------------------------------------------------------
+MODEL TYPE KIND CHANGES
+--------------------------------------------------------------------------------
+
+ScalingScheduleDaysOfWeekItem
+  OLD kind: struct
+  NEW kind: enum
+
+--------------------------------------------------------------------------------
+MODIFIED MODELS (public member changes)
+--------------------------------------------------------------------------------
+
+SessionHostAgentUpdatePatchProperties
+  File: SessionHostAgentUpdatePatchProperties.cs
+
+  ~ Changed members (1):
+      ~ property MaintenanceWindows
+        OLD:
+          - public IList<MaintenanceWindowPatchProperties> MaintenanceWindows { get; set; }
+        NEW:
+          + public IList<MaintenanceWindowPatchProperties> MaintenanceWindows { get; }
+
+--------------------------------------------------------------------------------
+MODIFIED MODELS (public member changes)
+--------------------------------------------------------------------------------
+
+SessionHostAgentUpdateProperties
+  File: SessionHostAgentUpdateProperties.cs
+
+  ~ Changed members (1):
+      ~ property MaintenanceWindows
+        OLD:
+          - public IList<SessionHostMaintenanceWindowProperties> MaintenanceWindows { get; set; }
+        NEW:
+          + public IList<SessionHostMaintenanceWindowProperties> MaintenanceWindows { get; }
+
+--------------------------------------------------------------------------------
+MODIFIED MODELS (public member changes)
+--------------------------------------------------------------------------------
+
+SessionHostData
+  File: SessionHostData.cs
+
+  + Added members (5):
+      + public int? ActiveSessions { get; }
+      + public int? DisconnectedSessions { get; }
+      + public DateTimeOffset? LastSessionHostUpdateOn { get; }
+      + public int? PendingSessions { get; }
+      + public string SessionHostConfiguration { get; }
+
+  ~ Changed members (8):
+      ~ property AgentVersion
+        OLD:
+          - public string AgentVersion { get; set; }
+        NEW:
+          + public string AgentVersion { get; }
+      ~ property LastHeartBeatOn
+        OLD:
+          - public DateTimeOffset? LastHeartBeatOn { get; set; }
+        NEW:
+          + public DateTimeOffset? LastHeartBeatOn { get; }
+      ~ property OSVersion
+        OLD:
+          - public string OSVersion { get; set; }
+        NEW:
+          + public string OSVersion { get; }
+      ~ property Sessions
+        OLD:
+          - public int? Sessions { get; set; }
+        NEW:
+          + public int? Sessions { get; }
+      ~ property Status
+        OLD:
+          - public SessionHostStatus? Status { get; set; }
+        NEW:
+          + public SessionHostStatus? Status { get; }
+      ~ property SxsStackVersion
+        OLD:
+          - public string SxsStackVersion { get; set; }
+        NEW:
+          + public string SxsStackVersion { get; }
+      ~ property UpdateErrorMessage
+        OLD:
+          - public string UpdateErrorMessage { get; set; }
+        NEW:
+          + public string UpdateErrorMessage { get; }
+      ~ property UpdateState
+        OLD:
+          - public SessionHostUpdateState? UpdateState { get; set; }
+        NEW:
+          + public SessionHostUpdateState? UpdateState { get; }
+
+--------------------------------------------------------------------------------
+MODIFIED MODELS (public member changes)
+--------------------------------------------------------------------------------
+
+VirtualApplicationGroupData
+  File: VirtualApplicationGroupData.cs
+
+  + Added members (3):
+      + public DeploymentScope? DeploymentScope { get; }
+      + public bool? IsCloudPcResource { get; }
+      + public string OboTenantId { get; set; }
+
+  - Removed members (1):
+      - public bool? IsCloudPCResource { get; }
+
+  ~ Changed members (1):
+      ~ property ETag
+        OLD:
+          - public ETag? ETag { get; }
+        NEW:
+          + public string ETag { get; }
+
+--------------------------------------------------------------------------------
+MODIFIED MODELS (public member changes)
+--------------------------------------------------------------------------------
+
+VirtualApplicationGroupPatch
+  File: VirtualApplicationGroupPatch.cs
+
+  ~ Changed members (1):
+      ~ property Tags
+        OLD:
+          - public IDictionary<string, string> Tags { get; set; }
+        NEW:
+          + public IDictionary<string, string> Tags { get; }
+
+--------------------------------------------------------------------------------
+MODIFIED MODELS (public member changes)
+--------------------------------------------------------------------------------
+
+VirtualApplicationPatch
+  File: VirtualApplicationPatch.cs
+
+  - Removed members (1):
+      - public IDictionary<string, string> Tags { get; set; }
+
+--------------------------------------------------------------------------------
+MODIFIED MODELS (public member changes)
+--------------------------------------------------------------------------------
+
+VirtualDesktopPatch
+  File: VirtualDesktopPatch.cs
+
+  - Removed members (1):
+      - public IDictionary<string, string> Tags { get; set; }
+
+--------------------------------------------------------------------------------
+MODIFIED MODELS (public member changes)
+--------------------------------------------------------------------------------
+
+VirtualWorkspaceData
+  File: VirtualWorkspaceData.cs
+
+  + Added members (3):
+      + public DeploymentScope? DeploymentScope { get; set; }
+      + public bool? IsCloudPcResource { get; }
+      + public string OboTenantId { get; set; }
+
+  - Removed members (1):
+      - public bool? IsCloudPCResource { get; }
+
+  ~ Changed members (2):
+      ~ property ApplicationGroupReferences
+        OLD:
+          - public IList<string> ApplicationGroupReferences { get; set; }
+        NEW:
+          + public IList<string> ApplicationGroupReferences { get; }
+      ~ property ETag
+        OLD:
+          - public ETag? ETag { get; }
+        NEW:
+          + public string ETag { get; }
+
+--------------------------------------------------------------------------------
+MODIFIED MODELS (public member changes)
+--------------------------------------------------------------------------------
+
+VirtualWorkspacePatch
+  File: VirtualWorkspacePatch.cs
+
+  ~ Changed members (2):
+      ~ property ApplicationGroupReferences
+        OLD:
+          - public IList<string> ApplicationGroupReferences { get; set; }
+        NEW:
+          + public IList<string> ApplicationGroupReferences { get; }
+      ~ property Tags
+        OLD:
+          - public IDictionary<string, string> Tags { get; set; }
+        NEW:
+          + public IDictionary<string, string> Tags { get; }
+
+====================================================================================================
+SUMMARY
+====================================================================================================
+Models in baseline:     83
+Models in current:      153
+
+Removed models (2):
+  - DesktopVirtualizationPrivateEndpointConnectionDataData
+  - MsixImageUri
+Added models (72):
+  + ActiveDirectoryInfoProperties
+  + ActiveSessionHostConfigurationData
+  + ActiveSessionHostConfigurationProperties
+  + AllowRDPShortPathWithPrivateLink
+  + BootDiagnosticsInfoPatchProperties
+  + BootDiagnosticsInfoProperties
+  + CanaryPolicy
+  + CreateDeleteProperties
+  + DeploymentScope
+  + DesktopVirtualizationPrivateEndpointConnectionData
+  + DiffDiskOption
+  + DiffDiskPlacement
+  + DiffDiskProperties
+  + DirectUDP
+  + DiskInfoProperties
+  + DomainInfoProperties
+  + DomainJoinType
+  + ExpandParameterBody
+  + FailedSessionHostCleanupPolicySHC
+  + HostPoolProvisioningAction
+  + HostPoolProvisioningControlContent
+  + HostPoolUpdateAction
+  + HostPoolUpdateConfigurationPatchProperties
+  + HostPoolUpdateConfigurationProperties
+  + HostPoolUpdateControlContent
+  + ImageInfoPatchProperties
+  + ImageInfoProperties
+  + ImportParameterBody
+  + KeyVaultCredentialsPatchProperties
+  + KeyVaultCredentialsProperties
+  + LogSpecification
+  + ManagedPrivateUDP
+  + ManagementType
+  + MarketplaceInfoPatchProperties
+  + MarketplaceInfoProperties
+  + NetworkInfoPatchProperties
+  + NetworkInfoProperties
+  + PostParameterBody
+  + ProvisioningStateSHC
+  + PublicUDP
+  + RegistrationTokenList
+  + RegistrationTokenMinimal
+  + RelayUDP
+  + ResourceProviderOperationDisplay
+  + ResourceProviderOperationInfo
+  + ScalingMethodType
+  + ScopedRegistrationTokenProperties
+  + SecurityInfoPatchProperties
+  + SecurityInfoProperties
+  + SendMessageParameterBody
+  + SessionHostConfigurationData
+  + SessionHostConfigurationPatch
+  + SessionHostConfigurationPatchProperties
+  + SessionHostConfigurationProperties
+  + SessionHostManagementData
+  + SessionHostManagementOperationProgress
+  + SessionHostManagementPatch
+  + SessionHostManagementPatchProperties
+  + SessionHostManagementProperties
+  + SessionHostManagementProvisioningOperationProgress
+  + SessionHostManagementProvisioningOperationStatus
+  + SessionHostManagementProvisioningStatus
+  + SessionHostManagementProvisioningStatusProperties
+  + SessionHostManagementUpdateStatus
+  + SessionHostManagementUpdateStatusProperties
+  + SessionHostProvisioningConfigurationPatchProperties
+  + SessionHostProvisioningConfigurationProperties
+  + Type
+  + UpdateSessionHostsRequestBody
+  + UpdateStatus
+  + VirtualMachineDiskType
+  + VirtualMachineSecurityType
+Modified models (28):
+  ~ AppAttachPackageInfoProperties
+  ~ AppAttachPackagePatch
+  ~ AppAttachPackagePatchProperties
+  ~ AppAttachPackageProperties
+  ~ DesktopVirtualizationPrivateEndpointConnection
+  ~ DesktopVirtualizationPrivateLinkResourceData
+  ~ ExpandMsixImage
+  ~ HostPoolData
+  ~ HostPoolLoadBalancerType
+  ~ HostPoolPatch
+  ~ MsixPackageData
+  ~ ScalingHostPoolType
+  ~ ScalingPlanData
+  ~ ScalingPlanPatch
+  ~ ScalingPlanPersonalScheduleData
+  ~ ScalingPlanPooledScheduleData
+  ~ ScalingPlanPooledSchedulePatch
+  ~ ScalingSchedule
+  ~ ScalingScheduleDaysOfWeekItem
+  ~ SessionHostAgentUpdatePatchProperties
+  ~ SessionHostAgentUpdateProperties
+  ~ SessionHostData
+  ~ VirtualApplicationGroupData
+  ~ VirtualApplicationGroupPatch
+  ~ VirtualApplicationPatch
+  ~ VirtualDesktopPatch
+  ~ VirtualWorkspaceData
+  ~ VirtualWorkspacePatch
+Unchanged models (53):
+
+--------------------------------------------------------------------------------
+MISSING SETTERS (baseline had { get; set; } but current only has { get; })
+Fix: Add @@usage(ModelName, Usage.input, "csharp"); to client.tsp
+--------------------------------------------------------------------------------
+  AppAttachPackageInfoProperties
+    - PackageDependencies
+  ExpandMsixImage
+    - PackageDependencies
+  HostPoolPatch
+    - Tags
+  ScalingPlanPatch
+    - Tags
+  SessionHostAgentUpdatePatchProperties
+    - MaintenanceWindows
+  SessionHostAgentUpdateProperties
+    - MaintenanceWindows
+  SessionHostData
+    - AgentVersion
+    - LastHeartBeatOn
+    - OSVersion
+    - Sessions
+    - Status
+    - SxsStackVersion
+    - UpdateErrorMessage
+    - UpdateState
+  VirtualApplicationGroupPatch
+    - Tags
+  VirtualWorkspaceData
+    - ApplicationGroupReferences
+  VirtualWorkspacePatch
+    - ApplicationGroupReferences
+    - Tags

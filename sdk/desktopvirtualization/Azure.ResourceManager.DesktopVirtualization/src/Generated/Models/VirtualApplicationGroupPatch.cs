@@ -41,9 +41,65 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> tags to be updated. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> ApplicationGroup properties that can be patched. </summary>
-        public ApplicationGroupPatchProperties Properties { get; set; }
+        [WirePath("properties")]
+        internal ApplicationGroupPatchProperties Properties { get; set; }
+
+        /// <summary> Description of ApplicationGroup. </summary>
+        [WirePath("properties.description")]
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGroupPatchProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
+        /// <summary> Friendly name of ApplicationGroup. </summary>
+        [WirePath("properties.friendlyName")]
+        public string FriendlyName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FriendlyName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGroupPatchProperties();
+                }
+                Properties.FriendlyName = value;
+            }
+        }
+
+        /// <summary> Boolean representing whether the applicationGroup is show in the feed. </summary>
+        [WirePath("properties.showInFeed")]
+        public bool? ShowInFeed
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ShowInFeed;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGroupPatchProperties();
+                }
+                Properties.ShowInFeed = value.Value;
+            }
+        }
     }
 }

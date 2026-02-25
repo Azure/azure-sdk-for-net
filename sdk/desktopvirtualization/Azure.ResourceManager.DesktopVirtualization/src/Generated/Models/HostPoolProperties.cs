@@ -12,7 +12,7 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Properties of HostPool. </summary>
-    public partial class HostPoolProperties
+    internal partial class HostPoolProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="ssoClientSecretKeyVaultPath"> Path to Azure KeyVault storing the secret used for communication to ADFS. </param>
         /// <param name="ssoSecretType"> The type of single sign on Secret Type. </param>
         /// <param name="preferredAppGroupType"> The type of preferred application group type, default to Desktop Application Group. </param>
-        /// <param name="startVMOnConnect"> The flag to turn on/off StartVMOnConnect feature. </param>
+        /// <param name="startVmOnConnect"> The flag to turn on/off StartVMOnConnect feature. </param>
         /// <param name="isCloudPcResource"> Is cloud pc resource. </param>
         /// <param name="publicNetworkAccess"> Enabled allows this resource to be accessed from both public and private networks, Disabled allows this resource to only be accessed via private endpoints. </param>
         /// <param name="agentUpdate"> The session host configuration for updating agent, monitoring agent, and stack component. </param>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="oboTenantId"> Tenant that the resource is being requested on behalf of. </param>
         /// <param name="allowRDPShortPathWithPrivateLink"> Controls if the use of RDPShortPath transport is allowed, possibly bypassing Private Link routes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HostPoolProperties(string objectId, string friendlyName, string description, HostPoolType hostPoolType, PersonalDesktopAssignmentType? personalDesktopAssignmentType, string customRdpProperty, int? maxSessionLimit, HostPoolLoadBalancerType loadBalancerType, int? ring, bool? isValidationEnvironment, HostPoolRegistrationInfo registrationInfo, string vmTemplate, IReadOnlyList<string> applicationGroupReferences, IReadOnlyList<string> appAttachPackageReferences, string ssoAdfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, HostPoolSsoSecretType? ssoSecretType, PreferredAppGroupType preferredAppGroupType, bool? startVMOnConnect, bool? isCloudPcResource, HostPoolPublicNetworkAccess? publicNetworkAccess, SessionHostAgentUpdateProperties agentUpdate, IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections, ManagedPrivateUDP? managedPrivateUDP, DirectUDP? directUDP, PublicUDP? publicUDP, RelayUDP? relayUDP, ManagementType? managementType, DeploymentScope? deploymentScope, string oboTenantId, AllowRDPShortPathWithPrivateLink? allowRDPShortPathWithPrivateLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HostPoolProperties(string objectId, string friendlyName, string description, HostPoolType hostPoolType, PersonalDesktopAssignmentType? personalDesktopAssignmentType, string customRdpProperty, int? maxSessionLimit, HostPoolLoadBalancerType loadBalancerType, int? ring, bool? isValidationEnvironment, HostPoolRegistrationInfo registrationInfo, string vmTemplate, IReadOnlyList<string> applicationGroupReferences, IReadOnlyList<string> appAttachPackageReferences, string ssoAdfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, HostPoolSsoSecretType? ssoSecretType, PreferredAppGroupType preferredAppGroupType, bool? startVmOnConnect, bool? isCloudPcResource, HostPoolPublicNetworkAccess? publicNetworkAccess, SessionHostAgentUpdateProperties agentUpdate, IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections, ManagedPrivateUDP? managedPrivateUDP, DirectUDP? directUDP, PublicUDP? publicUDP, RelayUDP? relayUDP, ManagementType? managementType, DeploymentScope? deploymentScope, string oboTenantId, AllowRDPShortPathWithPrivateLink? allowRDPShortPathWithPrivateLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ObjectId = objectId;
             FriendlyName = friendlyName;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             SsoClientSecretKeyVaultPath = ssoClientSecretKeyVaultPath;
             SsoSecretType = ssoSecretType;
             PreferredAppGroupType = preferredAppGroupType;
-            StartVMOnConnect = startVMOnConnect;
+            StartVmOnConnect = startVmOnConnect;
             IsCloudPcResource = isCloudPcResource;
             PublicNetworkAccess = publicNetworkAccess;
             AgentUpdate = agentUpdate;
@@ -103,99 +103,131 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> ObjectId of HostPool. (internal use). </summary>
+        [WirePath("objectId")]
         public string ObjectId { get; }
 
         /// <summary> Friendly name of HostPool. </summary>
+        [WirePath("friendlyName")]
         public string FriendlyName { get; set; }
 
         /// <summary> Description of HostPool. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> HostPool type for desktop. </summary>
+        [WirePath("hostPoolType")]
         public HostPoolType HostPoolType { get; set; }
 
         /// <summary> PersonalDesktopAssignment type for HostPool. </summary>
+        [WirePath("personalDesktopAssignmentType")]
         public PersonalDesktopAssignmentType? PersonalDesktopAssignmentType { get; set; }
 
         /// <summary> Custom rdp property of HostPool. </summary>
+        [WirePath("customRdpProperty")]
         public string CustomRdpProperty { get; set; }
 
         /// <summary> The max session limit of HostPool. </summary>
+        [WirePath("maxSessionLimit")]
         public int? MaxSessionLimit { get; set; }
 
         /// <summary> The type of the load balancer. </summary>
+        [WirePath("loadBalancerType")]
         public HostPoolLoadBalancerType LoadBalancerType { get; set; }
 
         /// <summary> The ring number of HostPool. </summary>
+        [WirePath("ring")]
         public int? Ring { get; set; }
 
         /// <summary> Is validation environment. </summary>
+        [WirePath("validationEnvironment")]
         public bool? IsValidationEnvironment { get; set; }
 
         /// <summary> The registration info of HostPool. </summary>
+        [WirePath("registrationInfo")]
         public HostPoolRegistrationInfo RegistrationInfo { get; set; }
 
         /// <summary> VM template for sessionhosts configuration within hostpool. </summary>
+        [WirePath("vmTemplate")]
         public string VmTemplate { get; set; }
 
         /// <summary> List of applicationGroup links. </summary>
-        public IReadOnlyList<string> ApplicationGroupReferences { get; }
+        [WirePath("applicationGroupReferences")]
+        public IReadOnlyList<string> ApplicationGroupReferences { get; } = new ChangeTrackingList<string>();
 
         /// <summary> List of App Attach Package links. </summary>
-        public IReadOnlyList<string> AppAttachPackageReferences { get; }
+        [WirePath("appAttachPackageReferences")]
+        public IReadOnlyList<string> AppAttachPackageReferences { get; } = new ChangeTrackingList<string>();
 
         /// <summary> URL to customer ADFS server for signing WVD SSO certificates. </summary>
+        [WirePath("ssoadfsAuthority")]
         public string SsoAdfsAuthority { get; set; }
 
         /// <summary> ClientId for the registered Relying Party used to issue WVD SSO certificates. </summary>
+        [WirePath("ssoClientId")]
         public string SsoClientId { get; set; }
 
         /// <summary> Path to Azure KeyVault storing the secret used for communication to ADFS. </summary>
+        [WirePath("ssoClientSecretKeyVaultPath")]
         public string SsoClientSecretKeyVaultPath { get; set; }
 
         /// <summary> The type of single sign on Secret Type. </summary>
+        [WirePath("ssoSecretType")]
         public HostPoolSsoSecretType? SsoSecretType { get; set; }
 
         /// <summary> The type of preferred application group type, default to Desktop Application Group. </summary>
+        [WirePath("preferredAppGroupType")]
         public PreferredAppGroupType PreferredAppGroupType { get; set; }
 
         /// <summary> The flag to turn on/off StartVMOnConnect feature. </summary>
-        public bool? StartVMOnConnect { get; set; }
+        [WirePath("startVMOnConnect")]
+        public bool? StartVmOnConnect { get; set; }
 
         /// <summary> Is cloud pc resource. </summary>
+        [WirePath("cloudPcResource")]
         public bool? IsCloudPcResource { get; }
 
         /// <summary> Enabled allows this resource to be accessed from both public and private networks, Disabled allows this resource to only be accessed via private endpoints. </summary>
+        [WirePath("publicNetworkAccess")]
         public HostPoolPublicNetworkAccess? PublicNetworkAccess { get; set; }
 
         /// <summary> The session host configuration for updating agent, monitoring agent, and stack component. </summary>
+        [WirePath("agentUpdate")]
         public SessionHostAgentUpdateProperties AgentUpdate { get; set; }
 
         /// <summary> List of private endpoint connection associated with the specified resource. </summary>
-        public IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection> PrivateEndpointConnections { get; }
+        [WirePath("privateEndpointConnections")]
+        public IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection> PrivateEndpointConnections { get; } = new ChangeTrackingList<DesktopVirtualizationPrivateEndpointConnection>();
 
         /// <summary> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </summary>
+        [WirePath("managedPrivateUDP")]
         public ManagedPrivateUDP? ManagedPrivateUDP { get; set; }
 
         /// <summary> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </summary>
+        [WirePath("directUDP")]
         public DirectUDP? DirectUDP { get; set; }
 
         /// <summary> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </summary>
+        [WirePath("publicUDP")]
         public PublicUDP? PublicUDP { get; set; }
 
         /// <summary> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </summary>
+        [WirePath("relayUDP")]
         public RelayUDP? RelayUDP { get; set; }
 
         /// <summary> The type of management for this hostpool, Automated or Standard. The default value is Automated. </summary>
+        [WirePath("managementType")]
         public ManagementType? ManagementType { get; set; }
 
         /// <summary> DeploymentScope type for HostPool. </summary>
+        [WirePath("deploymentScope")]
         public DeploymentScope? DeploymentScope { get; set; }
 
         /// <summary> Tenant that the resource is being requested on behalf of. </summary>
+        [WirePath("oboTenantId")]
         public string OboTenantId { get; set; }
 
         /// <summary> Controls if the use of RDPShortPath transport is allowed, possibly bypassing Private Link routes. </summary>
+        [WirePath("allowRDPShortPathWithPrivateLink")]
         public AllowRDPShortPathWithPrivateLink? AllowRDPShortPathWithPrivateLink { get; set; }
     }
 }

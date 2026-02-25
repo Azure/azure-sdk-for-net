@@ -83,13 +83,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            MSIXImageURI msixImageURI = default;
+            MsixImageUri msixImageURI = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("msixImageURI"u8))
                 {
-                    msixImageURI = MSIXImageURI.DeserializeMSIXImageURI(prop.Value, options);
+                    msixImageURI = MsixImageUri.DeserializeMsixImageUri(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

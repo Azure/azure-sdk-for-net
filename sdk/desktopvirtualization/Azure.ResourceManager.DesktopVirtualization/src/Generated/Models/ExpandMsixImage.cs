@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DesktopVirtualization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExpandMsixImage"/>. </summary>
-        internal ExpandMsixImage()
+        public ExpandMsixImage()
         {
         }
 
@@ -37,6 +38,269 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Detailed properties for ExpandMsixImage. </summary>
-        public ExpandMsixImageProperties Properties { get; }
+        [WirePath("properties")]
+        internal ExpandMsixImageProperties Properties { get; set; }
+
+        /// <summary> Alias of MSIX Package. </summary>
+        [WirePath("properties.packageAlias")]
+        public string PackageAlias
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PackageAlias;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpandMsixImageProperties();
+                }
+                Properties.PackageAlias = value;
+            }
+        }
+
+        /// <summary> VHD/CIM image path on Network Share. </summary>
+        [WirePath("properties.imagePath")]
+        public string ImagePath
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ImagePath;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpandMsixImageProperties();
+                }
+                Properties.ImagePath = value;
+            }
+        }
+
+        /// <summary> Package Name from appxmanifest.xml. </summary>
+        [WirePath("properties.packageName")]
+        public string PackageName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PackageName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpandMsixImageProperties();
+                }
+                Properties.PackageName = value;
+            }
+        }
+
+        /// <summary> Package Family Name from appxmanifest.xml. Contains Package Name and Publisher name. </summary>
+        [WirePath("properties.packageFamilyName")]
+        public string PackageFamilyName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PackageFamilyName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpandMsixImageProperties();
+                }
+                Properties.PackageFamilyName = value;
+            }
+        }
+
+        /// <summary> Package Full Name from appxmanifest.xml. </summary>
+        [WirePath("properties.packageFullName")]
+        public string PackageFullName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PackageFullName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpandMsixImageProperties();
+                }
+                Properties.PackageFullName = value;
+            }
+        }
+
+        /// <summary> User friendly Name to be displayed in the portal. </summary>
+        [WirePath("properties.displayName")]
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpandMsixImageProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
+        /// <summary> Relative Path to the package inside the image. </summary>
+        [WirePath("properties.packageRelativePath")]
+        public string PackageRelativePath
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PackageRelativePath;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpandMsixImageProperties();
+                }
+                Properties.PackageRelativePath = value;
+            }
+        }
+
+        /// <summary> Specifies how to register Package in feed. </summary>
+        [WirePath("properties.isRegularRegistration")]
+        public bool? IsRegularRegistration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsRegularRegistration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpandMsixImageProperties();
+                }
+                Properties.IsRegularRegistration = value.Value;
+            }
+        }
+
+        /// <summary> Make this version of the package the active one across the hostpool. </summary>
+        [WirePath("properties.isActive")]
+        public bool? IsActive
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsActive;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpandMsixImageProperties();
+                }
+                Properties.IsActive = value.Value;
+            }
+        }
+
+        /// <summary> List of package dependencies. </summary>
+        [WirePath("properties.packageDependencies")]
+        public IList<MsixPackageDependencies> PackageDependencies
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpandMsixImageProperties();
+                }
+                return Properties.PackageDependencies;
+            }
+        }
+
+        /// <summary> Package version found in the appxmanifest.xml. </summary>
+        [WirePath("properties.version")]
+        public string Version
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Version;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpandMsixImageProperties();
+                }
+                Properties.Version = value;
+            }
+        }
+
+        /// <summary> Date Package was last updated, found in the appxmanifest.xml. </summary>
+        [WirePath("properties.lastUpdated")]
+        public DateTimeOffset? LastUpdatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastUpdatedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpandMsixImageProperties();
+                }
+                Properties.LastUpdatedOn = value.Value;
+            }
+        }
+
+        /// <summary> List of package applications. </summary>
+        [WirePath("properties.packageApplications")]
+        public IList<MsixPackageApplications> PackageApplications
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpandMsixImageProperties();
+                }
+                return Properties.PackageApplications;
+            }
+        }
+
+        /// <summary> Certificate name found in the appxmanifest.xml. </summary>
+        [WirePath("properties.certificateName")]
+        public string CertificateName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CertificateName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpandMsixImageProperties();
+                }
+                Properties.CertificateName = value;
+            }
+        }
+
+        /// <summary> Date certificate expires, found in the appxmanifest.xml. </summary>
+        [WirePath("properties.certificateExpiry")]
+        public DateTimeOffset? CertificateExpiry
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CertificateExpiry;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpandMsixImageProperties();
+                }
+                Properties.CertificateExpiry = value.Value;
+            }
+        }
     }
 }

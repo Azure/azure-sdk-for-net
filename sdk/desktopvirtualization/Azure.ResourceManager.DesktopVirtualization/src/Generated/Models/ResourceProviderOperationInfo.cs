@@ -7,27 +7,28 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Supported operation of this resource provider. </summary>
-    public partial class ResourceProviderOperation
+    public partial class ResourceProviderOperationInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceProviderOperation"/>. </summary>
-        internal ResourceProviderOperation()
+        /// <summary> Initializes a new instance of <see cref="ResourceProviderOperationInfo"/>. </summary>
+        internal ResourceProviderOperationInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceProviderOperation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceProviderOperationInfo"/>. </summary>
         /// <param name="name"> Operation name, in format of {provider}/{resource}/{operation}. </param>
         /// <param name="display"> Display metadata associated with the operation. </param>
         /// <param name="isDataAction"> Is a data action. </param>
         /// <param name="properties"> Properties of the operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceProviderOperation(string name, ResourceProviderOperationDisplay display, bool? isDataAction, OperationProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceProviderOperationInfo(string name, ResourceProviderOperationDisplay display, bool? isDataAction, OperationProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Display = display;
@@ -37,18 +38,23 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Operation name, in format of {provider}/{resource}/{operation}. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Display metadata associated with the operation. </summary>
+        [WirePath("display")]
         public ResourceProviderOperationDisplay Display { get; }
 
         /// <summary> Is a data action. </summary>
+        [WirePath("isDataAction")]
         public bool? IsDataAction { get; }
 
         /// <summary> Properties of the operation. </summary>
+        [WirePath("properties")]
         internal OperationProperties Properties { get; }
 
         /// <summary> Specifications of the Log for Azure Monitoring. </summary>
+        [WirePath("properties.serviceSpecification.logSpecifications")]
         public IList<LogSpecification> OperationServiceSpecificationLogSpecifications
         {
             get

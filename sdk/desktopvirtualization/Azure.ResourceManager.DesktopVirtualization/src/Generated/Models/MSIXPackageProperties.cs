@@ -12,7 +12,7 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Schema for MSIX Package properties. </summary>
-    public partial class MSIXPackageProperties
+    internal partial class MSIXPackageProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -54,36 +54,47 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> VHD/CIM image path on Network Share. </summary>
+        [WirePath("imagePath")]
         public string ImagePath { get; set; }
 
         /// <summary> Package Name from appxmanifest.xml. </summary>
+        [WirePath("packageName")]
         public string PackageName { get; set; }
 
         /// <summary> Package Family Name from appxmanifest.xml. Contains Package Name and Publisher name. </summary>
+        [WirePath("packageFamilyName")]
         public string PackageFamilyName { get; set; }
 
         /// <summary> User friendly Name to be displayed in the portal. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
 
         /// <summary> Relative Path to the package inside the image. </summary>
+        [WirePath("packageRelativePath")]
         public string PackageRelativePath { get; set; }
 
         /// <summary> Specifies how to register Package in feed. </summary>
+        [WirePath("isRegularRegistration")]
         public bool? IsRegularRegistration { get; set; }
 
         /// <summary> Make this version of the package the active one across the hostpool. </summary>
+        [WirePath("isActive")]
         public bool? IsActive { get; set; }
 
         /// <summary> List of package dependencies. </summary>
-        public IList<MsixPackageDependencies> PackageDependencies { get; }
+        [WirePath("packageDependencies")]
+        public IList<MsixPackageDependencies> PackageDependencies { get; } = new ChangeTrackingList<MsixPackageDependencies>();
 
         /// <summary> Package version found in the appxmanifest.xml. </summary>
+        [WirePath("version")]
         public string Version { get; set; }
 
         /// <summary> Date Package was last updated, found in the appxmanifest.xml. </summary>
+        [WirePath("lastUpdated")]
         public DateTimeOffset? LastUpdatedOn { get; set; }
 
         /// <summary> List of package applications. </summary>
-        public IList<MsixPackageApplications> PackageApplications { get; }
+        [WirePath("packageApplications")]
+        public IList<MsixPackageApplications> PackageApplications { get; } = new ChangeTrackingList<MsixPackageApplications>();
     }
 }

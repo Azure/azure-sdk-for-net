@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             ManagedServiceIdentity identity = default;
             string eTag = default;
             string kind = default;
-            string managedBy = default;
+            ResourceIdentifier managedBy = default;
             ArmPlan plan = default;
             DesktopVirtualizationSku sku = default;
             foreach (var prop in element.EnumerateObject())
@@ -203,7 +203,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
                 if (prop.NameEquals("managedBy"u8))
                 {
-                    managedBy = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    managedBy = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("plan"u8))

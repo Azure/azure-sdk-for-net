@@ -37,9 +37,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> The ActiveSessionHostConfiguration items on this page. </summary>
+        [WirePath("value")]
         public IList<ActiveSessionHostConfigurationData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

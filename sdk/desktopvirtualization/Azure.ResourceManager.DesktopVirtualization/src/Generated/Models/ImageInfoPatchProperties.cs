@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -36,15 +37,19 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> The type of image session hosts use in the hostpool. </summary>
+        [WirePath("type")]
         public Type? ImageType { get; set; }
 
         /// <summary> The values to uniquely identify a marketplace image. Only one should be populated based on the image type. </summary>
+        [WirePath("marketplaceInfo")]
         public MarketplaceInfoPatchProperties MarketplaceInfo { get; set; }
 
         /// <summary> The values to uniquely identify a custom image. Only one should be populated based on the image type. </summary>
+        [WirePath("customInfo")]
         internal CustomInfoPatchProperties CustomInfo { get; set; }
 
         /// <summary> The resource ID of the image. </summary>
+        [WirePath("customInfo.resourceId")]
         public ResourceIdentifier CustomInfoResourceId
         {
             get

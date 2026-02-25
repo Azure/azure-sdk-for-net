@@ -14,7 +14,7 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Application properties that can be patched. </summary>
-    public partial class ApplicationPatchProperties : IJsonModel<ApplicationPatchProperties>
+    internal partial class ApplicationPatchProperties : IJsonModel<ApplicationPatchProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

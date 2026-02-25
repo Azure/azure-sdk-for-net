@@ -41,9 +41,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> tags to be updated. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Detailed properties for App Attach Package. </summary>
+        [WirePath("properties")]
         public AppAttachPackagePatchProperties Properties { get; set; }
     }
 }

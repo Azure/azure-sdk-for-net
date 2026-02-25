@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Information to import app attach package. </summary>
+        [WirePath("importPackageInfoRequest")]
         public ImportPackageInfoContent ImportPackageInfoRequest { get; }
     }
 }

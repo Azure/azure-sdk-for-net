@@ -38,6 +38,255 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> Detailed properties for SessionHost. </summary>
-        public SessionHostProperties Properties { get; set; }
+        [WirePath("properties")]
+        internal SessionHostProperties Properties { get; set; }
+
+        /// <summary> Number of active sessions on SessionHost. </summary>
+        [WirePath("properties.activeSessions")]
+        public int? ActiveSessions
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ActiveSessions;
+            }
+        }
+
+        /// <summary> Number of disconnected sessions on SessionHost. </summary>
+        [WirePath("properties.disconnectedSessions")]
+        public int? DisconnectedSessions
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisconnectedSessions;
+            }
+        }
+
+        /// <summary> Number of pending sessions on SessionHost. </summary>
+        [WirePath("properties.pendingSessions")]
+        public int? PendingSessions
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PendingSessions;
+            }
+        }
+
+        /// <summary> ObjectId of SessionHost. (internal use). </summary>
+        [WirePath("properties.objectId")]
+        public string ObjectId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ObjectId;
+            }
+        }
+
+        /// <summary> Last heart beat from SessionHost. </summary>
+        [WirePath("properties.lastHeartBeat")]
+        public DateTimeOffset? LastHeartBeatOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastHeartBeatOn;
+            }
+        }
+
+        /// <summary> Number of sessions on SessionHost. </summary>
+        [WirePath("properties.sessions")]
+        public int? Sessions
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Sessions;
+            }
+        }
+
+        /// <summary> Version of agent on SessionHost. </summary>
+        [WirePath("properties.agentVersion")]
+        public string AgentVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AgentVersion;
+            }
+        }
+
+        /// <summary> Allow a new session. </summary>
+        [WirePath("properties.allowNewSession")]
+        public bool? AllowNewSession
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllowNewSession;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SessionHostProperties();
+                }
+                Properties.AllowNewSession = value.Value;
+            }
+        }
+
+        /// <summary> Virtual Machine Id of SessionHost's underlying virtual machine. </summary>
+        [WirePath("properties.virtualMachineId")]
+        public string VmId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VmId;
+            }
+        }
+
+        /// <summary> Resource Id of SessionHost's underlying virtual machine. </summary>
+        [WirePath("properties.resourceId")]
+        public ResourceIdentifier ResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceId;
+            }
+        }
+
+        /// <summary> User assigned to SessionHost. </summary>
+        [WirePath("properties.assignedUser")]
+        public string AssignedUser
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AssignedUser;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SessionHostProperties();
+                }
+                Properties.AssignedUser = value;
+            }
+        }
+
+        /// <summary> Friendly name of SessionHost. </summary>
+        [WirePath("properties.friendlyName")]
+        public string FriendlyName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FriendlyName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SessionHostProperties();
+                }
+                Properties.FriendlyName = value;
+            }
+        }
+
+        /// <summary> Status for a SessionHost. </summary>
+        [WirePath("properties.status")]
+        public SessionHostStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
+
+        /// <summary> The timestamp of the status. </summary>
+        [WirePath("properties.statusTimestamp")]
+        public DateTimeOffset? StatusTimestamp
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StatusTimestamp;
+            }
+        }
+
+        /// <summary> The version of the OS on the session host. </summary>
+        [WirePath("properties.osVersion")]
+        public string OSVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OSVersion;
+            }
+        }
+
+        /// <summary> The version of the side by side stack on the session host. </summary>
+        [WirePath("properties.sxSStackVersion")]
+        public string SxsStackVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SxsStackVersion;
+            }
+        }
+
+        /// <summary> Update state of a SessionHost. </summary>
+        [WirePath("properties.updateState")]
+        public SessionHostUpdateState? UpdateState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UpdateState;
+            }
+        }
+
+        /// <summary> The timestamp of the last update. </summary>
+        [WirePath("properties.lastUpdateTime")]
+        public DateTimeOffset? LastUpdatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastUpdatedOn;
+            }
+        }
+
+        /// <summary> The error message. </summary>
+        [WirePath("properties.updateErrorMessage")]
+        public string UpdateErrorMessage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UpdateErrorMessage;
+            }
+        }
+
+        /// <summary> The last time update was completed. </summary>
+        [WirePath("properties.lastSessionHostUpdateTime")]
+        public DateTimeOffset? LastSessionHostUpdateOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastSessionHostUpdateOn;
+            }
+        }
+
+        /// <summary> SessionHostConfiguration version reference at the time the update is initiated, in the format of date time. Example: 2024-04-26T04:56:45Z. </summary>
+        [WirePath("properties.sessionHostConfiguration")]
+        public string SessionHostConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SessionHostConfiguration;
+            }
+        }
+
+        /// <summary> List of SessionHostHealthCheckReports. </summary>
+        [WirePath("properties.sessionHostHealthCheckResults")]
+        public IReadOnlyList<SessionHostHealthCheckReport> SessionHostHealthCheckResults
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SessionHostProperties();
+                }
+                return Properties.SessionHostHealthCheckResults;
+            }
+        }
     }
 }

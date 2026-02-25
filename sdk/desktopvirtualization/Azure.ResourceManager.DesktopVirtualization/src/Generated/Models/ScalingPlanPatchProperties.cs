@@ -12,7 +12,7 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Scaling plan properties. </summary>
-    public partial class ScalingPlanPatchProperties
+    internal partial class ScalingPlanPatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -44,21 +44,27 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Description of scaling plan. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> User friendly name of scaling plan. </summary>
+        [WirePath("friendlyName")]
         public string FriendlyName { get; set; }
 
         /// <summary> Timezone of the scaling plan. </summary>
+        [WirePath("timeZone")]
         public string TimeZone { get; set; }
 
         /// <summary> Exclusion tag for scaling plan. </summary>
+        [WirePath("exclusionTag")]
         public string ExclusionTag { get; set; }
 
         /// <summary> List of ScalingSchedule definitions. </summary>
-        public IList<ScalingSchedule> Schedules { get; }
+        [WirePath("schedules")]
+        public IList<ScalingSchedule> Schedules { get; } = new ChangeTrackingList<ScalingSchedule>();
 
         /// <summary> List of ScalingHostPoolReference definitions. </summary>
-        public IList<ScalingHostPoolReference> HostPoolReferences { get; }
+        [WirePath("hostPoolReferences")]
+        public IList<ScalingHostPoolReference> HostPoolReferences { get; } = new ChangeTrackingList<ScalingHostPoolReference>();
     }
 }

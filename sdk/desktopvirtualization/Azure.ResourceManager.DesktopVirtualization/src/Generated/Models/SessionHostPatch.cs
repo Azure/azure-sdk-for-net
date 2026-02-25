@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DesktopVirtualization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
@@ -37,6 +38,61 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Detailed properties for SessionHost. </summary>
-        public SessionHostPatchProperties Properties { get; set; }
+        [WirePath("properties")]
+        internal SessionHostPatchProperties Properties { get; set; }
+
+        /// <summary> Allow a new session. </summary>
+        [WirePath("properties.allowNewSession")]
+        public bool? AllowNewSession
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllowNewSession;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SessionHostPatchProperties();
+                }
+                Properties.AllowNewSession = value.Value;
+            }
+        }
+
+        /// <summary> User assigned to SessionHost. </summary>
+        [WirePath("properties.assignedUser")]
+        public string AssignedUser
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AssignedUser;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SessionHostPatchProperties();
+                }
+                Properties.AssignedUser = value;
+            }
+        }
+
+        /// <summary> Friendly name of SessionHost. </summary>
+        [WirePath("properties.friendlyName")]
+        public string FriendlyName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FriendlyName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SessionHostPatchProperties();
+                }
+                Properties.FriendlyName = value;
+            }
+        }
     }
 }

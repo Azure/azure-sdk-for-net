@@ -49,30 +49,39 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> The provisioning state of the App Attach Package. </summary>
+        [WirePath("provisioningState")]
         public AppAttachPackageProvisioningState? ProvisioningState { get; }
 
         /// <summary> Detailed properties for App Attach Package. </summary>
+        [WirePath("image")]
         public AppAttachPackageInfoProperties Image { get; set; }
 
         /// <summary> List of Hostpool resource Ids. </summary>
+        [WirePath("hostPoolReferences")]
         public IList<string> HostPoolReferences { get; }
 
         /// <summary> URL path to certificate name located in keyVault. </summary>
+        [WirePath("keyVaultURL")]
         public Uri KeyVaultUri { get; set; }
 
         /// <summary> Parameter indicating how the health check should behave if this package fails staging. </summary>
+        [WirePath("failHealthCheckOnStagingFailure")]
         public FailHealthCheckOnStagingFailure? FailHealthCheckOnStagingFailure { get; set; }
 
         /// <summary> Specific name of package owner, is "AppAttach" for native app attach packages. </summary>
+        [WirePath("packageOwnerName")]
         public string PackageOwnerName { get; set; }
 
         /// <summary> Lookback url to third party control plane, is null for native app attach packages. </summary>
+        [WirePath("packageLookbackUrl")]
         public Uri PackageLookbackUri { get; set; }
 
         /// <summary> Field that can be populated with custom data and filtered on in list GET calls. </summary>
+        [WirePath("customData")]
         public string CustomData { get; set; }
 
         /// <summary> DeploymentScope type for AppAttachPackage. </summary>
+        [WirePath("deploymentScope")]
         public DeploymentScope? DeploymentScope { get; set; }
     }
 }

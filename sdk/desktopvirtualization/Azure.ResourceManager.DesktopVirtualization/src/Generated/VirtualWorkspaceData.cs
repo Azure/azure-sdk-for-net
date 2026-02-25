@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="managedBy"> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </param>
         /// <param name="plan"> Details of the resource plan. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
-        internal VirtualWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, WorkspaceProperties properties, ManagedServiceIdentity identity, string eTag, string kind, string managedBy, ArmPlan plan, DesktopVirtualizationSku sku) : base(id, name, resourceType, systemData, tags, location)
+        internal VirtualWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, WorkspaceProperties properties, ManagedServiceIdentity identity, string eTag, string kind, ResourceIdentifier managedBy, ArmPlan plan, DesktopVirtualizationSku sku) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -53,24 +53,169 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> Detailed properties for Workspace. </summary>
-        public WorkspaceProperties Properties { get; set; }
+        [WirePath("properties")]
+        internal WorkspaceProperties Properties { get; set; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </summary>
+        [WirePath("etag")]
         public string ETag { get; }
 
         /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
 
         /// <summary> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </summary>
-        public string ManagedBy { get; set; }
+        [WirePath("managedBy")]
+        public ResourceIdentifier ManagedBy { get; set; }
 
         /// <summary> Details of the resource plan. </summary>
+        [WirePath("plan")]
         public ArmPlan Plan { get; set; }
 
         /// <summary> The SKU (Stock Keeping Unit) assigned to this resource. </summary>
+        [WirePath("sku")]
         public DesktopVirtualizationSku Sku { get; set; }
+
+        /// <summary> ObjectId of Workspace. (internal use). </summary>
+        [WirePath("properties.objectId")]
+        public string ObjectId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ObjectId;
+            }
+        }
+
+        /// <summary> Description of Workspace. </summary>
+        [WirePath("properties.description")]
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspaceProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
+        /// <summary> Friendly name of Workspace. </summary>
+        [WirePath("properties.friendlyName")]
+        public string FriendlyName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FriendlyName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspaceProperties();
+                }
+                Properties.FriendlyName = value;
+            }
+        }
+
+        /// <summary> List of applicationGroup resource Ids. </summary>
+        [WirePath("properties.applicationGroupReferences")]
+        public IList<string> ApplicationGroupReferences
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspaceProperties();
+                }
+                return Properties.ApplicationGroupReferences;
+            }
+        }
+
+        /// <summary> Is cloud pc resource. </summary>
+        [WirePath("properties.cloudPcResource")]
+        public bool? IsCloudPcResource
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsCloudPcResource;
+            }
+        }
+
+        /// <summary> Enabled allows this resource to be accessed from both public and private networks, Disabled allows this resource to only be accessed via private endpoints. </summary>
+        [WirePath("properties.publicNetworkAccess")]
+        public DesktopVirtualizationPublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspaceProperties();
+                }
+                Properties.PublicNetworkAccess = value.Value;
+            }
+        }
+
+        /// <summary> List of private endpoint connection associated with the specified resource. </summary>
+        [WirePath("properties.privateEndpointConnections")]
+        public IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection> PrivateEndpointConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspaceProperties();
+                }
+                return Properties.PrivateEndpointConnections;
+            }
+        }
+
+        /// <summary> Tenant that the resource is being requested on behalf of. </summary>
+        [WirePath("properties.oboTenantId")]
+        public string OboTenantId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OboTenantId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspaceProperties();
+                }
+                Properties.OboTenantId = value;
+            }
+        }
+
+        /// <summary> DeploymentScope type for Workspace. </summary>
+        [WirePath("properties.deploymentScope")]
+        public DeploymentScope? DeploymentScope
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeploymentScope;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspaceProperties();
+                }
+                Properties.DeploymentScope = value.Value;
+            }
+        }
     }
 }

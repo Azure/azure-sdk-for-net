@@ -14,7 +14,7 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Scaling plan properties. </summary>
-    public partial class ScalingPlanProperties : IJsonModel<ScalingPlanProperties>
+    internal partial class ScalingPlanProperties : IJsonModel<ScalingPlanProperties>
     {
         /// <summary> Initializes a new instance of <see cref="ScalingPlanProperties"/> for deserialization. </summary>
         internal ScalingPlanProperties()

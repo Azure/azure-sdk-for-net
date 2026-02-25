@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Any architecture can be used. </summary>
         private const string NeutralValue = "Neutral";
         /// <summary> X86 Compiled Hybrid Portable Executable for ARM64. </summary>
-        private const string X86a64Value = "x86a64";
+        private const string X86A64Value = "x86a64";
         /// <summary> Select all listed applications, no filters. </summary>
         private const string AllValue = "ALL";
 
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static AppAttachPackageArchitecture Neutral { get; } = new AppAttachPackageArchitecture(NeutralValue);
 
         /// <summary> X86 Compiled Hybrid Portable Executable for ARM64. </summary>
-        public static AppAttachPackageArchitecture X86a64 { get; } = new AppAttachPackageArchitecture(X86a64Value);
+        public static AppAttachPackageArchitecture X86A64 { get; } = new AppAttachPackageArchitecture(X86A64Value);
 
         /// <summary> Select all listed applications, no filters. </summary>
         public static AppAttachPackageArchitecture All { get; } = new AppAttachPackageArchitecture(AllValue);

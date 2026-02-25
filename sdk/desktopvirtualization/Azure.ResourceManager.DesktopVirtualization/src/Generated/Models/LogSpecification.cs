@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Name of the log. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Localized friendly display name of the log. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
 
         /// <summary> Blob duration of the log. </summary>
+        [WirePath("blobDuration")]
         public string BlobDuration { get; }
     }
 }

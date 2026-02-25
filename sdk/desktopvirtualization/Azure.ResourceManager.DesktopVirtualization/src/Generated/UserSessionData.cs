@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="UserSessionData"/>. </summary>
-        internal UserSessionData()
+        public UserSessionData()
         {
         }
 
@@ -38,6 +38,107 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> Detailed properties for UserSession. </summary>
-        public UserSessionProperties Properties { get; }
+        [WirePath("properties")]
+        internal UserSessionProperties Properties { get; set; }
+
+        /// <summary> ObjectId of user session. (internal use). </summary>
+        [WirePath("properties.objectId")]
+        public string ObjectId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ObjectId;
+            }
+        }
+
+        /// <summary> The user principal name. </summary>
+        [WirePath("properties.userPrincipalName")]
+        public string UserPrincipalName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UserPrincipalName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UserSessionProperties();
+                }
+                Properties.UserPrincipalName = value;
+            }
+        }
+
+        /// <summary> Application type of application. </summary>
+        [WirePath("properties.applicationType")]
+        public VirtualApplicationType? ApplicationType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ApplicationType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UserSessionProperties();
+                }
+                Properties.ApplicationType = value.Value;
+            }
+        }
+
+        /// <summary> State of user session. </summary>
+        [WirePath("properties.sessionState")]
+        public UserSessionState? SessionState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SessionState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UserSessionProperties();
+                }
+                Properties.SessionState = value.Value;
+            }
+        }
+
+        /// <summary> The active directory user name. </summary>
+        [WirePath("properties.activeDirectoryUserName")]
+        public string ActiveDirectoryUserName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ActiveDirectoryUserName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UserSessionProperties();
+                }
+                Properties.ActiveDirectoryUserName = value;
+            }
+        }
+
+        /// <summary> The timestamp of the user session create. </summary>
+        [WirePath("properties.createTime")]
+        public DateTimeOffset? CreateOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreateOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UserSessionProperties();
+                }
+                Properties.CreateOn = value.Value;
+            }
+        }
     }
 }

@@ -14,7 +14,7 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Schema for MSIX Package properties. </summary>
-    public partial class MSIXPackageProperties : IJsonModel<MSIXPackageProperties>
+    internal partial class MSIXPackageProperties : IJsonModel<MSIXPackageProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

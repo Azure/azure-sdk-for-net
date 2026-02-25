@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> The uri to access the secret that the username is stored in. </summary>
+        [WirePath("usernameKeyVaultSecretUri")]
         public Uri UsernameKeyVaultSecretUri { get; set; }
 
         /// <summary> The uri to access the secret that the password is stored in. </summary>
+        [WirePath("passwordKeyVaultSecretUri")]
         public Uri PasswordKeyVaultSecretUri { get; set; }
     }
 }

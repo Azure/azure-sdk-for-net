@@ -14,7 +14,7 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Properties of HostPool. </summary>
-    public partial class HostPoolPatchProperties : IJsonModel<HostPoolPatchProperties>
+    internal partial class HostPoolPatchProperties : IJsonModel<HostPoolPatchProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("preferredAppGroupType"u8);
                 writer.WriteStringValue(PreferredAppGroupType.Value.ToString());
             }
-            if (Optional.IsDefined(StartVMOnConnect))
+            if (Optional.IsDefined(StartVmOnConnect))
             {
                 writer.WritePropertyName("startVMOnConnect"u8);
-                writer.WriteBooleanValue(StartVMOnConnect.Value);
+                writer.WriteBooleanValue(StartVmOnConnect.Value);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             string ssoClientSecretKeyVaultPath = default;
             HostPoolSsoSecretType? ssoSecretType = default;
             PreferredAppGroupType? preferredAppGroupType = default;
-            bool? startVMOnConnect = default;
+            bool? startVmOnConnect = default;
             HostPoolPublicNetworkAccess? publicNetworkAccess = default;
             SessionHostAgentUpdatePatchProperties agentUpdate = default;
             ManagedPrivateUDP? managedPrivateUDP = default;
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    startVMOnConnect = prop.Value.GetBoolean();
+                    startVmOnConnect = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("publicNetworkAccess"u8))
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 ssoClientSecretKeyVaultPath,
                 ssoSecretType,
                 preferredAppGroupType,
-                startVMOnConnect,
+                startVmOnConnect,
                 publicNetworkAccess,
                 agentUpdate,
                 managedPrivateUDP,

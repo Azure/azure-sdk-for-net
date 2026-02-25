@@ -14,7 +14,7 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> SessionHost properties that can be patched. </summary>
-    public partial class SessionHostPatchProperties : IJsonModel<SessionHostPatchProperties>
+    internal partial class SessionHostPatchProperties : IJsonModel<SessionHostPatchProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

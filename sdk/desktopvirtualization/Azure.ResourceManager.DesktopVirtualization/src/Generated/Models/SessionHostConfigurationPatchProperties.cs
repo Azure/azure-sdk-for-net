@@ -62,51 +62,67 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Friendly name to describe this version of the SessionHostConfiguration. </summary>
+        [WirePath("friendlyName")]
         public string FriendlyName { get; set; }
 
         /// <summary> Hashtable that lists key/value pair tags to apply to the VMs. </summary>
+        [WirePath("vmTags")]
         public IDictionary<string, string> VmTags { get; }
 
         /// <summary> The Location for the session host to be created in. It will default to the location of the hostpool if not provided. </summary>
+        [WirePath("vmLocation")]
         public string VmLocation { get; set; }
 
         /// <summary> The ResourceGroup for the session hosts to be created in. It will default to the ResourceGroup of the hostpool if not provided. </summary>
+        [WirePath("vmResourceGroup")]
         public string VmResourceGroup { get; set; }
 
         /// <summary> The prefix that should be associated with session host names. </summary>
+        [WirePath("vmNamePrefix")]
         public string VmNamePrefix { get; set; }
 
         /// <summary> Value for availability zones to be used by the session host. Should be from [1,2,3]. </summary>
+        [WirePath("availabilityZones")]
         public IList<int> AvailabilityZones { get; }
 
         /// <summary> Network information. </summary>
+        [WirePath("networkInfo")]
         public NetworkInfoPatchProperties NetworkInfo { get; set; }
 
         /// <summary> The id of the size of a virtual machine connected to a hostpool. Example: Standard_D2as_v6. </summary>
+        [WirePath("vmSizeId")]
         public string VmSizeId { get; set; }
 
         /// <summary> Disk Information. </summary>
+        [WirePath("diskInfo")]
         public DiskInfoProperties DiskInfo { get; set; }
 
         /// <summary> The uri to the storage blob containing the arm template to be run on the virtual machine after provisioning. </summary>
+        [WirePath("customConfigurationScriptUrl")]
         public Uri CustomConfigurationScriptUri { get; set; }
 
         /// <summary> Image configurations of HostPool. </summary>
+        [WirePath("imageInfo")]
         public ImageInfoPatchProperties ImageInfo { get; set; }
 
         /// <summary> Domain configurations of session hosts. </summary>
+        [WirePath("domainInfo")]
         internal DomainInfoPatchProperties DomainInfo { get; set; }
 
         /// <summary> Security Information. </summary>
+        [WirePath("securityInfo")]
         public SecurityInfoPatchProperties SecurityInfo { get; set; }
 
         /// <summary> Local Admin credentials for session hosts.". </summary>
+        [WirePath("vmAdminCredentials")]
         public KeyVaultCredentialsPatchProperties VmAdminCredentials { get; set; }
 
         /// <summary> Boot Diagnostics Information. </summary>
+        [WirePath("bootDiagnosticsInfo")]
         public BootDiagnosticsInfoPatchProperties BootDiagnosticsInfo { get; set; }
 
         /// <summary> Credentials needed to create the virtual machine. </summary>
+        [WirePath("domainInfo.activeDirectoryInfo.domainCredentials")]
         public KeyVaultCredentialsPatchProperties ActiveDirectoryInfoDomainCredentials
         {
             get

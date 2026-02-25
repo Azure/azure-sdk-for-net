@@ -7,17 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Schema for UserSession properties. </summary>
-    public partial class UserSessionProperties
+    internal partial class UserSessionProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="UserSessionProperties"/>. </summary>
-        internal UserSessionProperties()
+        public UserSessionProperties()
         {
         }
 
@@ -41,21 +42,27 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> ObjectId of user session. (internal use). </summary>
+        [WirePath("objectId")]
         public string ObjectId { get; }
 
         /// <summary> The user principal name. </summary>
-        public string UserPrincipalName { get; }
+        [WirePath("userPrincipalName")]
+        public string UserPrincipalName { get; set; }
 
         /// <summary> Application type of application. </summary>
-        public VirtualApplicationType? ApplicationType { get; }
+        [WirePath("applicationType")]
+        public VirtualApplicationType? ApplicationType { get; set; }
 
         /// <summary> State of user session. </summary>
-        public UserSessionState? SessionState { get; }
+        [WirePath("sessionState")]
+        public UserSessionState? SessionState { get; set; }
 
         /// <summary> The active directory user name. </summary>
-        public string ActiveDirectoryUserName { get; }
+        [WirePath("activeDirectoryUserName")]
+        public string ActiveDirectoryUserName { get; set; }
 
         /// <summary> The timestamp of the user session create. </summary>
-        public DateTimeOffset? CreateOn { get; }
+        [WirePath("createTime")]
+        public DateTimeOffset? CreateOn { get; set; }
     }
 }

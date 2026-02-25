@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Specifies the ephemeral disk settings for operating system disk. </summary>
+        [WirePath("option")]
         public DiffDiskOption? Option { get; set; }
 
         /// <summary> Gets or sets specifies the ephemeral disk placement for operating system disk. The defaulting behavior is: CacheDisk if one is configured for the VM size otherwise ResourceDisk is used. Refer to the VM size documentation for Windows VM at https://docs.microsoft.com/azure/virtual-machines/windows/sizes and Linux VM at https://docs.microsoft.com/azure/virtual-machines/linux/sizes to check which VM sizes exposes a cache disk. Possible values include: 'CacheDisk', 'ResourceDisk'. </summary>
+        [WirePath("placement")]
         public DiffDiskPlacement? Placement { get; set; }
     }
 }

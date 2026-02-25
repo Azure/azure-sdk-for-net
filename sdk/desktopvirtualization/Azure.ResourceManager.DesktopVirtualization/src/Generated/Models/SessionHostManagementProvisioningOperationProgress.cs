@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -39,18 +40,23 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Time that the sessionHostManagement operation was created. </summary>
+        [WirePath("executionStartTime")]
         public DateTimeOffset? ExecutionStartOn { get; }
 
         /// <summary> The number of sessionHosts in progress in the sessionHostManagement provisioning operation. </summary>
+        [WirePath("sessionHostsInProgress")]
         public int? SessionHostsInProgress { get; }
 
         /// <summary> The number of sessionHosts completed in the sessionHostManagement provisioning operation. </summary>
+        [WirePath("sessionHostsCompleted")]
         public int? SessionHostsCompleted { get; }
 
         /// <summary> The final instance count of the host pool for this provisioning operation. </summary>
+        [WirePath("finalSessionHostsCount")]
         public int? FinalSessionHostsCount { get; }
 
         /// <summary> The initial instance count of the host pool for this provisioning operation. </summary>
+        [WirePath("initialSessionHostsCount")]
         public int? InitialSessionHostsCount { get; }
     }
 }

@@ -17,11 +17,11 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> MSIX Package properties that can be patched. </summary>
-    public partial class MSIXPackagePatch : ResourceData, IJsonModel<MSIXPackagePatch>
+    public partial class MsixPackagePatch : ResourceData, IJsonModel<MsixPackagePatch>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MSIXPackagePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MsixPackagePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MSIXPackagePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MsixPackagePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MSIXPackagePatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MsixPackagePatch)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -47,24 +47,24 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MSIXPackagePatch IJsonModel<MSIXPackagePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MSIXPackagePatch)JsonModelCreateCore(ref reader, options);
+        MsixPackagePatch IJsonModel<MsixPackagePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MsixPackagePatch)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MSIXPackagePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MsixPackagePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MSIXPackagePatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MsixPackagePatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMSIXPackagePatch(document.RootElement, options);
+            return DeserializeMsixPackagePatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MSIXPackagePatch DeserializeMSIXPackagePatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static MsixPackagePatch DeserializeMsixPackagePatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MSIXPackagePatch(
+            return new MsixPackagePatch(
                 id,
                 name,
                 resourceType,
@@ -134,47 +134,47 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MSIXPackagePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MsixPackagePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MSIXPackagePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MsixPackagePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDesktopVirtualizationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MSIXPackagePatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MsixPackagePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MSIXPackagePatch IPersistableModel<MSIXPackagePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (MSIXPackagePatch)PersistableModelCreateCore(data, options);
+        MsixPackagePatch IPersistableModel<MsixPackagePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (MsixPackagePatch)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MSIXPackagePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MsixPackagePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMSIXPackagePatch(document.RootElement, options);
+                        return DeserializeMsixPackagePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MSIXPackagePatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MsixPackagePatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MSIXPackagePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MsixPackagePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="msixPackagePatch"> The <see cref="MSIXPackagePatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(MSIXPackagePatch msixPackagePatch)
+        /// <param name="msixPackagePatch"> The <see cref="MsixPackagePatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(MsixPackagePatch msixPackagePatch)
         {
             if (msixPackagePatch == null)
             {

@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> The resource ID of the image. </summary>
+        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
     }
 }

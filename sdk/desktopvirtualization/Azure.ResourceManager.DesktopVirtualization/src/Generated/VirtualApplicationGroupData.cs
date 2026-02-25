@@ -21,13 +21,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         /// <summary> Initializes a new instance of <see cref="VirtualApplicationGroupData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Detailed properties for ApplicationGroup. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public VirtualApplicationGroupData(AzureLocation location, ApplicationGroupProperties properties) : base(location)
+        /// <param name="hostPoolId"> HostPool arm path of ApplicationGroup. </param>
+        /// <param name="applicationGroupType"> Resource Type of ApplicationGroup. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="hostPoolId"/> is null. </exception>
+        public VirtualApplicationGroupData(AzureLocation location, ResourceIdentifier hostPoolId, VirtualApplicationGroupType applicationGroupType) : base(location)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(hostPoolId, nameof(hostPoolId));
 
-            Properties = properties;
+            Properties = new ApplicationGroupProperties(hostPoolId, applicationGroupType);
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualApplicationGroupData"/>. </summary>
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="managedBy"> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </param>
         /// <param name="plan"> Details of the resource plan. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
-        internal VirtualApplicationGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ApplicationGroupProperties properties, ManagedServiceIdentity identity, string eTag, string kind, string managedBy, ArmPlan plan, DesktopVirtualizationSku sku) : base(id, name, resourceType, systemData, tags, location)
+        internal VirtualApplicationGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ApplicationGroupProperties properties, ManagedServiceIdentity identity, string eTag, string kind, ResourceIdentifier managedBy, ArmPlan plan, DesktopVirtualizationSku sku) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -58,24 +59,179 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> Detailed properties for ApplicationGroup. </summary>
-        public ApplicationGroupProperties Properties { get; set; }
+        [WirePath("properties")]
+        internal ApplicationGroupProperties Properties { get; set; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </summary>
+        [WirePath("etag")]
         public string ETag { get; }
 
         /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
 
         /// <summary> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </summary>
-        public string ManagedBy { get; set; }
+        [WirePath("managedBy")]
+        public ResourceIdentifier ManagedBy { get; set; }
 
         /// <summary> Details of the resource plan. </summary>
+        [WirePath("plan")]
         public ArmPlan Plan { get; set; }
 
         /// <summary> The SKU (Stock Keeping Unit) assigned to this resource. </summary>
+        [WirePath("sku")]
         public DesktopVirtualizationSku Sku { get; set; }
+
+        /// <summary> ObjectId of ApplicationGroup. (internal use). </summary>
+        [WirePath("properties.objectId")]
+        public string ObjectId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ObjectId;
+            }
+        }
+
+        /// <summary> Description of ApplicationGroup. </summary>
+        [WirePath("properties.description")]
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGroupProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
+        /// <summary> Friendly name of ApplicationGroup. </summary>
+        [WirePath("properties.friendlyName")]
+        public string FriendlyName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FriendlyName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGroupProperties();
+                }
+                Properties.FriendlyName = value;
+            }
+        }
+
+        /// <summary> HostPool arm path of ApplicationGroup. </summary>
+        [WirePath("properties.hostPoolArmPath")]
+        public ResourceIdentifier HostPoolId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HostPoolId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGroupProperties();
+                }
+                Properties.HostPoolId = value;
+            }
+        }
+
+        /// <summary> Workspace arm path of ApplicationGroup. </summary>
+        [WirePath("properties.workspaceArmPath")]
+        public ResourceIdentifier WorkspaceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WorkspaceId;
+            }
+        }
+
+        /// <summary> Resource Type of ApplicationGroup. </summary>
+        [WirePath("properties.applicationGroupType")]
+        public VirtualApplicationGroupType ApplicationGroupType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ApplicationGroupType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGroupProperties();
+                }
+                Properties.ApplicationGroupType = value;
+            }
+        }
+
+        /// <summary> Is cloud pc resource. </summary>
+        [WirePath("properties.cloudPcResource")]
+        public bool? IsCloudPcResource
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsCloudPcResource;
+            }
+        }
+
+        /// <summary> Boolean representing whether the applicationGroup is show in the feed. </summary>
+        [WirePath("properties.showInFeed")]
+        public bool? ShowInFeed
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ShowInFeed;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGroupProperties();
+                }
+                Properties.ShowInFeed = value.Value;
+            }
+        }
+
+        /// <summary> Tenant that the resource is being requested on behalf of. </summary>
+        [WirePath("properties.oboTenantId")]
+        public string OboTenantId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OboTenantId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGroupProperties();
+                }
+                Properties.OboTenantId = value;
+            }
+        }
+
+        /// <summary> DeploymentScope type for ApplicationGroup. </summary>
+        [WirePath("properties.deploymentScope")]
+        public DeploymentScope? DeploymentScope
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeploymentScope;
+            }
+        }
     }
 }

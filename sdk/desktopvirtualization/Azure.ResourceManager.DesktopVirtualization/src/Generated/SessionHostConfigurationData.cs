@@ -43,6 +43,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> Detailed properties for SessionHostConfiguration. </summary>
+        [WirePath("properties")]
         public SessionHostConfigurationProperties Properties { get; set; }
     }
 }

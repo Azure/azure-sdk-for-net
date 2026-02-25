@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DesktopVirtualization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
@@ -37,6 +38,37 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Resource properties. </summary>
-        public DesktopVirtualizationPrivateLinkResourceProperties Properties { get; }
+        [WirePath("properties")]
+        internal DesktopVirtualizationPrivateLinkResourceProperties Properties { get; }
+
+        /// <summary> The private link resource group id. </summary>
+        [WirePath("properties.groupId")]
+        public string GroupId
+        {
+            get
+            {
+                return Properties.GroupId;
+            }
+        }
+
+        /// <summary> The private link resource required member names. </summary>
+        [WirePath("properties.requiredMembers")]
+        public IReadOnlyList<string> RequiredMembers
+        {
+            get
+            {
+                return Properties.RequiredMembers;
+            }
+        }
+
+        /// <summary> The private link resource Private link DNS zone name. </summary>
+        [WirePath("properties.requiredZoneNames")]
+        public IList<string> RequiredZoneNames
+        {
+            get
+            {
+                return Properties.RequiredZoneNames;
+            }
+        }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualDesktopData"/>. </summary>
-        internal VirtualDesktopData()
+        public VirtualDesktopData()
         {
         }
 
@@ -38,6 +38,73 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> Detailed properties for Desktop. </summary>
-        public DesktopProperties Properties { get; }
+        [WirePath("properties")]
+        internal DesktopProperties Properties { get; set; }
+
+        /// <summary> ObjectId of Desktop. (internal use). </summary>
+        [WirePath("properties.objectId")]
+        public string ObjectId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ObjectId;
+            }
+        }
+
+        /// <summary> Description of Desktop. </summary>
+        [WirePath("properties.description")]
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DesktopProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
+        /// <summary> Friendly name of Desktop. </summary>
+        [WirePath("properties.friendlyName")]
+        public string FriendlyName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FriendlyName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DesktopProperties();
+                }
+                Properties.FriendlyName = value;
+            }
+        }
+
+        /// <summary> Hash of the icon. </summary>
+        [WirePath("properties.iconHash")]
+        public string IconHash
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IconHash;
+            }
+        }
+
+        /// <summary> The icon a 64 bit string as a byte array. </summary>
+        [WirePath("properties.iconContent")]
+        public BinaryData IconContent
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IconContent;
+            }
+        }
     }
 }

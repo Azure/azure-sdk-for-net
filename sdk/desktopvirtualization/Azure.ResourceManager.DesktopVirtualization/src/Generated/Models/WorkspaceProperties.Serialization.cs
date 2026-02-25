@@ -14,7 +14,7 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Schema for Workspace properties. </summary>
-    public partial class WorkspaceProperties : IJsonModel<WorkspaceProperties>
+    internal partial class WorkspaceProperties : IJsonModel<WorkspaceProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

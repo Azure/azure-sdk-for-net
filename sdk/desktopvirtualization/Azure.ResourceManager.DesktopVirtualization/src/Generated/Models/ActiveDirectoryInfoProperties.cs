@@ -44,12 +44,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Credentials needed to create the virtual machine. </summary>
+        [WirePath("domainCredentials")]
         public KeyVaultCredentialsProperties DomainCredentials { get; set; }
 
         /// <summary> The organizational unit(OU) path. </summary>
+        [WirePath("ouPath")]
         public string OuPath { get; set; }
 
         /// <summary> The domain a virtual machine connected to a hostpool will join. </summary>
+        [WirePath("domainName")]
         public string DomainName { get; set; }
     }
 }

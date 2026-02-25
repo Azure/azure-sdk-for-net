@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Credentials needed to create the virtual machine. </summary>
+        [WirePath("domainCredentials")]
         public KeyVaultCredentialsPatchProperties DomainCredentials { get; set; }
     }
 }

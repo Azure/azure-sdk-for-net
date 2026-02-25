@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Maximum number of session hosts that may be created by the Scaling Service. This requires the assigned hostpool to have a session host config property. </summary>
+        [WirePath("rampUpMaximumHostPoolSize")]
         public int? RampUpMaximumHostPoolSize { get; set; }
 
         /// <summary> Minimum number of session hosts that will be be created by the Scaling Service. Scaling will not delete any hosts when this limit is met. This requires the assigned hostpool to have a session host config property. </summary>
+        [WirePath("rampUpMinimumHostPoolSize")]
         public int? RampUpMinimumHostPoolSize { get; set; }
 
         /// <summary> Maximum number of session hosts that may be created by the Scaling Service. This requires the assigned hostpool to have a session host config property. </summary>
+        [WirePath("rampDownMaximumHostPoolSize")]
         public int? RampDownMaximumHostPoolSize { get; set; }
 
         /// <summary> Minimum number of session hosts that will be be created by the Scaling Service. Scaling will not delete any hosts when this limit is met. This requires the assigned hostpool to have a session host config property. </summary>
+        [WirePath("rampDownMinimumHostPoolSize")]
         public int? RampDownMinimumHostPoolSize { get; set; }
     }
 }

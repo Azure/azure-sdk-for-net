@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -31,9 +32,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Active directory info. Only one should be populated based on the join type. </summary>
+        [WirePath("activeDirectoryInfo")]
         internal ActiveDirectoryInfoPatchProperties ActiveDirectoryInfo { get; set; }
 
         /// <summary> Credentials needed to create the virtual machine. </summary>
+        [WirePath("activeDirectoryInfo.domainCredentials")]
         public KeyVaultCredentialsPatchProperties ActiveDirectoryInfoDomainCredentials
         {
             get

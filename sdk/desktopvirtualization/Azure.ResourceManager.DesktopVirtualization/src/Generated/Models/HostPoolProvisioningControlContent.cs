@@ -7,27 +7,28 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Object containing control action for hostpool provisioning. </summary>
-    public partial class HostPoolProvisioningControlParameter
+    public partial class HostPoolProvisioningControlContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HostPoolProvisioningControlParameter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostPoolProvisioningControlContent"/>. </summary>
         /// <param name="action"> Action types for controlling hostpool update. </param>
-        public HostPoolProvisioningControlParameter(HostPoolProvisioningAction action)
+        public HostPoolProvisioningControlContent(HostPoolProvisioningAction action)
         {
             Action = action;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HostPoolProvisioningControlParameter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostPoolProvisioningControlContent"/>. </summary>
         /// <param name="action"> Action types for controlling hostpool update. </param>
         /// <param name="cancelMessage"> The cancel message sent to the user on the session host. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HostPoolProvisioningControlParameter(HostPoolProvisioningAction action, string cancelMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HostPoolProvisioningControlContent(HostPoolProvisioningAction action, string cancelMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Action = action;
             CancelMessage = cancelMessage;
@@ -35,9 +36,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Action types for controlling hostpool update. </summary>
+        [WirePath("action")]
         public HostPoolProvisioningAction Action { get; }
 
         /// <summary> The cancel message sent to the user on the session host. </summary>
+        [WirePath("cancelMessage")]
         public string CancelMessage { get; set; }
     }
 }

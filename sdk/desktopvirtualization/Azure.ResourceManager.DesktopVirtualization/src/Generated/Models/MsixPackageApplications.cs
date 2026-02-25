@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -25,17 +26,17 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of <see cref="MsixPackageApplications"/>. </summary>
         /// <param name="appId"> Package Application Id, found in appxmanifest.xml. </param>
         /// <param name="description"> Description of Package Application. </param>
-        /// <param name="appUserModelID"> Used to activate Package Application. Consists of Package Name and ApplicationID. Found in appxmanifest.xml. </param>
+        /// <param name="appUserModelId"> Used to activate Package Application. Consists of Package Name and ApplicationID. Found in appxmanifest.xml. </param>
         /// <param name="friendlyName"> User friendly name. </param>
         /// <param name="iconImageName"> User friendly name. </param>
         /// <param name="rawIcon"> the icon a 64 bit string as a byte array. </param>
         /// <param name="rawPng"> the icon a 64 bit string as a byte array. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MsixPackageApplications(string appId, string description, string appUserModelID, string friendlyName, string iconImageName, BinaryData rawIcon, BinaryData rawPng, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MsixPackageApplications(string appId, string description, string appUserModelId, string friendlyName, string iconImageName, BinaryData rawIcon, BinaryData rawPng, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AppId = appId;
             Description = description;
-            AppUserModelID = appUserModelID;
+            AppUserModelId = appUserModelId;
             FriendlyName = friendlyName;
             IconImageName = iconImageName;
             RawIcon = rawIcon;
@@ -44,18 +45,23 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Package Application Id, found in appxmanifest.xml. </summary>
+        [WirePath("appId")]
         public string AppId { get; set; }
 
         /// <summary> Description of Package Application. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> Used to activate Package Application. Consists of Package Name and ApplicationID. Found in appxmanifest.xml. </summary>
-        public string AppUserModelID { get; set; }
+        [WirePath("appUserModelID")]
+        public string AppUserModelId { get; set; }
 
         /// <summary> User friendly name. </summary>
+        [WirePath("friendlyName")]
         public string FriendlyName { get; set; }
 
         /// <summary> User friendly name. </summary>
+        [WirePath("iconImageName")]
         public string IconImageName { get; set; }
 
         /// <summary>
@@ -84,6 +90,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("rawIcon")]
         public BinaryData RawIcon { get; set; }
 
         /// <summary>
@@ -112,6 +119,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("rawPng")]
         public BinaryData RawPng { get; set; }
     }
 }

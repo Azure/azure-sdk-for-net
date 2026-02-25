@@ -14,7 +14,7 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Schema for UserSession properties. </summary>
-    public partial class UserSessionProperties : IJsonModel<UserSessionProperties>
+    internal partial class UserSessionProperties : IJsonModel<UserSessionProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

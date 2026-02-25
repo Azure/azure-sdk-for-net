@@ -35,9 +35,111 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> tags to be updated. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Detailed properties for scaling plan. </summary>
-        public ScalingPlanPatchProperties Properties { get; set; }
+        [WirePath("properties")]
+        internal ScalingPlanPatchProperties Properties { get; set; }
+
+        /// <summary> Description of scaling plan. </summary>
+        [WirePath("properties.description")]
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPatchProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
+        /// <summary> User friendly name of scaling plan. </summary>
+        [WirePath("properties.friendlyName")]
+        public string FriendlyName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FriendlyName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPatchProperties();
+                }
+                Properties.FriendlyName = value;
+            }
+        }
+
+        /// <summary> Timezone of the scaling plan. </summary>
+        [WirePath("properties.timeZone")]
+        public string TimeZone
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TimeZone;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPatchProperties();
+                }
+                Properties.TimeZone = value;
+            }
+        }
+
+        /// <summary> Exclusion tag for scaling plan. </summary>
+        [WirePath("properties.exclusionTag")]
+        public string ExclusionTag
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExclusionTag;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPatchProperties();
+                }
+                Properties.ExclusionTag = value;
+            }
+        }
+
+        /// <summary> List of ScalingSchedule definitions. </summary>
+        [WirePath("properties.schedules")]
+        public IList<ScalingSchedule> Schedules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPatchProperties();
+                }
+                return Properties.Schedules;
+            }
+        }
+
+        /// <summary> List of ScalingHostPoolReference definitions. </summary>
+        [WirePath("properties.hostPoolReferences")]
+        public IList<ScalingHostPoolReference> HostPoolReferences
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPatchProperties();
+                }
+                return Properties.HostPoolReferences;
+            }
+        }
     }
 }

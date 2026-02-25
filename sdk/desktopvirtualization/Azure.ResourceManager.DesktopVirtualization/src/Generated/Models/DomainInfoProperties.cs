@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> The type of domain join done by the virtual machine. </summary>
+        [WirePath("joinType")]
         public DomainJoinType JoinType { get; set; }
 
         /// <summary> Active directory info. Only one should be populated based on the join type. </summary>
+        [WirePath("activeDirectoryInfo")]
         public ActiveDirectoryInfoProperties ActiveDirectoryInfo { get; set; }
 
         /// <summary> Azure active directory info. Only one should be populated based on the join type. </summary>
+        [WirePath("azureActiveDirectoryInfo")]
         internal AzureActiveDirectoryInfoProperties AzureActiveDirectoryInfo { get; set; }
 
         /// <summary> The Mobile Device Management(MDM) guid. </summary>
+        [WirePath("azureActiveDirectoryInfo.mdmProviderGuid")]
         public string AzureActiveDirectoryInfoMdmProviderGuid
         {
             get

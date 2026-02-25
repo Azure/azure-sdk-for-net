@@ -1,0 +1,162 @@
+================================================================================
+  BREAKING CHANGES ANALYSIS — client.tsp Decorator Fixability
+================================================================================
+
+Generated: 2026-02-24
+Source: toFix.txt (182 checklist items)
+
+================================================================================
+  CATEGORY A — Fixable with @@clientName (new decorators to ADD)
+================================================================================
+
+| # | Items   | TypeSpec Target                                                     | Decorator to Add                                                                                    |
+|---|---------|---------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------|
+| 1 | [4]     | MSIXImageURI (type)                                                 | @@clientName(MSIXImageURI, "MsixImageUri", "csharp")                                               |
+| 2 | [14,15] | HostPoolProperties.startVMOnConnect                                 | @@clientName(HostPoolProperties.startVMOnConnect, "StartVmOnConnect", "csharp")                     |
+| 3 | [21]    | AppAttachPackageArchitectures.x86a64                                | @@clientName(AppAttachPackageArchitectures.x86a64, "X86A64", "csharp")                              |
+| 4 | [50,51] | HostPoolPatchProperties.startVMOnConnect                            | @@clientName(HostPoolPatchProperties.startVMOnConnect, "StartVmOnConnect", "csharp")                |
+| 5 | [53,54] | MsixPackageApplications.appUserModelID                              | @@clientName(MsixPackageApplications.appUserModelID, "AppUserModelId", "csharp")                    |
+| 6 | [58,59] | ScalingPlanPersonalSchedulePatchProperties.offPeakStartVMOnConnect  | @@clientName(ScalingPlanPersonalSchedulePatchProperties.offPeakStartVMOnConnect, "OffPeakStartVmOnConnect", "csharp") |
+| 7 | [60,61] | ScalingPlanPersonalSchedulePatchProperties.peakStartVMOnConnect     | @@clientName(ScalingPlanPersonalSchedulePatchProperties.peakStartVMOnConnect, "PeakStartVmOnConnect", "csharp")       |
+| 8 | [62,63] | ScalingPlanPersonalSchedulePatchProperties.rampDownStartVMOnConnect | @@clientName(ScalingPlanPersonalSchedulePatchProperties.rampDownStartVMOnConnect, "RampDownStartVmOnConnect", "csharp") |
+| 9 | [64,65] | ScalingPlanPersonalSchedulePatchProperties.rampUpStartVMOnConnect   | @@clientName(ScalingPlanPersonalSchedulePatchProperties.rampUpStartVMOnConnect, "RampUpStartVmOnConnect", "csharp")   |
+|10 | [85,86] | AgentUpdatePatchProperties.type                                     | @@clientName(AgentUpdatePatchProperties.type, "UpdateType", "csharp")                               |
+|11 | [88,89] | AgentUpdateProperties.type                                          | @@clientName(AgentUpdateProperties.type, "UpdateType", "csharp")                                    |
+|12 | [90]    | HealthCheckName.SxSStackListenerCheck                               | @@clientName(HealthCheckName.SxSStackListenerCheck, "SxsStackListenerCheck", "csharp")              |
+|13 | [91]    | HealthCheckName.WebRTCRedirectorCheck                               | @@clientName(HealthCheckName.WebRTCRedirectorCheck, "WebRtcRedirectorCheck", "csharp")              |
+|14 | [92]    | Status.SxSStackListenerNotReady                                     | @@clientName(Status.SxSStackListenerNotReady, "SxsStackListenerNotReady", "csharp")                 |
+|15 |[108,109]| ScalingPlanPersonalScheduleProperties.offPeakStartVMOnConnect       | @@clientName(ScalingPlanPersonalScheduleProperties.offPeakStartVMOnConnect, "OffPeakStartVmOnConnect", "csharp")     |
+|16 |[110,111]| ScalingPlanPersonalScheduleProperties.peakStartVMOnConnect          | @@clientName(ScalingPlanPersonalScheduleProperties.peakStartVMOnConnect, "PeakStartVmOnConnect", "csharp")           |
+|17 |[112,113]| ScalingPlanPersonalScheduleProperties.rampDownStartVMOnConnect      | @@clientName(ScalingPlanPersonalScheduleProperties.rampDownStartVMOnConnect, "RampDownStartVmOnConnect", "csharp")   |
+|18 |[114,115]| ScalingPlanPersonalScheduleProperties.rampUpStartVMOnConnect        | @@clientName(ScalingPlanPersonalScheduleProperties.rampUpStartVMOnConnect, "RampUpStartVmOnConnect", "csharp")       |
+|19 |[120,121]| SessionHostProperties.osVersion                                     | @@clientName(SessionHostProperties.osVersion, "OSVersion", "csharp")                                |
+|20 |[124,125]| SessionHostProperties.sxSStackVersion                               | @@clientName(SessionHostProperties.sxSStackVersion, "SxsStackVersion", "csharp")                    |
+
+Subtotal: 35 items resolved by 20 new @@clientName decorators.
+
+================================================================================
+  CATEGORY A+B — Fixable with BOTH @@clientName AND @@alternateType (etag)
+================================================================================
+
+The `etagProperty.etag` property (spread into resources) has two issues:
+  - Name: `etag` generates `Etag` but old SDK had `ETag`
+  - Type: `string` but old SDK had `Azure.ETag?`
+
+Option 1 — Target the shared mixin (fixes all 4 resources at once):
+  @@clientName(etagProperty.etag, "ETag", "csharp");
+  @@alternateType(etagProperty.etag, Azure.Core.eTag, "csharp");
+
+Option 2 — Target each resource individually:
+
+| # | Items  | TypeSpec Target         | clientName Decorator                                   | alternateType Decorator                                   |
+|---|--------|-------------------------|--------------------------------------------------------|-----------------------------------------------------------|
+| 1 | [8]    | HostPool.etag            | @@clientName(HostPool.etag, "ETag", "csharp")          | @@alternateType(HostPool.etag, Azure.Core.eTag, "csharp") |
+| 2 | [102]  | ScalingPlan.etag          | @@clientName(ScalingPlan.etag, "ETag", "csharp")       | @@alternateType(ScalingPlan.etag, Azure.Core.eTag, "csharp") |
+| 3 | [139]  | ApplicationGroup.etag     | @@clientName(ApplicationGroup.etag, "ETag", "csharp")  | @@alternateType(ApplicationGroup.etag, Azure.Core.eTag, "csharp") |
+| 4 | [152]  | Workspace.etag            | @@clientName(Workspace.etag, "ETag", "csharp")         | @@alternateType(Workspace.etag, Azure.Core.eTag, "csharp") |
+
+Subtotal: 4 items resolved by 2 decorators (global) or 8 decorators (per-resource).
+
+================================================================================
+  CATEGORY B — Fixable with @@alternateType (managedBy)
+================================================================================
+
+The `ManagedByProperty.managedBy` property (spread into resources) is `string` but old SDK had `ResourceIdentifier`.
+Note: The existing `@@alternateType(ResourceModelWithAllowedPropertySet.managedBy, ...)` in client.tsp
+targets a DIFFERENT model and does NOT apply to these resources.
+
+| # | Items     | TypeSpec Target            | Decorator to Add                                                          |
+|---|-----------|----------------------------|---------------------------------------------------------------------------|
+| 1 | [10,11]   | HostPool.managedBy          | @@alternateType(HostPool.managedBy, Azure.Core.armResourceIdentifier, "csharp")          |
+| 2 | [105,106] | ScalingPlan.managedBy       | @@alternateType(ScalingPlan.managedBy, Azure.Core.armResourceIdentifier, "csharp")       |
+| 3 | [141,142] | ApplicationGroup.managedBy  | @@alternateType(ApplicationGroup.managedBy, Azure.Core.armResourceIdentifier, "csharp")  |
+| 4 | [154,155] | Workspace.managedBy         | @@alternateType(Workspace.managedBy, Azure.Core.armResourceIdentifier, "csharp")         |
+
+Subtotal: 8 items resolved by 4 new @@alternateType decorators.
+
+================================================================================
+  CATEGORY C — Existing @@clientName needs CHANGED
+================================================================================
+
+| # | Items  | TypeSpec Target                          | Current Decorator                                                           | Corrected Decorator                                                          |
+|---|--------|-----------------------------------------|-----------------------------------------------------------------------------|------------------------------------------------------------------------------|
+| 1 | [9]    | HostPoolProperties.cloudPcResource       | @@clientName(HostPoolProperties.cloudPcResource, "IsCloudPcResource", ...)  | @@clientName(HostPoolProperties.cloudPcResource, "IsCloudPCResource", "csharp") |
+| 2 | [140]  | ApplicationGroupProperties.cloudPcResource | @@clientName(ApplicationGroupProperties.cloudPcResource, "IsCloudPcResource", ...) | @@clientName(ApplicationGroupProperties.cloudPcResource, "IsCloudPCResource", "csharp") |
+| 3 | [153]  | WorkspaceProperties.cloudPcResource      | @@clientName(WorkspaceProperties.cloudPcResource, "IsCloudPcResource", ...) | @@clientName(WorkspaceProperties.cloudPcResource, "IsCloudPCResource", "csharp") |
+
+Subtotal: 3 items resolved by changing 3 existing @@clientName decorators.
+
+NOTE on items [103,104] — ScalingPlanProperties.hostPoolType:
+  The existing @@clientName renames property to "ScalingHostPoolType" but old SDK had "HostPoolType".
+  Changing to "HostPoolType" would fix the property NAME, but the property TYPE remains
+  `ScalingHostPoolType` (different union from old SDK's `HostPoolType`). The return type mismatch
+  means the MembersMustExist error would persist. These are effectively NOT fully fixable.
+  Counted under Category D.
+
+================================================================================
+  CATEGORY D — NOT Fixable with Decorators
+================================================================================
+
+Total: 132 items
+
+--- D.1: Missing Types (not in TypeSpec) ---
+Items: [1], [2], [3]
+  [1] DesktopVirtualizationPrivateEndpointConnectionDataData — Resource data type renamed/restructured
+  [2] DesktopVirtualizationMigrationProperties — Migration model removed from TypeSpec
+  [3] MigrationOperation — Migration enum removed from TypeSpec
+
+--- D.2: Missing Methods / Changed Method Signatures ---
+Items: [5], [6], [7], [16], [17], [18], [19], [20], [23], [98], [100], [117], [128], [129], [136], [137], [138], [145], [146], [150], [156], [157], [158], [159]
+  Collection.GetAll overloads (no-parameter variants): [7], [98], [100], [117], [129], [137], [138], [146], [150]
+  Subscription-level list with fewer params: [6], [20]
+  Resource method signature changes (different params/return types): [5], [16], [17], [18], [19], [128], [136], [145], [156], [157], [158], [159]
+  Model factory method overloads: [23]
+
+--- D.3: Setter/Mutability Changes (read-only vs read-write) ---
+Items: [22], [30], [31], [32], [33], [34], [36], [37], [38], [39], [40], [41], [42], [43], [44], [45], [46], [47], [48], [49], [52], [57], [84], [87], [93], [94], [95], [96], [97], [118], [119], [122], [123], [126], [127], [131], [132], [133], [134], [135], [148], [149], [151], [160], [161]
+  (45 items — properties that had setters in old SDK but are now read-only or on output-only models)
+
+--- D.4: Constructor Visibility (sealed types) ---
+Items: [24], [28], [29], [35], [99], [101], [107], [116], [130], [147], [162], [163], [164], [165], [166], [167], [168], [169], [170]
+  (19 items — types now sealed that were previously unsealed)
+
+--- D.5: Virtual Member Restoration ---
+Items: [171], [172], [173], [174], [175], [176], [177], [178], [179]
+  (9 items — JsonModelWriteCore methods no longer virtual)
+
+--- D.6: Base Type/Interface Changes ---
+Items: [180], [181], [182]
+  [180] HostPoolPrivateEndpointConnectionResource lost IJsonModel<...DataData> base
+  [181] ScalingScheduleDaysOfWeekItem lost IEquatable interface
+  [182] WorkspacePrivateEndpointConnectionResource lost IJsonModel<...DataData> base
+
+--- D.7: Enum↔Extensible-String Classification Change ---
+Items: [75], [76], [77], [78], [79], [80], [81], [82], [83]
+  ScalingScheduleDaysOfWeekItem changed from extensible string (struct) to enum
+
+--- D.8: Properties That Don't Exist in TypeSpec Model ---
+Items: [12], [13], [25], [26], [27], [55], [56], [66], [67], [68], [69], [70], [71], [72], [73], [74], [103], [104], [143], [144]
+  [12,13] HostPoolData.MigrationRequest — migration model removed from TypeSpec
+  [25,26] DesktopVirtualizationPrivateEndpointConnection.ConnectionState — structural model change
+  [27] DesktopVirtualizationPrivateEndpointConnection.PrivateEndpointId — structural change
+  [55,56] ScalingPlanPatch.HostPoolType — property absent from ScalingPlanPatchProperties
+  [66] ScalingSchedule.DaysOfWeek — type changed (ScalingScheduleDaysOfWeekItem enum vs extensible string)
+  [67-74] ScalingSchedule time properties — type changed from DateTimeOffset? to Time object (hour/minute)
+  [103,104] ScalingPlanData.HostPoolType — property name fixable but return type mismatch (see Category C note)
+  [143,144] VirtualApplicationGroupData.MigrationRequest — migration model removed from TypeSpec
+
+================================================================================
+  SUMMARY
+================================================================================
+
+  Category A (@@clientName to add):        35 items  (20 decorators)
+  Category A+B (@@clientName + @@alternateType): 4 items  (2-8 decorators)
+  Category B (@@alternateType to add):      8 items  (4 decorators)
+  Category C (@@clientName to change):      3 items  (3 decorator changes)
+  ─────────────────────────────────────────────────
+  Total fixable via decorators:            50 items
+  Total NOT fixable (Category D):         132 items
+  ─────────────────────────────────────────────────
+  Grand total:                            182 items
+
+================================================================================

@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> List of RegistrationToken definitions. </summary>
+        [WirePath("value")]
         public IList<RegistrationTokenMinimal> Value { get; }
 
         /// <summary> Link to the next page of results. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

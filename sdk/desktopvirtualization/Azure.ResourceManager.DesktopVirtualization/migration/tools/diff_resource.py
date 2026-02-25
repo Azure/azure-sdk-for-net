@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """
-Diff resource classes between pre-generated (HEAD) and newly generated versions.
+Diff resource classes between baseline commit and newly generated versions.
 
 This script:
-1. Gets the list of resource classes from git HEAD (pre-generated)
-2. Compares with current generated resource classes
-3. For missing resources, shows diagnostic info
-4. For existing resources, compares public methods to find diffs
+1. Reads the baseline commit from info.txt
+2. Gets the list of resource classes from baseline commit (pre-generated)
+3. Compares with current generated resource classes
+4. For missing resources, shows diagnostic info
+5. For existing resources, compares public methods to find diffs
 """
 
 import re
@@ -48,11 +49,24 @@ def run_git_command(args: list[str], cwd: Path) -> tuple[int, str, str]:
     return result.returncode, result.stdout, result.stderr
 
 
-def get_file_from_head(file_path: Path, workspace: Path) -> Optional[str]:
-    """Get file content from git HEAD."""
+def read_baseline_commit(info_path: Path) -> str:
+    """Read baseline commit ID from info.txt."""
+    if not info_path.exists():
+        print(f"Error: {info_path} not found")
+        sys.exit(1)
+    content = info_path.read_text(encoding='utf-8')
+    for line in content.splitlines():
+        if line.startswith('baseline commit id:'):
+            return line.split(':', 1)[1].strip()
+    print(f"Error: 'baseline commit id' not found in {info_path}")
+    sys.exit(1)
+
+
+def get_file_from_commit(file_path: Path, workspace: Path, commit: str) -> Optional[str]:
+    """Get file content from a specific git commit."""
     relative_path = file_path.relative_to(workspace)
     returncode, stdout, stderr = run_git_command(
-        ["show", f"HEAD:{relative_path}"],
+        ["show", f"{commit}:{relative_path}"],
         workspace
     )
     if returncode == 0:
@@ -137,6 +151,22 @@ def parse_resource_class(content: str, file_path: str) -> Optional[ResourceClass
     )
 
 
+def parse_collection_class(content: str, file_path: str) -> Optional[ResourceClass]:
+    """Parse a collection class from its content."""
+    class_match = re.search(r'public partial class (\w+Collection)\s*:', content)
+    if not class_match:
+        return None
+    
+    class_name = class_match.group(1)
+    methods = extract_public_methods(content)
+    
+    return ResourceClass(
+        class_name=class_name,
+        file_path=file_path,
+        public_methods=methods
+    )
+
+
 def get_current_resources(generated_dir: Path) -> dict[str, ResourceClass]:
     """Get currently generated resource classes."""
     resources = {}
@@ -153,21 +183,86 @@ def get_current_resources(generated_dir: Path) -> dict[str, ResourceClass]:
     return resources
 
 
-def get_head_resources(generated_dir: Path, workspace: Path) -> dict[str, ResourceClass]:
-    """Get resource classes from git HEAD."""
-    resources = {}
+def get_current_collections(generated_dir: Path) -> dict[str, ResourceClass]:
+    """Get currently generated collection classes."""
+    collections = {}
     
-    for cs_file in generated_dir.glob('*Resource.cs'):
-        if 'Collection' in cs_file.name or '.Serialization.' in cs_file.name:
+    for cs_file in generated_dir.glob('*Collection.cs'):
+        if '.Serialization.' in cs_file.name:
             continue
         
-        content = get_file_from_head(cs_file, workspace)
+        content = cs_file.read_text(encoding='utf-8')
+        collection = parse_collection_class(content, str(cs_file))
+        if collection:
+            collections[collection.class_name] = collection
+    
+    return collections
+
+
+def get_baseline_resources(generated_dir: Path, workspace: Path, commit: str) -> dict[str, ResourceClass]:
+    """Get resource classes from baseline commit, including files that may have been deleted."""
+    resources = {}
+
+    # Use git ls-tree to list files at the baseline commit, so we also find deleted files
+    relative_dir = generated_dir.relative_to(workspace)
+    returncode, stdout, _ = run_git_command(
+        ["ls-tree", "--name-only", commit, str(relative_dir) + "/"],
+        workspace
+    )
+    if returncode != 0:
+        return resources
+
+    for line in stdout.strip().splitlines():
+        file_path = workspace / line
+        if not file_path.name.endswith('Resource.cs'):
+            continue
+        if 'Collection' in file_path.name or '.Serialization.' in file_path.name:
+            continue
+
+        content = get_file_from_commit(file_path, workspace, commit)
         if content:
-            resource = parse_resource_class(content, str(cs_file))
+            resource = parse_resource_class(content, str(file_path))
             if resource:
                 resources[resource.class_name] = resource
-    
+
     return resources
+
+
+def get_baseline_collections(generated_dir: Path, workspace: Path, commit: str) -> dict[str, ResourceClass]:
+    """Get collection classes from baseline commit, including files that may have been deleted."""
+    collections = {}
+
+    relative_dir = generated_dir.relative_to(workspace)
+    returncode, stdout, _ = run_git_command(
+        ["ls-tree", "--name-only", commit, str(relative_dir) + "/"],
+        workspace
+    )
+    if returncode != 0:
+        return collections
+
+    for line in stdout.strip().splitlines():
+        file_path = workspace / line
+        if not file_path.name.endswith('Collection.cs'):
+            continue
+        if '.Serialization.' in file_path.name:
+            continue
+
+        content = get_file_from_commit(file_path, workspace, commit)
+        if content:
+            collection = parse_collection_class(content, str(file_path))
+            if collection:
+                collections[collection.class_name] = collection
+
+    return collections
+
+
+def normalize_signature(signature: str) -> str:
+    """Normalize a signature for comparison purposes.
+
+    Treats ``= null`` and ``= default`` as equivalent so that trivial
+    default-value changes are not reported as diffs.
+    """
+    return re.sub(r'=\s*(null|default)\b', '= default', signature)
 
 
 def compare_methods(
@@ -189,7 +284,7 @@ def compare_methods(
     for name in common:
         old_m = old_by_name[name]
         new_m = new_by_name[name]
-        if old_m.signature != new_m.signature:
+        if normalize_signature(old_m.signature) != normalize_signature(new_m.signature):
             changed.append({
                 'name': name,
                 'old': old_m.signature,
@@ -213,52 +308,65 @@ def main():
     if returncode == 0:
         workspace = Path(stdout.strip())
     
-    generated_dir = script_dir / 'src' / 'Generated'
-    output_path = script_dir / 'diff_result.txt'
+    project_root = script_dir.parent.parent
+    generated_dir = project_root / 'src' / 'Generated'
+    info_path = script_dir.parent / 'info.txt'
+    output_path = script_dir / 'resource_diff_result.txt'
     
     if not generated_dir.exists():
         print(f"Error: {generated_dir} not found")
         sys.exit(1)
     
-    print("Getting resources from HEAD (pre-generated)...")
-    head_resources = get_head_resources(generated_dir, workspace)
-    print(f"Found {len(head_resources)} resources in HEAD")
+    baseline_commit = read_baseline_commit(info_path)
+    print(f"Using baseline commit: {baseline_commit}")
+    
+    print("\nGetting resources from baseline (pre-generated)...")
+    baseline_resources = get_baseline_resources(generated_dir, workspace, baseline_commit)
+    print(f"Found {len(baseline_resources)} resources in baseline")
     
     print("\nGetting current resources (post-generated)...")
     current_resources = get_current_resources(generated_dir)
     print(f"Found {len(current_resources)} resources in current")
     
+    print("\nGetting collections from baseline (pre-generated)...")
+    baseline_collections = get_baseline_collections(generated_dir, workspace, baseline_commit)
+    print(f"Found {len(baseline_collections)} collections in baseline")
+    
+    print("\nGetting current collections (post-generated)...")
+    current_collections = get_current_collections(generated_dir)
+    print(f"Found {len(current_collections)} collections in current")
+    
     # Build output
     lines = []
     
     lines.append("=" * 100)
-    lines.append("RESOURCE DIFF ANALYSIS")
-    lines.append("Comparing HEAD (pre-generated) vs Current (post-generated)")
+    lines.append("RESOURCE & COLLECTION DIFF ANALYSIS")
+    lines.append(f"Comparing baseline ({baseline_commit[:12]}) vs Current (post-generated)")
     lines.append("=" * 100)
     
-    head_names = set(head_resources.keys())
+    baseline_names = set(baseline_resources.keys())
     current_names = set(current_resources.keys())
     
-    # Resources removed (in HEAD but not in current)
-    removed_resources = head_names - current_names
+    # Resources removed (in baseline but not in current)
+    removed_resources = baseline_names - current_names
     if removed_resources:
         lines.append("")
         lines.append("-" * 80)
-        lines.append("REMOVED RESOURCES (in HEAD but not in current)")
+        lines.append("REMOVED RESOURCES (in baseline but not in current)")
         lines.append("-" * 80)
         for name in sorted(removed_resources):
-            resource = head_resources[name]
+            resource = baseline_resources[name]
             lines.append(f"\n  {name}")
             lines.append(f"    Resource ID: {resource.resource_id_pattern}")
             lines.append(f"    File: {Path(resource.file_path).name}")
             lines.append(f"    Had {len(resource.public_methods)} public methods")
     
-    # Resources added (in current but not in HEAD)
-    added_resources = current_names - head_names
+    # Resources added (in current but not in baseline)
+    added_resources = current_names - baseline_names
     if added_resources:
         lines.append("")
         lines.append("-" * 80)
-        lines.append("ADDED RESOURCES (in current but not in HEAD)")
+        lines.append("ADDED RESOURCES (in current but not in baseline)")
         lines.append("-" * 80)
         for name in sorted(added_resources):
             resource = current_resources[name]
@@ -268,17 +376,17 @@ def main():
             lines.append(f"    Has {len(resource.public_methods)} public methods")
     
     # Compare common resources
-    common_resources = head_names & current_names
+    common_resources = baseline_names & current_names
     resources_with_changes = []
     
     for name in sorted(common_resources):
-        head_res = head_resources[name]
+        base_res = baseline_resources[name]
         curr_res = current_resources[name]
         
-        diff = compare_methods(head_res.public_methods, curr_res.public_methods)
+        diff = compare_methods(base_res.public_methods, curr_res.public_methods)
         
         if diff['added'] or diff['removed'] or diff['changed']:
-            resources_with_changes.append((name, head_res, curr_res, diff))
+            resources_with_changes.append((name, base_res, curr_res, diff))
     
     if resources_with_changes:
         lines.append("")
@@ -286,7 +394,7 @@ def main():
         lines.append("MODIFIED RESOURCES (method changes)")
         lines.append("-" * 80)
         
-        for name, head_res, curr_res, diff in resources_with_changes:
+        for name, base_res, curr_res, diff in resources_with_changes:
             lines.append(f"\n{name}")
             lines.append(f"  File: {Path(curr_res.file_path).name}")
             
@@ -310,22 +418,125 @@ def main():
     # Unchanged resources
     unchanged_count = len(common_resources) - len(resources_with_changes)
     
+    # ==================== COLLECTION DIFF ====================
+    baseline_col_names = set(baseline_collections.keys())
+    current_col_names = set(current_collections.keys())
+    
+    # Collections removed
+    removed_collections = baseline_col_names - current_col_names
+    if removed_collections:
+        lines.append("")
+        lines.append("-" * 80)
+        lines.append("REMOVED COLLECTIONS (in baseline but not in current)")
+        lines.append("-" * 80)
+        for name in sorted(removed_collections):
+            col = baseline_collections[name]
+            lines.append(f"\n  {name}")
+            lines.append(f"    File: {Path(col.file_path).name}")
+            lines.append(f"    Had {len(col.public_methods)} public methods")
+    
+    # Collections added
+    added_collections = current_col_names - baseline_col_names
+    if added_collections:
+        lines.append("")
+        lines.append("-" * 80)
+        lines.append("ADDED COLLECTIONS (in current but not in baseline)")
+        lines.append("-" * 80)
+        for name in sorted(added_collections):
+            col = current_collections[name]
+            lines.append(f"\n  {name}")
+            lines.append(f"    File: {Path(col.file_path).name}")
+            lines.append(f"    Has {len(col.public_methods)} public methods")
+    
+    # Compare common collections
+    common_collections = baseline_col_names & current_col_names
+    collections_with_changes = []
+    
+    for name in sorted(common_collections):
+        base_col = baseline_collections[name]
+        curr_col = current_collections[name]
+        
+        diff = compare_methods(base_col.public_methods, curr_col.public_methods)
+        
+        if diff['added'] or diff['removed'] or diff['changed']:
+            collections_with_changes.append((name, base_col, curr_col, diff))
+    
+    if collections_with_changes:
+        lines.append("")
+        lines.append("-" * 80)
+        lines.append("MODIFIED COLLECTIONS (method changes)")
+        lines.append("-" * 80)
+        
+        for name, base_col, curr_col, diff in collections_with_changes:
+            lines.append(f"\n{name}")
+            lines.append(f"  File: {Path(curr_col.file_path).name}")
+            
+            if diff['added']:
+                lines.append(f"\n  + Added methods ({len(diff['added'])}):") 
+                for method in diff['added']:
+                    lines.append(f"      + {method.signature}")
+            
+            if diff['removed']:
+                lines.append(f"\n  - Removed methods ({len(diff['removed'])}):") 
+                for method in diff['removed']:
+                    lines.append(f"      - {method.signature}")
+            
+            if diff['changed']:
+                lines.append(f"\n  ~ Changed methods ({len(diff['changed'])}):") 
+                for change in diff['changed']:
+                    lines.append(f"      ~ {change['name']}")
+                    lines.append(f"        OLD: {change['old']}")
+                    lines.append(f"        NEW: {change['new']}")
+    
+    unchanged_col_count = len(common_collections) - len(collections_with_changes)
+    
     # Summary
     lines.append("")
     lines.append("=" * 100)
     lines.append("SUMMARY")
     lines.append("=" * 100)
-    lines.append(f"Resources in HEAD:      {len(head_resources)}")
+    lines.append("--- Resources ---")
+    lines.append(f"Resources in baseline:  {len(baseline_resources)}")
     lines.append(f"Resources in current:   {len(current_resources)}")
     lines.append(f"")
-    lines.append(f"Removed resources:      {len(removed_resources)}")
-    lines.append(f"Added resources:        {len(added_resources)}")
-    lines.append(f"Modified resources:     {len(resources_with_changes)}")
-    lines.append(f"Unchanged resources:    {unchanged_count}")
+    lines.append(f"Removed resources ({len(removed_resources)}):")
+    for name in sorted(removed_resources):
+        lines.append(f"  - {name}")
+    lines.append(f"Added resources ({len(added_resources)}):")
+    for name in sorted(added_resources):
+        lines.append(f"  + {name}")
+    lines.append(f"Modified resources ({len(resources_with_changes)}):")
+    for name, _, _, _ in resources_with_changes:
+        lines.append(f"  ~ {name}")
+    unchanged_resources = common_resources - {name for name, _, _, _ in resources_with_changes}
+    lines.append(f"Unchanged resources ({unchanged_count}):")
+    for name in sorted(unchanged_resources):
+        lines.append(f"    {name}")
     
-    if not removed_resources and not added_resources and not resources_with_changes:
+    lines.append("")
+    lines.append("--- Collections ---")
+    lines.append(f"Collections in baseline:  {len(baseline_collections)}")
+    lines.append(f"Collections in current:   {len(current_collections)}")
+    lines.append(f"")
+    lines.append(f"Removed collections ({len(removed_collections)}):")
+    for name in sorted(removed_collections):
+        lines.append(f"  - {name}")
+    lines.append(f"Added collections ({len(added_collections)}):")
+    for name in sorted(added_collections):
+        lines.append(f"  + {name}")
+    lines.append(f"Modified collections ({len(collections_with_changes)}):")
+    for name, _, _, _ in collections_with_changes:
+        lines.append(f"  ~ {name}")
+    unchanged_collections = common_collections - {name for name, _, _, _ in collections_with_changes}
+    lines.append(f"Unchanged collections ({unchanged_col_count}):")
+    for name in sorted(unchanged_collections):
+        lines.append(f"    {name}")
+    
+    has_resource_diff = removed_resources or added_resources or resources_with_changes
+    has_collection_diff = removed_collections or added_collections or collections_with_changes
+    if not has_resource_diff and not has_collection_diff:
         lines.append("")
-        lines.append("No differences found between HEAD and current generated resources.")
+        lines.append("No differences found between baseline and current generated code.")
     
     # Write to file
     output_content = '\n'.join(lines)

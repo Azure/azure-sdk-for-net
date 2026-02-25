@@ -38,6 +38,55 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public PrivateEndpointConnectionProperties Properties { get; set; }
+        [WirePath("properties")]
+        internal PrivateEndpointConnectionProperties Properties { get; set; }
+
+        /// <summary> The group ids for the private endpoint resource. </summary>
+        [WirePath("properties.groupIds")]
+        public IReadOnlyList<string> GroupIds
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GroupIds;
+            }
+        }
+
+        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
+        [WirePath("properties.privateLinkServiceConnectionState")]
+        public DesktopVirtualizationPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateLinkServiceConnectionState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateEndpointConnectionProperties();
+                }
+                Properties.PrivateLinkServiceConnectionState = value;
+            }
+        }
+
+        /// <summary> The provisioning state of the private endpoint connection resource. </summary>
+        [WirePath("properties.provisioningState")]
+        public DesktopVirtualizationPrivateEndpointConnectionProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> The ARM identifier for private endpoint. </summary>
+        [WirePath("properties.privateEndpoint.id")]
+        public string PrivateEndpointId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateEndpointId;
+            }
+        }
     }
 }

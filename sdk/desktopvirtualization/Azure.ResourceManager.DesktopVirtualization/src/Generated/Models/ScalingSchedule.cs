@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -69,63 +70,83 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Name of the ScalingPlanPooledSchedule. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> Set of days of the week on which this schedule is active. </summary>
+        [WirePath("daysOfWeek")]
         public ScalingScheduleDaysOfWeekItem? DaysOfWeek { get; set; }
 
         /// <summary> The desired scaling method to be used to scale the hosts in the assigned host pool. </summary>
+        [WirePath("scalingMethod")]
         public ScalingMethodType? ScalingMethod { get; set; }
 
         /// <summary> The properties that control how Scaling will manage the size of the hostpool by creating and deleting hosts. </summary>
+        [WirePath("createDelete")]
         public CreateDeleteProperties CreateDelete { get; set; }
 
         /// <summary> Starting time for ramp up period. </summary>
+        [WirePath("rampUpStartTime")]
         public ScalingActionTime RampUpStartTime { get; set; }
 
         /// <summary> Load balancing algorithm for ramp up period. </summary>
+        [WirePath("rampUpLoadBalancingAlgorithm")]
         public SessionHostLoadBalancingAlgorithm? RampUpLoadBalancingAlgorithm { get; set; }
 
         /// <summary> Minimum host percentage for ramp up period. </summary>
+        [WirePath("rampUpMinimumHostsPct")]
         public int? RampUpMinimumHostsPct { get; set; }
 
         /// <summary> Capacity threshold for ramp up period. </summary>
+        [WirePath("rampUpCapacityThresholdPct")]
         public int? RampUpCapacityThresholdPct { get; set; }
 
         /// <summary> Starting time for peak period. </summary>
+        [WirePath("peakStartTime")]
         public ScalingActionTime PeakStartTime { get; set; }
 
         /// <summary> Load balancing algorithm for peak period. </summary>
+        [WirePath("peakLoadBalancingAlgorithm")]
         public SessionHostLoadBalancingAlgorithm? PeakLoadBalancingAlgorithm { get; set; }
 
         /// <summary> Starting time for ramp down period. </summary>
+        [WirePath("rampDownStartTime")]
         public ScalingActionTime RampDownStartTime { get; set; }
 
         /// <summary> Load balancing algorithm for ramp down period. </summary>
+        [WirePath("rampDownLoadBalancingAlgorithm")]
         public SessionHostLoadBalancingAlgorithm? RampDownLoadBalancingAlgorithm { get; set; }
 
         /// <summary> Minimum host percentage for ramp down period. </summary>
+        [WirePath("rampDownMinimumHostsPct")]
         public int? RampDownMinimumHostsPct { get; set; }
 
         /// <summary> Capacity threshold for ramp down period. </summary>
+        [WirePath("rampDownCapacityThresholdPct")]
         public int? RampDownCapacityThresholdPct { get; set; }
 
         /// <summary> Should users be logged off forcefully from hosts. </summary>
+        [WirePath("rampDownForceLogoffUsers")]
         public bool? RampDownForceLogoffUsers { get; set; }
 
         /// <summary> Specifies when to stop hosts during ramp down period. </summary>
+        [WirePath("rampDownStopHostsWhen")]
         public DesktopVirtualizationStopHostsWhen? RampDownStopHostsWhen { get; set; }
 
         /// <summary> Number of minutes to wait to stop hosts during ramp down period. </summary>
+        [WirePath("rampDownWaitTimeMinutes")]
         public int? RampDownWaitTimeMinutes { get; set; }
 
         /// <summary> Notification message for users during ramp down period. </summary>
+        [WirePath("rampDownNotificationMessage")]
         public string RampDownNotificationMessage { get; set; }
 
         /// <summary> Starting time for off-peak period. </summary>
+        [WirePath("offPeakStartTime")]
         public ScalingActionTime OffPeakStartTime { get; set; }
 
         /// <summary> Load balancing algorithm for off-peak period. </summary>
+        [WirePath("offPeakLoadBalancingAlgorithm")]
         public SessionHostLoadBalancingAlgorithm? OffPeakLoadBalancingAlgorithm { get; set; }
     }
 }

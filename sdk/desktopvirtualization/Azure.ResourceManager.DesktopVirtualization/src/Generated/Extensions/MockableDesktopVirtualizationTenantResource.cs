@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceProviderOperation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceProviderOperation> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceProviderOperationInfo"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceProviderOperationInfo> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceProviderOperation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceProviderOperation> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceProviderOperationInfo"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceProviderOperationInfo> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByHostPoolRequest(nextLink, _subscriptionId, _resourceGroupName, _hostPoolName, _pageSize, _isDescending, _initialSkip, _context) : _client.CreateGetByHostPoolRequest(_subscriptionId, _resourceGroupName, _hostPoolName, _pageSize, _isDescending, _initialSkip, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HostPoolPrivateEndpointConnectionCollection.GetAll");
             scope.Start();
             try
             {

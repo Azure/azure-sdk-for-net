@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 throw new FormatException($"The model {nameof(SessionHostAgentUpdateProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(UpdateType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(UpdateType.Value.ToString());
             }
             if (Optional.IsDefined(DoesUseSessionHostLocalTime))
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            SessionHostComponentUpdateType? @type = default;
+            SessionHostComponentUpdateType? updateType = default;
             bool? doesUseSessionHostLocalTime = default;
             string maintenanceWindowTimeZone = default;
             IList<SessionHostMaintenanceWindowProperties> maintenanceWindows = default;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    @type = new SessionHostComponentUpdateType(prop.Value.GetString());
+                    updateType = new SessionHostComponentUpdateType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("useSessionHostLocalTime"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SessionHostAgentUpdateProperties(@type, doesUseSessionHostLocalTime, maintenanceWindowTimeZone, maintenanceWindows ?? new ChangeTrackingList<SessionHostMaintenanceWindowProperties>(), additionalBinaryDataProperties);
+            return new SessionHostAgentUpdateProperties(updateType, doesUseSessionHostLocalTime, maintenanceWindowTimeZone, maintenanceWindows ?? new ChangeTrackingList<SessionHostMaintenanceWindowProperties>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

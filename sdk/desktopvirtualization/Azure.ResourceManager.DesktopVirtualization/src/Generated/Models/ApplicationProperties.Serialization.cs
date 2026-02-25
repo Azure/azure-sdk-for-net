@@ -14,7 +14,7 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Schema for Application properties. </summary>
-    public partial class ApplicationProperties : IJsonModel<ApplicationProperties>
+    internal partial class ApplicationProperties : IJsonModel<ApplicationProperties>
     {
         /// <summary> Initializes a new instance of <see cref="ApplicationProperties"/> for deserialization. </summary>
         internal ApplicationProperties()

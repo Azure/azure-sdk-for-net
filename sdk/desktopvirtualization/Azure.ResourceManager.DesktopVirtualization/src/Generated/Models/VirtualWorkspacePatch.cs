@@ -35,9 +35,79 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> tags to be updated. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Detailed properties for Workspace. </summary>
-        public WorkspacePatchProperties Properties { get; set; }
+        [WirePath("properties")]
+        internal WorkspacePatchProperties Properties { get; set; }
+
+        /// <summary> Description of Workspace. </summary>
+        [WirePath("properties.description")]
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspacePatchProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
+        /// <summary> Friendly name of Workspace. </summary>
+        [WirePath("properties.friendlyName")]
+        public string FriendlyName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FriendlyName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspacePatchProperties();
+                }
+                Properties.FriendlyName = value;
+            }
+        }
+
+        /// <summary> List of applicationGroup links. </summary>
+        [WirePath("properties.applicationGroupReferences")]
+        public IList<string> ApplicationGroupReferences
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspacePatchProperties();
+                }
+                return Properties.ApplicationGroupReferences;
+            }
+        }
+
+        /// <summary> Enabled to allow this resource to be access from the public network. </summary>
+        [WirePath("properties.publicNetworkAccess")]
+        public DesktopVirtualizationPublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspacePatchProperties();
+                }
+                Properties.PublicNetworkAccess = value.Value;
+            }
+        }
     }
 }

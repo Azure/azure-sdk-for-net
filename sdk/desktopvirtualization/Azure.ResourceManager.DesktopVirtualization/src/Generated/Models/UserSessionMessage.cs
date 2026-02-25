@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Title of message. </summary>
+        [WirePath("messageTitle")]
         public string MessageTitle { get; set; }
 
         /// <summary> Body of message. </summary>
+        [WirePath("messageBody")]
         public string MessageBody { get; set; }
     }
 }

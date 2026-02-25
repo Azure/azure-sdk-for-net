@@ -14,17 +14,17 @@ using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    /// <summary> Object containing control action for hostpool update. </summary>
-    public partial class HostPoolUpdateControlParameter : IJsonModel<HostPoolUpdateControlParameter>
+    /// <summary> Object containing control action for hostpool provisioning. </summary>
+    public partial class HostPoolProvisioningControlContent : IJsonModel<HostPoolProvisioningControlContent>
     {
-        /// <summary> Initializes a new instance of <see cref="HostPoolUpdateControlParameter"/> for deserialization. </summary>
-        internal HostPoolUpdateControlParameter()
+        /// <summary> Initializes a new instance of <see cref="HostPoolProvisioningControlContent"/> for deserialization. </summary>
+        internal HostPoolProvisioningControlContent()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HostPoolUpdateControlParameter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HostPoolProvisioningControlContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HostPoolUpdateControlParameter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HostPoolProvisioningControlContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HostPoolUpdateControlParameter)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HostPoolProvisioningControlContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("action"u8);
             writer.WriteStringValue(Action.ToString());
@@ -66,37 +66,37 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HostPoolUpdateControlParameter IJsonModel<HostPoolUpdateControlParameter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        HostPoolProvisioningControlContent IJsonModel<HostPoolProvisioningControlContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HostPoolUpdateControlParameter JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual HostPoolProvisioningControlContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HostPoolUpdateControlParameter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HostPoolProvisioningControlContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HostPoolUpdateControlParameter)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HostPoolProvisioningControlContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHostPoolUpdateControlParameter(document.RootElement, options);
+            return DeserializeHostPoolProvisioningControlContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HostPoolUpdateControlParameter DeserializeHostPoolUpdateControlParameter(JsonElement element, ModelReaderWriterOptions options)
+        internal static HostPoolProvisioningControlContent DeserializeHostPoolProvisioningControlContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            HostPoolUpdateAction action = default;
+            HostPoolProvisioningAction action = default;
             string cancelMessage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("action"u8))
                 {
-                    action = new HostPoolUpdateAction(prop.Value.GetString());
+                    action = new HostPoolProvisioningAction(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("cancelMessage"u8))
@@ -109,58 +109,58 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HostPoolUpdateControlParameter(action, cancelMessage, additionalBinaryDataProperties);
+            return new HostPoolProvisioningControlContent(action, cancelMessage, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HostPoolUpdateControlParameter>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HostPoolProvisioningControlContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HostPoolUpdateControlParameter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HostPoolProvisioningControlContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDesktopVirtualizationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HostPoolUpdateControlParameter)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HostPoolProvisioningControlContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HostPoolUpdateControlParameter IPersistableModel<HostPoolUpdateControlParameter>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        HostPoolProvisioningControlContent IPersistableModel<HostPoolProvisioningControlContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HostPoolUpdateControlParameter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual HostPoolProvisioningControlContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HostPoolUpdateControlParameter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HostPoolProvisioningControlContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeHostPoolUpdateControlParameter(document.RootElement, options);
+                        return DeserializeHostPoolProvisioningControlContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HostPoolUpdateControlParameter)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HostPoolProvisioningControlContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HostPoolUpdateControlParameter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HostPoolProvisioningControlContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="hostPoolUpdateControlParameter"> The <see cref="HostPoolUpdateControlParameter"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(HostPoolUpdateControlParameter hostPoolUpdateControlParameter)
+        /// <param name="hostPoolProvisioningControlContent"> The <see cref="HostPoolProvisioningControlContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(HostPoolProvisioningControlContent hostPoolProvisioningControlContent)
         {
-            if (hostPoolUpdateControlParameter == null)
+            if (hostPoolProvisioningControlContent == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(hostPoolUpdateControlParameter, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(hostPoolProvisioningControlContent, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

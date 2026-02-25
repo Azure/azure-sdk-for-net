@@ -12,7 +12,7 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Properties of a private link resource. </summary>
-    public partial class DesktopVirtualizationPrivateLinkResourceProperties
+    internal partial class DesktopVirtualizationPrivateLinkResourceProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -38,12 +38,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> The private link resource group id. </summary>
+        [WirePath("groupId")]
         public string GroupId { get; }
 
         /// <summary> The private link resource required member names. </summary>
-        public IReadOnlyList<string> RequiredMembers { get; }
+        [WirePath("requiredMembers")]
+        public IReadOnlyList<string> RequiredMembers { get; } = new ChangeTrackingList<string>();
 
         /// <summary> The private link resource Private link DNS zone name. </summary>
-        public IList<string> RequiredZoneNames { get; }
+        [WirePath("requiredZoneNames")]
+        public IList<string> RequiredZoneNames { get; } = new ChangeTrackingList<string>();
     }
 }

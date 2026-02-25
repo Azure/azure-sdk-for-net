@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> The resource properties to be updated. </summary>
+        [WirePath("updateSessionHostsRequestBody")]
         public UpdateSessionHostsRequestBody UpdateSessionHostsRequestBody { get; set; }
     }
 }

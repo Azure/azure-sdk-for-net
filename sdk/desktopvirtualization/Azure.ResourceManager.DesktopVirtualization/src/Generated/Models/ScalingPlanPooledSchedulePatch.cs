@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DesktopVirtualization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
@@ -37,6 +38,355 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Detailed properties for ScalingPlanPooledSchedule. </summary>
-        public ScalingPlanPooledSchedulePatchProperties Properties { get; set; }
+        [WirePath("properties")]
+        internal ScalingPlanPooledSchedulePatchProperties Properties { get; set; }
+
+        /// <summary> Name of the ScalingPlanPooledSchedule. </summary>
+        [WirePath("properties.scheduleName")]
+        public string ScheduleName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScheduleName;
+            }
+        }
+
+        /// <summary> Set of days of the week on which this schedule is active. </summary>
+        [WirePath("properties.daysOfWeek")]
+        public IList<DesktopVirtualizationDayOfWeek> DaysOfWeek
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPooledSchedulePatchProperties();
+                }
+                return Properties.DaysOfWeek;
+            }
+        }
+
+        /// <summary> The desired scaling method to be used to scale the hosts in the assigned host pool. </summary>
+        [WirePath("properties.scalingMethod")]
+        public ScalingMethodType? ScalingMethod
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScalingMethod;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPooledSchedulePatchProperties();
+                }
+                Properties.ScalingMethod = value.Value;
+            }
+        }
+
+        /// <summary> The properties that control how Scaling will manage the size of the hostpool by creating and deleting hosts. </summary>
+        [WirePath("properties.createDelete")]
+        public CreateDeleteProperties CreateDelete
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreateDelete;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPooledSchedulePatchProperties();
+                }
+                Properties.CreateDelete = value;
+            }
+        }
+
+        /// <summary> Starting time for ramp up period. </summary>
+        [WirePath("properties.rampUpStartTime")]
+        public ScalingActionTime RampUpStartTime
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RampUpStartTime;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPooledSchedulePatchProperties();
+                }
+                Properties.RampUpStartTime = value;
+            }
+        }
+
+        /// <summary> Load balancing algorithm for ramp up period. </summary>
+        [WirePath("properties.rampUpLoadBalancingAlgorithm")]
+        public SessionHostLoadBalancingAlgorithm? RampUpLoadBalancingAlgorithm
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RampUpLoadBalancingAlgorithm;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPooledSchedulePatchProperties();
+                }
+                Properties.RampUpLoadBalancingAlgorithm = value.Value;
+            }
+        }
+
+        /// <summary> Minimum host percentage for ramp up period. </summary>
+        [WirePath("properties.rampUpMinimumHostsPct")]
+        public int? RampUpMinimumHostsPct
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RampUpMinimumHostsPct;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPooledSchedulePatchProperties();
+                }
+                Properties.RampUpMinimumHostsPct = value.Value;
+            }
+        }
+
+        /// <summary> Capacity threshold for ramp up period. </summary>
+        [WirePath("properties.rampUpCapacityThresholdPct")]
+        public int? RampUpCapacityThresholdPct
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RampUpCapacityThresholdPct;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPooledSchedulePatchProperties();
+                }
+                Properties.RampUpCapacityThresholdPct = value.Value;
+            }
+        }
+
+        /// <summary> Starting time for peak period. </summary>
+        [WirePath("properties.peakStartTime")]
+        public ScalingActionTime PeakStartTime
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PeakStartTime;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPooledSchedulePatchProperties();
+                }
+                Properties.PeakStartTime = value;
+            }
+        }
+
+        /// <summary> Load balancing algorithm for peak period. </summary>
+        [WirePath("properties.peakLoadBalancingAlgorithm")]
+        public SessionHostLoadBalancingAlgorithm? PeakLoadBalancingAlgorithm
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PeakLoadBalancingAlgorithm;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPooledSchedulePatchProperties();
+                }
+                Properties.PeakLoadBalancingAlgorithm = value.Value;
+            }
+        }
+
+        /// <summary> Starting time for ramp down period. </summary>
+        [WirePath("properties.rampDownStartTime")]
+        public ScalingActionTime RampDownStartTime
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RampDownStartTime;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPooledSchedulePatchProperties();
+                }
+                Properties.RampDownStartTime = value;
+            }
+        }
+
+        /// <summary> Load balancing algorithm for ramp down period. </summary>
+        [WirePath("properties.rampDownLoadBalancingAlgorithm")]
+        public SessionHostLoadBalancingAlgorithm? RampDownLoadBalancingAlgorithm
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RampDownLoadBalancingAlgorithm;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPooledSchedulePatchProperties();
+                }
+                Properties.RampDownLoadBalancingAlgorithm = value.Value;
+            }
+        }
+
+        /// <summary> Minimum host percentage for ramp down period. </summary>
+        [WirePath("properties.rampDownMinimumHostsPct")]
+        public int? RampDownMinimumHostsPct
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RampDownMinimumHostsPct;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPooledSchedulePatchProperties();
+                }
+                Properties.RampDownMinimumHostsPct = value.Value;
+            }
+        }
+
+        /// <summary> Capacity threshold for ramp down period. </summary>
+        [WirePath("properties.rampDownCapacityThresholdPct")]
+        public int? RampDownCapacityThresholdPct
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RampDownCapacityThresholdPct;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPooledSchedulePatchProperties();
+                }
+                Properties.RampDownCapacityThresholdPct = value.Value;
+            }
+        }
+
+        /// <summary> Should users be logged off forcefully from hosts. </summary>
+        [WirePath("properties.rampDownForceLogoffUsers")]
+        public bool? RampDownForceLogoffUsers
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RampDownForceLogoffUsers;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPooledSchedulePatchProperties();
+                }
+                Properties.RampDownForceLogoffUsers = value.Value;
+            }
+        }
+
+        /// <summary> Specifies when to stop hosts during ramp down period. </summary>
+        [WirePath("properties.rampDownStopHostsWhen")]
+        public DesktopVirtualizationStopHostsWhen? RampDownStopHostsWhen
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RampDownStopHostsWhen;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPooledSchedulePatchProperties();
+                }
+                Properties.RampDownStopHostsWhen = value.Value;
+            }
+        }
+
+        /// <summary> Number of minutes to wait to stop hosts during ramp down period. </summary>
+        [WirePath("properties.rampDownWaitTimeMinutes")]
+        public int? RampDownWaitTimeMinutes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RampDownWaitTimeMinutes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPooledSchedulePatchProperties();
+                }
+                Properties.RampDownWaitTimeMinutes = value.Value;
+            }
+        }
+
+        /// <summary> Notification message for users during ramp down period. </summary>
+        [WirePath("properties.rampDownNotificationMessage")]
+        public string RampDownNotificationMessage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RampDownNotificationMessage;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPooledSchedulePatchProperties();
+                }
+                Properties.RampDownNotificationMessage = value;
+            }
+        }
+
+        /// <summary> Starting time for off-peak period. </summary>
+        [WirePath("properties.offPeakStartTime")]
+        public ScalingActionTime OffPeakStartTime
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OffPeakStartTime;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPooledSchedulePatchProperties();
+                }
+                Properties.OffPeakStartTime = value;
+            }
+        }
+
+        /// <summary> Load balancing algorithm for off-peak period. </summary>
+        [WirePath("properties.offPeakLoadBalancingAlgorithm")]
+        public SessionHostLoadBalancingAlgorithm? OffPeakLoadBalancingAlgorithm
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OffPeakLoadBalancingAlgorithm;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPooledSchedulePatchProperties();
+                }
+                Properties.OffPeakLoadBalancingAlgorithm = value.Value;
+            }
+        }
     }
 }

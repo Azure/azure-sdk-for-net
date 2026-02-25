@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> SessionHost properties that can be patched. </summary>
-    public partial class SessionHostPatchProperties
+    internal partial class SessionHostPatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Allow a new session. </summary>
+        [WirePath("allowNewSession")]
         public bool? AllowNewSession { get; set; }
 
         /// <summary> User assigned to SessionHost. </summary>
+        [WirePath("assignedUser")]
         public string AssignedUser { get; set; }
 
         /// <summary> Friendly name of SessionHost. </summary>
+        [WirePath("friendlyName")]
         public string FriendlyName { get; set; }
     }
 }

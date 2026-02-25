@@ -7,30 +7,32 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Represents URI referring to MSIX Image. </summary>
-    internal partial class MSIXImageURI
+    internal partial class MsixImageUri
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MSIXImageURI"/>. </summary>
-        public MSIXImageURI()
+        /// <summary> Initializes a new instance of <see cref="MsixImageUri"/>. </summary>
+        public MsixImageUri()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MSIXImageURI"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MsixImageUri"/>. </summary>
         /// <param name="uri"> URI to Image. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MSIXImageURI(Uri uri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MsixImageUri(Uri uri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> URI to Image. </summary>
+        [WirePath("uri")]
         public Uri Uri { get; set; }
     }
 }

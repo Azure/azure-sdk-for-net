@@ -14,7 +14,7 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Scaling plan properties. </summary>
-    public partial class ScalingPlanPatchProperties : IJsonModel<ScalingPlanPatchProperties>
+    internal partial class ScalingPlanPatchProperties : IJsonModel<ScalingPlanPatchProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

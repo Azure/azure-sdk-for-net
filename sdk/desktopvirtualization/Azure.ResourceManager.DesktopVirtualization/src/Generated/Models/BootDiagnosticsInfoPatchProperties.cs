@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Whether boot diagnostics should be enabled on the Virtual Machine. </summary>
+        [WirePath("enabled")]
         public bool? Enabled { get; set; }
 
         /// <summary> Uri of the storage account to use for placing the console output and screenshot. &lt;br&gt;&lt;br&gt;If storageUri is not specified while enabling boot diagnostics, managed storage will be used. </summary>
+        [WirePath("storageUri")]
         public Uri StorageUri { get; set; }
     }
 }

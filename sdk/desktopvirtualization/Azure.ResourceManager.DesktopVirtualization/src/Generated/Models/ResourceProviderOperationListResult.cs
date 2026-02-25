@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Initializes a new instance of <see cref="ResourceProviderOperationListResult"/>. </summary>
         /// <param name="value"> The ResourceProviderOperation items on this page. </param>
-        internal ResourceProviderOperationListResult(IEnumerable<ResourceProviderOperation> value)
+        internal ResourceProviderOperationListResult(IEnumerable<ResourceProviderOperationInfo> value)
         {
             Value = value.ToList();
         }
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="value"> The ResourceProviderOperation items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceProviderOperationListResult(IList<ResourceProviderOperation> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceProviderOperationListResult(IList<ResourceProviderOperationInfo> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,9 +37,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> The ResourceProviderOperation items on this page. </summary>
-        public IList<ResourceProviderOperation> Value { get; }
+        [WirePath("value")]
+        public IList<ResourceProviderOperationInfo> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

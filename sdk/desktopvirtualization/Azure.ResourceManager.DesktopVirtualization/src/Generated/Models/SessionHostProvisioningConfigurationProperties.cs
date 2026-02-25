@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Whether the session host should be set in drain mode following provisioning. </summary>
+        [WirePath("setDrainMode")]
         public bool? SetDrainMode { get; set; }
 
         /// <summary> The number of session hosts to exist in the Host Pool. </summary>
+        [WirePath("instanceCount")]
         public int? InstanceCount { get; set; }
 
         /// <summary> Policy on whether a Canary VM(a single VM to validate the configuration) should be provisioned during a session host provisioning operation. </summary>
+        [WirePath("canaryPolicy")]
         public CanaryPolicy? CanaryPolicy { get; set; }
     }
 }

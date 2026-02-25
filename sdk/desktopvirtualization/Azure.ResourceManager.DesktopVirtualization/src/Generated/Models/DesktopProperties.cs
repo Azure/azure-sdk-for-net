@@ -8,17 +8,18 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Schema for Desktop properties. </summary>
-    public partial class DesktopProperties
+    internal partial class DesktopProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DesktopProperties"/>. </summary>
-        internal DesktopProperties()
+        public DesktopProperties()
         {
         }
 
@@ -40,15 +41,19 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> ObjectId of Desktop. (internal use). </summary>
+        [WirePath("objectId")]
         public string ObjectId { get; }
 
         /// <summary> Description of Desktop. </summary>
-        public string Description { get; }
+        [WirePath("description")]
+        public string Description { get; set; }
 
         /// <summary> Friendly name of Desktop. </summary>
-        public string FriendlyName { get; }
+        [WirePath("friendlyName")]
+        public string FriendlyName { get; set; }
 
         /// <summary> Hash of the icon. </summary>
+        [WirePath("iconHash")]
         public string IconHash { get; }
 
         /// <summary>
@@ -77,6 +82,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("iconContent")]
         public BinaryData IconContent { get; }
     }
 }

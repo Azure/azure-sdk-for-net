@@ -1,6 +1,7 @@
 {
   "package-name": "Azure.ResourceManager.DesktopVirtualization",
   "namespace": "Azure.ResourceManager.DesktopVirtualization",
+  "enable-wire-path-attribute": true,
   "model-namespace": true,
   "license": {
     "name": "MIT License",

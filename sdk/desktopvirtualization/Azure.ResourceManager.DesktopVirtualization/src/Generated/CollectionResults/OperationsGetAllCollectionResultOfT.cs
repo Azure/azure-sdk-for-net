@@ -14,7 +14,7 @@ using Azure.ResourceManager.DesktopVirtualization.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    internal partial class OperationsGetAllCollectionResultOfT : Pageable<ResourceProviderOperation>
+    internal partial class OperationsGetAllCollectionResultOfT : Pageable<ResourceProviderOperationInfo>
     {
         private readonly Operations _client;
         private readonly RequestContext _context;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of OperationsGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ResourceProviderOperation>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<ResourceProviderOperationInfo>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     yield break;
                 }
                 ResourceProviderOperationListResult result = ResourceProviderOperationListResult.FromResponse(response);
-                yield return Page<ResourceProviderOperation>.FromValues((IReadOnlyList<ResourceProviderOperation>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ResourceProviderOperationInfo>.FromValues((IReadOnlyList<ResourceProviderOperationInfo>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> MSIX Package properties that can be patched. </summary>
-    public partial class MSIXPackagePatchProperties
+    internal partial class MSIXPackagePatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Set a version of the package to be active across hostpool. </summary>
+        [WirePath("isActive")]
         public bool? IsActive { get; set; }
 
         /// <summary> Set Registration mode. Regular or Delayed. </summary>
+        [WirePath("isRegularRegistration")]
         public bool? IsRegularRegistration { get; set; }
 
         /// <summary> Display name for MSIX Package. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> The offer of the image. </summary>
+        [WirePath("offer")]
         public string Offer { get; set; }
 
         /// <summary> The publisher of the image. </summary>
+        [WirePath("publisher")]
         public string Publisher { get; set; }
 
         /// <summary> The SKU of the image. </summary>
+        [WirePath("sku")]
         public string Sku { get; set; }
 
         /// <summary> The version of the image. </summary>
+        [WirePath("exactVersion")]
         public string ExactVersion { get; set; }
     }
 }

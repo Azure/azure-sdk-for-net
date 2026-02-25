@@ -89,22 +89,22 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
             return new VirtualDesktopResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="HostPoolPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
-        public virtual PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HostPoolPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual HostPoolPrivateEndpointConnectionResource GetHostPoolPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            PrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new PrivateEndpointConnectionResource(Client, id);
+            HostPoolPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new HostPoolPrivateEndpointConnectionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="WorkspacePrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
-        public virtual PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WorkspacePrivateEndpointConnectionResource"/> object. </returns>
+        public virtual WorkspacePrivateEndpointConnectionResource GetWorkspacePrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            PrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new PrivateEndpointConnectionResource(Client, id);
+            WorkspacePrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new WorkspacePrivateEndpointConnectionResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="SessionHostResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -143,13 +143,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
             return new ScalingPlanPooledScheduleResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="MSIXPackageResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="MsixPackageResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MSIXPackageResource"/> object. </returns>
-        public virtual MSIXPackageResource GetMSIXPackageResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MsixPackageResource"/> object. </returns>
+        public virtual MsixPackageResource GetMsixPackageResource(ResourceIdentifier id)
         {
-            MSIXPackageResource.ValidateResourceId(id);
-            return new MSIXPackageResource(Client, id);
+            MsixPackageResource.ValidateResourceId(id);
+            return new MsixPackageResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ActiveSessionHostConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>

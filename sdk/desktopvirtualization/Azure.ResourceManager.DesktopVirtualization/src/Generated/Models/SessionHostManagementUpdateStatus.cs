@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -49,27 +50,35 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Fully qualified ID for the async operation. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
 
         /// <summary> Name of the async operation. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Percent of the operation that is complete. </summary>
+        [WirePath("percentComplete")]
         public double? PercentComplete { get; }
 
         /// <summary> The start time of the operation. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
 
         /// <summary> The end time of the operation. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
 
         /// <summary> If present, details of the operation error. </summary>
+        [WirePath("error")]
         public ResponseError Error { get; }
 
         /// <summary> Operation status. Current defined values are &lt; Error | Scheduled | UpdatingSessionHosts | ValidatingSessionHostUpdate | Paused | Pausing | Cancelling &gt; | Succeeded | Failed | Canceled. </summary>
+        [WirePath("status")]
         public UpdateStatus Status { get; }
 
         /// <summary> Properties bag for sessionHostManagement Update Statuses. </summary>
+        [WirePath("properties")]
         public SessionHostManagementUpdateStatusProperties Properties { get; }
     }
 }

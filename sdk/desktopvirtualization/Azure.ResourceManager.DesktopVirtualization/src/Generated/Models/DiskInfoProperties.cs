@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -33,12 +34,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> The managed disk parameters. </summary>
+        [WirePath("managedDisk")]
         internal ManagedDiskProperties ManagedDisk { get; set; }
 
         /// <summary> Specifies the ephemeral disk settings for the operating system disk used by the virtual machine. </summary>
+        [WirePath("diffDiskSettings")]
         public DiffDiskProperties DiffDiskSettings { get; set; }
 
         /// <summary> Managed Disk information. </summary>
+        [WirePath("managedDisk.type")]
         public VirtualMachineDiskType? ManagedDiskType
         {
             get

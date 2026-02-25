@@ -753,11 +753,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
         }
 
-        /// <summary> Gets a collection of PrivateEndpointConnections in the <see cref="VirtualWorkspaceResource"/>. </summary>
-        /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a PrivateEndpointConnectionResource. </returns>
-        public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
+        /// <summary> Gets a collection of WorkspacePrivateEndpointConnections in the <see cref="VirtualWorkspaceResource"/>. </summary>
+        /// <returns> An object representing collection of WorkspacePrivateEndpointConnections and their operations over a WorkspacePrivateEndpointConnectionResource. </returns>
+        public virtual WorkspacePrivateEndpointConnectionCollection GetWorkspacePrivateEndpointConnections()
         {
-            return this.GetCachedClient(client => new PrivateEndpointConnectionCollection(client, Id));
+            return GetCachedClient(client => new WorkspacePrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary> Get a PrivateEndpointConnectionWithSystemData. </summary>
@@ -766,11 +766,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateEndpointConnectionResource>> GetPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkspacePrivateEndpointConnectionResource>> GetWorkspacePrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            return await GetPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetWorkspacePrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a PrivateEndpointConnectionWithSystemData. </summary>
@@ -779,11 +779,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateEndpointConnectionResource> GetPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<WorkspacePrivateEndpointConnectionResource> GetWorkspacePrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            return GetPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+            return GetWorkspacePrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
     }
 }

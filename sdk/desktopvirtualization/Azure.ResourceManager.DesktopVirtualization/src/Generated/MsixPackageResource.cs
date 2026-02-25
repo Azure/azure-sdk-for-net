@@ -18,36 +18,36 @@ using Azure.ResourceManager.DesktopVirtualization.Models;
 namespace Azure.ResourceManager.DesktopVirtualization
 {
     /// <summary>
-    /// A class representing a MSIXPackage along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MSIXPackageResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HostPoolResource"/> using the GetMSIXPackages method.
+    /// A class representing a MsixPackage along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MsixPackageResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HostPoolResource"/> using the GetMsixPackages method.
     /// </summary>
-    public partial class MSIXPackageResource : ArmResource
+    public partial class MsixPackageResource : ArmResource
     {
         private readonly ClientDiagnostics _msixPackagesClientDiagnostics;
         private readonly MSIXPackages _msixPackagesRestClient;
-        private readonly MSIXPackageData _data;
+        private readonly MsixPackageData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DesktopVirtualization/hostPools/msixPackages";
 
-        /// <summary> Initializes a new instance of MSIXPackageResource for mocking. </summary>
-        protected MSIXPackageResource()
+        /// <summary> Initializes a new instance of MsixPackageResource for mocking. </summary>
+        protected MsixPackageResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MSIXPackageResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MsixPackageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal MSIXPackageResource(ArmClient client, MSIXPackageData data) : this(client, data.Id)
+        internal MsixPackageResource(ArmClient client, MsixPackageData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MSIXPackageResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MsixPackageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MSIXPackageResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MsixPackageResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string msixPackageApiVersion);
             _msixPackagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual MSIXPackageData Data
+        public virtual MsixPackageData Data
         {
             get
             {
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MSIXPackageResource"/>. </description>
+        /// <description> <see cref="MsixPackageResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MSIXPackageResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MsixPackageResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _msixPackagesClientDiagnostics.CreateScope("MSIXPackageResource.Get");
+            using DiagnosticScope scope = _msixPackagesClientDiagnostics.CreateScope("MsixPackageResource.Get");
             scope.Start();
             try
             {
@@ -126,12 +126,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 };
                 HttpMessage message = _msixPackagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MSIXPackageData> response = Response.FromValue(MSIXPackageData.FromResponse(result), result);
+                Response<MsixPackageData> response = Response.FromValue(MsixPackageData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new MSIXPackageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MsixPackageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,14 +157,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MSIXPackageResource"/>. </description>
+        /// <description> <see cref="MsixPackageResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MSIXPackageResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<MsixPackageResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _msixPackagesClientDiagnostics.CreateScope("MSIXPackageResource.Get");
+            using DiagnosticScope scope = _msixPackagesClientDiagnostics.CreateScope("MsixPackageResource.Get");
             scope.Start();
             try
             {
@@ -174,12 +174,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 };
                 HttpMessage message = _msixPackagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MSIXPackageData> response = Response.FromValue(MSIXPackageData.FromResponse(result), result);
+                Response<MsixPackageData> response = Response.FromValue(MsixPackageData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new MSIXPackageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MsixPackageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -205,18 +205,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MSIXPackageResource"/>. </description>
+        /// <description> <see cref="MsixPackageResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<MSIXPackageResource>> UpdateAsync(MSIXPackagePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MsixPackageResource>> UpdateAsync(MsixPackagePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _msixPackagesClientDiagnostics.CreateScope("MSIXPackageResource.Update");
+            using DiagnosticScope scope = _msixPackagesClientDiagnostics.CreateScope("MsixPackageResource.Update");
             scope.Start();
             try
             {
@@ -224,14 +224,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _msixPackagesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MSIXPackagePatch.ToRequestContent(patch), context);
+                HttpMessage message = _msixPackagesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MsixPackagePatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MSIXPackageData> response = Response.FromValue(MSIXPackageData.FromResponse(result), result);
+                Response<MsixPackageData> response = Response.FromValue(MsixPackageData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new MSIXPackageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MsixPackageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -257,18 +257,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MSIXPackageResource"/>. </description>
+        /// <description> <see cref="MsixPackageResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<MSIXPackageResource> Update(MSIXPackagePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<MsixPackageResource> Update(MsixPackagePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _msixPackagesClientDiagnostics.CreateScope("MSIXPackageResource.Update");
+            using DiagnosticScope scope = _msixPackagesClientDiagnostics.CreateScope("MsixPackageResource.Update");
             scope.Start();
             try
             {
@@ -276,14 +276,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _msixPackagesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MSIXPackagePatch.ToRequestContent(patch), context);
+                HttpMessage message = _msixPackagesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MsixPackagePatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MSIXPackageData> response = Response.FromValue(MSIXPackageData.FromResponse(result), result);
+                Response<MsixPackageData> response = Response.FromValue(MsixPackageData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new MSIXPackageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MsixPackageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MSIXPackageResource"/>. </description>
+        /// <description> <see cref="MsixPackageResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _msixPackagesClientDiagnostics.CreateScope("MSIXPackageResource.Delete");
+            using DiagnosticScope scope = _msixPackagesClientDiagnostics.CreateScope("MsixPackageResource.Delete");
             scope.Start();
             try
             {
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MSIXPackageResource"/>. </description>
+        /// <description> <see cref="MsixPackageResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _msixPackagesClientDiagnostics.CreateScope("MSIXPackageResource.Delete");
+            using DiagnosticScope scope = _msixPackagesClientDiagnostics.CreateScope("MsixPackageResource.Delete");
             scope.Start();
             try
             {
