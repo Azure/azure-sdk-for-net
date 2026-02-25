@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.Resources.Mocking
         private JitRequestsRestOperations _jitRequestRestClient;
         private ClientDiagnostics _decompileClientDiagnostics;
         private DecompileRestOperations _decompileRestClient;
+        private ClientDiagnostics _batchOperationsClientDiagnostics;
+        private BatchOperationsRestOperations _batchOperationsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableResourcesSubscriptionResource"/> class for mocking. </summary>
         protected MockableResourcesSubscriptionResource()
@@ -51,6 +53,8 @@ namespace Azure.ResourceManager.Resources.Mocking
         private JitRequestsRestOperations JitRequestRestClient => _jitRequestRestClient ??= new JitRequestsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(JitRequestResource.ResourceType));
         private ClientDiagnostics DecompileClientDiagnostics => _decompileClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private DecompileRestOperations DecompileRestClient => _decompileRestClient ??= new DecompileRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics BatchOperationsClientDiagnostics => _batchOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private BatchOperationsRestOperations BatchOperationsRestClient => _batchOperationsRestClient ??= new BatchOperationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -503,6 +507,82 @@ namespace Azure.ResourceManager.Resources.Mocking
             try
             {
                 var response = DecompileRestClient.Bicep(Id.SubscriptionId, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Executes batch operation to perform multiple ARM operations at subscription scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Resources/batchOperations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BatchOperations_InvokeAtSubscriptionScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="batchRequests"> Batch requests to be executed. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="batchRequests"/> is null. </exception>
+        public virtual async Task<Response<BatchResponse>> InvokeBatchOperationsAsync(BatchRequests batchRequests, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(batchRequests, nameof(batchRequests));
+
+            using var scope = BatchOperationsClientDiagnostics.CreateScope("MockableResourcesSubscriptionResource.InvokeBatchOperations");
+            scope.Start();
+            try
+            {
+                var response = await BatchOperationsRestClient.InvokeAtSubscriptionScopeAsync(Id.SubscriptionId, batchRequests, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Executes batch operation to perform multiple ARM operations at subscription scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Resources/batchOperations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BatchOperations_InvokeAtSubscriptionScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="batchRequests"> Batch requests to be executed. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="batchRequests"/> is null. </exception>
+        public virtual Response<BatchResponse> InvokeBatchOperations(BatchRequests batchRequests, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(batchRequests, nameof(batchRequests));
+
+            using var scope = BatchOperationsClientDiagnostics.CreateScope("MockableResourcesSubscriptionResource.InvokeBatchOperations");
+            scope.Start();
+            try
+            {
+                var response = BatchOperationsRestClient.InvokeAtSubscriptionScope(Id.SubscriptionId, batchRequests, cancellationToken);
                 return response;
             }
             catch (Exception e)

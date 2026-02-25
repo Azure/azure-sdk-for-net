@@ -9,6 +9,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources.Mocking
@@ -16,6 +17,9 @@ namespace Azure.ResourceManager.Resources.Mocking
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableResourcesResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _batchOperationsClientDiagnostics;
+        private BatchOperationsRestOperations _batchOperationsRestClient;
+
         /// <summary> Initializes a new instance of the <see cref="MockableResourcesResourceGroupResource"/> class for mocking. </summary>
         protected MockableResourcesResourceGroupResource()
         {
@@ -27,6 +31,9 @@ namespace Azure.ResourceManager.Resources.Mocking
         internal MockableResourcesResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics BatchOperationsClientDiagnostics => _batchOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private BatchOperationsRestOperations BatchOperationsRestClient => _batchOperationsRestClient ??= new BatchOperationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -517,6 +524,82 @@ namespace Azure.ResourceManager.Resources.Mocking
         public virtual Response<DeploymentStackResource> GetDeploymentStack(string deploymentStackName, CancellationToken cancellationToken = default)
         {
             return GetDeploymentStacks().Get(deploymentStackName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Executes batch operation to perform multiple ARM operations at resource group scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/batchOperations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BatchOperations_InvokeAtResourceGroupScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="batchRequests"> Batch requests to be executed. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="batchRequests"/> is null. </exception>
+        public virtual async Task<Response<BatchResponse>> InvokeBatchOperationsAsync(BatchRequests batchRequests, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(batchRequests, nameof(batchRequests));
+
+            using var scope = BatchOperationsClientDiagnostics.CreateScope("MockableResourcesResourceGroupResource.InvokeBatchOperations");
+            scope.Start();
+            try
+            {
+                var response = await BatchOperationsRestClient.InvokeAtResourceGroupScopeAsync(Id.SubscriptionId, Id.ResourceGroupName, batchRequests, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Executes batch operation to perform multiple ARM operations at resource group scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/batchOperations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BatchOperations_InvokeAtResourceGroupScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="batchRequests"> Batch requests to be executed. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="batchRequests"/> is null. </exception>
+        public virtual Response<BatchResponse> InvokeBatchOperations(BatchRequests batchRequests, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(batchRequests, nameof(batchRequests));
+
+            using var scope = BatchOperationsClientDiagnostics.CreateScope("MockableResourcesResourceGroupResource.InvokeBatchOperations");
+            scope.Start();
+            try
+            {
+                var response = BatchOperationsRestClient.InvokeAtResourceGroupScope(Id.SubscriptionId, Id.ResourceGroupName, batchRequests, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

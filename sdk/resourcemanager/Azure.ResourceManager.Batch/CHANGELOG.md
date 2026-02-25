@@ -24,6 +24,6 @@
 
 ### Dependencies
 
-- Azure.Core (>= 1.35.0) 
+- Azure.Core (>= 1.35.0)
 - Azure.ResourceManager (>= 1.9.0)
 - System.Text.Json (>= 6.0.0)
