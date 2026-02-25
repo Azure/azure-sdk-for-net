@@ -8,11 +8,12 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
     /// <summary></summary>
-    public partial class SessionHostResource : IJsonModel<SessionHostData>
+    public partial class SessionHostResource : ArmResource, IJsonModel<SessionHostData>
     {
         private static IJsonModel<SessionHostData> s_dataDeserializationInstance;
 

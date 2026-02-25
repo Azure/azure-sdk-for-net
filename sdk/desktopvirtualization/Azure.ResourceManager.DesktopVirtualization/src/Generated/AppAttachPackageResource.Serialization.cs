@@ -8,11 +8,12 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
     /// <summary></summary>
-    public partial class AppAttachPackageResource : IJsonModel<AppAttachPackageData>
+    public partial class AppAttachPackageResource : ArmResource, IJsonModel<AppAttachPackageData>
     {
         private static IJsonModel<AppAttachPackageData> s_dataDeserializationInstance;
 

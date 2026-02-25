@@ -3,35 +3,25 @@ Build output written to /home/codespace/code/sdk/sdk/desktopvirtualization/Azure
 ================================================================================
   BREAKING CHANGES SUMMARY
 ================================================================================
-  Total unique errors : 148
+  Total unique errors : 95
   Error categories    : 6
-  Affected classes    : 51
+  Affected classes    : 38
 ================================================================================
 
-┌─ Missing Members (MembersMustExist)  (133 errors)
+┌─ Missing Members (MembersMustExist)  (82 errors)
 │  These members existed in the public API contract but are missing in the new implementation.
 │  FIX: Add these members back to the implementation, or add entries to the API baseline/compat suppression file.
 │
 │  ▸ Azure.ResourceManager.DesktopVirtualization.AppAttachPackageResource
 │      • Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil, CancellationToken)
 │      • Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil, CancellationToken)
-│  ▸ Azure.ResourceManager.DesktopVirtualization.DesktopVirtualizationExtensions
-│      • Azure.Pageable<Azure.ResourceManager.DesktopVirtualization.HostPoolResource> GetHostPools(Resources.SubscriptionResource, CancellationToken)
-│      • Azure.AsyncPageable<Azure.ResourceManager.DesktopVirtualization.HostPoolResource> GetHostPoolsAsync(Resources.SubscriptionResource, CancellationToken)
-│      • Azure.Pageable<Azure.ResourceManager.DesktopVirtualization.ScalingPlanResource> GetScalingPlans(Resources.SubscriptionResource, CancellationToken)
-│      • Azure.AsyncPageable<Azure.ResourceManager.DesktopVirtualization.ScalingPlanResource> GetScalingPlansAsync(Resources.SubscriptionResource, CancellationToken)
 │  ▸ Azure.ResourceManager.DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionDataData
 │      • ConnectionState { get; }  (returns Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateLinkServiceConnectionState)
 │      • ConnectionState { set; }  (param: Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateLinkServiceConnectionState)
 │      • PrivateEndpointId { get; }  (returns Azure.Core.ResourceIdentifier)
-│  ▸ Azure.ResourceManager.DesktopVirtualization.HostPoolCollection
-│      • Azure.Pageable<Azure.ResourceManager.DesktopVirtualization.HostPoolResource> GetAll(CancellationToken)
-│      • Azure.AsyncPageable<Azure.ResourceManager.DesktopVirtualization.HostPoolResource> GetAllAsync(CancellationToken)
 │  ▸ Azure.ResourceManager.DesktopVirtualization.HostPoolData
 │      • ETag { get; }  (returns Azure.ETag?)
 │      • IsCloudPCResource { get; }  (returns Boolean?)
-│      • MigrationRequest { get; }  (returns Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationMigrationProperties)
-│      • MigrationRequest { set; }  (param: Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationMigrationProperties)
 │  ▸ Azure.ResourceManager.DesktopVirtualization.HostPoolPrivateEndpointConnectionCollection
 │      • Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DesktopVirtualization.HostPoolPrivateEndpointConnectionResource> CreateOrUpdate(Azure.WaitUntil, String, Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnection, CancellationToken)
 │      • Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DesktopVirtualization.HostPoolPrivateEndpointConnectionResource>> CreateOrUpdateAsync(Azure.WaitUntil, String, Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnection, CancellationToken)
@@ -43,19 +33,10 @@ Build output written to /home/codespace/code/sdk/sdk/desktopvirtualization/Azure
 │      • Azure.AsyncPageable<Azure.ResourceManager.DesktopVirtualization.Models.ExpandMsixImage> ExpandMsixImagesAsync(Azure.ResourceManager.DesktopVirtualization.Models.MsixImageUri, CancellationToken)
 │      • Azure.Pageable<Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateLinkResourceData> GetPrivateLinkResources(Int32?, Boolean?, Int32?, CancellationToken)
 │      • Azure.AsyncPageable<Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateLinkResourceData> GetPrivateLinkResourcesAsync(Int32?, Boolean?, Int32?, CancellationToken)
-│      • Azure.Pageable<Azure.ResourceManager.DesktopVirtualization.ScalingPlanResource> GetScalingPlans(CancellationToken)
-│      • Azure.AsyncPageable<Azure.ResourceManager.DesktopVirtualization.ScalingPlanResource> GetScalingPlansAsync(CancellationToken)
-│      • Azure.Pageable<Azure.ResourceManager.DesktopVirtualization.UserSessionResource> GetUserSessions(String, CancellationToken)
-│      • Azure.AsyncPageable<Azure.ResourceManager.DesktopVirtualization.UserSessionResource> GetUserSessionsAsync(String, CancellationToken)
 │      • Azure.Pageable<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageResource> ImportAppAttachPackageInfos(Azure.ResourceManager.DesktopVirtualization.Models.ImportPackageInfoContent, CancellationToken)
 │      • Azure.AsyncPageable<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageResource> ImportAppAttachPackageInfosAsync(Azure.ResourceManager.DesktopVirtualization.Models.ImportPackageInfoContent, CancellationToken)
 │      • Azure.Response<Azure.ResourceManager.DesktopVirtualization.Models.HostPoolRegistrationInfo> RetrieveRegistrationToken(CancellationToken)
 │      • Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.Models.HostPoolRegistrationInfo>> RetrieveRegistrationTokenAsync(CancellationToken)
-│  ▸ Azure.ResourceManager.DesktopVirtualization.Mocking.MockableDesktopVirtualizationSubscriptionResource
-│      • Azure.Pageable<Azure.ResourceManager.DesktopVirtualization.HostPoolResource> GetHostPools(CancellationToken)
-│      • Azure.AsyncPageable<Azure.ResourceManager.DesktopVirtualization.HostPoolResource> GetHostPoolsAsync(CancellationToken)
-│      • Azure.Pageable<Azure.ResourceManager.DesktopVirtualization.ScalingPlanResource> GetScalingPlans(CancellationToken)
-│      • Azure.AsyncPageable<Azure.ResourceManager.DesktopVirtualization.ScalingPlanResource> GetScalingPlansAsync(CancellationToken)
 │  ▸ Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageInfoProperties
 │      • PackageDependencies { set; }  (param: IList<Azure.ResourceManager.DesktopVirtualization.Models.MsixPackageDependencies>)
 │  ▸ Azure.ResourceManager.DesktopVirtualization.Models.ArmDesktopVirtualizationModelFactory
@@ -72,19 +53,9 @@ Build output written to /home/codespace/code/sdk/sdk/desktopvirtualization/Azure
 │  ▸ Azure.ResourceManager.DesktopVirtualization.Models.HostPoolPatch
 │      • Tags { set; }  (param: IDictionary<String, String>)
 │  ▸ Azure.ResourceManager.DesktopVirtualization.Models.ScalingPlanPatch
-│      • HostPoolType { get; }  (returns Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType?)
-│      • HostPoolType { set; }  (param: Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType?)
 │      • Tags { set; }  (param: IDictionary<String, String>)
 │  ▸ Azure.ResourceManager.DesktopVirtualization.Models.ScalingSchedule
 │      • DaysOfWeek { get; }  (returns IList<Azure.ResourceManager.DesktopVirtualization.Models.ScalingScheduleDaysOfWeekItem>)
-│      • OffPeakStartOn { get; }  (returns DateTimeOffset?)
-│      • OffPeakStartOn { set; }  (param: DateTimeOffset?)
-│      • PeakStartOn { get; }  (returns DateTimeOffset?)
-│      • PeakStartOn { set; }  (param: DateTimeOffset?)
-│      • RampDownStartOn { get; }  (returns DateTimeOffset?)
-│      • RampDownStartOn { set; }  (param: DateTimeOffset?)
-│      • RampUpStartOn { get; }  (returns DateTimeOffset?)
-│      • RampUpStartOn { set; }  (param: DateTimeOffset?)
 │  ▸ Azure.ResourceManager.DesktopVirtualization.Models.ScalingScheduleDaysOfWeekItem
 │      • .ctor(String)
 │      • Boolean Equals(Azure.ResourceManager.DesktopVirtualization.Models.ScalingScheduleDaysOfWeekItem)
@@ -111,28 +82,17 @@ Build output written to /home/codespace/code/sdk/sdk/desktopvirtualization/Azure
 │  ▸ Azure.ResourceManager.DesktopVirtualization.Models.VirtualWorkspacePatch
 │      • ApplicationGroupReferences { set; }  (param: IList<String>)
 │      • Tags { set; }  (param: IDictionary<String, String>)
-│  ▸ Azure.ResourceManager.DesktopVirtualization.MsixPackageCollection
-│      • Azure.Pageable<Azure.ResourceManager.DesktopVirtualization.MsixPackageResource> GetAll(CancellationToken)
-│      • Azure.AsyncPageable<Azure.ResourceManager.DesktopVirtualization.MsixPackageResource> GetAllAsync(CancellationToken)
 │  ▸ Azure.ResourceManager.DesktopVirtualization.MsixPackageData
 │      • .ctor()
-│  ▸ Azure.ResourceManager.DesktopVirtualization.ScalingPlanCollection
-│      • Azure.Pageable<Azure.ResourceManager.DesktopVirtualization.ScalingPlanResource> GetAll(CancellationToken)
-│      • Azure.AsyncPageable<Azure.ResourceManager.DesktopVirtualization.ScalingPlanResource> GetAllAsync(CancellationToken)
 │  ▸ Azure.ResourceManager.DesktopVirtualization.ScalingPlanData
-│      • .ctor(Azure.Core.AzureLocation)
 │      • ETag { get; }  (returns Azure.ETag?)
-│      • HostPoolType { get; }  (returns Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType?)
-│      • HostPoolType { set; }  (param: Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType?)
 │  ▸ Azure.ResourceManager.DesktopVirtualization.ScalingPlanPersonalScheduleData
 │      • .ctor()
 │  ▸ Azure.ResourceManager.DesktopVirtualization.ScalingPlanPooledScheduleData
 │      • .ctor()
 │  ▸ Azure.ResourceManager.DesktopVirtualization.SessionHostCollection
 │      • Azure.Pageable<Azure.ResourceManager.DesktopVirtualization.SessionHostResource> GetAll(Int32?, Boolean?, Int32?, CancellationToken)
-│      • Azure.Pageable<Azure.ResourceManager.DesktopVirtualization.SessionHostResource> GetAll(CancellationToken)
 │      • Azure.AsyncPageable<Azure.ResourceManager.DesktopVirtualization.SessionHostResource> GetAllAsync(Int32?, Boolean?, Int32?, CancellationToken)
-│      • Azure.AsyncPageable<Azure.ResourceManager.DesktopVirtualization.SessionHostResource> GetAllAsync(CancellationToken)
 │  ▸ Azure.ResourceManager.DesktopVirtualization.SessionHostData
 │      • AgentVersion { set; }  (param: String)
 │      • LastHeartBeatOn { set; }  (param: DateTimeOffset?)
@@ -142,39 +102,17 @@ Build output written to /home/codespace/code/sdk/sdk/desktopvirtualization/Azure
 │      • SxsStackVersion { set; }  (param: String)
 │      • UpdateErrorMessage { set; }  (param: String)
 │      • UpdateState { set; }  (param: Azure.ResourceManager.DesktopVirtualization.Models.SessionHostUpdateState?)
-│  ▸ Azure.ResourceManager.DesktopVirtualization.SessionHostResource
-│      • Azure.Response<Azure.ResourceManager.DesktopVirtualization.SessionHostResource> Update(Azure.ResourceManager.DesktopVirtualization.Models.SessionHostPatch, CancellationToken)
-│      • Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.SessionHostResource>> UpdateAsync(Azure.ResourceManager.DesktopVirtualization.Models.SessionHostPatch, CancellationToken)
-│  ▸ Azure.ResourceManager.DesktopVirtualization.UserSessionCollection
-│      • Azure.Pageable<Azure.ResourceManager.DesktopVirtualization.UserSessionResource> GetAll(CancellationToken)
-│      • Azure.AsyncPageable<Azure.ResourceManager.DesktopVirtualization.UserSessionResource> GetAllAsync(CancellationToken)
 │  ▸ Azure.ResourceManager.DesktopVirtualization.UserSessionResource
 │      • Azure.Response Disconnect(CancellationToken)
 │      • Task<Azure.Response> DisconnectAsync(CancellationToken)
 │      • Azure.Response SendMessage(Azure.ResourceManager.DesktopVirtualization.Models.UserSessionMessage, CancellationToken)
 │      • Task<Azure.Response> SendMessageAsync(Azure.ResourceManager.DesktopVirtualization.Models.UserSessionMessage, CancellationToken)
-│  ▸ Azure.ResourceManager.DesktopVirtualization.VirtualApplicationCollection
-│      • Azure.Pageable<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationResource> GetAll(CancellationToken)
-│      • Azure.AsyncPageable<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationResource> GetAllAsync(CancellationToken)
-│  ▸ Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupCollection
-│      • Azure.Pageable<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupResource> GetAll(String, CancellationToken)
-│      • Azure.AsyncPageable<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupResource> GetAllAsync(String, CancellationToken)
 │  ▸ Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupData
 │      • ETag { get; }  (returns Azure.ETag?)
 │      • IsCloudPCResource { get; }  (returns Boolean?)
-│      • MigrationRequest { get; }  (returns Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationMigrationProperties)
-│      • MigrationRequest { set; }  (param: Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationMigrationProperties)
 │  ▸ Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupResource
 │      • Azure.Pageable<Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationStartMenuItem> GetStartMenuItems(Int32?, Boolean?, Int32?, CancellationToken)
-│      • Azure.Pageable<Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationStartMenuItem> GetStartMenuItems(CancellationToken)
 │      • Azure.AsyncPageable<Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationStartMenuItem> GetStartMenuItemsAsync(Int32?, Boolean?, Int32?, CancellationToken)
-│      • Azure.AsyncPageable<Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationStartMenuItem> GetStartMenuItemsAsync(CancellationToken)
-│  ▸ Azure.ResourceManager.DesktopVirtualization.VirtualDesktopCollection
-│      • Azure.Pageable<Azure.ResourceManager.DesktopVirtualization.VirtualDesktopResource> GetAll(CancellationToken)
-│      • Azure.AsyncPageable<Azure.ResourceManager.DesktopVirtualization.VirtualDesktopResource> GetAllAsync(CancellationToken)
-│  ▸ Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceCollection
-│      • Azure.Pageable<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceResource> GetAll(CancellationToken)
-│      • Azure.AsyncPageable<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceResource> GetAllAsync(CancellationToken)
 │  ▸ Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceData
 │      • ApplicationGroupReferences { set; }  (param: IList<String>)
 │      • ETag { get; }  (returns Azure.ETag?)
@@ -226,14 +164,10 @@ Build output written to /home/codespace/code/sdk/sdk/desktopvirtualization/Azure
 │      • void JsonModelWriteCore(Text.Json.Utf8JsonWriter, ClientModel.Primitives.ModelReaderWriterOptions)
 └───────────────────────────────────────────────────────────────────────────────
 
-┌─ Missing Types (TypesMustExist)  (3 errors)
+┌─ Missing Types (TypesMustExist)  (1 errors)
 │  These entire types existed in the contract but are gone from the implementation.
 │  FIX: Re-introduce the type (possibly as an empty stub or tag class), or suppress in the baseline.
 │
-│  ▸ Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationMigrationProperties
-│      • Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationMigrationProperties
-│  ▸ Azure.ResourceManager.DesktopVirtualization.Models.MigrationOperation
-│      • Azure.ResourceManager.DesktopVirtualization.Models.MigrationOperation
 │  ▸ Azure.ResourceManager.DesktopVirtualization.Models.MsixImageUri
 │      • Azure.ResourceManager.DesktopVirtualization.Models.MsixImageUri
 └───────────────────────────────────────────────────────────────────────────────
@@ -257,109 +191,79 @@ Build output written to /home/codespace/code/sdk/sdk/desktopvirtualization/Azure
 ================================================================================
   SUGGESTED ACTION CHECKLIST
 ================================================================================
-  [1] Re-add missing type: Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationMigrationProperties
-  [2] Re-add missing type: Azure.ResourceManager.DesktopVirtualization.Models.MigrationOperation
-  [3] Re-add missing type: Azure.ResourceManager.DesktopVirtualization.Models.MsixImageUri
-  [4] Add missing method(s) to Azure.ResourceManager.DesktopVirtualization.AppAttachPackageResource: Delete, DeleteAsync
-  [5] Add missing method(s) to Azure.ResourceManager.DesktopVirtualization.DesktopVirtualizationExtensions: GetHostPools, GetHostPoolsAsync, GetScalingPlans, GetScalingPlansAsync
-  [6] Restore property Azure.ResourceManager.DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionDataData.ConnectionState
-  [7] Restore property Azure.ResourceManager.DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionDataData.ConnectionState
-  [8] Restore property Azure.ResourceManager.DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionDataData.PrivateEndpointId
-  [9] Add missing method(s) to Azure.ResourceManager.DesktopVirtualization.HostPoolCollection: GetAll, GetAllAsync
-  [10] Restore property Azure.ResourceManager.DesktopVirtualization.HostPoolData.ETag
-  [11] Restore property Azure.ResourceManager.DesktopVirtualization.HostPoolData.IsCloudPCResource
-  [12] Restore property Azure.ResourceManager.DesktopVirtualization.HostPoolData.MigrationRequest
-  [13] Restore property Azure.ResourceManager.DesktopVirtualization.HostPoolData.MigrationRequest
-  [14] Add missing method(s) to Azure.ResourceManager.DesktopVirtualization.HostPoolPrivateEndpointConnectionCollection: CreateOrUpdate, CreateOrUpdateAsync
-  [15] Add missing method(s) to Azure.ResourceManager.DesktopVirtualization.HostPoolPrivateEndpointConnectionResource: Update, UpdateAsync
-  [16] Add missing method(s) to Azure.ResourceManager.DesktopVirtualization.HostPoolResource: ExpandMsixImages, ExpandMsixImagesAsync, GetPrivateLinkResources, GetPrivateLinkResourcesAsync, GetScalingPlans, GetScalingPlansAsync, GetUserSessions, GetUserSessionsAsync, ImportAppAttachPackageInfos, ImportAppAttachPackageInfosAsync, RetrieveRegistrationToken, RetrieveRegistrationTokenAsync
-  [17] Add missing method(s) to Azure.ResourceManager.DesktopVirtualization.Mocking.MockableDesktopVirtualizationSubscriptionResource: GetHostPools, GetHostPoolsAsync, GetScalingPlans, GetScalingPlansAsync
-  [18] Restore property Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageInfoProperties.PackageDependencies
-  [19] Add missing method(s) to Azure.ResourceManager.DesktopVirtualization.Models.ArmDesktopVirtualizationModelFactory: VirtualApplicationData
-  [20] Add public constructor to Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnection
-  [21] Restore property Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnection.ConnectionState
-  [22] Restore property Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnection.ConnectionState
-  [23] Restore property Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnection.PrivateEndpointId
-  [24] Add public constructor to Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateLinkResourceData
-  [25] Restore property Azure.ResourceManager.DesktopVirtualization.Models.ExpandMsixImage.PackageDependencies
-  [26] Restore property Azure.ResourceManager.DesktopVirtualization.Models.HostPoolPatch.Tags
-  [27] Restore property Azure.ResourceManager.DesktopVirtualization.Models.ScalingPlanPatch.HostPoolType
-  [28] Restore property Azure.ResourceManager.DesktopVirtualization.Models.ScalingPlanPatch.HostPoolType
-  [29] Restore property Azure.ResourceManager.DesktopVirtualization.Models.ScalingPlanPatch.Tags
-  [30] Restore property Azure.ResourceManager.DesktopVirtualization.Models.ScalingSchedule.DaysOfWeek
-  [31] Restore property Azure.ResourceManager.DesktopVirtualization.Models.ScalingSchedule.OffPeakStartOn
-  [32] Restore property Azure.ResourceManager.DesktopVirtualization.Models.ScalingSchedule.OffPeakStartOn
-  [33] Restore property Azure.ResourceManager.DesktopVirtualization.Models.ScalingSchedule.PeakStartOn
-  [34] Restore property Azure.ResourceManager.DesktopVirtualization.Models.ScalingSchedule.PeakStartOn
-  [35] Restore property Azure.ResourceManager.DesktopVirtualization.Models.ScalingSchedule.RampDownStartOn
-  [36] Restore property Azure.ResourceManager.DesktopVirtualization.Models.ScalingSchedule.RampDownStartOn
-  [37] Restore property Azure.ResourceManager.DesktopVirtualization.Models.ScalingSchedule.RampUpStartOn
-  [38] Restore property Azure.ResourceManager.DesktopVirtualization.Models.ScalingSchedule.RampUpStartOn
-  [39] Add public constructor to Azure.ResourceManager.DesktopVirtualization.Models.ScalingScheduleDaysOfWeekItem
-  [40] Restore property Azure.ResourceManager.DesktopVirtualization.Models.ScalingScheduleDaysOfWeekItem.Friday
-  [41] Restore property Azure.ResourceManager.DesktopVirtualization.Models.ScalingScheduleDaysOfWeekItem.Monday
-  [42] Restore property Azure.ResourceManager.DesktopVirtualization.Models.ScalingScheduleDaysOfWeekItem.Saturday
-  [43] Restore property Azure.ResourceManager.DesktopVirtualization.Models.ScalingScheduleDaysOfWeekItem.Sunday
-  [44] Restore property Azure.ResourceManager.DesktopVirtualization.Models.ScalingScheduleDaysOfWeekItem.Thursday
-  [45] Restore property Azure.ResourceManager.DesktopVirtualization.Models.ScalingScheduleDaysOfWeekItem.Tuesday
-  [46] Restore property Azure.ResourceManager.DesktopVirtualization.Models.ScalingScheduleDaysOfWeekItem.Wednesday
-  [47] Add missing method(s) to Azure.ResourceManager.DesktopVirtualization.Models.ScalingScheduleDaysOfWeekItem: Equals, op_Equality, op_Implicit, op_Inequality
-  [48] Restore property Azure.ResourceManager.DesktopVirtualization.Models.SessionHostAgentUpdatePatchProperties.MaintenanceWindows
-  [49] Restore property Azure.ResourceManager.DesktopVirtualization.Models.SessionHostAgentUpdateProperties.MaintenanceWindows
-  [50] Restore property Azure.ResourceManager.DesktopVirtualization.Models.VirtualApplicationGroupPatch.Tags
-  [51] Restore property Azure.ResourceManager.DesktopVirtualization.Models.VirtualApplicationPatch.Tags
-  [52] Restore property Azure.ResourceManager.DesktopVirtualization.Models.VirtualDesktopPatch.Tags
-  [53] Restore property Azure.ResourceManager.DesktopVirtualization.Models.VirtualWorkspacePatch.ApplicationGroupReferences
-  [54] Restore property Azure.ResourceManager.DesktopVirtualization.Models.VirtualWorkspacePatch.Tags
-  [55] Add missing method(s) to Azure.ResourceManager.DesktopVirtualization.MsixPackageCollection: GetAll, GetAllAsync
-  [56] Add public constructor to Azure.ResourceManager.DesktopVirtualization.MsixPackageData
-  [57] Add missing method(s) to Azure.ResourceManager.DesktopVirtualization.ScalingPlanCollection: GetAll, GetAllAsync
-  [58] Add public constructor to Azure.ResourceManager.DesktopVirtualization.ScalingPlanData
-  [59] Restore property Azure.ResourceManager.DesktopVirtualization.ScalingPlanData.ETag
-  [60] Restore property Azure.ResourceManager.DesktopVirtualization.ScalingPlanData.HostPoolType
-  [61] Restore property Azure.ResourceManager.DesktopVirtualization.ScalingPlanData.HostPoolType
-  [62] Add public constructor to Azure.ResourceManager.DesktopVirtualization.ScalingPlanPersonalScheduleData
-  [63] Add public constructor to Azure.ResourceManager.DesktopVirtualization.ScalingPlanPooledScheduleData
-  [64] Add missing method(s) to Azure.ResourceManager.DesktopVirtualization.SessionHostCollection: GetAll, GetAll, GetAllAsync, GetAllAsync
-  [65] Restore property Azure.ResourceManager.DesktopVirtualization.SessionHostData.AgentVersion
-  [66] Restore property Azure.ResourceManager.DesktopVirtualization.SessionHostData.LastHeartBeatOn
-  [67] Restore property Azure.ResourceManager.DesktopVirtualization.SessionHostData.OSVersion
-  [68] Restore property Azure.ResourceManager.DesktopVirtualization.SessionHostData.Sessions
-  [69] Restore property Azure.ResourceManager.DesktopVirtualization.SessionHostData.Status
-  [70] Restore property Azure.ResourceManager.DesktopVirtualization.SessionHostData.SxsStackVersion
-  [71] Restore property Azure.ResourceManager.DesktopVirtualization.SessionHostData.UpdateErrorMessage
-  [72] Restore property Azure.ResourceManager.DesktopVirtualization.SessionHostData.UpdateState
-  [73] Add missing method(s) to Azure.ResourceManager.DesktopVirtualization.SessionHostResource: Update, UpdateAsync
-  [74] Add missing method(s) to Azure.ResourceManager.DesktopVirtualization.UserSessionCollection: GetAll, GetAllAsync
-  [75] Add missing method(s) to Azure.ResourceManager.DesktopVirtualization.UserSessionResource: Disconnect, DisconnectAsync, SendMessage, SendMessageAsync
-  [76] Add missing method(s) to Azure.ResourceManager.DesktopVirtualization.VirtualApplicationCollection: GetAll, GetAllAsync
-  [77] Add missing method(s) to Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupCollection: GetAll, GetAllAsync
-  [78] Restore property Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupData.ETag
-  [79] Restore property Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupData.IsCloudPCResource
-  [80] Restore property Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupData.MigrationRequest
-  [81] Restore property Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupData.MigrationRequest
-  [82] Add missing method(s) to Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupResource: GetStartMenuItems, GetStartMenuItems, GetStartMenuItemsAsync, GetStartMenuItemsAsync
-  [83] Add missing method(s) to Azure.ResourceManager.DesktopVirtualization.VirtualDesktopCollection: GetAll, GetAllAsync
-  [84] Add missing method(s) to Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceCollection: GetAll, GetAllAsync
-  [85] Restore property Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceData.ApplicationGroupReferences
-  [86] Restore property Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceData.ETag
-  [87] Restore property Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceData.IsCloudPCResource
-  [88] Add missing method(s) to Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceResource: GetPrivateLinkResources, GetPrivateLinkResourcesAsync
-  [89] Add missing method(s) to Azure.ResourceManager.DesktopVirtualization.WorkspacePrivateEndpointConnectionCollection: CreateOrUpdate, CreateOrUpdateAsync
-  [90] Add missing method(s) to Azure.ResourceManager.DesktopVirtualization.WorkspacePrivateEndpointConnectionResource: Update, UpdateAsync
-  [91] Restore property String> Azure.ResourceManager.DesktopVirtualization.Models.VirtualApplicationPatch.Tags
-  [92] Restore property String> Azure.ResourceManager.DesktopVirtualization.Models.VirtualDesktopPatch.Tags
-  [93] Un-seal type (add public/protected ctor): Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnection
-  [94] Un-seal type (add public/protected ctor): Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateLinkResourceData
-  [95] Un-seal type (add public/protected ctor): Azure.ResourceManager.DesktopVirtualization.MsixPackageData
-  [96] Un-seal type (add public/protected ctor): Azure.ResourceManager.DesktopVirtualization.ScalingPlanPersonalScheduleData
-  [97] Un-seal type (add public/protected ctor): Azure.ResourceManager.DesktopVirtualization.ScalingPlanPooledScheduleData
-  [98] Make member virtual again in Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnection: void JsonModelWriteCore
-  [99] Make member virtual again in Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateLinkResourceData: void JsonModelWriteCore
-  [100] Make member virtual again in Azure.ResourceManager.DesktopVirtualization.MsixPackageData: void JsonModelWriteCore
-  [101] Make member virtual again in Azure.ResourceManager.DesktopVirtualization.ScalingPlanPersonalScheduleData: void JsonModelWriteCore
-  [102] Make member virtual again in Azure.ResourceManager.DesktopVirtualization.ScalingPlanPooledScheduleData: void JsonModelWriteCore
-  [103] Restore base type(s) for Azure.ResourceManager.DesktopVirtualization.Models.ScalingScheduleDaysOfWeekItem: IEquatable<Azure.ResourceManager.DesktopVirtualization.Models.ScalingScheduleDaysOfWeekItem>
+  [1] Re-add missing type: Azure.ResourceManager.DesktopVirtualization.Models.MsixImageUri
+  [2] Add missing method(s) to Azure.ResourceManager.DesktopVirtualization.AppAttachPackageResource: Delete, DeleteAsync
+  [3] Restore property Azure.ResourceManager.DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionDataData.ConnectionState
+  [4] Restore property Azure.ResourceManager.DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionDataData.ConnectionState
+  [5] Restore property Azure.ResourceManager.DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionDataData.PrivateEndpointId
+  [6] Restore property Azure.ResourceManager.DesktopVirtualization.HostPoolData.ETag
+  [7] Restore property Azure.ResourceManager.DesktopVirtualization.HostPoolData.IsCloudPCResource
+  [8] Add missing method(s) to Azure.ResourceManager.DesktopVirtualization.HostPoolPrivateEndpointConnectionCollection: CreateOrUpdate, CreateOrUpdateAsync
+  [9] Add missing method(s) to Azure.ResourceManager.DesktopVirtualization.HostPoolPrivateEndpointConnectionResource: Update, UpdateAsync
+  [10] Add missing method(s) to Azure.ResourceManager.DesktopVirtualization.HostPoolResource: ExpandMsixImages, ExpandMsixImagesAsync, GetPrivateLinkResources, GetPrivateLinkResourcesAsync, ImportAppAttachPackageInfos, ImportAppAttachPackageInfosAsync, RetrieveRegistrationToken, RetrieveRegistrationTokenAsync
+  [11] Restore property Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageInfoProperties.PackageDependencies
+  [12] Add missing method(s) to Azure.ResourceManager.DesktopVirtualization.Models.ArmDesktopVirtualizationModelFactory: VirtualApplicationData
+  [13] Add public constructor to Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnection
+  [14] Restore property Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnection.ConnectionState
+  [15] Restore property Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnection.ConnectionState
+  [16] Restore property Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnection.PrivateEndpointId
+  [17] Add public constructor to Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateLinkResourceData
+  [18] Restore property Azure.ResourceManager.DesktopVirtualization.Models.ExpandMsixImage.PackageDependencies
+  [19] Restore property Azure.ResourceManager.DesktopVirtualization.Models.HostPoolPatch.Tags
+  [20] Restore property Azure.ResourceManager.DesktopVirtualization.Models.ScalingPlanPatch.Tags
+  [21] Restore property Azure.ResourceManager.DesktopVirtualization.Models.ScalingSchedule.DaysOfWeek
+  [22] Add public constructor to Azure.ResourceManager.DesktopVirtualization.Models.ScalingScheduleDaysOfWeekItem
+  [23] Restore property Azure.ResourceManager.DesktopVirtualization.Models.ScalingScheduleDaysOfWeekItem.Friday
+  [24] Restore property Azure.ResourceManager.DesktopVirtualization.Models.ScalingScheduleDaysOfWeekItem.Monday
+  [25] Restore property Azure.ResourceManager.DesktopVirtualization.Models.ScalingScheduleDaysOfWeekItem.Saturday
+  [26] Restore property Azure.ResourceManager.DesktopVirtualization.Models.ScalingScheduleDaysOfWeekItem.Sunday
+  [27] Restore property Azure.ResourceManager.DesktopVirtualization.Models.ScalingScheduleDaysOfWeekItem.Thursday
+  [28] Restore property Azure.ResourceManager.DesktopVirtualization.Models.ScalingScheduleDaysOfWeekItem.Tuesday
+  [29] Restore property Azure.ResourceManager.DesktopVirtualization.Models.ScalingScheduleDaysOfWeekItem.Wednesday
+  [30] Add missing method(s) to Azure.ResourceManager.DesktopVirtualization.Models.ScalingScheduleDaysOfWeekItem: Equals, op_Equality, op_Implicit, op_Inequality
+  [31] Restore property Azure.ResourceManager.DesktopVirtualization.Models.SessionHostAgentUpdatePatchProperties.MaintenanceWindows
+  [32] Restore property Azure.ResourceManager.DesktopVirtualization.Models.SessionHostAgentUpdateProperties.MaintenanceWindows
+  [33] Restore property Azure.ResourceManager.DesktopVirtualization.Models.VirtualApplicationGroupPatch.Tags
+  [34] Restore property Azure.ResourceManager.DesktopVirtualization.Models.VirtualApplicationPatch.Tags
+  [35] Restore property Azure.ResourceManager.DesktopVirtualization.Models.VirtualDesktopPatch.Tags
+  [36] Restore property Azure.ResourceManager.DesktopVirtualization.Models.VirtualWorkspacePatch.ApplicationGroupReferences
+  [37] Restore property Azure.ResourceManager.DesktopVirtualization.Models.VirtualWorkspacePatch.Tags
+  [38] Add public constructor to Azure.ResourceManager.DesktopVirtualization.MsixPackageData
+  [39] Restore property Azure.ResourceManager.DesktopVirtualization.ScalingPlanData.ETag
+  [40] Add public constructor to Azure.ResourceManager.DesktopVirtualization.ScalingPlanPersonalScheduleData
+  [41] Add public constructor to Azure.ResourceManager.DesktopVirtualization.ScalingPlanPooledScheduleData
+  [42] Add missing method(s) to Azure.ResourceManager.DesktopVirtualization.SessionHostCollection: GetAll, GetAllAsync
+  [43] Restore property Azure.ResourceManager.DesktopVirtualization.SessionHostData.AgentVersion
+  [44] Restore property Azure.ResourceManager.DesktopVirtualization.SessionHostData.LastHeartBeatOn
+  [45] Restore property Azure.ResourceManager.DesktopVirtualization.SessionHostData.OSVersion
+  [46] Restore property Azure.ResourceManager.DesktopVirtualization.SessionHostData.Sessions
+  [47] Restore property Azure.ResourceManager.DesktopVirtualization.SessionHostData.Status
+  [48] Restore property Azure.ResourceManager.DesktopVirtualization.SessionHostData.SxsStackVersion
+  [49] Restore property Azure.ResourceManager.DesktopVirtualization.SessionHostData.UpdateErrorMessage
+  [50] Restore property Azure.ResourceManager.DesktopVirtualization.SessionHostData.UpdateState
+  [51] Add missing method(s) to Azure.ResourceManager.DesktopVirtualization.UserSessionResource: Disconnect, DisconnectAsync, SendMessage, SendMessageAsync
+  [52] Restore property Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupData.ETag
+  [53] Restore property Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupData.IsCloudPCResource
+  [54] Add missing method(s) to Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupResource: GetStartMenuItems, GetStartMenuItemsAsync
+  [55] Restore property Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceData.ApplicationGroupReferences
+  [56] Restore property Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceData.ETag
+  [57] Restore property Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceData.IsCloudPCResource
+  [58] Add missing method(s) to Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceResource: GetPrivateLinkResources, GetPrivateLinkResourcesAsync
+  [59] Add missing method(s) to Azure.ResourceManager.DesktopVirtualization.WorkspacePrivateEndpointConnectionCollection: CreateOrUpdate, CreateOrUpdateAsync
+  [60] Add missing method(s) to Azure.ResourceManager.DesktopVirtualization.WorkspacePrivateEndpointConnectionResource: Update, UpdateAsync
+  [61] Restore property String> Azure.ResourceManager.DesktopVirtualization.Models.VirtualApplicationPatch.Tags
+  [62] Restore property String> Azure.ResourceManager.DesktopVirtualization.Models.VirtualDesktopPatch.Tags
+  [63] Un-seal type (add public/protected ctor): Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnection
+  [64] Un-seal type (add public/protected ctor): Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateLinkResourceData
+  [65] Un-seal type (add public/protected ctor): Azure.ResourceManager.DesktopVirtualization.MsixPackageData
+  [66] Un-seal type (add public/protected ctor): Azure.ResourceManager.DesktopVirtualization.ScalingPlanPersonalScheduleData
+  [67] Un-seal type (add public/protected ctor): Azure.ResourceManager.DesktopVirtualization.ScalingPlanPooledScheduleData
+  [68] Make member virtual again in Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnection: void JsonModelWriteCore
+  [69] Make member virtual again in Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateLinkResourceData: void JsonModelWriteCore
+  [70] Make member virtual again in Azure.ResourceManager.DesktopVirtualization.MsixPackageData: void JsonModelWriteCore
+  [71] Make member virtual again in Azure.ResourceManager.DesktopVirtualization.ScalingPlanPersonalScheduleData: void JsonModelWriteCore
+  [72] Make member virtual again in Azure.ResourceManager.DesktopVirtualization.ScalingPlanPooledScheduleData: void JsonModelWriteCore
+  [73] Restore base type(s) for Azure.ResourceManager.DesktopVirtualization.Models.ScalingScheduleDaysOfWeekItem: IEquatable<Azure.ResourceManager.DesktopVirtualization.Models.ScalingScheduleDaysOfWeekItem>
 
-  Total actions: 103
+  Total actions: 73
 ================================================================================

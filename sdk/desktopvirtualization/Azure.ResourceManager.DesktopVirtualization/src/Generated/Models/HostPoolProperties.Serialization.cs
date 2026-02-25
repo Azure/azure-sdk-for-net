@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("startVMOnConnect"u8);
                 writer.WriteBooleanValue(StartVmOnConnect.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsCloudPcResource))
+            if (options.Format != "W" && Optional.IsDefined(IsCloudPCResource))
             {
                 writer.WritePropertyName("cloudPcResource"u8);
-                writer.WriteBooleanValue(IsCloudPcResource.Value);
+                writer.WriteBooleanValue(IsCloudPCResource.Value);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             HostPoolSsoSecretType? ssoSecretType = default;
             PreferredAppGroupType preferredAppGroupType = default;
             bool? startVmOnConnect = default;
-            bool? isCloudPcResource = default;
+            bool? isCloudPCResource = default;
             HostPoolPublicNetworkAccess? publicNetworkAccess = default;
             SessionHostAgentUpdateProperties agentUpdate = default;
             IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections = default;
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    isCloudPcResource = prop.Value.GetBoolean();
+                    isCloudPCResource = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("publicNetworkAccess"u8))
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 ssoSecretType,
                 preferredAppGroupType,
                 startVmOnConnect,
-                isCloudPcResource,
+                isCloudPCResource,
                 publicNetworkAccess,
                 agentUpdate,
                 privateEndpointConnections ?? new ChangeTrackingList<DesktopVirtualizationPrivateEndpointConnection>(),

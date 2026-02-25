@@ -29,19 +29,19 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="description"> Description of Workspace. </param>
         /// <param name="friendlyName"> Friendly name of Workspace. </param>
         /// <param name="applicationGroupReferences"> List of applicationGroup resource Ids. </param>
-        /// <param name="isCloudPcResource"> Is cloud pc resource. </param>
+        /// <param name="isCloudPCResource"> Is cloud pc resource. </param>
         /// <param name="publicNetworkAccess"> Enabled allows this resource to be accessed from both public and private networks, Disabled allows this resource to only be accessed via private endpoints. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connection associated with the specified resource. </param>
         /// <param name="oboTenantId"> Tenant that the resource is being requested on behalf of. </param>
         /// <param name="deploymentScope"> DeploymentScope type for Workspace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceProperties(string objectId, string description, string friendlyName, IList<string> applicationGroupReferences, bool? isCloudPcResource, DesktopVirtualizationPublicNetworkAccess? publicNetworkAccess, IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections, string oboTenantId, DeploymentScope? deploymentScope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkspaceProperties(string objectId, string description, string friendlyName, IList<string> applicationGroupReferences, bool? isCloudPCResource, DesktopVirtualizationPublicNetworkAccess? publicNetworkAccess, IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections, string oboTenantId, DeploymentScope? deploymentScope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ObjectId = objectId;
             Description = description;
             FriendlyName = friendlyName;
             ApplicationGroupReferences = applicationGroupReferences;
-            IsCloudPcResource = isCloudPcResource;
+            IsCloudPCResource = isCloudPCResource;
             PublicNetworkAccess = publicNetworkAccess;
             PrivateEndpointConnections = privateEndpointConnections;
             OboTenantId = oboTenantId;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Is cloud pc resource. </summary>
         [WirePath("cloudPcResource")]
-        public bool? IsCloudPcResource { get; }
+        public bool? IsCloudPCResource { get; }
 
         /// <summary> Enabled allows this resource to be accessed from both public and private networks, Disabled allows this resource to only be accessed via private endpoints. </summary>
         [WirePath("publicNetworkAccess")]

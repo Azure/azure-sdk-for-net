@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(IsCloudPcResource))
+            if (options.Format != "W" && Optional.IsDefined(IsCloudPCResource))
             {
                 writer.WritePropertyName("cloudPcResource"u8);
-                writer.WriteBooleanValue(IsCloudPcResource.Value);
+                writer.WriteBooleanValue(IsCloudPCResource.Value);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             string description = default;
             string friendlyName = default;
             IList<string> applicationGroupReferences = default;
-            bool? isCloudPcResource = default;
+            bool? isCloudPCResource = default;
             DesktopVirtualizationPublicNetworkAccess? publicNetworkAccess = default;
             IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections = default;
             string oboTenantId = default;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    isCloudPcResource = prop.Value.GetBoolean();
+                    isCloudPCResource = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("publicNetworkAccess"u8))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 description,
                 friendlyName,
                 applicationGroupReferences ?? new ChangeTrackingList<string>(),
-                isCloudPcResource,
+                isCloudPCResource,
                 publicNetworkAccess,
                 privateEndpointConnections ?? new ChangeTrackingList<DesktopVirtualizationPrivateEndpointConnection>(),
                 oboTenantId,

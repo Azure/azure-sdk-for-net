@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationPrivateLinkResourceData"/>. </summary>
-        internal DesktopVirtualizationPrivateLinkResourceData()
+        public DesktopVirtualizationPrivateLinkResourceData()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Resource properties. </summary>
         [WirePath("properties")]
-        internal DesktopVirtualizationPrivateLinkResourceProperties Properties { get; }
+        internal DesktopVirtualizationPrivateLinkResourceProperties Properties { get; set; }
 
         /// <summary> The private link resource group id. </summary>
         [WirePath("properties.groupId")]
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         {
             get
             {
-                return Properties.GroupId;
+                return Properties is null ? default : Properties.GroupId;
             }
         }
 
@@ -57,6 +57,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         {
             get
             {
+                if (Properties is null)
+                {
+                    Properties = new DesktopVirtualizationPrivateLinkResourceProperties();
+                }
                 return Properties.RequiredMembers;
             }
         }
@@ -67,6 +71,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         {
             get
             {
+                if (Properties is null)
+                {
+                    Properties = new DesktopVirtualizationPrivateLinkResourceProperties();
+                }
                 return Properties.RequiredZoneNames;
             }
         }

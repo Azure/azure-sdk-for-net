@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationPrivateEndpointConnection"/>. </summary>
-        internal DesktopVirtualizationPrivateEndpointConnection()
+        public DesktopVirtualizationPrivateEndpointConnection()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Resource properties. </summary>
         [WirePath("properties")]
-        internal PrivateEndpointConnectionProperties Properties { get; }
+        internal PrivateEndpointConnectionProperties Properties { get; set; }
 
         /// <summary> The group ids for the private endpoint resource. </summary>
         [WirePath("properties.groupIds")]
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         {
             get
             {
-                return Properties.GroupIds;
+                return Properties is null ? default : Properties.GroupIds;
             }
         }
 
@@ -57,7 +57,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         {
             get
             {
-                return Properties.PrivateLinkServiceConnectionState;
+                return Properties is null ? default : Properties.PrivateLinkServiceConnectionState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateEndpointConnectionProperties();
+                }
+                Properties.PrivateLinkServiceConnectionState = value;
             }
         }
 
@@ -67,7 +75,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
@@ -77,7 +85,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         {
             get
             {
-                return Properties.PrivateEndpointId;
+                return Properties is null ? default : Properties.PrivateEndpointId;
             }
         }
     }

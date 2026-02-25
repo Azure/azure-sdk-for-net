@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationPrivateLinkResourceProperties"/>. </summary>
-        internal DesktopVirtualizationPrivateLinkResourceProperties()
+        public DesktopVirtualizationPrivateLinkResourceProperties()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();

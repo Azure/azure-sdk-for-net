@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             writer.WritePropertyName("applicationGroupType"u8);
             writer.WriteStringValue(ApplicationGroupType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(IsCloudPcResource))
+            if (options.Format != "W" && Optional.IsDefined(IsCloudPCResource))
             {
                 writer.WritePropertyName("cloudPcResource"u8);
-                writer.WriteBooleanValue(IsCloudPcResource.Value);
+                writer.WriteBooleanValue(IsCloudPCResource.Value);
             }
             if (Optional.IsDefined(ShowInFeed))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             ResourceIdentifier hostPoolId = default;
             ResourceIdentifier workspaceId = default;
             VirtualApplicationGroupType applicationGroupType = default;
-            bool? isCloudPcResource = default;
+            bool? isCloudPCResource = default;
             bool? showInFeed = default;
             string oboTenantId = default;
             DeploymentScope? deploymentScope = default;
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    isCloudPcResource = prop.Value.GetBoolean();
+                    isCloudPCResource = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("showInFeed"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 hostPoolId,
                 workspaceId,
                 applicationGroupType,
-                isCloudPcResource,
+                isCloudPCResource,
                 showInFeed,
                 oboTenantId,
                 deploymentScope,

@@ -8,11 +8,12 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
     /// <summary></summary>
-    public partial class VirtualApplicationGroupResource : IJsonModel<VirtualApplicationGroupData>
+    public partial class VirtualApplicationGroupResource : ArmResource, IJsonModel<VirtualApplicationGroupData>
     {
         private static IJsonModel<VirtualApplicationGroupData> s_dataDeserializationInstance;
 

@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="hostPoolId"> HostPool arm path of ApplicationGroup. </param>
         /// <param name="workspaceId"> Workspace arm path of ApplicationGroup. </param>
         /// <param name="applicationGroupType"> Resource Type of ApplicationGroup. </param>
-        /// <param name="isCloudPcResource"> Is cloud pc resource. </param>
+        /// <param name="isCloudPCResource"> Is cloud pc resource. </param>
         /// <param name="showInFeed"> Boolean representing whether the applicationGroup is show in the feed. </param>
         /// <param name="oboTenantId"> Tenant that the resource is being requested on behalf of. </param>
         /// <param name="deploymentScope"> DeploymentScope type for ApplicationGroup. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGroupProperties(string objectId, string description, string friendlyName, ResourceIdentifier hostPoolId, ResourceIdentifier workspaceId, VirtualApplicationGroupType applicationGroupType, bool? isCloudPcResource, bool? showInFeed, string oboTenantId, DeploymentScope? deploymentScope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationGroupProperties(string objectId, string description, string friendlyName, ResourceIdentifier hostPoolId, ResourceIdentifier workspaceId, VirtualApplicationGroupType applicationGroupType, bool? isCloudPCResource, bool? showInFeed, string oboTenantId, DeploymentScope? deploymentScope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ObjectId = objectId;
             Description = description;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             HostPoolId = hostPoolId;
             WorkspaceId = workspaceId;
             ApplicationGroupType = applicationGroupType;
-            IsCloudPcResource = isCloudPcResource;
+            IsCloudPCResource = isCloudPCResource;
             ShowInFeed = showInFeed;
             OboTenantId = oboTenantId;
             DeploymentScope = deploymentScope;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Is cloud pc resource. </summary>
         [WirePath("cloudPcResource")]
-        public bool? IsCloudPcResource { get; }
+        public bool? IsCloudPCResource { get; }
 
         /// <summary> Boolean representing whether the applicationGroup is show in the feed. </summary>
         [WirePath("showInFeed")]
