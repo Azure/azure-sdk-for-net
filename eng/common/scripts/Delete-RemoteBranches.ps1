@@ -83,7 +83,7 @@ if ($TargetBranch) {
     if ($LASTEXITCODE) {
       # GitHub returns 422 when the ref doesn't exist. Treat that as a non-fatal warning
       # since the goal (branch gone) is already achieved.
-      if ($response -match "Reference does not exist" -or $response -match "422") {
+      if ($response -match "Reference does not exist" -or $response -match "HTTP 422") {
         LogWarning "Branch '$TargetBranch' does not exist in '$RepoId'. It may have already been deleted."
       }
       else {
