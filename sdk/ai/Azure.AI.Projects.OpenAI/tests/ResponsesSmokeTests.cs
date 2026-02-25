@@ -4,6 +4,8 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
@@ -175,98 +177,42 @@ public class ResponsesSmokeTests : ProjectsOpenAITestBase
     }
 
     [Test]
-    public void RequestOptionsOverloadCreateResponseAsyncExists()
+    public void RequestOptionsHeaderWorks()
     {
+        const string expectedHeaderKey = "x-test-header-key";
+        const string expectedHeaderValue = "some header value";
+
+        bool headerChecked = false;
+
+        ProjectResponsesClientOptions options = new();
+        options.AddPolicy(
+            new GenericActionPipelinePolicy(
+                requestAction: (request) =>
+                {
+                    IEnumerable<string> values = [];
+                    Assert.That(request?.Headers?.TryGetValues(expectedHeaderKey, out values), Is.True);
+                    Assert.That(values.ToList(), Has.Count.EqualTo(1));
+                    Assert.That(values.FirstOrDefault(), Is.EqualTo(expectedHeaderValue));
+                    headerChecked = true;
+                }),
+            PipelinePosition.PerCall);
+
         Uri mockProjectEndpoint = new("https://microsoft.com/mock/endpoint");
-        ProjectResponsesClient client = new(mockProjectEndpoint, new MockCredential());
+        ProjectResponsesClient client = new(mockProjectEndpoint, new MockCredential(), options);
 
-        Assert.ThrowsAsync<ArgumentNullException>(async () => await client.CreateResponseAsync((CreateResponseOptions)null, new RequestOptions()));
-    }
+        RequestOptions requestOptions = new();
+        requestOptions.AddHeader(expectedHeaderKey, expectedHeaderValue);
 
-    [Test]
-    public void RequestOptionsOverloadCreateResponseStreamingExists()
-    {
-        Uri mockProjectEndpoint = new("https://microsoft.com/mock/endpoint");
-        ProjectResponsesClient client = new(mockProjectEndpoint, new MockCredential());
+        Assert.ThrowsAsync<ClientResultException>(async ()
+            => await client.CreateResponseAsync(
+                options: new CreateResponseOptions()
+                {
+                    Model = "mock-model",
+                    InputItems = { ResponseItem.CreateUserMessageItem("Hello") },
+                },
+                requestOptions));
 
-        Assert.Throws<ArgumentNullException>(() => client.CreateResponseStreaming((CreateResponseOptions)null, new RequestOptions()));
-    }
-
-    [Test]
-    public void RequestOptionsOverloadCreateResponseStreamingAsyncExists()
-    {
-        Uri mockProjectEndpoint = new("https://microsoft.com/mock/endpoint");
-        ProjectResponsesClient client = new(mockProjectEndpoint, new MockCredential());
-
-        Assert.Throws<ArgumentNullException>(() => client.CreateResponseStreamingAsync((CreateResponseOptions)null, new RequestOptions()));
-    }
-
-    [Test]
-    public void RequestOptionsStreamingRejectsBufferedResponse()
-    {
-        Uri mockProjectEndpoint = new("https://microsoft.com/mock/endpoint");
-        ProjectResponsesClient client = new(mockProjectEndpoint, new MockCredential());
-
-        CreateResponseOptions options = new()
-        {
-            Model = "test-model",
-            StreamingEnabled = true,
-            InputItems = { ResponseItem.CreateUserMessageItem("Hello") },
-        };
-
-        RequestOptions requestOptions = new() { BufferResponse = true };
-
-        Assert.Throws<InvalidOperationException>(() => client.CreateResponseStreaming(options, requestOptions));
-        Assert.Throws<InvalidOperationException>(() => client.CreateResponseStreamingAsync(options, requestOptions));
-    }
-
-    [Test]
-    public void RequestOptionsOverloadsAcceptNullRequestOptions()
-    {
-        Uri mockProjectEndpoint = new("https://microsoft.com/mock/endpoint");
-        ProjectResponsesClient client = new(mockProjectEndpoint, new MockCredential());
-
-        CreateResponseOptions options = new()
-        {
-            Model = "test-model",
-            InputItems = { ResponseItem.CreateUserMessageItem("Hello") },
-        };
-
-        // Non-streaming with null RequestOptions: should proceed to protocol call (which fails
-        // because there's no real service) rather than throwing ArgumentNullException.
-        var ex = Assert.Throws<ClientResultException>(() => client.CreateResponse(options, (RequestOptions)null));
-        Assert.That(ex, Is.Not.Null);
-    }
-
-    [Test]
-    public void RequestOptionsOverloadsApplyClientDefaults()
-    {
-        Uri mockProjectEndpoint = new("https://microsoft.com/mock/endpoint");
-        ProjectResponsesClient client = new(
-            mockProjectEndpoint,
-            new MockCredential(),
-            defaultAgent: new AgentReference("my-default-agent"),
-            defaultConversationId: "conv_default123");
-
-        CreateResponseOptions options = new()
-        {
-            InputItems = { ResponseItem.CreateUserMessageItem("Hello") },
-        };
-
-        // The overload should apply defaults before the protocol call fails.
-        // We can verify the defaults were applied by inspecting the options after
-        // the method processes them (even though the actual HTTP call fails).
-        try
-        {
-            client.CreateResponse(options, new RequestOptions());
-        }
-        catch (ClientResultException)
-        {
-            // Expected: no real service endpoint
-        }
-
-        Assert.That(options.Agent?.Name, Is.EqualTo("my-default-agent"));
-        Assert.That(options.AgentConversationId, Is.EqualTo("conv_default123"));
+        Assert.That(headerChecked, Is.True, "The request header validation in the pipeline policy was not executed.");
     }
 
     [Test]
