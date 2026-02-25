@@ -18,7 +18,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.VisualStudio
     /// </summary>
     internal class VisualStudioCredentialCreationTests : CredentialCreationTestBase<VisualStudioCredential>
     {
-        protected override string CredentialSource => "VisualStudioCredential";
+        protected override string CredentialSource => nameof(VisualStudioCredential);
 
         private static Dictionary<string, string> AllNulledEnvVars() => new()
         {
