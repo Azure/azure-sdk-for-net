@@ -196,39 +196,55 @@ namespace Azure.Identity
 
         internal string ApiKey { get; private set; }
 
-        private static string ConvertCredentialSource(string value) => value?.ToLowerInvariant() switch
+        internal static string ConvertCredentialSource(string value)
         {
-            null => throw new InvalidOperationException("CredentialSource is required when configuring credentials. Specify a valid CredentialSource in the configuration."),
-            // Full credential names and already-converted lowercase values match directly
-            Constants.VisualStudioCredential => Constants.VisualStudioCredential,
-            Constants.VisualStudioCodeCredential => Constants.VisualStudioCodeCredential,
-            Constants.AzureCliCredential => Constants.AzureCliCredential,
-            Constants.AzurePowerShellCredential => Constants.AzurePowerShellCredential,
-            Constants.AzureDeveloperCliCredential => Constants.AzureDeveloperCliCredential,
-            Constants.EnvironmentCredential => Constants.EnvironmentCredential,
-            Constants.WorkloadIdentityCredential => Constants.WorkloadIdentityCredential,
-            Constants.ManagedIdentityCredential => Constants.ManagedIdentityCredential,
-            Constants.InteractiveBrowserCredential => Constants.InteractiveBrowserCredential,
-            Constants.BrokerCredential => Constants.BrokerCredential,
-            Constants.AzurePipelinesCredential => Constants.AzurePipelinesCredential,
-            Constants.ManagedIdentityAsFederatedIdentityCredential => Constants.ManagedIdentityAsFederatedIdentityCredential,
-            Constants.ApiKeyCredential => Constants.ApiKeyCredential,
-            // Short names (back-compat)
-            "visualstudio" => Constants.VisualStudioCredential,
-            "visualstudiocode" => Constants.VisualStudioCodeCredential,
-            "azurecli" => Constants.AzureCliCredential,
-            "azurepowershell" => Constants.AzurePowerShellCredential,
-            "azuredevelopercli" => Constants.AzureDeveloperCliCredential,
-            "environment" => Constants.EnvironmentCredential,
-            "workloadidentity" => Constants.WorkloadIdentityCredential,
-            "managedidentity" => Constants.ManagedIdentityCredential,
-            "interactivebrowser" => Constants.InteractiveBrowserCredential,
-            "broker" => Constants.BrokerCredential,
-            "azurepipelines" => Constants.AzurePipelinesCredential,
-            "managedidentityasfederatedidentity" => Constants.ManagedIdentityAsFederatedIdentityCredential,
-            "apikey" => Constants.ApiKeyCredential,
-            _ => throw new InvalidOperationException($"Unsupported CredentialSource found in configuration: {value}."),
-        };
+            if (!TryConvertCredentialSource(value, out string result))
+            {
+                throw new InvalidOperationException(value is null
+                    ? "CredentialSource is required when configuring credentials. Specify a valid CredentialSource in the configuration."
+                    : $"Unsupported CredentialSource found in configuration: {value}.");
+            }
+
+            return result;
+        }
+
+        internal static bool TryConvertCredentialSource(string value, out string result)
+        {
+            result = value?.ToLowerInvariant() switch
+            {
+                // Full credential names and already-converted lowercase values match directly
+                Constants.VisualStudioCredential => Constants.VisualStudioCredential,
+                Constants.VisualStudioCodeCredential => Constants.VisualStudioCodeCredential,
+                Constants.AzureCliCredential => Constants.AzureCliCredential,
+                Constants.AzurePowerShellCredential => Constants.AzurePowerShellCredential,
+                Constants.AzureDeveloperCliCredential => Constants.AzureDeveloperCliCredential,
+                Constants.EnvironmentCredential => Constants.EnvironmentCredential,
+                Constants.WorkloadIdentityCredential => Constants.WorkloadIdentityCredential,
+                Constants.ManagedIdentityCredential => Constants.ManagedIdentityCredential,
+                Constants.InteractiveBrowserCredential => Constants.InteractiveBrowserCredential,
+                Constants.BrokerCredential => Constants.BrokerCredential,
+                Constants.AzurePipelinesCredential => Constants.AzurePipelinesCredential,
+                Constants.ManagedIdentityAsFederatedIdentityCredential => Constants.ManagedIdentityAsFederatedIdentityCredential,
+                Constants.ApiKeyCredential => Constants.ApiKeyCredential,
+                // Short names (back-compat)
+                "visualstudio" => Constants.VisualStudioCredential,
+                "visualstudiocode" => Constants.VisualStudioCodeCredential,
+                "azurecli" => Constants.AzureCliCredential,
+                "azurepowershell" => Constants.AzurePowerShellCredential,
+                "azuredevelopercli" => Constants.AzureDeveloperCliCredential,
+                "environment" => Constants.EnvironmentCredential,
+                "workloadidentity" => Constants.WorkloadIdentityCredential,
+                "managedidentity" => Constants.ManagedIdentityCredential,
+                "interactivebrowser" => Constants.InteractiveBrowserCredential,
+                "broker" => Constants.BrokerCredential,
+                "azurepipelines" => Constants.AzurePipelinesCredential,
+                "managedidentityasfederatedidentity" => Constants.ManagedIdentityAsFederatedIdentityCredential,
+                "apikey" => Constants.ApiKeyCredential,
+                _ => null,
+            };
+
+            return result is not null;
+        }
 
         /// <summary>
         /// The ID of the tenant to which the credential will authenticate by default. If not specified, the credential will authenticate to any requested tenant, and will default to the tenant to which the chosen authentication method was originally authenticated.
