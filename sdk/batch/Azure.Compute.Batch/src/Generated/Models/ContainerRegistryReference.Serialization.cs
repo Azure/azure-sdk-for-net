@@ -158,7 +158,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    registryServerUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    registryServerUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("identityReference"u8))

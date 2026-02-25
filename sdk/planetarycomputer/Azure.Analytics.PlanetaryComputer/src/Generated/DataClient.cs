@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -4244,6 +4245,68 @@ namespace Azure.Analytics.PlanetaryComputer
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Register a Search query. </summary>
+        /// <param name="collections"> List of STAC collection IDs to include in the mosaic. </param>
+        /// <param name="ids"> List of specific STAC item IDs to include in the mosaic. </param>
+        /// <param name="boundingBox"> Geographic bounding box to filter items [west, south, east, north]. </param>
+        /// <param name="intersects"> GeoJSON geometry to spatially filter items by intersection. </param>
+        /// <param name="query"> Query. </param>
+        /// <param name="filter"> Filter. </param>
+        /// <param name="datetime"> Temporal filter in RFC 3339 format or interval. </param>
+        /// <param name="sortBy"> Criteria for ordering items in the mosaic. </param>
+        /// <param name="filterLanguage"> Query language format used in the filter parameter. </param>
+        /// <param name="metadata"> Additional metadata to associate with the mosaic. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<TilerMosaicSearchRegistrationResult> RegisterMosaicsSearch(IEnumerable<string> collections = default, IEnumerable<string> ids = default, IEnumerable<float> boundingBox = default, GeoJsonGeometry intersects = default, IDictionary<string, BinaryData> query = default, IDictionary<string, BinaryData> filter = default, string datetime = default, IEnumerable<StacSortExtension> sortBy = default, FilterLanguage? filterLanguage = default, MosaicMetadata metadata = default, CancellationToken cancellationToken = default)
+        {
+            RegisterMosaicsSearchRequest spreadModel = new RegisterMosaicsSearchRequest(
+                collections?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                ids?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                boundingBox?.ToList() as IList<float> ?? new ChangeTrackingList<float>(),
+                intersects,
+                query ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                filter ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                datetime,
+                sortBy?.ToList() as IList<StacSortExtension> ?? new ChangeTrackingList<StacSortExtension>(),
+                filterLanguage,
+                metadata,
+                default);
+            Response result = RegisterMosaicsSearch(spreadModel, cancellationToken.ToRequestContext());
+            return Response.FromValue((TilerMosaicSearchRegistrationResult)result, result);
+        }
+
+        /// <summary> Register a Search query. </summary>
+        /// <param name="collections"> List of STAC collection IDs to include in the mosaic. </param>
+        /// <param name="ids"> List of specific STAC item IDs to include in the mosaic. </param>
+        /// <param name="boundingBox"> Geographic bounding box to filter items [west, south, east, north]. </param>
+        /// <param name="intersects"> GeoJSON geometry to spatially filter items by intersection. </param>
+        /// <param name="query"> Query. </param>
+        /// <param name="filter"> Filter. </param>
+        /// <param name="datetime"> Temporal filter in RFC 3339 format or interval. </param>
+        /// <param name="sortBy"> Criteria for ordering items in the mosaic. </param>
+        /// <param name="filterLanguage"> Query language format used in the filter parameter. </param>
+        /// <param name="metadata"> Additional metadata to associate with the mosaic. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<TilerMosaicSearchRegistrationResult>> RegisterMosaicsSearchAsync(IEnumerable<string> collections = default, IEnumerable<string> ids = default, IEnumerable<float> boundingBox = default, GeoJsonGeometry intersects = default, IDictionary<string, BinaryData> query = default, IDictionary<string, BinaryData> filter = default, string datetime = default, IEnumerable<StacSortExtension> sortBy = default, FilterLanguage? filterLanguage = default, MosaicMetadata metadata = default, CancellationToken cancellationToken = default)
+        {
+            RegisterMosaicsSearchRequest spreadModel = new RegisterMosaicsSearchRequest(
+                collections?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                ids?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                boundingBox?.ToList() as IList<float> ?? new ChangeTrackingList<float>(),
+                intersects,
+                query ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                filter ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                datetime,
+                sortBy?.ToList() as IList<StacSortExtension> ?? new ChangeTrackingList<StacSortExtension>(),
+                filterLanguage,
+                metadata,
+                default);
+            Response result = await RegisterMosaicsSearchAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TilerMosaicSearchRegistrationResult)result, result);
         }
 
         /// <summary>

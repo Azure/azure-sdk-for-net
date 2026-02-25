@@ -1227,14 +1227,18 @@ Console.WriteLine($"Continuous Evaluation Rule created (id: {continuousEvalRule.
 
 **Note:** Tracing functionality is in preliminary preview and is subject to change. Spans, attributes, and events may be modified in future versions.
 
-You can add an Application Insights Azure resource to your Microsoft Foundry project. If one was enabled, you can get the Application Insights connection string, configure your AI Projects client, and observe traces in Azure Monitor. Typically, you might want to start tracing before you create a client or Agent.
+### Enabling GenAI Tracing
 
-Tracing requires enabling OpenTelemetry support. One way to do this is to set the `AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE` environment variable value to `true`. You can also enable the feature with the following code:
-```C# Snippet:EnableActivitySourceToGetTraces
-AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
+Tracing requires enabling GenAI-specific OpenTelemetry support. One way to do this is to set the `AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING` environment variable value to `true`. You can also enable the feature with the following code:
+```C# Snippet:Sample_EnableGenAITracing
+AppContext.SetSwitch("Azure.Experimental.EnableGenAITracing", true);
 ```
 
 > **Precedence:** If both the `AppContext` switch and the environment variable are set, the `AppContext` switch takes priority. No exception is thrown on conflict. If neither is set, the value defaults to `false`.
+
+**Important:** When you enable `Azure.Experimental.EnableGenAITracing`, the SDK automatically enables the `Azure.Experimental.EnableActivitySource` flag, which is required for the OpenTelemetry instrumentation to function.
+
+You can add an Application Insights Azure resource to your Microsoft Foundry project. If one was enabled, you can get the Application Insights connection string, configure your AI Projects client, and observe traces in Azure Monitor. Typically, you might want to start tracing before you create a client or Agent.
 
 ### Tracing to Azure Monitor
 
@@ -1253,7 +1257,6 @@ dotnet add package Azure.Monitor.OpenTelemetry.Exporter
 ```
 
 Here is an example how to set up tracing to Azure Monitor using Azure.Monitor.OpenTelemetry.Exporter:
-```C#
 var tracerProvider = Sdk.CreateTracerProviderBuilder()
     .AddSource("Azure.AI.Projects.*")
     .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("AgentTracingSample"))
@@ -1269,11 +1272,7 @@ dotnet add package OpenTelemetry.Exporter.Console
 ```
 
 Here is an example how to set up tracing to console:
-```C#
 var tracerProvider = Sdk.CreateTracerProviderBuilder()
-    .AddSource("Azure.AI.Projects.*")
-    .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("AgentTracingSample"))
-    .AddConsoleExporter()
     .Build();
 ```
 

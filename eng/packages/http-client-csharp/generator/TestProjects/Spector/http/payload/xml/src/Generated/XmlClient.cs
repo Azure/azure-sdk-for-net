@@ -41,5 +41,7 @@ namespace Payload.Xml
         public virtual ModelWithDictionaryValue GetModelWithDictionaryValueClient() => throw null;
 
         public virtual ModelWithEncodedNamesValue GetModelWithEncodedNamesValueClient() => throw null;
+
+        public virtual XmlErrorValue GetXmlErrorValueClient() => throw null;
     }
 }

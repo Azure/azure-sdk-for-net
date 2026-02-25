@@ -24,7 +24,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.Reset(_endpoint);
             uri.AppendPath("/data/tile-matrix-sets/", false);
             uri.AppendPath(tileMatrixSetId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -38,7 +41,10 @@ namespace Azure.Analytics.PlanetaryComputer
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/data/tile-matrix-sets", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -56,7 +62,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/items/", false);
             uri.AppendPath(itemId, true);
             uri.AppendPath("/asset_statistics", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var @param in assets)
@@ -129,7 +138,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/items/", false);
             uri.AppendPath(itemId, true);
             uri.AppendPath("/assets", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -147,7 +159,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/items/", false);
             uri.AppendPath(itemId, true);
             uri.AppendPath("/bounds", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -166,7 +181,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(itemId, true);
             uri.AppendPath("/crop.", false);
             uri.AppendPath(format, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var @param in assets)
@@ -269,7 +287,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(height.ToString(), true);
             uri.AppendPath(".", false);
             uri.AppendPath(format, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var @param in assets)
@@ -359,7 +380,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/items/", false);
             uri.AppendPath(itemId, true);
             uri.AppendPath("/statistics", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var @param in assets)
@@ -438,7 +462,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/items/", false);
             uri.AppendPath(itemId, true);
             uri.AppendPath("/info.geojson", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var @param in assets)
@@ -463,7 +490,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/items/", false);
             uri.AppendPath(itemId, true);
             uri.AppendPath("/info", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var @param in assets)
@@ -497,7 +527,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(maxy.ToString(), true);
             uri.AppendPath(".", false);
             uri.AppendPath(format, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var @param in assets)
@@ -610,7 +643,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(height.ToString(), true);
             uri.AppendPath(".", false);
             uri.AppendPath(format, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var @param in assets)
@@ -705,7 +741,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(longitude.ToString(), true);
             uri.AppendPath(",", false);
             uri.AppendPath(latitude.ToString(), true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var @param in assets)
@@ -758,7 +797,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/items/", false);
             uri.AppendPath(itemId, true);
             uri.AppendPath("/preview", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var @param in assets)
@@ -859,7 +901,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(itemId, true);
             uri.AppendPath("/preview.", false);
             uri.AppendPath(format, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var @param in assets)
@@ -953,7 +998,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/data/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/image/static", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -972,7 +1020,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/image/static/", false);
             uri.AppendPath(id, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -990,7 +1041,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/items/", false);
             uri.AppendPath(itemId, true);
             uri.AppendPath("/statistics", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var @param in assets)
@@ -1065,7 +1119,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/", false);
             uri.AppendPath(tileMatrixSetId, true);
             uri.AppendPath("/tilejson.json", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var @param in assets)
@@ -1176,7 +1233,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(scale.ToString(), true);
             uri.AppendPath("x.", false);
             uri.AppendPath(format, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var @param in assets)
@@ -1270,7 +1330,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/", false);
             uri.AppendPath(tileMatrixSetId, true);
             uri.AppendPath("/WMTSCapabilities.xml", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var @param in assets)
@@ -1367,7 +1430,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.Reset(_endpoint);
             uri.AppendPath("/data/legend/classmap/", false);
             uri.AppendPath(classmapName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (trimStart != null)
             {
                 uri.AppendQuery("trim_start", TypeFormatters.ConvertToString(trimStart), true);
@@ -1390,7 +1456,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.Reset(_endpoint);
             uri.AppendPath("/data/legend/interval/", false);
             uri.AppendPath(classmapName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (trimStart != null)
             {
                 uri.AppendQuery("trim_start", TypeFormatters.ConvertToString(trimStart), true);
@@ -1413,7 +1482,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.Reset(_endpoint);
             uri.AppendPath("/data/legend/colormap/", false);
             uri.AppendPath(colorMapName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (height != null)
             {
                 uri.AppendQuery("height", TypeFormatters.ConvertToString(height), true);
@@ -1449,7 +1521,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(",", false);
             uri.AppendPath(latitude.ToString(), true);
             uri.AppendPath("/assets", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (scanLimit != null)
             {
                 uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
@@ -1497,7 +1572,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/", false);
             uri.AppendPath(y.ToString(), true);
             uri.AppendPath("/assets", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (scanLimit != null)
             {
                 uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
@@ -1534,7 +1612,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/data/mosaic/", false);
             uri.AppendPath(searchId, true);
             uri.AppendPath("/info", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -1548,7 +1629,10 @@ namespace Azure.Analytics.PlanetaryComputer
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/data/mosaic/register", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -1568,7 +1652,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/", false);
             uri.AppendPath(tileMatrixSetId, true);
             uri.AppendPath("/tilejson.json", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var @param in assets)
@@ -1705,7 +1792,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(scale.ToString(), true);
             uri.AppendPath("x.", false);
             uri.AppendPath(format, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var @param in assets)
@@ -1817,7 +1907,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/", false);
             uri.AppendPath(tileMatrixSetId, true);
             uri.AppendPath("/WMTSCapabilities.xml", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var @param in assets)

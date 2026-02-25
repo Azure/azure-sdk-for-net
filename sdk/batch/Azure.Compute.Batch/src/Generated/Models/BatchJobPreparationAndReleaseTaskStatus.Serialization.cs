@@ -164,7 +164,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    nodeUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    nodeUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("jobPreparationTaskExecutionInfo"u8))
