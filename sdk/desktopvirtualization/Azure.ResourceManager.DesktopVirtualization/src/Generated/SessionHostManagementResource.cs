@@ -30,6 +30,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private readonly ControlSessionHostProvisioning _controlSessionHostProvisioningRestClient;
         private readonly ClientDiagnostics _controlSessionHostUpdateClientDiagnostics;
         private readonly ControlSessionHostUpdate _controlSessionHostUpdateRestClient;
+        private readonly ClientDiagnostics _initiateSessionHostUpdateClientDiagnostics;
+        private readonly InitiateSessionHostUpdate _initiateSessionHostUpdateRestClient;
         private readonly SessionHostManagementData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DesktopVirtualization/hostPools/sessionHostManagements";
@@ -60,6 +62,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
             _controlSessionHostProvisioningRestClient = new ControlSessionHostProvisioning(_controlSessionHostProvisioningClientDiagnostics, Pipeline, Endpoint, sessionHostManagementApiVersion ?? "2026-01-01-preview");
             _controlSessionHostUpdateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
             _controlSessionHostUpdateRestClient = new ControlSessionHostUpdate(_controlSessionHostUpdateClientDiagnostics, Pipeline, Endpoint, sessionHostManagementApiVersion ?? "2026-01-01-preview");
+            _initiateSessionHostUpdateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
+            _initiateSessionHostUpdateRestClient = new InitiateSessionHostUpdate(_initiateSessionHostUpdateClientDiagnostics, Pipeline, Endpoint, sessionHostManagementApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -609,6 +613,100 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     operation.WaitForCompletionResponse(cancellationToken);
                 }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Initiates a hostpool update or schedule an update for the future.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHostManagements/default/initiateSessionHostUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> InitiateSessionHostUpdate_Post. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SessionHostManagementResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="body"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual async Task<Response> PostAsync(PostParameterBody body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            using DiagnosticScope scope = _initiateSessionHostUpdateClientDiagnostics.CreateScope("SessionHostManagementResource.Post");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _initiateSessionHostUpdateRestClient.CreatePostRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, null, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Initiates a hostpool update or schedule an update for the future.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHostManagements/default/initiateSessionHostUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> InitiateSessionHostUpdate_Post. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SessionHostManagementResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="body"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual Response Post(PostParameterBody body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            using DiagnosticScope scope = _initiateSessionHostUpdateClientDiagnostics.CreateScope("SessionHostManagementResource.Post");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _initiateSessionHostUpdateRestClient.CreatePostRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, null, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
             }
             catch (Exception e)
             {

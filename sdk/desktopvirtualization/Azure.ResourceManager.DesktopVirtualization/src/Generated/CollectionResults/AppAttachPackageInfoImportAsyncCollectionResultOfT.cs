@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextImportRequest(nextLink, _subscriptionId, _resourceGroupName, _hostPoolName, _content, _context) : _client.CreateImportRequest(_subscriptionId, _resourceGroupName, _hostPoolName, _content, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableDesktopVirtualizationResourceGroupResource.Import");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HostPoolResource.Import");
             scope.Start();
             try
             {

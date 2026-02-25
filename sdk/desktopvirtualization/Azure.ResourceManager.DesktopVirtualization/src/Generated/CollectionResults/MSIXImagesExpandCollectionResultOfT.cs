@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextExpandRequest(nextLink, _subscriptionId, _resourceGroupName, _hostPoolName, _content, _context) : _client.CreateExpandRequest(_subscriptionId, _resourceGroupName, _hostPoolName, _content, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableDesktopVirtualizationResourceGroupResource.Expand");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HostPoolResource.Expand");
             scope.Start();
             try
             {
