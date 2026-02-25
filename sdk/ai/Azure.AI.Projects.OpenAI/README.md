@@ -58,9 +58,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
       - [New Microsoft Foundry](#new-microsoft-foundry)
     - [Using A2A Tool](#using-a2a-tool)
   - [Memory search tool](#memory-search-tool)
-- [Tracing](#tracing)
-  - [Tracing to Azure Monitor](#tracing-to-azure-monitor)
-  - [Tracing to Console](#tracing-to-console)
+  - [Azure Function tool](#azure-function-tool)
 - [Troubleshooting](#troubleshooting)
 - [Next steps](#next-steps)
 - [Contributing](#contributing)
@@ -459,6 +457,12 @@ Console.WriteLine(response.GetOutputText());
 
 ### Container App
 
+**Note:** This feature is in the preview, to use it, please disable the `AAIP001` warning.
+
+```C#
+#pragma warning disable AAIP001
+```
+
 [Azure Container App](https://learn.microsoft.com/azure/container-apps/ai-integration) may act as an agent if it implements the OpenAI-like protocol. Azure.AI.Projects.OpenAI allow you to interact with these applications as with regular agents. The main difference is that in this case agent needs to be created with `ContainerAppAgentDefinition`. This agent can be used in responses API as a regular agent.
 
 ```C# Snippet:Sample_CreateContainerApp_ContainerApp_Async
@@ -472,18 +476,23 @@ AgentVersion containerAgentVersion = await projectClient.Agents.CreateAgentVersi
 
 ### Hosted Agents
 
+**Note:** This feature is in the preview, to use it, please disable the `AAIP001` warning.
+
+```C#
+#pragma warning disable AAIP001
+```
+
 Hosted agents simplify the custom agent deployment on fully controlled environment [see more](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/hosted-agents).
 
 To create the hosted agent, please use the `ImageBasedHostedAgentDefinition` while creating the AgentVersion object.
 
 ```C# Snippet:Sample_ImageBasedHostedAgentDefinition_HostedAgent
-private static  ImageBasedHostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
+private static  HostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
 {
-    ImageBasedHostedAgentDefinition agentDefinition = new(
+    HostedAgentDefinition agentDefinition = new(
         containerProtocolVersions: [new ProtocolVersionRecord(AgentCommunicationMethod.ActivityProtocol, "v1")],
         cpu: "1",
-        memory: "2Gi",
-        image: dockerImage
+        memory: "2Gi"
     )
     {
         EnvironmentVariables = {
@@ -492,7 +501,8 @@ private static  ImageBasedHostedAgentDefinition GetAgentDefinition(string docker
             // Optional variables, used for logging
             { "APPLICATIONINSIGHTS_CONNECTION_STRING", applicationInsightConnectionString },
             { "AGENT_PROJECT_RESOURCE_ID", projectEndpoint },
-        }
+        },
+        Image = dockerImage,
     };
     return agentDefinition;
 }
@@ -1274,8 +1284,8 @@ To use the OpenAPI tool, we need to Create the `OpenAPIFunctionDefinition` objec
 string filePath = GetFile();
 OpenAPIFunctionDefinition toolDefinition = new(
     name: "get_weather",
-    spec: BinaryData.FromBytes(BinaryData.FromBytes(File.ReadAllBytes(filePath))),
-    auth: new OpenAPIAnonymousAuthenticationDetails()
+    specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
+    authentication: new OpenAPIAnonymousAuthenticationDetails()
 );
 toolDefinition.Description = "Retrieve weather information for a location.";
 OpenAPITool openapiTool = new(toolDefinition);
@@ -1312,8 +1322,8 @@ string filePath = GetFile();
 AIProjectConnection tripadvisorConnection = projectClient.Connections.GetConnection("tripadvisor");
 OpenAPIFunctionDefinition toolDefinition = new(
     name: "tripadvisor",
-    spec: BinaryData.FromBytes(BinaryData.FromBytes(File.ReadAllBytes(filePath))),
-    auth: new OpenAPIProjectConnectionAuthenticationDetails(new OpenAPIProjectConnectionSecurityScheme(
+    specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
+    authentication: new OpenAPIProjectConnectionAuthenticationDetails(new OpenAPIProjectConnectionSecurityScheme(
         projectConnectionId: tripadvisorConnection.Id
     ))
 );
@@ -1622,62 +1632,160 @@ AgentVersion agentVersionWithMemory = await projectClient.Agents.CreateAgentVers
     options: new(agentDefinition));
 ```
 
-## Tracing
-**Note:** The tracing functionality is currently in preview with limited scope. Only agent creation operations generate dedicated gen_ai traces currently. As a preview feature, the trace structure including spans, attributes, and events may change in future releases.
+### Azure Function tool
+#### Prerequisites
+To make a function call we need to create and deploy the Azure function. In the code snippet below, we have an example of function on C# which can be used by the agent.
 
-You can add an Application Insights Azure resource to your Azure AI Foundry project. See the Tracing tab in your AI Foundry project. If one was enabled, you use the Application Insights connection string, configure your Agents, and observe the full execution path through Azure Monitor. Typically, you might want to start tracing before you create an Agent.
+```C#
+namespace FunctionProj
+{
+    public class Response
+    {
+        public required string Value { get; set; }
+        public required string CorrelationId { get; set; }
+    }
 
-Tracing requires enabling OpenTelemetry support. One way to do this is to set the `AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE` environment variable value to `true`. You can also enable the feature with the following code:
-```C# Snippet:EnableActivitySourceToGetAgentTraces
-AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
+    public class Arguments
+    {
+        public required string CorrelationId { get; set; }
+    }
+
+    public class Foo
+    {
+        private readonly ILogger<Foo> _logger;
+
+        public Foo(ILogger<Foo> logger)
+        {
+            _logger = logger;
+        }
+
+        [Function("Foo")]
+        [QueueOutput("azure-function-tool-output", Connection = "AzureWebJobsStorage")]
+        public string Run([QueueTrigger("azure-function-foo-input")] Arguments input, FunctionContext executionContext)
+        {
+            var logger = executionContext.GetLogger("Foo");
+            logger.LogInformation("C# Queue function processed a request.");
+
+            var response = new Response
+            {
+                Value = "Bar",
+                // Important! Correlation ID must match the input correlation ID.
+                CorrelationId = input.CorrelationId
+            };
+
+            return JsonSerializer.Serialize(response);
+        }
+    }
+}
 ```
 
-To enabled content recording, set the `OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT` environment variable to `true`. Content in this context refers to chat message content, function call tool related function names, function parameter names and values. Alternatively, you can control content recording with the following code:
-```C# Snippet:DisableContentRecordingForAgentTraces
-AppContext.SetSwitch("Azure.Experimental.TraceGenAIMessageContent", false);
-```
-Set the value to `true` to enable content recording.
+In this code we define function input and output class: `Arguments` and `Response` respectively. These two data classes will be serialized in JSON. It is important that these both contain field `CorrelationId`, which is the same between input and output.
 
-### Tracing to Azure Monitor
-First, set the `APPLICATIONINSIGHTS_CONNECTION_STRING` environment variable to point to your Azure Monitor resource. You can also retrieve the connection string programmatically using the Azure AI Projects client library (Azure.AI.Projects) by calling the `Telemetry.GetApplicationInsightsConnectionString()` method on the `AIProjectClient` class.
+**Note:** The Azure Function may be only used in standard agent setup. Please follow the [instruction](https://github.com/azure-ai-foundry/foundry-samples/tree/main/infrastructure/infrastructure-setup-bicep/41-standard-agent-setup) to deploy an agent, capable of calling Azure Functions.
+In our example the function will be stored in the storage account, created with the AI hub. For that we need to allow key access to that storage. In Azure portal go to Storage account > Settings > Configuration and set "Allow storage account key access" to Enabled. If it is not done, the error will be displayed "The remote server returned an error: (403) Forbidden." To create the function resource that will host our function, install [azure-cli](https://pypi.org/project/azure-cli/) python package and run the next command:
 
-For tracing to Azure Monitor from your application, the preferred option is to use Azure.Monitor.OpenTelemetry.AspNetCore. Install the package with [NuGet](https://www.nuget.org/ ):
 ```shell
-dotnet add package Azure.Monitor.OpenTelemetry.AspNetCore
+pip install -U azure-cli
+az login
+az functionapp create --resource-group your-resource-group --consumption-plan-location region --runtime dotnet-isolated --functions-version 4 --name function_name --storage-account storage_account_already_present_in_resource_group --app-insights existing_or_new_application_insights_name
 ```
 
-More information about using the Azure.Monitor.OpenTelemetry.AspNetCore package can be found [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/README.md ).
+This function writes data to the output queue and hence needs to be authenticated to Azure, so we will need to assign the function system identity and provide it `Storage Queue Data Contributor`. To do that in Azure portal select the function, located in `your-resource-group` resource group and in Settings>Identity, switch it on and click Save. After that assign the `Storage Queue Data Contributor` permission on storage account used by our function (`storage_account_already_present_in_resource_group` in the script above) for just assigned System Managed identity.
 
-Another option is to use Azure.Monitor.OpenTelemetry.Exporter package. Install the package with [NuGet](https://www.nuget.org/ )
-```shell
-dotnet add package Azure.Monitor.OpenTelemetry.Exporter
+Now we will create the function itself. Install [.NET](https://dotnet.microsoft.com/download) and [Core Tools](https://go.microsoft.com/fwlink/?linkid=2174087) and create the function project using next commands.
+```
+func init FunctionProj --worker-runtime dotnet-isolated --target-framework net8.0
+cd FunctionProj
+func new --name foo --template "HTTP trigger" --authlevel "anonymous"
+dotnet add package Azure.Identity
+dotnet add package Microsoft.Azure.Functions.Worker.Extensions.Storage.Queues --prerelease
 ```
 
-Here is an example how to set up tracing to Azure monitor using Azure.Monitor.OpenTelemetry.Exporter:
-```C# Snippet:AgentTelemetrySetupTracingToAzureMonitor
-var tracerProvider = Sdk.CreateTracerProviderBuilder()
-    .AddSource("Azure.AI.Projects.Persistent.*")
-    .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("AgentTracingSample"))
-    .AddAzureMonitorTraceExporter().Build();
+**Note:** There is a "Azure Queue Storage trigger", however the attempt to use it results in error for now.
+We have created a project, containing HTTP-triggered azure function with the logic in `Foo.cs` file. As far as we need to trigger Azure function by a new message in the queue, we will replace the content of a Foo.cs by the C# sample code above.
+To deploy the function run the command from dotnet project folder:
+
+```
+func azure functionapp publish function_name
 ```
 
-
-### Tracing to Console
-
-For tracing to console from your application, install the OpenTelemetry.Exporter.Console with [NuGet](https://www.nuget.org/ ):
-
-```shell
-dotnet add package OpenTelemetry.Exporter.Console
+In the `storage_account_already_present_in_resource_group` select the `Queue service` and create two queues: `azure-function-foo-input` and `azure-function-tool-output`. Note that the same queues are used in our sample. To check that the function is working, place the next message into the `azure-function-foo-input` and replace `storage_account_already_present_in_resource_group` by the actual resource group name, or just copy the output queue address.
+```json
+{
+  "OutputQueueUri": "https://storage_account_already_present_in_resource_group.queue.core.windows.net/azure-function-tool-output",
+  "CorrelationId": "42"
+}
 ```
 
+After the processing, the output queue should contain the message with the following contents:
+```json
+{
+  "Value": "Bar",
+  "CorrelationId": "42"
+}
+```
+Please note that the input `CorrelationId` is the same as output.
+*Hint:* Place multiple messages to input queue and keep second internet browser window with the output queue open, hit the refresh button on the portal user interface, so that you will not miss the message. If the function completed with error the message instead gets into the `azure-function-foo-input-poison` queue. If that happened, please check your setup.
+After we have tested the function and made sure it works, please make sure that the Azure AI Project have the next roles for the storage account: `Storage Account Contributor`, `Storage Blob Data Contributor`, `Storage File Data Privileged Contributor`, `Storage Queue Data Contributor` and `Storage Table Data Contributor`. Now the function is ready to be used by the agent.
 
-Here is an example how to set up tracing to console:
-```C# Snippet:AgentTelemetrySetupTracingToConsole
-var tracerProvider = Sdk.CreateTracerProviderBuilder()
-                .AddSource("Azure.AI.Projects.Persistent.*") // Add the required sources name
-                .SetResourceBuilder(OpenTelemetry.Resources.ResourceBuilder.CreateDefault().AddService("AgentTracingSample"))
-                .AddConsoleExporter() // Export traces to the console
-                .Build();
+#### Using Agent with Azure Function
+
+To use agent with Azure Function we need to create `AzureFunctionTool`, containing the description
+of an Azure Function.
+
+```C# Snippet:Sample_AzureFunctionTool_AzureFunction
+public class Sample_AzureFunction : ProjectsOpenAITestBase
+{
+    private static AzureFunctionTool GetFunctionTool(string storageQueueUri)
+    {
+        AzureFunctionDefinitionFunction functionDefinition = new(
+            name: "foo",
+            parameters: BinaryData.FromObjectAsJson(
+                new
+                {
+                    Type = "object",
+                    Properties = new
+                    {
+                        query = new
+                        {
+                            Type = "string",
+                            Description = "The question to ask.",
+                        }
+                    }
+                },
+                new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }
+            )
+        )
+        {
+            Description = "Get answers from the foo bot.",
+        };
+        return new AzureFunctionTool(
+            new AzureFunctionDefinition(
+                function: functionDefinition,
+                inputBinding: new AzureFunctionBinding(
+                    new AzureFunctionStorageQueue(queueServiceEndpoint: storageQueueUri, queueName: "azure-function-foo-input")),
+                outputBinding: new AzureFunctionBinding(
+                    new AzureFunctionStorageQueue(queueServiceEndpoint: storageQueueUri, queueName: "azure-function-tool-output"))
+                )
+            );
+    }
+```
+
+This tool should be used by `PromptAgentDefinition` so Agent can use the Azure Function when required.
+
+```C# Snippet:Sample_CreateAgent_AzureFunction_Async
+PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "You are a helpful support agent. Use the provided function any "
+        + "time the prompt contains the string 'What would foo say?'. When you invoke "
+        + "the function, ALWAYS specify the output queue uri parameter as "
+        + $"'{storageQueueUri}/azure-function-tool-output'. Always responds with "
+        + "\"Foo says\" and then the response from the tool.",
+    Tools = { GetFunctionTool(storageQueueUri) },
+};
+AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+    agentName: "myAgent",
+    options: new(agentDefinition));
 ```
 
 ## Troubleshooting

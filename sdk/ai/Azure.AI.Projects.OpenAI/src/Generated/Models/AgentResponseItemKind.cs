@@ -11,30 +11,46 @@ namespace Azure.AI.Projects.OpenAI
     public readonly partial struct AgentResponseItemKind : IEquatable<AgentResponseItemKind>
     {
         private readonly string _value;
-        private const string MessageValue = "message";
         private const string OutputMessageValue = "output_message";
         private const string FileSearchCallValue = "file_search_call";
-        private const string ComputerCallValue = "computer_call";
-        private const string ComputerCallOutputValue = "computer_call_output";
-        private const string WebSearchCallValue = "web_search_call";
         private const string FunctionCallValue = "function_call";
-        private const string FunctionCallOutputValue = "function_call_output";
+        private const string WebSearchCallValue = "web_search_call";
+        private const string ComputerCallValue = "computer_call";
+        private const string ReasoningValue = "reasoning";
+        private const string CompactionValue = "compaction";
         private const string ImageGenerationCallValue = "image_generation_call";
         private const string CodeInterpreterCallValue = "code_interpreter_call";
         private const string LocalShellCallValue = "local_shell_call";
-        private const string LocalShellCallOutputValue = "local_shell_call_output";
         private const string ShellCallValue = "shell_call";
         private const string ShellCallOutputValue = "shell_call_output";
         private const string ApplyPatchCallValue = "apply_patch_call";
         private const string ApplyPatchCallOutputValue = "apply_patch_call_output";
+        private const string McpCallValue = "mcp_call";
         private const string McpListToolsValue = "mcp_list_tools";
         private const string McpApprovalRequestValue = "mcp_approval_request";
-        private const string McpApprovalResponseValue = "mcp_approval_response";
-        private const string McpCallValue = "mcp_call";
+        private const string CustomToolCallValue = "custom_tool_call";
         private const string StructuredOutputsValue = "structured_outputs";
-        private const string WorkflowActionValue = "workflow_action";
-        private const string MemorySearchCallValue = "memory_search_call";
         private const string OauthConsentRequestValue = "oauth_consent_request";
+        private const string MemorySearchCallValue = "memory_search_call";
+        private const string WorkflowActionValue = "workflow_action";
+        private const string A2aPreviewCallValue = "a2a_preview_call";
+        private const string A2aPreviewCallOutputValue = "a2a_preview_call_output";
+        private const string BingGroundingCallValue = "bing_grounding_call";
+        private const string BingGroundingCallOutputValue = "bing_grounding_call_output";
+        private const string SharepointGroundingPreviewCallValue = "sharepoint_grounding_preview_call";
+        private const string SharepointGroundingPreviewCallOutputValue = "sharepoint_grounding_preview_call_output";
+        private const string AzureAiSearchCallValue = "azure_ai_search_call";
+        private const string AzureAiSearchCallOutputValue = "azure_ai_search_call_output";
+        private const string BingCustomSearchPreviewCallValue = "bing_custom_search_preview_call";
+        private const string BingCustomSearchPreviewCallOutputValue = "bing_custom_search_preview_call_output";
+        private const string OpenapiCallValue = "openapi_call";
+        private const string OpenapiCallOutputValue = "openapi_call_output";
+        private const string BrowserAutomationPreviewCallValue = "browser_automation_preview_call";
+        private const string BrowserAutomationPreviewCallOutputValue = "browser_automation_preview_call_output";
+        private const string FabricDataagentPreviewCallValue = "fabric_dataagent_preview_call";
+        private const string FabricDataagentPreviewCallOutputValue = "fabric_dataagent_preview_call_output";
+        private const string AzureFunctionCallValue = "azure_function_call";
+        private const string AzureFunctionCallOutputValue = "azure_function_call_output";
 
         /// <summary> Initializes a new instance of <see cref="AgentResponseItemKind"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -46,29 +62,26 @@ namespace Azure.AI.Projects.OpenAI
             _value = value;
         }
 
-        /// <summary> Gets the Message. </summary>
-        public static AgentResponseItemKind Message { get; } = new AgentResponseItemKind(MessageValue);
-
         /// <summary> Gets the OutputMessage. </summary>
         public static AgentResponseItemKind OutputMessage { get; } = new AgentResponseItemKind(OutputMessageValue);
 
         /// <summary> Gets the FileSearchCall. </summary>
         public static AgentResponseItemKind FileSearchCall { get; } = new AgentResponseItemKind(FileSearchCallValue);
 
-        /// <summary> Gets the ComputerCall. </summary>
-        public static AgentResponseItemKind ComputerCall { get; } = new AgentResponseItemKind(ComputerCallValue);
-
-        /// <summary> Gets the ComputerCallOutput. </summary>
-        public static AgentResponseItemKind ComputerCallOutput { get; } = new AgentResponseItemKind(ComputerCallOutputValue);
+        /// <summary> Gets the FunctionCall. </summary>
+        public static AgentResponseItemKind FunctionCall { get; } = new AgentResponseItemKind(FunctionCallValue);
 
         /// <summary> Gets the WebSearchCall. </summary>
         public static AgentResponseItemKind WebSearchCall { get; } = new AgentResponseItemKind(WebSearchCallValue);
 
-        /// <summary> Gets the FunctionCall. </summary>
-        public static AgentResponseItemKind FunctionCall { get; } = new AgentResponseItemKind(FunctionCallValue);
+        /// <summary> Gets the ComputerCall. </summary>
+        public static AgentResponseItemKind ComputerCall { get; } = new AgentResponseItemKind(ComputerCallValue);
 
-        /// <summary> Gets the FunctionCallOutput. </summary>
-        public static AgentResponseItemKind FunctionCallOutput { get; } = new AgentResponseItemKind(FunctionCallOutputValue);
+        /// <summary> Gets the Reasoning. </summary>
+        public static AgentResponseItemKind Reasoning { get; } = new AgentResponseItemKind(ReasoningValue);
+
+        /// <summary> Gets the Compaction. </summary>
+        public static AgentResponseItemKind Compaction { get; } = new AgentResponseItemKind(CompactionValue);
 
         /// <summary> Gets the ImageGenerationCall. </summary>
         public static AgentResponseItemKind ImageGenerationCall { get; } = new AgentResponseItemKind(ImageGenerationCallValue);
@@ -78,9 +91,6 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <summary> Gets the LocalShellCall. </summary>
         public static AgentResponseItemKind LocalShellCall { get; } = new AgentResponseItemKind(LocalShellCallValue);
-
-        /// <summary> Gets the LocalShellCallOutput. </summary>
-        public static AgentResponseItemKind LocalShellCallOutput { get; } = new AgentResponseItemKind(LocalShellCallOutputValue);
 
         /// <summary> Gets the ShellCall. </summary>
         public static AgentResponseItemKind ShellCall { get; } = new AgentResponseItemKind(ShellCallValue);
@@ -94,29 +104,83 @@ namespace Azure.AI.Projects.OpenAI
         /// <summary> Gets the ApplyPatchCallOutput. </summary>
         public static AgentResponseItemKind ApplyPatchCallOutput { get; } = new AgentResponseItemKind(ApplyPatchCallOutputValue);
 
+        /// <summary> Gets the McpCall. </summary>
+        public static AgentResponseItemKind McpCall { get; } = new AgentResponseItemKind(McpCallValue);
+
         /// <summary> Gets the McpListTools. </summary>
         public static AgentResponseItemKind McpListTools { get; } = new AgentResponseItemKind(McpListToolsValue);
 
         /// <summary> Gets the McpApprovalRequest. </summary>
         public static AgentResponseItemKind McpApprovalRequest { get; } = new AgentResponseItemKind(McpApprovalRequestValue);
 
-        /// <summary> Gets the McpApprovalResponse. </summary>
-        public static AgentResponseItemKind McpApprovalResponse { get; } = new AgentResponseItemKind(McpApprovalResponseValue);
-
-        /// <summary> Gets the McpCall. </summary>
-        public static AgentResponseItemKind McpCall { get; } = new AgentResponseItemKind(McpCallValue);
+        /// <summary> Gets the CustomToolCall. </summary>
+        public static AgentResponseItemKind CustomToolCall { get; } = new AgentResponseItemKind(CustomToolCallValue);
 
         /// <summary> Gets the StructuredOutputs. </summary>
         public static AgentResponseItemKind StructuredOutputs { get; } = new AgentResponseItemKind(StructuredOutputsValue);
 
-        /// <summary> Gets the WorkflowAction. </summary>
-        public static AgentResponseItemKind WorkflowAction { get; } = new AgentResponseItemKind(WorkflowActionValue);
+        /// <summary> Gets the OauthConsentRequest. </summary>
+        public static AgentResponseItemKind OauthConsentRequest { get; } = new AgentResponseItemKind(OauthConsentRequestValue);
 
         /// <summary> Gets the MemorySearchCall. </summary>
         public static AgentResponseItemKind MemorySearchCall { get; } = new AgentResponseItemKind(MemorySearchCallValue);
 
-        /// <summary> Gets the OauthConsentRequest. </summary>
-        public static AgentResponseItemKind OauthConsentRequest { get; } = new AgentResponseItemKind(OauthConsentRequestValue);
+        /// <summary> Gets the WorkflowAction. </summary>
+        public static AgentResponseItemKind WorkflowAction { get; } = new AgentResponseItemKind(WorkflowActionValue);
+
+        /// <summary> Gets the A2aPreviewCall. </summary>
+        public static AgentResponseItemKind A2aPreviewCall { get; } = new AgentResponseItemKind(A2aPreviewCallValue);
+
+        /// <summary> Gets the A2aPreviewCallOutput. </summary>
+        public static AgentResponseItemKind A2aPreviewCallOutput { get; } = new AgentResponseItemKind(A2aPreviewCallOutputValue);
+
+        /// <summary> Gets the BingGroundingCall. </summary>
+        public static AgentResponseItemKind BingGroundingCall { get; } = new AgentResponseItemKind(BingGroundingCallValue);
+
+        /// <summary> Gets the BingGroundingCallOutput. </summary>
+        public static AgentResponseItemKind BingGroundingCallOutput { get; } = new AgentResponseItemKind(BingGroundingCallOutputValue);
+
+        /// <summary> Gets the SharepointGroundingPreviewCall. </summary>
+        public static AgentResponseItemKind SharepointGroundingPreviewCall { get; } = new AgentResponseItemKind(SharepointGroundingPreviewCallValue);
+
+        /// <summary> Gets the SharepointGroundingPreviewCallOutput. </summary>
+        public static AgentResponseItemKind SharepointGroundingPreviewCallOutput { get; } = new AgentResponseItemKind(SharepointGroundingPreviewCallOutputValue);
+
+        /// <summary> Gets the AzureAiSearchCall. </summary>
+        public static AgentResponseItemKind AzureAiSearchCall { get; } = new AgentResponseItemKind(AzureAiSearchCallValue);
+
+        /// <summary> Gets the AzureAiSearchCallOutput. </summary>
+        public static AgentResponseItemKind AzureAiSearchCallOutput { get; } = new AgentResponseItemKind(AzureAiSearchCallOutputValue);
+
+        /// <summary> Gets the BingCustomSearchPreviewCall. </summary>
+        public static AgentResponseItemKind BingCustomSearchPreviewCall { get; } = new AgentResponseItemKind(BingCustomSearchPreviewCallValue);
+
+        /// <summary> Gets the BingCustomSearchPreviewCallOutput. </summary>
+        public static AgentResponseItemKind BingCustomSearchPreviewCallOutput { get; } = new AgentResponseItemKind(BingCustomSearchPreviewCallOutputValue);
+
+        /// <summary> Gets the OpenapiCall. </summary>
+        public static AgentResponseItemKind OpenapiCall { get; } = new AgentResponseItemKind(OpenapiCallValue);
+
+        /// <summary> Gets the OpenapiCallOutput. </summary>
+        public static AgentResponseItemKind OpenapiCallOutput { get; } = new AgentResponseItemKind(OpenapiCallOutputValue);
+
+        /// <summary> Gets the BrowserAutomationPreviewCall. </summary>
+        public static AgentResponseItemKind BrowserAutomationPreviewCall { get; } = new AgentResponseItemKind(BrowserAutomationPreviewCallValue);
+
+        /// <summary> Gets the BrowserAutomationPreviewCallOutput. </summary>
+        public static AgentResponseItemKind BrowserAutomationPreviewCallOutput { get; } = new AgentResponseItemKind(BrowserAutomationPreviewCallOutputValue);
+
+        /// <summary> Gets the FabricDataagentPreviewCall. </summary>
+        public static AgentResponseItemKind FabricDataagentPreviewCall { get; } = new AgentResponseItemKind(FabricDataagentPreviewCallValue);
+
+        /// <summary> Gets the FabricDataagentPreviewCallOutput. </summary>
+        public static AgentResponseItemKind FabricDataagentPreviewCallOutput { get; } = new AgentResponseItemKind(FabricDataagentPreviewCallOutputValue);
+
+        /// <summary> Gets the AzureFunctionCall. </summary>
+        public static AgentResponseItemKind AzureFunctionCall { get; } = new AgentResponseItemKind(AzureFunctionCallValue);
+
+        /// <summary> Gets the AzureFunctionCallOutput. </summary>
+        public static AgentResponseItemKind AzureFunctionCallOutput { get; } = new AgentResponseItemKind(AzureFunctionCallOutputValue);
 
         /// <summary> Determines if two <see cref="AgentResponseItemKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

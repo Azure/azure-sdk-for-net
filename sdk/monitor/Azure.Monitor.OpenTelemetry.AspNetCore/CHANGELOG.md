@@ -4,6 +4,9 @@
 
 ### Features Added
 
+* Add ability to specify EnableStandardMetrics and EnablePerfCounters
+  ([#56438](https://github.com/Azure/azure-sdk-for-net/pull/56438))
+
 ### Breaking Changes
 
 *  **Default Sampler Changed**: The default sampling behavior has been changed from
@@ -15,7 +18,7 @@
   traces exported by default.
   **Migration**: To maintain the previous behavior (100% sampling), explicitly
   configure the sampler:
-  
+
   ```csharp
   // Option 1: Set SamplingRatio and clear TracesPerSecond
   builder.Services.AddOpenTelemetry()
@@ -78,7 +81,7 @@
   - `preview.item.dropped.count`
   - `preview.item.retry.count`
   ([#53010](https://github.com/Azure/azure-sdk-for-net/pull/53010))
-* Add `enduser.pseudo.id` as ai.user.id 
+* Add `enduser.pseudo.id` as ai.user.id
 ([#52722](https://github.com/Azure/azure-sdk-for-net/pull/52722))
 * Add `ai.location.ip` mapping for all telemetry types ([#52211](https://github.com/Azure/azure-sdk-for-net/pull/52211))
 

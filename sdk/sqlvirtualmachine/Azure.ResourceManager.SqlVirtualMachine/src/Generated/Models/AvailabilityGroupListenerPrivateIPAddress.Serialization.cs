@@ -18,6 +18,23 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     /// <summary> A private IP address bound to the availability group listener. </summary>
     public partial class AvailabilityGroupListenerPrivateIPAddress : IJsonModel<AvailabilityGroupListenerPrivateIPAddress>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AvailabilityGroupListenerPrivateIPAddress PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AvailabilityGroupListenerPrivateIPAddress>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAvailabilityGroupListenerPrivateIPAddress(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AvailabilityGroupListenerPrivateIPAddress)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AvailabilityGroupListenerPrivateIPAddress>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -138,23 +155,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AvailabilityGroupListenerPrivateIPAddress IPersistableModel<AvailabilityGroupListenerPrivateIPAddress>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AvailabilityGroupListenerPrivateIPAddress PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AvailabilityGroupListenerPrivateIPAddress>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAvailabilityGroupListenerPrivateIPAddress(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AvailabilityGroupListenerPrivateIPAddress)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AvailabilityGroupListenerPrivateIPAddress>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

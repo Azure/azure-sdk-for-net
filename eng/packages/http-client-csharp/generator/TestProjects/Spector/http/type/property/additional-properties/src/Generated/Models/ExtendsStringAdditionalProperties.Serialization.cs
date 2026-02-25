@@ -19,6 +19,17 @@ namespace _Type.Property.AdditionalProperties
 
         protected virtual ExtendsStringAdditionalProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        BinaryData IPersistableModel<ExtendsStringAdditionalProperties>.Write(ModelReaderWriterOptions options) => throw null;
+
+        ExtendsStringAdditionalProperties IPersistableModel<ExtendsStringAdditionalProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        string IPersistableModel<ExtendsStringAdditionalProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
+        /// <param name="extendsStringAdditionalProperties"> The <see cref="ExtendsStringAdditionalProperties"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(ExtendsStringAdditionalProperties extendsStringAdditionalProperties) => throw null;
+
         public static explicit operator ExtendsStringAdditionalProperties(Response response) => throw null;
 
         void IJsonModel<ExtendsStringAdditionalProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -28,16 +39,5 @@ namespace _Type.Property.AdditionalProperties
         ExtendsStringAdditionalProperties IJsonModel<ExtendsStringAdditionalProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual ExtendsStringAdditionalProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<ExtendsStringAdditionalProperties>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
-        ExtendsStringAdditionalProperties IPersistableModel<ExtendsStringAdditionalProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        string IPersistableModel<ExtendsStringAdditionalProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        /// <param name="extendsStringAdditionalProperties"> The <see cref="ExtendsStringAdditionalProperties"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(ExtendsStringAdditionalProperties extendsStringAdditionalProperties) => throw null;
     }
 }

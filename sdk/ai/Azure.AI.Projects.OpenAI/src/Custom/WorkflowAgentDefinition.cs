@@ -3,9 +3,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.AI.Projects.OpenAI;
 
-[CodeGenType("WorkflowDefinition")]
+[CodeGenType("WorkflowAgentDefinition")]
+[Experimental("AAIP001")]
 public partial class WorkflowAgentDefinition
 {
     /// <summary> Initializes a new instance of <see cref="WorkflowAgentDefinition"/>. </summary>

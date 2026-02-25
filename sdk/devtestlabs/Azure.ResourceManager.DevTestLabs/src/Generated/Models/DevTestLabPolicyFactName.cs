@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     public readonly partial struct DevTestLabPolicyFactName : IEquatable<DevTestLabPolicyFactName>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DevTestLabPolicyFactName"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DevTestLabPolicyFactName(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UserOwnedLabVmCountValue = "UserOwnedLabVmCount";
         private const string UserOwnedLabPremiumVmCountValue = "UserOwnedLabPremiumVmCount";
         private const string LabVmCountValue = "LabVmCount";
@@ -33,43 +26,76 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         private const string EnvironmentTemplateValue = "EnvironmentTemplate";
         private const string ScheduleEditPermissionValue = "ScheduleEditPermission";
 
-        /// <summary> UserOwnedLabVmCount. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabPolicyFactName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DevTestLabPolicyFactName(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the UserOwnedLabVmCount. </summary>
         public static DevTestLabPolicyFactName UserOwnedLabVmCount { get; } = new DevTestLabPolicyFactName(UserOwnedLabVmCountValue);
-        /// <summary> UserOwnedLabPremiumVmCount. </summary>
+
+        /// <summary> Gets the UserOwnedLabPremiumVmCount. </summary>
         public static DevTestLabPolicyFactName UserOwnedLabPremiumVmCount { get; } = new DevTestLabPolicyFactName(UserOwnedLabPremiumVmCountValue);
-        /// <summary> LabVmCount. </summary>
+
+        /// <summary> Gets the LabVmCount. </summary>
         public static DevTestLabPolicyFactName LabVmCount { get; } = new DevTestLabPolicyFactName(LabVmCountValue);
-        /// <summary> LabPremiumVmCount. </summary>
+
+        /// <summary> Gets the LabPremiumVmCount. </summary>
         public static DevTestLabPolicyFactName LabPremiumVmCount { get; } = new DevTestLabPolicyFactName(LabPremiumVmCountValue);
-        /// <summary> LabVmSize. </summary>
+
+        /// <summary> Gets the LabVmSize. </summary>
         public static DevTestLabPolicyFactName LabVmSize { get; } = new DevTestLabPolicyFactName(LabVmSizeValue);
-        /// <summary> GalleryImage. </summary>
+
+        /// <summary> Gets the GalleryImage. </summary>
         public static DevTestLabPolicyFactName GalleryImage { get; } = new DevTestLabPolicyFactName(GalleryImageValue);
-        /// <summary> UserOwnedLabVmCountInSubnet. </summary>
+
+        /// <summary> Gets the UserOwnedLabVmCountInSubnet. </summary>
         public static DevTestLabPolicyFactName UserOwnedLabVmCountInSubnet { get; } = new DevTestLabPolicyFactName(UserOwnedLabVmCountInSubnetValue);
-        /// <summary> LabTargetCost. </summary>
+
+        /// <summary> Gets the LabTargetCost. </summary>
         public static DevTestLabPolicyFactName LabTargetCost { get; } = new DevTestLabPolicyFactName(LabTargetCostValue);
-        /// <summary> EnvironmentTemplate. </summary>
+
+        /// <summary> Gets the EnvironmentTemplate. </summary>
         public static DevTestLabPolicyFactName EnvironmentTemplate { get; } = new DevTestLabPolicyFactName(EnvironmentTemplateValue);
-        /// <summary> ScheduleEditPermission. </summary>
+
+        /// <summary> Gets the ScheduleEditPermission. </summary>
         public static DevTestLabPolicyFactName ScheduleEditPermission { get; } = new DevTestLabPolicyFactName(ScheduleEditPermissionValue);
+
         /// <summary> Determines if two <see cref="DevTestLabPolicyFactName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DevTestLabPolicyFactName left, DevTestLabPolicyFactName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DevTestLabPolicyFactName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DevTestLabPolicyFactName left, DevTestLabPolicyFactName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DevTestLabPolicyFactName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DevTestLabPolicyFactName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DevTestLabPolicyFactName(string value) => new DevTestLabPolicyFactName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DevTestLabPolicyFactName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DevTestLabPolicyFactName?(string value) => value == null ? null : new DevTestLabPolicyFactName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DevTestLabPolicyFactName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DevTestLabPolicyFactName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

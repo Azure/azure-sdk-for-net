@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Type of backup.
-    /// Serialized Name: BackupType
-    /// </summary>
+    /// <summary> Type of backup. </summary>
     public readonly partial struct PostgreSqlFlexibleServerBackupOrigin : IEquatable<PostgreSqlFlexibleServerBackupOrigin>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string FullValue = "Full";
         private const string CustomerOnDemandValue = "Customer On-Demand";
 
-        /// <summary>
-        /// Full
-        /// Serialized Name: BackupType.Full
-        /// </summary>
+        /// <summary> Full. </summary>
         public static PostgreSqlFlexibleServerBackupOrigin Full { get; } = new PostgreSqlFlexibleServerBackupOrigin(FullValue);
-        /// <summary>
-        /// Customer On-Demand
-        /// Serialized Name: BackupType.Customer On-Demand
-        /// </summary>
+        /// <summary> Customer On-Demand. </summary>
         public static PostgreSqlFlexibleServerBackupOrigin CustomerOnDemand { get; } = new PostgreSqlFlexibleServerBackupOrigin(CustomerOnDemandValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerBackupOrigin"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerBackupOrigin left, PostgreSqlFlexibleServerBackupOrigin right) => left.Equals(right);

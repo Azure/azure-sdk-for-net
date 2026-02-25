@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SignalR
     /// <summary>
     /// A class representing a SignalRReplicaSharedPrivateLinkResource along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SignalRReplicaSharedPrivateLinkResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SignalRResource"/> using the GetSignalRReplicaSharedPrivateLinkResources method.
+    /// Otherwise you can get one from its parent resource <see cref="SignalRReplicaResource"/> using the GetSignalRReplicaSharedPrivateLinkResources method.
     /// </summary>
     public partial class SignalRReplicaSharedPrivateLinkResource : ArmResource
     {

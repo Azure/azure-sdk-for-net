@@ -84,7 +84,7 @@ namespace Azure.Identity.Tests
                 : Assert.Throws<AuthenticationFailedException>(() => credential.GetToken(new TokenRequestContext(new[] { "https://vault.azure.net/.default" })));
 
             // If MSAL retry was active, we'd see one or more extra requests.
-            Assert.AreEqual(expectedCalls, requestCount, $"Expected exactly {expectedCalls} requests (1 initial + {maxRetries} Azure SDK retries). If this is {expectedCalls+1}, MSAL retry is not disabled.");
+            Assert.AreEqual(expectedCalls, requestCount, $"Expected exactly {expectedCalls} requests (1 initial + {maxRetries} Azure SDK retries). If this is {expectedCalls + 1}, MSAL retry is not disabled.");
         }
 
         public class TestCredentialOptions : TokenCredentialOptions, ISupportsTokenCachePersistenceOptions

@@ -21,6 +21,7 @@ namespace Azure.AI.VoiceLive
             Version = version switch
             {
                 ServiceVersion.V2025_10_01 => "2025-10-01",
+                ServiceVersion.V2026_01_01_PREVIEW => "2026-01-01-preview",
                 _ => throw new NotSupportedException()
             };
 
@@ -42,7 +43,11 @@ namespace Azure.AI.VoiceLive
         public enum ServiceVersion
         {
             /// <summary> V2025_10_01. </summary>
-            V2025_10_01 = 1
+            V2025_10_01 = 1,
+            /// <summary>
+            /// 2026-01-01-preview version.
+            /// </summary>
+            V2026_01_01_PREVIEW = 2
         }
 
         /// <summary>

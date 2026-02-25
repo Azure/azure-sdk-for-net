@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Function tool. </summary>
-    public partial class ToolChoiceFunction : ToolChoiceParam
+    internal partial class ToolChoiceFunction : InternalToolChoiceParam
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceFunction"/>. </summary>
         /// <param name="name"> The name of the function to call. </param>

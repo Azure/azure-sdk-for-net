@@ -21,6 +21,23 @@ namespace Azure.ResourceManager.Fabric.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FabricSkuDetailsForExistingCapacity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FabricSkuDetailsForExistingCapacity>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeFabricSkuDetailsForExistingCapacity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FabricSkuDetailsForExistingCapacity)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FabricSkuDetailsForExistingCapacity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -127,23 +144,6 @@ namespace Azure.ResourceManager.Fabric.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         FabricSkuDetailsForExistingCapacity IPersistableModel<FabricSkuDetailsForExistingCapacity>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FabricSkuDetailsForExistingCapacity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<FabricSkuDetailsForExistingCapacity>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeFabricSkuDetailsForExistingCapacity(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FabricSkuDetailsForExistingCapacity)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FabricSkuDetailsForExistingCapacity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

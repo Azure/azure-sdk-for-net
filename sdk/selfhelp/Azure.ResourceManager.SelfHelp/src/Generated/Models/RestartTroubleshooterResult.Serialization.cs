@@ -17,6 +17,30 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Troubleshooter restart response. </summary>
     public partial class RestartTroubleshooterResult : IJsonModel<RestartTroubleshooterResult>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RestartTroubleshooterResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RestartTroubleshooterResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRestartTroubleshooterResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RestartTroubleshooterResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RestartTroubleshooterResult"/> from. </param>
+        internal static RestartTroubleshooterResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeRestartTroubleshooterResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RestartTroubleshooterResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -119,31 +143,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         RestartTroubleshooterResult IPersistableModel<RestartTroubleshooterResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RestartTroubleshooterResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RestartTroubleshooterResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeRestartTroubleshooterResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RestartTroubleshooterResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RestartTroubleshooterResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RestartTroubleshooterResult"/> from. </param>
-        internal static RestartTroubleshooterResult FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeRestartTroubleshooterResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

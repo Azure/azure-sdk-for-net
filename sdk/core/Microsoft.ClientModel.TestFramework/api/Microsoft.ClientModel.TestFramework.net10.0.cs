@@ -380,6 +380,11 @@ namespace Microsoft.ClientModel.TestFramework
         protected TestEnvironment() { }
         public virtual System.ClientModel.AuthenticationTokenProvider Credential { get { throw null; } }
         public static string? DevCertPath { get { throw null; } protected set { } }
+        public static bool DisableBootstrapping { get { throw null; } set { } }
+        public static bool EnableFiddler { get { throw null; } set { } }
+        public static bool EnableTestProxyDebugLogs { get { throw null; } set { } }
+        public static bool GlobalDisableAutoRecording { get { throw null; } set { } }
+        public static Microsoft.ClientModel.TestFramework.RecordedTestMode GlobalTestMode { get { throw null; } set { } }
         public static bool IsWindows { get { throw null; } }
         public Microsoft.ClientModel.TestFramework.RecordedTestMode? Mode { get { throw null; } set { } }
         public string? PathToTestResourceBootstrappingScript { get { throw null; } set { } }

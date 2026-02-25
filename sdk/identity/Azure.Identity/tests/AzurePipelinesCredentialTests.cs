@@ -69,6 +69,20 @@ namespace Azure.Identity.Tests
             return InstrumentClient(new AzurePipelinesCredential(config.TenantId, ClientId, "myConnectionId", "mytoken", options: options));
         }
 
+        /// <summary>
+        /// Creates an <see cref="AzurePipelinesCredential"/> with the given mock transport for error handling tests.
+        /// The transport is used to simulate OIDC endpoint responses.
+        /// </summary>
+        protected virtual AzurePipelinesCredential CreateCredentialWithTransport(string tenantId, string clientId, string serviceConnectionId, string systemAccessToken, MockTransport mockTransport, string oidcRequestUri = null)
+        {
+            var options = new AzurePipelinesCredentialOptions { Transport = mockTransport };
+            if (oidcRequestUri != null)
+            {
+                options.OidcRequestUri = oidcRequestUri;
+            }
+            return new AzurePipelinesCredential(tenantId, clientId, serviceConnectionId, systemAccessToken, options);
+        }
+
         [Test]
         public void AzurePipelinesCredentialOptions_Loads_From_Env()
         {
@@ -83,7 +97,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async Task AzurePipelineCredentialWorksInChainedCredential()
+        public virtual async Task AzurePipelineCredentialWorksInChainedCredential()
         {
             using (new TestEnvVar(new Dictionary<string, string>
             {
@@ -106,16 +120,10 @@ namespace Azure.Identity.Tests
                 { "SYSTEM_OIDCREQUESTURI", "mockCollectionUri" },
             }))
             {
-                var systemAccessToken = "mytoken";
-                var tenantId = "myTenantId";
-                var clientId = "myClientId";
-                var serviceConnectionId = "myConnectionId";
-
                 var mockTransport = new MockTransport(req => new MockResponse(200).WithContent(
                             $"{{\"token_type\": \"Bearer\",\"expires_in\": 9999,\"ext_expires_in\": 9999,\"access_token\": \"mytoken\" }}"));
 
-                var options = new AzurePipelinesCredentialOptions { Transport = mockTransport, OidcRequestUri = "https://mockCollectionUri" };
-                var cred = new AzurePipelinesCredential(tenantId, clientId, serviceConnectionId, systemAccessToken, options);
+                var cred = CreateCredentialWithTransport("myTenantId", "myClientId", "myConnectionId", "mytoken", mockTransport, oidcRequestUri: "https://mockCollectionUri");
 
                 var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new TokenRequestContext(new[] { "scope" }), CancellationToken.None));
                 Assert.That(ex.Message, Does.Contain(AzurePipelinesCredential.Troubleshooting));
@@ -132,11 +140,6 @@ namespace Azure.Identity.Tests
                 { "SYSTEM_OIDCREQUESTURI", "https://mockCollectionUri" },
             }))
             {
-                var systemAccessToken = "mytoken";
-                var tenantId = "myTenantId";
-                var clientId = "myClientId";
-                var serviceConnectionId = "myConnectionId";
-
                 var mockTransport = new MockTransport(req =>
                 {
                     if (req.Uri.Host == "mockcollectionuri")
@@ -150,8 +153,7 @@ namespace Azure.Identity.Tests
                             $"{{\"token_type\": \"Bearer\",\"expires_in\": 9999,\"ext_expires_in\": 9999,\"access_token\": \"mytoken\" }}");
                 });
 
-                var options = new AzurePipelinesCredentialOptions { Transport = mockTransport };
-                var cred = new AzurePipelinesCredential(tenantId, clientId, serviceConnectionId, systemAccessToken, options);
+                var cred = CreateCredentialWithTransport("myTenantId", "myClientId", "myConnectionId", "mytoken", mockTransport);
 
                 var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new TokenRequestContext(new[] { "scope" }), CancellationToken.None));
 

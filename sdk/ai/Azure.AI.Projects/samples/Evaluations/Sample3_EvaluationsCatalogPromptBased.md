@@ -1,5 +1,11 @@
 # Sample of using custom prompt-based evaluator with data sets in Azure.AI.Projects.
 
+**Note:** Storing evaluators in catalog is an experimental feature, to use it, please disable the `AAIP001` warning.
+
+```C#
+#pragma warning disable AAIP001
+```
+
 In this example we will demonstrate how to evaluate the data set using a custom prompt-based evaluator.
 
 1. First, we need to create project client and read the environment variables which will be used in the next steps. We will also create an `EvaluationClient` for creating and running evaluations.

@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> Time ranges blocked for scheduling maintenance. </summary>
     public partial class BlockedWhileScheduleOperation : AvsScheduleOperationConstraint, IJsonModel<BlockedWhileScheduleOperation>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AvsScheduleOperationConstraint PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BlockedWhileScheduleOperation>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBlockedWhileScheduleOperation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BlockedWhileScheduleOperation)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BlockedWhileScheduleOperation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -134,23 +151,6 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         BlockedWhileScheduleOperation IPersistableModel<BlockedWhileScheduleOperation>.Create(BinaryData data, ModelReaderWriterOptions options) => (BlockedWhileScheduleOperation)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AvsScheduleOperationConstraint PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BlockedWhileScheduleOperation>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBlockedWhileScheduleOperation(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BlockedWhileScheduleOperation)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BlockedWhileScheduleOperation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
