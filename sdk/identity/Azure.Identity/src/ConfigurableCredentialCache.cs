@@ -45,8 +45,29 @@ namespace Azure.Identity
             StringBuilder sb = new();
             foreach (KeyValuePair<string, string?> kvp in entries)
             {
-                sb.Append(kvp.Key, prefixLength, kvp.Key.Length - prefixLength);
-                sb.Append('=').Append(kvp.Value).Append(';');
+                string relativeKey = kvp.Key.Substring(prefixLength);
+                sb.Append(relativeKey);
+                sb.Append('=');
+
+                // Normalize CredentialSource so that aliases (e.g. "AzureCli" vs "AzureCliCredential")
+                // produce the same cache key.
+                if (relativeKey.Equals("CredentialSource", StringComparison.Ordinal) && kvp.Value is not null)
+                {
+                    try
+                    {
+                        sb.Append(DefaultAzureCredentialOptions.ConvertCredentialSource(kvp.Value));
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        sb.Append(kvp.Value);
+                    }
+                }
+                else
+                {
+                    sb.Append(kvp.Value);
+                }
+
+                sb.Append(';');
             }
 
             byte[] inputBytes = Encoding.UTF8.GetBytes(sb.ToString());

@@ -196,7 +196,7 @@ namespace Azure.Identity
 
         internal string ApiKey { get; private set; }
 
-        private static string ConvertCredentialSource(string value) => value?.ToLowerInvariant() switch
+        internal static string ConvertCredentialSource(string value) => value?.ToLowerInvariant() switch
         {
             null => throw new InvalidOperationException("CredentialSource is required when configuring credentials. Specify a valid CredentialSource in the configuration."),
             // Full credential names and already-converted lowercase values match directly
