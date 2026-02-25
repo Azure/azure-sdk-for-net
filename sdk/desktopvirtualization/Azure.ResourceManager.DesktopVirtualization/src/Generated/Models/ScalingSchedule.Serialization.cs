@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(DaysOfWeek))
             {
                 writer.WritePropertyName("daysOfWeek"u8);
-                writer.WriteStringValue(DaysOfWeek.Value.ToSerialString());
+                writer.WriteStringValue(DaysOfWeek.Value.ToString());
             }
             if (Optional.IsDefined(ScalingMethod))
             {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    daysOfWeek = prop.Value.GetString().ToScalingScheduleDaysOfWeekItem();
+                    daysOfWeek = new ScalingScheduleDaysOfWeekItem(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("scalingMethod"u8))
