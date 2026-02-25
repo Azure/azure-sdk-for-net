@@ -76,7 +76,7 @@ namespace Azure.AI.ContentUnderstanding
             fields ??= new ChangeTrackingDictionary<string, ContentField>();
 
             return new UnknownAnalysisContent(
-                new MediaContentKind(kind),
+                new AnalysisContentKind(kind),
                 mimeType,
                 analyzerId,
                 category,
@@ -146,7 +146,7 @@ namespace Azure.AI.ContentUnderstanding
             segments ??= new ChangeTrackingList<DocumentContentSegment>();
 
             return new DocumentContent(
-                MediaContentKind.Document,
+                AnalysisContentKind.Document,
                 mimeType,
                 analyzerId,
                 category,
@@ -567,7 +567,7 @@ namespace Azure.AI.ContentUnderstanding
             segments ??= new ChangeTrackingList<AudioVisualContentSegment>();
 
             return new AudioVisualContent(
-                MediaContentKind.AudioVisual,
+                AnalysisContentKind.AudioVisual,
                 mimeType,
                 analyzerId,
                 category,

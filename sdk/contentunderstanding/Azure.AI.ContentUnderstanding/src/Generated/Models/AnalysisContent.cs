@@ -22,7 +22,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <summary> Initializes a new instance of <see cref="AnalysisContent"/>. </summary>
         /// <param name="kind"> Content kind. </param>
         /// <param name="mimeType"> Detected MIME type of the content.  Ex. application/pdf, image/jpeg, etc. </param>
-        private protected AnalysisContent(MediaContentKind kind, string mimeType)
+        private protected AnalysisContent(AnalysisContentKind kind, string mimeType)
         {
             Kind = kind;
             MimeType = mimeType;
@@ -38,7 +38,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="markdown"> Markdown representation of the content. </param>
         /// <param name="fields"> Extracted fields from the content. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalysisContent(MediaContentKind kind, string mimeType, string analyzerId, string category, string path, string markdown, IDictionary<string, ContentField> fields, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalysisContent(AnalysisContentKind kind, string mimeType, string analyzerId, string category, string path, string markdown, IDictionary<string, ContentField> fields, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             MimeType = mimeType;
@@ -51,7 +51,7 @@ namespace Azure.AI.ContentUnderstanding
         }
 
         /// <summary> Content kind. </summary>
-        internal MediaContentKind Kind { get; set; }
+        internal AnalysisContentKind Kind { get; set; }
 
         /// <summary> Detected MIME type of the content.  Ex. application/pdf, image/jpeg, etc. </summary>
         public string MimeType { get; }

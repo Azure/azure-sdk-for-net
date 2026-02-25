@@ -195,7 +195,7 @@ namespace Azure.AI.ContentUnderstanding
             {
                 return null;
             }
-            MediaContentKind kind = default;
+            AnalysisContentKind kind = default;
             string mimeType = default;
             string analyzerId = default;
             string category = default;
@@ -218,7 +218,7 @@ namespace Azure.AI.ContentUnderstanding
             {
                 if (prop.NameEquals("kind"u8))
                 {
-                    kind = new MediaContentKind(prop.Value.GetString());
+                    kind = new AnalysisContentKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("mimeType"u8))

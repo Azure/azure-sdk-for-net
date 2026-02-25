@@ -21,7 +21,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="markdown"> Markdown representation of the content. </param>
         /// <param name="fields"> Extracted fields from the content. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAnalysisContent(MediaContentKind kind, string mimeType, string analyzerId, string category, string path, string markdown, IDictionary<string, ContentField> fields, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", mimeType, analyzerId, category, path, markdown, fields, additionalBinaryDataProperties)
+        internal UnknownAnalysisContent(AnalysisContentKind kind, string mimeType, string analyzerId, string category, string path, string markdown, IDictionary<string, ContentField> fields, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", mimeType, analyzerId, category, path, markdown, fields, additionalBinaryDataProperties)
         {
         }
     }
