@@ -163,8 +163,8 @@ namespace Azure.AI.Projects.OpenAI.Tests.Utilities
             {
                 if (expectedStr == "*")
                 {
-                    Assert.That(actual, Is.Not.Null, $"The value for {key} i expected to be {actual} but was null.");
-                    Assert.That(actual, Is.Not.Empty, $"The value for {key} i expected to be {actual} but was empty.");
+                    Assert.That(actual, Is.Not.Null, $"The value for {key} is expected to be {actual} but was null.");
+                    Assert.That(actual, Is.Not.Empty, $"The value for {key} is expected to be {actual} but was empty.");
                 }
                 else if (expectedStr == "+")
                 {
