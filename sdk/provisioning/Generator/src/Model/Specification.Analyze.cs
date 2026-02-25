@@ -637,8 +637,9 @@ public abstract partial class Specification
         // Extract the version after the marker - it follows after some whitespace/punctuation
         string rest = summary[(idx + marker.Length)..].Trim().TrimStart('.').Trim();
 
-        // The version is the next token that looks like a date (YYYY-MM-DD with optional suffix)
-        Match match = Regex.Match(rest, @"(\d{4}-\d{2}-\d{2}[\w-]*)");
+        // Match YYYY-MM-DD, optionally followed by hyphenated suffix (e.g., "-preview", "-PREVIEW")
+        // The suffix must start with a hyphen to avoid greedily matching into subsequent text.
+        Match match = Regex.Match(rest, @"(\d{4}-\d{2}-\d{2}(?:-[a-zA-Z][\w.]*)*)");
         return match.Success ? match.Groups[1].Value.TrimEnd('.') : null;
     }
 
