@@ -309,7 +309,7 @@ namespace Azure.AI.Projects.OpenAI.Tests.Utilities
                     Assert.That(actualProps.Count, Is.EqualTo(expectedProps.Count), $"The number of properties for {key} was different. Expected: {expectedProps.Count}, but was {actualProps.Count}.\nExpected: {expectedProps}\nActual: {actualProps}.");
                     for (int i = 0; i < expectedProps.Count; i++)
                     {
-                        Assert.That(actualProps[i].Name, Is.EqualTo(expectedProps[i].Name), $"The {i}-th property of {key} is named {actualProps[i].Name} bit expected property is {expectedProps[i].Name}");
+                        Assert.That(actualProps[i].Name, Is.EqualTo(expectedProps[i].Name), $"The {i}-th property of {key} is named {actualProps[i].Name} but expected property is {expectedProps[i].Name}");
                         AssertJsonElementDeepEquals(expectedProps[i].Value, actualProps[i].Value, $"{key}/{actualProps[i].Name}");
                     }
                     break;
