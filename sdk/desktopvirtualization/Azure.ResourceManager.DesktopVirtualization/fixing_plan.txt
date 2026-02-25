@@ -1,636 +1,508 @@
 ================================================================================
-BREAKING CHANGES FIXING PLAN
+BREAKING CHANGE REMEDIATION PLAN
+Azure.ResourceManager.DesktopVirtualization (ApiCompat baseline: 1.3.2)
 ================================================================================
 
-This plan covers all 43 unique breaking changes (129 errors across 3 target
-frameworks) reported by ApiCompat. Each error is repeated 3x (netstandard2.0,
-net8.0, net10.0), so we group them by unique issue.
+Total unique breaking changes: 14 (grouped by root cause below)
+Errors repeat across 3 target frameworks (net8.0, net10.0, netstandard2.0).
 
 ================================================================================
-CATEGORY A: OPERATION METHODS MOVED OFF RESOURCE CLASSES
+BREAKING CHANGE #1: Method renamed — HostPoolResource.ImportAppAttachPackageInfos
 ================================================================================
-Several operations that were previously instance methods on Resource classes
-have been regenerated as extension methods on ResourceGroupResource. The old
-API contract expects them on the Resource class. These need to be restored.
 
---------------------------------------------------------------------------------
-A1. UserSessionResource.Disconnect / DisconnectAsync
---------------------------------------------------------------------------------
-ERROR:
-  MembersMustExist: 'Azure.Response UserSessionResource.Disconnect(CancellationToken)'
-  MembersMustExist: 'Task<Azure.Response> UserSessionResource.DisconnectAsync(CancellationToken)'
+Error Messages:
+  - MembersMustExist: 'public Pageable<AppAttachPackageResource> HostPoolResource.ImportAppAttachPackageInfos(ImportPackageInfoContent, CancellationToken)'
+  - MembersMustExist: 'public AsyncPageable<AppAttachPackageResource> HostPoolResource.ImportAppAttachPackageInfosAsync(ImportPackageInfoContent, CancellationToken)'
 
-ROOT CAUSE:
-  The TypeSpec generates Disconnect as a resource-group-level extension method
-  (on MockableDesktopVirtualizationResourceGroupResource) instead of on
-  UserSessionResource. The old SDK had these as instance methods on
-  UserSessionResource.
+Root Cause:
+  The TSP interface `AppAttachPackageInfo` defines the operation as `import`, which the
+  generator maps to method name `Import`. The old SDK (v1.3.2) had this method named
+  `ImportAppAttachPackageInfos`/`ImportAppAttachPackageInfosAsync`.
+  Additionally, the TSP action uses an inline request body wrapper
+  `{ @bodyRoot importPackageInfoRequest: ImportPackageInfoRequest; }`, which generates a
+  wrapper type `ImportParameterBody` instead of the old direct `ImportPackageInfoContent`
+  (the @@clientName(ImportPackageInfoRequest, "ImportPackageInfoContent") applies to the
+  inner model but not the generated wrapper).
 
-PREFERRED FIX: SDK-side (custom code)
-  File: src/Customize/UserSessionResource.cs (create or extend)
+Preferred Fix: SDK-side (Customize)
+  File: src/Customize/HostPoolResource.cs
   Steps:
-    1. Add a custom partial class for UserSessionResource.
-    2. Add Disconnect(CancellationToken) and DisconnectAsync(CancellationToken)
-       methods that delegate to the generated REST client, extracting
-       hostPoolName, sessionHostName, and userSessionId from the resource's Id.
-    3. Mark them as [EditorBrowsable(EditorBrowsableState.Never)] if new
-       overloads with different signatures exist on the generated code, OR
-       just make them regular public methods to restore the old API.
+  1. Add [EditorBrowsable(EditorBrowsableState.Never)] overload methods
+     `ImportAppAttachPackageInfos(ImportPackageInfoContent, CancellationToken)` and
+     `ImportAppAttachPackageInfosAsync(ImportPackageInfoContent, CancellationToken)`
+     that wrap the content in an `ImportParameterBody` and delegate to the new
+     `Import`/`ImportAsync` methods.
+  2. This requires `ImportPackageInfoContent` to remain as a public type. Verify that
+     @@clientName(ImportPackageInfoRequest, "ImportPackageInfoContent", "csharp") in
+     client.tsp still produces a public type. If it became internal (absorbed into the
+     wrapper), add @@access(ImportPackageInfoRequest, Access.public, "csharp") in
+     client.tsp.
 
-  NOTE: TSP-side fix is not practical here because the operation's path
-  is at the resource group level in the TypeSpec, not scoped to UserSession
-  resource.
+================================================================================
+BREAKING CHANGE #2: Method renamed — HostPoolResource.ExpandMsixImages
+================================================================================
 
---------------------------------------------------------------------------------
-A2. UserSessionResource.SendMessage / SendMessageAsync
---------------------------------------------------------------------------------
-ERROR:
-  MembersMustExist: 'Azure.Response UserSessionResource.SendMessage(UserSessionMessage, CancellationToken)'
-  MembersMustExist: 'Task<Azure.Response> UserSessionResource.SendMessageAsync(UserSessionMessage, CancellationToken)'
+Error Messages:
+  - MembersMustExist: 'public Pageable<ExpandMsixImage> HostPoolResource.ExpandMsixImages(MsixImageUri, CancellationToken)'
+  - MembersMustExist: 'public AsyncPageable<ExpandMsixImage> HostPoolResource.ExpandMsixImagesAsync(MsixImageUri, CancellationToken)'
 
-ROOT CAUSE:
-  Same pattern as A1. SendMessage is generated as an extension method on
-  ResourceGroupResource. The old SDK had it on UserSessionResource taking
-  a UserSessionMessage parameter. The new code uses SendMessageParameterBody
-  as a wrapper.
+Root Cause:
+  The TSP interface `MSIXImages` defines the operation as `expand`, which generates
+  method name `Expand`. The old SDK had `ExpandMsixImages`/`ExpandMsixImagesAsync`.
+  Also, the TSP action wraps the body in `{ @bodyRoot msixImageURI: MSIXImageURI; }`,
+  generating wrapper type `ExpandParameterBody` instead of using `MsixImageUri` directly.
 
-PREFERRED FIX: SDK-side (custom code)
-  File: src/Customize/UserSessionResource.cs
+Preferred Fix: SDK-side (Customize)
+  File: src/Customize/HostPoolResource.cs
   Steps:
-    1. Add SendMessage(UserSessionMessage, CancellationToken) and
-       SendMessageAsync(UserSessionMessage, CancellationToken) methods.
-    2. Inside, create a SendMessageParameterBody wrapping the UserSessionMessage
-       and call the REST client directly, extracting path parameters from
-       the resource's Id.
+  1. Add [EditorBrowsable(EditorBrowsableState.Never)] overload methods
+     `ExpandMsixImages(MsixImageUri, CancellationToken)` and
+     `ExpandMsixImagesAsync(MsixImageUri, CancellationToken)` that wrap `MsixImageUri`
+     into an `ExpandParameterBody` and delegate to `Expand`/`ExpandAsync`.
+  2. This depends on `MsixImageUri` being public (see Breaking Change #3).
 
---------------------------------------------------------------------------------
-A3. HostPoolResource.RetrieveRegistrationToken / RetrieveRegistrationTokenAsync
---------------------------------------------------------------------------------
-ERROR:
-  MembersMustExist: 'Response<HostPoolRegistrationInfo> HostPoolResource.RetrieveRegistrationToken(CancellationToken)'
-  MembersMustExist: 'Task<Response<HostPoolRegistrationInfo>> HostPoolResource.RetrieveRegistrationTokenAsync(CancellationToken)'
+================================================================================
+BREAKING CHANGE #3: Type MsixImageUri is not public
+================================================================================
 
-ROOT CAUSE:
-  Operation moved to ResourceGroupResource extension method. The old SDK had
-  it as an instance method on HostPoolResource.
+Error Message:
+  - TypesMustExist: Type 'Azure.ResourceManager.DesktopVirtualization.Models.MsixImageUri'
+    does not exist in the implementation but it does exist in the contract.
 
-PREFERRED FIX: SDK-side (custom code)
-  File: src/Customize/HostPoolResource.cs (extend existing)
-  Steps:
-    1. Add RetrieveRegistrationToken(CancellationToken) and
-       RetrieveRegistrationTokenAsync(CancellationToken) that parse
-       hostPoolName from the resource's Id and call the REST client.
+Root Cause:
+  The type `MSIXImageURI` is defined in models.tsp, and @@clientName(MSIXImageURI,
+  "MsixImageUri", "csharp") renames it. However, because the action operation uses an
+  inline anonymous request body that wraps this type, the generator makes `MsixImageUri`
+  internal (it's only used as a property of the internal `ExpandParameterBody` wrapper).
 
---------------------------------------------------------------------------------
-A4. HostPoolResource.ExpandMsixImages / ExpandMsixImagesAsync
---------------------------------------------------------------------------------
-ERROR:
-  MembersMustExist: 'Pageable<ExpandMsixImage> HostPoolResource.ExpandMsixImages(MsixImageUri, CancellationToken)'
-  MembersMustExist: 'AsyncPageable<ExpandMsixImage> HostPoolResource.ExpandMsixImagesAsync(MsixImageUri, CancellationToken)'
-
-ROOT CAUSE:
-  1. Operation moved to ResourceGroupResource extension.
-  2. Parameter type changed: old API uses MsixImageUri, new code uses
-     ExpandParameterBody (which wraps MsixImageUri internally).
-  3. MsixImageUri is now internal (see B1).
-
-PREFERRED FIX: SDK-side (custom code)
-  File: src/Customize/HostPoolResource.cs (extend existing)
-  Steps:
-    1. Add ExpandMsixImages(MsixImageUri, CancellationToken) and
-       ExpandMsixImagesAsync(MsixImageUri, CancellationToken).
-    2. Wrap the MsixImageUri into an ExpandParameterBody and call the
-       REST client.
-    3. This also requires restoring MsixImageUri as public (see B1).
-
---------------------------------------------------------------------------------
-A5. HostPoolResource.ImportAppAttachPackageInfos / ImportAppAttachPackageInfosAsync
---------------------------------------------------------------------------------
-ERROR:
-  MembersMustExist: 'Pageable<AppAttachPackageResource> HostPoolResource.ImportAppAttachPackageInfos(ImportPackageInfoContent, CancellationToken)'
-  MembersMustExist: 'AsyncPageable<AppAttachPackageResource> HostPoolResource.ImportAppAttachPackageInfosAsync(ImportPackageInfoContent, CancellationToken)'
-
-ROOT CAUSE:
-  Operation moved to ResourceGroupResource extension. Parameter type changed
-  from ImportPackageInfoContent to ImportParameterBody (wrapper).
-
-PREFERRED FIX: SDK-side (custom code)
-  File: src/Customize/HostPoolResource.cs (extend existing)
-  Steps:
-    1. Add ImportAppAttachPackageInfos(ImportPackageInfoContent, CancellationToken)
-       and async version.
-    2. Wrap ImportPackageInfoContent into ImportParameterBody and call REST client.
-
---------------------------------------------------------------------------------
-A6. HostPoolResource.GetPrivateLinkResources / GetPrivateLinkResourcesAsync
---------------------------------------------------------------------------------
-ERROR:
-  MembersMustExist: 'Pageable<DesktopVirtualizationPrivateLinkResourceData> HostPoolResource.GetPrivateLinkResources(int?, bool?, int?, CancellationToken)'
-  MembersMustExist: 'AsyncPageable<DesktopVirtualizationPrivateLinkResourceData> HostPoolResource.GetPrivateLinkResourcesAsync(int?, bool?, int?, CancellationToken)'
-
-ROOT CAUSE:
-  Method renamed from GetPrivateLinkResources to GetByHostPool in the
-  generated code (still on HostPoolResource). The signatures are identical
-  except for the method name.
-
-PREFERRED FIX: TSP-side (client.tsp)
+Preferred Fix: TSP-side (client.tsp)
   File: TempTypeSpecFiles/DesktopVirtualization/client.tsp
   Steps:
-    1. Add an @@clientName decorator to rename the operation back:
-       @@clientName(HostPools.listPrivateLinkResourcesByHostPool,
-         "GetPrivateLinkResources", "csharp");
-       (Find the exact operation name in the TypeSpec — it may be
-       PrivateLinkResources.listByHostPool or similar. The generated REST
-       operation name should guide the exact target.)
+  1. Add the following decorator to force the type to be public:
+     @@access(MSIXImageURI, Access.public, "csharp");
+  2. Ensure the @@clientName(MSIXImageURI, "MsixImageUri", "csharp") already present
+     still applies correctly.
 
-  ALTERNATIVE SDK-SIDE FIX:
-    File: src/Customize/HostPoolResource.cs
-    Add GetPrivateLinkResources/GetPrivateLinkResourcesAsync that delegate
-    to generated GetByHostPool/GetByHostPoolAsync.
+================================================================================
+BREAKING CHANGE #4: Method renamed — HostPoolResource.GetPrivateLinkResources
+================================================================================
 
---------------------------------------------------------------------------------
-A7. VirtualWorkspaceResource.GetPrivateLinkResources / GetPrivateLinkResourcesAsync
---------------------------------------------------------------------------------
-ERROR:
-  MembersMustExist: 'Pageable<DesktopVirtualizationPrivateLinkResourceData> VirtualWorkspaceResource.GetPrivateLinkResources(int?, bool?, int?, CancellationToken)'
-  MembersMustExist: 'AsyncPageable<DesktopVirtualizationPrivateLinkResourceData> VirtualWorkspaceResource.GetPrivateLinkResourcesAsync(int?, bool?, int?, CancellationToken)'
+Error Messages:
+  - MembersMustExist: 'public Pageable<DesktopVirtualizationPrivateLinkResourceData> HostPoolResource.GetPrivateLinkResources(int?, bool?, int?, CancellationToken)'
+  - MembersMustExist: 'public AsyncPageable<DesktopVirtualizationPrivateLinkResourceData> HostPoolResource.GetPrivateLinkResourcesAsync(int?, bool?, int?, CancellationToken)'
 
-ROOT CAUSE:
-  Same as A6 but for Workspace. Method renamed to GetByWorkspace.
+Root Cause:
+  The TSP interface `PrivateLinkResources` defines the operation as `listByHostPool`,
+  which the generator maps to `GetByHostPool`/`GetByHostPoolAsync`. The old SDK named
+  these `GetPrivateLinkResources`/`GetPrivateLinkResourcesAsync`.
 
-PREFERRED FIX: TSP-side (client.tsp)
+Preferred Fix: SDK-side (Customize)
+  File: src/Customize/HostPoolResource.cs
+  Steps:
+  1. Add [EditorBrowsable(EditorBrowsableState.Never)] overloads:
+     `GetPrivateLinkResources(int?, bool?, int?, CancellationToken)` →
+       delegates to `GetByHostPool(pageSize, isDescending, initialSkip, cancellationToken)`
+     `GetPrivateLinkResourcesAsync(int?, bool?, int?, CancellationToken)` →
+       delegates to `GetByHostPoolAsync(pageSize, isDescending, initialSkip, cancellationToken)`
+
+  Alternative (TSP-side): In client.tsp, add:
+     @@clientName(PrivateLinkResources.listByHostPool, "GetPrivateLinkResources", "csharp");
+  This would rename the generated method directly, avoiding the need for custom code.
+  However, this only works if the generator supports operation-level clientName for this
+  pattern. Test this first — if it works, prefer this approach.
+
+================================================================================
+BREAKING CHANGE #5: Method renamed — VirtualWorkspaceResource.GetPrivateLinkResources
+================================================================================
+
+Error Messages:
+  - MembersMustExist: 'public Pageable<DesktopVirtualizationPrivateLinkResourceData> VirtualWorkspaceResource.GetPrivateLinkResources(int?, bool?, int?, CancellationToken)'
+  - MembersMustExist: 'public AsyncPageable<DesktopVirtualizationPrivateLinkResourceData> VirtualWorkspaceResource.GetPrivateLinkResourcesAsync(int?, bool?, int?, CancellationToken)'
+
+Root Cause:
+  Same as #4, but on VirtualWorkspaceResource. The TSP `PrivateLinkResources` interface
+  operation `listByWorkspace` is not defined in HostPool.tsp. Looking at workspace.tsp,
+  there is likely a similar operation that generates `GetByWorkspace` instead of the
+  old `GetPrivateLinkResources`.
+
+Preferred Fix: SDK-side (Customize)
+  File: src/Customize/VirtualWorkspaceResource.cs (create new file if needed, or add to
+  an existing Workspace customize file)
+  Steps:
+  1. Add [EditorBrowsable(EditorBrowsableState.Never)] overloads:
+     `GetPrivateLinkResources(int?, bool?, int?, CancellationToken)` →
+       delegates to `GetByWorkspace(pageSize, isDescending, initialSkip, cancellationToken)`
+     `GetPrivateLinkResourcesAsync(int?, bool?, int?, CancellationToken)` →
+       delegates to `GetByWorkspaceAsync(pageSize, isDescending, initialSkip, cancellationToken)`
+
+================================================================================
+BREAKING CHANGE #6: Method renamed — VirtualApplicationGroupResource.GetStartMenuItems
+================================================================================
+
+Error Messages:
+  - MembersMustExist: 'public Pageable<DesktopVirtualizationStartMenuItem> VirtualApplicationGroupResource.GetStartMenuItems(int?, bool?, int?, CancellationToken)'
+  - MembersMustExist: 'public AsyncPageable<DesktopVirtualizationStartMenuItem> VirtualApplicationGroupResource.GetStartMenuItemsAsync(int?, bool?, int?, CancellationToken)'
+
+Root Cause:
+  The TSP interface `StartMenuItems` defines the operation as `list`, which generates
+  `GetAll`/`GetAllAsync` on VirtualApplicationGroupResource. The old SDK had these named
+  `GetStartMenuItems`/`GetStartMenuItemsAsync` with parameters (int?, bool?, int?, CT).
+
+Preferred Fix: SDK-side (Customize)
+  File: src/Customize/VirtualApplicationGroupResource.cs
+  Steps:
+  1. Add [EditorBrowsable(EditorBrowsableState.Never)] overloads:
+     `GetStartMenuItems(int?, bool?, int?, CancellationToken)` →
+       delegates to `GetAll(pageSize, isDescending, initialSkip, cancellationToken)`
+     `GetStartMenuItemsAsync(int?, bool?, int?, CancellationToken)` →
+       delegates to `GetAllAsync(pageSize, isDescending, initialSkip, cancellationToken)`
+  2. Note: The existing customization file already has overloads
+     `GetStartMenuItems(CancellationToken)` — verify these also still work.
+
+================================================================================
+BREAKING CHANGE #7: PrivateEndpoint CreateOrUpdate/Update parameter type changed
+================================================================================
+
+Error Messages:
+  - MembersMustExist: 'ArmOperation<HostPoolPrivateEndpointConnectionResource> HostPoolPrivateEndpointConnectionCollection.CreateOrUpdate(WaitUntil, string, DesktopVirtualizationPrivateEndpointConnection, CancellationToken)'
+  - MembersMustExist: 'ArmOperation<HostPoolPrivateEndpointConnectionResource> HostPoolPrivateEndpointConnectionResource.Update(WaitUntil, DesktopVirtualizationPrivateEndpointConnection, CancellationToken)'
+  - MembersMustExist: 'ArmOperation<WorkspacePrivateEndpointConnectionResource> WorkspacePrivateEndpointConnectionCollection.CreateOrUpdate(WaitUntil, string, DesktopVirtualizationPrivateEndpointConnection, CancellationToken)'
+  - MembersMustExist: 'ArmOperation<WorkspacePrivateEndpointConnectionResource> WorkspacePrivateEndpointConnectionResource.Update(WaitUntil, DesktopVirtualizationPrivateEndpointConnection, CancellationToken)'
+  (Both sync and async variants for each — 8 errors total)
+
+Root Cause:
+  The old SDK (v1.3.2) used `DesktopVirtualizationPrivateEndpointConnection` (from
+  Models namespace) as the input parameter for CreateOrUpdate/Update operations.
+  The new TSP-generated SDK uses `DesktopVirtualizationPrivateEndpointConnectionDataData`
+  (the resource Data type) because the TSP defines the resource as
+  `PrivateEndpointConnectionWithSystemData` and the generator correctly uses the
+  resource data type for CRUD operations.
+
+Preferred Fix: SDK-side (Customize)
+  Files:
+  - src/Customize/HostPoolPrivateEndpointConnectionCollection.cs (create new)
+  - src/Customize/HostPoolPrivateEndpointConnectionResource.cs (create new)
+  - src/Customize/WorkspacePrivateEndpointConnectionCollection.cs (create new)
+  - src/Customize/WorkspacePrivateEndpointConnectionResource.cs (create new)
+  Steps:
+  1. In each file, add [EditorBrowsable(EditorBrowsableState.Never)] overloads for
+     CreateOrUpdate/CreateOrUpdateAsync (collections) and Update/UpdateAsync (resources)
+     that accept `DesktopVirtualizationPrivateEndpointConnection` and convert it to
+     `DesktopVirtualizationPrivateEndpointConnectionDataData` before delegating.
+  2. The conversion can map the flattened properties (GroupIds,
+     PrivateLinkServiceConnectionState, PrivateEndpointId, ProvisioningState) from the
+     Models type into the Data type.
+
+================================================================================
+BREAKING CHANGE #8: PrivateEndpointId type and ConnectionState renamed
+================================================================================
+
+Error Messages:
+  - MembersMustExist: 'ResourceIdentifier DesktopVirtualizationPrivateEndpointConnectionDataData.PrivateEndpointId.get()'
+  - MembersMustExist: 'ResourceIdentifier DesktopVirtualizationPrivateEndpointConnection.PrivateEndpointId.get()'
+  - MembersMustExist: 'DesktopVirtualizationPrivateLinkServiceConnectionState DesktopVirtualizationPrivateEndpointConnectionDataData.ConnectionState.get()'
+  - MembersMustExist: 'void DesktopVirtualizationPrivateEndpointConnectionDataData.ConnectionState.set(...)'
+  - MembersMustExist: 'DesktopVirtualizationPrivateLinkServiceConnectionState DesktopVirtualizationPrivateEndpointConnection.ConnectionState.get()'
+  - MembersMustExist: 'void DesktopVirtualizationPrivateEndpointConnection.ConnectionState.set(...)'
+
+Root Cause (PrivateEndpointId type):
+  The TSP model `PrivateEndpoint.id` is defined as `string` (with @visibility(Read)).
+  The old SDK had this flattened as `ResourceIdentifier PrivateEndpointId`. The new
+  generated code has `string PrivateEndpointId`. The old SDK used AutoRest conventions
+  that auto-converted ARM id strings to ResourceIdentifier.
+
+Root Cause (ConnectionState rename):
+  The TSP model property is `privateLinkServiceConnectionState`. The old SDK shortened
+  this to `ConnectionState` via AutoRest naming conventions. The new generator uses the
+  full name `PrivateLinkServiceConnectionState`.
+
+Preferred Fix: TSP-side (client.tsp) + SDK-side (Customize)
   File: TempTypeSpecFiles/DesktopVirtualization/client.tsp
-  Steps:
-    1. Add @@clientName to rename the operation:
-       @@clientName(Workspaces.listPrivateLinkResourcesByWorkspace,
-         "GetPrivateLinkResources", "csharp");
+  Steps for PrivateEndpointId type:
+  1. Add @@alternateType decorator to convert the PrivateEndpoint.id to ResourceIdentifier:
+       @@alternateType(PrivateEndpoint.id, Azure.Core.armResourceIdentifier, "csharp");
+     This will generate `ResourceIdentifier PrivateEndpointId` instead of `string`.
 
-  ALTERNATIVE SDK-SIDE FIX:
-    File: src/Customize/VirtualWorkspaceResource.cs (create)
-    Add delegating methods.
-
---------------------------------------------------------------------------------
-A8. VirtualApplicationGroupResource.GetStartMenuItems / GetStartMenuItemsAsync
---------------------------------------------------------------------------------
-ERROR:
-  MembersMustExist: 'Pageable<DesktopVirtualizationStartMenuItem> VirtualApplicationGroupResource.GetStartMenuItems(int?, bool?, int?, CancellationToken)'
-  MembersMustExist: 'AsyncPageable<DesktopVirtualizationStartMenuItem> VirtualApplicationGroupResource.GetStartMenuItemsAsync(int?, bool?, int?, CancellationToken)'
-
-ROOT CAUSE:
-  Method renamed to GetAll/GetAllAsync in the generated code. The old API
-  had GetStartMenuItems/GetStartMenuItemsAsync.
-
-PREFERRED FIX: TSP-side (client.tsp)
-  File: TempTypeSpecFiles/DesktopVirtualization/client.tsp
-  Steps:
-    1. Add @@clientName to rename the StartMenuItems list operation:
-       @@clientName(ApplicationGroups.listStartMenuItems,
-         "GetStartMenuItems", "csharp");
-       (Find exact operation name in TypeSpec spec files.)
-
-  NOTE: The existing custom code in src/Customize/VirtualApplicationGroupResource.cs
-  already has GetStartMenuItems wrappers but they delegate to themselves
-  (a bug). If TSP fix is applied, the custom wrappers should be updated or
-  removed. If SDK-side fix, fix the delegation target to point to GetAll.
-
-  ALTERNATIVE SDK-SIDE FIX:
-    File: src/Customize/VirtualApplicationGroupResource.cs
-    Fix the existing GetStartMenuItems methods to delegate to the generated
-    GetAll(pageSize, isDescending, initialSkip, ct) instead of self-recursion.
-
-================================================================================
-CATEGORY B: MISSING TYPES
-================================================================================
-
---------------------------------------------------------------------------------
-B1. Type MsixImageUri does not exist (public)
---------------------------------------------------------------------------------
-ERROR:
-  TypesMustExist: Type 'Azure.ResourceManager.DesktopVirtualization.Models.MsixImageUri'
-  does not exist in the implementation but it does exist in the contract.
-
-ROOT CAUSE:
-  MsixImageUri is generated as internal (used inside ExpandParameterBody).
-  The old SDK exposed it as a public class.
-
-PREFERRED FIX: TSP-side (client.tsp)
-  File: TempTypeSpecFiles/DesktopVirtualization/client.tsp
-  Steps:
-    1. Add a @@usage decorator to make MSIXImageURI (the TSP model name)
-       have input usage so it becomes public:
-       @@usage(MSIXImageURI, Usage.input, "csharp");
-    2. Or alternatively add @@access(MSIXImageURI, Access.public, "csharp");
-
-  ALTERNATIVE: If the TSP model is called something different, search for
-  MSIXImageURI or MsixImageUri in the spec files to find the correct name.
-
-================================================================================
-CATEGORY C: PRIVATE ENDPOINT CONNECTION PARAMETER TYPE CHANGES
-================================================================================
-The old API used DesktopVirtualizationPrivateEndpointConnection (a Models class)
-as the parameter for CreateOrUpdate/Update on PrivateEndpointConnection
-collections/resources. The new API uses DesktopVirtualizationPrivateEndpointConnectionDataData
-(the resource Data class).
-
---------------------------------------------------------------------------------
-C1. HostPoolPrivateEndpointConnectionCollection.CreateOrUpdate / CreateOrUpdateAsync
---------------------------------------------------------------------------------
-ERROR:
-  MembersMustExist: 'ArmOperation<HostPoolPrivateEndpointConnectionResource>
-    HostPoolPrivateEndpointConnectionCollection.CreateOrUpdate(WaitUntil, string,
-    DesktopVirtualizationPrivateEndpointConnection, CancellationToken)'
-  (and async version)
-
-ROOT CAUSE:
-  Parameter type changed from DesktopVirtualizationPrivateEndpointConnection
-  to DesktopVirtualizationPrivateEndpointConnectionDataData.
-
-PREFERRED FIX: SDK-side (custom code)
-  File: src/Customize/HostPoolPrivateEndpointConnectionCollection.cs (create)
-  Steps:
-    1. Add overloads taking DesktopVirtualizationPrivateEndpointConnection.
-    2. Convert the DesktopVirtualizationPrivateEndpointConnection to
-       DesktopVirtualizationPrivateEndpointConnectionDataData and delegate
-       to the generated methods.
-    3. Mark with [EditorBrowsable(EditorBrowsableState.Never)].
-
-  NOTE: This requires the DesktopVirtualizationPrivateEndpointConnection
-  model class to also retain its old shape (ConnectionState, PrivateEndpointId
-  properties — see C5/C6).
-
---------------------------------------------------------------------------------
-C2. HostPoolPrivateEndpointConnectionResource.Update / UpdateAsync
---------------------------------------------------------------------------------
-ERROR:
-  MembersMustExist: 'ArmOperation<HostPoolPrivateEndpointConnectionResource>
-    HostPoolPrivateEndpointConnectionResource.Update(WaitUntil,
-    DesktopVirtualizationPrivateEndpointConnection, CancellationToken)'
-  (and async version)
-
-ROOT CAUSE: Same as C1 — parameter type changed.
-
-PREFERRED FIX: SDK-side (custom code)
-  File: src/Customize/HostPoolPrivateEndpointConnectionResource.cs (create)
-  Steps: Same pattern as C1.
-
---------------------------------------------------------------------------------
-C3. WorkspacePrivateEndpointConnectionCollection.CreateOrUpdate / CreateOrUpdateAsync
---------------------------------------------------------------------------------
-ERROR:
-  MembersMustExist: 'ArmOperation<WorkspacePrivateEndpointConnectionResource>
-    WorkspacePrivateEndpointConnectionCollection.CreateOrUpdate(WaitUntil, string,
-    DesktopVirtualizationPrivateEndpointConnection, CancellationToken)'
-  (and async version)
-
-ROOT CAUSE: Same as C1.
-
-PREFERRED FIX: SDK-side (custom code)
-  File: src/Customize/WorkspacePrivateEndpointConnectionCollection.cs (create)
-  Steps: Same pattern as C1.
-
---------------------------------------------------------------------------------
-C4. WorkspacePrivateEndpointConnectionResource.Update / UpdateAsync
---------------------------------------------------------------------------------
-ERROR:
-  MembersMustExist: 'ArmOperation<WorkspacePrivateEndpointConnectionResource>
-    WorkspacePrivateEndpointConnectionResource.Update(WaitUntil,
-    DesktopVirtualizationPrivateEndpointConnection, CancellationToken)'
-  (and async version)
-
-ROOT CAUSE: Same as C1.
-
-PREFERRED FIX: SDK-side (custom code)
-  File: src/Customize/WorkspacePrivateEndpointConnectionResource.cs (create)
-  Steps: Same pattern as C1.
-
-================================================================================
-CATEGORY D: PRIVATE ENDPOINT CONNECTION PROPERTY CHANGES
-================================================================================
-
---------------------------------------------------------------------------------
-C5. DesktopVirtualizationPrivateEndpointConnection.ConnectionState (get/set)
---------------------------------------------------------------------------------
-ERROR:
-  MembersMustExist: 'DesktopVirtualizationPrivateLinkServiceConnectionState
-    DesktopVirtualizationPrivateEndpointConnection.ConnectionState.get()'
-  MembersMustExist: 'void
-    DesktopVirtualizationPrivateEndpointConnection.ConnectionState.set(...)'
-
-ROOT CAUSE:
-  The old API had a property named ConnectionState of type
-  DesktopVirtualizationPrivateLinkServiceConnectionState. The new generated
-  code has the property named PrivateLinkServiceConnectionState (same type).
-  The property was renamed.
-
-PREFERRED FIX: TSP-side (client.tsp)
-  File: TempTypeSpecFiles/DesktopVirtualization/client.tsp
-  Steps:
-    1. Add @@clientName to rename the property back:
+  Steps for ConnectionState rename:
+  2. Add @@clientName decorators to rename the property back to "ConnectionState":
        @@clientName(PrivateEndpointConnectionProperties.privateLinkServiceConnectionState,
          "ConnectionState", "csharp");
+     This will generate the property as `ConnectionState` on both the Data type and
+     the Models type (since both are flattened from the same TSP properties model).
 
-  ALTERNATIVE SDK-SIDE FIX:
-    File: src/Customize/Models/DesktopVirtualizationPrivateEndpointConnection.cs (create)
-    Add a ConnectionState property that wraps PrivateLinkServiceConnectionState.
-    Mark with [EditorBrowsable(Never)].
+================================================================================
+BREAKING CHANGE #9: VirtualApplicationPatch.Tags and VirtualDesktopPatch.Tags missing
+================================================================================
 
---------------------------------------------------------------------------------
-C6. DesktopVirtualizationPrivateEndpointConnection.PrivateEndpointId (ResourceIdentifier)
---------------------------------------------------------------------------------
-ERROR:
-  MembersMustExist: 'Azure.Core.ResourceIdentifier
-    DesktopVirtualizationPrivateEndpointConnection.PrivateEndpointId.get()'
+Error Messages:
+  - MembersMustExist: 'IDictionary<string, string> VirtualApplicationPatch.Tags.get()'
+  - MembersMustExist: 'void VirtualApplicationPatch.Tags.set(IDictionary<string, string>)'
+  - MembersMustExist: 'IDictionary<string, string> VirtualDesktopPatch.Tags.get()'
+  - MembersMustExist: 'void VirtualDesktopPatch.Tags.set(IDictionary<string, string>)'
 
-ROOT CAUSE:
-  The old API had PrivateEndpointId as type ResourceIdentifier. The new
-  generated code has it as type string (no alternateType applied). Also
-  the property name may differ (it might be a nested object in the new API).
+Root Cause:
+  The TSP models `ApplicationPatch` and `DesktopPatch` do not include a `tags` property.
+  They only have a `properties` sub-model. In the old SDK, these patch models included
+  Tags (likely added automatically by AutoRest or because the old Swagger included them).
+  The TSP models must explicitly include tags to generate them.
 
-PREFERRED FIX: TSP-side (client.tsp) + SDK-side
-  File: TempTypeSpecFiles/DesktopVirtualization/client.tsp
+Preferred Fix: TSP-side (models.tsp or client.tsp)
+  Option A — Modify models.tsp (if allowed to modify the spec):
+    Add `...Azure.ResourceManager.Foundations.TagsUpdateModel<Application>` or a manual
+    `tags?: Record<string>` property to the `ApplicationPatch` and `DesktopPatch` models.
+
+  Option B — SDK-side fix (Customize):
+    File: src/Customize/Models/VirtualApplicationPatch.cs (create new)
+    File: src/Customize/Models/VirtualDesktopPatch.cs (create new)
+    Steps:
+    1. Add a `Tags` property (IDictionary<string, string>) with get/set to each patch
+       model as a partial class extension.
+    2. Update the serialization to include Tags in the JSON output. This may require a
+       custom serialization override or a Customize serialization file.
+
+  Recommendation: Option A (TSP-side) is cleaner. Add tags to the patch models in
+  models.tsp. If models.tsp cannot be modified (it's from the spec repo), then use
+  Option B.
+
+================================================================================
+BREAKING CHANGE #10: ScalingSchedule.DaysOfWeek type changed
+================================================================================
+
+Error Message:
+  - MembersMustExist: 'IList<ScalingScheduleDaysOfWeekItem> ScalingSchedule.DaysOfWeek.get()'
+
+Root Cause:
+  The old SDK had `IList<ScalingScheduleDaysOfWeekItem> DaysOfWeek { get; }`.
+  The new generated code has `ScalingScheduleDaysOfWeekItem? DaysOfWeek { get; set; }`
+  (a single nullable value instead of a list).
+  The client.tsp has workarounds: it renames the original enum to
+  `ScalingScheduleDaysOfWeekItemOld`, creates a union-based struct
+  `ScalingScheduleDaysOfWeekItemUsingStruct` renamed to `ScalingScheduleDaysOfWeekItem`,
+  and uses @@alternateType to swap the type. However, the TSP model defines
+  `daysOfWeek?: ScalingScheduleDaysOfWeekItem?` as a single optional value, not an array.
+  This means the type was changed from IList<T> to T? — a fundamental shape change.
+
+Preferred Fix: SDK-side (Customize)
+  File: src/Customize/Models/ScalingSchedule.cs (already exists with other customizations)
   Steps:
-    1. Add @@alternateType to change the type:
-       @@alternateType(PrivateEndpointConnectionProperties.privateEndpoint,
-         Azure.Core.armResourceIdentifier, "csharp");
-       (Note: the TSP may have privateEndpoint as a sub-object with an id
-       property. Need to check the exact path. If the property was flattened,
-       target the flattened property name.)
-
-  If the structure is {privateEndpoint: {id: string}}, then the flattened
-  property becomes privateEndpointId (string). To make it ResourceIdentifier:
-    @@alternateType(PrivateEndpointConnectionProperties.privateEndpointId,
-      Azure.Core.armResourceIdentifier, "csharp");
-
-  ALTERNATIVE SDK-SIDE FIX:
-    Add a custom property that wraps the string as ResourceIdentifier.
-
---------------------------------------------------------------------------------
-C7. DesktopVirtualizationPrivateEndpointConnectionDataData.ConnectionState (get/set)
---------------------------------------------------------------------------------
-ERROR:
-  MembersMustExist: 'DesktopVirtualizationPrivateLinkServiceConnectionState
-    DesktopVirtualizationPrivateEndpointConnectionDataData.ConnectionState.get()'
-  MembersMustExist: 'void
-    DesktopVirtualizationPrivateEndpointConnectionDataData.ConnectionState.set(...)'
-
-ROOT CAUSE:
-  Same as C5 but for the Data class. Property renamed from ConnectionState
-  to PrivateLinkServiceConnectionState.
-
-PREFERRED FIX: TSP-side (client.tsp)
-  Same fix as C5 (a single @@clientName on the property will fix both the
-  Models class and the Data class since they share the same TypeSpec source).
-
-  ALTERNATIVE SDK-SIDE FIX:
-    File: src/Customize/DesktopVirtualizationPrivateEndpointConnectionDataData.cs (create)
-    Add ConnectionState property wrapper.
-
---------------------------------------------------------------------------------
-C8. DesktopVirtualizationPrivateEndpointConnectionDataData.PrivateEndpointId (ResourceIdentifier)
---------------------------------------------------------------------------------
-ERROR:
-  MembersMustExist: 'Azure.Core.ResourceIdentifier
-    DesktopVirtualizationPrivateEndpointConnectionDataData.PrivateEndpointId.get()'
-
-ROOT CAUSE:
-  Same as C6 but for the Data class. PrivateEndpointId is string instead
-  of ResourceIdentifier.
-
-PREFERRED FIX: TSP-side (client.tsp)
-  Same fix as C6 will resolve both.
-
-================================================================================
-CATEGORY E: MISSING PROPERTY SETTERS (IList properties became read-only)
-================================================================================
-In the new TypeSpec codegen, IList<T> properties on models that are marked
-with Input usage get a getter returning the list (initializing on first access)
-but no setter. The old SDK had both getter and setter.
-
---------------------------------------------------------------------------------
-E1. AppAttachPackageInfoProperties.PackageDependencies.set
---------------------------------------------------------------------------------
-ERROR:
-  MembersMustExist: 'void AppAttachPackageInfoProperties.PackageDependencies.set(
-    IList<MsixPackageDependencies>)'
-
-ROOT CAUSE:
-  In the new codegen, IList<T> properties are initialized lazily and only
-  expose a getter. The list itself is mutable (add/remove), so a setter is
-  not strictly needed. But the old API had it.
-
-PREFERRED FIX: SDK-side (custom code)
-  File: src/Customize/Models/AppAttachPackageInfoProperties.cs (create)
-  Steps:
-    1. Add a partial class with the setter for PackageDependencies.
-    2. Mark with [EditorBrowsable(EditorBrowsableState.Never)].
-
---------------------------------------------------------------------------------
-E2. ExpandMsixImage.PackageDependencies.set
---------------------------------------------------------------------------------
-ERROR:
-  MembersMustExist: 'void ExpandMsixImage.PackageDependencies.set(
-    IList<MsixPackageDependencies>)'
-
-ROOT CAUSE: Same pattern as E1.
-
-PREFERRED FIX: SDK-side (custom code)
-  File: src/Customize/Models/ExpandMsixImage.cs (create)
-  Steps: Same as E1.
-
---------------------------------------------------------------------------------
-E3. SessionHostAgentUpdatePatchProperties.MaintenanceWindows.set
---------------------------------------------------------------------------------
-ERROR:
-  MembersMustExist: 'void SessionHostAgentUpdatePatchProperties.MaintenanceWindows.set(
-    IList<MaintenanceWindowPatchProperties>)'
-
-ROOT CAUSE: Same pattern — IList getter-only.
-
-PREFERRED FIX: SDK-side (custom code)
-  File: src/Customize/Models/SessionHostAgentUpdatePatchProperties.cs (create)
-  Steps: Same as E1.
-
---------------------------------------------------------------------------------
-E4. SessionHostAgentUpdateProperties.MaintenanceWindows.set
---------------------------------------------------------------------------------
-ERROR:
-  MembersMustExist: 'void SessionHostAgentUpdateProperties.MaintenanceWindows.set(
-    IList<SessionHostMaintenanceWindowProperties>)'
-
-ROOT CAUSE: Same pattern.
-
-PREFERRED FIX: SDK-side (custom code)
-  File: src/Customize/Models/SessionHostAgentUpdateProperties.cs (create)
-  Steps: Same as E1.
-
---------------------------------------------------------------------------------
-E5. VirtualWorkspacePatch.ApplicationGroupReferences.set
---------------------------------------------------------------------------------
-ERROR:
-  MembersMustExist: 'void VirtualWorkspacePatch.ApplicationGroupReferences.set(
-    IList<string>)'
-
-ROOT CAUSE: Same pattern — IList<string> is getter-only.
-
-PREFERRED FIX: SDK-side (custom code)
-  File: src/Customize/Models/VirtualWorkspacePatch.cs (already exists, extend)
-  Steps:
-    1. The existing customization file already has Tags. Add a setter for
-       ApplicationGroupReferences.
-    2. Mark with [EditorBrowsable(EditorBrowsableState.Never)].
-
-================================================================================
-CATEGORY F: MISSING Tags PROPERTIES ON PATCH MODELS
-================================================================================
-
---------------------------------------------------------------------------------
-F1. VirtualApplicationPatch.Tags (get/set)
---------------------------------------------------------------------------------
-ERROR:
-  MembersMustExist: 'IDictionary<string,string> VirtualApplicationPatch.Tags.get()'
-  MembersMustExist: 'void VirtualApplicationPatch.Tags.set(IDictionary<string,string>)'
-
-ROOT CAUSE:
-  VirtualApplicationPatch no longer has a Tags property in the TypeSpec.
-  The old API (autorest) included tags on this patch model because it was
-  defined in the swagger, but the new TypeSpec doesn't define tags for
-  Application updates (sub-resources don't typically have tags).
-
-PREFERRED FIX: SDK-side (custom code)
-  File: src/Customize/Models/VirtualApplicationPatch.cs (create)
-  Steps:
-    1. Add a partial class with Tags property (IDictionary<string,string>)
-       with get/set.
-    2. Mark with [EditorBrowsable(EditorBrowsableState.Never)] and
-       [Obsolete("Tags are not supported on this resource.")].
-
-  NOTE: This is purely for backward compatibility. The tags won't actually
-  be serialized/sent to the service unless custom serialization is also added.
-
---------------------------------------------------------------------------------
-F2. VirtualDesktopPatch.Tags (get/set)
---------------------------------------------------------------------------------
-ERROR:
-  MembersMustExist: 'IDictionary<string,string> VirtualDesktopPatch.Tags.get()'
-  MembersMustExist: 'void VirtualDesktopPatch.Tags.set(IDictionary<string,string>)'
-
-ROOT CAUSE: Same as F1.
-
-PREFERRED FIX: SDK-side (custom code)
-  File: src/Customize/Models/VirtualDesktopPatch.cs (create)
-  Steps: Same as F1.
-
-================================================================================
-CATEGORY G: MODELFACTORY SIGNATURE CHANGE
-================================================================================
-
---------------------------------------------------------------------------------
-G1. ArmDesktopVirtualizationModelFactory.VirtualApplicationData
---------------------------------------------------------------------------------
-ERROR:
-  MembersMustExist: 'VirtualApplicationData ArmDesktopVirtualizationModelFactory.VirtualApplicationData(
-    ResourceIdentifier, string, ResourceType, SystemData, string, string, string, string, string,
-    string, RemoteApplicationType?, VirtualApplicationCommandLineSetting, string, bool?, string,
-    int?, string, BinaryData)'
-
-ROOT CAUSE:
-  The old ModelFactory method had VirtualApplicationCommandLineSetting as
-  non-nullable. The new generated ModelFactory has it as
-  VirtualApplicationCommandLineSetting? (nullable). This is a signature
-  mismatch — the non-nullable overload no longer exists.
-
-PREFERRED FIX: SDK-side (custom code)
-  File: src/Customize/Models/ArmDesktopVirtualizationModelFactory.cs (create)
-  Steps:
-    1. Add a partial class for ArmDesktopVirtualizationModelFactory.
-    2. Add the old overload with non-nullable VirtualApplicationCommandLineSetting
-       that delegates to the new overload (passing the value as nullable).
-    3. Mark with [EditorBrowsable(EditorBrowsableState.Never)].
-
-================================================================================
-CATEGORY H: ENUM/STRUCT TYPE CHANGE FOR DaysOfWeek
-================================================================================
-
---------------------------------------------------------------------------------
-H1. ScalingSchedule.DaysOfWeek type change (IList<ScalingScheduleDaysOfWeekItem> → single value)
---------------------------------------------------------------------------------
-ERROR:
-  MembersMustExist: 'IList<ScalingScheduleDaysOfWeekItem>
-    ScalingSchedule.DaysOfWeek.get()'
-
-ROOT CAUSE:
-  The old API had DaysOfWeek as IList<ScalingScheduleDaysOfWeekItem> (a list
-  of enum values). The new TypeSpec models it as a single
-  ScalingScheduleDaysOfWeekItemUsingStructFirst? value (a flags-like string
-  struct). The type changed from a list of enums to a single nullable struct.
-
-  The client.tsp has:
-    @@alternateType(ScalingSchedule.daysOfWeek, ScalingScheduleDaysOfWeekItem, "csharp");
-  And rename tricks to swap ScalingScheduleDaysOfWeekItemUsingStruct ↔
-  ScalingScheduleDaysOfWeekItem.
-
-  But the result is still a single value property, not IList.
-
-PREFERRED FIX: SDK-side (custom code)
-  File: src/Customize/Models/ScalingSchedule.cs (already exists, extend)
-  Steps:
-    1. The existing customize file already has time-related shim properties.
-    2. Add a new property:
-       [EditorBrowsable(EditorBrowsableState.Never)]
+  1. Add an [EditorBrowsable(EditorBrowsableState.Never)] property:
        public IList<ScalingScheduleDaysOfWeekItem> DaysOfWeek { get; }
-    3. This property should convert between the new single-value struct
-       and the old list representation.
-    4. Hide the generated DaysOfWeek property by re-declaring it with
-       [EditorBrowsable(Never)] in the customize partial class.
+     This is complex because the underlying TSP model has this as a single nullable
+     value (flags enum / bitmask), not a list.
+  2. The old SDK treated DaysOfWeek as a list of day-of-week items, but the TSP spec
+     defines it as a single value (likely a flags/bitmask enum). A compatibility shim
+     would need to convert between the list representation and the bitmask.
+  3. Alternative: If the spec can be modified, change the TSP property type from
+     `ScalingScheduleDaysOfWeekItem?` to `ScalingScheduleDaysOfWeekItem[]` in models.tsp.
+     This is the cleanest fix but requires spec agreement.
 
-  NOTE: This is complex because the types are fundamentally different.
-  The list of enum values (Monday, Tuesday...) vs a single struct.
-  May need a custom conversion layer. Alternatively, this could be
-  flagged as an accepted breaking change if a smooth wrapper is not
-  feasible.
-
-  TSP-SIDE ALTERNATIVE: Modify the TypeSpec model for ScalingSchedule to
-  use an array of enum values instead of a single value. In the TypeSpec
-  spec, change daysOfWeek from a single value to an array. This may require
-  changes in the upstream TypeSpec spec (not just client.tsp), which may
-  not be within our control.
+  Recommendation: Check whether the TSP spec's single-value type is correct (flags enum)
+  or whether it should be an array. If it should be an array, fix the TSP spec. If the
+  single-value is correct, add SDK-side compat shim.
 
 ================================================================================
-SUMMARY OF FILES TO MODIFY
+BREAKING CHANGE #11: SessionHostResource.Update overload missing
 ================================================================================
 
-TSP-SIDE FIXES (in TempTypeSpecFiles/DesktopVirtualization/client.tsp):
-  1. @@clientName for PrivateLinkResources operations → "GetPrivateLinkResources"
-     (A6, A7)
-  2. @@clientName for StartMenuItems list operation → "GetStartMenuItems" (A8)
-  3. @@clientName for privateLinkServiceConnectionState → "ConnectionState"
-     (C5, C7)
-  4. @@alternateType for privateEndpoint(Id) → armResourceIdentifier (C6, C8)
-  5. @@usage or @@access for MSIXImageURI → public (B1)
+Error Messages:
+  - MembersMustExist: 'Response<SessionHostResource> SessionHostResource.Update(SessionHostPatch, CancellationToken)'
+  - MembersMustExist: 'Task<Response<SessionHostResource>> SessionHostResource.UpdateAsync(SessionHostPatch, CancellationToken)'
 
-SDK-SIDE FIXES (in src/Customize/):
-  1. UserSessionResource.cs — Disconnect, SendMessage methods (A1, A2)
-  2. HostPoolResource.cs — RetrieveRegistrationToken, ExpandMsixImages,
-     ImportAppAttachPackageInfos methods (A3, A4, A5)
-  3. HostPoolPrivateEndpointConnectionCollection.cs — CreateOrUpdate
-     overload (C1)
-  4. HostPoolPrivateEndpointConnectionResource.cs — Update overload (C2)
-  5. WorkspacePrivateEndpointConnectionCollection.cs — CreateOrUpdate
-     overload (C3)
-  6. WorkspacePrivateEndpointConnectionResource.cs — Update overload (C4)
-  7. Models/AppAttachPackageInfoProperties.cs — PackageDependencies setter (E1)
-  8. Models/ExpandMsixImage.cs — PackageDependencies setter (E2)
-  9. Models/SessionHostAgentUpdatePatchProperties.cs — MaintenanceWindows
-     setter (E3)
-  10. Models/SessionHostAgentUpdateProperties.cs — MaintenanceWindows
-      setter (E4)
-  11. Models/VirtualWorkspacePatch.cs — ApplicationGroupReferences setter (E5)
-  12. Models/VirtualApplicationPatch.cs — Tags property (F1)
-  13. Models/VirtualDesktopPatch.cs — Tags property (F2)
-  14. Models/ArmDesktopVirtualizationModelFactory.cs — VirtualApplicationData
-      overload (G1)
-  15. Models/ScalingSchedule.cs — DaysOfWeek IList shim (H1)
+Root Cause:
+  The old SDK had two overloads:
+    Update(SessionHostPatch, CancellationToken)                     // 2 params
+    Update(SessionHostPatch, bool? force, CancellationToken)        // 3 params
+  The new generated code only has:
+    Update(SessionHostPatch, bool? force, CancellationToken)        // 3 params (force is optional)
+  The 2-parameter overload is missing. Although the 3-param version has `force` as optional
+  (default = null), ApiCompat requires the exact signature match.
 
-TOTAL: 43 unique errors (deduplicated across 3 target frameworks)
-       → 20 distinct issues
-       → 5 TSP-side fixes, 15 SDK-side fixes
+Preferred Fix: SDK-side (Customize)
+  File: src/Customize/SessionHostResource.cs (create new or add to existing)
+  Steps:
+  1. Add [EditorBrowsable(EditorBrowsableState.Never)] overloads:
+       public virtual Response<SessionHostResource> Update(SessionHostPatch patch,
+         CancellationToken cancellationToken)
+         => Update(patch, null, cancellationToken);
+       public virtual async Task<Response<SessionHostResource>> UpdateAsync(
+         SessionHostPatch patch, CancellationToken cancellationToken)
+         => await UpdateAsync(patch, null, cancellationToken);
+
+================================================================================
+BREAKING CHANGE #12: UserSessionResource.SendMessage parameter type changed
+================================================================================
+
+Error Messages:
+  - MembersMustExist: 'Response UserSessionResource.SendMessage(UserSessionMessage, CancellationToken)'
+  - MembersMustExist: 'Task<Response> UserSessionResource.SendMessageAsync(UserSessionMessage, CancellationToken)'
+
+Root Cause:
+  The TSP operation `sendMessage` uses an inline anonymous request body:
+    `{ @bodyRoot sendMessage?: SendMessage; }`
+  The generator wraps this in `SendMessageParameterBody`. The old SDK used
+  `UserSessionMessage` (which is @@clientName(SendMessage, "UserSessionMessage")) directly.
+  The wrapper type replaces the direct usage.
+
+Preferred Fix: SDK-side (Customize)
+  File: src/Customize/UserSessionResource.cs (create new)
+  Steps:
+  1. Ensure `UserSessionMessage` is still public. If absorbed into the wrapper, add
+     @@access(SendMessage, Access.public, "csharp") in client.tsp.
+  2. Add [EditorBrowsable(EditorBrowsableState.Never)] overloads:
+       public virtual Response SendMessage(UserSessionMessage message,
+         CancellationToken cancellationToken)
+       {
+         var body = new SendMessageParameterBody() { ... copy properties ... };
+         return SendMessage(body, cancellationToken);
+       }
+       (same for async)
+  3. Alternative: Check if the `SendMessageParameterBody` can be renamed to
+     `UserSessionMessage` via @@clientName on the wrapper. This would be cleaner but
+     depends on generator support.
+
+================================================================================
+BREAKING CHANGE #13: ModelFactory.VirtualApplicationData overload missing
+================================================================================
+
+Error Message:
+  - MembersMustExist: 'VirtualApplicationData ArmDesktopVirtualizationModelFactory.VirtualApplicationData(ResourceIdentifier, String, ResourceType, SystemData, String, String, String, String, String, String, Nullable<RemoteApplicationType>, VirtualApplicationCommandLineSetting, String, Nullable<Boolean>, String, Nullable<Int32>, String, BinaryData)'
+
+Root Cause:
+  The old SDK had a model factory overload where the `commandLineSetting` parameter was
+  non-nullable (`VirtualApplicationCommandLineSetting`). The new generated code only has
+  the version with `VirtualApplicationCommandLineSetting?` (nullable). This is because
+  in the old API the constructor required `commandLineSetting`, so the model factory had
+  a non-nullable overload. The new generation makes all model factory params optional
+  with defaults.
+
+Preferred Fix: SDK-side (Customize)
+  File: src/Customize/Models/ArmDesktopVirtualizationModelFactory.cs (create new)
+  Steps:
+  1. Add an [EditorBrowsable(EditorBrowsableState.Never)] overload of
+     `VirtualApplicationData` with the exact old signature (non-nullable
+     `VirtualApplicationCommandLineSetting commandLineSetting` and positional params
+     without defaults):
+       public static VirtualApplicationData VirtualApplicationData(
+         ResourceIdentifier id, string name, ResourceType resourceType,
+         SystemData systemData, string objectId, string description,
+         string friendlyName, string filePath, string msixPackageFamilyName,
+         string msixPackageApplicationId, RemoteApplicationType? applicationType,
+         VirtualApplicationCommandLineSetting commandLineSetting,
+         string commandLineArguments, bool? showInPortal, string iconPath,
+         int? iconIndex, string iconHash, BinaryData iconContent)
+       => VirtualApplicationData(id, name, resourceType, systemData, objectId,
+            description, friendlyName, filePath, msixPackageFamilyName,
+            msixPackageApplicationId, applicationType, commandLineSetting,
+            commandLineArguments, showInPortal, iconPath, iconIndex,
+            iconHash, iconContent);
+
+================================================================================
+BREAKING CHANGE #14: Collection property setters removed
+================================================================================
+
+Error Messages:
+  - MembersMustExist: 'void AppAttachPackageInfoProperties.PackageDependencies.set(IList<MsixPackageDependencies>)'
+  - MembersMustExist: 'void ExpandMsixImage.PackageDependencies.set(IList<MsixPackageDependencies>)'
+  - MembersMustExist: 'void SessionHostAgentUpdatePatchProperties.MaintenanceWindows.set(IList<MaintenanceWindowPatchProperties>)'
+  - MembersMustExist: 'void SessionHostAgentUpdateProperties.MaintenanceWindows.set(IList<SessionHostMaintenanceWindowProperties>)'
+  - MembersMustExist: 'void VirtualWorkspacePatch.ApplicationGroupReferences.set(IList<string>)'
+
+Root Cause:
+  The new TypeSpec generator generates collection properties as `IList<T>` with get-only
+  accessors (no setter). The collection is mutable via Add/Remove/Clear. The old SDK had
+  both get and set accessors. ApiCompat flags the missing setters.
+
+Preferred Fix: SDK-side (Customize)
+  Files (create new customization files for each):
+  - src/Customize/Models/AppAttachPackageInfoProperties.cs
+  - src/Customize/Models/ExpandMsixImage.cs
+  - src/Customize/Models/SessionHostAgentUpdatePatchProperties.cs
+  - src/Customize/Models/SessionHostAgentUpdateProperties.cs
+  - src/Customize/Models/VirtualWorkspacePatch.cs (may already exist — check and add to it)
+  Steps:
+  1. For each affected type, the generated code uses a backing field or property with
+     a ChangeTrackingList/IList. Add a property setter that replaces the list contents:
+       [EditorBrowsable(EditorBrowsableState.Never)]
+       public IList<T> PropertyName
+       {
+         get => _existingBackingField;
+         set
+         {
+           _existingBackingField.Clear();
+           foreach (var item in value) _existingBackingField.Add(item);
+         }
+       }
+  2. Since the generated code already has the getter, use the `new` keyword or verify
+     that partial class allows adding the setter alongside the existing getter.
+  3. For VirtualWorkspacePatch, the file src/Customize/Models/VirtualWorkspacePatch.cs
+     already exists — add the setter there.
+
+  Note: The exact implementation depends on how the generated partial class defines the
+  property. If the generated property already has `{ get; }`, the customization must use
+  the same property declaration with the added setter, which may require CodeGenSuppression
+  attribute to suppress the generated property and redefine it with both get and set.
+
+================================================================================
+SUMMARY OF FIXES BY FILE
+================================================================================
+
+TSP-side changes (client.tsp):
+  1. @@access(MSIXImageURI, Access.public, "csharp");
+  2. @@alternateType(PrivateEndpoint.id, Azure.Core.armResourceIdentifier, "csharp");
+  3. @@clientName(PrivateEndpointConnectionProperties.privateLinkServiceConnectionState,
+       "ConnectionState", "csharp");
+  4. Possibly @@access(SendMessage, Access.public, "csharp");
+  5. Consider adding tags to ApplicationPatch and DesktopPatch in models.tsp
+
+SDK-side changes (Customize):
+  1. src/Customize/HostPoolResource.cs — Add compat overloads for
+     ImportAppAttachPackageInfos, ExpandMsixImages, GetPrivateLinkResources
+  2. src/Customize/VirtualWorkspaceResource.cs — Add compat overload for
+     GetPrivateLinkResources (may need new file or add to existing)
+  3. src/Customize/VirtualApplicationGroupResource.cs — Add compat overload for
+     GetStartMenuItems (with pageSize/isDescending/initialSkip params)
+  4. src/Customize/HostPoolPrivateEndpointConnectionCollection.cs (new) —
+     CreateOrUpdate compat overload
+  5. src/Customize/HostPoolPrivateEndpointConnectionResource.cs (new) —
+     Update compat overload
+  6. src/Customize/WorkspacePrivateEndpointConnectionCollection.cs (new) —
+     CreateOrUpdate compat overload
+  7. src/Customize/WorkspacePrivateEndpointConnectionResource.cs (new) —
+     Update compat overload
+  8. src/Customize/SessionHostResource.cs (new) — Update(patch, ct) compat overload
+  9. src/Customize/UserSessionResource.cs (new) — SendMessage(UserSessionMessage, ct) compat overload
+  10. src/Customize/Models/ArmDesktopVirtualizationModelFactory.cs (new) —
+      VirtualApplicationData compat overload
+  11. src/Customize/Models/VirtualApplicationPatch.cs (new or add to models.tsp) — Tags
+  12. src/Customize/Models/VirtualDesktopPatch.cs (new or add to models.tsp) — Tags
+  13. src/Customize/Models/ScalingSchedule.cs (existing) — DaysOfWeek IList compat
+  14. src/Customize/Models/AppAttachPackageInfoProperties.cs (new) —
+      PackageDependencies setter
+  15. src/Customize/Models/ExpandMsixImage.cs (new) — PackageDependencies setter
+  16. src/Customize/Models/SessionHostAgentUpdatePatchProperties.cs (new) —
+      MaintenanceWindows setter
+  17. src/Customize/Models/SessionHostAgentUpdateProperties.cs (new) —
+      MaintenanceWindows setter
+  18. src/Customize/Models/VirtualWorkspacePatch.cs (existing) —
+      ApplicationGroupReferences setter
+
+================================================================================
+PRIORITY ORDER
+================================================================================
+
+Phase 1 — TSP-side fixes (regenerate after these):
+  - #3: Make MsixImageUri public
+  - #8: Fix PrivateEndpointId type and ConnectionState name
+
+Phase 2 — SDK-side compatibility overloads (after regeneration):
+  - #1, #2: ImportAppAttachPackageInfos, ExpandMsixImages overloads
+  - #4, #5, #6: GetPrivateLinkResources, GetStartMenuItems overloads
+  - #7: PrivateEndpoint CreateOrUpdate/Update overloads
+  - #11: SessionHostResource.Update overload
+  - #12: UserSessionResource.SendMessage overload
+  - #13: ModelFactory VirtualApplicationData overload
+
+Phase 3 — Property fixes:
+  - #9: Tags on patch models
+  - #10: ScalingSchedule.DaysOfWeek type compat
+  - #14: Collection property setters
