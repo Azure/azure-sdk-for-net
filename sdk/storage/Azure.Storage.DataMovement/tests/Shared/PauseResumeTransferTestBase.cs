@@ -1278,7 +1278,17 @@ namespace Azure.Storage.DataMovement.Tests
         private void AssertCheckpointerFilesAreAccessible(string checkpointerPath, string transferId)
         {
             // Get all files related to this transfer
-            string[] allFiles = Directory.GetFiles(checkpointerPath, "*", SearchOption.TopDirectoryOnly);
+            string[] allFiles;
+            try
+            {
+                allFiles = Directory.GetFiles(checkpointerPath, "*", SearchOption.TopDirectoryOnly);
+            }
+            catch (DirectoryNotFoundException)
+            {
+                // Directory was already cleaned up - that's fine
+                return;
+            }
+
             List<string> transferFiles = new List<string>();
 
             foreach (string file in allFiles)
@@ -1290,16 +1300,36 @@ namespace Azure.Storage.DataMovement.Tests
                 }
             }
 
+            // If no files exist, the transfer was cleaned up successfully
+            if (transferFiles.Count == 0)
+            {
+                return;
+            }
+
             // Verify we can open each file with exclusive access
             // This will fail if the checkpointer still has file handles open
             foreach (string filePath in transferFiles)
             {
+                // Check if file still exists (may have been deleted during iteration)
+                if (!File.Exists(filePath))
+                {
+                    continue;
+                }
+
                 try
                 {
                     using FileStream fs = File.Open(filePath, FileMode.Open, FileAccess.ReadWrite, FileShare.None);
                     // Successfully opened with exclusive access - file handles are released
                 }
+                catch (FileNotFoundException)
+                {
+                    // File was deleted between our check and open - that's fine
+                }
                 catch (IOException ex)
+                {
+                    Assert.Fail($"Checkpointer file '{filePath}' is still locked. File handles were not released. Error: {ex.Message}");
+                }
+                catch (UnauthorizedAccessException ex)
                 {
                     Assert.Fail($"Checkpointer file '{filePath}' is still locked. File handles were not released. Error: {ex.Message}");
                 }
@@ -1389,6 +1419,10 @@ namespace Azure.Storage.DataMovement.Tests
             };
             TransferManager transferManager = new TransferManager(options);
 
+            // Create mock checkpoint details for source and destination
+            Mock<StorageResourceCheckpointDetails> mockCheckpointDetails = new Mock<StorageResourceCheckpointDetails>();
+            mockCheckpointDetails.SetupGet(c => c.Length).Returns(0);
+
             // Create a source resource that will fail during transfer
             Mock<StorageResourceItem> failingSource = new Mock<StorageResourceItem>(MockBehavior.Strict);
             failingSource.Setup(r => r.Uri).Returns(new Uri("file:///fake/source"));
@@ -1398,6 +1432,8 @@ namespace Azure.Storage.DataMovement.Tests
             failingSource.Setup(r => r.ShouldItemTransferAsync(It.IsAny<CancellationToken>())).Returns(Task.FromResult(true));
             failingSource.Setup(r => r.GetPropertiesAsync(It.IsAny<CancellationToken>()))
                 .ThrowsAsync(new Exception("Simulated failure for testing"));
+            failingSource.Setup(r => r.GetSourceCheckpointDetails())
+                .Returns(mockCheckpointDetails.Object);
 
             Mock<StorageResourceItem> destination = new Mock<StorageResourceItem>(MockBehavior.Strict);
             destination.Setup(r => r.Uri).Returns(new Uri("https://example.com/dest"));
@@ -1410,6 +1446,8 @@ namespace Azure.Storage.DataMovement.Tests
             destination.SetupGet(r => r.MaxSupportedChunkCount).Returns(int.MaxValue);
             destination.Setup(r => r.ValidateTransferAsync(It.IsAny<string>(), It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
+            destination.Setup(r => r.GetDestinationCheckpointDetails())
+                .Returns(mockCheckpointDetails.Object);
 
             TransferOptions transferOptions = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);

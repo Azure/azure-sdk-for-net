@@ -737,26 +737,15 @@ public class TransferManagerTests
         // Add a transfer
         TransferOperation transfer = await transferManager.StartTransferAsync(srcResource.Object, dstResource.Object);
 
-        // Verify transfer was added
-        IAsyncEnumerable<TransferOperation> transfers = transferManager.GetTransfersAsync();
-        int count = 0;
-        await foreach (var _ in transfers)
-        {
-            count++;
-        }
-        Assert.That(count, Is.EqualTo(1), "Transfer should be tracked.");
+        // Verify transfer was added to internal dictionary
+        Assert.That(transferManager._transfers.Count, Is.EqualTo(1), "Transfer should be tracked.");
+        Assert.That(transferManager._transfers.ContainsKey(transfer.Id), Is.True, "Transfer should be in dictionary.");
 
         // Act
         await transferManager.DisposeAsync();
 
-        // Assert - Transfers should be cleared after dispose
-        transfers = transferManager.GetTransfersAsync();
-        count = 0;
-        await foreach (var _ in transfers)
-        {
-            count++;
-        }
-        Assert.That(count, Is.EqualTo(0), "Transfers should be cleared after dispose.");
+        // Assert - Internal transfers dictionary should be cleared after dispose
+        Assert.That(transferManager._transfers.Count, Is.EqualTo(0), "Transfers should be cleared after dispose.");
     }
 
     #endregion
@@ -835,6 +824,16 @@ internal static partial class MockExtensions
         items.Source.Setup(r => r.IsContainer).Returns(false);
 
         items.Source.Setup(r => r.ProviderId).Returns("mock");
+
+        // Setup checkpoint details for source and destination
+        items.Source.Setup(r => r.GetSourceCheckpointDetails())
+            .Returns(MockResourceCheckpointDetails.DefaultInstance);
+        items.Source.Setup(r => r.GetDestinationCheckpointDetails())
+            .Returns(MockResourceCheckpointDetails.DefaultInstance);
+        items.Destination.Setup(r => r.GetSourceCheckpointDetails())
+            .Returns(MockResourceCheckpointDetails.DefaultInstance);
+        items.Destination.Setup(r => r.GetDestinationCheckpointDetails())
+            .Returns(MockResourceCheckpointDetails.DefaultInstance);
 
         items.Destination.Setup(r => r.CopyFromStreamAsync(
             It.IsAny<Stream>(), It.IsAny<long>(), It.IsAny<bool>(), It.IsAny<long>(),

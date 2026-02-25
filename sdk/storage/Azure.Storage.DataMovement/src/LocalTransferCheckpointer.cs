@@ -6,7 +6,6 @@ using System.Buffers;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.MemoryMappedFiles;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -194,10 +193,34 @@ namespace Azure.Storage.DataMovement
             await jobPlanFile.WriteLock.WaitAsync(cancellationToken).ConfigureAwait(false);
             try
             {
-                using (MemoryMappedFile mmf = MemoryMappedFile.CreateFromFile(jobPlanFile.FilePath))
-                using (MemoryMappedViewStream mmfStream = mmf.CreateViewStream(offset, length, MemoryMappedFileAccess.Read))
+                using (FileStream fileStream = new FileStream(
+                    jobPlanFile.FilePath,
+                    FileMode.Open,
+                    FileAccess.Read,
+                    FileShare.Read))
                 {
-                    await mmfStream.CopyToAsync(copiedStream, bufferSize, cancellationToken).ConfigureAwait(false);
+                    if (offset > 0)
+                    {
+                        fileStream.Seek(offset, SeekOrigin.Begin);
+                    }
+
+                    if (length > 0)
+                    {
+                        byte[] buffer = ArrayPool<byte>.Shared.Rent(length);
+                        try
+                        {
+                            int bytesRead = await fileStream.ReadAsync(buffer, 0, length, cancellationToken).ConfigureAwait(false);
+                            await copiedStream.WriteAsync(buffer, 0, bytesRead, cancellationToken).ConfigureAwait(false);
+                        }
+                        finally
+                        {
+                            ArrayPool<byte>.Shared.Return(buffer);
+                        }
+                    }
+                    else
+                    {
+                        await fileStream.CopyToAsync(copiedStream, bufferSize, cancellationToken).ConfigureAwait(false);
+                    }
                 }
 
                 copiedStream.Position = 0;
@@ -232,10 +255,34 @@ namespace Azure.Storage.DataMovement
             await jobPartPlanFile.WriteLock.WaitAsync(cancellationToken).ConfigureAwait(false);
             try
             {
-                using (MemoryMappedFile mmf = MemoryMappedFile.CreateFromFile(jobPartPlanFile.FilePath))
-                using (MemoryMappedViewStream mmfStream = mmf.CreateViewStream(offset, length, MemoryMappedFileAccess.Read))
+                using (FileStream fileStream = new FileStream(
+                    jobPartPlanFile.FilePath,
+                    FileMode.Open,
+                    FileAccess.Read,
+                    FileShare.Read))
                 {
-                    await mmfStream.CopyToAsync(copiedStream, bufferSize, cancellationToken).ConfigureAwait(false);
+                    if (offset > 0)
+                    {
+                        fileStream.Seek(offset, SeekOrigin.Begin);
+                    }
+
+                    if (length > 0)
+                    {
+                        byte[] buffer = ArrayPool<byte>.Shared.Rent(length);
+                        try
+                        {
+                            int bytesRead = await fileStream.ReadAsync(buffer, 0, length, cancellationToken).ConfigureAwait(false);
+                            await copiedStream.WriteAsync(buffer, 0, bytesRead, cancellationToken).ConfigureAwait(false);
+                        }
+                        finally
+                        {
+                            ArrayPool<byte>.Shared.Return(buffer);
+                        }
+                    }
+                    else
+                    {
+                        await fileStream.CopyToAsync(copiedStream, bufferSize, cancellationToken).ConfigureAwait(false);
+                    }
                 }
 
                 copiedStream.Position = 0;
@@ -261,11 +308,15 @@ namespace Azure.Storage.DataMovement
                 await jobPlanFile.WriteLock.WaitAsync(cancellationToken).ConfigureAwait(false);
                 try
                 {
-                    using (MemoryMappedFile mmf = MemoryMappedFile.CreateFromFile(jobPlanFile.FilePath, FileMode.Open))
-                    using (MemoryMappedViewAccessor accessor = mmf.CreateViewAccessor(fileOffset, length, MemoryMappedFileAccess.Write))
+                    using (FileStream fileStream = new FileStream(
+                        jobPlanFile.FilePath,
+                        FileMode.Open,
+                        FileAccess.Write,
+                        FileShare.Read))
                     {
-                        accessor.WriteArray(0, buffer, bufferOffset, length);
-                        accessor.Flush();
+                        fileStream.Seek(fileOffset, SeekOrigin.Begin);
+                        await fileStream.WriteAsync(buffer, bufferOffset, length, cancellationToken).ConfigureAwait(false);
+                        await fileStream.FlushAsync(cancellationToken).ConfigureAwait(false);
                     }
                 }
                 finally
@@ -339,7 +390,6 @@ namespace Azure.Storage.DataMovement
             TransferStatus status,
             CancellationToken cancellationToken = default)
         {
-            long length = DataMovementConstants.IntSizeInBytes;
             int offset = DataMovementConstants.JobPlanFile.JobStatusIndex;
 
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
@@ -359,11 +409,17 @@ namespace Azure.Storage.DataMovement
             await jobPlanFile.WriteLock.WaitAsync(cancellationToken).ConfigureAwait(false);
             try
             {
-                using (MemoryMappedFile mmf = MemoryMappedFile.CreateFromFile(jobPlanFile.FilePath, FileMode.Open))
-                using (MemoryMappedViewAccessor accessor = mmf.CreateViewAccessor(offset, length))
+                using (FileStream fileStream = new FileStream(
+                    jobPlanFile.FilePath,
+                    FileMode.Open,
+                    FileAccess.Write,
+                    FileShare.Read))
                 {
-                    accessor.Write(0, (int)status.ToJobPlanStatus());
-                    accessor.Flush();
+                    fileStream.Seek(offset, SeekOrigin.Begin);
+                    int statusValue = (int)status.ToJobPlanStatus();
+                    byte[] statusBytes = BitConverter.GetBytes(statusValue);
+                    await fileStream.WriteAsync(statusBytes, 0, statusBytes.Length, cancellationToken).ConfigureAwait(false);
+                    await fileStream.FlushAsync(cancellationToken).ConfigureAwait(false);
                 }
             }
             finally
@@ -388,7 +444,6 @@ namespace Azure.Storage.DataMovement
             TransferStatus status,
             CancellationToken cancellationToken = default)
         {
-            long length = DataMovementConstants.IntSizeInBytes;
             int offset = DataMovementConstants.JobPartPlanFile.JobPartStatusIndex;
 
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
@@ -404,11 +459,17 @@ namespace Azure.Storage.DataMovement
             await file.WriteLock.WaitAsync(cancellationToken).ConfigureAwait(false);
             try
             {
-                using (MemoryMappedFile mmf = MemoryMappedFile.CreateFromFile(file.FilePath, FileMode.Open))
-                using (MemoryMappedViewAccessor accessor = mmf.CreateViewAccessor(offset, length))
+                using (FileStream fileStream = new FileStream(
+                    file.FilePath,
+                    FileMode.Open,
+                    FileAccess.Write,
+                    FileShare.Read))
                 {
-                    accessor.Write(0, (int)status.ToJobPlanStatus());
-                    accessor.Flush();
+                    fileStream.Seek(offset, SeekOrigin.Begin);
+                    int statusValue = (int)status.ToJobPlanStatus();
+                    byte[] statusBytes = BitConverter.GetBytes(statusValue);
+                    await fileStream.WriteAsync(statusBytes, 0, statusBytes.Length, cancellationToken).ConfigureAwait(false);
+                    await fileStream.FlushAsync(cancellationToken).ConfigureAwait(false);
                 }
             }
             finally
