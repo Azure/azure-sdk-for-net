@@ -102,6 +102,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
             string? callConnectionId = null, uniqueId = null;
 
             try
@@ -123,9 +124,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                     string? incomingCallContext = await WaitForIncomingCallContext(uniqueId, TimeSpan.FromSeconds(20));
                     Assert.IsNotNull(incomingCallContext);
 
-                    // answer the call
+                    // reject the call (target client should reject, not the caller)
                     var rejectCallOptions = new RejectCallOptions(incomingCallContext);
-                    Response rejectResponse = await client.RejectCallAsync(rejectCallOptions);
+                    Response rejectResponse = await targetClient.RejectCallAsync(rejectCallOptions);
 
                     // check reject response
                     Assert.IsFalse(rejectResponse.IsError);
