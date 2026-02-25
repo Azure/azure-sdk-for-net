@@ -49,7 +49,7 @@ namespace Azure.AI.Projects
 
             if (connectionType == "DirectPipelinePassthrough")
             {
-                newConnection = new(connectionId, _endpoint.AbsoluteUri.TrimEnd('/') + "/openai", _pipeline, CredentialKind.None);
+                newConnection = new(connectionId, _endpoint.AbsoluteUri.TrimEnd('/') + "/openai/v1", _pipeline, CredentialKind.None);
             }
             else
             {

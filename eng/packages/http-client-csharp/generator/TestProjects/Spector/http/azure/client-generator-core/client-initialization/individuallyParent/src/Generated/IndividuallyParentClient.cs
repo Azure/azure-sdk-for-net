@@ -12,13 +12,9 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyPar
 {
     public partial class IndividuallyParentClient
     {
-        protected IndividuallyParentClient() => throw null;
+        public IndividuallyParentClient() : this(new Uri("http://localhost:3000"), new IndividuallyParentClientOptions()) => throw null;
 
-        public IndividuallyParentClient(string blobName, string name, string region, string blob) : this(new Uri("http://localhost:3000"), blobName, name, region, blob, new IndividuallyParentClientOptions()) => throw null;
-
-        public IndividuallyParentClient(string blobName, string name, string region, string blob, IndividuallyParentClientOptions options) : this(new Uri("http://localhost:3000"), blobName, name, region, blob, options) => throw null;
-
-        public IndividuallyParentClient(Uri endpoint, string blobName, string name, string region, string blob, IndividuallyParentClientOptions options) => throw null;
+        public IndividuallyParentClient(Uri endpoint, IndividuallyParentClientOptions options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

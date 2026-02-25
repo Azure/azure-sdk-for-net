@@ -9,7 +9,7 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// Evaluation action model.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContinuousEvaluationRuleAction"/> and <see cref="HumanEvaluationRuleAction"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContinuousEvaluationRuleAction"/> and <see cref="HumanEvaluationPreviewRuleAction"/>.
     /// </summary>
     public abstract partial class EvaluationRuleAction
     {

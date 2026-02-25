@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
@@ -20,7 +19,7 @@ namespace Azure.AI.Projects.OpenAI
         ///   Includes details on how the model used the web (search, open_page, find).
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="action"/> is null. </exception>
-        public InputItemWebSearchToolCall(string id, ItemResourceWebSearchToolCallStatus status, BinaryData action) : base(InputItemType.WebSearchCall)
+        public InputItemWebSearchToolCall(string id, OutputItemWebSearchToolCallStatus status, BinaryData action) : base(InputItemType.WebSearchCall)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(action, nameof(action));
@@ -39,7 +38,7 @@ namespace Azure.AI.Projects.OpenAI
         /// An object describing the specific action taken in this web search call.
         ///   Includes details on how the model used the web (search, open_page, find).
         /// </param>
-        internal InputItemWebSearchToolCall(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, ItemResourceWebSearchToolCallStatus status, BinaryData action) : base(@type, additionalBinaryDataProperties)
+        internal InputItemWebSearchToolCall(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, OutputItemWebSearchToolCallStatus status, BinaryData action) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             Status = status;
@@ -50,7 +49,7 @@ namespace Azure.AI.Projects.OpenAI
         public string Id { get; }
 
         /// <summary> The status of the web search tool call. </summary>
-        public ItemResourceWebSearchToolCallStatus Status { get; }
+        public OutputItemWebSearchToolCallStatus Status { get; }
 
         /// <summary>
         /// An object describing the specific action taken in this web search call.

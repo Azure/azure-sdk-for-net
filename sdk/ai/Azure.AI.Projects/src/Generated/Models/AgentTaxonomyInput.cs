@@ -15,7 +15,7 @@ namespace Azure.AI.Projects
         /// <param name="target"> Target configuration for the agent. </param>
         /// <param name="riskCategories"> List of risk categories to evaluate against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="target"/> or <paramref name="riskCategories"/> is null. </exception>
-        public AgentTaxonomyInput(AzureAIAgentTarget target, IEnumerable<RiskCategory> riskCategories) : base(EvaluationTaxonomyInputType.Agent)
+        public AgentTaxonomyInput(Target target, IEnumerable<RiskCategory> riskCategories) : base(EvaluationTaxonomyInputType.Agent)
         {
             Argument.AssertNotNull(target, nameof(target));
             Argument.AssertNotNull(riskCategories, nameof(riskCategories));
@@ -29,14 +29,14 @@ namespace Azure.AI.Projects
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="target"> Target configuration for the agent. </param>
         /// <param name="riskCategories"> List of risk categories to evaluate against. </param>
-        internal AgentTaxonomyInput(EvaluationTaxonomyInputType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureAIAgentTarget target, IList<RiskCategory> riskCategories) : base(@type, additionalBinaryDataProperties)
+        internal AgentTaxonomyInput(EvaluationTaxonomyInputType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, Target target, IList<RiskCategory> riskCategories) : base(@type, additionalBinaryDataProperties)
         {
             Target = target;
             RiskCategories = riskCategories;
         }
 
         /// <summary> Target configuration for the agent. </summary>
-        public AzureAIAgentTarget Target { get; set; }
+        public Target Target { get; set; }
 
         /// <summary> List of risk categories to evaluate against. </summary>
         public IList<RiskCategory> RiskCategories { get; }

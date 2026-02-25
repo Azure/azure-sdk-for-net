@@ -36,12 +36,12 @@ namespace Azure.AI.Projects.OpenAI
         }
 
         /// <summary> Indicates which mouse button was pressed during the click. One of `left`, `right`, `wheel`, `back`, or `forward`. </summary>
-        public ClickButtonType Button { get; }
+        public ClickButtonType Button { get; set; }
 
         /// <summary> The x-coordinate where the click occurred. </summary>
-        public long X { get; }
+        public long X { get; set; }
 
         /// <summary> The y-coordinate where the click occurred. </summary>
-        public long Y { get; }
+        public long Y { get; set; }
     }
 }

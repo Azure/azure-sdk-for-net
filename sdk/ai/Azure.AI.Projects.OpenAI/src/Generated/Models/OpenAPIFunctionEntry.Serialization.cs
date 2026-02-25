@@ -83,14 +83,25 @@ namespace Azure.AI.Projects.OpenAI
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("parameters"u8);
-#if NET6_0_OR_GREATER
-            writer.WriteRawValue(Parameters);
-#else
-            using (JsonDocument document = JsonDocument.Parse(Parameters))
+            writer.WriteStartObject();
+            foreach (var item in Parameters)
             {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
+                writer.WritePropertyName(item.Key);
+                if (item.Value == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(item.Value);
+#else
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
+            }
+            writer.WriteEndObject();
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -135,7 +146,7 @@ namespace Azure.AI.Projects.OpenAI
             }
             string name = default;
             string description = default;
-            BinaryData parameters = default;
+            IDictionary<string, BinaryData> parameters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -151,7 +162,19 @@ namespace Azure.AI.Projects.OpenAI
                 }
                 if (prop.NameEquals("parameters"u8))
                 {
-                    parameters = BinaryData.FromString(prop.Value.GetRawText());
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                        }
+                    }
+                    parameters = dictionary;
                     continue;
                 }
                 if (options.Format != "W")

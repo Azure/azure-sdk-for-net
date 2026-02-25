@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     internal partial class InternalWebSearchActionOpenPage
     {
@@ -31,9 +31,9 @@ namespace OpenAI
         }
 
         /// <summary> The action type. </summary>
-        internal string Type { get; } = "open_page";
+        public string Type { get; } = "open_page";
 
         /// <summary> The URL opened by the model. </summary>
-        public Uri Url { get; }
+        public Uri Url { get; set; }
     }
 }

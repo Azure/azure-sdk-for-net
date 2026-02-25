@@ -8,10 +8,10 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects.OpenAI;
 
-[CodeGenType("StructuredOutputsItemResource")]
+[CodeGenType("StructuredOutputsOutputItem")]
 public partial class AgentStructuredOutputsResponseItem
 {
     public AgentStructuredOutputsResponseItem(BinaryData output)
-        : this(AgentResponseItemKind.StructuredOutputs, id: null, itemSource: new(), agentReference: null, responseId: null, additionalBinaryDataProperties: null, output: output)
+        : this(AgentResponseItemKind.StructuredOutputs, id: null, agentReference: null, responseId: null, additionalBinaryDataProperties: null, output: output)
     { }
 }

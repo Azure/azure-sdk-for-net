@@ -27,12 +27,14 @@ namespace Azure.AI.Projects
             uri.Reset(_endpoint);
             uri.AppendPath("/evaluationrules/", false);
             uri.AppendPath(id, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
-            request.Headers.Set("x-ms-client-request-id", request.ClientRequestId);
             return message;
         }
 
@@ -42,23 +44,32 @@ namespace Azure.AI.Projects
             uri.Reset(_endpoint);
             uri.AppendPath("/evaluationrules/", false);
             uri.AppendPath(id, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "DELETE", PipelineMessageClassifier204);
             PipelineRequest request = message.Request;
             message.Apply(options);
-            request.Headers.Set("x-ms-client-request-id", request.ClientRequestId);
             return message;
         }
 
-        internal PipelineMessage CreateCreateOrUpdateRequest(string id, BinaryContent content, RequestOptions options)
+        internal PipelineMessage CreateCreateOrUpdateRequest(string id, BinaryContent content, string foundryFeatures, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/evaluationrules/", false);
             uri.AppendPath(id, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "PUT", PipelineMessageClassifier200201);
             PipelineRequest request = message.Request;
+            if (foundryFeatures != null)
+            {
+                request.Headers.Set("Foundry-Features", foundryFeatures);
+            }
             request.Headers.Set("Content-Type", "application/json");
             request.Headers.Set("Accept", "application/json");
             request.Content = content;
@@ -71,7 +82,10 @@ namespace Azure.AI.Projects
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/evaluationrules", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (actionType != null)
             {
                 uri.AppendQuery("actionType", actionType, true);
@@ -88,7 +102,6 @@ namespace Azure.AI.Projects
             PipelineRequest request = message.Request;
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
-            request.Headers.Set("x-ms-client-request-id", request.ClientRequestId);
             return message;
         }
 
@@ -103,12 +116,14 @@ namespace Azure.AI.Projects
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
-            request.Headers.Set("x-ms-client-request-id", request.ClientRequestId);
             return message;
         }
     }

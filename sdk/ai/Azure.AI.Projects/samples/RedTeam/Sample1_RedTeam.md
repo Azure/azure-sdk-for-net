@@ -1,5 +1,11 @@
 # Sample of using Red Teams to test models in Azure.AI.Projects.
 
+**Note:** Red teams is an experimental feature, to use it, please disable the `AAIP001` warning.
+
+```C#
+#pragma warning disable AAIP001
+```
+
 In this example we will demonstrate how to create and get the Red team model scans.
 
 1. First, we need to create project client and read the environment variables, which will be used in the next steps.
@@ -14,7 +20,7 @@ var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLO
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
-2. In this example we will test the model, which name is read from `MODEL_DEPLOYMENT_NAME` using Base64-encoded strings, the model will be tested against prompts asking it to generate the violent content.
+2. In this example we will test the model, which name is read from `MODEL_DEPLOYMENT_NAME` using Base64-encoded strings, the model will be tested against prompts asking it to generate violent content.
 
 ```C# Snippet:Sample_CreateRedTeam_RedTeam
 AzureOpenAIModelConfiguration config = new(modelDeploymentName: modelDeploymentName);

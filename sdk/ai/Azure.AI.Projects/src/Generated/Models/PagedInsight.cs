@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.AI.Projects;
 
-namespace Azure.Core.Foundations
+namespace Azure.Core
 {
     /// <summary> Paged collection of Insight items. </summary>
     internal partial class PagedInsight
@@ -25,13 +25,11 @@ namespace Azure.Core.Foundations
         /// <summary> Initializes a new instance of <see cref="PagedInsight"/>. </summary>
         /// <param name="value"> The Insight items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PagedInsight(IList<Insight> value, Uri nextLink, string clientRequestId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PagedInsight(IList<Insight> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
-            ClientRequestId = clientRequestId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -40,8 +38,5 @@ namespace Azure.Core.Foundations
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
-
-        /// <summary> An opaque, globally-unique, client-generated string identifier for the request. </summary>
-        public string ClientRequestId { get; }
     }
 }

@@ -10,7 +10,7 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// A base class for connection credentials
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AIProjectConnectionApiKeyCredential"/>, <see cref="AIProjectConnectionEntraIdCredential"/>, <see cref="AIProjectConnectionCustomCredential"/>, <see cref="AIProjectConnectionSasCredential"/>, <see cref="NoAuthenticationCredentials"/>, and <see cref="AgenticIdentityCredentials"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AIProjectConnectionApiKeyCredential"/>, <see cref="AIProjectConnectionEntraIdCredential"/>, <see cref="AIProjectConnectionCustomCredential"/>, <see cref="AIProjectConnectionSasCredential"/>, <see cref="NoAuthenticationCredentials"/>, and <see cref="AgenticIdentityPreviewCredentials"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAIProjectConnectionBaseCredential))]
     public abstract partial class AIProjectConnectionBaseCredential : IJsonModel<AIProjectConnectionBaseCredential>
@@ -134,8 +134,8 @@ namespace Azure.AI.Projects
                         return AIProjectConnectionSasCredential.DeserializeAIProjectConnectionSasCredential(element, options);
                     case "None":
                         return NoAuthenticationCredentials.DeserializeNoAuthenticationCredentials(element, options);
-                    case "AgenticIdentityToken":
-                        return AgenticIdentityCredentials.DeserializeAgenticIdentityCredentials(element, options);
+                    case "AgenticIdentityToken_Preview":
+                        return AgenticIdentityPreviewCredentials.DeserializeAgenticIdentityPreviewCredentials(element, options);
                 }
             }
             return UnknownAIProjectConnectionBaseCredential.DeserializeUnknownAIProjectConnectionBaseCredential(element, options);

@@ -22,7 +22,10 @@ namespace Azure.AI.Projects
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/memory_stores", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
             request.Headers.Set("Content-Type", "application/json");
@@ -38,7 +41,10 @@ namespace Azure.AI.Projects
             uri.Reset(_endpoint);
             uri.AppendPath("/memory_stores/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
             request.Headers.Set("Content-Type", "application/json");
@@ -54,7 +60,10 @@ namespace Azure.AI.Projects
             uri.Reset(_endpoint);
             uri.AppendPath("/memory_stores/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
             request.Headers.Set("Accept", "application/json");
@@ -67,7 +76,6 @@ namespace Azure.AI.Projects
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/memory_stores", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (limit != null)
             {
                 uri.AppendQuery("limit", TypeFormatters.ConvertToString(limit), true);
@@ -84,6 +92,10 @@ namespace Azure.AI.Projects
             {
                 uri.AppendQuery("before", before, true);
             }
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
             request.Headers.Set("Accept", "application/json");
@@ -97,7 +109,10 @@ namespace Azure.AI.Projects
             uri.Reset(_endpoint);
             uri.AppendPath("/memory_stores/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "DELETE", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
             request.Headers.Set("Accept", "application/json");
@@ -112,7 +127,10 @@ namespace Azure.AI.Projects
             uri.AppendPath("/memory_stores/", false);
             uri.AppendPath(name, true);
             uri.AppendPath(":search_memories", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
             request.Headers.Set("Content-Type", "application/json");
@@ -129,7 +147,10 @@ namespace Azure.AI.Projects
             uri.AppendPath("/memory_stores/", false);
             uri.AppendPath(name, true);
             uri.AppendPath(":update_memories", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier202);
             PipelineRequest request = message.Request;
             request.Headers.Set("Content-Type", "application/json");
@@ -147,7 +168,10 @@ namespace Azure.AI.Projects
             uri.AppendPath(name, true);
             uri.AppendPath("/updates/", false);
             uri.AppendPath(updateId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
             request.Headers.Set("Accept", "application/json");
@@ -162,7 +186,10 @@ namespace Azure.AI.Projects
             uri.AppendPath("/memory_stores/", false);
             uri.AppendPath(name, true);
             uri.AppendPath(":delete_scope", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
             request.Headers.Set("Content-Type", "application/json");
