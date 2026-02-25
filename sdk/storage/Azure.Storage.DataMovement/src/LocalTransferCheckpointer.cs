@@ -36,7 +36,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="folderPath">Path to the folder containing the checkpointing information to resume from.</param>
         public LocalTransferCheckpointer(string folderPath)
         {
-            _disposed = false;
+            _disposed = 0;
             _transferStates = new ConcurrentDictionary<string, JobPlanFile>();
             if (string.IsNullOrEmpty(folderPath))
             {
