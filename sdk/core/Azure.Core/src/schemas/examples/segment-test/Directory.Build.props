@@ -1,0 +1,7 @@
+<Project>
+  <!-- Isolate from repo's Directory.Build.props -->
+  <PropertyGroup>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+</Project>

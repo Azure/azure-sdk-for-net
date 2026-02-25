@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+  </PropertyGroup>
+
+  <!-- Simulates a 3rd-party app that depends on Azure.Storage.Blobs + Azure.Identity via NuGet -->
+  <ItemGroup>
+    <PackageReference Include="TestBlob" Version="1.0.0" />
+    <PackageReference Include="TestIdentity" Version="1.0.0" />
+    <!--<PackageReference Include="TestArm" Version="1.0.0" />-->
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,29 @@
+<Project>
+  <!-- Isolate from repo's Directory.Build.targets -->
+
+  <!--
+    Shared packing logic (like Aspire's src/Components/Directory.Build.targets).
+    Any project with a ConfigurationSchema.json gets it packed into the NuGet
+    along with a .targets file that registers the JsonSchemaSegment.
+  -->
+  <PropertyGroup>
+    <ConfigurationSchemaPath>$(MSBuildProjectDirectory)\ConfigurationSchema.json</ConfigurationSchemaPath>
+    <ConfigurationSchemaExists Condition="Exists('$(ConfigurationSchemaPath)')">true</ConfigurationSchemaExists>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(ConfigurationSchemaExists)' == 'true'">
+    <None Include="$(ConfigurationSchemaPath)" Pack="true" PackagePath="ConfigurationSchema.json" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(ConfigurationSchemaExists)' == 'true'">
+    <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);PackSchemaTargets</TargetsForTfmSpecificContentInPackage>
+  </PropertyGroup>
+
+  <Target Name="PackSchemaTargets">
+    <ItemGroup>
+      <TfmSpecificPackageFile Include="$(MSBuildProjectDirectory)\$(PackageId).targets"
+                              PackagePath="buildTransitive\$(TargetFramework)\$(PackageId).targets" />
+    </ItemGroup>
+  </Target>
+
+</Project>

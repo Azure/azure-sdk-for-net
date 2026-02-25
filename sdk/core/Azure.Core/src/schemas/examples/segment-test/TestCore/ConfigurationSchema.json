@@ -1,0 +1,55 @@
+{
+  "definitions": {
+    "retry": {
+      "type": "object",
+      "description": "Retry configuration.",
+      "properties": {
+        "MaxRetries": { "type": "integer", "description": "Maximum number of retry attempts. Default: 3.", "default": 3, "minimum": 0 },
+        "Delay": { "type": "string", "description": "Initial delay between retries (TimeSpan format).", "pattern": "^(\\d+\\.)?(\\d{1,2}):(\\d{2}):(\\d{2})(\\.\\d+)?$" },
+        "MaxDelay": { "type": "string", "description": "Maximum delay between retries (TimeSpan format).", "pattern": "^(\\d+\\.)?(\\d{1,2}):(\\d{2}):(\\d{2})(\\.\\d+)?$" },
+        "Mode": { "type": "string", "description": "Retry strategy mode.", "enum": ["Fixed", "Exponential"], "default": "Exponential" },
+        "NetworkTimeout": { "type": "string", "description": "Timeout for individual network operations (TimeSpan format).", "pattern": "^(\\d+\\.)?(\\d{1,2}):(\\d{2}):(\\d{2})(\\.\\d+)?$" }
+      },
+      "additionalProperties": false
+    },
+    "diagnostics": {
+      "type": "object",
+      "description": "Diagnostics configuration.",
+      "properties": {
+        "ApplicationId": { "type": "string", "description": "Application identifier appended to User-Agent.", "maxLength": 24 },
+        "IsLoggingEnabled": { "type": "boolean", "description": "Enable HTTP pipeline logging.", "default": true },
+        "IsTelemetryEnabled": { "type": "boolean", "description": "Enable telemetry collection.", "default": true },
+        "IsDistributedTracingEnabled": { "type": "boolean", "description": "Enable distributed tracing.", "default": true },
+        "IsLoggingContentEnabled": { "type": "boolean", "description": "Log request and response body content.", "default": false },
+        "LoggedContentSizeLimit": { "type": "integer", "description": "Maximum size of logged content in bytes.", "default": 4096, "minimum": 0 },
+        "LoggedHeaderNames": { "type": "array", "description": "HTTP header names to include in logs.", "items": { "type": "string" } },
+        "LoggedQueryParameters": { "type": "array", "description": "Query parameter names to include in logs.", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "azureOptions": {
+      "type": "object",
+      "description": "Azure SDK client options.",
+      "properties": {
+        "Retry": { "$ref": "#/definitions/retry" },
+        "Diagnostics": { "$ref": "#/definitions/diagnostics" }
+      },
+      "additionalProperties": true
+    }
+  },
+  "type": "object",
+  "properties": {
+    "AzureSdk": {
+      "type": "object",
+      "description": "Configuration for Azure.Core-based clients.",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "Credential": { "$ref": "#/definitions/credential" },
+          "Options": { "$ref": "#/definitions/azureOptions" }
+        },
+        "additionalProperties": true
+      }
+    }
+  }
+}

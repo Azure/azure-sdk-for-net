@@ -1,0 +1,120 @@
+{
+  "definitions": {
+    "credential": {
+      "type": "object",
+      "description": "Credential configuration. Available properties depend on the selected CredentialSource.",
+      "properties": {
+        "CredentialSource": {
+          "type": "string",
+          "description": "The credential type to use for authentication.",
+          "enum": [
+            "ApiKey", "AzureCli", "AzurePowerShell", "AzureDeveloperCli",
+            "Environment", "WorkloadIdentity", "ManagedIdentity",
+            "InteractiveBrowser", "VisualStudio", "VisualStudioCode", "Broker"
+          ]
+        }
+      },
+      "required": ["CredentialSource"],
+      "allOf": [
+        {
+          "if": { "properties": { "CredentialSource": { "const": "ApiKey" } }, "required": ["CredentialSource"] },
+          "then": {
+            "allOf": [{
+              "if": { "required": ["Key"] },
+              "then": {
+                "title": "⚠️ Do NOT put API keys in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets",
+                "description": "⚠️ Do NOT put API keys in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets",
+                "properties": {
+                  "Key": { "not": {}, "description": "⚠️ Do NOT put API keys in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets" }
+                }
+              }
+            }]
+          }
+        },
+        {
+          "if": { "properties": { "CredentialSource": { "const": "AzureCli" } }, "required": ["CredentialSource"] },
+          "then": { "properties": {
+            "TenantId": { "type": "string", "description": "The Azure AD tenant ID." },
+            "Subscription": { "type": "string", "description": "The Azure subscription to use." },
+            "ProcessTimeout": { "type": "string", "description": "Timeout (TimeSpan format).", "pattern": "^(\\d+\\.)?(\\d{1,2}):(\\d{2}):(\\d{2})(\\.\\d+)?$" },
+            "AdditionallyAllowedTenants": { "type": "array", "description": "Additional tenant IDs.", "items": { "type": "string" } }
+          }}
+        },
+        {
+          "if": { "properties": { "CredentialSource": { "const": "AzurePowerShell" } }, "required": ["CredentialSource"] },
+          "then": { "properties": {
+            "TenantId": { "type": "string", "description": "The Azure AD tenant ID." },
+            "ProcessTimeout": { "type": "string", "description": "Timeout (TimeSpan format).", "pattern": "^(\\d+\\.)?(\\d{1,2}):(\\d{2}):(\\d{2})(\\.\\d+)?$" },
+            "AdditionallyAllowedTenants": { "type": "array", "description": "Additional tenant IDs.", "items": { "type": "string" } }
+          }}
+        },
+        {
+          "if": { "properties": { "CredentialSource": { "const": "AzureDeveloperCli" } }, "required": ["CredentialSource"] },
+          "then": { "properties": {
+            "TenantId": { "type": "string", "description": "The Azure AD tenant ID." },
+            "ProcessTimeout": { "type": "string", "description": "Timeout (TimeSpan format).", "pattern": "^(\\d+\\.)?(\\d{1,2}):(\\d{2}):(\\d{2})(\\.\\d+)?$" },
+            "AdditionallyAllowedTenants": { "type": "array", "description": "Additional tenant IDs.", "items": { "type": "string" } }
+          }}
+        },
+        {
+          "if": { "properties": { "CredentialSource": { "const": "Environment" } }, "required": ["CredentialSource"] },
+          "then": { "properties": {
+            "DisableInstanceDiscovery": { "type": "boolean", "description": "Disable Azure AD instance discovery." },
+            "AdditionallyAllowedTenants": { "type": "array", "description": "Additional tenant IDs.", "items": { "type": "string" } }
+          }}
+        },
+        {
+          "if": { "properties": { "CredentialSource": { "const": "WorkloadIdentity" } }, "required": ["CredentialSource"] },
+          "then": { "properties": {
+            "TenantId": { "type": "string", "description": "The Azure AD tenant ID." },
+            "ClientId": { "type": "string", "description": "The client (application) ID." },
+            "TokenFilePath": { "type": "string", "description": "Path to the token file." },
+            "DisableInstanceDiscovery": { "type": "boolean", "description": "Disable Azure AD instance discovery." },
+            "IsAzureProxyEnabled": { "type": "boolean", "description": "Enable Azure proxy." },
+            "AdditionallyAllowedTenants": { "type": "array", "description": "Additional tenant IDs.", "items": { "type": "string" } }
+          }}
+        },
+        {
+          "if": { "properties": { "CredentialSource": { "const": "VisualStudio" } }, "required": ["CredentialSource"] },
+          "then": { "properties": {
+            "TenantId": { "type": "string", "description": "The Azure AD tenant ID." },
+            "ProcessTimeout": { "type": "string", "description": "Timeout (TimeSpan format).", "pattern": "^(\\d+\\.)?(\\d{1,2}):(\\d{2}):(\\d{2})(\\.\\d+)?$" },
+            "AdditionallyAllowedTenants": { "type": "array", "description": "Additional tenant IDs.", "items": { "type": "string" } }
+          }}
+        },
+        {
+          "if": { "properties": { "CredentialSource": { "const": "VisualStudioCode" } }, "required": ["CredentialSource"] },
+          "then": { "properties": {
+            "TenantId": { "type": "string", "description": "The Azure AD tenant ID." },
+            "AdditionallyAllowedTenants": { "type": "array", "description": "Additional tenant IDs.", "items": { "type": "string" } }
+          }}
+        },
+        {
+          "if": { "properties": { "CredentialSource": { "const": "ManagedIdentity" } }, "required": ["CredentialSource"] },
+          "then": {
+            "properties": {
+              "ManagedIdentityIdType": {
+                "type": "string",
+                "description": "The type of managed identity to use.",
+                "enum": ["SystemAssigned", "ClientId", "ResourceId", "ObjectId"]
+              }
+            },
+            "required": ["ManagedIdentityIdType"],
+            "allOf": [{
+              "if": {
+                "properties": { "ManagedIdentityIdType": { "enum": ["ClientId", "ResourceId", "ObjectId"] } },
+                "required": ["ManagedIdentityIdType"]
+              },
+              "then": {
+                "properties": {
+                  "ManagedIdentityId": { "type": "string", "description": "The managed identity identifier (client ID, resource ID, or object ID depending on ManagedIdentityIdType)." }
+                }
+              }
+            }]
+          }
+        }
+      ],
+      "additionalProperties": true
+    }
+  }
+}

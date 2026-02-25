@@ -1,0 +1,39 @@
+{
+  "type": "object",
+  "properties": {
+    "AzureSdk": {
+      "type": "object",
+      "properties": {
+        "ArmClient": {
+          "type": "object",
+          "description": "Configuration for ArmClient.",
+          "properties": {
+            "DefaultSubscriptionId": {
+              "type": "string",
+              "description": "The default Azure subscription ID."
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "allOf": [
+                { "$ref": "#/definitions/azureOptions" },
+                {
+                  "type": "object",
+                  "properties": {
+                    "AuxiliaryTenantIds": {
+                      "type": "array",
+                      "items": { "type": "string" },
+                      "description": "Auxiliary tenant IDs for cross-tenant requests."
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  }
+}
