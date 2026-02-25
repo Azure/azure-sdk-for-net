@@ -191,7 +191,6 @@
     <PackageVersion Include="CoreWCF.Queue" Version="1.7.0" />
     <PackageVersion Include="CoreWCF.Primitives" Version="1.7.0" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.UserSecrets" Version="$(MicrosoftExtensionsConfigurationUserSecretsVersion)" />
-    <PackageVersion Include="Microsoft.Extensions.Http" Version="$(MicrosoftExtensionsHttpVersion)" />
     <PackageVersion Include="System.Formats.Asn1" Version="10.0.1" />
     <PackageVersion Include="System.Security.Cryptography.Pkcs" Version="10.0.1" />
     <PackageVersion Include="System.ServiceModel.Primitives" Version="6.2.0" />
@@ -206,6 +205,7 @@
       and '$(IsStressProject)' != 'true'
       and '$(IsSamplesProject)' != 'true'">
     <PackageVersion Include="Microsoft.AspNetCore" Version="$(MicrosoftAspNetCoreVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Http" Version="$(MicrosoftExtensionsHttpVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Configuration" Version="$(MicrosoftExtensionsLoggingConfigurationVersion)" />
     <PackageVersion Include="System.IO.Pipelines" Version="$(SystemIOPipelinesVersion)" />
   </ItemGroup>
@@ -241,7 +241,6 @@
     <PackageVersion Include="Microsoft.DotNet.ApiCompat" Version="5.0.0-beta.20467.1" PrivateAssets="All" />
     <PackageVersion Include="Microsoft.DotNet.GenAPI" Version="5.0.0-beta.19552.1" PrivateAssets="All" />
     <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
-    <PackageVersion Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="All" />
     <!--
       Note: SauceControl.InheritDoc 2.0.x causes NuGet restore loops in Visual Studio with multi-targeting projects.
       See https://github.com/saucecontrol/InheritDoc/releases for v2.0 release notes about incremental build fixes.
