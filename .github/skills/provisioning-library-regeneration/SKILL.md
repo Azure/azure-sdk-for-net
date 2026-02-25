@@ -210,30 +210,11 @@ If CI fails with "Unknown word" errors, add the words to `sdk/provisioning/cspel
 
 **Important:** Use `sdk/provisioning/cspell.yaml`, NOT `.vscode/cspell.json`.
 
-## Step 7: Export API and Update Snippets
+## Step 7: Run Pre-Commit Checks
 
-```shell
-pwsh eng\scripts\Export-API.ps1 provisioning
-pwsh eng\scripts\Update-Snippets.ps1 provisioning
-```
+Before committing, invoke the `pre-commit-checks` skill with the service directory set to `provisioning`. This will handle code formatting, API export, and snippet updates.
 
-## Step 8: Run Pre-Commit Checks
-
-Before committing, run:
-
-```shell
-pwsh eng\scripts\CodeChecks.ps1 -ServiceDirectory provisioning
-```
-
-This runs:
-- Code generation verification
-- API export
-- Snippet updates
-- Installation instruction validation
-
-All checks must pass with 0 errors.
-
-## Step 9: Update CHANGELOG and Commit
+## Step 8: Update CHANGELOG and Commit
 
 1. Update the CHANGELOG at `sdk/provisioning/Azure.Provisioning.{Service}/CHANGELOG.md`:
    ```markdown
