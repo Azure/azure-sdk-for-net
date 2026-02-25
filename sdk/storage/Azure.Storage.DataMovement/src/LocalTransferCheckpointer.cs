@@ -28,7 +28,7 @@ namespace Azure.Storage.DataMovement
         /// Stores references to the memory mapped files stored by IDs.
         /// </summary>
         internal readonly ConcurrentDictionary<string, JobPlanFile> _transferStates;
-        internal bool _disposed;
+        internal int _disposed;
 
         /// <summary>
         /// Initializes a new instance of <see cref="LocalTransferCheckpointer"/> class.
@@ -59,9 +59,10 @@ namespace Azure.Storage.DataMovement
 
         public void Dispose()
         {
-            if (_disposed)
+            // Atomically set _disposed to 1 and check if it was already 1
+            if (Interlocked.Exchange(ref _disposed, 1) == 1)
             {
-                return;
+                return; // Already disposed
             }
 
             foreach (var kvp in _transferStates)
@@ -69,8 +70,6 @@ namespace Azure.Storage.DataMovement
                 DisposeOfJobPartPlanAndPlanFile(kvp.Value);
             }
             _transferStates.Clear();
-
-            _disposed = true;
         }
 
         private bool TryGetJobPlanFile(string transferId, out JobPlanFile result)
