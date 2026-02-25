@@ -17,8 +17,7 @@ internal record ResourceMetadata(
     IReadOnlyList<ResourceMethod> Methods,
     string? SingletonResourceName,
     string? ParentResourceId,
-    IReadOnlyList<string> ChildResourceIds,
-    bool IsCustomResource)
+    IReadOnlyList<string> ChildResourceIds)
 {
     // ChildResourceIds is currently unpopulated and passed in as an empty array
     internal static ResourceMetadata DeserializeResourceMetadata(JsonElement element, InputModelType inputModel, IReadOnlyList<string> childResourceIds)
@@ -30,7 +29,6 @@ internal record ResourceMetadata(
         var methods = new List<ResourceMethod>();
         string? parentResource = null;
         string? resourceName = null;
-        bool isCustomResource = false;
 
         if (element.TryGetProperty("resourceIdPattern", out var resourceIdPatternElement))
         {
@@ -73,10 +71,6 @@ internal record ResourceMetadata(
         {
             resourceName = resourceNameElement.GetString();
         }
-        if (element.TryGetProperty("isCustomResource", out var isCustomResourceElement))
-        {
-            isCustomResource = isCustomResourceElement.GetBoolean();
-        }
 
         return new(
             resourceIdPattern ?? throw new InvalidOperationException("resourceIdPattern cannot be null"),
@@ -87,7 +81,6 @@ internal record ResourceMetadata(
             methods,
             singletonResourceName,
             parentResource,
-            childResourceIds,
-            isCustomResource);
+            childResourceIds);
     }
 }
