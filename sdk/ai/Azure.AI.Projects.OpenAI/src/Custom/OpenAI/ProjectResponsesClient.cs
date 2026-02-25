@@ -235,6 +235,88 @@ public partial class ProjectResponsesClient : ResponsesClient
         return base.CreateResponseStreamingAsync(options, cancellationToken);
     }
 
+    /// <summary>
+    /// Creates a model response using the specified options and request options.
+    /// </summary>
+    /// <param name="options"> The options for the response creation request, including model, input, tools, etc. </param>
+    /// <param name="requestOptions"> The request options to apply to the underlying HTTP request. </param>
+    /// <returns> A <see cref="ClientResult{ResponseResult}"/> representing the created response. </returns>
+    public virtual ClientResult<ResponseResult> CreateResponse(CreateResponseOptions options, RequestOptions requestOptions)
+    {
+        Argument.AssertNotNull(options, nameof(options));
+        ApplyClientDefaults(options);
+        ClientResult result = CreateResponse((BinaryContent)options, requestOptions);
+        return ClientResult.FromValue((ResponseResult)result, result.GetRawResponse());
+    }
+
+    /// <summary>
+    /// Creates a model response asynchronously using the specified options and request options.
+    /// </summary>
+    /// <param name="options"> The options for the response creation request, including model, input, tools, etc. </param>
+    /// <param name="requestOptions"> The request options to apply to the underlying HTTP request. </param>
+    /// <returns> A <see cref="ClientResult{ResponseResult}"/> representing the created response. </returns>
+    public virtual async Task<ClientResult<ResponseResult>> CreateResponseAsync(CreateResponseOptions options, RequestOptions requestOptions)
+    {
+        Argument.AssertNotNull(options, nameof(options));
+        ApplyClientDefaults(options);
+        ClientResult result = await CreateResponseAsync((BinaryContent)options, requestOptions).ConfigureAwait(false);
+        return ClientResult.FromValue((ResponseResult)result, result.GetRawResponse());
+    }
+
+    /// <summary>
+    /// Creates a model response with streaming using the specified options and request options.
+    /// </summary>
+    /// <remarks>
+    /// <see cref="CreateResponseOptions.StreamingEnabled"/> will be automatically set to <c>true</c>.
+    /// <see cref="RequestOptions.BufferResponse"/> must not be set to <c>true</c>.
+    /// </remarks>
+    /// <param name="options"> The options for the response creation request, including model, input, tools, etc. </param>
+    /// <param name="requestOptions"> The request options to apply to the underlying HTTP request. </param>
+    /// <returns> A <see cref="CollectionResult{StreamingResponseUpdate}"/> representing the streaming response. </returns>
+    public virtual CollectionResult<StreamingResponseUpdate> CreateResponseStreaming(CreateResponseOptions options, RequestOptions requestOptions)
+    {
+        Argument.AssertNotNull(options, nameof(options));
+        ApplyClientDefaults(options);
+        options.StreamingEnabled = true;
+        requestOptions ??= new RequestOptions();
+        if (requestOptions.BufferResponse == true)
+        {
+            throw new InvalidOperationException(
+                $"{nameof(RequestOptions.BufferResponse)} must not be set to true when calling {nameof(CreateResponseStreaming)}.");
+        }
+        requestOptions.BufferResponse = false;
+        return new ProjectSseCollectionResult(
+            () => CreateResponse((BinaryContent)options, requestOptions),
+            requestOptions.CancellationToken);
+    }
+
+    /// <summary>
+    /// Creates a model response with streaming asynchronously using the specified options and request options.
+    /// </summary>
+    /// <remarks>
+    /// <see cref="CreateResponseOptions.StreamingEnabled"/> will be automatically set to <c>true</c>.
+    /// <see cref="RequestOptions.BufferResponse"/> must not be set to <c>true</c>.
+    /// </remarks>
+    /// <param name="options"> The options for the response creation request, including model, input, tools, etc. </param>
+    /// <param name="requestOptions"> The request options to apply to the underlying HTTP request. </param>
+    /// <returns> An <see cref="AsyncCollectionResult{StreamingResponseUpdate}"/> representing the streaming response. </returns>
+    public virtual AsyncCollectionResult<StreamingResponseUpdate> CreateResponseStreamingAsync(CreateResponseOptions options, RequestOptions requestOptions)
+    {
+        Argument.AssertNotNull(options, nameof(options));
+        ApplyClientDefaults(options);
+        options.StreamingEnabled = true;
+        requestOptions ??= new RequestOptions();
+        if (requestOptions.BufferResponse == true)
+        {
+            throw new InvalidOperationException(
+                $"{nameof(RequestOptions.BufferResponse)} must not be set to true when calling {nameof(CreateResponseStreamingAsync)}.");
+        }
+        requestOptions.BufferResponse = false;
+        return new ProjectAsyncSseCollectionResult(
+            async () => await CreateResponseAsync((BinaryContent)options, requestOptions).ConfigureAwait(false),
+            requestOptions.CancellationToken);
+    }
+
     public virtual CollectionResult<ResponseResult> GetProjectResponses(AgentReference agent = null, string conversationId = null, int? limit = default, string order = null, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         Dictionary<string, string> extraQueryForProtocol = new()

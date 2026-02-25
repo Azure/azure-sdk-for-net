@@ -157,6 +157,119 @@ public class ResponsesSmokeTests : ProjectsOpenAITestBase
     }
 
     [Test]
+    public void RequestOptionsOverloadCreateResponseExists()
+    {
+        Uri mockProjectEndpoint = new("https://microsoft.com/mock/endpoint");
+        ProjectResponsesClient client = new(mockProjectEndpoint, new MockCredential());
+
+        CreateResponseOptions options = new()
+        {
+            Model = "test-model",
+            InputItems = { ResponseItem.CreateUserMessageItem("Hello") },
+        };
+
+        // Verify the overload exists by checking that the method is resolvable.
+        // The actual call will fail because there's no real service, but we verify
+        // that argument validation and defaults application work.
+        Assert.Throws<ArgumentNullException>(() => client.CreateResponse((CreateResponseOptions)null, new RequestOptions()));
+    }
+
+    [Test]
+    public void RequestOptionsOverloadCreateResponseAsyncExists()
+    {
+        Uri mockProjectEndpoint = new("https://microsoft.com/mock/endpoint");
+        ProjectResponsesClient client = new(mockProjectEndpoint, new MockCredential());
+
+        Assert.ThrowsAsync<ArgumentNullException>(async () => await client.CreateResponseAsync((CreateResponseOptions)null, new RequestOptions()));
+    }
+
+    [Test]
+    public void RequestOptionsOverloadCreateResponseStreamingExists()
+    {
+        Uri mockProjectEndpoint = new("https://microsoft.com/mock/endpoint");
+        ProjectResponsesClient client = new(mockProjectEndpoint, new MockCredential());
+
+        Assert.Throws<ArgumentNullException>(() => client.CreateResponseStreaming((CreateResponseOptions)null, new RequestOptions()));
+    }
+
+    [Test]
+    public void RequestOptionsOverloadCreateResponseStreamingAsyncExists()
+    {
+        Uri mockProjectEndpoint = new("https://microsoft.com/mock/endpoint");
+        ProjectResponsesClient client = new(mockProjectEndpoint, new MockCredential());
+
+        Assert.Throws<ArgumentNullException>(() => client.CreateResponseStreamingAsync((CreateResponseOptions)null, new RequestOptions()));
+    }
+
+    [Test]
+    public void RequestOptionsStreamingRejectsBufferedResponse()
+    {
+        Uri mockProjectEndpoint = new("https://microsoft.com/mock/endpoint");
+        ProjectResponsesClient client = new(mockProjectEndpoint, new MockCredential());
+
+        CreateResponseOptions options = new()
+        {
+            Model = "test-model",
+            StreamingEnabled = true,
+            InputItems = { ResponseItem.CreateUserMessageItem("Hello") },
+        };
+
+        RequestOptions requestOptions = new() { BufferResponse = true };
+
+        Assert.Throws<InvalidOperationException>(() => client.CreateResponseStreaming(options, requestOptions));
+        Assert.Throws<InvalidOperationException>(() => client.CreateResponseStreamingAsync(options, requestOptions));
+    }
+
+    [Test]
+    public void RequestOptionsOverloadsAcceptNullRequestOptions()
+    {
+        Uri mockProjectEndpoint = new("https://microsoft.com/mock/endpoint");
+        ProjectResponsesClient client = new(mockProjectEndpoint, new MockCredential());
+
+        CreateResponseOptions options = new()
+        {
+            Model = "test-model",
+            InputItems = { ResponseItem.CreateUserMessageItem("Hello") },
+        };
+
+        // Non-streaming with null RequestOptions: should proceed to protocol call (which fails
+        // because there's no real service) rather than throwing ArgumentNullException.
+        var ex = Assert.Throws<ClientResultException>(() => client.CreateResponse(options, (RequestOptions)null));
+        Assert.That(ex, Is.Not.Null);
+    }
+
+    [Test]
+    public void RequestOptionsOverloadsApplyClientDefaults()
+    {
+        Uri mockProjectEndpoint = new("https://microsoft.com/mock/endpoint");
+        ProjectResponsesClient client = new(
+            mockProjectEndpoint,
+            new MockCredential(),
+            defaultAgent: new AgentReference("my-default-agent"),
+            defaultConversationId: "conv_default123");
+
+        CreateResponseOptions options = new()
+        {
+            InputItems = { ResponseItem.CreateUserMessageItem("Hello") },
+        };
+
+        // The overload should apply defaults before the protocol call fails.
+        // We can verify the defaults were applied by inspecting the options after
+        // the method processes them (even though the actual HTTP call fails).
+        try
+        {
+            client.CreateResponse(options, new RequestOptions());
+        }
+        catch (ClientResultException)
+        {
+            // Expected: no real service endpoint
+        }
+
+        Assert.That(options.Agent?.Name, Is.EqualTo("my-default-agent"));
+        Assert.That(options.AgentConversationId, Is.EqualTo("conv_default123"));
+    }
+
+    [Test]
     public void ResponsesEndpointsSetCorrectly()
     {
         Uri mockProjectEndpoint = new("https://microsoft.com/mock/endpoint");
