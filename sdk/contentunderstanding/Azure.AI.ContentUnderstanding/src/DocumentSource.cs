@@ -61,26 +61,13 @@ namespace Azure.AI.ContentUnderstanding
         }
 
         /// <summary>
-        /// Parses a single document source segment.
-        /// </summary>
-        /// <param name="source"> The source string in the format <c>D(page,x1,y1,...,xN,yN)</c> or <c>D(page)</c>. </param>
-        /// <returns> A new <see cref="DocumentSource"/>. </returns>
-        /// <exception cref="ArgumentNullException"> <paramref name="source"/> is null. </exception>
-        /// <exception cref="FormatException"> The source string is not in the expected format. </exception>
-        public static new DocumentSource Parse(string source)
-        {
-            Argument.AssertNotNullOrEmpty(source, nameof(source));
-            return new DocumentSource(source);
-        }
-
-        /// <summary>
         /// Parses a source string containing one or more document source segments separated by <c>;</c>.
         /// </summary>
         /// <param name="source"> The source string (may contain <c>;</c> delimiters). </param>
         /// <returns> An array of <see cref="DocumentSource"/> instances. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> is null. </exception>
         /// <exception cref="FormatException"> Any segment is not in the expected format. </exception>
-        public static new DocumentSource[] ParseAll(string source)
+        public static new DocumentSource[] Parse(string source)
         {
             Argument.AssertNotNullOrEmpty(source, nameof(source));
 

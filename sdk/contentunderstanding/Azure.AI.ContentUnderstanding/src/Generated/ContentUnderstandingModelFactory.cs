@@ -515,13 +515,13 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary> Hyperlink in a document, such as a link to a web page or an email address. </summary>
         /// <param name="content"> Hyperlinked content. </param>
-        /// <param name="url"> URL of the hyperlink. </param>
+        /// <param name="uri"> URL of the hyperlink. </param>
         /// <param name="span"> Span of the hyperlink in the markdown content. </param>
         /// <param name="source"> Position of the hyperlink. </param>
         /// <returns> A new <see cref="ContentUnderstanding.DocumentHyperlink"/> instance for mocking. </returns>
-        public static DocumentHyperlink DocumentHyperlink(string content = default, string url = default, ContentSpan span = default, string source = default)
+        public static DocumentHyperlink DocumentHyperlink(string content = default, string uri = default, ContentSpan span = default, string source = default)
         {
-            return new DocumentHyperlink(content, url, span, source, additionalBinaryDataProperties: null);
+            return new DocumentHyperlink(content, uri, span, source, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Detected document content segment. </summary>
@@ -801,13 +801,13 @@ namespace Azure.AI.ContentUnderstanding
         }
 
         /// <summary> Labeled data knowledge source. </summary>
-        /// <param name="containerUrl"> The URL of the blob container containing labeled data. </param>
+        /// <param name="containerUri"> The URL of the blob container containing labeled data. </param>
         /// <param name="prefix"> An optional prefix to filter blobs within the container. </param>
         /// <param name="fileListPath"> An optional path to a file listing specific blobs to include. </param>
         /// <returns> A new <see cref="ContentUnderstanding.LabeledDataKnowledgeSource"/> instance for mocking. </returns>
-        public static LabeledDataKnowledgeSource LabeledDataKnowledgeSource(Uri containerUrl = default, string prefix = default, string fileListPath = default)
+        public static LabeledDataKnowledgeSource LabeledDataKnowledgeSource(Uri containerUri = default, string prefix = default, string fileListPath = default)
         {
-            return new LabeledDataKnowledgeSource(KnowledgeSourceKind.LabeledData, additionalBinaryDataProperties: null, containerUrl, prefix, fileListPath);
+            return new LabeledDataKnowledgeSource(KnowledgeSourceKind.LabeledData, additionalBinaryDataProperties: null, containerUri, prefix, fileListPath);
         }
 
         /// <summary> Chat completion and embedding models supported by the analyzer. </summary>

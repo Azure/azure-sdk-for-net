@@ -44,26 +44,13 @@ namespace Azure.AI.ContentUnderstanding
         }
 
         /// <summary>
-        /// Parses a single audio/visual source segment.
-        /// </summary>
-        /// <param name="source"> The source string in the format <c>AV(time[,x,y,w,h])</c>. </param>
-        /// <returns> A new <see cref="AudioVisualSource"/>. </returns>
-        /// <exception cref="ArgumentNullException"> <paramref name="source"/> is null. </exception>
-        /// <exception cref="FormatException"> The source string is not in the expected format. </exception>
-        public static new AudioVisualSource Parse(string source)
-        {
-            Argument.AssertNotNullOrEmpty(source, nameof(source));
-            return new AudioVisualSource(source);
-        }
-
-        /// <summary>
         /// Parses a source string containing one or more audio/visual source segments separated by <c>;</c>.
         /// </summary>
         /// <param name="source"> The source string (may contain <c>;</c> delimiters). </param>
         /// <returns> An array of <see cref="AudioVisualSource"/> instances. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> is null. </exception>
         /// <exception cref="FormatException"> Any segment is not in the expected format. </exception>
-        public static new AudioVisualSource[] ParseAll(string source)
+        public static new AudioVisualSource[] Parse(string source)
         {
             Argument.AssertNotNullOrEmpty(source, nameof(source));
 
