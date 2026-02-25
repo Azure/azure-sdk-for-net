@@ -749,7 +749,7 @@ namespace Azure.Communication.CallAutomation
             return message;
         }
 
-        /// <summary> Move participants from another call into this call. </summary>
+        /// <summary> Add a participant to the call. </summary>
         /// <param name="callConnectionId"> The call connection Id. </param>
         /// <param name="moveParticipantRequest"> The move participants request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -781,7 +781,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        /// <summary> Move participants from another call into this call. </summary>
+        /// <summary> Add a participant to the call. </summary>
         /// <param name="callConnectionId"> The call connection Id. </param>
         /// <param name="moveParticipantRequest"> The move participants request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
