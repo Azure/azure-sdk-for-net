@@ -27,9 +27,9 @@ namespace Azure.AI.Projects.OpenAI
         }
 
         /// <summary> Gets the Type. </summary>
-        internal string Type { get; } = "agent_reference";
+        public string Type { get; } = "agent_reference";
 
         /// <summary> The name of the agent. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
     }
 }

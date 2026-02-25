@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Custom tool. </summary>
-    public partial class ToolChoiceCustom : ToolChoiceParam
+    internal partial class ToolChoiceCustom : InternalToolChoiceParam
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceCustom"/>. </summary>
         /// <param name="name"> The name of the custom tool to call. </param>

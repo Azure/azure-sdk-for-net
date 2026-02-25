@@ -47,7 +47,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.InteractiveBrowser
             AuthenticationRecord authenticationRecord = null)
         {
             IConfiguration config = _helper.GetConfiguration();
-            config["MyClient:Credential:InteractiveBrowserCredentialClientId"] = ClientId;
+            config["MyClient:Credential:ClientId"] = ClientId;
             if (tenantId != null)
             {
                 config["MyClient:Credential:TenantId"] = tenantId;
@@ -93,7 +93,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.InteractiveBrowser
         public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
         {
             IConfiguration configuration = _helper.GetConfigurationFromCommonCredentialTestConfig<InteractiveBrowserCredentialOptions>(config);
-            configuration["MyClient:Credential:InteractiveBrowserCredentialClientId"] = ClientId;
+            configuration["MyClient:Credential:ClientId"] = ClientId;
 
             string resolvedTenantId = config.RequestContext.TenantId ?? config.TenantId ?? TenantId;
             var authRecord = config.AuthenticationRecord ?? new AuthenticationRecord(ExpectedUsername, "login.windows.net", $"{ObjectId}.{resolvedTenantId}", resolvedTenantId, ClientId);

@@ -93,18 +93,5 @@ namespace Azure.Identity
                 UnsafeAllowUnencryptedStorage = unsafeAllow;
             }
         }
-
-        /// <summary>
-        /// Creates a copy of the <see cref="TokenCachePersistenceOptions"/>.
-        /// </summary>
-        /// <returns></returns>
-        internal TokenCachePersistenceOptions Clone()
-        {
-            return new TokenCachePersistenceOptions
-            {
-                Name = Name,
-                UnsafeAllowUnencryptedStorage = UnsafeAllowUnencryptedStorage
-            };
-        }
     }
 }

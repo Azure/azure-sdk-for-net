@@ -1,6 +1,16 @@
 # Release History
 
-## 1.2.0-beta.6 (Unreleased)
+## 2.0.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 2.0.0-beta.1 (2026-02-24)
 
 ### Features Added
 
@@ -8,11 +18,21 @@
 
 ### Breaking Changes
 
+**Transitive from Azure.AI.Projects.OpenAI**:
+* `ImageBasedHostedAgentDefinition` has been merged into `HostedAgentDefinition`
+  * `Image` is now an optional property on `HostedAgentDefinition`; no other net change
 - Tracing: gen_ai.system.instructions event changed to gen_ai.system_instructions attribute.
 - Tracing: provider name change from "azure.ai.agents" to "microsoft.foundry".
 
 ### Sample Updates
 - Added Evaluation sample.
+
+### Known Issues
+At the time of release, the following operation areas do not yet support the latest API version and will fail. Please temporarily use the previous library version until the new v1 operations are available.
+ - Computer use tool
+ - Fine tuning
+ - Red teams
+ - Evaluation
 
 ## 1.2.0-beta.5 (2025-12-12)
 
@@ -27,8 +47,6 @@
 * Added fine tuning samples.
 
 ## 1.2.0-beta.4 (2025-11-17)
-
-### Bugs Fixed
 
 - Fixed an issue preventing telemetry from being logged.
 

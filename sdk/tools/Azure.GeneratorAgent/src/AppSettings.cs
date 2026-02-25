@@ -33,7 +33,7 @@ public class AppSettings(IConfiguration configuration)
             _defaultTimeout ??= configuration["Copilot:DefaultTimeoutMinutes"] switch
             {
                 string config when int.TryParse(config, out var minutes) => TimeSpan.FromMinutes(minutes),
-                _ => TimeSpan.FromMinutes(2)
+                _ => TimeSpan.FromMinutes(35)
             };
             return _defaultTimeout.Value;
         }

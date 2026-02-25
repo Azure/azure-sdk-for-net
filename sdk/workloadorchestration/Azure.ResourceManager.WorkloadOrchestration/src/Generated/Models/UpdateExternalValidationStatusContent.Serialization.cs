@@ -41,6 +41,41 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<UpdateExternalValidationStatusContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadOrchestrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(UpdateExternalValidationStatusContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<UpdateExternalValidationStatusContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        UpdateExternalValidationStatusContent IPersistableModel<UpdateExternalValidationStatusContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<UpdateExternalValidationStatusContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="updateExternalValidationStatusContent"> The <see cref="UpdateExternalValidationStatusContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(UpdateExternalValidationStatusContent updateExternalValidationStatusContent)
+        {
+            if (updateExternalValidationStatusContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(updateExternalValidationStatusContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<UpdateExternalValidationStatusContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -149,41 +184,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 }
             }
             return new UpdateExternalValidationStatusContent(solutionVersionId, errorDetails, externalValidationId, validationStatus, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<UpdateExternalValidationStatusContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<UpdateExternalValidationStatusContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadOrchestrationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(UpdateExternalValidationStatusContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        UpdateExternalValidationStatusContent IPersistableModel<UpdateExternalValidationStatusContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<UpdateExternalValidationStatusContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="updateExternalValidationStatusContent"> The <see cref="UpdateExternalValidationStatusContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(UpdateExternalValidationStatusContent updateExternalValidationStatusContent)
-        {
-            if (updateExternalValidationStatusContent == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(updateExternalValidationStatusContent, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

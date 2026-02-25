@@ -5,7 +5,7 @@
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary></summary>
-    public enum DetailEnum
+    internal enum DetailEnum
     {
         /// <summary> Low. </summary>
         Low,

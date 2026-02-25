@@ -160,7 +160,7 @@ public class ResponsesSmokeTests : ProjectsOpenAITestBase
     public void ResponsesEndpointsSetCorrectly()
     {
         Uri mockProjectEndpoint = new("https://microsoft.com/mock/endpoint");
-        Uri mockOpenAIEndpoint = new($"{mockProjectEndpoint.AbsoluteUri}/openai");
+        Uri mockOpenAIEndpoint = new($"{mockProjectEndpoint.AbsoluteUri}/openai/v1");
         AuthenticationTokenProvider mockCredential = new MockCredential();
         AuthenticationPolicy mockAuthPolicy = new BearerTokenPolicy(mockCredential, "https://ai.azure.com/.default");
 

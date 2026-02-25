@@ -116,7 +116,7 @@ namespace Azure.AI.Projects.OpenAI
             string id = default;
             string callId = default;
             LocalShellExecAction action = default;
-            ItemResourceLocalShellToolCallStatus status = default;
+            OutputItemLocalShellToolCallStatus status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -141,7 +141,7 @@ namespace Azure.AI.Projects.OpenAI
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToItemResourceLocalShellToolCallStatus();
+                    status = prop.Value.GetString().ToOutputItemLocalShellToolCallStatus();
                     continue;
                 }
                 if (options.Format != "W")

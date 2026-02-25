@@ -1,5 +1,11 @@
 # Sample demonstrating CRUD operations on the Evaluators using in Azure.AI.Projects.
 
+**Note:** Storing evaluators in catalog is an experimental feature, to use it, please disable the `AAIP001` warning.\
+
+```C#
+#pragma warning disable AAIP001
+```
+
 In this example we will demonstrate how to create, get, delete, list and update the evaluators.
 
 1. Define two helper methods `GetPromptEvaluatorVersion` and `GetCodeEvaluatorVersion`, returning `EvaluatorVersion` objects for prompt-based and code-based evaluator respectively.

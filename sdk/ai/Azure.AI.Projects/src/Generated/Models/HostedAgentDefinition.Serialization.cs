@@ -4,6 +4,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.AI.Projects
@@ -112,6 +113,11 @@ namespace Azure.AI.Projects
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(Image))
+            {
+                writer.WritePropertyName("image"u8);
+                writer.WriteStringValue(Image);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -139,15 +145,106 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            if (element.TryGetProperty("kind"u8, out JsonElement discriminator))
+            AgentKind kind = default;
+            RaiConfig raiConfig = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<InternalTool> tools = default;
+            IList<ProtocolVersionRecord> containerProtocolVersions = default;
+            string cpu = default;
+            string memory = default;
+            IDictionary<string, string> environmentVariables = default;
+            string image = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (prop.NameEquals("kind"u8))
                 {
-                    case "hosted":
-                        return ImageBasedHostedAgentDefinition.DeserializeImageBasedHostedAgentDefinition(element, options);
+                    kind = new AgentKind(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("rai_config"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    raiConfig = RaiConfig.DeserializeRaiConfig(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("tools"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<InternalTool> array = new List<InternalTool>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(InternalTool.DeserializeInternalTool(item, options));
+                    }
+                    tools = array;
+                    continue;
+                }
+                if (prop.NameEquals("container_protocol_versions"u8))
+                {
+                    List<ProtocolVersionRecord> array = new List<ProtocolVersionRecord>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ProtocolVersionRecord.DeserializeProtocolVersionRecord(item, options));
+                    }
+                    containerProtocolVersions = array;
+                    continue;
+                }
+                if (prop.NameEquals("cpu"u8))
+                {
+                    cpu = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("memory"u8))
+                {
+                    memory = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("environment_variables"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
+                    }
+                    environmentVariables = dictionary;
+                    continue;
+                }
+                if (prop.NameEquals("image"u8))
+                {
+                    image = prop.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return UnknownHostedAgentDefinition.DeserializeUnknownHostedAgentDefinition(element, options);
+            return new HostedAgentDefinition(
+                kind,
+                raiConfig,
+                additionalBinaryDataProperties,
+                tools ?? new ChangeTrackingList<InternalTool>(),
+                containerProtocolVersions,
+                cpu,
+                memory,
+                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
+                image);
         }
     }
 }

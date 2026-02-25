@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Avs
                     yield break;
                 }
                 PagedResourceSku result = PagedResourceSku.FromResponse(response);
-                yield return Page<AvsResourceSku>.FromValues((IReadOnlyList<AvsResourceSku>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<AvsResourceSku>.FromValues((IReadOnlyList<AvsResourceSku>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -310,7 +310,7 @@ namespace Azure.AI.Projects.Telemetry
             }
             // Check for ImageBasedHostedAgentDefinition BEFORE checking for HostedAgentDefinition
             // since ImageBasedHostedAgentDefinition inherits from HostedAgentDefinition
-            else if (agentDefinition is Azure.AI.Projects.OpenAI.ImageBasedHostedAgentDefinition imageBasedHostedAgentDefinition)
+            else if (agentDefinition is Azure.AI.Projects.OpenAI.HostedAgentDefinition imageBasedHostedAgentDefinition)
             {
                 // Handle image-based hosted agent - add all hosted-specific attributes including image
                 scope.SetTagMaybe(GenAiAgentHostedCpu, imageBasedHostedAgentDefinition.Cpu);
@@ -334,6 +334,7 @@ namespace Azure.AI.Projects.Telemetry
                 // Handle non-image-based hosted agent (fallback for base HostedAgentDefinition)
                 scope.SetTagMaybe(GenAiAgentHostedCpu, hostedAgentDefinition.Cpu);
                 scope.SetTagMaybe(GenAiAgentHostedMemory, hostedAgentDefinition.Memory);
+                scope.SetTagMaybe(GenAiAgentHostedImage, hostedAgentDefinition.Image);
 
                 // Extract protocol and version from ContainerProtocolVersions if available
                 if (hostedAgentDefinition.ContainerProtocolVersions != null &&

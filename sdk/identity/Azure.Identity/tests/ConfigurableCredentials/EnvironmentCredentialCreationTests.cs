@@ -18,7 +18,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.Environment
     /// </summary>
     internal class EnvironmentCredentialCreationTests : CredentialCreationTestBase<EnvironmentCredential>
     {
-        protected override string CredentialSource => "Environment";
+        protected override string CredentialSource => nameof(EnvironmentCredential);
 
         /// <summary>
         /// Env vars needed for EnvironmentCredential to construct a ClientSecretCredential internally.

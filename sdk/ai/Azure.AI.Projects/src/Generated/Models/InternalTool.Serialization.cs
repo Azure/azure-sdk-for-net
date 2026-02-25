@@ -123,6 +123,28 @@ namespace Azure.AI.Projects
             {
                 switch (discriminator.GetString())
                 {
+                    case "bing_grounding":
+                        return BingGroundingTool.DeserializeBingGroundingTool(element, options);
+                    case "fabric_dataagent_preview":
+                        return MicrosoftFabricPreviewTool.DeserializeMicrosoftFabricPreviewTool(element, options);
+                    case "sharepoint_grounding_preview":
+                        return SharepointPreviewTool.DeserializeSharepointPreviewTool(element, options);
+                    case "azure_ai_search":
+                        return AzureAISearchTool.DeserializeAzureAISearchTool(element, options);
+                    case "openapi":
+                        return OpenApiTool.DeserializeOpenApiTool(element, options);
+                    case "bing_custom_search_preview":
+                        return BingCustomSearchPreviewTool.DeserializeBingCustomSearchPreviewTool(element, options);
+                    case "browser_automation_preview":
+                        return BrowserAutomationPreviewTool.DeserializeBrowserAutomationPreviewTool(element, options);
+                    case "azure_function":
+                        return AzureFunctionTool.DeserializeAzureFunctionTool(element, options);
+                    case "capture_structured_outputs":
+                        return CaptureStructuredOutputsTool.DeserializeCaptureStructuredOutputsTool(element, options);
+                    case "a2a_preview":
+                        return A2APreviewTool.DeserializeA2APreviewTool(element, options);
+                    case "memory_search_preview":
+                        return MemorySearchPreviewTool.DeserializeMemorySearchPreviewTool(element, options);
                     case "code_interpreter":
                         return InternalCodeInterpreterTool.DeserializeInternalCodeInterpreterTool(element, options);
                     case "function":
@@ -147,28 +169,6 @@ namespace Azure.AI.Projects
                         return InternalWebSearchPreviewTool.DeserializeInternalWebSearchPreviewTool(element, options);
                     case "apply_patch":
                         return ApplyPatchToolParam.DeserializeApplyPatchToolParam(element, options);
-                    case "bing_grounding":
-                        return BingGroundingTool.DeserializeBingGroundingTool(element, options);
-                    case "fabric_dataagent_preview":
-                        return MicrosoftFabricPreviewTool.DeserializeMicrosoftFabricPreviewTool(element, options);
-                    case "sharepoint_grounding_preview":
-                        return SharepointPreviewTool.DeserializeSharepointPreviewTool(element, options);
-                    case "azure_ai_search":
-                        return AzureAISearchTool.DeserializeAzureAISearchTool(element, options);
-                    case "openapi":
-                        return OpenApiTool.DeserializeOpenApiTool(element, options);
-                    case "bing_custom_search_preview":
-                        return BingCustomSearchPreviewTool.DeserializeBingCustomSearchPreviewTool(element, options);
-                    case "browser_automation_preview":
-                        return BrowserAutomationPreviewTool.DeserializeBrowserAutomationPreviewTool(element, options);
-                    case "azure_function":
-                        return AzureFunctionTool.DeserializeAzureFunctionTool(element, options);
-                    case "capture_structured_outputs":
-                        return CaptureStructuredOutputsTool.DeserializeCaptureStructuredOutputsTool(element, options);
-                    case "a2a_preview":
-                        return A2APreviewTool.DeserializeA2APreviewTool(element, options);
-                    case "memory_search":
-                        return MemorySearchPreviewTool.DeserializeMemorySearchPreviewTool(element, options);
                 }
             }
             return UnknownTool.DeserializeUnknownTool(element, options);

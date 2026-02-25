@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.MongoCluster
                     yield break;
                 }
                 FirewallRuleListResult result = FirewallRuleListResult.FromResponse(response);
-                yield return Page<MongoClusterFirewallRuleData>.FromValues((IReadOnlyList<MongoClusterFirewallRuleData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<MongoClusterFirewallRuleData>.FromValues((IReadOnlyList<MongoClusterFirewallRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

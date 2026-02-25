@@ -46,7 +46,9 @@ namespace Azure.Identity
             foreach (KeyValuePair<string, string?> kvp in entries)
             {
                 sb.Append(kvp.Key, prefixLength, kvp.Key.Length - prefixLength);
-                sb.Append('=').Append(kvp.Value).Append(';');
+                sb.Append('=')
+                    .Append(DefaultAzureCredentialOptions.TryConvertCredentialSource(kvp.Value, out string normalized) ? normalized : kvp.Value)
+                    .Append(';');
             }
 
             byte[] inputBytes = Encoding.UTF8.GetBytes(sb.ToString());

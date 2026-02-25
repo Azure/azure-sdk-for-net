@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Quota
                     yield break;
                 }
                 QuotaLimits result = QuotaLimits.FromResponse(response);
-                yield return Page<CurrentQuotaLimitBaseData>.FromValues((IReadOnlyList<CurrentQuotaLimitBaseData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<CurrentQuotaLimitBaseData>.FromValues((IReadOnlyList<CurrentQuotaLimitBaseData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

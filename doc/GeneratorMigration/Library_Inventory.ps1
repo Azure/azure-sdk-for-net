@@ -60,7 +60,7 @@ function Get-GeneratorType {
     # Check for tsp-location.yaml files
     $tspLocationPaths = @()
     if (Test-Path $Path) {
-        $tspLocationPaths = Get-ChildItem -Path $Path -Recurse -Filter "tsp-location.yaml" -ErrorAction SilentlyContinue | ForEach-Object { $_.FullName }
+        $tspLocationPaths = Get-ChildItem -Path $Path -Recurse -Filter "tsp-location*" -ErrorAction SilentlyContinue | ForEach-Object { $_.FullName }
     }
 
     # If there's a tsp-location.yaml file and it contains emitterPackageJsonPath, extract the generator name
@@ -116,7 +116,7 @@ function Test-HasTspLocation {
     param([string]$Path)
 
     # Check if the library has a tsp-location.yaml file
-    $tspLocationFiles = Get-ChildItem -Path $Path -Recurse -Filter "tsp-location.yaml" -ErrorAction SilentlyContinue
+    $tspLocationFiles = Get-ChildItem -Path $Path -Recurse -Filter "tsp-location*" -ErrorAction SilentlyContinue
     return ($tspLocationFiles.Count -gt 0)
 }
 

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.CloudHealth
                     yield break;
                 }
                 SignalDefinitionListResult result = SignalDefinitionListResult.FromResponse(response);
-                yield return Page<HealthModelSignalDefinitionData>.FromValues((IReadOnlyList<HealthModelSignalDefinitionData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<HealthModelSignalDefinitionData>.FromValues((IReadOnlyList<HealthModelSignalDefinitionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
