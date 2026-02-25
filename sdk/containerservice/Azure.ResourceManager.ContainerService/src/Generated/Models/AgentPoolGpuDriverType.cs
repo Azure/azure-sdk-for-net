@@ -12,7 +12,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Specify the type of GPU driver to install when creating Windows agent pools. If not provided, AKS selects the driver based on system compatibility. This cannot be changed once the AgentPool has been created. This cannot be set on Linux AgentPools. For Linux AgentPools, the driver is selected based on system compatibility. </summary>
-    public readonly partial struct DriverType : IEquatable<DriverType>
+    public readonly partial struct AgentPoolGpuDriverType : IEquatable<AgentPoolGpuDriverType>
     {
         private readonly string _value;
         /// <summary> Install the GRID driver for the GPU, suitable for applications requiring virtualization support. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Install the CUDA driver for the GPU, optimized for computational tasks in scientific computing and data-intensive applications. </summary>
         private const string CudaValue = "CUDA";
 
-        /// <summary> Initializes a new instance of <see cref="DriverType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolGpuDriverType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DriverType(string value)
+        public AgentPoolGpuDriverType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Install the GRID driver for the GPU, suitable for applications requiring virtualization support. </summary>
-        public static DriverType Grid { get; } = new DriverType(GridValue);
+        public static AgentPoolGpuDriverType Grid { get; } = new AgentPoolGpuDriverType(GridValue);
 
         /// <summary> Install the CUDA driver for the GPU, optimized for computational tasks in scientific computing and data-intensive applications. </summary>
-        public static DriverType Cuda { get; } = new DriverType(CudaValue);
+        public static AgentPoolGpuDriverType Cuda { get; } = new AgentPoolGpuDriverType(CudaValue);
 
-        /// <summary> Determines if two <see cref="DriverType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="AgentPoolGpuDriverType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(DriverType left, DriverType right) => left.Equals(right);
+        public static bool operator ==(AgentPoolGpuDriverType left, AgentPoolGpuDriverType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DriverType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="AgentPoolGpuDriverType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(DriverType left, DriverType right) => !left.Equals(right);
+        public static bool operator !=(AgentPoolGpuDriverType left, AgentPoolGpuDriverType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DriverType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AgentPoolGpuDriverType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DriverType(string value) => new DriverType(value);
+        public static implicit operator AgentPoolGpuDriverType(string value) => new AgentPoolGpuDriverType(value);
 
-        /// <summary> Converts a string to a <see cref="DriverType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AgentPoolGpuDriverType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DriverType?(string value) => value == null ? null : new DriverType(value);
+        public static implicit operator AgentPoolGpuDriverType?(string value) => value == null ? null : new AgentPoolGpuDriverType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DriverType other && Equals(other);
+        public override bool Equals(object obj) => obj is AgentPoolGpuDriverType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(DriverType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AgentPoolGpuDriverType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

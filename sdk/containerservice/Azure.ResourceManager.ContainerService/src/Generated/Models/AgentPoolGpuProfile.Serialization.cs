@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             AgentPoolGpuDriver? driver = default;
-            DriverType? driverType = default;
+            AgentPoolGpuDriverType? driverType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    driverType = new DriverType(prop.Value.GetString());
+                    driverType = new AgentPoolGpuDriverType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

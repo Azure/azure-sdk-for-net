@@ -1410,11 +1410,28 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static bool operator !=(Azure.ResourceManager.ContainerService.Models.AgentPoolGpuDriver left, Azure.ResourceManager.ContainerService.Models.AgentPoolGpuDriver right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AgentPoolGpuDriverType : System.IEquatable<Azure.ResourceManager.ContainerService.Models.AgentPoolGpuDriverType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AgentPoolGpuDriverType(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerService.Models.AgentPoolGpuDriverType Cuda { get { throw null; } }
+        public static Azure.ResourceManager.ContainerService.Models.AgentPoolGpuDriverType Grid { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerService.Models.AgentPoolGpuDriverType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerService.Models.AgentPoolGpuDriverType left, Azure.ResourceManager.ContainerService.Models.AgentPoolGpuDriverType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerService.Models.AgentPoolGpuDriverType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerService.Models.AgentPoolGpuDriverType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerService.Models.AgentPoolGpuDriverType left, Azure.ResourceManager.ContainerService.Models.AgentPoolGpuDriverType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class AgentPoolGpuProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerService.Models.AgentPoolGpuProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.AgentPoolGpuProfile>
     {
         public AgentPoolGpuProfile() { }
         public Azure.ResourceManager.ContainerService.Models.AgentPoolGpuDriver? Driver { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerService.Models.DriverType? DriverType { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerService.Models.AgentPoolGpuDriverType? DriverType { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ContainerService.Models.AgentPoolGpuProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ContainerService.Models.AgentPoolGpuProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2616,23 +2633,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static implicit operator Azure.ResourceManager.ContainerService.Models.ContainerServiceWeekDay (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerService.Models.ContainerServiceWeekDay? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ContainerService.Models.ContainerServiceWeekDay left, Azure.ResourceManager.ContainerService.Models.ContainerServiceWeekDay right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DriverType : System.IEquatable<Azure.ResourceManager.ContainerService.Models.DriverType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DriverType(string value) { throw null; }
-        public static Azure.ResourceManager.ContainerService.Models.DriverType Cuda { get { throw null; } }
-        public static Azure.ResourceManager.ContainerService.Models.DriverType Grid { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ContainerService.Models.DriverType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ContainerService.Models.DriverType left, Azure.ResourceManager.ContainerService.Models.DriverType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ContainerService.Models.DriverType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ContainerService.Models.DriverType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ContainerService.Models.DriverType left, Azure.ResourceManager.ContainerService.Models.DriverType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
