@@ -141,50 +141,50 @@ try {
   # that use MSBuildProjectName conditions must NOT be touched.
   $oldFile = Join-Path $RepoRoot "eng" "Packages.Data.props"
   if (Test-Path -LiteralPath $oldFile -PathType Leaf) {
-    [xml]$propsXml = Get-Content -LiteralPath $oldFile -Raw
+    $content = Get-Content -LiteralPath $oldFile -Raw
 
-    # Build a set of line numbers that are safe to update by walking the XML DOM.
-    # Safe ItemGroups: those without conditions referencing MSBuildProjectName,
-    # TargetFramework, or legacy library filters.
-    $safeLineNumbers = @{}
-    foreach ($itemGroup in $propsXml.SelectNodes('//ItemGroup')) {
-      $condition = $itemGroup.GetAttribute('Condition')
-      if ($condition -match 'MSBuildProjectName') { continue }
-      if ($condition -match 'TargetFramework') { continue }
-      if ($condition -match "'`\$\(IsClientLibrary\)'\s*!=\s*'true'") { continue }
+    # Walk each ItemGroup block individually. Check the Condition attribute to decide
+    # whether this block is safe to update, then only replace within that block's body.
+    $itemGroupPattern = '<ItemGroup(?<attrs>[^>]*)>(?<body>.*?)</ItemGroup>'
+    $regexOptions = [System.Text.RegularExpressions.RegexOptions]::Singleline
+    $packagePattern = '(<Package(?:Version|Reference)\s+(?:Include|Update)="' + $escapedName + '"\s+Version=")(\d[^"]*?)(")'
 
-      foreach ($node in $itemGroup.ChildNodes) {
-        if ($node.NodeType -ne 'Element') { continue }
-        if ($node.LocalName -ne 'PackageReference' -and $node.LocalName -ne 'PackageVersion') { continue }
-        $nameAttr = $node.GetAttribute('Update')
-        if (-not $nameAttr) { $nameAttr = $node.GetAttribute('Include') }
-        if ($nameAttr -eq $PackageName) {
-          $versionAttr = $node.GetAttribute('Version')
-          if ($versionAttr -and $versionAttr -notmatch '^\$' -and $versionAttr -notmatch '^\[') {
-            # XmlReader-based line info isn't available after loading, so we match by
-            # the unique combination of element+name+version to build a targeted regex.
-            $safeLineNumbers[$versionAttr] = $true
-          }
-        }
+    $builder = New-Object System.Text.StringBuilder
+    $lastIndex = 0
+    $oldFileUpdated = $false
+
+    foreach ($match in [regex]::Matches($content, $itemGroupPattern, $regexOptions)) {
+      # Append content before this ItemGroup unchanged.
+      if ($match.Index -gt $lastIndex) {
+        [void]$builder.Append($content.Substring($lastIndex, $match.Index - $lastIndex))
       }
+
+      $attrs = $match.Groups['attrs'].Value
+      $body = $match.Groups['body'].Value
+
+      # Determine if this ItemGroup is safe to update.
+      $isUnsafe = ($attrs -match 'MSBuildProjectName') -or
+                  ($attrs -match 'TargetFramework') -or
+                  ($attrs -match "IsClientLibrary\)'\s*!=\s*'true'")
+
+      $newBody = $body
+      if (-not $isUnsafe) {
+        $newBody = [regex]::Replace($body, $packagePattern, '${1}' + $releasedVersion + '${3}')
+        if ($newBody -ne $body) { $oldFileUpdated = $true }
+      }
+
+      [void]$builder.Append('<ItemGroup' + $attrs + '>' + $newBody + '</ItemGroup>')
+      $lastIndex = $match.Index + $match.Length
     }
 
-    if ($safeLineNumbers.Count -gt 0) {
-      $content = Get-Content -LiteralPath $oldFile -Raw
-      # For each safe version found, build a targeted pattern that only matches
-      # the exact package with that exact old version (to avoid touching overrides).
-      $newContent = $content
-      foreach ($oldVersion in $safeLineNumbers.Keys) {
-        $escapedOldVersion = [regex]::Escape($oldVersion)
-        $targetedPattern = '(<Package(?:Version|Reference)\s+(?:Include|Update)="' + $escapedName + '"\s+Version=")' + $escapedOldVersion + '(")'
-        $newContent = [regex]::Replace($newContent, $targetedPattern, '${1}' + $releasedVersion + '${2}')
-      }
+    if ($lastIndex -lt $content.Length) {
+      [void]$builder.Append($content.Substring($lastIndex))
+    }
 
-      if ($newContent -ne $content) {
-        Set-Content -LiteralPath $oldFile -Value $newContent -NoNewline
-        Write-Host "Updated package '$PackageName' version to '$releasedVersion' in '$oldFile'"
-        $totalUpdates++
-      }
+    if ($oldFileUpdated) {
+      Set-Content -LiteralPath $oldFile -Value $builder.ToString() -NoNewline
+      Write-Host "Updated package '$PackageName' version to '$releasedVersion' in '$oldFile'"
+      $totalUpdates++
     }
   }
 

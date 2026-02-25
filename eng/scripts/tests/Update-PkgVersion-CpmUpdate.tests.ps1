@@ -58,41 +58,43 @@ BeforeAll {
         $oldFile = Join-Path $RepoRoot "eng" "Packages.Data.props"
         if (-not (Test-Path -LiteralPath $oldFile -PathType Leaf)) { return 0 }
 
-        [xml]$propsXml = Get-Content -LiteralPath $oldFile -Raw
-
-        $safeLineNumbers = @{}
-        foreach ($itemGroup in $propsXml.SelectNodes('//ItemGroup')) {
-            $condition = $itemGroup.GetAttribute('Condition')
-            if ($condition -match 'MSBuildProjectName') { continue }
-            if ($condition -match 'TargetFramework') { continue }
-            if ($condition -match "'\`$\(IsClientLibrary\)'\s*!=\s*'true'") { continue }
-
-            foreach ($node in $itemGroup.ChildNodes) {
-                if ($node.NodeType -ne 'Element') { continue }
-                if ($node.LocalName -ne 'PackageReference' -and $node.LocalName -ne 'PackageVersion') { continue }
-                $nameAttr = $node.GetAttribute('Update')
-                if (-not $nameAttr) { $nameAttr = $node.GetAttribute('Include') }
-                if ($nameAttr -eq $PackageName) {
-                    $versionAttr = $node.GetAttribute('Version')
-                    if ($versionAttr -and $versionAttr -notmatch '^\$' -and $versionAttr -notmatch '^\[') {
-                        $safeLineNumbers[$versionAttr] = $true
-                    }
-                }
-            }
-        }
-
-        if ($safeLineNumbers.Count -eq 0) { return 0 }
-
         $content = Get-Content -LiteralPath $oldFile -Raw
-        $newContent = $content
-        foreach ($oldVersion in $safeLineNumbers.Keys) {
-            $escapedOldVersion = [regex]::Escape($oldVersion)
-            $targetedPattern = '(<Package(?:Version|Reference)\s+(?:Include|Update)="' + $escapedName + '"\s+Version=")' + $escapedOldVersion + '(")'
-            $newContent = [regex]::Replace($newContent, $targetedPattern, '${1}' + $ReleasedVersion + '${2}')
+        $itemGroupPattern = '<ItemGroup(?<attrs>[^>]*)>(?<body>.*?)</ItemGroup>'
+        $regexOptions = [System.Text.RegularExpressions.RegexOptions]::Singleline
+        $packagePattern = '(<Package(?:Version|Reference)\s+(?:Include|Update)="' + $escapedName + '"\s+Version=")(\d[^"]*?)(")'
+
+        $builder = New-Object System.Text.StringBuilder
+        $lastIndex = 0
+        $oldFileUpdated = $false
+
+        foreach ($match in [regex]::Matches($content, $itemGroupPattern, $regexOptions)) {
+            if ($match.Index -gt $lastIndex) {
+                [void]$builder.Append($content.Substring($lastIndex, $match.Index - $lastIndex))
+            }
+
+            $attrs = $match.Groups['attrs'].Value
+            $body = $match.Groups['body'].Value
+
+            $isUnsafe = ($attrs -match 'MSBuildProjectName') -or
+                        ($attrs -match 'TargetFramework') -or
+                        ($attrs -match "IsClientLibrary\)'\s*!=\s*'true'")
+
+            $newBody = $body
+            if (-not $isUnsafe) {
+                $newBody = [regex]::Replace($body, $packagePattern, '${1}' + $ReleasedVersion + '${3}')
+                if ($newBody -ne $body) { $oldFileUpdated = $true }
+            }
+
+            [void]$builder.Append('<ItemGroup' + $attrs + '>' + $newBody + '</ItemGroup>')
+            $lastIndex = $match.Index + $match.Length
         }
 
-        if ($newContent -ne $content) {
-            Set-Content -LiteralPath $oldFile -Value $newContent -NoNewline
+        if ($lastIndex -lt $content.Length) {
+            [void]$builder.Append($content.Substring($lastIndex))
+        }
+
+        if ($oldFileUpdated) {
+            Set-Content -LiteralPath $oldFile -Value $builder.ToString() -NoNewline
             return 1
         }
         return 0
@@ -585,19 +587,88 @@ Describe "Old Packages.Data.props scoped update" -Tag "UnitTest" {
             (Get-Content (Join-Path $root "eng" "Packages.Data.props") -Raw) | Should -Match 'Version="2.0.0-beta.4"'
         }
     }
+
+    Context "with MSBuild XML namespace (production format)" {
+        It "updates package in safe group when xmlns is present" {
+            $root = Join-Path $TestDrive "old-xmlns"
+            New-Item -ItemType Directory -Path (Join-Path $root "eng") -Force | Out-Null
+            @"
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Condition="'`$(IsClientLibrary)' == 'true' or '`$(IsTestProject)' == 'true'">
+    <PackageReference Update="Azure.Core" Version="1.43.0" />
+  </ItemGroup>
+</Project>
+"@ | Set-Content (Join-Path $root "eng" "Packages.Data.props") -NoNewline
+
+            $result = Update-OldCpmFile -RepoRoot $root -PackageName "Azure.Core" -ReleasedVersion "1.44.0"
+
+            $result | Should -Be 1
+            (Get-Content (Join-Path $root "eng" "Packages.Data.props") -Raw) | Should -Match 'Version="1.44.0"'
+        }
+
+        It "skips override group when xmlns is present" {
+            $root = Join-Path $TestDrive "old-xmlns-skip"
+            New-Item -ItemType Directory -Path (Join-Path $root "eng") -Force | Out-Null
+            @"
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Condition="'`$(IsClientLibrary)' == 'true'">
+    <PackageReference Update="Azure.Core" Version="1.43.0" />
+  </ItemGroup>
+  <ItemGroup Condition="`$(MSBuildProjectName.StartsWith('Azure.Batch'))">
+    <PackageReference Update="Azure.Core" Version="1.41.0" />
+  </ItemGroup>
+</Project>
+"@ | Set-Content (Join-Path $root "eng" "Packages.Data.props") -NoNewline
+
+            $result = Update-OldCpmFile -RepoRoot $root -PackageName "Azure.Core" -ReleasedVersion "1.44.0"
+
+            $result | Should -Be 1
+            $content = Get-Content (Join-Path $root "eng" "Packages.Data.props") -Raw
+            $content | Should -Match 'Version="1.44.0"'
+            $content | Should -Match 'Version="1.41.0"'
+        }
+    }
+
+    Context "mixed: override group has same version as safe group" {
+        It "does not update the override group when versions coincide" {
+            $root = Join-Path $TestDrive "old-mixed-same"
+            New-Item -ItemType Directory -Path (Join-Path $root "eng") -Force | Out-Null
+            @"
+<Project>
+  <ItemGroup Condition="'`$(IsClientLibrary)' == 'true'">
+    <PackageReference Update="Azure.Core" Version="1.43.0" />
+  </ItemGroup>
+  <ItemGroup Condition="`$(MSBuildProjectName.StartsWith('Azure.Something'))">
+    <PackageReference Update="Azure.Core" Version="1.43.0" />
+  </ItemGroup>
+</Project>
+"@ | Set-Content (Join-Path $root "eng" "Packages.Data.props") -NoNewline
+
+            $result = Update-OldCpmFile -RepoRoot $root -PackageName "Azure.Core" -ReleasedVersion "1.44.0"
+
+            $result | Should -Be 1
+            $content = Get-Content (Join-Path $root "eng" "Packages.Data.props") -Raw
+            # Safe group updated
+            $content | Should -Match 'Version="1.44.0"'
+            # Override group NOT touched — still has 1.43.0
+            $content | Should -Match 'Version="1.43.0"'
+        }
+    }
 }
 
 # --------------------- Error Resilience ---------------------
 Describe "Error resilience" -Tag "UnitTest" {
     Context "malformed XML in old file" {
-        It "throws an error that production try/catch would catch" {
+        It "does not crash on malformed content" {
             $root = Join-Path $TestDrive "err-malformed"
             New-Item -ItemType Directory -Path (Join-Path $root "eng") -Force | Out-Null
             'this is not valid xml <>' | Set-Content (Join-Path $root "eng" "Packages.Data.props") -NoNewline
 
-            # The helper function will throw on malformed XML.
-            # In production, this is wrapped in try/catch so the pipeline continues.
-            { Update-OldCpmFile -RepoRoot $root -PackageName "Azure.Core" -ReleasedVersion "1.44.0" } | Should -Throw
+            # With regex-based approach, malformed content just gets no matches
+            $result = Update-OldCpmFile -RepoRoot $root -PackageName "Azure.Core" -ReleasedVersion "1.44.0"
+            $result | Should -Be 0
         }
     }
 
@@ -616,22 +687,21 @@ Describe "Error resilience" -Tag "UnitTest" {
     }
 
     Context "production try/catch wrapping" {
-        It "catches errors and emits warning instead of terminating" {
+        It "handles errors gracefully" {
             $root = Join-Path $TestDrive "err-trycatch"
             New-Item -ItemType Directory -Path (Join-Path $root "eng") -Force | Out-Null
             'this is not valid xml <>' | Set-Content (Join-Path $root "eng" "Packages.Data.props") -NoNewline
 
-            # Simulate the production try/catch behavior
-            $warning = $null
+            # With regex-based approach, malformed content is handled gracefully
+            $result = $null
             try {
-                Update-OldCpmFile -RepoRoot $root -PackageName "Azure.Core" -ReleasedVersion "1.44.0"
+                $result = Update-OldCpmFile -RepoRoot $root -PackageName "Azure.Core" -ReleasedVersion "1.44.0"
             }
             catch {
-                $warning = "CPM update failed: $($_.Exception.Message)"
+                $result = -1
             }
 
-            $warning | Should -Not -BeNullOrEmpty
-            $warning | Should -Match 'CPM update failed'
+            $result | Should -Be 0
         }
     }
 }
