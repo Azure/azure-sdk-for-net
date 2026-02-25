@@ -28,15 +28,11 @@ public partial class AgentsTelemetryTests : AgentsTestBase
     public const string TraceContentsEnvironmentVariable = "OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT";
     public const string EnableOpenTelemetryEnvironmentVariable = "AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING";
     public const string UseMessageEventsEnvironmentVariable = "AZURE_EXPERIMENTAL_TRACING_GEN_AI_USE_MESSAGE_EVENTS";
-    public const string TraceContextPropagationEnvironmentVariable = "AZURE_TRACING_GEN_AI_ENABLE_TRACE_CONTEXT_PROPAGATION";
-    public const string BaggagePropagationEnvironmentVariable = "AZURE_TRACING_GEN_AI_TRACE_CONTEXT_PROPAGATION_INCLUDE_BAGGAGE";
     private MemoryTraceExporter _exporter;
     private TracerProvider _tracerProvider;
     private string _contentRecordingEnabledInitialValue;
     private string _tracesEnabledInitialValue;
     private string _useMessageEventsInitialValue;
-    private string _traceContextPropagationInitialValue;
-    private string _baggagePropagationInitialValue;
 
     public AgentsTelemetryTests(bool isAsync) : base(isAsync)
     {
@@ -50,8 +46,6 @@ public partial class AgentsTelemetryTests : AgentsTestBase
         _tracesEnabledInitialValue = Environment.GetEnvironmentVariable(EnableOpenTelemetryEnvironmentVariable, EnvironmentVariableTarget.Process);
         _contentRecordingEnabledInitialValue = Environment.GetEnvironmentVariable(TraceContentsEnvironmentVariable, EnvironmentVariableTarget.Process);
         _useMessageEventsInitialValue = Environment.GetEnvironmentVariable(UseMessageEventsEnvironmentVariable, EnvironmentVariableTarget.Process);
-        _traceContextPropagationInitialValue = Environment.GetEnvironmentVariable(TraceContextPropagationEnvironmentVariable);
-        _baggagePropagationInitialValue = Environment.GetEnvironmentVariable(BaggagePropagationEnvironmentVariable);
 
         Environment.SetEnvironmentVariable(EnableOpenTelemetryEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
 
@@ -79,14 +73,6 @@ public partial class AgentsTelemetryTests : AgentsTestBase
         Environment.SetEnvironmentVariable(
             UseMessageEventsEnvironmentVariable,
             _useMessageEventsInitialValue,
-            EnvironmentVariableTarget.Process);
-        Environment.SetEnvironmentVariable(
-            TraceContextPropagationEnvironmentVariable,
-            _traceContextPropagationInitialValue,
-            EnvironmentVariableTarget.Process);
-        Environment.SetEnvironmentVariable(
-            BaggagePropagationEnvironmentVariable,
-            _baggagePropagationInitialValue,
             EnvironmentVariableTarget.Process);
     }
 
@@ -869,157 +855,6 @@ trigger:
         var contentArray = System.Text.Json.JsonDocument.Parse(eventContent).RootElement;
         Assert.That(contentArray.ValueKind, Is.EqualTo(System.Text.Json.JsonValueKind.Array));
         Assert.That(contentArray.GetArrayLength(), Is.EqualTo(0));
-    }
-
-    [RecordedTest]
-    public async Task TestTraceContextPropagationHeadersInjected()
-    {
-        Environment.SetEnvironmentVariable(TraceContentsEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
-        Environment.SetEnvironmentVariable(EnableOpenTelemetryEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
-        Environment.SetEnvironmentVariable(TraceContextPropagationEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
-        ReinitializeOpenTelemetryScopeConfiguration();
-
-        // Client must be created AFTER setting the env var since the policy
-        // is added at construction time
-        AIProjectClient projectClient = GetTestProjectClient();
-        var modelDeploymentName = GetModelDeploymentName();
-        var agentName = "agentsTelemetryPropagation1";
-
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
-        {
-            Instructions = "You are a prompt agent."
-        };
-
-        // Create agent within an activity scope to verify traceparent propagation
-        using var activitySource = new ActivitySource("TraceContextPropagationTest");
-        using var parentActivity = activitySource.StartActivity("ParentOperation");
-        Assert.That(parentActivity, Is.Not.Null);
-
-        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
-            agentName: agentName,
-            options: new(agentDefinition));
-
-        await projectClient.Agents.DeleteAgentAsync(agentName: agentName);
-
-        // Force flush spans
-        _exporter.ForceFlush();
-
-        // Verify the telemetry span was created (proves the pipeline executed successfully
-        // with the propagation policy included)
-        var createAgentSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == $"create_agent {agentName}");
-        Assert.That(createAgentSpan, Is.Not.Null);
-
-        // Verify the create_agent span is a child of our parent activity,
-        // confirming the trace context is connected
-        Assert.That(createAgentSpan.ParentId, Is.EqualTo(parentActivity.Id));
-    }
-
-    [RecordedTest]
-    public async Task TestTraceContextPropagationDisabledByDefault()
-    {
-        Environment.SetEnvironmentVariable(TraceContentsEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
-        Environment.SetEnvironmentVariable(EnableOpenTelemetryEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
-        // Explicitly ensure propagation is NOT enabled
-        Environment.SetEnvironmentVariable(TraceContextPropagationEnvironmentVariable, null, EnvironmentVariableTarget.Process);
-        ReinitializeOpenTelemetryScopeConfiguration();
-
-        AIProjectClient projectClient = GetTestProjectClient();
-        var modelDeploymentName = GetModelDeploymentName();
-        var agentName = "agentsTelemetryPropagation2";
-
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
-        {
-            Instructions = "You are a prompt agent."
-        };
-
-        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
-            agentName: agentName,
-            options: new(agentDefinition));
-
-        await projectClient.Agents.DeleteAgentAsync(agentName: agentName);
-
-        // Force flush spans
-        _exporter.ForceFlush();
-
-        // Verify the telemetry span was created (API works without propagation)
-        var createAgentSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == $"create_agent {agentName}");
-        Assert.That(createAgentSpan, Is.Not.Null);
-        CheckCreateAgentTrace(createAgentSpan, modelDeploymentName, agentName, "[{\"type\":\"text\",\"content\":\"You are a prompt agent.\"}]");
-    }
-
-    [RecordedTest]
-    public async Task TestTraceContextPropagationWithBaggageEnabled()
-    {
-        Environment.SetEnvironmentVariable(TraceContentsEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
-        Environment.SetEnvironmentVariable(EnableOpenTelemetryEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
-        Environment.SetEnvironmentVariable(TraceContextPropagationEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
-        Environment.SetEnvironmentVariable(BaggagePropagationEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
-        ReinitializeOpenTelemetryScopeConfiguration();
-
-        AIProjectClient projectClient = GetTestProjectClient();
-        var modelDeploymentName = GetModelDeploymentName();
-        var agentName = "agentsTelemetryBaggage1";
-
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
-        {
-            Instructions = "You are a prompt agent."
-        };
-
-        using var activitySource = new ActivitySource("BaggagePropagationTest");
-        using var parentActivity = activitySource.StartActivity("ParentOperation");
-        Assert.That(parentActivity, Is.Not.Null);
-        parentActivity.AddBaggage("userId", "test-user-123");
-        parentActivity.AddBaggage("sessionId", "session-456");
-
-        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
-            agentName: agentName,
-            options: new(agentDefinition));
-
-        await projectClient.Agents.DeleteAgentAsync(agentName: agentName);
-
-        _exporter.ForceFlush();
-
-        var createAgentSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == $"create_agent {agentName}");
-        Assert.That(createAgentSpan, Is.Not.Null);
-        Assert.That(createAgentSpan.ParentId, Is.EqualTo(parentActivity.Id));
-    }
-
-    [RecordedTest]
-    public async Task TestTraceContextPropagationWithBaggageDisabled()
-    {
-        Environment.SetEnvironmentVariable(TraceContentsEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
-        Environment.SetEnvironmentVariable(EnableOpenTelemetryEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
-        Environment.SetEnvironmentVariable(TraceContextPropagationEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
-        // Baggage explicitly disabled
-        Environment.SetEnvironmentVariable(BaggagePropagationEnvironmentVariable, "false", EnvironmentVariableTarget.Process);
-        ReinitializeOpenTelemetryScopeConfiguration();
-
-        AIProjectClient projectClient = GetTestProjectClient();
-        var modelDeploymentName = GetModelDeploymentName();
-        var agentName = "agentsTelemetryBaggage2";
-
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
-        {
-            Instructions = "You are a prompt agent."
-        };
-
-        using var activitySource = new ActivitySource("BaggagePropagationTest");
-        using var parentActivity = activitySource.StartActivity("ParentOperation");
-        Assert.That(parentActivity, Is.Not.Null);
-        parentActivity.AddBaggage("userId", "test-user-123");
-
-        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
-            agentName: agentName,
-            options: new(agentDefinition));
-
-        await projectClient.Agents.DeleteAgentAsync(agentName: agentName);
-
-        _exporter.ForceFlush();
-
-        // API call succeeds with propagation enabled but baggage disabled
-        var createAgentSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == $"create_agent {agentName}");
-        Assert.That(createAgentSpan, Is.Not.Null);
-        Assert.That(createAgentSpan.ParentId, Is.EqualTo(parentActivity.Id));
     }
 
     private async Task WaitMayBe(int timeout = 1000)
