@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Response from a List Aliases request. If successful, it includes the associated index mappings for all aliases. </summary>
-    public partial class ListAliasesResult
+    internal partial class ListAliasesResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

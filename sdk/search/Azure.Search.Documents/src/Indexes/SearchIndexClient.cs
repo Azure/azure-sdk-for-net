@@ -222,6 +222,7 @@ namespace Azure.Search.Documents.Indexes
         /// </returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="index"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual Response<SearchIndex> CreateOrUpdateIndex(
             SearchIndex index,
             bool allowIndexDowntime = false,
@@ -254,6 +255,7 @@ namespace Azure.Search.Documents.Indexes
         /// </returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="index"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SearchIndex>> CreateOrUpdateIndexAsync(
             SearchIndex index,
             bool allowIndexDowntime = false,
@@ -274,6 +276,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual Response DeleteIndex(
             string indexName,
             CancellationToken cancellationToken = default) =>
@@ -287,6 +290,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response> DeleteIndexAsync(
             string indexName,
             CancellationToken cancellationToken = default) =>
@@ -304,6 +308,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="index"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual Response DeleteIndex(
             SearchIndex index,
             bool onlyIfUnchanged = false,
@@ -327,6 +332,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="index"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response> DeleteIndexAsync(
             SearchIndex index,
             bool onlyIfUnchanged = false,
@@ -546,6 +552,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="synonymMapName"/> or <see cref="SynonymMap.Name"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual Response DeleteSynonymMap(
             string synonymMapName,
             CancellationToken cancellationToken = default) =>
@@ -559,6 +566,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="synonymMapName"/> or <see cref="SynonymMap.Name"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response> DeleteSynonymMapAsync(
             string synonymMapName,
             CancellationToken cancellationToken = default) =>
@@ -576,6 +584,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="synonymMap"/> or <see cref="SynonymMap.Name"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual Response DeleteSynonymMap(
             SynonymMap synonymMap,
             bool onlyIfUnchanged = false,
@@ -599,6 +608,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="synonymMap"/> or <see cref="SynonymMap.Name"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response> DeleteSynonymMapAsync(
             SynonymMap synonymMap,
             bool onlyIfUnchanged = false,

@@ -214,7 +214,7 @@ namespace Azure.Search.Documents.Indexes.Models
                         entitiesDefinitionUri = null;
                         continue;
                     }
-                    entitiesDefinitionUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    entitiesDefinitionUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("inlineEntitiesDefinition"u8))

@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> The kind of knowledge base configuration to use. </summary>
-    public readonly partial struct KnowledgeRetrievalIntentType : IEquatable<KnowledgeRetrievalIntentType>
+    internal readonly partial struct KnowledgeRetrievalIntentType : IEquatable<KnowledgeRetrievalIntentType>
     {
         private readonly string _value;
         /// <summary> A natural language semantic query intent. </summary>

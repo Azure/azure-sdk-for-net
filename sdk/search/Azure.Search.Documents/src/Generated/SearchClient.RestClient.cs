@@ -31,7 +31,10 @@ namespace Azure.Search.Documents
             uri.AppendPath("/indexes('", false);
             uri.AppendPath(_indexName, true);
             uri.AppendPath("')/docs/$count", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -47,7 +50,10 @@ namespace Azure.Search.Documents
             uri.AppendPath("/indexes('", false);
             uri.AppendPath(_indexName, true);
             uri.AppendPath("')/docs", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (searchText != null)
             {
                 uri.AppendQuery("search", searchText, true);
@@ -197,7 +203,10 @@ namespace Azure.Search.Documents
             uri.AppendPath("/indexes('", false);
             uri.AppendPath(_indexName, true);
             uri.AppendPath("')/docs/search.post.search", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200206);
             Request request = message.Request;
             request.Uri = uri;
@@ -225,7 +234,10 @@ namespace Azure.Search.Documents
             uri.AppendPath("')/docs('", false);
             uri.AppendPath(key, true);
             uri.AppendPath("')", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (selectedFields != null && !(selectedFields is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("$select", selectedFields, ",", escape: true);
@@ -253,7 +265,10 @@ namespace Azure.Search.Documents
             uri.AppendPath("/indexes('", false);
             uri.AppendPath(_indexName, true);
             uri.AppendPath("')/docs/search.suggest", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             uri.AppendQuery("search", searchText, true);
             uri.AppendQuery("suggesterName", suggesterName, true);
             if (filter != null)
@@ -307,7 +322,10 @@ namespace Azure.Search.Documents
             uri.AppendPath("/indexes('", false);
             uri.AppendPath(_indexName, true);
             uri.AppendPath("')/docs/search.post.suggest", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -325,7 +343,10 @@ namespace Azure.Search.Documents
             uri.AppendPath("/indexes('", false);
             uri.AppendPath(_indexName, true);
             uri.AppendPath("')/docs/search.index", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200207);
             Request request = message.Request;
             request.Uri = uri;
@@ -343,7 +364,10 @@ namespace Azure.Search.Documents
             uri.AppendPath("/indexes('", false);
             uri.AppendPath(_indexName, true);
             uri.AppendPath("')/docs/search.autocomplete", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             uri.AppendQuery("search", searchText, true);
             uri.AppendQuery("suggesterName", suggesterName, true);
             if (autocompleteMode != null)
@@ -393,7 +417,10 @@ namespace Azure.Search.Documents
             uri.AppendPath("/indexes('", false);
             uri.AppendPath(_indexName, true);
             uri.AppendPath("')/docs/search.post.autocomplete", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;

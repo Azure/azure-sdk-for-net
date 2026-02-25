@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The kind of the knowledge source. </summary>
-    public readonly partial struct KnowledgeSourceKind : IEquatable<KnowledgeSourceKind>
+    internal readonly partial struct KnowledgeSourceKind : IEquatable<KnowledgeSourceKind>
     {
         private readonly string _value;
         /// <summary> A knowledge source that reads data from a Search Index. </summary>

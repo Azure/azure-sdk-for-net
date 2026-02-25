@@ -5,9 +5,37 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Search.Documents.Models
 {
     internal static partial class AutocompleteModeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
+        public static string ToSerialString(this AutocompleteMode value) => value switch
+        {
+            AutocompleteMode.OneTerm => "oneTerm",
+            AutocompleteMode.TwoTerms => "twoTerms",
+            AutocompleteMode.OneTermWithContext => "oneTermWithContext",
+            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AutocompleteMode value.")
+        };
+
+        /// <param name="value"> The value to deserialize. </param>
+        public static AutocompleteMode ToAutocompleteMode(this string value)
+        {
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "oneTerm"))
+            {
+                return AutocompleteMode.OneTerm;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "twoTerms"))
+            {
+                return AutocompleteMode.TwoTerms;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "oneTermWithContext"))
+            {
+                return AutocompleteMode.OneTermWithContext;
+            }
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AutocompleteMode value.");
+        }
     }
 }

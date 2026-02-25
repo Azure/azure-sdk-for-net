@@ -7,9 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Search.Documents.Indexes.Models;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     internal partial class UnknownScoringFunction : ScoringFunction
     {

@@ -82,12 +82,12 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(ParsingMode))
             {
                 writer.WritePropertyName("parsingMode"u8);
-                writer.WriteObjectValue<BlobIndexerParsingMode?>(ParsingMode.Value, options);
+                writer.WriteStringValue(ParsingMode.Value.ToString());
             }
             if (Optional.IsDefined(DataToExtract))
             {
                 writer.WritePropertyName("dataToExtract"u8);
-                writer.WriteObjectValue<BlobIndexerDataToExtract?>(DataToExtract.Value, options);
+                writer.WriteStringValue(DataToExtract.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Configuration))
             {

@@ -32,6 +32,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns><see cref="SearchAlias"/> created or updated by the service.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="alias"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual Response<SearchAlias> CreateOrUpdateAlias(
             SearchAlias alias,
             bool onlyIfUnchanged = false,
@@ -55,6 +56,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns><see cref="SearchAlias"/> created or updated by the service.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="alias"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SearchAlias>> CreateOrUpdateAliasAsync(
             SearchAlias alias,
             bool onlyIfUnchanged = false,
@@ -124,6 +126,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Pageable{T}"/> from the server containing a list of <see cref="SearchAlias"/> objects.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual Pageable<SearchAlias> GetAliases(CancellationToken cancellationToken = default)
         {
             return new PageableWrapper<BinaryData, SearchAlias>(
@@ -137,6 +140,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="AsyncPageable{T}"/> from the server containing a list of <see cref="SearchAlias"/> objects.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual AsyncPageable<SearchAlias> GetAliasesAsync(CancellationToken cancellationToken = default)
         {
             return new AsyncPageableWrapper<BinaryData, SearchAlias>(

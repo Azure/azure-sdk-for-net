@@ -15,7 +15,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Response from a List Aliases request. If successful, it includes the associated index mappings for all aliases. </summary>
-    public partial class ListAliasesResult : IJsonModel<ListAliasesResult>
+    internal partial class ListAliasesResult : IJsonModel<ListAliasesResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

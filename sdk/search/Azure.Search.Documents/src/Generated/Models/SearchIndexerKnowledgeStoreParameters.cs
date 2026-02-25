@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A dictionary of knowledge store-specific configuration properties. Each name is the name of a specific property. Each value must be of a primitive type. </summary>
     public partial class SearchIndexerKnowledgeStoreParameters

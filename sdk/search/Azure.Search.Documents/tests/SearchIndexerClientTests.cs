@@ -99,7 +99,8 @@ namespace Azure.Search.Documents.Tests
             actualIndexer.Description = "Updated description";
             await serviceClient.CreateOrUpdateIndexerAsync(
                 actualIndexer,
-                onlyIfUnchanged: true);
+                onlyIfUnchanged: true,
+                CancellationToken.None);
 
             // Run the indexer.
             await serviceClient.RunIndexerAsync(
@@ -247,7 +248,6 @@ namespace Azure.Search.Documents.Tests
 
         [Test]
         [SyncOnly]
-        // TODO: Run this test once constructor issue on indexer is fixed:
         public void CreateOrUpdateIndexerParameterValidation()
         {
             var endpoint = new Uri($"https://my-svc-name.search.windows.net");
@@ -256,7 +256,7 @@ namespace Azure.Search.Documents.Tests
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.CreateOrUpdateIndexer(null));
             Assert.AreEqual("indexer", ex.ParamName);
 
-            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.CreateOrUpdateIndexerAsync(null, false)); // TODO: Change this back to not have false
+            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.CreateOrUpdateIndexerAsync(null));
             Assert.AreEqual("indexer", ex.ParamName);
         }
 

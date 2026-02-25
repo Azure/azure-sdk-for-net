@@ -36,6 +36,7 @@ MembersMustExist : Member 'public void Azure.Search.Documents.Indexes.Models.Ent
 MembersMustExist : Member 'public Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion.V1.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'public void Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.IncludeTypelessEntities.set(System.Nullable<System.Boolean>)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'public System.Nullable<System.Boolean> Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.IncludeTypelessEntities.get()' does not exist in the implementation but it does exist in the contract.
+TypesMustExist : Type 'Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage' does not exist in the implementation but it does exist in the contract.
 
 # SentimentSkillLanguage and SentimentSkill are deprecated (V1 skill) - all related errors are expected
 CannotRemoveBaseTypeOrInterface : Type 'Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage' does not implement interface 'System.IEquatable<Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage>' in the implementation but it does in the contract.
@@ -64,6 +65,7 @@ MembersMustExist : Member 'public void Azure.Search.Documents.Indexes.Models.Sen
 TypesMustExist : Type 'Azure.Search.Documents.Indexes.Models.EntityCategory' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.EntityCategory> Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.Categories.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'public Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion.V1.get()' does not exist in the implementation but it does exist in the contract.
+TypesMustExist : Type 'Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage' does not exist in the implementation but it does exist in the contract.
 
 # Deprecated VectorSearchCompression propertiesMembersMustExist : Member 'public void
 MembersMustExist : Member 'public void Azure.Search.Documents.Indexes.Models.VectorSearchCompression.RerankWithOriginalVectors.set(System.Nullable<System.Boolean>)' does not exist in the implementation but it does exist in the contract.

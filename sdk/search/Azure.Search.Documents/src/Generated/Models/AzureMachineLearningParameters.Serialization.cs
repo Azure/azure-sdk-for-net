@@ -171,7 +171,7 @@ namespace Azure.Search.Documents.Indexes.Models
                         scoringUri = null;
                         continue;
                     }
-                    scoringUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    scoringUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("key"u8))

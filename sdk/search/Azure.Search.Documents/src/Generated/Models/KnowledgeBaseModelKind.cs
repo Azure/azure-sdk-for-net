@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The AI model to be used for query planning. </summary>
-    public readonly partial struct KnowledgeBaseModelKind : IEquatable<KnowledgeBaseModelKind>
+    internal readonly partial struct KnowledgeBaseModelKind : IEquatable<KnowledgeBaseModelKind>
     {
         private readonly string _value;
         /// <summary> Use Azure Open AI models for query planning. </summary>

@@ -18,45 +18,6 @@ namespace Azure.Search.Documents.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class SearchModelFactory
     {
-        /// <summary> Common error response for all Azure Resource Manager APIs to return error details for failed operations. (This also follows the OData error response format.). </summary>
-        /// <param name="error"> The error object. </param>
-        /// <returns> A new <see cref="Models.ErrorResponse"/> instance for mocking. </returns>
-        public static ErrorResponse ErrorResponse(ErrorDetail error = default)
-        {
-            return new ErrorResponse(error, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The error detail. </summary>
-        /// <param name="code"> The error code. </param>
-        /// <param name="message"> The error message. </param>
-        /// <param name="target"> The error target. </param>
-        /// <param name="details"> The error details. </param>
-        /// <param name="additionalInfo"> The error additional info. </param>
-        /// <returns> A new <see cref="Models.ErrorDetail"/> instance for mocking. </returns>
-        public static ErrorDetail ErrorDetail(string code = default, string message = default, string target = default, IEnumerable<ErrorDetail> details = default, IEnumerable<ErrorAdditionalInfo> additionalInfo = default)
-        {
-            details ??= new ChangeTrackingList<ErrorDetail>();
-            additionalInfo ??= new ChangeTrackingList<ErrorAdditionalInfo>();
-
-            return new ErrorDetail(
-                code,
-                message,
-                target,
-                details.ToList(),
-                additionalInfo.ToList(),
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The resource management error additional info. </summary>
-        /// <param name="type"> The additional info type. </param>
-        /// <param name="info"> The additional info. </param>
-        /// <returns> A new <see cref="Models.ErrorAdditionalInfo"/> instance for mocking. </returns>
-        public static ErrorAdditionalInfo ErrorAdditionalInfo(string @type = default, IReadOnlyDictionary<string, BinaryData> info = default)
-        {
-            info ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new ErrorAdditionalInfo(@type, info, additionalBinaryDataProperties: null);
-        }
 
         /// <summary> A single bucket of a facet query result. Reports the number of documents with a field value falling within a particular range or having a particular value or interval. </summary>
         /// <param name="count"> The approximate count of documents falling within the bucket described by this facet. </param>
@@ -1079,7 +1040,7 @@ namespace Azure.Search.Documents.Models
         /// <summary> Breaks text following the Unicode Text Segmentation rules. This tokenizer is implemented using Apache Lucene. </summary>
         /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="maxTokenLength"> The maximum token length. Default is 255. Tokens longer than the maximum length are split. The maximum token length that can be used is 300 characters. </param>
-        /// <returns> A new <see cref="Models.LuceneStandardTokenizerV2"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Indexes.Models.LuceneStandardTokenizerV2"/> instance for mocking. </returns>
         public static LuceneStandardTokenizerV2 LuceneStandardTokenizerV2(string name = default, int? maxTokenLength = default)
         {
             return new LuceneStandardTokenizerV2("#Microsoft.Azure.Search.StandardTokenizerV2", name, additionalBinaryDataProperties: null, maxTokenLength);
@@ -1853,16 +1814,6 @@ namespace Azure.Search.Documents.Models
             return new SearchAlias(name, indexes.ToList(), etag, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Response from a List Aliases request. If successful, it includes the associated index mappings for all aliases. </summary>
-        /// <param name="aliases"> The aliases in the Search service. </param>
-        /// <returns> A new <see cref="Indexes.Models.ListAliasesResult"/> instance for mocking. </returns>
-        public static ListAliasesResult ListAliasesResult(IEnumerable<SearchAlias> aliases = default)
-        {
-            aliases ??= new ChangeTrackingList<SearchAlias>();
-
-            return new ListAliasesResult(aliases.ToList(), additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Represents a knowledge base definition. </summary>
         /// <param name="name"> The name of the knowledge base. </param>
         /// <param name="knowledgeSources"> Knowledge sources referenced by this knowledge base. </param>
@@ -1951,16 +1902,6 @@ namespace Azure.Search.Documents.Models
         public static KnowledgeRetrievalMediumReasoningEffort KnowledgeRetrievalMediumReasoningEffort()
         {
             return new KnowledgeRetrievalMediumReasoningEffort(KnowledgeRetrievalReasoningEffortKind.Medium, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Result from listing knowledge bases. </summary>
-        /// <param name="value"> The knowledge bases in the service. </param>
-        /// <returns> A new <see cref="Indexes.Models.ListKnowledgeBasesResult"/> instance for mocking. </returns>
-        public static ListKnowledgeBasesResult ListKnowledgeBasesResult(IEnumerable<KnowledgeBase> value = default)
-        {
-            value ??= new ChangeTrackingList<KnowledgeBase>();
-
-            return new ListKnowledgeBasesResult(value.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -2288,16 +2229,6 @@ namespace Azure.Search.Documents.Models
             resourceMetadata ??= new ChangeTrackingList<string>();
 
             return new RemoteSharePointKnowledgeSourceParameters(filterExpression, resourceMetadata.ToList(), containerTypeId, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Result from listing knowledge sources. </summary>
-        /// <param name="value"> The knowledge sources in the service. </param>
-        /// <returns> A new <see cref="Indexes.Models.ListKnowledgeSourcesResult"/> instance for mocking. </returns>
-        public static ListKnowledgeSourcesResult ListKnowledgeSourcesResult(IEnumerable<KnowledgeSource> value = default)
-        {
-            value ??= new ChangeTrackingList<KnowledgeSource>();
-
-            return new ListKnowledgeSourcesResult(value.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents the status and synchronization history of a knowledge source. </summary>
@@ -3796,7 +3727,7 @@ namespace Azure.Search.Documents.Models
         /// <summary> A dictionary of knowledge store-specific configuration properties. Each name is the name of a specific property. Each value must be of a primitive type. </summary>
         /// <param name="synthesizeGeneratedKeyName"> Whether or not projections should synthesize a generated key name if one isn't already present. </param>
         /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="Models.SearchIndexerKnowledgeStoreParameters"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Indexes.Models.SearchIndexerKnowledgeStoreParameters"/> instance for mocking. </returns>
         public static SearchIndexerKnowledgeStoreParameters SearchIndexerKnowledgeStoreParameters(bool? synthesizeGeneratedKeyName = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();

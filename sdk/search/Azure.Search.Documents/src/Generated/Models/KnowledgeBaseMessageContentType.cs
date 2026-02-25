@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> The type of message content. </summary>
-    public readonly partial struct KnowledgeBaseMessageContentType : IEquatable<KnowledgeBaseMessageContentType>
+    internal readonly partial struct KnowledgeBaseMessageContentType : IEquatable<KnowledgeBaseMessageContentType>
     {
         private readonly string _value;
         /// <summary> Text message content kind. </summary>

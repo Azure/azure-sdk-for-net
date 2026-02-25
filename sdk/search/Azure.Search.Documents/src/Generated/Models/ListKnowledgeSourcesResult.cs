@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Result from listing knowledge sources. </summary>
-    public partial class ListKnowledgeSourcesResult
+    internal partial class ListKnowledgeSourcesResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

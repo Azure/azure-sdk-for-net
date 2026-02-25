@@ -178,7 +178,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     {
                         continue;
                     }
-                    webUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    webUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("searchSensitivityLabelInfo"u8))

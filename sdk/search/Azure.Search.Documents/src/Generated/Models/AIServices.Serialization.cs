@@ -135,7 +135,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             {
                 if (prop.NameEquals("uri"u8))
                 {
-                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("apiKey"u8))

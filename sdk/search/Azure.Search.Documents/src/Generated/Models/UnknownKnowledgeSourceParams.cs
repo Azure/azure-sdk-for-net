@@ -8,9 +8,8 @@
 using System;
 using System.Collections.Generic;
 using Azure.Search.Documents.Indexes.Models;
-using Azure.Search.Documents.KnowledgeBases.Models;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     internal partial class UnknownKnowledgeSourceParams : KnowledgeSourceParams
     {

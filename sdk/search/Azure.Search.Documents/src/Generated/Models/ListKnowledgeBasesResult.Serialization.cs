@@ -15,7 +15,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Result from listing knowledge bases. </summary>
-    public partial class ListKnowledgeBasesResult : IJsonModel<ListKnowledgeBasesResult>
+    internal partial class ListKnowledgeBasesResult : IJsonModel<ListKnowledgeBasesResult>
     {
         /// <summary> Initializes a new instance of <see cref="ListKnowledgeBasesResult"/> for deserialization. </summary>
         internal ListKnowledgeBasesResult()

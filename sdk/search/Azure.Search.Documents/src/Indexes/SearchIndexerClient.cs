@@ -197,6 +197,7 @@ namespace Azure.Search.Documents.Indexes
         /// </returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexer"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual Response<SearchIndexer> CreateOrUpdateIndexer(
             SearchIndexer indexer,
             bool onlyIfUnchanged = false,
@@ -232,40 +233,10 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default) => await CreateOrUpdateIndexerAsync(
                 indexer,
                 onlyIfUnchanged,
+                ignoreCacheResetRequirements: null,
+                disableCacheReprocessingChangeDetection: null,
                 cancellationToken).
                 ConfigureAwait(false);
-
-        /// <summary>
-        /// Creates a new indexer or updates an existing indexer.
-        /// </summary>
-        /// <param name="indexer">Required. The <see cref="SearchIndexer"/> to create or update.</param>
-        /// <param name="onlyIfUnchanged">
-        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexer.ETag"/> does not match the current service version;
-        /// otherwise, the current service version will be overwritten.
-        /// </param>
-        /// <param name="disableCacheReprocessingChangeDetection">Disables cache reprocessing change detection.</param>
-        /// <param name="ignoreCacheResetRequirements">Ignores cache reset requirements.</param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>
-        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexer"/> created.
-        /// This may differ slightly from what was passed into the service.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexer"/> is null.</exception>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-        public virtual async Task<Response<SearchIndexer>> CreateOrUpdateIndexerAsync(
-#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-            SearchIndexer indexer,
-            bool onlyIfUnchanged,
-            bool disableCacheReprocessingChangeDetection,
-            bool ignoreCacheResetRequirements,
-            CancellationToken cancellationToken) => await CreateOrUpdateIndexerAsync(
-                indexer,
-                onlyIfUnchanged,
-                ignoreCacheResetRequirements,
-                disableCacheReprocessingChangeDetection,
-                cancellationToken).ConfigureAwait(false);
 
         //        /// <summary>
         //        /// Creates a new indexer or updates an existing indexer.
@@ -275,8 +246,8 @@ namespace Azure.Search.Documents.Indexes
         //        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexer.ETag"/> does not match the current service version;
         //        /// otherwise, the current service version will be overwritten.
         //        /// </param>
-        //        /// <param name="ignoreCacheResetRequirements">Ignores cache reset requirements.</param>
         //        /// <param name="disableCacheReprocessingChangeDetection">Disables cache reprocessing change detection.</param>
+        //        /// <param name="ignoreCacheResetRequirements">Ignores cache reset requirements.</param>
         //        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         //        /// <returns>
         //        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexer"/> created.
@@ -284,18 +255,51 @@ namespace Azure.Search.Documents.Indexes
         //        /// </returns>
         //        /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexer"/> is null.</exception>
         //        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        //        [EditorBrowsable(EditorBrowsableState.Never)]
+        //#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         //        public virtual async Task<Response<SearchIndexer>> CreateOrUpdateIndexerAsync(
+        //#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         //            SearchIndexer indexer,
-        //            bool onlyIfUnchanged = false,
-        //            bool? ignoreCacheResetRequirements = null,
-        //            bool? disableCacheReprocessingChangeDetection = null,
-        //            CancellationToken cancellationToken = default)
-        //        {
-        //            Argument.AssertNotNull(indexer, nameof(indexer));
+        //            bool onlyIfUnchanged,
+        //            bool disableCacheReprocessingChangeDetection,
+        //            bool ignoreCacheResetRequirements,
+        //            CancellationToken cancellationToken) => await CreateOrUpdateIndexerAsync(
+        //                indexer,
+        //                onlyIfUnchanged,
+        //                ignoreCacheResetRequirements,
+        //                disableCacheReprocessingChangeDetection,
+        //                cancellationToken).ConfigureAwait(false);
 
-        //            MatchConditions matchConditions = onlyIfUnchanged ? new MatchConditions { IfMatch = indexer?.ETag } : null;
-        //            return await CreateOrUpdateIndexerAsync(indexer?.Name, indexer, matchConditions, ignoreCacheResetRequirements, disableCacheReprocessingChangeDetection, cancellationToken).ConfigureAwait(false);
-        //        }
+        /// <summary>
+        /// Creates a new indexer or updates an existing indexer.
+        /// </summary>
+        /// <param name="indexer">Required. The <see cref="SearchIndexer"/> to create or update.</param>
+        /// <param name="onlyIfUnchanged">
+        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexer.ETag"/> does not match the current service version;
+        /// otherwise, the current service version will be overwritten.
+        /// </param>
+        /// <param name="ignoreCacheResetRequirements">Ignores cache reset requirements.</param>
+        /// <param name="disableCacheReprocessingChangeDetection">Disables cache reprocessing change detection.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexer"/> created.
+        /// This may differ slightly from what was passed into the service.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexer"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SearchIndexer>> CreateOrUpdateIndexerAsync(
+            SearchIndexer indexer,
+            bool onlyIfUnchanged = false,
+            bool? ignoreCacheResetRequirements = null,
+            bool? disableCacheReprocessingChangeDetection = null,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(indexer, nameof(indexer));
+
+            MatchConditions matchConditions = onlyIfUnchanged ? new MatchConditions { IfMatch = indexer?.ETag } : null;
+            return await CreateOrUpdateIndexerAsync(indexer?.Name, indexer, matchConditions, ignoreCacheResetRequirements, disableCacheReprocessingChangeDetection, cancellationToken).ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Deletes an indexer.
@@ -305,6 +309,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexerName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual Response DeleteIndexer(
             string indexerName,
             CancellationToken cancellationToken = default)
@@ -321,6 +326,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexerName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response> DeleteIndexerAsync(
             string indexerName,
             CancellationToken cancellationToken = default)
@@ -341,6 +347,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexer"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual Response DeleteIndexer(
             SearchIndexer indexer,
             bool onlyIfUnchanged = false,
@@ -364,6 +371,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexer"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response> DeleteIndexerAsync(
             SearchIndexer indexer,
             bool onlyIfUnchanged = false,
@@ -381,6 +389,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexer"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual Response<IReadOnlyList<SearchIndexer>> GetIndexers(
             CancellationToken cancellationToken = default)
         {
@@ -394,6 +403,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexer"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<IReadOnlyList<SearchIndexer>>> GetIndexersAsync(
             CancellationToken cancellationToken = default)
         {
@@ -407,6 +417,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexer"/> names.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual Response<IReadOnlyList<string>> GetIndexerNames(
             CancellationToken cancellationToken = default)
         {
@@ -421,6 +432,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexer"/> names.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<IReadOnlyList<string>>> GetIndexerNamesAsync(
             CancellationToken cancellationToken = default)
         {

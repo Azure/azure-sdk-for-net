@@ -11,9 +11,8 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes.Models;
-using Azure.Search.Documents.KnowledgeBases.Models;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     internal partial class UnknownKnowledgeSourceParams : KnowledgeSourceParams, IJsonModel<KnowledgeSourceParams>
     {

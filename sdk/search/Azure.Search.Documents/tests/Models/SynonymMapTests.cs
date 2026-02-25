@@ -156,12 +156,11 @@ namespace Azure.Search.Documents.Tests.Models
 
             Assert.AreEqual("test-map", root.GetProperty("name").GetString());
             Assert.AreEqual("solr", root.GetProperty("format").GetString());
-            Assert.AreEqual(JsonValueKind.Array, root.GetProperty("synonyms").ValueKind);
+            Assert.AreEqual(JsonValueKind.String, root.GetProperty("synonyms").ValueKind);
 
-            // Verify synonyms are serialized as an array
-            JsonElement synonymsArray = root.GetProperty("synonyms");
-            Assert.AreEqual(1, synonymsArray.GetArrayLength());
-            Assert.AreEqual("word1,word2=>synonym", synonymsArray[0].GetString());
+            // Verify synonyms are serialized as an string
+            JsonElement synonyms = root.GetProperty("synonyms");
+            Assert.AreEqual("word1,word2=>synonym", synonyms.GetString());
         }
 
         [Test]

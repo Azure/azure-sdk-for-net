@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Search.Documents;
-using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.Indexes.Models
 {

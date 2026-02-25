@@ -5,6 +5,7 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Utilities;
 
@@ -24,6 +25,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="KnowledgeBase"/> that was created.
         /// </returns>
+        [ForwardsClientCalls]
         public virtual Response<KnowledgeBase> CreateKnowledgeBase(KnowledgeBase knowledgeBase, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(knowledgeBase, nameof(knowledgeBase));
@@ -39,6 +41,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="KnowledgeBase"/> that was created.
         /// </returns>
+        [ForwardsClientCalls]
         public virtual async Task<Response<KnowledgeBase>> CreateKnowledgeBaseAsync(KnowledgeBase knowledgeBase, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(knowledgeBase, nameof(knowledgeBase));
@@ -58,6 +61,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="KnowledgeBase"/> that was created or updated.
         /// </returns>
+        [ForwardsClientCalls]
         public virtual Response<KnowledgeBase> CreateOrUpdateKnowledgeBase(KnowledgeBase knowledgeBase, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(knowledgeBase, nameof(knowledgeBase));
@@ -77,6 +81,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="KnowledgeBase"/> that was created or updated.
         /// </returns>
+        [ForwardsClientCalls]
         public virtual async Task<Response<KnowledgeBase>> CreateOrUpdateKnowledgeBaseAsync(KnowledgeBase knowledgeBase, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(knowledgeBase, nameof(knowledgeBase));
@@ -90,6 +95,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException"> <paramref name="knowledgeBaseName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response DeleteKnowledgeBase(string knowledgeBaseName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
@@ -102,6 +108,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException"> <paramref name="knowledgeBaseName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response> DeleteKnowledgeBaseAsync(string knowledgeBaseName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
@@ -118,6 +125,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException"> <paramref name="knowledgeBase"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response DeleteKnowledgeBase(KnowledgeBase knowledgeBase, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(knowledgeBase, nameof(knowledgeBase));
@@ -135,6 +143,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException"> <paramref name="knowledgeBase"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response> DeleteKnowledgeBaseAsync(KnowledgeBase knowledgeBase, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(knowledgeBase, nameof(knowledgeBase));
@@ -150,6 +159,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="KnowledgeBase"/>.
         /// </returns>
+        [ForwardsClientCalls]
         public virtual Response<KnowledgeBase> GetKnowledgeBase(string knowledgeBaseName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
@@ -165,6 +175,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="KnowledgeBase"/>.
         /// </returns>
+        [ForwardsClientCalls]
         public virtual async Task<Response<KnowledgeBase>> GetKnowledgeBaseAsync(string knowledgeBaseName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
@@ -177,6 +188,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Pageable{T}"/> from the server containing a list of <see cref="KnowledgeBase"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual Pageable<KnowledgeBase> GetKnowledgeBases(CancellationToken cancellationToken = default)
         {
             return new PageableWrapper<BinaryData, KnowledgeBase>(
@@ -188,6 +200,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="AsyncPageable{T}"/> from the server containing a list of <see cref="KnowledgeBase"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual AsyncPageable<KnowledgeBase> GetKnowledgeBasesAsync(CancellationToken cancellationToken = default)
         {
             return new AsyncPageableWrapper<BinaryData, KnowledgeBase>(
