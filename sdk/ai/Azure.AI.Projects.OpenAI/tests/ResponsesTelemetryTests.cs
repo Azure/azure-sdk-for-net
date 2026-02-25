@@ -76,21 +76,7 @@ public partial class ResponsesTelemetryTests : ProjectsOpenAITestBase
         var span = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == $"chat {modelDeploymentName}");
         Assert.That(span, Is.Not.Null, $"Expected span 'chat {modelDeploymentName}'");
 
-        var expectedAttributes = new Dictionary<string, object>
-        {
-            { "gen_ai.provider.name", "microsoft.foundry" },
-            { "gen_ai.operation.name", "chat" },
-            { "server.address", "*" },
-            { "az.namespace", "Microsoft.CognitiveServices" },
-            { "gen_ai.request.model", modelDeploymentName },
-            { "gen_ai.response.model", "*" },
-            { "gen_ai.response.id", "*" },
-            { "gen_ai.usage.input_tokens", "+" },
-            { "gen_ai.usage.output_tokens", "+" },
-            { "gen_ai.input.messages", "*" },
-            { "gen_ai.output.messages", "*" },
-        };
-        GenAiTraceVerifier.ValidateSpanAttributes(span, expectedAttributes, allowUnexpected: false);
+        GenAiTraceVerifier.ValidateSpanAttributes(span, GetExpectedChatAttributes(modelDeploymentName), allowUnexpected: false);
 
         string inputMessages = span.GetTagItem("gen_ai.input.messages") as string;
         Assert.That(inputMessages, Does.Contain("\"content\":\"What is 2+2?\""));
@@ -121,21 +107,7 @@ public partial class ResponsesTelemetryTests : ProjectsOpenAITestBase
         var span = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == $"chat {modelDeploymentName}");
         Assert.That(span, Is.Not.Null, $"Expected span 'chat {modelDeploymentName}'");
 
-        var expectedAttributes = new Dictionary<string, object>
-        {
-            { "gen_ai.provider.name", "microsoft.foundry" },
-            { "gen_ai.operation.name", "chat" },
-            { "server.address", "*" },
-            { "az.namespace", "Microsoft.CognitiveServices" },
-            { "gen_ai.request.model", modelDeploymentName },
-            { "gen_ai.response.model", "*" },
-            { "gen_ai.response.id", "*" },
-            { "gen_ai.usage.input_tokens", "+" },
-            { "gen_ai.usage.output_tokens", "+" },
-            { "gen_ai.input.messages", "*" },
-            { "gen_ai.output.messages", "*" },
-        };
-        GenAiTraceVerifier.ValidateSpanAttributes(span, expectedAttributes, allowUnexpected: false);
+        GenAiTraceVerifier.ValidateSpanAttributes(span, GetExpectedChatAttributes(modelDeploymentName), allowUnexpected: false);
 
         string inputMessages = span.GetTagItem("gen_ai.input.messages") as string;
         Assert.That(inputMessages, Does.Not.Contain("What is 2+2?"));
@@ -206,22 +178,7 @@ public partial class ResponsesTelemetryTests : ProjectsOpenAITestBase
             var span = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == $"invoke_agent {agentName}");
             Assert.That(span, Is.Not.Null, $"Expected span 'invoke_agent {agentName}'");
 
-                var expectedAttributes = new Dictionary<string, object>
-            {
-                { "gen_ai.provider.name", "microsoft.foundry" },
-                { "gen_ai.operation.name", "invoke_agent" },
-                { "server.address", "*" },
-                { "az.namespace", "Microsoft.CognitiveServices" },
-                { "gen_ai.agent.name", agentName },
-                { "gen_ai.agent.id", $"{agentName}:{agentVersion.Version}" },
-                { "gen_ai.response.model", "*" },
-                { "gen_ai.response.id", "*" },
-                { "gen_ai.usage.input_tokens", "+" },
-                { "gen_ai.usage.output_tokens", "+" },
-                { "gen_ai.input.messages", "*" },
-                { "gen_ai.output.messages", "*" },
-            };
-            GenAiTraceVerifier.ValidateSpanAttributes(span, expectedAttributes, allowUnexpected: false);
+                GenAiTraceVerifier.ValidateSpanAttributes(span, GetExpectedAgentAttributes(agentName, agentVersion.Version), allowUnexpected: false);
         }
         finally
         {
@@ -230,6 +187,36 @@ public partial class ResponsesTelemetryTests : ProjectsOpenAITestBase
     }
 
     #region Helpers
+
+    private static Dictionary<string, object> GetCommonExpectedAttributes() => new()
+    {
+        { "gen_ai.provider.name", "microsoft.foundry" },
+        { "server.address", "*" },
+        { "az.namespace", "Microsoft.CognitiveServices" },
+        { "gen_ai.response.model", "*" },
+        { "gen_ai.response.id", "*" },
+        { "gen_ai.usage.input_tokens", "+" },
+        { "gen_ai.usage.output_tokens", "+" },
+        { "gen_ai.input.messages", "*" },
+        { "gen_ai.output.messages", "*" },
+    };
+
+    private static Dictionary<string, object> GetExpectedChatAttributes(string modelDeploymentName)
+    {
+        var attrs = GetCommonExpectedAttributes();
+        attrs["gen_ai.operation.name"] = "chat";
+        attrs["gen_ai.request.model"] = modelDeploymentName;
+        return attrs;
+    }
+
+    private static Dictionary<string, object> GetExpectedAgentAttributes(string agentName, object agentVersionNumber)
+    {
+        var attrs = GetCommonExpectedAttributes();
+        attrs["gen_ai.operation.name"] = "invoke_agent";
+        attrs["gen_ai.agent.name"] = agentName;
+        attrs["gen_ai.agent.id"] = $"{agentName}:{agentVersionNumber}";
+        return attrs;
+    }
 
     private static void ReinitializeResponseScopeConfiguration()
     {

@@ -474,11 +474,7 @@ namespace Azure.AI.Projects.OpenAI.Telemetry
 
         private static string GetFinishReason(ResponseStatus status)
         {
-            if (status == ResponseStatus.Completed) return "completed";
-            if (status == ResponseStatus.Failed) return "failed";
-            if (status == ResponseStatus.Incomplete) return "incomplete";
-            if (status == ResponseStatus.Cancelled) return "cancelled";
-            return null;
+            return status.ToString()?.ToLower();
         }
 
         private static List<ToolCallInfo> ExtractToolCallsFromResponse(ResponseResult response)

@@ -30,7 +30,7 @@ public class Sample_Responses_Tracing : ProjectsOpenAITestBase
 #endif
 
         #region Snippet:Sample_ResponsesEnableGenAITracing
-        AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
+        AppContext.SetSwitch("Azure.Experimental.EnableGenAITracing", true);
         #endregion
         AppContext.SetSwitch("Azure.Experimental.TraceGenAIMessageContent", false);
 
@@ -65,7 +65,7 @@ public class Sample_Responses_Tracing : ProjectsOpenAITestBase
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
 
-        AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
+        AppContext.SetSwitch("Azure.Experimental.EnableGenAITracing", true);
         AppContext.SetSwitch("Azure.Experimental.TraceGenAIMessageContent", false);
 
         var tracerProvider = Sdk.CreateTracerProviderBuilder()
@@ -104,7 +104,7 @@ public class Sample_Responses_Tracing : ProjectsOpenAITestBase
         Console.WriteLine("Assign the retrieved string to the required environment variable.");
         Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING", connectionString);
 
-        AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
+        AppContext.SetSwitch("Azure.Experimental.EnableGenAITracing", true);
         AppContext.SetSwitch("Azure.Experimental.TraceGenAIMessageContent", false);
 
         #region Snippet:Sample_ResponsesSetupTracingToAzureMonitor
@@ -142,7 +142,7 @@ public class Sample_Responses_Tracing : ProjectsOpenAITestBase
         Console.WriteLine("Assign the retrieved string to the required environment variable.");
         Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING", connectionString);
 
-        AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
+        AppContext.SetSwitch("Azure.Experimental.EnableGenAITracing", true);
         AppContext.SetSwitch("Azure.Experimental.TraceGenAIMessageContent", false);
 
         var tracerProvider = Sdk.CreateTracerProviderBuilder()
