@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     yield break;
                 }
                 WorkspaceList result = WorkspaceList.FromResponse(response);
-                yield return Page<VirtualWorkspaceData>.FromValues((IReadOnlyList<VirtualWorkspaceData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<VirtualWorkspaceData>.FromValues((IReadOnlyList<VirtualWorkspaceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

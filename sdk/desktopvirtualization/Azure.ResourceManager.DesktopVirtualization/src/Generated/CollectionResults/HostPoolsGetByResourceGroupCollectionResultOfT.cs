@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     yield break;
                 }
                 HostPoolList result = HostPoolList.FromResponse(response);
-                yield return Page<HostPoolData>.FromValues((IReadOnlyList<HostPoolData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<HostPoolData>.FromValues((IReadOnlyList<HostPoolData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

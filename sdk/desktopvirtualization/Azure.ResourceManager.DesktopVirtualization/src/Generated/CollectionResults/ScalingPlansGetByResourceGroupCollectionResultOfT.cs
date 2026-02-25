@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     yield break;
                 }
                 ScalingPlanList result = ScalingPlanList.FromResponse(response);
-                yield return Page<ScalingPlanData>.FromValues((IReadOnlyList<ScalingPlanData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ScalingPlanData>.FromValues((IReadOnlyList<ScalingPlanData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

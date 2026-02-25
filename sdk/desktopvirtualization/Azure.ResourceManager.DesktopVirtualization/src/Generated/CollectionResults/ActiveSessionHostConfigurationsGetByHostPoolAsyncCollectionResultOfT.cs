@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     yield break;
                 }
                 ActiveSessionHostConfigurationList result = ActiveSessionHostConfigurationList.FromResponse(response);
-                yield return Page<ActiveSessionHostConfigurationData>.FromValues((IReadOnlyList<ActiveSessionHostConfigurationData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ActiveSessionHostConfigurationData>.FromValues((IReadOnlyList<ActiveSessionHostConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

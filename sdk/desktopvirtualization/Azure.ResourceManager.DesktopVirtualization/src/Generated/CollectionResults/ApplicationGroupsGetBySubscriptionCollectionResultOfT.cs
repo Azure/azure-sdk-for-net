@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     yield break;
                 }
                 ApplicationGroupList result = ApplicationGroupList.FromResponse(response);
-                yield return Page<VirtualApplicationGroupData>.FromValues((IReadOnlyList<VirtualApplicationGroupData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<VirtualApplicationGroupData>.FromValues((IReadOnlyList<VirtualApplicationGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

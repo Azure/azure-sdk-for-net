@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     yield break;
                 }
                 PrivateEndpointConnectionListResultWithSystemData result = PrivateEndpointConnectionListResultWithSystemData.FromResponse(response);
-                yield return Page<DesktopVirtualizationPrivateEndpointConnectionDataData>.FromValues((IReadOnlyList<DesktopVirtualizationPrivateEndpointConnectionDataData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DesktopVirtualizationPrivateEndpointConnectionDataData>.FromValues((IReadOnlyList<DesktopVirtualizationPrivateEndpointConnectionDataData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

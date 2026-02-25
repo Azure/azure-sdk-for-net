@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     yield break;
                 }
                 DesktopVirtualizationPrivateLinkResourceListResult result = DesktopVirtualizationPrivateLinkResourceListResult.FromResponse(response);
-                yield return Page<DesktopVirtualizationPrivateLinkResourceData>.FromValues((IReadOnlyList<DesktopVirtualizationPrivateLinkResourceData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DesktopVirtualizationPrivateLinkResourceData>.FromValues((IReadOnlyList<DesktopVirtualizationPrivateLinkResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

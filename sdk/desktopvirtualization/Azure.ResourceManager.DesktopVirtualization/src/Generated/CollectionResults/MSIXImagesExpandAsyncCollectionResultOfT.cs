@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     yield break;
                 }
                 ExpandMsixImageList result = ExpandMsixImageList.FromResponse(response);
-                yield return Page<ExpandMsixImage>.FromValues((IReadOnlyList<ExpandMsixImage>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ExpandMsixImage>.FromValues((IReadOnlyList<ExpandMsixImage>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

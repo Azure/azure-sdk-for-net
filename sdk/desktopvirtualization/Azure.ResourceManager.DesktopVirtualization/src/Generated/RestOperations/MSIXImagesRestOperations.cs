@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
             uri.AppendPath("/providers/Microsoft.DesktopVirtualization/hostPools/", false);
             uri.AppendPath(hostPoolName, true);
             uri.AppendPath("/expandMsixImage", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -66,8 +69,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         internal HttpMessage CreateNextExpandRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string hostPoolName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     yield break;
                 }
                 ResourceProviderOperationListResult result = ResourceProviderOperationListResult.FromResponse(response);
-                yield return Page<ResourceProviderOperationInfo>.FromValues((IReadOnlyList<ResourceProviderOperationInfo>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ResourceProviderOperationInfo>.FromValues((IReadOnlyList<ResourceProviderOperationInfo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

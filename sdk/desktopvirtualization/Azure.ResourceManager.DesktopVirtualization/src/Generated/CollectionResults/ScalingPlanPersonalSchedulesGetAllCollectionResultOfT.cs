@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     yield break;
                 }
                 ScalingPlanPersonalScheduleList result = ScalingPlanPersonalScheduleList.FromResponse(response);
-                yield return Page<ScalingPlanPersonalScheduleData>.FromValues((IReadOnlyList<ScalingPlanPersonalScheduleData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ScalingPlanPersonalScheduleData>.FromValues((IReadOnlyList<ScalingPlanPersonalScheduleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

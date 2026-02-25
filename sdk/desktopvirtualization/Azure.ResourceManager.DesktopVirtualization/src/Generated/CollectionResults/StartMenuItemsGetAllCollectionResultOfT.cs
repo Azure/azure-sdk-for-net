@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     yield break;
                 }
                 StartMenuItemList result = StartMenuItemList.FromResponse(response);
-                yield return Page<DesktopVirtualizationStartMenuItem>.FromValues((IReadOnlyList<DesktopVirtualizationStartMenuItem>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DesktopVirtualizationStartMenuItem>.FromValues((IReadOnlyList<DesktopVirtualizationStartMenuItem>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
