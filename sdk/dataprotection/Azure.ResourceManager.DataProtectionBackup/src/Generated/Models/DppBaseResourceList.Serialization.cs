@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (DppBaseResource item in Value)
+            foreach (ResourceGuardProtectedObjectData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -118,17 +118,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            IList<DppBaseResource> value = default;
+            IList<ResourceGuardProtectedObjectData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<DppBaseResource> array = new List<DppBaseResource>();
+                    List<ResourceGuardProtectedObjectData> array = new List<ResourceGuardProtectedObjectData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DppBaseResource.DeserializeDppBaseResource(item, options));
+                        array.Add(ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(item, options));
                     }
                     value = array;
                     continue;

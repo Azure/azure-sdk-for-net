@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<DppBaseResource>> GetDefaultDeleteResourceGuardProxyRequestsObjectAsync(string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultDeleteResourceGuardProxyRequestsObjectAsync(string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
             Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
                 };
                 HttpMessage message = ResourceGuardsRestClient.CreateGetDefaultDeleteResourceGuardProxyRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGuardsName, requestName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DppBaseResource> response = Response.FromValue(DppBaseResource.FromResponse(result), result);
+                Response<ResourceGuardProtectedObjectData> response = Response.FromValue(ResourceGuardProtectedObjectData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<DppBaseResource> GetDefaultDeleteResourceGuardProxyRequestsObject(string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGuardProtectedObjectData> GetDefaultDeleteResourceGuardProxyRequestsObject(string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
             Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
                 };
                 HttpMessage message = ResourceGuardsRestClient.CreateGetDefaultDeleteResourceGuardProxyRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGuardsName, requestName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DppBaseResource> response = Response.FromValue(DppBaseResource.FromResponse(result), result);
+                Response<ResourceGuardProtectedObjectData> response = Response.FromValue(ResourceGuardProtectedObjectData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<DppBaseResource>> GetDefaultDisableSoftDeleteRequestsObjectAsync(string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultDisableSoftDeleteRequestsObjectAsync(string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
             Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
                 };
                 HttpMessage message = DppBaseResourceOperationGroupRestClient.CreateGetDefaultDisableSoftDeleteRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGuardsName, requestName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DppBaseResource> response = Response.FromValue(DppBaseResource.FromResponse(result), result);
+                Response<ResourceGuardProtectedObjectData> response = Response.FromValue(ResourceGuardProtectedObjectData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<DppBaseResource> GetDefaultDisableSoftDeleteRequestsObject(string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGuardProtectedObjectData> GetDefaultDisableSoftDeleteRequestsObject(string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
             Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
                 };
                 HttpMessage message = DppBaseResourceOperationGroupRestClient.CreateGetDefaultDisableSoftDeleteRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGuardsName, requestName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DppBaseResource> response = Response.FromValue(DppBaseResource.FromResponse(result), result);
+                Response<ResourceGuardProtectedObjectData> response = Response.FromValue(ResourceGuardProtectedObjectData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<DppBaseResource>> GetDefaultUpdateProtectedItemRequestsObjectAsync(string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultUpdateProtectedItemRequestsObjectAsync(string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
             Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
                 };
                 HttpMessage message = DppBaseResourceOperationGroupRestClient.CreateGetDefaultUpdateProtectedItemRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGuardsName, requestName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DppBaseResource> response = Response.FromValue(DppBaseResource.FromResponse(result), result);
+                Response<ResourceGuardProtectedObjectData> response = Response.FromValue(ResourceGuardProtectedObjectData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<DppBaseResource> GetDefaultUpdateProtectedItemRequestsObject(string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGuardProtectedObjectData> GetDefaultUpdateProtectedItemRequestsObject(string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
             Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
                 };
                 HttpMessage message = DppBaseResourceOperationGroupRestClient.CreateGetDefaultUpdateProtectedItemRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGuardsName, requestName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DppBaseResource> response = Response.FromValue(DppBaseResource.FromResponse(result), result);
+                Response<ResourceGuardProtectedObjectData> response = Response.FromValue(ResourceGuardProtectedObjectData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<DppBaseResource>> GetDefaultUpdateProtectionPolicyRequestsObjectAsync(string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultUpdateProtectionPolicyRequestsObjectAsync(string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
             Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
                 };
                 HttpMessage message = DppBaseResourceOperationGroupRestClient.CreateGetDefaultUpdateProtectionPolicyRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGuardsName, requestName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DppBaseResource> response = Response.FromValue(DppBaseResource.FromResponse(result), result);
+                Response<ResourceGuardProtectedObjectData> response = Response.FromValue(ResourceGuardProtectedObjectData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<DppBaseResource> GetDefaultUpdateProtectionPolicyRequestsObject(string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGuardProtectedObjectData> GetDefaultUpdateProtectionPolicyRequestsObject(string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
             Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
                 };
                 HttpMessage message = DppBaseResourceOperationGroupRestClient.CreateGetDefaultUpdateProtectionPolicyRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGuardsName, requestName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DppBaseResource> response = Response.FromValue(DppBaseResource.FromResponse(result), result);
+                Response<ResourceGuardProtectedObjectData> response = Response.FromValue(ResourceGuardProtectedObjectData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<DppBaseResource>> GetDefaultDeleteProtectedItemRequestsObjectAsync(string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultDeleteProtectedItemRequestsObjectAsync(string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
             Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
                 };
                 HttpMessage message = DppBaseResourceOperationGroupRestClient.CreateGetDefaultDeleteProtectedItemRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGuardsName, requestName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DppBaseResource> response = Response.FromValue(DppBaseResource.FromResponse(result), result);
+                Response<ResourceGuardProtectedObjectData> response = Response.FromValue(ResourceGuardProtectedObjectData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -687,7 +687,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<DppBaseResource> GetDefaultDeleteProtectedItemRequestsObject(string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGuardProtectedObjectData> GetDefaultDeleteProtectedItemRequestsObject(string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
             Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
@@ -702,7 +702,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
                 };
                 HttpMessage message = DppBaseResourceOperationGroupRestClient.CreateGetDefaultDeleteProtectedItemRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGuardsName, requestName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DppBaseResource> response = Response.FromValue(DppBaseResource.FromResponse(result), result);
+                Response<ResourceGuardProtectedObjectData> response = Response.FromValue(ResourceGuardProtectedObjectData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -738,7 +738,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<DppBaseResource>> GetDefaultBackupSecurityPinRequestsObjectAsync(string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultBackupSecurityPinRequestsObjectAsync(string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
             Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
@@ -753,7 +753,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
                 };
                 HttpMessage message = DppBaseResourceOperationGroupRestClient.CreateGetDefaultBackupSecurityPinRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGuardsName, requestName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DppBaseResource> response = Response.FromValue(DppBaseResource.FromResponse(result), result);
+                Response<ResourceGuardProtectedObjectData> response = Response.FromValue(ResourceGuardProtectedObjectData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -789,7 +789,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<DppBaseResource> GetDefaultBackupSecurityPinRequestsObject(string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGuardProtectedObjectData> GetDefaultBackupSecurityPinRequestsObject(string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
             Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
@@ -804,7 +804,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
                 };
                 HttpMessage message = DppBaseResourceOperationGroupRestClient.CreateGetDefaultBackupSecurityPinRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGuardsName, requestName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DppBaseResource> response = Response.FromValue(DppBaseResource.FromResponse(result), result);
+                Response<ResourceGuardProtectedObjectData> response = Response.FromValue(ResourceGuardProtectedObjectData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -839,8 +839,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="DppBaseResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DppBaseResource> GetDeleteResourceGuardProxyRequestsObjectsAsync(string resourceGuardsName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceGuardProtectedObjectData> GetDeleteResourceGuardProxyRequestsObjectsAsync(string resourceGuardsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
 
@@ -872,8 +872,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="DppBaseResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DppBaseResource> GetDeleteResourceGuardProxyRequestsObjects(string resourceGuardsName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceGuardProtectedObjectData> GetDeleteResourceGuardProxyRequestsObjects(string resourceGuardsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
 
@@ -905,8 +905,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="DppBaseResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DppBaseResource> GetDisableSoftDeleteRequestsObjectsAsync(string resourceGuardsName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceGuardProtectedObjectData> GetDisableSoftDeleteRequestsObjectsAsync(string resourceGuardsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
 
@@ -938,8 +938,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="DppBaseResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DppBaseResource> GetDisableSoftDeleteRequestsObjects(string resourceGuardsName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceGuardProtectedObjectData> GetDisableSoftDeleteRequestsObjects(string resourceGuardsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
 
@@ -971,8 +971,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="DppBaseResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DppBaseResource> GetUpdateProtectedItemRequestsObjectsAsync(string resourceGuardsName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceGuardProtectedObjectData> GetUpdateProtectedItemRequestsObjectsAsync(string resourceGuardsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
 
@@ -1004,8 +1004,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="DppBaseResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DppBaseResource> GetUpdateProtectedItemRequestsObjects(string resourceGuardsName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceGuardProtectedObjectData> GetUpdateProtectedItemRequestsObjects(string resourceGuardsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
 
@@ -1037,8 +1037,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="DppBaseResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DppBaseResource> GetUpdateProtectionPolicyRequestsObjectsAsync(string resourceGuardsName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceGuardProtectedObjectData> GetUpdateProtectionPolicyRequestsObjectsAsync(string resourceGuardsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
 
@@ -1070,8 +1070,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="DppBaseResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DppBaseResource> GetUpdateProtectionPolicyRequestsObjects(string resourceGuardsName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceGuardProtectedObjectData> GetUpdateProtectionPolicyRequestsObjects(string resourceGuardsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
 
@@ -1103,8 +1103,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="DppBaseResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DppBaseResource> GetDeleteProtectedItemRequestsObjectsAsync(string resourceGuardsName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceGuardProtectedObjectData> GetDeleteProtectedItemRequestsObjectsAsync(string resourceGuardsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
 
@@ -1136,8 +1136,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="DppBaseResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DppBaseResource> GetDeleteProtectedItemRequestsObjects(string resourceGuardsName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceGuardProtectedObjectData> GetDeleteProtectedItemRequestsObjects(string resourceGuardsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
 
@@ -1169,8 +1169,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="DppBaseResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DppBaseResource> GetBackupSecurityPinRequestsObjectsAsync(string resourceGuardsName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceGuardProtectedObjectData> GetBackupSecurityPinRequestsObjectsAsync(string resourceGuardsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
 
@@ -1202,8 +1202,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="DppBaseResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DppBaseResource> GetBackupSecurityPinRequestsObjects(string resourceGuardsName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceGuardProtectedObjectData> GetBackupSecurityPinRequestsObjects(string resourceGuardsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
 

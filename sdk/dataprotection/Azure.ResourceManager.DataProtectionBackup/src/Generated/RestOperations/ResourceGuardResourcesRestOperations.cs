@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return message;
         }
 
-        internal HttpMessage CreatePatchRequest(Guid subscriptionId, string resourceGroupName, string resourceGuardsName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateRequest(Guid subscriptionId, string resourceGroupName, string resourceGuardsName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

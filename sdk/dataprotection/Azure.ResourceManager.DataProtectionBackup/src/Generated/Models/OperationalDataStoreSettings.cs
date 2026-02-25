@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         /// <summary> Initializes a new instance of <see cref="OperationalDataStoreSettings"/>. </summary>
         /// <param name="dataStoreType"> type of datastore; Operational/Vault/Archive. </param>
-        public OperationalDataStoreSettings(DataStoreTypes dataStoreType) : base("AzureOperationalStoreParameters", dataStoreType)
+        public OperationalDataStoreSettings(DataStoreType dataStoreType) : base("AzureOperationalStoreParameters", dataStoreType)
         {
         }
 
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="dataStoreType"> type of datastore; Operational/Vault/Archive. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="resourceGroupId"> Gets or sets the Snapshot Resource Group Uri. </param>
-        internal OperationalDataStoreSettings(string objectType, DataStoreTypes dataStoreType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier resourceGroupId) : base(objectType, dataStoreType, additionalBinaryDataProperties)
+        internal OperationalDataStoreSettings(string objectType, DataStoreType dataStoreType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier resourceGroupId) : base(objectType, dataStoreType, additionalBinaryDataProperties)
         {
             ResourceGroupId = resourceGroupId;
         }

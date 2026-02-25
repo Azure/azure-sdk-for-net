@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="requestName"> The name of the DppBaseResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<DppBaseResource>> GetDefaultDeleteResourceGuardProxyRequestsObjectAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultDeleteResourceGuardProxyRequestsObjectAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="requestName"> The name of the DppBaseResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<DppBaseResource> GetDefaultDeleteResourceGuardProxyRequestsObject(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        public static Response<ResourceGuardProtectedObjectData> GetDefaultDeleteResourceGuardProxyRequestsObject(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="requestName"> The name of the DppBaseResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<DppBaseResource>> GetDefaultDisableSoftDeleteRequestsObjectAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultDisableSoftDeleteRequestsObjectAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="requestName"> The name of the DppBaseResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<DppBaseResource> GetDefaultDisableSoftDeleteRequestsObject(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        public static Response<ResourceGuardProtectedObjectData> GetDefaultDisableSoftDeleteRequestsObject(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="requestName"> The name of the DppBaseResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<DppBaseResource>> GetDefaultUpdateProtectedItemRequestsObjectAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultUpdateProtectedItemRequestsObjectAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="requestName"> The name of the DppBaseResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<DppBaseResource> GetDefaultUpdateProtectedItemRequestsObject(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        public static Response<ResourceGuardProtectedObjectData> GetDefaultUpdateProtectedItemRequestsObject(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="requestName"> The name of the DppBaseResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<DppBaseResource>> GetDefaultUpdateProtectionPolicyRequestsObjectAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultUpdateProtectionPolicyRequestsObjectAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="requestName"> The name of the DppBaseResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<DppBaseResource> GetDefaultUpdateProtectionPolicyRequestsObject(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        public static Response<ResourceGuardProtectedObjectData> GetDefaultUpdateProtectionPolicyRequestsObject(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="requestName"> The name of the DppBaseResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<DppBaseResource>> GetDefaultDeleteProtectedItemRequestsObjectAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultDeleteProtectedItemRequestsObjectAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="requestName"> The name of the DppBaseResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<DppBaseResource> GetDefaultDeleteProtectedItemRequestsObject(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        public static Response<ResourceGuardProtectedObjectData> GetDefaultDeleteProtectedItemRequestsObject(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="requestName"> The name of the DppBaseResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<DppBaseResource>> GetDefaultBackupSecurityPinRequestsObjectAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultBackupSecurityPinRequestsObjectAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="requestName"> The name of the DppBaseResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<DppBaseResource> GetDefaultBackupSecurityPinRequestsObject(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        public static Response<ResourceGuardProtectedObjectData> GetDefaultBackupSecurityPinRequestsObject(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -555,8 +555,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DppBaseResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DppBaseResource> GetDeleteResourceGuardProxyRequestsObjectsAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ResourceGuardProtectedObjectData> GetDeleteResourceGuardProxyRequestsObjectsAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -574,8 +574,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DppBaseResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DppBaseResource> GetDeleteResourceGuardProxyRequestsObjects(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ResourceGuardProtectedObjectData> GetDeleteResourceGuardProxyRequestsObjects(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -593,8 +593,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DppBaseResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DppBaseResource> GetDisableSoftDeleteRequestsObjectsAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ResourceGuardProtectedObjectData> GetDisableSoftDeleteRequestsObjectsAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -612,8 +612,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DppBaseResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DppBaseResource> GetDisableSoftDeleteRequestsObjects(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ResourceGuardProtectedObjectData> GetDisableSoftDeleteRequestsObjects(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -631,8 +631,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DppBaseResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DppBaseResource> GetUpdateProtectedItemRequestsObjectsAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ResourceGuardProtectedObjectData> GetUpdateProtectedItemRequestsObjectsAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -650,8 +650,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DppBaseResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DppBaseResource> GetUpdateProtectedItemRequestsObjects(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ResourceGuardProtectedObjectData> GetUpdateProtectedItemRequestsObjects(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -669,8 +669,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DppBaseResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DppBaseResource> GetUpdateProtectionPolicyRequestsObjectsAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ResourceGuardProtectedObjectData> GetUpdateProtectionPolicyRequestsObjectsAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -688,8 +688,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DppBaseResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DppBaseResource> GetUpdateProtectionPolicyRequestsObjects(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ResourceGuardProtectedObjectData> GetUpdateProtectionPolicyRequestsObjects(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -707,8 +707,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DppBaseResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DppBaseResource> GetDeleteProtectedItemRequestsObjectsAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ResourceGuardProtectedObjectData> GetDeleteProtectedItemRequestsObjectsAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -726,8 +726,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DppBaseResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DppBaseResource> GetDeleteProtectedItemRequestsObjects(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ResourceGuardProtectedObjectData> GetDeleteProtectedItemRequestsObjects(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -745,8 +745,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DppBaseResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DppBaseResource> GetBackupSecurityPinRequestsObjectsAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ResourceGuardProtectedObjectData> GetBackupSecurityPinRequestsObjectsAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -764,8 +764,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DppBaseResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DppBaseResource> GetBackupSecurityPinRequestsObjects(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ResourceGuardProtectedObjectData> GetBackupSecurityPinRequestsObjects(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 

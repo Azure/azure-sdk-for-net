@@ -1268,10 +1268,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <returns> A new <see cref="Models.DppBaseResource"/> instance for mocking. </returns>
-        public static DppBaseResource DppBaseResource(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default)
+        /// <returns> A new <see cref="Models.ResourceGuardProtectedObjectData"/> instance for mocking. </returns>
+        public static ResourceGuardProtectedObjectData ResourceGuardProtectedObjectData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default)
         {
-            return new DppBaseResource(id, name, resourceType, systemData, additionalBinaryDataProperties: null);
+            return new ResourceGuardProtectedObjectData(id, name, resourceType, systemData, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

@@ -75,5 +75,19 @@ namespace Azure.ResourceManager.DataProtectionBackup
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<DataProtectionBackupVaultResource> CreateOrUpdate(WaitUntil waitUntil, string vaultName, DataProtectionBackupVaultData data, CancellationToken cancellationToken)
             => CreateOrUpdate(waitUntil, vaultName, data, null, null, cancellationToken);
+
+        /// <summary>
+        /// Backward compatibility overload with single xMsAuthorizationAuxiliary parameter.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation<DataProtectionBackupVaultResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vaultName, DataProtectionBackupVaultData data, string xMsAuthorizationAuxiliary, CancellationToken cancellationToken)
+            => await CreateOrUpdateAsync(waitUntil, vaultName, data, xMsAuthorizationAuxiliary, null, cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Backward compatibility overload with single xMsAuthorizationAuxiliary parameter.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<DataProtectionBackupVaultResource> CreateOrUpdate(WaitUntil waitUntil, string vaultName, DataProtectionBackupVaultData data, string xMsAuthorizationAuxiliary, CancellationToken cancellationToken)
+            => CreateOrUpdate(waitUntil, vaultName, data, xMsAuthorizationAuxiliary, null, cancellationToken);
     }
 }
