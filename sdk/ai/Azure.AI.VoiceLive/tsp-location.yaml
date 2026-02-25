@@ -1,5 +1,5 @@
 directory: specification/ai/data-plane/VoiceLive
-commit: e8f3c52913011644cf294c7c4546df12f7db7c6b
+commit: 046afa44ad7dc3552f46cb6f975549320f362e57
 repo: rhurey/azure-rest-api-specs
 additionalDirectories: 
 - specification/ai/data-plane/VoiceLive
