@@ -23,21 +23,24 @@ internal sealed class TelemetryStreamingCollectionResult : CollectionResult<Stre
     }
 
     public override ContinuationToken GetContinuationToken(ClientResult page)
-        => _innerResult.GetContinuationToken(page);
+        // SSE streaming responses have no continuation token.
+        => null;
 
     public override IEnumerable<ClientResult> GetRawPages()
-        => _innerResult.GetRawPages();
+    {
+        // We yield a single sentinel page rather than delegating to _innerResult.GetRawPages().
+        // Any caller that drives GetRawPages and GetValuesFromPage as two separate steps —
+        // including the base-class GetEnumerator — would otherwise trigger two independent
+        // enumerations of _innerResult. For an SSE stream that can only be read once, the
+        // second enumeration hangs. The sentinel ensures GetValuesFromPage is called exactly
+        // once and the inner result is only opened from inside that single call.
+        yield return null;
+    }
 
     protected override IEnumerable<StreamingResponseUpdate> GetValuesFromPage(ClientResult page)
     {
-        // Instead of parsing the page ourselves (which would require calling the
-        // inner result's protected GetValuesFromPage via reflection), we enumerate
-        // the inner result directly. The inner result handles its own page iteration
-        // and SSE parsing internally. We just observe and record telemetry on the
-        // values as they flow through.
-        //
-        // This works because streaming responses use a single page/response, so
-        // GetValuesFromPage is called exactly once.
+        // We enumerate _innerResult directly rather than using the page parameter.
+        // The inner result owns its SSE parsing; the page parameter is intentionally unused.
         if (_scope == null)
         {
             _scope = _telemetryContext.CreateScope();

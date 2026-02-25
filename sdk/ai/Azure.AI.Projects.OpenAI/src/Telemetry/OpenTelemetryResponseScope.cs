@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
@@ -10,6 +11,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Threading;
+using OpenAI;
 using OpenAI.Responses;
 
 namespace Azure.AI.Projects.OpenAI.Telemetry
@@ -24,8 +26,8 @@ namespace Azure.AI.Projects.OpenAI.Telemetry
         private const string ActivitySourceName = "Azure.AI.Projects.ProjectResponsesClient";
         private const string ProviderName = "microsoft.foundry";
         private const string AzNamespace = "Microsoft.CognitiveServices";
-        private const string EnableSwitch = "Azure.Experimental.EnableActivitySource";
-        private const string EnableEnvVar = "AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE";
+        private const string EnableSwitch = "Azure.Experimental.EnableGenAITracing";
+        private const string EnableEnvVar = "AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING";
         private const string TraceContentSwitch = "Azure.Experimental.TraceGenAIMessageContent";
         private const string TraceContentEnvVar = "OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT";
 
@@ -51,7 +53,28 @@ namespace Azure.AI.Projects.OpenAI.Telemetry
         private ResponseStatus? _streamedStatus;
 
         private static bool s_traceContent = GetConfigValue(TraceContentSwitch, TraceContentEnvVar);
-        private static bool s_enableTelemetry = GetConfigValue(EnableSwitch, EnableEnvVar);
+        private static bool s_enableTelemetry = InitializeGenAITelemetry();
+
+        /// <summary>
+        /// Initializes GenAI telemetry by checking the GenAI-specific feature flag and
+        /// enabling the underlying Azure.Core ActivitySource when GenAI tracing is enabled.
+        /// This allows GenAI tracing to remain experimental independently of when general
+        /// OpenTelemetry support becomes stable in Azure SDKs.
+        /// </summary>
+        private static bool InitializeGenAITelemetry()
+        {
+            bool isEnabled = GetConfigValue(
+                EnableSwitch,
+                EnableEnvVar);
+
+            // When GenAI tracing is enabled, also enable the underlying Azure.Core ActivitySource
+            if (isEnabled)
+            {
+                AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
+            }
+
+            return isEnabled;
+        }
 
         internal static void ReinitializeConfiguration()
         {
@@ -135,6 +158,128 @@ namespace Azure.AI.Projects.OpenAI.Telemetry
             return scope;
         }
 
+        internal static OpenTelemetryResponseScope Start(CreateResponseOptions options, Uri endpoint, string defaultModelName)
+        {
+            if (!IsEnabled)
+            {
+                return null;
+            }
+
+            ExtractOptionsContext(options, defaultModelName, out string agentName, out string agentId, out string model, out string conversationId, out var inputTexts, out var toolOutputs);
+
+            var scope = StartResponseGeneration(endpoint, model, agentName, agentId, conversationId, inputTexts);
+            scope?.AddToolCallInputMessages(toolOutputs);
+            return scope;
+        }
+
+        internal static void ExtractOptionsContext(
+            CreateResponseOptions options,
+            string defaultModelName,
+            out string agentName,
+            out string agentId,
+            out string model,
+            out string conversationId,
+            out List<string> inputTexts,
+            out List<ToolCallOutputInfo> toolOutputs)
+        {
+            agentName = options.Agent?.Name;
+            agentId = options.Agent is not null
+                ? (!string.IsNullOrEmpty(options.Agent.Version)
+                    ? $"{options.Agent.Name}:{options.Agent.Version}"
+                    : options.Agent.Name)
+                : null;
+            model = options.Model ?? defaultModelName;
+            conversationId = options.AgentConversationId;
+
+            inputTexts = new List<string>();
+            toolOutputs = new List<ToolCallOutputInfo>();
+            foreach (ResponseItem inputItem in options.InputItems)
+            {
+                string text = ExtractInputText(inputItem);
+                if (text != null)
+                {
+                    inputTexts.Add(text);
+                    continue;
+                }
+
+                var toolOutput = ExtractToolCallOutput(inputItem);
+                if (toolOutput != null)
+                {
+                    toolOutputs.Add(toolOutput.Value);
+                }
+            }
+        }
+
+        private static string ExtractInputText(ResponseItem item)
+        {
+            try
+            {
+                using var doc = JsonDocument.Parse(
+                    ModelReaderWriter.Write(
+                        item,
+                        ModelReaderWriterOptions.Json,
+                        OpenAIContext.Default).ToString());
+
+                var root = doc.RootElement;
+                if (root.TryGetProperty("role", out var roleProp) &&
+                    roleProp.GetString() == "user" &&
+                    root.TryGetProperty("content", out var contentProp))
+                {
+                    if (contentProp.ValueKind == JsonValueKind.String)
+                    {
+                        return contentProp.GetString();
+                    }
+                    if (contentProp.ValueKind == JsonValueKind.Array)
+                    {
+                        foreach (var part in contentProp.EnumerateArray())
+                        {
+                            if (part.TryGetProperty("type", out var typeProp) &&
+                                (typeProp.GetString() == "input_text" || typeProp.GetString() == "text") &&
+                                part.TryGetProperty("text", out var textProp))
+                            {
+                                return textProp.GetString();
+                            }
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                // Telemetry extraction should never break the user's call.
+            }
+            return null;
+        }
+
+        private static ToolCallOutputInfo? ExtractToolCallOutput(ResponseItem item)
+        {
+            try
+            {
+                using var doc = JsonDocument.Parse(
+                    ModelReaderWriter.Write(
+                        item,
+                        ModelReaderWriterOptions.Json,
+                        OpenAIContext.Default).ToString());
+
+                var root = doc.RootElement;
+                if (root.TryGetProperty("type", out var typeProp) &&
+                    typeProp.GetString() == "function_call_output")
+                {
+                    string callId = root.TryGetProperty("call_id", out var callIdProp)
+                        ? callIdProp.GetString()
+                        : null;
+                    string output = root.TryGetProperty("output", out var outputProp)
+                        ? outputProp.GetString()
+                        : null;
+                    return new ToolCallOutputInfo(callId, output);
+                }
+            }
+            catch
+            {
+                // Telemetry extraction should never break the user's call.
+            }
+            return null;
+        }
+
         /// <summary>
         /// Represents a function call tool invocation from the model's response output.
         /// </summary>
@@ -196,6 +341,33 @@ namespace Azure.AI.Projects.OpenAI.Telemetry
             AddOutputMessage(outputText, finishReason);
         }
 
+        public void RecordResponse(ResponseResult response)
+        {
+            if (response == null)
+            {
+                return;
+            }
+
+            long? inputTokens = null;
+            long? outputTokens = null;
+            if (response.Usage != null)
+            {
+                inputTokens = response.Usage.InputTokenCount;
+                outputTokens = response.Usage.OutputTokenCount;
+            }
+
+            string finishReason = response.Status.HasValue ? GetFinishReason(response.Status.Value) : null;
+
+            RecordResponse(
+                responseModel: response.Model,
+                responseId: response.Id,
+                inputTokens: inputTokens,
+                outputTokens: outputTokens,
+                outputText: response.GetOutputText(),
+                toolCalls: ExtractToolCallsFromResponse(response),
+                finishReason: finishReason);
+        }
+
         public void RecordError(Exception e)
         {
             _errorType = e?.GetType()?.FullName ?? "error";
@@ -240,7 +412,7 @@ namespace Azure.AI.Projects.OpenAI.Telemetry
                         _activity?.SetTag("gen_ai.usage.output_tokens", _outputTokens.Value);
                     }
 
-                    var toolCalls = ProjectResponsesClient.ExtractToolCallsFromResponse(completedUpdate.Response);
+                    var toolCalls = ExtractToolCallsFromResponse(completedUpdate.Response);
                     if (toolCalls != null && toolCalls.Count > 0)
                     {
                         string json = WriteToolCallsJson(toolCalls);
@@ -307,6 +479,51 @@ namespace Azure.AI.Projects.OpenAI.Telemetry
             if (status == ResponseStatus.Incomplete) return "incomplete";
             if (status == ResponseStatus.Cancelled) return "cancelled";
             return null;
+        }
+
+        private static List<ToolCallInfo> ExtractToolCallsFromResponse(ResponseResult response)
+        {
+            List<ToolCallInfo> toolCalls = null;
+            try
+            {
+                using var doc = JsonDocument.Parse(
+                    ModelReaderWriter.Write(
+                        response,
+                        ModelReaderWriterOptions.Json,
+                        OpenAIContext.Default).ToString());
+
+                var root = doc.RootElement;
+                if (!root.TryGetProperty("output", out var outputProp) ||
+                    outputProp.ValueKind != JsonValueKind.Array)
+                {
+                    return null;
+                }
+
+                foreach (var outputItem in outputProp.EnumerateArray())
+                {
+                    if (outputItem.TryGetProperty("type", out var typeProp) &&
+                        typeProp.GetString() == "function_call")
+                    {
+                        string callId = outputItem.TryGetProperty("call_id", out var callIdProp)
+                            ? callIdProp.GetString()
+                            : null;
+                        string name = outputItem.TryGetProperty("name", out var nameProp)
+                            ? nameProp.GetString()
+                            : null;
+                        string arguments = outputItem.TryGetProperty("arguments", out var argsProp)
+                            ? argsProp.GetRawText()
+                            : null;
+
+                        toolCalls ??= new List<ToolCallInfo>();
+                        toolCalls.Add(new ToolCallInfo(callId, name, arguments));
+                    }
+                }
+            }
+            catch
+            {
+                // Telemetry extraction should never break the user's call.
+            }
+            return toolCalls;
         }
 
         public void Dispose()

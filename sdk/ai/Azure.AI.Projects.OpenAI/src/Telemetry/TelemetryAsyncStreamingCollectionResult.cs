@@ -4,8 +4,6 @@
 using System;
 using System.ClientModel;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using OpenAI.Responses;
 
 namespace Azure.AI.Projects.OpenAI.Telemetry;
@@ -25,20 +23,27 @@ internal sealed class TelemetryAsyncStreamingCollectionResult : AsyncCollectionR
     }
 
     public override ContinuationToken GetContinuationToken(ClientResult page)
-        => _innerResult.GetContinuationToken(page);
+        // SSE streaming responses have no continuation token.
+        => null;
 
-    public override IAsyncEnumerable<ClientResult> GetRawPagesAsync()
-        => _innerResult.GetRawPagesAsync();
+#pragma warning disable CS1998 // async iterator with no await — intentional, mirrors the sync version
+    public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
+    {
+        // We yield a single sentinel page rather than delegating to _innerResult.GetRawPagesAsync().
+        // Any caller that drives GetRawPagesAsync and GetValuesFromPageAsync as two separate steps —
+        // including the base-class GetAsyncEnumerator — would otherwise trigger two independent
+        // enumerations of _innerResult. For an SSE stream that can only be read once, the
+        // second enumeration hangs. The sentinel ensures GetValuesFromPageAsync is called exactly
+        // once and the inner result is only opened from inside that single call.
+        yield return null;
+    }
+#pragma warning restore CS1998
 
     protected override async IAsyncEnumerable<StreamingResponseUpdate> GetValuesFromPageAsync(
         ClientResult page)
     {
-        // SSE streaming responses consist of a single page (one HTTP response).
-        // Instead of parsing the page ourselves (which would require calling the
-        // inner result's protected GetValuesFromPageAsync), we enumerate the inner
-        // result directly. The inner result handles its own page iteration and
-        // SSE parsing internally. We just observe and record telemetry on the
-        // values as they flow through.
+        // We enumerate _innerResult directly rather than using the page parameter.
+        // The inner result owns its SSE parsing; the page parameter is intentionally unused.
         if (_scope == null)
         {
             _scope = _telemetryContext.CreateScope();

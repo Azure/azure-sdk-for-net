@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects.OpenAI.Telemetry;
 
@@ -36,6 +37,12 @@ internal sealed class StreamingTelemetryContext
         _conversationId = conversationId;
         _inputTexts = inputTexts;
         _toolOutputs = toolOutputs;
+    }
+
+    internal static StreamingTelemetryContext Create(CreateResponseOptions options, Uri endpoint, string defaultModelName)
+    {
+        OpenTelemetryResponseScope.ExtractOptionsContext(options, defaultModelName, out string agentName, out string agentId, out string model, out string conversationId, out var inputTexts, out var toolOutputs);
+        return new StreamingTelemetryContext(endpoint, model, agentName, agentId, conversationId, inputTexts, toolOutputs);
     }
 
     public OpenTelemetryResponseScope CreateScope()

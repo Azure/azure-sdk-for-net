@@ -99,11 +99,11 @@ public partial class ProjectResponsesClient : ResponsesClient
     {
         Argument.AssertNotNull(options, nameof(options));
         ApplyClientDefaults(options);
-        using var scope = StartTelemetryScope(options);
+        using var scope = OpenTelemetryResponseScope.Start(options, Endpoint, _defaultModelName);
         try
         {
             var result = base.CreateResponse(options, cancellationToken);
-            RecordTelemetryResponse(scope, result.Value);
+            scope?.RecordResponse(result.Value);
             return result;
         }
         catch (Exception ex)
@@ -137,11 +137,11 @@ public partial class ProjectResponsesClient : ResponsesClient
             InputItems = { ResponseItem.CreateUserMessageItem(userInputText) },
         };
         ApplyClientDefaults(options);
-        using var scope = StartTelemetryScope(options);
+        using var scope = OpenTelemetryResponseScope.Start(options, Endpoint, _defaultModelName);
         try
         {
             var result = base.CreateResponse(options, cancellationToken);
-            RecordTelemetryResponse(scope, result.Value);
+            scope?.RecordResponse(result.Value);
             return result;
         }
         catch (Exception ex)
@@ -155,11 +155,11 @@ public partial class ProjectResponsesClient : ResponsesClient
     {
         Argument.AssertNotNull(options, nameof(options));
         ApplyClientDefaults(options);
-        using var scope = StartTelemetryScope(options);
+        using var scope = OpenTelemetryResponseScope.Start(options, Endpoint, _defaultModelName);
         try
         {
             var result = await base.CreateResponseAsync(options, cancellationToken).ConfigureAwait(false);
-            RecordTelemetryResponse(scope, result.Value);
+            scope?.RecordResponse(result.Value);
             return result;
         }
         catch (Exception ex)
@@ -194,11 +194,11 @@ public partial class ProjectResponsesClient : ResponsesClient
             InputItems = { ResponseItem.CreateUserMessageItem(userInputText) },
         };
         ApplyClientDefaults(options);
-        using var scope = StartTelemetryScope(options);
+        using var scope = OpenTelemetryResponseScope.Start(options, Endpoint, _defaultModelName);
         try
         {
             var result = await base.CreateResponseAsync(options, cancellationToken).ConfigureAwait(false);
-            RecordTelemetryResponse(scope, result.Value);
+            scope?.RecordResponse(result.Value);
             return result;
         }
         catch (Exception ex)
@@ -218,7 +218,7 @@ public partial class ProjectResponsesClient : ResponsesClient
             return base.CreateResponseStreaming(options, cancellationToken);
         }
 
-        var telemetryContext = CreateStreamingTelemetryContext(options);
+        var telemetryContext = StreamingTelemetryContext.Create(options, Endpoint, _defaultModelName);
 
         try
         {
@@ -273,7 +273,7 @@ public partial class ProjectResponsesClient : ResponsesClient
             return base.CreateResponseStreamingAsync(options, cancellationToken);
         }
 
-        var telemetryContext = CreateStreamingTelemetryContext(options);
+        var telemetryContext = StreamingTelemetryContext.Create(options, Endpoint, _defaultModelName);
 
         try
         {
@@ -397,254 +397,4 @@ public partial class ProjectResponsesClient : ResponsesClient
             options,
             OpenAIContext.Default);
     }
-
-    #region Telemetry Helpers
-
-    private StreamingTelemetryContext CreateStreamingTelemetryContext(CreateResponseOptions options)
-    {
-        string agentName = options.Agent?.Name;
-        string agentId = options.Agent is not null
-            ? (!string.IsNullOrEmpty(options.Agent.Version)
-                ? $"{options.Agent.Name}:{options.Agent.Version}"
-                : options.Agent.Name)
-            : null;
-        string model = options.Model ?? _defaultModelName;
-        string conversationId = options.AgentConversationId;
-
-        var inputTexts = new List<string>();
-        var toolOutputs = new List<OpenTelemetryResponseScope.ToolCallOutputInfo>();
-        foreach (ResponseItem inputItem in options.InputItems)
-        {
-            string text = ExtractInputText(inputItem);
-            if (text != null)
-            {
-                inputTexts.Add(text);
-                continue;
-            }
-
-            var toolOutput = ExtractToolCallOutput(inputItem);
-            if (toolOutput != null)
-            {
-                toolOutputs.Add(toolOutput.Value);
-            }
-        }
-
-        return new StreamingTelemetryContext(
-            Endpoint,
-            model,
-            agentName,
-            agentId,
-            conversationId,
-            inputTexts,
-            toolOutputs);
-    }
-
-    private OpenTelemetryResponseScope StartTelemetryScope(CreateResponseOptions options)
-    {
-        if (!OpenTelemetryResponseScope.IsEnabled)
-        {
-            return null;
-        }
-
-        string agentName = options.Agent?.Name;
-        string agentId = options.Agent is not null
-            ? (!string.IsNullOrEmpty(options.Agent.Version)
-                ? $"{options.Agent.Name}:{options.Agent.Version}"
-                : options.Agent.Name)
-            : null;
-        string model = options.Model ?? _defaultModelName;
-        string conversationId = options.AgentConversationId;
-
-        var inputTexts = new List<string>();
-        var toolOutputs = new List<OpenTelemetryResponseScope.ToolCallOutputInfo>();
-        foreach (ResponseItem inputItem in options.InputItems)
-        {
-            string text = ExtractInputText(inputItem);
-            if (text != null)
-            {
-                inputTexts.Add(text);
-                continue;
-            }
-
-            var toolOutput = ExtractToolCallOutput(inputItem);
-            if (toolOutput != null)
-            {
-                toolOutputs.Add(toolOutput.Value);
-            }
-        }
-
-        var scope = OpenTelemetryResponseScope.StartResponseGeneration(
-            Endpoint,
-            model,
-            agentName,
-            agentId,
-            conversationId,
-            inputTexts);
-
-        scope?.AddToolCallInputMessages(toolOutputs);
-
-        return scope;
-    }
-
-    private static void RecordTelemetryResponse(OpenTelemetryResponseScope scope, ResponseResult response)
-    {
-        if (scope == null || response == null)
-        {
-            return;
-        }
-
-        string outputText = response.GetOutputText();
-        var toolCalls = ExtractToolCallsFromResponse(response);
-
-        long? inputTokens = null;
-        long? outputTokens = null;
-        if (response.Usage != null)
-        {
-            inputTokens = response.Usage.InputTokenCount;
-            outputTokens = response.Usage.OutputTokenCount;
-        }
-
-        string finishReason = response.Status.HasValue ? GetFinishReason(response.Status.Value) : null;
-
-        scope.RecordResponse(
-            responseModel: response.Model,
-            responseId: response.Id,
-            inputTokens: inputTokens,
-            outputTokens: outputTokens,
-            outputText: outputText,
-            toolCalls: toolCalls,
-            finishReason: finishReason);
-    }
-
-    private static string ExtractInputText(ResponseItem item)
-    {
-        try
-        {
-            using var doc = JsonDocument.Parse(
-                ModelReaderWriter.Write(
-                    item,
-                    ModelReaderWriterOptions.Json,
-                    OpenAIContext.Default).ToString());
-
-            var root = doc.RootElement;
-            if (root.TryGetProperty("role", out var roleProp) &&
-                roleProp.GetString() == "user" &&
-                root.TryGetProperty("content", out var contentProp))
-            {
-                if (contentProp.ValueKind == JsonValueKind.String)
-                {
-                    return contentProp.GetString();
-                }
-                if (contentProp.ValueKind == JsonValueKind.Array)
-                {
-                    foreach (var part in contentProp.EnumerateArray())
-                    {
-                        if (part.TryGetProperty("type", out var typeProp) &&
-                            (typeProp.GetString() == "input_text" || typeProp.GetString() == "text") &&
-                            part.TryGetProperty("text", out var textProp))
-                        {
-                            return textProp.GetString();
-                        }
-                    }
-                }
-            }
-        }
-        catch
-        {
-            // Telemetry extraction should never break the user's call.
-        }
-        return null;
-    }
-
-    /// <summary>
-    /// Extracts function_call_output info from an input item, if it is one.
-    /// </summary>
-    private static OpenTelemetryResponseScope.ToolCallOutputInfo? ExtractToolCallOutput(ResponseItem item)
-    {
-        try
-        {
-            using var doc = JsonDocument.Parse(
-                ModelReaderWriter.Write(
-                    item,
-                    ModelReaderWriterOptions.Json,
-                    OpenAIContext.Default).ToString());
-
-            var root = doc.RootElement;
-            if (root.TryGetProperty("type", out var typeProp) &&
-                typeProp.GetString() == "function_call_output")
-            {
-                string callId = root.TryGetProperty("call_id", out var callIdProp)
-                    ? callIdProp.GetString()
-                    : null;
-                string output = root.TryGetProperty("output", out var outputProp)
-                    ? outputProp.GetString()
-                    : null;
-                return new OpenTelemetryResponseScope.ToolCallOutputInfo(callId, output);
-            }
-        }
-        catch
-        {
-            // Telemetry extraction should never break the user's call.
-        }
-        return null;
-    }
-
-    /// <summary>
-    /// Extracts function_call items from the response output.
-    /// </summary>
-    internal static List<OpenTelemetryResponseScope.ToolCallInfo> ExtractToolCallsFromResponse(ResponseResult response)
-    {
-        List<OpenTelemetryResponseScope.ToolCallInfo> toolCalls = null;
-        try
-        {
-            using var doc = JsonDocument.Parse(
-                ModelReaderWriter.Write(
-                    response,
-                    ModelReaderWriterOptions.Json,
-                    OpenAIContext.Default).ToString());
-
-            var root = doc.RootElement;
-            if (!root.TryGetProperty("output", out var outputProp) ||
-                outputProp.ValueKind != JsonValueKind.Array)
-            {
-                return null;
-            }
-
-            foreach (var outputItem in outputProp.EnumerateArray())
-            {
-                if (outputItem.TryGetProperty("type", out var typeProp) &&
-                    typeProp.GetString() == "function_call")
-                {
-                    string callId = outputItem.TryGetProperty("call_id", out var callIdProp)
-                        ? callIdProp.GetString()
-                        : null;
-                    string name = outputItem.TryGetProperty("name", out var nameProp)
-                        ? nameProp.GetString()
-                        : null;
-                    string arguments = outputItem.TryGetProperty("arguments", out var argsProp)
-                        ? argsProp.GetRawText()
-                        : null;
-
-                    toolCalls ??= new List<OpenTelemetryResponseScope.ToolCallInfo>();
-                    toolCalls.Add(new OpenTelemetryResponseScope.ToolCallInfo(callId, name, arguments));
-                }
-            }
-        }
-        catch
-        {
-            // Telemetry extraction should never break the user's call.
-        }
-        return toolCalls;
-    }
-
-    private static string GetFinishReason(ResponseStatus status)
-    {
-        if (status == ResponseStatus.Completed) return "completed";
-        if (status == ResponseStatus.Failed) return "failed";
-        if (status == ResponseStatus.Incomplete) return "incomplete";
-        if (status == ResponseStatus.Cancelled) return "cancelled";
-        return null;
-    }
-
-    #endregion
 }
