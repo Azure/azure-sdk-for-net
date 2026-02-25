@@ -26,6 +26,7 @@ Metadata Security Protocol Support on Pools
 - Added `ProxyAgentSettings`
 - Added `ProxyAgentSettings` to `BatchSecurityProfile` for metadata security protocol support.
 
+
 ### Breaking Changes
 
 Removed Certificate Management APIs and Types:
