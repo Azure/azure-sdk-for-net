@@ -95,7 +95,7 @@ DocumentContent docContent = (DocumentContent)result.Contents!.First();
 Console.WriteLine($"Found {docContent.Hyperlinks?.Count ?? 0} hyperlink(s)");
 foreach (var hyperlink in docContent.Hyperlinks ?? Enumerable.Empty<DocumentHyperlink>())
 {
-    Console.WriteLine($"  URL: {hyperlink.Url ?? "(not available)"}");
+    Console.WriteLine($"  URL: {hyperlink.Uri ?? "(not available)"}");
     Console.WriteLine($"    Content: {hyperlink.Content ?? "(not available)"}");
 }
 ```

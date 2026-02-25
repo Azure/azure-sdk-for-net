@@ -49,7 +49,7 @@ namespace Azure.AI.ContentUnderstanding
         /// </example>
         /// <exception cref="FormatException"> The source string has an unrecognized prefix or is malformed. </exception>
         public ContentSource[]? Sources =>
-            string.IsNullOrEmpty(SourceValue) ? null : ContentSource.ParseAll(SourceValue);
+            string.IsNullOrEmpty(SourceValue) ? null : ContentSource.Parse(SourceValue);
 #nullable disable
 
         /// <summary>

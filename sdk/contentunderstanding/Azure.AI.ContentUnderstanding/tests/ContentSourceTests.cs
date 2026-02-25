@@ -21,8 +21,10 @@ namespace Azure.AI.ContentUnderstanding.Tests
         [Test]
         public void DocumentSource_Parse_SingleSegment_ExtractsPageAndPolygon()
         {
-            var source = DocumentSource.Parse("D(1,0.5712,1.4062,2.1087,1.4088,2.1084,1.5762,0.5709,1.5736)");
+            var sources = DocumentSource.Parse("D(1,0.5712,1.4062,2.1087,1.4088,2.1084,1.5762,0.5709,1.5736)");
 
+            Assert.AreEqual(1, sources.Length);
+            var source = sources[0];
             Assert.AreEqual(1, source.PageNumber);
             Assert.IsNotNull(source.Polygon);
             Assert.AreEqual(4, source.Polygon!.Count);
@@ -35,24 +37,24 @@ namespace Azure.AI.ContentUnderstanding.Tests
         [Test]
         public void DocumentSource_Parse_PageNumber_IsExtractedCorrectly()
         {
-            var source = DocumentSource.Parse("D(3,0.0,0.0,1.0,0.0,1.0,1.0,0.0,1.0)");
-            Assert.AreEqual(3, source.PageNumber);
+            var sources = DocumentSource.Parse("D(3,0.0,0.0,1.0,0.0,1.0,1.0,0.0,1.0)");
+            Assert.AreEqual(3, sources[0].PageNumber);
         }
 
         [Test]
         public void DocumentSource_Parse_RawValue_PreservesOriginalString()
         {
             string raw = "D(1,0.5712,1.4062,2.1087,1.4088,2.1084,1.5762,0.5709,1.5736)";
-            var source = DocumentSource.Parse(raw);
-            Assert.AreEqual(raw, source.RawValue);
-            Assert.AreEqual(raw, source.ToString());
+            var sources = DocumentSource.Parse(raw);
+            Assert.AreEqual(raw, sources[0].RawValue);
+            Assert.AreEqual(raw, sources[0].ToString());
         }
 
         [Test]
-        public void DocumentSource_ParseAll_MultiRegion_ReturnsMultipleSources()
+        public void DocumentSource_Parse_MultiRegion_ReturnsMultipleSources()
         {
             string input = "D(1,0.0,0.0,1.0,0.0,1.0,1.0,0.0,1.0);D(1,2.0,2.0,3.0,2.0,3.0,3.0,2.0,3.0);D(2,0.0,0.0,1.0,0.0,1.0,1.0,0.0,1.0)";
-            var sources = DocumentSource.ParseAll(input);
+            var sources = DocumentSource.Parse(input);
 
             Assert.AreEqual(3, sources.Length);
             Assert.AreEqual(1, sources[0].PageNumber);
@@ -88,7 +90,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
         [Test]
         public void DocumentSource_Parse_BoundingBox_ComputedFromPolygon()
         {
-            var source = DocumentSource.Parse("D(1,0.5712,1.4062,2.1087,1.4088,2.1084,1.5762,0.5709,1.5736)");
+            var sources = DocumentSource.Parse("D(1,0.5712,1.4062,2.1087,1.4088,2.1084,1.5762,0.5709,1.5736)");
+            var source = sources[0];
 
             Assert.IsNotNull(source.BoundingBox);
             var bbox = source.BoundingBox!.Value;
@@ -108,7 +111,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
         [Test]
         public void DocumentSource_Parse_PageOnly_HasNullPolygonAndBoundingBox()
         {
-            var source = DocumentSource.Parse("D(1)");
+            var sources = DocumentSource.Parse("D(1)");
+            var source = sources[0];
 
             Assert.AreEqual(1, source.PageNumber);
             Assert.IsNull(source.Polygon);
@@ -118,7 +122,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
         [Test]
         public void DocumentSource_Parse_TrianglePolygon_Accepts3Points()
         {
-            var source = DocumentSource.Parse("D(1,0.0,0.0,1.0,0.0,0.5,1.0)");
+            var sources = DocumentSource.Parse("D(1,0.0,0.0,1.0,0.0,0.5,1.0)");
+            var source = sources[0];
 
             Assert.AreEqual(1, source.PageNumber);
             Assert.IsNotNull(source.Polygon);
@@ -131,7 +136,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
         [Test]
         public void DocumentSource_Parse_Pentagon_Accepts5Points()
         {
-            var source = DocumentSource.Parse("D(1,0.0,0.0,1.0,0.0,1.5,0.5,0.5,1.0,0.0,0.5)");
+            var sources = DocumentSource.Parse("D(1,0.0,0.0,1.0,0.0,1.5,0.5,0.5,1.0,0.0,0.5)");
+            var source = sources[0];
 
             Assert.AreEqual(1, source.PageNumber);
             Assert.IsNotNull(source.Polygon);
@@ -152,7 +158,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
         [Test]
         public void AudioVisualSource_Parse_WithBoundingBox_ExtractsAllFields()
         {
-            var source = AudioVisualSource.Parse("AV(5000,100,200,50,60)");
+            var sources = AudioVisualSource.Parse("AV(5000,100,200,50,60)");
+            var source = sources[0];
 
             Assert.AreEqual(TimeSpan.FromMilliseconds(5000), source.Time);
             Assert.IsNotNull(source.BoundingBox);
@@ -165,7 +172,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
         [Test]
         public void AudioVisualSource_Parse_TimeOnly_HasNullBoundingBox()
         {
-            var source = AudioVisualSource.Parse("AV(5000)");
+            var sources = AudioVisualSource.Parse("AV(5000)");
+            var source = sources[0];
 
             Assert.AreEqual(TimeSpan.FromMilliseconds(5000), source.Time);
             Assert.IsNull(source.BoundingBox);
@@ -175,9 +183,9 @@ namespace Azure.AI.ContentUnderstanding.Tests
         public void AudioVisualSource_Parse_RawValue_PreservesOriginalString()
         {
             string raw = "AV(5000,100,200,50,60)";
-            var source = AudioVisualSource.Parse(raw);
-            Assert.AreEqual(raw, source.RawValue);
-            Assert.AreEqual(raw, source.ToString());
+            var sources = AudioVisualSource.Parse(raw);
+            Assert.AreEqual(raw, sources[0].RawValue);
+            Assert.AreEqual(raw, sources[0].ToString());
         }
 
         [Test]
@@ -199,10 +207,10 @@ namespace Azure.AI.ContentUnderstanding.Tests
         }
 
         [Test]
-        public void AudioVisualSource_ParseAll_MultiSegment_ReturnsMultipleSources()
+        public void AudioVisualSource_Parse_MultiSegment_ReturnsMultipleSources()
         {
             string input = "AV(0,100,200,50,60);AV(1000,105,205,50,60)";
-            var sources = AudioVisualSource.ParseAll(input);
+            var sources = AudioVisualSource.Parse(input);
 
             Assert.AreEqual(2, sources.Length);
             Assert.AreEqual(TimeSpan.Zero, sources[0].Time);
@@ -211,20 +219,22 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
         #endregion
 
-        #region ContentSource.Parse Dispatch
+        #region ContentSource.Parse
 
         [Test]
         public void ContentSource_Parse_DocumentPrefix_ReturnsDocumentSource()
         {
-            var source = ContentSource.Parse("D(1,0.0,0.0,1.0,0.0,1.0,1.0,0.0,1.0)");
-            Assert.IsInstanceOf<DocumentSource>(source);
+            var sources = ContentSource.Parse("D(1,0.0,0.0,1.0,0.0,1.0,1.0,0.0,1.0)");
+            Assert.AreEqual(1, sources.Length);
+            Assert.IsInstanceOf<DocumentSource>(sources[0]);
         }
 
         [Test]
         public void ContentSource_Parse_AudioVisualPrefix_ReturnsAudioVisualSource()
         {
-            var source = ContentSource.Parse("AV(5000,100,200,50,60)");
-            Assert.IsInstanceOf<AudioVisualSource>(source);
+            var sources = ContentSource.Parse("AV(5000,100,200,50,60)");
+            Assert.AreEqual(1, sources.Length);
+            Assert.IsInstanceOf<AudioVisualSource>(sources[0]);
         }
 
         [Test]
@@ -239,15 +249,11 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.Throws<ArgumentNullException>(() => ContentSource.Parse(null!));
         }
 
-        #endregion
-
-        #region ContentSource.ParseAll
-
         [Test]
-        public void ContentSource_ParseAll_MultiRegionDocument_ReturnsAll()
+        public void ContentSource_Parse_MultiRegionDocument_ReturnsAll()
         {
             string input = "D(1,0.0,0.0,1.0,0.0,1.0,1.0,0.0,1.0);D(2,0.0,0.0,1.0,0.0,1.0,1.0,0.0,1.0)";
-            var sources = ContentSource.ParseAll(input);
+            var sources = ContentSource.Parse(input);
 
             Assert.AreEqual(2, sources.Length);
             Assert.IsInstanceOf<DocumentSource>(sources[0]);
@@ -255,9 +261,9 @@ namespace Azure.AI.ContentUnderstanding.Tests
         }
 
         [Test]
-        public void ContentSource_ParseAll_SingleSegment_ReturnsSingleElement()
+        public void ContentSource_Parse_SingleSegment_ReturnsSingleElement()
         {
-            var sources = ContentSource.ParseAll("AV(5000)");
+            var sources = ContentSource.Parse("AV(5000)");
             Assert.AreEqual(1, sources.Length);
             Assert.IsInstanceOf<AudioVisualSource>(sources[0]);
         }
@@ -316,7 +322,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
         public void ContentSourceExtensions_ToRawString_JoinsSources()
         {
             string input = "D(1,0.0,0.0,1.0,0.0,1.0,1.0,0.0,1.0);D(2,0.0,0.0,1.0,0.0,1.0,1.0,0.0,1.0)";
-            var sources = ContentSource.ParseAll(input);
+            var sources = ContentSource.Parse(input);
 
             string result = sources.ToRawString();
             Assert.AreEqual(input, result);
@@ -326,7 +332,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
         public void ContentSourceExtensions_ToRawString_SingleSource()
         {
             string input = "D(1,0.0,0.0,1.0,0.0,1.0,1.0,0.0,1.0)";
-            var sources = ContentSource.ParseAll(input);
+            var sources = ContentSource.Parse(input);
 
             string result = sources.ToRawString();
             Assert.AreEqual(input, result);
@@ -347,7 +353,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
         public void DocumentSource_Parse_RealInvoiceSource_ParsesCorrectly()
         {
             // Real source value from invoice test recording
-            var source = DocumentSource.Parse("D(1,0.5712,1.4062,2.1087,1.4088,2.1084,1.5762,0.5709,1.5736)");
+            var sources = DocumentSource.Parse("D(1,0.5712,1.4062,2.1087,1.4088,2.1084,1.5762,0.5709,1.5736)");
+            var source = sources[0];
 
             Assert.AreEqual(1, source.PageNumber);
             Assert.IsNotNull(source.Polygon);

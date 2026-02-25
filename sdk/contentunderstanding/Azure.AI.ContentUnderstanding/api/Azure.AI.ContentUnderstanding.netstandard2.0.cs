@@ -117,8 +117,7 @@ namespace Azure.AI.ContentUnderstanding
         internal AudioVisualSource() : base (default(string)) { }
         public System.Drawing.Rectangle? BoundingBox { get { throw null; } }
         public System.TimeSpan Time { get { throw null; } }
-        public static new Azure.AI.ContentUnderstanding.AudioVisualSource Parse(string source) { throw null; }
-        public static new Azure.AI.ContentUnderstanding.AudioVisualSource[] ParseAll(string source) { throw null; }
+        public static new Azure.AI.ContentUnderstanding.AudioVisualSource[] Parse(string source) { throw null; }
     }
     public partial class AzureAIContentUnderstandingContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
@@ -447,8 +446,7 @@ namespace Azure.AI.ContentUnderstanding
     {
         protected ContentSource(string rawValue) { }
         public string RawValue { get { throw null; } }
-        public static Azure.AI.ContentUnderstanding.ContentSource Parse(string source) { throw null; }
-        public static Azure.AI.ContentUnderstanding.ContentSource[] ParseAll(string source) { throw null; }
+        public static Azure.AI.ContentUnderstanding.ContentSource[] Parse(string source) { throw null; }
         public override string ToString() { throw null; }
     }
     public static partial class ContentSourceExtensions
@@ -617,7 +615,7 @@ namespace Azure.AI.ContentUnderstanding
         public static Azure.AI.ContentUnderstanding.DocumentFigure DocumentFigure(string kind = null, string id = null, string source = null, Azure.AI.ContentUnderstanding.ContentSpan span = null, System.Collections.Generic.IEnumerable<string> elements = null, Azure.AI.ContentUnderstanding.DocumentCaption caption = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentFootnote> footnotes = null, string description = null, Azure.AI.ContentUnderstanding.SemanticRole? role = default(Azure.AI.ContentUnderstanding.SemanticRole?)) { throw null; }
         public static Azure.AI.ContentUnderstanding.DocumentFootnote DocumentFootnote(string content = null, string source = null, Azure.AI.ContentUnderstanding.ContentSpan span = null, System.Collections.Generic.IEnumerable<string> elements = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.DocumentFormula DocumentFormula(Azure.AI.ContentUnderstanding.DocumentFormulaKind kind = default(Azure.AI.ContentUnderstanding.DocumentFormulaKind), string value = null, string source = null, Azure.AI.ContentUnderstanding.ContentSpan span = null, float? confidence = default(float?)) { throw null; }
-        public static Azure.AI.ContentUnderstanding.DocumentHyperlink DocumentHyperlink(string content = null, string url = null, Azure.AI.ContentUnderstanding.ContentSpan span = null, string source = null) { throw null; }
+        public static Azure.AI.ContentUnderstanding.DocumentHyperlink DocumentHyperlink(string content = null, string uri = null, Azure.AI.ContentUnderstanding.ContentSpan span = null, string source = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.DocumentLine DocumentLine(string content = null, string source = null, Azure.AI.ContentUnderstanding.ContentSpan span = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.DocumentMermaidFigure DocumentMermaidFigure(string id = null, string source = null, Azure.AI.ContentUnderstanding.ContentSpan span = null, System.Collections.Generic.IEnumerable<string> elements = null, Azure.AI.ContentUnderstanding.DocumentCaption caption = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentFootnote> footnotes = null, string description = null, Azure.AI.ContentUnderstanding.SemanticRole? role = default(Azure.AI.ContentUnderstanding.SemanticRole?), string content = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.DocumentPage DocumentPage(int pageNumber = 0, float? width = default(float?), float? height = default(float?), System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.ContentSpan> spans = null, float? angle = default(float?), System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentWord> words = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentLine> lines = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentBarcode> barcodes = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentFormula> formulas = null) { throw null; }
@@ -627,7 +625,7 @@ namespace Azure.AI.ContentUnderstanding
         public static Azure.AI.ContentUnderstanding.DocumentTableCell DocumentTableCell(Azure.AI.ContentUnderstanding.DocumentTableCellKind? kind = default(Azure.AI.ContentUnderstanding.DocumentTableCellKind?), int rowIndex = 0, int columnIndex = 0, int? rowSpan = default(int?), int? columnSpan = default(int?), string content = null, string source = null, Azure.AI.ContentUnderstanding.ContentSpan span = null, System.Collections.Generic.IEnumerable<string> elements = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.DocumentWord DocumentWord(string content = null, string source = null, Azure.AI.ContentUnderstanding.ContentSpan span = null, float? confidence = default(float?)) { throw null; }
         public static Azure.AI.ContentUnderstanding.KnowledgeSource KnowledgeSource(string kind = null) { throw null; }
-        public static Azure.AI.ContentUnderstanding.LabeledDataKnowledgeSource LabeledDataKnowledgeSource(System.Uri containerUrl = null, string prefix = null, string fileListPath = null) { throw null; }
+        public static Azure.AI.ContentUnderstanding.LabeledDataKnowledgeSource LabeledDataKnowledgeSource(System.Uri containerUri = null, string prefix = null, string fileListPath = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.SupportedModels SupportedModels(System.Collections.Generic.IEnumerable<string> completion = null, System.Collections.Generic.IEnumerable<string> embedding = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.TranscriptPhrase TranscriptPhrase(string speaker = null, long startTimeMsValue = (long)0, long endTimeMsValue = (long)0, string locale = null, string text = null, float? confidence = default(float?), Azure.AI.ContentUnderstanding.ContentSpan span = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.TranscriptWord> words = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.TranscriptWord TranscriptWord(long startTimeMsValue = (long)0, long endTimeMsValue = (long)0, string text = null, Azure.AI.ContentUnderstanding.ContentSpan span = null) { throw null; }
@@ -913,7 +911,7 @@ namespace Azure.AI.ContentUnderstanding
         public string Content { get { throw null; } }
         public string Source { get { throw null; } }
         public Azure.AI.ContentUnderstanding.ContentSpan Span { get { throw null; } }
-        public string Url { get { throw null; } }
+        public string Uri { get { throw null; } }
         protected virtual Azure.AI.ContentUnderstanding.DocumentHyperlink JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.AI.ContentUnderstanding.DocumentHyperlink PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1014,8 +1012,7 @@ namespace Azure.AI.ContentUnderstanding
         public System.Drawing.RectangleF? BoundingBox { get { throw null; } }
         public int PageNumber { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<System.Drawing.PointF>? Polygon { get { throw null; } }
-        public static new Azure.AI.ContentUnderstanding.DocumentSource Parse(string source) { throw null; }
-        public static new Azure.AI.ContentUnderstanding.DocumentSource[] ParseAll(string source) { throw null; }
+        public static new Azure.AI.ContentUnderstanding.DocumentSource[] Parse(string source) { throw null; }
     }
     public partial class DocumentTable : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentUnderstanding.DocumentTable>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.DocumentTable>
     {
@@ -1130,8 +1127,8 @@ namespace Azure.AI.ContentUnderstanding
     }
     public partial class LabeledDataKnowledgeSource : Azure.AI.ContentUnderstanding.KnowledgeSource, System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentUnderstanding.LabeledDataKnowledgeSource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.LabeledDataKnowledgeSource>
     {
-        public LabeledDataKnowledgeSource(System.Uri containerUrl, string fileListPath) { }
-        public System.Uri ContainerUrl { get { throw null; } set { } }
+        public LabeledDataKnowledgeSource(System.Uri containerUri, string fileListPath) { }
+        public System.Uri ContainerUri { get { throw null; } set { } }
         public string FileListPath { get { throw null; } set { } }
         public string Prefix { get { throw null; } set { } }
         protected override Azure.AI.ContentUnderstanding.KnowledgeSource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
