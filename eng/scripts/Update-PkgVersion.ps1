@@ -105,3 +105,92 @@ if (!$packageOldSemVer.IsPrerelease -and ($packageVersion -ne $NewVersionString)
 
 $propertyGroup.Version = $packageSemVer.ToString()
 $csproj.Save($csprojPath)
+
+# Update Central Package Management files with the released version so
+# other packages that depend on this one pick up the latest release.
+# Wrapped in its own try/catch so a CPM failure never blocks the version bump PR.
+try {
+  $releasedVersion = $packageOldSemVer.ToString()
+  $escapedName = [regex]::Escape($PackageName)
+  # Match PackageVersion (Include|Update) and PackageReference (Update) entries with literal versions.
+  # The version must start with a digit to skip MSBuild property references like $(SomeVersion).
+  $versionPattern = '(<Package(?:Version|Reference)\s+(?:Include|Update)="' + $escapedName + '"\s+Version=")(\d[^"]*?)(")'
+  $totalUpdates = 0
+
+  # New CPM structure (post CPM migration): eng/centralpackagemanagement/*.Packages.props
+  # Update all occurrences in files directly in this directory — NOT in overrides/ subdirectory.
+  $cpmDir = Join-Path $RepoRoot "eng" "centralpackagemanagement"
+  if (Test-Path -LiteralPath $cpmDir -PathType Container) {
+    $cpmFiles = Get-ChildItem -LiteralPath $cpmDir -File -Filter '*.Packages.props'
+    foreach ($file in $cpmFiles) {
+      $content = Get-Content -LiteralPath $file.FullName -Raw
+      if (-not $content) { continue }
+      $newContent = [regex]::Replace($content, $versionPattern, '${1}' + $releasedVersion + '${3}')
+
+      if ($newContent -ne $content) {
+        Set-Content -LiteralPath $file.FullName -Value $newContent -NoNewline
+        Write-Host "Updated package '$PackageName' version to '$releasedVersion' in '$($file.FullName)'"
+        $totalUpdates++
+      }
+    }
+  }
+
+  # Old format (pre CPM migration): eng/Packages.Data.props
+  # Only update entries inside the three central ItemGroups (approved dependencies,
+  # build-time packages, and test/support packages). Per-package override ItemGroups
+  # that use MSBuildProjectName conditions must NOT be touched.
+  $oldFile = Join-Path $RepoRoot "eng" "Packages.Data.props"
+  if (Test-Path -LiteralPath $oldFile -PathType Leaf) {
+    [xml]$propsXml = Get-Content -LiteralPath $oldFile -Raw
+
+    # Build a set of line numbers that are safe to update by walking the XML DOM.
+    # Safe ItemGroups: those without conditions referencing MSBuildProjectName,
+    # TargetFramework, or legacy library filters.
+    $safeLineNumbers = @{}
+    foreach ($itemGroup in $propsXml.SelectNodes('//ItemGroup')) {
+      $condition = $itemGroup.GetAttribute('Condition')
+      if ($condition -match 'MSBuildProjectName') { continue }
+      if ($condition -match 'TargetFramework') { continue }
+      if ($condition -match "'`\$\(IsClientLibrary\)'\s*!=\s*'true'") { continue }
+
+      foreach ($node in $itemGroup.ChildNodes) {
+        if ($node.NodeType -ne 'Element') { continue }
+        if ($node.LocalName -ne 'PackageReference' -and $node.LocalName -ne 'PackageVersion') { continue }
+        $nameAttr = $node.GetAttribute('Update')
+        if (-not $nameAttr) { $nameAttr = $node.GetAttribute('Include') }
+        if ($nameAttr -eq $PackageName) {
+          $versionAttr = $node.GetAttribute('Version')
+          if ($versionAttr -and $versionAttr -notmatch '^\$' -and $versionAttr -notmatch '^\[') {
+            # XmlReader-based line info isn't available after loading, so we match by
+            # the unique combination of element+name+version to build a targeted regex.
+            $safeLineNumbers[$versionAttr] = $true
+          }
+        }
+      }
+    }
+
+    if ($safeLineNumbers.Count -gt 0) {
+      $content = Get-Content -LiteralPath $oldFile -Raw
+      # For each safe version found, build a targeted pattern that only matches
+      # the exact package with that exact old version (to avoid touching overrides).
+      $newContent = $content
+      foreach ($oldVersion in $safeLineNumbers.Keys) {
+        $escapedOldVersion = [regex]::Escape($oldVersion)
+        $targetedPattern = '(<Package(?:Version|Reference)\s+(?:Include|Update)="' + $escapedName + '"\s+Version=")' + $escapedOldVersion + '(")'
+        $newContent = [regex]::Replace($newContent, $targetedPattern, '${1}' + $releasedVersion + '${2}')
+      }
+
+      if ($newContent -ne $content) {
+        Set-Content -LiteralPath $oldFile -Value $newContent -NoNewline
+        Write-Host "Updated package '$PackageName' version to '$releasedVersion' in '$oldFile'"
+        $totalUpdates++
+      }
+    }
+  }
+
+  Write-Host "Updated $totalUpdates central package management file(s)"
+}
+catch {
+  Write-Warning "CPM update failed — central package management will need to be updated manually: $($_.Exception.Message)"
+  Write-Host "##vso[task.logissue type=warning]CPM update failed for package version bump. Central package management files will need a manual update."
+}
