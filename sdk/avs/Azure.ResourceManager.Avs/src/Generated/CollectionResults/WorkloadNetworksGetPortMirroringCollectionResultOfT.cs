@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs
                     yield break;
                 }
                 WorkloadNetworkPortMirroringList result = WorkloadNetworkPortMirroringList.FromResponse(response);
-                yield return Page<WorkloadNetworkPortMirroringProfileData>.FromValues((IReadOnlyList<WorkloadNetworkPortMirroringProfileData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<WorkloadNetworkPortMirroringProfileData>.FromValues((IReadOnlyList<WorkloadNetworkPortMirroringProfileData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -7,6 +7,8 @@
 
 using System;
 using Azure.Core.Pipeline;
+using Parameters.Basic._ExplicitBody;
+using Parameters.Basic._ImplicitBody;
 
 namespace Parameters.Basic
 {

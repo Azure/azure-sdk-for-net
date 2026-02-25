@@ -35,9 +35,9 @@ namespace Azure.AI.Projects.OpenAI
         }
 
         /// <summary> The ID of the file. </summary>
-        public string FileId { get; }
+        public string FileId { get; set; }
 
         /// <summary> The index of the file in the list of files. </summary>
-        public long Index { get; }
+        public long Index { get; set; }
     }
 }

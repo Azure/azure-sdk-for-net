@@ -344,7 +344,7 @@
                 "responses": [
                   {
                     "statusCodes": [
-                      204
+                      200
                     ],
                     "headers": [],
                     "isErrorResponse": false

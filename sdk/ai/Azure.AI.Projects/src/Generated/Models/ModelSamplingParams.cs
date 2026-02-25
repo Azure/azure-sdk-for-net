@@ -18,7 +18,7 @@ namespace Azure.AI.Projects
         /// <param name="topP"> The top-p parameter for nucleus sampling. </param>
         /// <param name="seed"> The random seed for reproducibility. </param>
         /// <param name="maxCompletionTokens"> The maximum number of tokens allowed in the completion. </param>
-        internal ModelSamplingParams(float temperature, float topP, int seed, int maxCompletionTokens)
+        public ModelSamplingParams(float temperature, float topP, int seed, int maxCompletionTokens)
         {
             Temperature = temperature;
             TopP = topP;
@@ -42,15 +42,15 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The temperature parameter for sampling. </summary>
-        public float Temperature { get; }
+        public float Temperature { get; set; }
 
         /// <summary> The top-p parameter for nucleus sampling. </summary>
-        public float TopP { get; }
+        public float TopP { get; set; }
 
         /// <summary> The random seed for reproducibility. </summary>
-        public int Seed { get; }
+        public int Seed { get; set; }
 
         /// <summary> The maximum number of tokens allowed in the completion. </summary>
-        public int MaxCompletionTokens { get; }
+        public int MaxCompletionTokens { get; set; }
     }
 }

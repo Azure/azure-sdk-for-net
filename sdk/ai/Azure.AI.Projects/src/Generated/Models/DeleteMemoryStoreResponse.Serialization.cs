@@ -7,6 +7,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Projects
 {
@@ -85,7 +86,7 @@ namespace Azure.AI.Projects
                 throw new FormatException($"The model {nameof(DeleteMemoryStoreResponse)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("object"u8);
-            writer.WriteStringValue(Object);
+            writer.WriteStringValue(Object.ToString());
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("deleted"u8);
@@ -132,7 +133,7 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            string @object = default;
+            MemoryStoreObjectType @object = default;
             string name = default;
             bool deleted = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -140,7 +141,7 @@ namespace Azure.AI.Projects
             {
                 if (prop.NameEquals("object"u8))
                 {
-                    @object = prop.Value.GetString();
+                    @object = new MemoryStoreObjectType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))

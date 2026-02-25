@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.PineconeVectorDB
                     yield break;
                 }
                 OrganizationResourceListResult result = OrganizationResourceListResult.FromResponse(response);
-                yield return Page<PineconeVectorDBOrganizationData>.FromValues((IReadOnlyList<PineconeVectorDBOrganizationData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<PineconeVectorDBOrganizationData>.FromValues((IReadOnlyList<PineconeVectorDBOrganizationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

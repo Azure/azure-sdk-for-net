@@ -917,7 +917,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"></param>
         /// <returns> A new <see cref="Tests.BestPracticeData"/> instance for mocking. </returns>
-        public static BestPracticeData BestPracticeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BestPracticeProperties properties = default, ExtendedLocation1 extendedLocation = default)
+        public static BestPracticeData BestPracticeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BestPracticeProperties properties = default, ExtendedLocationOptionalModel extendedLocation = default)
         {
             return new BestPracticeData(
                 id,

@@ -35,7 +35,7 @@ namespace Azure.AI.Projects.OpenAI
         /// can specify which tool to use by setting the `tool_choice` parameter.
         /// </param>
         /// <param name="toolChoice">
-        /// How the model should select which tool (or tools) to use when generating a response. 
+        /// How the model should select which tool (or tools) to use when generating a response.
         /// See the `tools` parameter to see how to specify which tools the model can call.
         /// </param>
         /// <param name="textOptions"> Configuration options for a text response from the model. Can be plain text or structured JSON data. </param>
@@ -75,7 +75,7 @@ namespace Azure.AI.Projects.OpenAI
         public float? TopP { get; set; }
 
         /// <summary>
-        /// How the model should select which tool (or tools) to use when generating a response. 
+        /// How the model should select which tool (or tools) to use when generating a response.
         /// See the `tools` parameter to see how to specify which tools the model can call.
         /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
@@ -87,7 +87,7 @@ namespace Azure.AI.Projects.OpenAI
         /// <description> <see cref="string"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="ToolChoiceParam"/>. </description>
+        /// <description> <see cref="InternalToolChoiceParam"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>

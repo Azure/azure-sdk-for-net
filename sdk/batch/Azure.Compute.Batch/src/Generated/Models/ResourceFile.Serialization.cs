@@ -171,7 +171,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    storageContainerUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    storageContainerUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("httpUrl"u8))
@@ -180,7 +180,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    httpUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    httpUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("blobPrefix"u8))

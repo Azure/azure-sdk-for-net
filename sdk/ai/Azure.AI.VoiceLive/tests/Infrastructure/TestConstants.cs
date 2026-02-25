@@ -91,5 +91,11 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         // ===== MCP Server Configuration =====
         public const string MicrosoftLearnMcpServerUrl = "https://learn.microsoft.com/api/mcp";
         public const string MicrosoftLearnMcpServerLabel = "microsoft-learn";
+
+        // ===== Agent Session Configuration =====
+        public const string TestAgentName = "VoiceLiveIntegrationTestAgentV2";
+        public const string TestAgentVersion = "1";
+        public const string TestAgentProjectName = "test-project";
+        public const string TestAgentDescription = "You are a helpful math assistant. When asked a math question, solve it step by step and provide the answer.";
     }
 }

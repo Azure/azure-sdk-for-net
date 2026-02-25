@@ -131,7 +131,7 @@ namespace Azure.AI.Projects
             {
                 if (prop.NameEquals("blobUri"u8))
                 {
-                    blobUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    blobUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("storageAccountArmId"u8))

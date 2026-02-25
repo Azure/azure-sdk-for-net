@@ -42,6 +42,41 @@ namespace Azure.ResourceManager.Grafana
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GrafanaIntegrationFabricData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerGrafanaContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(GrafanaIntegrationFabricData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<GrafanaIntegrationFabricData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GrafanaIntegrationFabricData IPersistableModel<GrafanaIntegrationFabricData>.Create(BinaryData data, ModelReaderWriterOptions options) => (GrafanaIntegrationFabricData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GrafanaIntegrationFabricData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="grafanaIntegrationFabricData"> The <see cref="GrafanaIntegrationFabricData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(GrafanaIntegrationFabricData grafanaIntegrationFabricData)
+        {
+            if (grafanaIntegrationFabricData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(grafanaIntegrationFabricData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GrafanaIntegrationFabricData"/> from. </param>
         internal static GrafanaIntegrationFabricData FromResponse(Response response)
         {
@@ -191,41 +226,6 @@ namespace Azure.ResourceManager.Grafana
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GrafanaIntegrationFabricData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<GrafanaIntegrationFabricData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerGrafanaContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(GrafanaIntegrationFabricData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        GrafanaIntegrationFabricData IPersistableModel<GrafanaIntegrationFabricData>.Create(BinaryData data, ModelReaderWriterOptions options) => (GrafanaIntegrationFabricData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GrafanaIntegrationFabricData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="grafanaIntegrationFabricData"> The <see cref="GrafanaIntegrationFabricData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(GrafanaIntegrationFabricData grafanaIntegrationFabricData)
-        {
-            if (grafanaIntegrationFabricData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(grafanaIntegrationFabricData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

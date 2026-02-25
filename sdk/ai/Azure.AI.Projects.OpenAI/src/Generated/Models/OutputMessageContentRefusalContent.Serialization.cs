@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Refusal. </summary>
-    internal partial class OutputMessageContentRefusalContent : OutputMessageContent, IJsonModel<OutputMessageContentRefusalContent>
+    internal partial class OutputMessageContentRefusalContent : InternalOutputMessageContent, IJsonModel<OutputMessageContentRefusalContent>
     {
         /// <summary> Initializes a new instance of <see cref="OutputMessageContentRefusalContent"/> for deserialization. </summary>
         internal OutputMessageContentRefusalContent()
@@ -19,7 +19,7 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override OutputMessageContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override InternalOutputMessageContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<OutputMessageContentRefusalContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -86,7 +86,7 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override OutputMessageContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override InternalOutputMessageContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<OutputMessageContentRefusalContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

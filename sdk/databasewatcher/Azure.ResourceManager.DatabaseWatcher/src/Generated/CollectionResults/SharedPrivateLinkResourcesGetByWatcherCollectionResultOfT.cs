@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                     yield break;
                 }
                 SharedPrivateLinkResourceListResult result = SharedPrivateLinkResourceListResult.FromResponse(response);
-                yield return Page<DatabaseWatcherSharedPrivateLinkResourceData>.FromValues((IReadOnlyList<DatabaseWatcherSharedPrivateLinkResourceData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DatabaseWatcherSharedPrivateLinkResourceData>.FromValues((IReadOnlyList<DatabaseWatcherSharedPrivateLinkResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

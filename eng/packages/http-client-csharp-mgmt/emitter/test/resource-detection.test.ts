@@ -1994,6 +1994,11 @@ interface TrafficEndpoints {
     );
     ok(trafficProfileResource, "TrafficProfile resource should be detected");
     strictEqual(
+      trafficProfileResource.resourceModelId,
+      "Microsoft.ContosoProviderHub.TrafficProfile",
+      "TrafficProfile resource model ID should match"
+    );
+    strictEqual(
       trafficProfileResource.metadata.resourceName,
       "TrafficProfile",
       "Resource name should be TrafficProfile"
@@ -2012,6 +2017,11 @@ interface TrafficEndpoints {
     );
     ok(trafficEndpointResource, "TrafficEndpoint resource should be detected");
     strictEqual(
+      trafficEndpointResource.resourceModelId,
+      "Microsoft.ContosoProviderHub.TrafficEndpoint",
+      "TrafficEndpoint resource model ID should match"
+    );
+    strictEqual(
       trafficEndpointResource.metadata.resourceName,
       "TrafficEndpoint",
       "Resource name should be TrafficEndpoint"
@@ -2027,6 +2037,20 @@ interface TrafficEndpoints {
       trafficEndpointResource.metadata.parentResourceId,
       trafficProfileResource.metadata.resourceIdPattern,
       "TrafficEndpoint should have TrafficProfile as parent"
+    );
+
+    // Validate using resolveArmResources API
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    // Note: resolveArmResources does not detect custom Azure resources
+    // (those using @customAzureResource decorator), so the resolved schema
+    // will have no resources. This is a known gap — custom resources are only
+    // detected by the legacy buildArmProviderSchema path.
+    strictEqual(
+      resolvedSchema.resources.length,
+      0,
+      "resolveArmResources does not detect custom Azure resources"
     );
   });
 });

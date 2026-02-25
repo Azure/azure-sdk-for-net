@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                     yield break;
                 }
                 InventoryResourceListResult result = InventoryResourceListResult.FromResponse(response);
-                yield return Page<PublicCloudInventoryData>.FromValues((IReadOnlyList<PublicCloudInventoryData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<PublicCloudInventoryData>.FromValues((IReadOnlyList<PublicCloudInventoryData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

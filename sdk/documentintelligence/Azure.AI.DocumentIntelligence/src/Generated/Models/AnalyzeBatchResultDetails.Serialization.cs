@@ -148,7 +148,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (prop.NameEquals("sourceUrl"u8))
                 {
-                    sourceUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    sourceUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("resultUrl"u8))
@@ -157,7 +157,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    resultUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    resultUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("error"u8))

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
                     yield break;
                 }
                 PagedQuota result = PagedQuota.FromResponse(response);
-                yield return Page<DevOpsResourceQuota>.FromValues((IReadOnlyList<DevOpsResourceQuota>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DevOpsResourceQuota>.FromValues((IReadOnlyList<DevOpsResourceQuota>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

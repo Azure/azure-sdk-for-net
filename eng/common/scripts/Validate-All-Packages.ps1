@@ -11,7 +11,7 @@ Param (
   [string]$ConfigFileDir,
   [string]$BuildDefinition,
   [string]$PipelineUrl,
-  [string]$APIViewUri  = "https://apiview.dev/AutoReview/GetReviewStatus",
+  [string]$APIViewUri  = "https://apiview.org/AutoReview/GetReviewStatus",
   [bool] $IsReleaseBuild = $false,
   [Parameter(Mandatory=$False)]
   [array] $PackageInfoFiles

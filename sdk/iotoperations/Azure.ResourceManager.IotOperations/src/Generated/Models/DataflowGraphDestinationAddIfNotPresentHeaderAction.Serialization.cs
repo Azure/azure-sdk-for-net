@@ -38,6 +38,29 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataflowGraphDestinationAddIfNotPresentHeaderAction>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataflowGraphDestinationAddIfNotPresentHeaderAction)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataflowGraphDestinationAddIfNotPresentHeaderAction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataflowGraphDestinationAddIfNotPresentHeaderAction IPersistableModel<DataflowGraphDestinationAddIfNotPresentHeaderAction>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataflowGraphDestinationAddIfNotPresentHeaderAction)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataflowGraphDestinationAddIfNotPresentHeaderAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataflowGraphDestinationAddIfNotPresentHeaderAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -116,28 +139,5 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
             return new DataflowGraphDestinationAddIfNotPresentHeaderAction(actionType, additionalBinaryDataProperties, key, value);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DataflowGraphDestinationAddIfNotPresentHeaderAction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataflowGraphDestinationAddIfNotPresentHeaderAction>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataflowGraphDestinationAddIfNotPresentHeaderAction)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DataflowGraphDestinationAddIfNotPresentHeaderAction IPersistableModel<DataflowGraphDestinationAddIfNotPresentHeaderAction>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataflowGraphDestinationAddIfNotPresentHeaderAction)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DataflowGraphDestinationAddIfNotPresentHeaderAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

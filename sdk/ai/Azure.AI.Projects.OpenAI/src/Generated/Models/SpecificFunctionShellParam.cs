@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Specific shell tool choice. </summary>
-    public partial class SpecificFunctionShellParam : ToolChoiceParam
+    internal partial class SpecificFunctionShellParam : InternalToolChoiceParam
     {
         /// <summary> Initializes a new instance of <see cref="SpecificFunctionShellParam"/>. </summary>
         public SpecificFunctionShellParam() : base(ToolChoiceParamType.Shell)

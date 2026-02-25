@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Avs
                     yield break;
                 }
                 DatastoreList result = DatastoreList.FromResponse(response);
-                yield return Page<AvsPrivateCloudDatastoreData>.FromValues((IReadOnlyList<AvsPrivateCloudDatastoreData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<AvsPrivateCloudDatastoreData>.FromValues((IReadOnlyList<AvsPrivateCloudDatastoreData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

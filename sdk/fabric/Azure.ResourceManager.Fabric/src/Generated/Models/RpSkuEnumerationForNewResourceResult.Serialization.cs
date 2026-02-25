@@ -39,6 +39,29 @@ namespace Azure.ResourceManager.Fabric.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RpSkuEnumerationForNewResourceResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFabricContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RpSkuEnumerationForNewResourceResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RpSkuEnumerationForNewResourceResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RpSkuEnumerationForNewResourceResult IPersistableModel<RpSkuEnumerationForNewResourceResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RpSkuEnumerationForNewResourceResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RpSkuEnumerationForNewResourceResult"/> from. </param>
         internal static RpSkuEnumerationForNewResourceResult FromResponse(Response response)
         {
@@ -145,28 +168,5 @@ namespace Azure.ResourceManager.Fabric.Models
             }
             return new RpSkuEnumerationForNewResourceResult(value, nextLink, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RpSkuEnumerationForNewResourceResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RpSkuEnumerationForNewResourceResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFabricContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(RpSkuEnumerationForNewResourceResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        RpSkuEnumerationForNewResourceResult IPersistableModel<RpSkuEnumerationForNewResourceResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RpSkuEnumerationForNewResourceResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -75,6 +75,13 @@ namespace MgmtTypeSpec {
   @@alternateType(ZooAddressListListResult.value, Azure.ResourceManager.Models.SubResource[], "csharp");
   @@alternateType(Azure.ResourceManager.CommonTypes.PrivateEndpointConnectionProperties.privateEndpoint, Azure.ResourceManager.Models.SubResource, "csharp");
   @@alternateType(FooProperties.writableSubResourceProp, Azure.ResourceManager.Models.WritableSubResource, "csharp");
+
+  // Override client names for legacy ARM types to resolve duplicate-client-name errors
+  // with their CommonTypes counterparts.
+  // ExtendedLocationOptional has @friendlyName("ExtendedLocation") conflicting with CommonTypes.ExtendedLocation.
+  // ManagedServiceIdentityType in Legacy conflicts with CommonTypes.ManagedServiceIdentityType.
+  @@clientName(Azure.ResourceManager.Legacy.ExtendedLocationOptional, "ExtendedLocationOptionalModel", "csharp");
+  @@clientName(Azure.ResourceManager.Legacy.ManagedServiceIdentityType, "ManagedServiceIdentityTypeV4", "csharp");
 }
 
 // We define this model here to test if the generated code would be replaced by Azure.ResourceManager.Models.SubResource and WritableSubResource via alternateType

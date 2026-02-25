@@ -196,6 +196,7 @@ namespace Azure.AI.VoiceLive.Tests
             Assert.IsTrue(moved, "Failed to move to the next update.");
             var currentUpdate = updateEnumerator.Current;
             Assert.IsNotNull(currentUpdate);
+            Assert.IsFalse(currentUpdate is SessionUpdateError, (currentUpdate as SessionUpdateError)?.Error.Message);
             if (checkEventId)
             {
                 EnsureEventIdsUnique(currentUpdate);

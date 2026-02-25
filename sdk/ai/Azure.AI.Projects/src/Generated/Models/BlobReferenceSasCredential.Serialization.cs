@@ -129,7 +129,7 @@ namespace Azure.AI.Projects
             {
                 if (prop.NameEquals("sasUri"u8))
                 {
-                    sasUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    sasUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("type"u8))

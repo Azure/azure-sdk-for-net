@@ -100,8 +100,7 @@ export function buildArmProviderSchema(
   const models = new Map<string, SdkModelType>(
     sdkContext.sdkPackage.models.map((m) => [m.crossLanguageDefinitionId, m])
   );
-  const { models: resourceModels, customResourceIds } =
-    getAllResourceModels(codeModel);
+  const resourceModels = getAllResourceModels(codeModel);
   const resourceModelMap = new Map<string, InputModelType>(
     resourceModels.map((m) => [m.crossLanguageDefinitionId, m])
   );
@@ -263,7 +262,6 @@ export function buildArmProviderSchema(
           resourcePathToClientName.set(metadataKey, client.name);
         }
 
-        const isCustom = customResourceIds.has(modelId);
         entry = {
           resourceIdPattern: "", // this will be populated later
           resourceType: "", // this will be populated later
@@ -277,10 +275,6 @@ export function buildArmProviderSchema(
           // Use model name as default; will be updated later if multiple paths exist
           resourceName: model?.name ?? "Unknown"
         } as ResourceMetadata;
-        // Only set isCustomResource when true to keep output clean for standard resources
-        if (isCustom) {
-          entry.isCustomResource = true;
-        }
         resourcePathToMetadataMap.set(metadataKey, entry);
       }
 
@@ -896,9 +890,7 @@ export function getAllClients(codeModel: CodeModel): InputClient[] {
 function hasCustomAzureResourceInHierarchy(model: InputModelType): boolean {
   let current: InputModelType | undefined = model;
   while (current) {
-    if (
-      current.decorators?.some((d) => d.name === customAzureResource)
-    ) {
+    if (current.decorators?.some((d) => d.name === customAzureResource)) {
       return true;
     }
     current = current.baseModel;
@@ -920,14 +912,10 @@ function hasCustomAzureResourceInHierarchy(model: InputModelType): boolean {
  *    that were converted from Swagger to TypeSpec and don't fit standard ARM templates.
  *
  * @param codeModel - The code model containing all models
- * @returns Object containing array of resource models and set of custom resource model IDs
+ * @returns Array of resource models
  */
-function getAllResourceModels(codeModel: CodeModel): {
-  models: InputModelType[];
-  customResourceIds: Set<string>;
-} {
+function getAllResourceModels(codeModel: CodeModel): InputModelType[] {
   const resourceModels: InputModelType[] = [];
-  const customResourceIds = new Set<string>();
 
   for (const model of codeModel.models) {
     // Check for armResource decorators
@@ -942,17 +930,10 @@ function getAllResourceModels(codeModel: CodeModel): {
     // 2. Custom Azure resources: Models inheriting from a @customAzureResource base model
     //    Used by legacy services like TrafficManager that don't use standard ARM templates
     else if (hasCustomAzureResourceInHierarchy(model)) {
-      // Only include models that have properties defined.
-      // This filters out completely empty models. Note that the base CustomResource model
-      // also has properties (id, name, type), but it won't become a resource in the final schema
-      // because only models with defined operations become actual resources.
-      if (model.properties && model.properties.length > 0) {
-        resourceModels.push(model);
-        customResourceIds.add(model.crossLanguageDefinitionId);
-      }
+      resourceModels.push(model);
     }
   }
-  return { models: resourceModels, customResourceIds };
+  return resourceModels;
 }
 
 function getSingletonResource(

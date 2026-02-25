@@ -42,6 +42,41 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GlobalRulestackCertificateObjectData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(GlobalRulestackCertificateObjectData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<GlobalRulestackCertificateObjectData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GlobalRulestackCertificateObjectData IPersistableModel<GlobalRulestackCertificateObjectData>.Create(BinaryData data, ModelReaderWriterOptions options) => (GlobalRulestackCertificateObjectData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GlobalRulestackCertificateObjectData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="globalRulestackCertificateObjectData"> The <see cref="GlobalRulestackCertificateObjectData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(GlobalRulestackCertificateObjectData globalRulestackCertificateObjectData)
+        {
+            if (globalRulestackCertificateObjectData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(globalRulestackCertificateObjectData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GlobalRulestackCertificateObjectData"/> from. </param>
         internal static GlobalRulestackCertificateObjectData FromResponse(Response response)
         {
@@ -154,41 +189,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 systemData,
                 additionalBinaryDataProperties,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GlobalRulestackCertificateObjectData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<GlobalRulestackCertificateObjectData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(GlobalRulestackCertificateObjectData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        GlobalRulestackCertificateObjectData IPersistableModel<GlobalRulestackCertificateObjectData>.Create(BinaryData data, ModelReaderWriterOptions options) => (GlobalRulestackCertificateObjectData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GlobalRulestackCertificateObjectData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="globalRulestackCertificateObjectData"> The <see cref="GlobalRulestackCertificateObjectData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(GlobalRulestackCertificateObjectData globalRulestackCertificateObjectData)
-        {
-            if (globalRulestackCertificateObjectData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(globalRulestackCertificateObjectData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

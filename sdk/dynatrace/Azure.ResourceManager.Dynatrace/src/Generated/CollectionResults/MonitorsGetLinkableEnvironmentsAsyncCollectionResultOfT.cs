@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Dynatrace
                     yield break;
                 }
                 LinkableEnvironmentListResponse result = LinkableEnvironmentListResponse.FromResponse(response);
-                yield return Page<LinkableEnvironmentResult>.FromValues((IReadOnlyList<LinkableEnvironmentResult>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<LinkableEnvironmentResult>.FromValues((IReadOnlyList<LinkableEnvironmentResult>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

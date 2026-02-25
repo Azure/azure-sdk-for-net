@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                     yield break;
                 }
                 CodeSigningAccountListResult result = CodeSigningAccountListResult.FromResponse(response);
-                yield return Page<ArtifactSigningAccountData>.FromValues((IReadOnlyList<ArtifactSigningAccountData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ArtifactSigningAccountData>.FromValues((IReadOnlyList<ArtifactSigningAccountData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

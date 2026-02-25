@@ -511,7 +511,7 @@
     {
       "$id": "41",
       "kind": "enum",
-      "name": "ManagedServiceIdentityType",
+      "name": "ManagedServiceIdentityTypeV4",
       "crossLanguageDefinitionId": "Azure.ResourceManager.Legacy.ManagedServiceIdentityType",
       "valueType": {
         "$id": "42",
@@ -15323,7 +15323,7 @@
           "type": {
             "$id": "1214",
             "kind": "model",
-            "name": "ExtendedLocation1",
+            "name": "ExtendedLocationOptionalModel",
             "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
             "crossLanguageDefinitionId": "Azure.ResourceManager.Legacy.ExtendedLocationOptional",
             "usage": "Input,Output,Json",
@@ -20349,7 +20349,7 @@
                       },
                       "value": "2024-05-01"
                     },
-                    "optional": false,
+                    "optional": true,
                     "scope": "Method",
                     "crossLanguageDefinitionId": "MgmtTypeSpec.previewActions.apiVersion",
                     "readOnly": false,
@@ -21917,8 +21917,7 @@
                   }
                 ],
                 "resourceScope": "ResourceGroup",
-                "resourceName": "TrafficProfile",
-                "isCustomResource": true
+                "resourceName": "TrafficProfile"
               },
               {
                 "resourceModelId": "MgmtTypeSpec.TrafficEndpoint",
@@ -21952,8 +21951,7 @@
                 ],
                 "resourceScope": "ResourceGroup",
                 "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/trafficProfiles/{profileName}",
-                "resourceName": "TrafficEndpoint",
-                "isCustomResource": true
+                "resourceName": "TrafficEndpoint"
               },
               {
                 "resourceModelId": "MgmtTypeSpec.VmConfigurationAssignment",

@@ -15,7 +15,7 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="status"> The status of the image generation call. </param>
         /// <param name="result"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public InputItemImageGenToolCall(string id, ItemResourceImageGenToolCallStatus status, string result) : base(InputItemType.ImageGenerationCall)
+        public InputItemImageGenToolCall(string id, OutputItemImageGenToolCallStatus status, string result) : base(InputItemType.ImageGenerationCall)
         {
             Argument.AssertNotNull(id, nameof(id));
 
@@ -30,7 +30,7 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="id"> The unique ID of the image generation call. </param>
         /// <param name="status"> The status of the image generation call. </param>
         /// <param name="result"></param>
-        internal InputItemImageGenToolCall(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, ItemResourceImageGenToolCallStatus status, string result) : base(@type, additionalBinaryDataProperties)
+        internal InputItemImageGenToolCall(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, OutputItemImageGenToolCallStatus status, string result) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             Status = status;
@@ -41,7 +41,7 @@ namespace Azure.AI.Projects.OpenAI
         public string Id { get; }
 
         /// <summary> The status of the image generation call. </summary>
-        public ItemResourceImageGenToolCallStatus Status { get; }
+        public OutputItemImageGenToolCallStatus Status { get; }
 
         /// <summary> Gets the Result. </summary>
         public string Result { get; }

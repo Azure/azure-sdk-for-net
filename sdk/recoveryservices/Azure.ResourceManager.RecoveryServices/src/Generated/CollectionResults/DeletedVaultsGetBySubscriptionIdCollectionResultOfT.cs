@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServices
                     yield break;
                 }
                 DeletedVaultList result = DeletedVaultList.FromResponse(response);
-                yield return Page<RecoveryServicesDeletedVaultData>.FromValues((IReadOnlyList<RecoveryServicesDeletedVaultData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<RecoveryServicesDeletedVaultData>.FromValues((IReadOnlyList<RecoveryServicesDeletedVaultData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
