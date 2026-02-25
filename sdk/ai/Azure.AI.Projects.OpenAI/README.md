@@ -1803,9 +1803,9 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
 
 ### Enabling GenAI Tracing
 
-Tracing requires enabling GenAI-specific OpenTelemetry support. One way to do this is to set the `AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE` environment variable value to `true`. You can also enable the feature with the following code:
+Tracing requires enabling GenAI-specific OpenTelemetry support. One way to do this is to set the `AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING` environment variable value to `true`. You can also enable the feature with the following code:
 ```C# Snippet:Sample_ResponsesEnableGenAITracing
-AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
+AppContext.SetSwitch("Azure.Experimental.EnableGenAITracing", true);
 ```
 
 > **Precedence:** If both the `AppContext` switch and the environment variable are set, the `AppContext` switch takes priority. No exception is thrown on conflict. If neither is set, the value defaults to `false`.
