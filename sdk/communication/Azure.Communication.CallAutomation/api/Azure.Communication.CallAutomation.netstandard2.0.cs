@@ -1532,6 +1532,7 @@ namespace Azure.Communication.CallAutomation
     {
         public TeamsPhoneCallerDetails(Azure.Communication.CommunicationIdentifier caller, string name, string phoneNumber) { }
         public System.Collections.Generic.IDictionary<string, string> AdditionalCallerInformation { get { throw null; } }
+        public Azure.Communication.CommunicationIdentifier Caller { get { throw null; } set { } }
         public bool? IsAuthenticated { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string PhoneNumber { get { throw null; } set { } }

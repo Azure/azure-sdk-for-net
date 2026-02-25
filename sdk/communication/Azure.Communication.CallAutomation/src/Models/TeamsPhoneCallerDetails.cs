@@ -50,7 +50,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Caller's ID. </summary>
-        internal CommunicationIdentifier Caller { get; set; }
+        public CommunicationIdentifier Caller { get; set; }
         /// <summary> Caller's name. </summary>
         public string Name { get; set; }
         /// <summary> Caller's phone number. </summary>
@@ -61,7 +61,7 @@ namespace Azure.Communication.CallAutomation
         public string ScreenPopUrl { get; set; }
         /// <summary> Flag indicating whether the caller was authenticated. </summary>
         public bool? IsAuthenticated { get; set; }
-        /// <summary> A set of key value pairs (max 10, any additional entries would be ignored) which a bot author wants to pass to the Teams Client for display to the agent. </summary>
+        /// <summary> A set of key value pairs which a bot author wants to pass to the Teams Client for display to the agent. </summary>
         public IDictionary<string, string> AdditionalCallerInformation { get; }
 
         /// <summary>
