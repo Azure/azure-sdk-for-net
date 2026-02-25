@@ -30,5 +30,16 @@ namespace Azure.AI.Speech.Transcription
             IEnumerable<string> stringValues = value.Select(v => TypeFormatters.ConvertToString(v, format));
             headers.Set(name, string.Join(delimiter, stringValues));
         }
+
+        /// <param name="headers"></param>
+        /// <param name="prefix"> The prefix to prepend to each header key. </param>
+        /// <param name="value"> The dictionary of headers to add. </param>
+        public static void Add(this PipelineRequestHeaders headers, string prefix, IDictionary<string, string> value)
+        {
+            foreach (var header in value)
+            {
+                headers.Add(prefix + header.Key, header.Value);
+            }
+        }
     }
 }
