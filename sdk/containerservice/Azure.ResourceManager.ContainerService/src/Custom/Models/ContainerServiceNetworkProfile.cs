@@ -23,6 +23,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         [WirePath("ipFamilies")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This class is obsolete and will be removed in a future release, please use NetworkIPFamilies", false)]
-        public IList<IPFamily> IPFamilies { get; }
+        public IList<ContainerServiceIPFamily> IPFamilies { get; }
     }
 }

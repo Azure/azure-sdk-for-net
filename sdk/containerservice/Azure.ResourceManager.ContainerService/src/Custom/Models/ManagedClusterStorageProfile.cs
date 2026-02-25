@@ -1,9 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.ComponentModel;
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 #nullable disable
 
@@ -16,48 +14,48 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Whether to enable AzureDisk CSI Driver. The default value is true. </summary>
         public bool? IsDiskCsiDriverEnabled
         {
-            get => DiskCsiDriver is null ? default : DiskCsiDriver.IsEnabled;
+            get => DiskCsiDriver is null ? default : DiskCsiDriver.IsDiskCsiDriverEnabled;
             set
             {
                 if (DiskCsiDriver is null)
                     DiskCsiDriver = new ManagedClusterStorageProfileDiskCsiDriver();
-                DiskCsiDriver.IsEnabled = value;
+                DiskCsiDriver.IsDiskCsiDriverEnabled = value;
             }
         }
 
         /// <summary> Whether to enable AzureFile CSI Driver. The default value is true. </summary>
         public bool? IsFileCsiDriverEnabled
         {
-            get => FileCsiDriver is null ? default : FileCsiDriver.IsEnabled;
+            get => FileCsiDriver is null ? default : FileCsiDriver.IsFileCsiDriverEnabled;
             set
             {
                 if (FileCsiDriver is null)
                     FileCsiDriver = new ManagedClusterStorageProfileFileCsiDriver();
-                FileCsiDriver.IsEnabled = value;
+                FileCsiDriver.IsFileCsiDriverEnabled = value;
             }
         }
 
         /// <summary> Whether to enable Snapshot Controller. The default value is true. </summary>
         public bool? IsSnapshotControllerEnabled
         {
-            get => SnapshotController is null ? default : SnapshotController.IsEnabled;
+            get => SnapshotController is null ? default : SnapshotController.IsSnapshotControllerEnabled;
             set
             {
                 if (SnapshotController is null)
                     SnapshotController = new ManagedClusterStorageProfileSnapshotController();
-                SnapshotController.IsEnabled = value;
+                SnapshotController.IsSnapshotControllerEnabled = value;
             }
         }
 
         /// <summary> Whether to enable AzureBlob CSI Driver. The default value is false. </summary>
         public bool? IsBlobCsiDriverEnabled
         {
-            get => BlobCsiDriver is null ? default : BlobCsiDriver.IsEnabled;
+            get => BlobCsiDriver is null ? default : BlobCsiDriver.IsBlobCsiDriverEnabled;
             set
             {
                 if (BlobCsiDriver is null)
                     BlobCsiDriver = new ManagedClusterStorageProfileBlobCsiDriver();
-                BlobCsiDriver.IsEnabled = value;
+                BlobCsiDriver.IsBlobCsiDriverEnabled = value;
             }
         }
     }
