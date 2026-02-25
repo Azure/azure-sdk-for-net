@@ -483,7 +483,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         private void RefreshCache()
         {
-            // Dispose all existing items, then clear _transferSates dicitonary
+            // Dispose all existing items, then clear _transferSates dictionary
             foreach (var planState in _transferStates)
             {
                 DisposeOfJobPartPlanAndPlanFile(planState.Value);
