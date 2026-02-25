@@ -54,7 +54,10 @@ namespace Azure.ResourceManager.GuestConfiguration
             uri.AppendPath("/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/", false);
             uri.AppendPath(guestConfigurationAssignmentName, true);
             uri.AppendPath("/reports", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,7 +80,10 @@ namespace Azure.ResourceManager.GuestConfiguration
             uri.AppendPath(guestConfigurationAssignmentName, true);
             uri.AppendPath("/reports/", false);
             uri.AppendPath(reportId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

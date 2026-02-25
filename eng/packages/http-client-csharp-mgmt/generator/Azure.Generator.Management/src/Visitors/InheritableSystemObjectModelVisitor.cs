@@ -106,7 +106,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         var rawDataField = CreateRawDataField(model);
         UpdateSerialization(model);
 
-        UpdateFullConstructor(model, rawDataField, baseSystemType);
+        UpdateFullConstructor(model, rawDataField);
 
         var baseSystemPropertyNames = EnumerateBaseModelProperties(baseSystemType);
         var properties = model.Properties.Where(prop => !baseSystemPropertyNames.Contains(prop.Name));
@@ -154,15 +154,13 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         }
     }
 
-    private static void UpdateFullConstructor(ModelProvider model, FieldProvider rawDataField, InheritableSystemObjectModelProvider baseSystemType)
+    private static void UpdateFullConstructor(ModelProvider model, FieldProvider rawDataField)
     {
         var signature = model.FullConstructor.Signature;
         var initializer = signature.Initializer;
         if (initializer is not null)
         {
-            var args = initializer.Arguments.Where(arg => arg is VariableExpression variable && variable.Declaration.RequestedName != RawDataParameterName).ToList();
-
-            var updatedInitializer = new ConstructorInitializer(initializer.IsBase, [.. args]);
+            var updatedInitializer = new ConstructorInitializer(initializer.IsBase, initializer.Arguments.Where(arg => arg is VariableExpression variable && variable.Declaration.RequestedName != RawDataParameterName).ToArray());
             var updatedSignature = new ConstructorSignature(signature.Type, signature.Description, signature.Modifiers, signature.Parameters, signature.Attributes, updatedInitializer);
             model.FullConstructor.Update(signature: updatedSignature);
         }
