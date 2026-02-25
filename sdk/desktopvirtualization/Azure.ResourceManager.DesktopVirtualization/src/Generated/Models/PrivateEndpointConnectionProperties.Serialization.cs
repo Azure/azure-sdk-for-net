@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WriteObjectValue(PrivateEndpoint, options);
             }
             writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-            writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
+            writer.WriteObjectValue(ConnectionState, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             IReadOnlyList<string> groupIds = default;
             PrivateEndpoint privateEndpoint = default;
-            DesktopVirtualizationPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            DesktopVirtualizationPrivateLinkServiceConnectionState connectionState = default;
             DesktopVirtualizationPrivateEndpointConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 if (prop.NameEquals("privateLinkServiceConnectionState"u8))
                 {
-                    privateLinkServiceConnectionState = DesktopVirtualizationPrivateLinkServiceConnectionState.DeserializeDesktopVirtualizationPrivateLinkServiceConnectionState(prop.Value, options);
+                    connectionState = DesktopVirtualizationPrivateLinkServiceConnectionState.DeserializeDesktopVirtualizationPrivateLinkServiceConnectionState(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PrivateEndpointConnectionProperties(groupIds ?? new ChangeTrackingList<string>(), privateEndpoint, privateLinkServiceConnectionState, provisioningState, additionalBinaryDataProperties);
+            return new PrivateEndpointConnectionProperties(groupIds ?? new ChangeTrackingList<string>(), privateEndpoint, connectionState, provisioningState, additionalBinaryDataProperties);
         }
     }
 }

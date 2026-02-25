@@ -57,11 +57,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         [WirePath("properties.privateLinkServiceConnectionState")]
-        public DesktopVirtualizationPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState
+        public DesktopVirtualizationPrivateLinkServiceConnectionState ConnectionState
         {
             get
             {
-                return Properties is null ? default : Properties.PrivateLinkServiceConnectionState;
+                return Properties is null ? default : Properties.ConnectionState;
             }
             set
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new PrivateEndpointConnectionProperties();
                 }
-                Properties.PrivateLinkServiceConnectionState = value;
+                Properties.ConnectionState = value;
             }
         }
 
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> The ARM identifier for private endpoint. </summary>
         [WirePath("properties.privateEndpoint.id")]
-        public string PrivateEndpointId
+        public ResourceIdentifier PrivateEndpointId
         {
             get
             {

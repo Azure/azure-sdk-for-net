@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of <see cref="PrivateEndpoint"/>. </summary>
         /// <param name="id"> The ARM identifier for private endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateEndpoint(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateEndpoint(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -33,6 +34,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> The ARM identifier for private endpoint. </summary>
         [WirePath("id")]
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
     }
 }
