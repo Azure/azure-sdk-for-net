@@ -9,11 +9,11 @@ namespace Azure.ResourceManager.CertificateRegistration.Tests
     {
         // Variables retrieved using GetRecordedVariable will be recorded in recorded tests
         // Argument is the output name in the test-resources.json
-        public new string SubscriptionId => GetRecordedVariable("APPCONFIGURATION_SUBSCRIPTIONID");
+        public new string SubscriptionId => GetRecordedVariable("CERTIFICATEREGISTRATION_SUBSCRIPTIONID");
         // Variables retrieved using GetVariable will not be recorded but the method will throw if the variable is not set
-        public string ResourceGroupName => GetVariable("APPCONFIGURATION_RESOURCEGROUPNAME");
-        //Account details
-        public string AccountName => GetRecordedVariable("APPCONFIGURATION_ACCOUNTNAME");
-        public string CertificateProfile => GetRecordedVariable("APPCONFIGURATION_CERTIFICATEPROFILE");
+        public string ResourceGroupName => GetVariable("CERTIFICATEREGISTRATION_RESOURCEGROUPNAME");
+        // Account details
+        public string AccountName => GetRecordedVariable("CERTIFICATEREGISTRATION_ACCOUNTNAME");
+        public string CertificateProfile => GetRecordedVariable("CERTIFICATEREGISTRATION_CERTIFICATEPROFILE");
     }
 }
