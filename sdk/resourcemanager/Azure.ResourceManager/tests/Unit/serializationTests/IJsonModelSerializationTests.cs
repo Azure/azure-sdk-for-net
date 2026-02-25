@@ -5,7 +5,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using NUnit.Framework;
 
@@ -23,8 +22,10 @@ namespace Azure.ResourceManager.Tests
         private static readonly ModelReaderWriterOptions WireOptions = ModelSerializationExtensions.WireOptions;
 
         /// <summary>
-        /// Discovers all public types in the Azure.ResourceManager assembly that implement
-        /// IJsonModel&lt;T&gt; and returns test cases using the model type T for deserialization.
+        /// Discovers all types (public and internal) in the Azure.ResourceManager assembly
+        /// that implement IJsonModel&lt;T&gt; and returns test cases using the model type T
+        /// for deserialization. Internal types are included because they may be deserialized
+        /// as nested types within public models.
         /// Resource types (e.g. TenantResource) implement IJsonModel&lt;TenantData&gt;, so we
         /// extract T from the interface and use it as the deserialization target.
         /// </summary>
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.Tests
             var seen = new HashSet<Type>();
 
             foreach (var type in assembly.GetTypes()
-                .Where(t => t.IsPublic && !t.IsAbstract && t.IsClass)
+                .Where(t => !t.IsAbstract && t.IsClass)
                 .OrderBy(t => t.FullName))
             {
                 var jsonModelInterface = type.GetInterfaces()
