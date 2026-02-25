@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                     yield break;
                 }
                 CredentialListResult result = CredentialListResult.FromResponse(response);
-                yield return Page<CredentialData>.FromValues((IReadOnlyList<CredentialData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<CredentialData>.FromValues((IReadOnlyList<CredentialData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

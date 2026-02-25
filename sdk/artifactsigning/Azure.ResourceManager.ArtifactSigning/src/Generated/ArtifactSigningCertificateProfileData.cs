@@ -182,7 +182,11 @@ namespace Azure.ResourceManager.ArtifactSigning
         {
             get
             {
-                return Properties is null ? default : Properties.Certificates;
+                if (Properties is null)
+                {
+                    Properties = new CertificateProfileProperties();
+                }
+                return Properties.Certificates;
             }
         }
     }

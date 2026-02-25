@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             uri.AppendPath(sapVirtualInstanceName, true);
             uri.AppendPath("/centralInstances/", false);
             uri.AppendPath(centralInstanceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +77,10 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             uri.AppendPath(sapVirtualInstanceName, true);
             uri.AppendPath("/centralInstances/", false);
             uri.AppendPath(centralInstanceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -97,7 +103,10 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             uri.AppendPath(sapVirtualInstanceName, true);
             uri.AppendPath("/centralInstances/", false);
             uri.AppendPath(centralInstanceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -120,7 +129,10 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             uri.AppendPath(sapVirtualInstanceName, true);
             uri.AppendPath("/centralInstances/", false);
             uri.AppendPath(centralInstanceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -139,7 +151,10 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             uri.AppendPath("/providers/Microsoft.Workloads/sapVirtualInstances/", false);
             uri.AppendPath(sapVirtualInstanceName, true);
             uri.AppendPath("/centralInstances", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -151,8 +166,18 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
         internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string sapVirtualInstanceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -174,7 +199,10 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             uri.AppendPath("/centralInstances/", false);
             uri.AppendPath(centralInstanceName, true);
             uri.AppendPath("/start", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -201,7 +229,10 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             uri.AppendPath("/centralInstances/", false);
             uri.AppendPath(centralInstanceName, true);
             uri.AppendPath("/stop", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

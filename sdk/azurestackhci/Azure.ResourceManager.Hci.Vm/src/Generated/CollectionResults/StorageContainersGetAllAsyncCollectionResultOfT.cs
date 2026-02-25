@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Hci.Vm
                     yield break;
                 }
                 StorageContainerListResult result = StorageContainerListResult.FromResponse(response);
-                yield return Page<HciVmStorageContainerData>.FromValues((IReadOnlyList<HciVmStorageContainerData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<HciVmStorageContainerData>.FromValues((IReadOnlyList<HciVmStorageContainerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

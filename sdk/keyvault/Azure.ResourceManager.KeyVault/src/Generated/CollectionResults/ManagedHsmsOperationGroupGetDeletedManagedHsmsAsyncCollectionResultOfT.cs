@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.KeyVault
                     yield break;
                 }
                 DeletedManagedHsmListResult result = DeletedManagedHsmListResult.FromResponse(response);
-                yield return Page<DeletedManagedHsmData>.FromValues((IReadOnlyList<DeletedManagedHsmData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DeletedManagedHsmData>.FromValues((IReadOnlyList<DeletedManagedHsmData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

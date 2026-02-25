@@ -56,7 +56,10 @@ namespace Azure.ResourceManager.NeonPostgres
             uri.AppendPath("/branches/", false);
             uri.AppendPath(branchName, true);
             uri.AppendPath("/computes", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -68,8 +71,18 @@ namespace Azure.ResourceManager.NeonPostgres
         internal HttpMessage CreateNextGetComputesRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

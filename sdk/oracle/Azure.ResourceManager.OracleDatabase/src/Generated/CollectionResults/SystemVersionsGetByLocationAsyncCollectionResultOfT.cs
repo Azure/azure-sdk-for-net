@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.OracleDatabase
                     yield break;
                 }
                 SystemVersionListResult result = SystemVersionListResult.FromResponse(response);
-                yield return Page<OracleSystemVersionData>.FromValues((IReadOnlyList<OracleSystemVersionData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<OracleSystemVersionData>.FromValues((IReadOnlyList<OracleSystemVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
