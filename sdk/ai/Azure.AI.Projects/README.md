@@ -1227,6 +1227,8 @@ Console.WriteLine($"Continuous Evaluation Rule created (id: {continuousEvalRule.
 
 **Note:** Tracing functionality is in preliminary preview and is subject to change. Spans, attributes, and events may be modified in future versions.
 
+> **Environment variable values:** All tracing-related environment variables accept `true` (case-insensitive) or `1` as equivalent enabling values.
+
 ### Enabling GenAI Tracing
 
 Tracing requires enabling GenAI-specific OpenTelemetry support. One way to do this is to set the `AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING` environment variable value to `true`. You can also enable the feature with the following code:
@@ -1257,6 +1259,7 @@ dotnet add package Azure.Monitor.OpenTelemetry.Exporter
 ```
 
 Here is an example how to set up tracing to Azure Monitor using Azure.Monitor.OpenTelemetry.Exporter:
+```C# Snippet:Sample_SetupTracingToAzureMonitor
 var tracerProvider = Sdk.CreateTracerProviderBuilder()
     .AddSource("Azure.AI.Projects.*")
     .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("AgentTracingSample"))
@@ -1271,9 +1274,12 @@ For tracing to console from your application, install the OpenTelemetry.Exporter
 dotnet add package OpenTelemetry.Exporter.Console
 ```
 
-Here is an example how to set up tracing to console:
+```C# Snippet:Sample_SetupTracingToConsole
 var tracerProvider = Sdk.CreateTracerProviderBuilder()
-    .Build();
+                .AddSource("Azure.AI.Projects.*") // Add the required sources name
+                .SetResourceBuilder(OpenTelemetry.Resources.ResourceBuilder.CreateDefault().AddService("AgentTracingSample"))
+                .AddConsoleExporter() // Export traces to the console
+                .Build();
 ```
 
 ### Enabling trace context propagation

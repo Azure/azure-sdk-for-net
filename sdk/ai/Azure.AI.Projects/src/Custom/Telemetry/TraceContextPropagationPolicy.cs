@@ -46,19 +46,29 @@ namespace Azure.AI.Projects
                 return;
             }
 
-            DistributedContextPropagator.Current.Inject(activity, message.Request, static (carrier, key, value) =>
-            {
-                if (carrier is PipelineRequest request)
-                {
-                    request.Headers.Set(key, value);
-                }
-            });
+            // Let the propagator inject all headers it knows about, then filter
+            // to the W3C allow-list — same approach as the Python implementation.
+            var carrier = new Dictionary<string, string>();
+            DistributedContextPropagator.Current.Inject(activity, carrier, static (c, k, v) =>
+                ((Dictionary<string, string>)c)[k] = v);
 
-            // Remove baggage header if not explicitly opted in, since the propagator
-            // injects it by default. Baggage may contain sensitive application data.
-            if (!_includeBaggage)
+            foreach (KeyValuePair<string, string> entry in carrier)
             {
-                message.Request.Headers.Remove("baggage");
+                string keyLower = entry.Key.ToLowerInvariant();
+                if (keyLower == "traceparent" || keyLower == "tracestate")
+                {
+                    if (!message.Request.Headers.TryGetValue(entry.Key, out _))
+                    {
+                        message.Request.Headers.Set(entry.Key, entry.Value);
+                    }
+                }
+                else if (keyLower == "baggage" && _includeBaggage)
+                {
+                    if (!message.Request.Headers.TryGetValue(entry.Key, out _))
+                    {
+                        message.Request.Headers.Set(entry.Key, entry.Value);
+                    }
+                }
             }
         }
     }

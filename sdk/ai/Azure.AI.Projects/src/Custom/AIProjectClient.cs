@@ -65,9 +65,13 @@ namespace Azure.AI.Projects
             PipelinePolicyHelpers.OpenAI.AddErrorTransformPolicy(options);
             PipelinePolicyHelpers.OpenAI.AddAzureFinetuningParityPolicy(options);
 
-            bool enableTraceContextPropagation = AppContextSwitchHelper.GetConfigValue(
-                OpenTelemetryConstants.TraceContextPropagationSwitch,
-                OpenTelemetryConstants.TraceContextPropagationEnvironmentVariable);
+            bool enableTraceContextPropagation =
+                AppContextSwitchHelper.GetConfigValue(
+                    OpenTelemetryConstants.EnableOpenTelemetrySwitch,
+                    OpenTelemetryConstants.EnableOpenTelemetryEnvironmentVariable) &&
+                AppContextSwitchHelper.GetConfigValue(
+                    OpenTelemetryConstants.TraceContextPropagationSwitch,
+                    OpenTelemetryConstants.TraceContextPropagationEnvironmentVariable);
 
             PipelinePolicy[] perCallPolicies = enableTraceContextPropagation
                 ? new PipelinePolicy[] { new TraceContextPropagationPolicy(
