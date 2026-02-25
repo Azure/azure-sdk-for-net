@@ -6,6 +6,15 @@ Azure.ResourceManager.DesktopVirtualization (ApiCompat baseline: 1.3.2)
 Total unique breaking changes: 14 (grouped by root cause below)
 Errors repeat across 3 target frameworks (net8.0, net10.0, netstandard2.0).
 
+STATUS AFTER TSP-SIDE FIXES:
+  ✅ FIXED (TSP): #8 - PrivateEndpointId type (string→ResourceIdentifier) via @@alternateType
+  ✅ FIXED (TSP): #8 - ConnectionState rename via @@clientName
+  ❌ NOT FIXED (TSP): #3 - MsixImageUri visibility (@@access ignored by generator)
+  ⚠️  SIDE EFFECT: Generator produced ModelFactory compat overloads with wrong arg order
+     after ConnectionState rename — manually patched in generated code.
+  
+  Remaining: 34 unique ApiCompat errors (12 unique breaking changes) need SDK-side fixes.
+
 ================================================================================
 BREAKING CHANGE #1: Method renamed — HostPoolResource.ImportAppAttachPackageInfos
 ================================================================================
@@ -75,13 +84,16 @@ Root Cause:
   inline anonymous request body that wraps this type, the generator makes `MsixImageUri`
   internal (it's only used as a property of the internal `ExpandParameterBody` wrapper).
 
-Preferred Fix: TSP-side (client.tsp)
-  File: TempTypeSpecFiles/DesktopVirtualization/client.tsp
+Preferred Fix: TSP-side (client.tsp) — ❌ DID NOT WORK
+  @@access(MSIXImageURI, Access.public, "csharp") was applied but the C# generator
+  overrides it — the type remains internal because it's only used as an internal
+  flattened property within ExpandParameterBody.
+
+  Actual Fix Required: SDK-side (Customize)
+  File: src/Customize/Models/MsixImageUri.cs (create new)
   Steps:
-  1. Add the following decorator to force the type to be public:
-     @@access(MSIXImageURI, Access.public, "csharp");
-  2. Ensure the @@clientName(MSIXImageURI, "MsixImageUri", "csharp") already present
-     still applies correctly.
+  1. Add a CodeGenSuppression attribute to suppress the generated internal MsixImageUri.
+  2. Redefine the type as a public partial class with the same structure.
 
 ================================================================================
 BREAKING CHANGE #4: Method renamed — HostPoolResource.GetPrivateLinkResources
@@ -206,29 +218,15 @@ Error Messages:
   - MembersMustExist: 'void DesktopVirtualizationPrivateEndpointConnection.ConnectionState.set(...)'
 
 Root Cause (PrivateEndpointId type):
-  The TSP model `PrivateEndpoint.id` is defined as `string` (with @visibility(Read)).
-  The old SDK had this flattened as `ResourceIdentifier PrivateEndpointId`. The new
-  generated code has `string PrivateEndpointId`. The old SDK used AutoRest conventions
-  that auto-converted ARM id strings to ResourceIdentifier.
+  ✅ FIXED via TSP-side @@alternateType(PrivateEndpoint.id, Azure.Core.armResourceIdentifier, "csharp")
 
 Root Cause (ConnectionState rename):
-  The TSP model property is `privateLinkServiceConnectionState`. The old SDK shortened
-  this to `ConnectionState` via AutoRest naming conventions. The new generator uses the
-  full name `PrivateLinkServiceConnectionState`.
-
-Preferred Fix: TSP-side (client.tsp) + SDK-side (Customize)
-  File: TempTypeSpecFiles/DesktopVirtualization/client.tsp
-  Steps for PrivateEndpointId type:
-  1. Add @@alternateType decorator to convert the PrivateEndpoint.id to ResourceIdentifier:
-       @@alternateType(PrivateEndpoint.id, Azure.Core.armResourceIdentifier, "csharp");
-     This will generate `ResourceIdentifier PrivateEndpointId` instead of `string`.
-
-  Steps for ConnectionState rename:
-  2. Add @@clientName decorators to rename the property back to "ConnectionState":
-       @@clientName(PrivateEndpointConnectionProperties.privateLinkServiceConnectionState,
-         "ConnectionState", "csharp");
-     This will generate the property as `ConnectionState` on both the Data type and
-     the Models type (since both are flattened from the same TSP properties model).
+  ✅ FIXED via TSP-side @@clientName(PrivateEndpointConnectionProperties.privateLinkServiceConnectionState,
+     "ConnectionState", "csharp")
+  ⚠️  Side effect: Generator produced ModelFactory compat overloads with wrong positional
+     argument order. Manually patched in ArmDesktopVirtualizationModelFactory.cs (use
+     named arguments: privateEndpointId: privateEndpointId, connectionState: connectionState,
+     provisioningState: provisioningState).
 
 ================================================================================
 BREAKING CHANGE #9: VirtualApplicationPatch.Tags and VirtualDesktopPatch.Tags missing
