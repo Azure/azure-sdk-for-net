@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Chaos
                     yield break;
                 }
                 ExperimentListResult result = ExperimentListResult.FromResponse(response);
-                yield return Page<ChaosExperimentData>.FromValues((IReadOnlyList<ChaosExperimentData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ChaosExperimentData>.FromValues((IReadOnlyList<ChaosExperimentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

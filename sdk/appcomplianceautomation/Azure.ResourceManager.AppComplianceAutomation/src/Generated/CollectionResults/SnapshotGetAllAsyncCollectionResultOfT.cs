@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                     yield break;
                 }
                 SnapshotResourceListResult result = SnapshotResourceListResult.FromResponse(response);
-                yield return Page<AppComplianceReportSnapshotData>.FromValues((IReadOnlyList<AppComplianceReportSnapshotData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<AppComplianceReportSnapshotData>.FromValues((IReadOnlyList<AppComplianceReportSnapshotData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

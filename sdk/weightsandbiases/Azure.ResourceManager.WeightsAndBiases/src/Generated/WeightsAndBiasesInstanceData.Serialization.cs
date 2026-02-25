@@ -42,6 +42,41 @@ namespace Azure.ResourceManager.WeightsAndBiases
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WeightsAndBiasesInstanceData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWeightsAndBiasesContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(WeightsAndBiasesInstanceData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<WeightsAndBiasesInstanceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WeightsAndBiasesInstanceData IPersistableModel<WeightsAndBiasesInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (WeightsAndBiasesInstanceData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WeightsAndBiasesInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="weightsAndBiasesInstanceData"> The <see cref="WeightsAndBiasesInstanceData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(WeightsAndBiasesInstanceData weightsAndBiasesInstanceData)
+        {
+            if (weightsAndBiasesInstanceData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(weightsAndBiasesInstanceData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="WeightsAndBiasesInstanceData"/> from. </param>
         internal static WeightsAndBiasesInstanceData FromResponse(Response response)
         {
@@ -207,41 +242,6 @@ namespace Azure.ResourceManager.WeightsAndBiases
                 location,
                 properties,
                 identity);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WeightsAndBiasesInstanceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WeightsAndBiasesInstanceData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWeightsAndBiasesContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(WeightsAndBiasesInstanceData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        WeightsAndBiasesInstanceData IPersistableModel<WeightsAndBiasesInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (WeightsAndBiasesInstanceData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<WeightsAndBiasesInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="weightsAndBiasesInstanceData"> The <see cref="WeightsAndBiasesInstanceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(WeightsAndBiasesInstanceData weightsAndBiasesInstanceData)
-        {
-            if (weightsAndBiasesInstanceData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(weightsAndBiasesInstanceData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

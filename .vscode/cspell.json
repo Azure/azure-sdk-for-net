@@ -334,6 +334,12 @@
       ]
     },
     {
+      "filename": "**/sdk/certificateregistration/**/*.cs",
+      "words": [
+        "guage"
+      ]
+    },
+    {
       "filename": "**/sdk/cdn/**/*.cs",
       "words": [
         "orqel",

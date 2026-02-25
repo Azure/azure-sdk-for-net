@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     yield break;
                 }
                 FqdnListGlobalRulestackResourceListResult result = FqdnListGlobalRulestackResourceListResult.FromResponse(response);
-                yield return Page<GlobalRulestackFqdnData>.FromValues((IReadOnlyList<GlobalRulestackFqdnData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<GlobalRulestackFqdnData>.FromValues((IReadOnlyList<GlobalRulestackFqdnData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- `AzureDeveloperCliCredential` now parses JSON error output from `azd auth token` to extract clean error messages instead of including raw JSON in exceptions. Error messages like `{"type":"consoleMessage","data":{"message":"ERROR: fetching token: ..."}}` are now displayed as `ERROR: fetching token: ...`.
+
 ## 1.18.0-beta.3 (2026-02-20)
 
 ### Breaking Changes

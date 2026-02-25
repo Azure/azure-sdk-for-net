@@ -103,7 +103,11 @@ namespace Azure.ResourceManager.Avs
         {
             get
             {
-                return Properties is null ? default : Properties.IdentitySources;
+                if (Properties is null)
+                {
+                    Properties = new PrivateCloudProperties();
+                }
+                return Properties.IdentitySources;
             }
         }
 
@@ -151,7 +155,11 @@ namespace Azure.ResourceManager.Avs
         {
             get
             {
-                return Properties is null ? default : Properties.ExtendedNetworkBlocks;
+                if (Properties is null)
+                {
+                    Properties = new PrivateCloudProperties();
+                }
+                return Properties.ExtendedNetworkBlocks;
             }
         }
 
@@ -295,7 +303,11 @@ namespace Azure.ResourceManager.Avs
         {
             get
             {
-                return Properties is null ? default : Properties.ExternalCloudLinks;
+                if (Properties is null)
+                {
+                    Properties = new PrivateCloudProperties();
+                }
+                return Properties.ExternalCloudLinks;
             }
         }
 

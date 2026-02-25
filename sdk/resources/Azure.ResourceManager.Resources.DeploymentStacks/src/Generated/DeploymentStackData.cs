@@ -100,7 +100,11 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
         {
             get
             {
-                return Properties is null ? default : Properties.Parameters;
+                if (Properties is null)
+                {
+                    Properties = new DeploymentStackProperties();
+                }
+                return Properties.Parameters;
             }
         }
 
@@ -126,7 +130,11 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
         {
             get
             {
-                return Properties is null ? default : Properties.ExtensionConfigs;
+                if (Properties is null)
+                {
+                    Properties = new DeploymentStackProperties();
+                }
+                return Properties.ExtensionConfigs;
             }
         }
 
@@ -135,7 +143,11 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
         {
             get
             {
-                return Properties is null ? default : Properties.ExternalInputs;
+                if (Properties is null)
+                {
+                    Properties = new DeploymentStackProperties();
+                }
+                return Properties.ExternalInputs;
             }
         }
 
@@ -144,7 +156,11 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
         {
             get
             {
-                return Properties is null ? default : Properties.ExternalInputDefinitions;
+                if (Properties is null)
+                {
+                    Properties = new DeploymentStackProperties();
+                }
+                return Properties.ExternalInputDefinitions;
             }
         }
 
@@ -273,7 +289,11 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
         {
             get
             {
-                return Properties is null ? default : Properties.DetachedResources;
+                if (Properties is null)
+                {
+                    Properties = new DeploymentStackProperties();
+                }
+                return Properties.DetachedResources;
             }
         }
 
@@ -282,7 +302,11 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
         {
             get
             {
-                return Properties is null ? default : Properties.DeletedResources;
+                if (Properties is null)
+                {
+                    Properties = new DeploymentStackProperties();
+                }
+                return Properties.DeletedResources;
             }
         }
 
@@ -291,7 +315,11 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
         {
             get
             {
-                return Properties is null ? default : Properties.FailedResources;
+                if (Properties is null)
+                {
+                    Properties = new DeploymentStackProperties();
+                }
+                return Properties.FailedResources;
             }
         }
 
@@ -300,7 +328,11 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
         {
             get
             {
-                return Properties is null ? default : Properties.Resources;
+                if (Properties is null)
+                {
+                    Properties = new DeploymentStackProperties();
+                }
+                return Properties.Resources;
             }
         }
 
@@ -309,7 +341,11 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
         {
             get
             {
-                return Properties is null ? default : Properties.DeploymentExtensions;
+                if (Properties is null)
+                {
+                    Properties = new DeploymentStackProperties();
+                }
+                return Properties.DeploymentExtensions;
             }
         }
 

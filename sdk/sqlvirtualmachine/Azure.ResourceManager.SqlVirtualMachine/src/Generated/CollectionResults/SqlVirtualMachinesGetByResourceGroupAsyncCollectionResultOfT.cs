@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                     yield break;
                 }
                 SqlVirtualMachineListResult result = SqlVirtualMachineListResult.FromResponse(response);
-                yield return Page<SqlVmData>.FromValues(result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<SqlVmData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

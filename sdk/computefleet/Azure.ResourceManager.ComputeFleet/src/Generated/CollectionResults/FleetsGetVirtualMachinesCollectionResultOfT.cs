@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ComputeFleet
                     yield break;
                 }
                 VirtualMachineListResult result = VirtualMachineListResult.FromResponse(response);
-                yield return Page<ComputeFleetVirtualMachine>.FromValues((IReadOnlyList<ComputeFleetVirtualMachine>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ComputeFleetVirtualMachine>.FromValues((IReadOnlyList<ComputeFleetVirtualMachine>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

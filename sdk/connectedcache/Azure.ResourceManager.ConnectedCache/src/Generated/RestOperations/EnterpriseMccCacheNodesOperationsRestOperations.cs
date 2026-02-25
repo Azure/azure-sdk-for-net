@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.ConnectedCache
             uri.AppendPath(customerResourceName, true);
             uri.AppendPath("/enterpriseMccCacheNodes/", false);
             uri.AppendPath(cacheNodeResourceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +77,10 @@ namespace Azure.ResourceManager.ConnectedCache
             uri.AppendPath(customerResourceName, true);
             uri.AppendPath("/enterpriseMccCacheNodes/", false);
             uri.AppendPath(cacheNodeResourceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -97,7 +103,10 @@ namespace Azure.ResourceManager.ConnectedCache
             uri.AppendPath(customerResourceName, true);
             uri.AppendPath("/enterpriseMccCacheNodes/", false);
             uri.AppendPath(cacheNodeResourceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -120,7 +129,10 @@ namespace Azure.ResourceManager.ConnectedCache
             uri.AppendPath(customerResourceName, true);
             uri.AppendPath("/enterpriseMccCacheNodes/", false);
             uri.AppendPath(cacheNodeResourceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -139,7 +151,10 @@ namespace Azure.ResourceManager.ConnectedCache
             uri.AppendPath("/providers/Microsoft.ConnectedCache/enterpriseMccCustomers/", false);
             uri.AppendPath(customerResourceName, true);
             uri.AppendPath("/enterpriseMccCacheNodes", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -151,8 +166,18 @@ namespace Azure.ResourceManager.ConnectedCache
         internal HttpMessage CreateNextGetByEnterpriseMccCustomerResourceRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string customerResourceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -174,7 +199,10 @@ namespace Azure.ResourceManager.ConnectedCache
             uri.AppendPath("/enterpriseMccCacheNodes/", false);
             uri.AppendPath(cacheNodeResourceName, true);
             uri.AppendPath("/getCacheNodeInstallDetails", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -196,7 +224,10 @@ namespace Azure.ResourceManager.ConnectedCache
             uri.AppendPath("/enterpriseMccCacheNodes/", false);
             uri.AppendPath(cacheNodeResourceName, true);
             uri.AppendPath("/getCacheNodeAutoUpdateHistory", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -218,7 +249,10 @@ namespace Azure.ResourceManager.ConnectedCache
             uri.AppendPath("/enterpriseMccCacheNodes/", false);
             uri.AppendPath(cacheNodeResourceName, true);
             uri.AppendPath("/getCacheNodeMccIssueDetailsHistory", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -240,7 +274,10 @@ namespace Azure.ResourceManager.ConnectedCache
             uri.AppendPath("/enterpriseMccCacheNodes/", false);
             uri.AppendPath(cacheNodeResourceName, true);
             uri.AppendPath("/getCacheNodeTlsCertificateHistory", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

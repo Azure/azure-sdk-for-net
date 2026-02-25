@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.OracleDatabase
                     yield break;
                 }
                 AutonomousDatabaseCharacterSetListResult result = AutonomousDatabaseCharacterSetListResult.FromResponse(response);
-                yield return Page<AutonomousDatabaseCharacterSetData>.FromValues((IReadOnlyList<AutonomousDatabaseCharacterSetData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<AutonomousDatabaseCharacterSetData>.FromValues((IReadOnlyList<AutonomousDatabaseCharacterSetData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

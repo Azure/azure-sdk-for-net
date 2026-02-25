@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Peering
                     yield break;
                 }
                 PeeringServiceListResult result = PeeringServiceListResult.FromResponse(response);
-                yield return Page<PeeringServiceData>.FromValues((IReadOnlyList<PeeringServiceData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<PeeringServiceData>.FromValues((IReadOnlyList<PeeringServiceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

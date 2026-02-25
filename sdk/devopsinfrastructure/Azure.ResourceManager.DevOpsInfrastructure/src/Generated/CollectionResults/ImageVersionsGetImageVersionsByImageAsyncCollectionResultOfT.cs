@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
                     yield break;
                 }
                 ImageVersionListResult result = ImageVersionListResult.FromResponse(response);
-                yield return Page<DevOpsImageVersion>.FromValues((IReadOnlyList<DevOpsImageVersion>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DevOpsImageVersion>.FromValues((IReadOnlyList<DevOpsImageVersion>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
