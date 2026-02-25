@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -99,11 +98,12 @@ public abstract partial class Specification
                 }
 
                 /**/
-                // Extract api-versions from the mgmt library's RestOperations
+                // Extract api-versions from the CreateOrUpdate method's XML doc comments
                 foreach (Resource resource in Resources)
                 {
                     if (resource.ResourceType is null) { continue; }
-                    resource.DefaultResourceVersion = FindMgmtApiVersion(resource);
+                    MethodInfo creator = resources[resource.ArmType!];
+                    resource.DefaultResourceVersion = ExtractApiVersionFromXmlDoc(creator);
                 }
 
                 // Try to resolve missing versions from related types
@@ -611,85 +611,35 @@ public abstract partial class Specification
     }
 
     /// <summary>
-    /// Find the api-version used by the mgmt library for a given resource
-    /// by creating a RestOperations instance and reading its _apiVersion field.
-    /// All RestOperations classes within a library share the same default api-version,
-    /// so we can use any RestOperations field from the resource type.
+    /// Extract the default api-version from a CreateOrUpdate method's XML doc comment.
+    /// The generated mgmt libraries include a "Default Api Version" item in the
+    /// method's summary XML doc list, e.g.:
+    /// <code>
+    ///   &lt;item&gt;
+    ///     &lt;term&gt;Default Api Version&lt;/term&gt;
+    ///     &lt;description&gt;2025-06-01&lt;/description&gt;
+    ///   &lt;/item&gt;
+    /// </code>
     /// </summary>
-    private static string? FindMgmtApiVersion(Resource resource)
+    private string? ExtractApiVersionFromXmlDoc(MethodInfo method)
     {
-        Type armType = resource.ArmType!;
+        // Use the Specification's existing DocComments reader which has
+        // already loaded the XML doc file for the mgmt assembly
+        string? summary = DocComments.GetSummary(method);
+        if (summary is null) { return null; }
 
-        // Find any RestOperations field on the ArmResource type
-        foreach (FieldInfo field in armType.GetFields(BindingFlags.NonPublic | BindingFlags.Instance))
-        {
-            if (!field.FieldType.Name.EndsWith("RestOperations")) { continue; }
+        // The summary text contains the flattened content including
+        // "Default Api Version" followed by the version string.
+        const string marker = "Default Api Version";
+        int idx = summary.IndexOf(marker, StringComparison.OrdinalIgnoreCase);
+        if (idx < 0) { return null; }
 
-            string? version = ExtractApiVersionFromRestOperations(field.FieldType);
-            if (version is not null) { return version; }
-        }
+        // Extract the version after the marker - it follows after some whitespace/punctuation
+        string rest = summary[(idx + marker.Length)..].Trim().TrimStart('.').Trim();
 
-        return null;
-    }
-
-    /// <summary>
-    /// Extract the default api-version from a RestOperations type by creating
-    /// an instance with null apiVersion (triggering the hardcoded default)
-    /// and reading the private _apiVersion field via reflection.
-    /// </summary>
-    private static string? ExtractApiVersionFromRestOperations(Type restOperationsType)
-    {
-        // Find a constructor that accepts HttpPipeline as the first parameter
-        ConstructorInfo? ctor = restOperationsType
-            .GetConstructors(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
-            .FirstOrDefault();
-        if (ctor is null) { return null; }
-
-        try
-        {
-            // Build parameter values: pipeline is required, everything else can be null/default.
-            // Constructor signature is typically:
-            //   (HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
-            // or for older libraries:
-            //   (ClientDiagnostics diagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = default)
-            ParameterInfo[] parameters = ctor.GetParameters();
-            object?[] args = new object?[parameters.Length];
-
-            ArmClientOptions options = new();
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options);
-
-            for (int i = 0; i < parameters.Length; i++)
-            {
-                Type paramType = parameters[i].ParameterType;
-                if (paramType == typeof(HttpPipeline))
-                {
-                    args[i] = pipeline;
-                }
-                else if (paramType.Name == "ClientDiagnostics")
-                {
-                    // ClientDiagnostics is internal; create via reflection
-                    args[i] = Activator.CreateInstance(paramType,
-                        BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance,
-                        binder: null,
-                        args: [options],
-                        culture: null);
-                }
-                // Leave apiVersion, applicationId, endpoint, etc. as null
-                // so the constructor falls through to its hardcoded default
-            }
-
-            object? instance = ctor.Invoke(args);
-            if (instance is null) { return null; }
-
-            // Read the private _apiVersion field
-            FieldInfo? versionField = restOperationsType.GetField("_apiVersion",
-                BindingFlags.NonPublic | BindingFlags.Instance);
-            return versionField?.GetValue(instance) as string;
-        }
-        catch
-        {
-            return null;
-        }
+        // The version is the next token that looks like a date (YYYY-MM-DD with optional suffix)
+        Match match = Regex.Match(rest, @"(\d{4}-\d{2}-\d{2}[\w-]*)");
+        return match.Success ? match.Groups[1].Value.TrimEnd('.') : null;
     }
 
     /// <summary>
