@@ -64,14 +64,14 @@ namespace Azure.ResourceManager.ContainerService
                 AutoUpgradeProfile.UpgradeChannel = value;
             }
         }
-/*
+
         /// <summary> The identity of the managed cluster, if configured. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ManagedServiceIdentity Identity
         {
             //get; set;
             // Update get once Azure.ResourceManager provide model factory method for ManagedServiceIdentity
-            get => ClusterIdentity is null ? default : new ManagedServiceIdentity(ClusterIdentity.ResourceIdentityType);
+            get => ClusterIdentity is null ? default : new ManagedServiceIdentity(ClusterIdentity.ResourceIdentityType is null ? Azure.ResourceManager.Models.ManagedServiceIdentityType.None : ClusterIdentity.ResourceIdentityType.Value);
             set
             {
                 if (value is null)
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ContainerService
                 }
             }
         }
-*/
+
         /// <summary> Metrics profile for the Azure Monitor managed service for Prometheus addon. Collect out-of-the-box Kubernetes infrastructure metrics to send to an Azure Monitor Workspace and configure additional scraping for custom targets. See aka.ms/AzureManagedPrometheus for an overview. </summary>
         [WirePath("properties.azureMonitorProfile.metrics")]
         [EditorBrowsable(EditorBrowsableState.Never)]
