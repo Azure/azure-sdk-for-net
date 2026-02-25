@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
 using System.ClientModel;
@@ -455,7 +455,7 @@ public class AgentsTests : AgentsTestBase
             }
             else if (prop.NameEquals("participants"u8))
             {
-                Assert.That(prop.Value.ValueKind, Is.EqualTo(JsonValueKind.Array), $"Incorrect value type for partoicipants: {prop.Value.ValueKind.ToString()}");
+                Assert.That(prop.Value.ValueKind, Is.EqualTo(JsonValueKind.Array), $"Incorrect value type for participants: {prop.Value.ValueKind.ToString()}");
                 HashSet<string> values = [];
                 foreach (JsonElement dataElement in prop.Value.EnumerateArray())
                 {
@@ -755,7 +755,7 @@ public class AgentsTests : AgentsTestBase
                 Assert.That(Regex.Match(response.GetOutputText().ToLower(), expectedResponse.ToLower()).Success, Is.True, $"The output: \"{response.GetOutputText()}\" does not contain {expectedResponse}");
             }
         }
-        if (toolType == ToolType.AzureAISearch | toolType == ToolType.BingGrounding | toolType == ToolType.BingGroundingCustom | toolType == ToolType.Sharepoint | toolType ==ToolType.MicrosoftFabric)
+        if (toolType == ToolType.AzureAISearch | toolType == ToolType.BingGrounding | toolType == ToolType.BingGroundingCustom | toolType == ToolType.Sharepoint | toolType == ToolType.MicrosoftFabric)
         {
             bool isUriCitationFound = false;
 

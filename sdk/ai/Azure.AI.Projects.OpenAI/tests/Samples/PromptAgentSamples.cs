@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.ClientModel.TestFramework;
 using Azure.Identity;
+using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;
-using System.ClientModel;
 
 namespace Azure.AI.Projects.OpenAI.Tests.Samples;
 
