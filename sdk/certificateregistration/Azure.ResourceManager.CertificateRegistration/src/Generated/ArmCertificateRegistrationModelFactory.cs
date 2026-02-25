@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         /// <param name="expireOn"> Certificate expiration time. </param>
         /// <param name="isPrivateKeyExternal"> &lt;code&gt;true&lt;/code&gt; if private key is external; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="appServiceCertificateNotRenewableReasons"> Reasons why App Service Certificate is not renewable at the current moment. </param>
-        /// <param name="nextAutoRenewTimeStamp"> Time stamp when the certificate would be auto renewed next. </param>
+        /// <param name="nextAutoRenewOn"> Time stamp when the certificate would be auto renewed next. </param>
         /// <param name="contact"> Contact info. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="CertificateRegistration.AppServiceCertificateOrderData"/> instance for mocking. </returns>
-        public static AppServiceCertificateOrderData AppServiceCertificateOrderData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IDictionary<string, AppServiceCertificateProperties> certificates = default, string distinguishedName = default, string domainVerificationToken = default, int? validityInYears = default, int? keySize = default, CertificateProductType? productType = default, bool? isAutoRenew = default, CertificateRegistrationProvisioningState? provisioningState = default, CertificateOrderStatus? status = default, AppServiceCertificateDetails signedCertificate = default, string csr = default, AppServiceCertificateDetails intermediate = default, AppServiceCertificateDetails root = default, string serialNumber = default, DateTimeOffset? lastCertificateIssuedOn = default, DateTimeOffset? expireOn = default, bool? isPrivateKeyExternal = default, IEnumerable<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons = default, DateTimeOffset? nextAutoRenewTimeStamp = default, CertificateOrderContact contact = default, string kind = default)
+        public static AppServiceCertificateOrderData AppServiceCertificateOrderData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IDictionary<string, AppServiceCertificateProperties> certificates = default, string distinguishedName = default, string domainVerificationToken = default, int? validityInYears = default, int? keySize = default, CertificateProductType? productType = default, bool? isAutoRenew = default, CertificateRegistrationProvisioningState? provisioningState = default, CertificateOrderStatus? status = default, AppServiceCertificateDetails signedCertificate = default, string csr = default, AppServiceCertificateDetails intermediate = default, AppServiceCertificateDetails root = default, string serialNumber = default, DateTimeOffset? lastCertificateIssuedOn = default, DateTimeOffset? expireOn = default, bool? isPrivateKeyExternal = default, IEnumerable<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons = default, DateTimeOffset? nextAutoRenewOn = default, CertificateOrderContact contact = default, string kind = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                certificates is null && distinguishedName is null && domainVerificationToken is null && validityInYears is null && keySize is null && productType is null && isAutoRenew is null && provisioningState is null && status is null && signedCertificate is null && csr is null && intermediate is null && root is null && serialNumber is null && lastCertificateIssuedOn is null && expireOn is null && isPrivateKeyExternal is null && appServiceCertificateNotRenewableReasons is null && nextAutoRenewTimeStamp is null && contact is null ? default : new AppServiceCertificateOrderProperties(
+                certificates is null && distinguishedName is null && domainVerificationToken is null && validityInYears is null && keySize is null && productType is null && isAutoRenew is null && provisioningState is null && status is null && signedCertificate is null && csr is null && intermediate is null && root is null && serialNumber is null && lastCertificateIssuedOn is null && expireOn is null && isPrivateKeyExternal is null && appServiceCertificateNotRenewableReasons is null && nextAutoRenewOn is null && contact is null ? default : new AppServiceCertificateOrderProperties(
                     certificates,
                     distinguishedName,
                     domainVerificationToken,
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                     expireOn,
                     isPrivateKeyExternal,
                     (appServiceCertificateNotRenewableReasons ?? new ChangeTrackingList<AppServiceCertificateNotRenewableReason>()).ToList(),
-                    nextAutoRenewTimeStamp,
+                    nextAutoRenewOn,
                     contact,
                     null),
                 kind);
@@ -149,14 +149,14 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         /// <param name="intermediate"> Intermediate certificate. </param>
         /// <param name="root"> Root certificate. </param>
         /// <param name="serialNumber"> Current serial number of the certificate. </param>
-        /// <param name="lastCertificateIssuanceOn"> Certificate last issuance time. </param>
+        /// <param name="lastCertificateIssuedOn"> Certificate last issuance time. </param>
         /// <param name="expireOn"> Certificate expiration time. </param>
         /// <param name="isPrivateKeyExternal"> &lt;code&gt;true&lt;/code&gt; if private key is external; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="appServiceCertificateNotRenewableReasons"> Reasons why App Service Certificate is not renewable at the current moment. </param>
-        /// <param name="nextAutoRenewTimeStamp"> Time stamp when the certificate would be auto renewed next. </param>
+        /// <param name="nextAutoRenewOn"> Time stamp when the certificate would be auto renewed next. </param>
         /// <param name="contact"> Contact info. </param>
         /// <returns> A new <see cref="Models.AppServiceCertificateOrderPatch"/> instance for mocking. </returns>
-        public static AppServiceCertificateOrderPatch AppServiceCertificateOrderPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, AppServiceCertificateProperties> certificates = default, string distinguishedName = default, string domainVerificationToken = default, int? validityInYears = default, int? keySize = default, CertificateProductType? productType = default, bool? isAutoRenew = default, CertificateRegistrationProvisioningState? provisioningState = default, CertificateOrderStatus? status = default, AppServiceCertificateDetails signedCertificate = default, string csr = default, AppServiceCertificateDetails intermediate = default, AppServiceCertificateDetails root = default, string serialNumber = default, DateTimeOffset? lastCertificateIssuanceOn = default, DateTimeOffset? expireOn = default, bool? isPrivateKeyExternal = default, IEnumerable<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons = default, DateTimeOffset? nextAutoRenewTimeStamp = default, CertificateOrderContact contact = default)
+        public static AppServiceCertificateOrderPatch AppServiceCertificateOrderPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, AppServiceCertificateProperties> certificates = default, string distinguishedName = default, string domainVerificationToken = default, int? validityInYears = default, int? keySize = default, CertificateProductType? productType = default, bool? isAutoRenew = default, CertificateRegistrationProvisioningState? provisioningState = default, CertificateOrderStatus? status = default, AppServiceCertificateDetails signedCertificate = default, string csr = default, AppServiceCertificateDetails intermediate = default, AppServiceCertificateDetails root = default, string serialNumber = default, DateTimeOffset? lastCertificateIssuedOn = default, DateTimeOffset? expireOn = default, bool? isPrivateKeyExternal = default, IEnumerable<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons = default, DateTimeOffset? nextAutoRenewOn = default, CertificateOrderContact contact = default)
         {
             return new AppServiceCertificateOrderPatch(
                 id,
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                certificates is null && distinguishedName is null && domainVerificationToken is null && validityInYears is null && keySize is null && productType is null && isAutoRenew is null && provisioningState is null && status is null && signedCertificate is null && csr is null && intermediate is null && root is null && serialNumber is null && lastCertificateIssuanceOn is null && expireOn is null && isPrivateKeyExternal is null && appServiceCertificateNotRenewableReasons is null && nextAutoRenewTimeStamp is null && contact is null ? default : new AppServiceCertificateOrderPatchResourceProperties(
+                certificates is null && distinguishedName is null && domainVerificationToken is null && validityInYears is null && keySize is null && productType is null && isAutoRenew is null && provisioningState is null && status is null && signedCertificate is null && csr is null && intermediate is null && root is null && serialNumber is null && lastCertificateIssuedOn is null && expireOn is null && isPrivateKeyExternal is null && appServiceCertificateNotRenewableReasons is null && nextAutoRenewOn is null && contact is null ? default : new AppServiceCertificateOrderPatchResourceProperties(
                     certificates,
                     distinguishedName,
                     domainVerificationToken,
@@ -179,11 +179,11 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                     intermediate,
                     root,
                     serialNumber,
-                    lastCertificateIssuanceOn,
+                    lastCertificateIssuedOn,
                     expireOn,
                     isPrivateKeyExternal,
                     (appServiceCertificateNotRenewableReasons ?? new ChangeTrackingList<AppServiceCertificateNotRenewableReason>()).ToList(),
-                    nextAutoRenewTimeStamp,
+                    nextAutoRenewOn,
                     contact,
                     null));
         }
@@ -246,11 +246,11 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
 
         /// <summary> SSL certificate email. </summary>
         /// <param name="emailId"> Email id. </param>
-        /// <param name="timeStamp"> Time stamp. </param>
+        /// <param name="sentOn"> Time stamp. </param>
         /// <returns> A new <see cref="Models.AppServiceCertificateEmail"/> instance for mocking. </returns>
-        public static AppServiceCertificateEmail AppServiceCertificateEmail(string emailId = default, DateTimeOffset? timeStamp = default)
+        public static AppServiceCertificateEmail AppServiceCertificateEmail(string emailId = default, DateTimeOffset? sentOn = default)
         {
-            return new AppServiceCertificateEmail(emailId, timeStamp, additionalBinaryDataProperties: null);
+            return new AppServiceCertificateEmail(emailId, sentOn, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

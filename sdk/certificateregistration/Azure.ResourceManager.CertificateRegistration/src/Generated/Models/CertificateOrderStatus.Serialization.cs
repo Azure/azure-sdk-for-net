@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this CertificateOrderStatus value) => value switch
         {
-            CertificateOrderStatus.Pendingissuance => "Pendingissuance",
+            CertificateOrderStatus.PendingIssuance => "Pendingissuance",
             CertificateOrderStatus.Issued => "Issued",
             CertificateOrderStatus.Revoked => "Revoked",
             CertificateOrderStatus.Canceled => "Canceled",
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Pendingissuance"))
             {
-                return CertificateOrderStatus.Pendingissuance;
+                return CertificateOrderStatus.PendingIssuance;
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Issued"))
             {

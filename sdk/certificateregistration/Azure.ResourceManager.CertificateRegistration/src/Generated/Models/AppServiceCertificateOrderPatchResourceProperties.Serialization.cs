@@ -129,10 +129,10 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastCertificateIssuanceOn))
+            if (options.Format != "W" && Optional.IsDefined(LastCertificateIssuedOn))
             {
                 writer.WritePropertyName("lastCertificateIssuanceTime"u8);
-                writer.WriteStringValue(LastCertificateIssuanceOn.Value, "O");
+                writer.WriteStringValue(LastCertificateIssuedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ExpireOn))
             {
@@ -154,10 +154,10 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextAutoRenewTimeStamp))
+            if (options.Format != "W" && Optional.IsDefined(NextAutoRenewOn))
             {
                 writer.WritePropertyName("nextAutoRenewalTimeStamp"u8);
-                writer.WriteStringValue(NextAutoRenewTimeStamp.Value, "O");
+                writer.WriteStringValue(NextAutoRenewOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Contact))
             {
@@ -220,11 +220,11 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
             AppServiceCertificateDetails intermediate = default;
             AppServiceCertificateDetails root = default;
             string serialNumber = default;
-            DateTimeOffset? lastCertificateIssuanceOn = default;
+            DateTimeOffset? lastCertificateIssuedOn = default;
             DateTimeOffset? expireOn = default;
             bool? isPrivateKeyExternal = default;
             IReadOnlyList<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons = default;
-            DateTimeOffset? nextAutoRenewTimeStamp = default;
+            DateTimeOffset? nextAutoRenewOn = default;
             CertificateOrderContact contact = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                     {
                         continue;
                     }
-                    lastCertificateIssuanceOn = prop.Value.GetDateTimeOffset("O");
+                    lastCertificateIssuedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("expirationTime"u8))
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                     {
                         continue;
                     }
-                    nextAutoRenewTimeStamp = prop.Value.GetDateTimeOffset("O");
+                    nextAutoRenewOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("contact"u8))
@@ -419,11 +419,11 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 intermediate,
                 root,
                 serialNumber,
-                lastCertificateIssuanceOn,
+                lastCertificateIssuedOn,
                 expireOn,
                 isPrivateKeyExternal,
                 appServiceCertificateNotRenewableReasons ?? new ChangeTrackingList<AppServiceCertificateNotRenewableReason>(),
-                nextAutoRenewTimeStamp,
+                nextAutoRenewOn,
                 contact,
                 additionalBinaryDataProperties);
         }

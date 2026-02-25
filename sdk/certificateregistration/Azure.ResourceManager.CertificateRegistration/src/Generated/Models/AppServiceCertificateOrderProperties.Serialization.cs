@@ -154,10 +154,10 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextAutoRenewTimeStamp))
+            if (options.Format != "W" && Optional.IsDefined(NextAutoRenewOn))
             {
                 writer.WritePropertyName("nextAutoRenewalTimeStamp"u8);
-                writer.WriteStringValue(NextAutoRenewTimeStamp.Value, "O");
+                writer.WriteStringValue(NextAutoRenewOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Contact))
             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
             DateTimeOffset? expireOn = default;
             bool? isPrivateKeyExternal = default;
             IReadOnlyList<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons = default;
-            DateTimeOffset? nextAutoRenewTimeStamp = default;
+            DateTimeOffset? nextAutoRenewOn = default;
             CertificateOrderContact contact = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                     {
                         continue;
                     }
-                    nextAutoRenewTimeStamp = prop.Value.GetDateTimeOffset("O");
+                    nextAutoRenewOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("contact"u8))
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 expireOn,
                 isPrivateKeyExternal,
                 appServiceCertificateNotRenewableReasons ?? new ChangeTrackingList<AppServiceCertificateNotRenewableReason>(),
-                nextAutoRenewTimeStamp,
+                nextAutoRenewOn,
                 contact,
                 additionalBinaryDataProperties);
         }

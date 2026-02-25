@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 writer.WritePropertyName("emailId"u8);
                 writer.WriteStringValue(EmailId);
             }
-            if (Optional.IsDefined(TimeStamp))
+            if (Optional.IsDefined(SentOn))
             {
                 writer.WritePropertyName("timeStamp"u8);
-                writer.WriteStringValue(TimeStamp.Value, "O");
+                writer.WriteStringValue(SentOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 return null;
             }
             string emailId = default;
-            DateTimeOffset? timeStamp = default;
+            DateTimeOffset? sentOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                     {
                         continue;
                     }
-                    timeStamp = prop.Value.GetDateTimeOffset("O");
+                    sentOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AppServiceCertificateEmail(emailId, timeStamp, additionalBinaryDataProperties);
+            return new AppServiceCertificateEmail(emailId, sentOn, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

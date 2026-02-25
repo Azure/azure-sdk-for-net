@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         /// <param name="intermediate"> Intermediate certificate. </param>
         /// <param name="root"> Root certificate. </param>
         /// <param name="serialNumber"> Current serial number of the certificate. </param>
-        /// <param name="lastCertificateIssuanceOn"> Certificate last issuance time. </param>
+        /// <param name="lastCertificateIssuedOn"> Certificate last issuance time. </param>
         /// <param name="expireOn"> Certificate expiration time. </param>
         /// <param name="isPrivateKeyExternal"> &lt;code&gt;true&lt;/code&gt; if private key is external; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="appServiceCertificateNotRenewableReasons"> Reasons why App Service Certificate is not renewable at the current moment. </param>
-        /// <param name="nextAutoRenewTimeStamp"> Time stamp when the certificate would be auto renewed next. </param>
+        /// <param name="nextAutoRenewOn"> Time stamp when the certificate would be auto renewed next. </param>
         /// <param name="contact"> Contact info. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceCertificateOrderPatchResourceProperties(IDictionary<string, AppServiceCertificateProperties> certificates, string distinguishedName, string domainVerificationToken, int? validityInYears, int? keySize, CertificateProductType productType, bool? isAutoRenew, CertificateRegistrationProvisioningState? provisioningState, CertificateOrderStatus? status, AppServiceCertificateDetails signedCertificate, string csr, AppServiceCertificateDetails intermediate, AppServiceCertificateDetails root, string serialNumber, DateTimeOffset? lastCertificateIssuanceOn, DateTimeOffset? expireOn, bool? isPrivateKeyExternal, IReadOnlyList<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons, DateTimeOffset? nextAutoRenewTimeStamp, CertificateOrderContact contact, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppServiceCertificateOrderPatchResourceProperties(IDictionary<string, AppServiceCertificateProperties> certificates, string distinguishedName, string domainVerificationToken, int? validityInYears, int? keySize, CertificateProductType productType, bool? isAutoRenew, CertificateRegistrationProvisioningState? provisioningState, CertificateOrderStatus? status, AppServiceCertificateDetails signedCertificate, string csr, AppServiceCertificateDetails intermediate, AppServiceCertificateDetails root, string serialNumber, DateTimeOffset? lastCertificateIssuedOn, DateTimeOffset? expireOn, bool? isPrivateKeyExternal, IReadOnlyList<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons, DateTimeOffset? nextAutoRenewOn, CertificateOrderContact contact, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Certificates = certificates;
             DistinguishedName = distinguishedName;
@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
             Intermediate = intermediate;
             Root = root;
             SerialNumber = serialNumber;
-            LastCertificateIssuanceOn = lastCertificateIssuanceOn;
+            LastCertificateIssuedOn = lastCertificateIssuedOn;
             ExpireOn = expireOn;
             IsPrivateKeyExternal = isPrivateKeyExternal;
             AppServiceCertificateNotRenewableReasons = appServiceCertificateNotRenewableReasons;
-            NextAutoRenewTimeStamp = nextAutoRenewTimeStamp;
+            NextAutoRenewOn = nextAutoRenewOn;
             Contact = contact;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         public string SerialNumber { get; }
 
         /// <summary> Certificate last issuance time. </summary>
-        public DateTimeOffset? LastCertificateIssuanceOn { get; }
+        public DateTimeOffset? LastCertificateIssuedOn { get; }
 
         /// <summary> Certificate expiration time. </summary>
         public DateTimeOffset? ExpireOn { get; }
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         public IReadOnlyList<AppServiceCertificateNotRenewableReason> AppServiceCertificateNotRenewableReasons { get; } = new ChangeTrackingList<AppServiceCertificateNotRenewableReason>();
 
         /// <summary> Time stamp when the certificate would be auto renewed next. </summary>
-        public DateTimeOffset? NextAutoRenewTimeStamp { get; }
+        public DateTimeOffset? NextAutoRenewOn { get; }
 
         /// <summary> Contact info. </summary>
         public CertificateOrderContact Contact { get; }

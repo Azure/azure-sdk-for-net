@@ -206,11 +206,11 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         }
 
         /// <summary> Certificate last issuance time. </summary>
-        public DateTimeOffset? LastCertificateIssuanceOn
+        public DateTimeOffset? LastCertificateIssuedOn
         {
             get
             {
-                return Properties is null ? default : Properties.LastCertificateIssuanceOn;
+                return Properties is null ? default : Properties.LastCertificateIssuedOn;
             }
         }
 
@@ -242,11 +242,11 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         }
 
         /// <summary> Time stamp when the certificate would be auto renewed next. </summary>
-        public DateTimeOffset? NextAutoRenewTimeStamp
+        public DateTimeOffset? NextAutoRenewOn
         {
             get
             {
-                return Properties is null ? default : Properties.NextAutoRenewTimeStamp;
+                return Properties is null ? default : Properties.NextAutoRenewOn;
             }
         }
 

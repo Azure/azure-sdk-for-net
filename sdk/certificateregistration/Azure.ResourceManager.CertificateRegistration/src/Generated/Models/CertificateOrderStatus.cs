@@ -10,8 +10,8 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
     /// <summary> Current order status. </summary>
     public enum CertificateOrderStatus
     {
-        /// <summary> Pendingissuance. </summary>
-        Pendingissuance,
+        /// <summary> PendingIssuance. </summary>
+        PendingIssuance,
         /// <summary> Issued. </summary>
         Issued,
         /// <summary> Revoked. </summary>

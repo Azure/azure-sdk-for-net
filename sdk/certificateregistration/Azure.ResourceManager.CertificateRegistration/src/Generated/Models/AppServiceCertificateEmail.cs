@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
 
         /// <summary> Initializes a new instance of <see cref="AppServiceCertificateEmail"/>. </summary>
         /// <param name="emailId"> Email id. </param>
-        /// <param name="timeStamp"> Time stamp. </param>
+        /// <param name="sentOn"> Time stamp. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceCertificateEmail(string emailId, DateTimeOffset? timeStamp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppServiceCertificateEmail(string emailId, DateTimeOffset? sentOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EmailId = emailId;
-            TimeStamp = timeStamp;
+            SentOn = sentOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         public string EmailId { get; }
 
         /// <summary> Time stamp. </summary>
-        public DateTimeOffset? TimeStamp { get; }
+        public DateTimeOffset? SentOn { get; }
     }
 }
