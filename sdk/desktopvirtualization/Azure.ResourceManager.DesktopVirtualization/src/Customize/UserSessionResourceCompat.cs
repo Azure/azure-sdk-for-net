@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="sendMessage"> Object containing message body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response> SendMessageAsync(UserSessionMessage sendMessage, CancellationToken cancellationToken)
+        public virtual async Task<Response> SendMessageAsync(UserSessionMessage sendMessage, CancellationToken cancellationToken = default)
         {
             var body = new SendMessageParameterBody() { SendMessage = sendMessage };
             return await SendMessageAsync(body, cancellationToken).ConfigureAwait(false);
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="sendMessage"> Object containing message body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response SendMessage(UserSessionMessage sendMessage, CancellationToken cancellationToken)
+        public virtual Response SendMessage(UserSessionMessage sendMessage, CancellationToken cancellationToken = default)
         {
             var body = new SendMessageParameterBody() { SendMessage = sendMessage };
             return SendMessage(body, cancellationToken);

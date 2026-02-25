@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="patch"> Object containing SessionHost definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<SessionHostResource>> UpdateAsync(SessionHostPatch patch, CancellationToken cancellationToken)
+        public virtual async Task<Response<SessionHostResource>> UpdateAsync(SessionHostPatch patch, CancellationToken cancellationToken = default)
             => await UpdateAsync(patch, null, cancellationToken).ConfigureAwait(false);
 
         /// <summary> Update a session host. </summary>
         /// <param name="patch"> Object containing SessionHost definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<SessionHostResource> Update(SessionHostPatch patch, CancellationToken cancellationToken)
+        public virtual Response<SessionHostResource> Update(SessionHostPatch patch, CancellationToken cancellationToken = default)
             => Update(patch, null, cancellationToken);
     }
 }

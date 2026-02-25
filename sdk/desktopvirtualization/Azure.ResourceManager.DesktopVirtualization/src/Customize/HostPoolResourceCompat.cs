@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AppAttachPackageResource" /> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<AppAttachPackageResource> ImportAppAttachPackageInfosAsync(ImportPackageInfoContent body, CancellationToken cancellationToken)
+        public virtual AsyncPageable<AppAttachPackageResource> ImportAppAttachPackageInfosAsync(ImportPackageInfoContent body, CancellationToken cancellationToken = default)
             => ImportAsync(new ImportParameterBody(body), cancellationToken);
 
         /// <summary> Gets information from a package given the path to the package. </summary>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppAttachPackageResource" /> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<AppAttachPackageResource> ImportAppAttachPackageInfos(ImportPackageInfoContent body, CancellationToken cancellationToken)
+        public virtual Pageable<AppAttachPackageResource> ImportAppAttachPackageInfos(ImportPackageInfoContent body, CancellationToken cancellationToken = default)
             => Import(new ImportParameterBody(body), cancellationToken);
 
         /// <summary> Expands and Lists MSIX packages in an Image, given the Image Path. </summary>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ExpandMsixImage" /> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<ExpandMsixImage> ExpandMsixImagesAsync(MsixImageUri msixImageUri, CancellationToken cancellationToken)
+        public virtual AsyncPageable<ExpandMsixImage> ExpandMsixImagesAsync(MsixImageUri msixImageUri, CancellationToken cancellationToken = default)
             => ExpandAsync(new ExpandParameterBody(msixImageUri, null), cancellationToken);
 
         /// <summary> Expands and Lists MSIX packages in an Image, given the Image Path. </summary>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ExpandMsixImage" /> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<ExpandMsixImage> ExpandMsixImages(MsixImageUri msixImageUri, CancellationToken cancellationToken)
+        public virtual Pageable<ExpandMsixImage> ExpandMsixImages(MsixImageUri msixImageUri, CancellationToken cancellationToken = default)
             => Expand(new ExpandParameterBody(msixImageUri, null), cancellationToken);
 
         /// <summary> List the private link resources available for this hostpool. </summary>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DesktopVirtualizationPrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<DesktopVirtualizationPrivateLinkResourceData> GetPrivateLinkResourcesAsync(int? pageSize, bool? isDescending, int? initialSkip, CancellationToken cancellationToken)
+        public virtual AsyncPageable<DesktopVirtualizationPrivateLinkResourceData> GetPrivateLinkResourcesAsync(int? pageSize = default, bool? isDescending = default, int? initialSkip = default, CancellationToken cancellationToken = default)
             => GetByHostPoolAsync(pageSize, isDescending, initialSkip, cancellationToken);
 
         /// <summary> List the private link resources available for this hostpool. </summary>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DesktopVirtualizationPrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<DesktopVirtualizationPrivateLinkResourceData> GetPrivateLinkResources(int? pageSize, bool? isDescending, int? initialSkip, CancellationToken cancellationToken)
+        public virtual Pageable<DesktopVirtualizationPrivateLinkResourceData> GetPrivateLinkResources(int? pageSize = default, bool? isDescending = default, int? initialSkip = default, CancellationToken cancellationToken = default)
             => GetByHostPool(pageSize, isDescending, initialSkip, cancellationToken);
     }
 }

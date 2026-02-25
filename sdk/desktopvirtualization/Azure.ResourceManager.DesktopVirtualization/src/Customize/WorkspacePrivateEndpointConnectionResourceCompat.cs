@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="connection"> Object containing the updated connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<WorkspacePrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, DesktopVirtualizationPrivateEndpointConnection connection, CancellationToken cancellationToken)
+        public virtual async Task<ArmOperation<WorkspacePrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, DesktopVirtualizationPrivateEndpointConnection connection, CancellationToken cancellationToken = default)
         {
             var data = ToDataData(connection);
             return await UpdateAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="connection"> Object containing the updated connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<WorkspacePrivateEndpointConnectionResource> Update(WaitUntil waitUntil, DesktopVirtualizationPrivateEndpointConnection connection, CancellationToken cancellationToken)
+        public virtual ArmOperation<WorkspacePrivateEndpointConnectionResource> Update(WaitUntil waitUntil, DesktopVirtualizationPrivateEndpointConnection connection, CancellationToken cancellationToken = default)
         {
             var data = ToDataData(connection);
             return Update(waitUntil, data, cancellationToken);
