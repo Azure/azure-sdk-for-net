@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppConfiguration
     public partial class AppConfigurationSnapshotData
     {
         /// <summary> The type of the resource. </summary>
-        [Obsolete("This method is obsolete and will be removed in a future release", false)]
+        [Obsolete("This property is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("type")]
         public string SnapshotType => ResourceType.ToString();
