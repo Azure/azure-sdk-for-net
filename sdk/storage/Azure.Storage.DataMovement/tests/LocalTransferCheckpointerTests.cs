@@ -1047,7 +1047,6 @@ namespace Azure.Storage.DataMovement.Tests
                 "Transfer should be removed from memory cache when paused");
 
             // The semaphore should be disposed
-            // Note: This test will FAIL with the current implementation
             Assert.Throws<ObjectDisposedException>(() => jobPlanWriteLock.Wait(0),
                 "JobPlanFile.WriteLock should be disposed when transfer is paused");
 
