@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ComputeLimit
                     yield break;
                 }
                 SharedLimitListResult result = SharedLimitListResult.FromResponse(response);
-                yield return Page<ComputeLimitSharedLimitData>.FromValues((IReadOnlyList<ComputeLimitSharedLimitData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ComputeLimitSharedLimitData>.FromValues((IReadOnlyList<ComputeLimitSharedLimitData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

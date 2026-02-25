@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 {
     public class ConsoleTests : NetworkCloudManagementTestBase
     {
-        public ConsoleTests (bool isAsync, RecordedTestMode mode) : base(isAsync, mode) {}
-        public ConsoleTests (bool isAsync) : base(isAsync) {}
+        public ConsoleTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) { }
+        public ConsoleTests(bool isAsync) : base(isAsync) { }
 
         [Test, MaxTime(1800000)]
         [RecordedTest]

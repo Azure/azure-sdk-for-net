@@ -11,7 +11,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Parameters.Basic
+namespace Parameters.Basic._ImplicitBody
 {
     public partial class ImplicitBody
     {

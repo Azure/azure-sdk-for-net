@@ -46,7 +46,7 @@ namespace Azure.Developer.DevCenter
                     yield break;
                 }
                 PagedCatalog result = (PagedCatalog)response;
-                yield return Page<DevCenterCatalog>.FromValues((IReadOnlyList<DevCenterCatalog>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DevCenterCatalog>.FromValues((IReadOnlyList<DevCenterCatalog>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

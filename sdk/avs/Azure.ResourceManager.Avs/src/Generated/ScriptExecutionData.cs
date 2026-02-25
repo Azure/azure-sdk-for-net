@@ -62,7 +62,11 @@ namespace Azure.ResourceManager.Avs
         {
             get
             {
-                return Properties is null ? default : Properties.Parameters;
+                if (Properties is null)
+                {
+                    Properties = new ScriptExecutionProperties();
+                }
+                return Properties.Parameters;
             }
         }
 
@@ -74,7 +78,11 @@ namespace Azure.ResourceManager.Avs
         {
             get
             {
-                return Properties is null ? default : Properties.HiddenParameters;
+                if (Properties is null)
+                {
+                    Properties = new ScriptExecutionProperties();
+                }
+                return Properties.HiddenParameters;
             }
         }
 
@@ -173,7 +181,11 @@ namespace Azure.ResourceManager.Avs
         {
             get
             {
-                return Properties is null ? default : Properties.Output;
+                if (Properties is null)
+                {
+                    Properties = new ScriptExecutionProperties();
+                }
+                return Properties.Output;
             }
         }
 
@@ -199,7 +211,11 @@ namespace Azure.ResourceManager.Avs
         {
             get
             {
-                return Properties is null ? default : Properties.Information;
+                if (Properties is null)
+                {
+                    Properties = new ScriptExecutionProperties();
+                }
+                return Properties.Information;
             }
         }
 
@@ -208,7 +224,11 @@ namespace Azure.ResourceManager.Avs
         {
             get
             {
-                return Properties is null ? default : Properties.Warnings;
+                if (Properties is null)
+                {
+                    Properties = new ScriptExecutionProperties();
+                }
+                return Properties.Warnings;
             }
         }
 
@@ -217,7 +237,11 @@ namespace Azure.ResourceManager.Avs
         {
             get
             {
-                return Properties is null ? default : Properties.Errors;
+                if (Properties is null)
+                {
+                    Properties = new ScriptExecutionProperties();
+                }
+                return Properties.Errors;
             }
         }
     }

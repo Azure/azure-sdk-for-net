@@ -13,8 +13,8 @@ namespace Azure.ResourceManager.StorageMover.Tests.Scenario
     {
         public EndpointTests(bool isAsync)
             : base(isAsync) //, RecordedTestMode.Record)
-            {
-            }
+        {
+        }
 
         [Test]
         [RecordedTest]

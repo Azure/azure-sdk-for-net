@@ -7,7 +7,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-   public partial class HostNameMatchCondition
+    public partial class HostNameMatchCondition
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
         public HostNameMatchCondition(HostNameMatchConditionType conditionType, HostNameOperator hostNameOperator) : this(hostNameOperator)

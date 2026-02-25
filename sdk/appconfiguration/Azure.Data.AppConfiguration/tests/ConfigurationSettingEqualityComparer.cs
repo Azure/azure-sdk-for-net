@@ -5,7 +5,8 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Data.AppConfiguration.Tests {
+namespace Azure.Data.AppConfiguration.Tests
+{
     internal class ConfigurationSettingEqualityComparer : IEqualityComparer<ConfigurationSetting>
     {
         public static IEqualityComparer<ConfigurationSetting> Instance { get; } = new ConfigurationSettingEqualityComparer();

@@ -12,12 +12,21 @@
     <MicrosoftAspNetCoreHttpVersion>2.3.0</MicrosoftAspNetCoreHttpVersion>
     <MicrosoftAspNetCoreVersion>2.3.0</MicrosoftAspNetCoreVersion>
     <MicrosoftExtensionsAzureVersion>1.13.1</MicrosoftExtensionsAzureVersion>
-    <MicrosoftExtensionsConfigurationAbstractionsVersion>10.0.2</MicrosoftExtensionsConfigurationAbstractionsVersion>
-    <MicrosoftExtensionsConfigurationBinderVersion>10.0.2</MicrosoftExtensionsConfigurationBinderVersion>
-    <MicrosoftExtensionsConfigurationVersion>10.0.2</MicrosoftExtensionsConfigurationVersion>
-    <MicrosoftExtensionsDependencyInjectionAbstractionsVersion>10.0.2</MicrosoftExtensionsDependencyInjectionAbstractionsVersion>
-    <MicrosoftExtensionsHostingVersion>10.0.2</MicrosoftExtensionsHostingVersion>
-    <MicrosoftExtensionsLoggingVersion>10.0.2</MicrosoftExtensionsLoggingVersion>
+    <MicrosoftExtensionsConfigurationAbstractionsVersion>10.0.3</MicrosoftExtensionsConfigurationAbstractionsVersion>
+    <MicrosoftExtensionsConfigurationBinderVersion>10.0.3</MicrosoftExtensionsConfigurationBinderVersion>
+    <MicrosoftExtensionsConfigurationEnvironmentVariablesVersion>10.0.3</MicrosoftExtensionsConfigurationEnvironmentVariablesVersion>
+    <MicrosoftExtensionsConfigurationJsonVersion>10.0.3</MicrosoftExtensionsConfigurationJsonVersion>
+    <MicrosoftExtensionsConfigurationVersion>10.0.3</MicrosoftExtensionsConfigurationVersion>
+    <MicrosoftExtensionsDependencyInjectionAbstractionsVersion>10.0.3</MicrosoftExtensionsDependencyInjectionAbstractionsVersion>
+    <MicrosoftExtensionsDependencyInjectionVersion>10.0.3</MicrosoftExtensionsDependencyInjectionVersion>
+    <MicrosoftExtensionsHostingVersion>10.0.3</MicrosoftExtensionsHostingVersion>
+    <MicrosoftExtensionsHttpVersion>10.0.3</MicrosoftExtensionsHttpVersion>
+    <MicrosoftExtensionsLoggingConfigurationVersion>10.0.3</MicrosoftExtensionsLoggingConfigurationVersion>
+    <MicrosoftExtensionsLoggingConsoleVersion>10.0.3</MicrosoftExtensionsLoggingConsoleVersion>
+    <MicrosoftExtensionsLoggingVersion>10.0.3</MicrosoftExtensionsLoggingVersion>
+    <MicrosoftExtensionsConfigurationUserSecretsVersion>10.0.3</MicrosoftExtensionsConfigurationUserSecretsVersion>
+    <MicrosoftExtensionsPrimitivesVersion>10.0.3</MicrosoftExtensionsPrimitivesVersion>
+    <SystemIOPipelinesVersion>10.0.3</SystemIOPipelinesVersion>
     <MicrosoftSpatialVersion>7.5.3</MicrosoftSpatialVersion>
     <NewtonsoftJsonVersion>13.0.4</NewtonsoftJsonVersion>
     <MSTestVersion>1.3.2</MSTestVersion>
@@ -27,8 +36,8 @@
 
     <!-- Internal tooling from the Azure Development Feed -->
     <TestProxyVersion>1.0.0-dev.20260128.1</TestProxyVersion>
-    <UnbrandedGeneratorVersion>1.0.0-alpha.20260130.7</UnbrandedGeneratorVersion>
-    <AzureGeneratorVersion>1.0.0-alpha.20260131.1</AzureGeneratorVersion>
+    <UnbrandedGeneratorVersion>1.0.0-alpha.20260224.3</UnbrandedGeneratorVersion>
+    <AzureGeneratorVersion>1.0.0-alpha.20260219.1</AzureGeneratorVersion>
 
     <!-- Legacy package use only -->
     <MicrosoftRestClientRuntimeVersion>[2.3.24, 3.0.0)</MicrosoftRestClientRuntimeVersion>
@@ -123,6 +132,7 @@
   -->
   <ItemGroup Condition="'$(IsClientLibrary)' == 'true'
       or '$(IsGeneratorLibrary)' == 'true'
+      or '$(IsToolProject)' == 'true'
       or '$(IsSamplesProject)' == 'true'
       or '$(IsTestProject)' == 'true'
       or '$(IsTestSupportProject)' == 'true'
@@ -130,35 +140,35 @@
       or '$(IsStressProject)' == 'true'">
 
     <!-- BCL packages -->
-    <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="10.0.2" />
+    <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="10.0.3" />
     <PackageReference Update="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.2" />
-    <PackageReference Update="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.2" />
-    <PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="10.0.2" />
-    <PackageReference Update="System.Buffers" Version="4.5.1" />
+    <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="$(MicrosoftExtensionsConfigurationAbstractionsVersion)" />
+    <PackageReference Update="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.3" />
+    <PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="10.0.3" />
+    <PackageReference Update="System.Buffers" Version="4.6.1" />
     <PackageReference Update="System.ClientModel" Version="1.9.0" />
-    <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="10.0.2" />
-    <PackageReference Update="System.IO.Hashing" Version="10.0.1" />
+    <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="10.0.3" />
+    <PackageReference Update="System.IO.Hashing" Version="10.0.3" />
     <PackageReference Update="System.Memory" Version="4.6.3" />
-    <PackageReference Update="System.Memory.Data" Version="10.0.1" />
+    <PackageReference Update="System.Memory.Data" Version="10.0.3" />
     <PackageReference Update="System.Net.Http" Version="4.3.4" />
-    <PackageReference Update="System.Net.ServerSentEvents" Version="9.0.9" />
+    <PackageReference Update="System.Net.ServerSentEvents" Version="10.0.3" />
     <PackageReference Update="System.Numerics.Vectors" Version="4.6.1" />
     <PackageReference Update="System.Reflection.TypeExtensions" Version="4.7.0" />
     <PackageReference Update="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
-    <PackageReference Update="System.Security.Cryptography.Cose" Version="10.0.1" />
-    <PackageReference Update="System.Text.Encodings.Web" Version="10.0.1" />
-    <PackageReference Update="System.Text.Json" Version="10.0.1" />
-    <PackageReference Update="System.Threading.Channels" Version="10.0.1" />
+    <PackageReference Update="System.Security.Cryptography.Cose" Version="10.0.3" />
+    <PackageReference Update="System.Text.Encodings.Web" Version="10.0.3" />
+    <PackageReference Update="System.Text.Json" Version="10.0.3" />
+    <PackageReference Update="System.Threading.Channels" Version="10.0.3" />
     <PackageReference Update="System.Threading.Tasks.Extensions" Version="4.6.3" />
-    <PackageReference Update="System.ValueTuple" Version="4.6.1" />
+    <PackageReference Update="System.ValueTuple" Version="4.6.2" />
 
     <!-- Azure SDK packages -->
     <PackageReference Update="Azure.AI.Inference" Version="1.0.0-beta.5" />
     <PackageReference Update="Azure.AI.OpenAI" Version="2.0.0" />
     <PackageReference Update="Azure.AI.Projects" Version="1.1.0" />
     <PackageReference Update="Azure.Communication.Common" Version="1.4.0" />
-    <PackageReference Update="Azure.Core" Version="1.51.0" />
+    <PackageReference Update="Azure.Core" Version="1.51.1" />
     <PackageReference Update="Azure.Core.Amqp" Version="1.3.1" />
     <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.36" />
     <PackageReference Update="Azure.Core.Expressions.DataFactory" Version="1.0.0" />
@@ -169,7 +179,6 @@
     <PackageReference Update="Azure.Messaging.EventHubs" Version="5.12.2" />
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.20.1" />
     <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.6.0" />
-    <PackageReference Update="Azure.MixedReality.Authentication" version= "1.2.0" />
     <PackageReference Update="Azure.Monitor.OpenTelemetry.Exporter" Version="1.5.0" />
     <PackageReference Update="Azure.Monitor.Query.Logs" Version="1.0.0" />
     <PackageReference Update="Azure.ResourceManager" Version="1.13.2" />
@@ -227,7 +236,7 @@
     <PackageReference Update="Azure.Provisioning.KeyVault" Version="1.1.0" />
     <PackageReference Update="Azure.Provisioning.ServiceBus" Version="1.1.0" />
     <PackageReference Update="Azure.Provisioning.Storage" Version="1.1.2" />
-    <PackageReference Update="Microsoft.Bcl.Numerics" Version="10.0.1" />
+    <PackageReference Update="Microsoft.Bcl.Numerics" Version="10.0.3" />
 
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.7.0" />
@@ -243,13 +252,18 @@
   <!-- Conditionally approved packages; these are approved only for the scoped projects -->
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.AI.AgentServer'))">
     <PackageReference Update="Azure.Monitor.OpenTelemetry.AspNetCore" Version="1.3.0"/>
-    <PackageReference Update="Microsoft.Agents.AI" Version="1.0.0-preview.251104.1" />
+    <PackageReference Update="Microsoft.Agents.AI" Version="1.0.0-rc1" />
     <PackageReference Update="ModelContextProtocol" Version="0.4.0-preview.3" />
     <PackageReference Update="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.12.0"/>
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.AI.OpenAI'))">
     <PackageReference Update="OpenAI" Version="2.8.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.AI.Projects'))">
+    <PackageReference Update="OpenAI" Version="2.8.0" />
+    <PackageReference Update="Microsoft.ClientModel.TestFramework" Version="1.0.0-alpha.20251110.1" />
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.Contains('Azure.AI.Agents.Persistent'))">
@@ -330,11 +344,11 @@
     <PackageReference Update="CoreWCF.Primitives" Version="1.7.0" />
     <PackageReference Update="CoreWCF.Queue" Version="1.7.0" />
     <PackageReference Update="Microsoft.AspNetCore" Version="$(MicrosoftAspNetCoreVersion)" />
-    <PackageReference Update="Microsoft.Extensions.Configuration.UserSecrets" Version="10.0.2" />
-    <PackageReference Update="Microsoft.Extensions.Http" Version="10.0.1" />
-    <PackageReference Update="Microsoft.Extensions.Logging.Configuration" Version="10.0.1" />
+    <PackageReference Update="Microsoft.Extensions.Configuration.UserSecrets" Version="$(MicrosoftExtensionsConfigurationUserSecretsVersion)" />
+    <PackageReference Update="Microsoft.Extensions.Http" Version="$(MicrosoftExtensionsHttpVersion)" />
+    <PackageReference Update="Microsoft.Extensions.Logging.Configuration" Version="$(MicrosoftExtensionsLoggingConfigurationVersion)" />
     <PackageReference Update="System.Formats.Asn1" Version="10.0.1" />
-    <PackageReference Update="System.IO.Pipelines" Version="10.0.1" />
+    <PackageReference Update="System.IO.Pipelines" Version="$(SystemIOPipelinesVersion)" />
     <PackageReference Update="System.Security.Cryptography.Pkcs" Version="10.0.1" />
     <PackageReference Update="System.ServiceModel.Primitives" Version="6.2.0" />
   </ItemGroup>
@@ -361,13 +375,19 @@
     <!-- Note: 4.3.0 is required to keep our shipped source generators compatible with most project targets like netstandard2.0-->
     <PackageReference Update="Microsoft.CodeAnalysis.CSharp" Version ="4.3.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.3.0" PrivateAssets="All" />
-    <PackageReference Update="Microsoft.CodeAnalysis.CSharp.Analyzer.Testing.NUnit" Version="1.1.1" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.CodeAnalysis.CSharp.Analyzer.Testing" Version="1.1.3" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.CodeAnalysis.CSharp.CodeFix.Testing" Version="1.1.3" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="10.0.101" PrivateAssets="All" />
     <PackageReference Update="Microsoft.DotNet.ApiCompat" Version="5.0.0-beta.20467.1" PrivateAssets="All" />
     <PackageReference Update="Microsoft.DotNet.GenAPI" Version="5.0.0-beta.19552.1" PrivateAssets="All" />
     <PackageReference Update="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="All" />
     <PackageReference Update="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
-    <PackageReference Update="SauceControl.InheritDoc" Version="2.0.2" PrivateAssets="All" />
+    <!--
+      Note: SauceControl.InheritDoc 2.0.x causes NuGet restore loops in Visual Studio with multi-targeting projects.
+      See https://github.com/saucecontrol/InheritDoc/releases for v2.0 release notes about incremental build fixes.
+      Do not upgrade until this issue is resolved upstream.
+    -->
+    <PackageReference Update="SauceControl.InheritDoc" Version="1.2.0" PrivateAssets="All" />
     <PackageReference Update="StyleCop.Analyzers" Version="1.2.0-beta.333" PrivateAssets="All" />
   </ItemGroup>
 
@@ -383,7 +403,8 @@
       or '$(IsTestSupportProject)' == 'true'
       or '$(IsPerfProject)' == 'true'
       or '$(IsStressProject)' == 'true'
-      or '$(IsSamplesProject)' == 'true'">
+      or '$(IsSamplesProject)' == 'true'
+      or '$(IsToolProject)' == 'true'">
 
     <!-- General testing infrastructure  -->
     <PackageReference Update="Moq" Version="[4.18.2]" /><!-- This version should not be changed without team discussion. -->
@@ -408,6 +429,7 @@
     <PackageReference Update="Castle.Core" Version="$(CastleCoreVersion)" />
     <PackageReference Update="CloudNative.CloudEvents.SystemTextJson" Version="$(CloudNativeCloudEventsSystemTextJsonVersion)" />
     <PackageReference Update="CommandLineParser" Version="2.9.1" />
+    <PackageReference Update="GitHub.Copilot.SDK" Version="0.1.24" />
     <PackageReference Update="Microsoft.ApplicationInsights" Version="2.23.0" />
     <PackageReference Update="Microsoft.AspNetCore" Version="$(MicrosoftAspNetCoreVersion)" />
     <PackageReference Update="Microsoft.AspNetCore.Http" Version="$(MicrosoftAspNetCoreHttpVersion)" />
@@ -457,15 +479,17 @@
     <PackageReference Update="Microsoft.Extensions.Configuration" Version="$(MicrosoftExtensionsConfigurationVersion)" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="$(MicrosoftExtensionsConfigurationAbstractionsVersion)" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Binder" Version="$(MicrosoftExtensionsConfigurationBinderVersion)" />
-    <PackageReference Update="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="10.0.2" />
-    <PackageReference Update="Microsoft.Extensions.Configuration.Json" Version="10.0.2" />
-    <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="10.0.2" />
+    <PackageReference Update="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="$(MicrosoftExtensionsConfigurationEnvironmentVariablesVersion)" />
+    <PackageReference Update="Microsoft.Extensions.Configuration.Json" Version="$(MicrosoftExtensionsConfigurationJsonVersion)" />
+    <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="$(MicrosoftExtensionsDependencyInjectionVersion)" />
+    <PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="$(MicrosoftExtensionsDependencyInjectionAbstractionsVersion)" />
     <PackageReference Update="Microsoft.Extensions.Hosting" Version="$(MicrosoftExtensionsHostingVersion)" />
+    <PackageReference Update="Microsoft.Extensions.Http" Version="$(MicrosoftExtensionsHttpVersion)" />
     <PackageReference Update="Microsoft.Extensions.Logging" Version="$(MicrosoftExtensionsLoggingVersion)" />
-    <PackageReference Update="Microsoft.Extensions.Logging.Configuration" Version="10.0.2" />
-    <PackageReference Update="Microsoft.Extensions.Logging.Console" Version="10.0.2"/>
+    <PackageReference Update="Microsoft.Extensions.Logging.Configuration" Version="$(MicrosoftExtensionsLoggingConfigurationVersion)" />
+    <PackageReference Update="Microsoft.Extensions.Logging.Console" Version="$(MicrosoftExtensionsLoggingConsoleVersion)" />
     <PackageReference Update="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
-    <PackageReference Update="Microsoft.Extensions.Primitives" Version="10.0.2"/>
+    <PackageReference Update="Microsoft.Extensions.Primitives" Version="$(MicrosoftExtensionsPrimitivesVersion)"/>
     <PackageReference Update="Microsoft.Graph" Version="5.100.0" />
     <PackageReference Update="Microsoft.Spatial" Version="$(MicrosoftSpatialVersion)" />
     <PackageReference Update="Mono.Posix" Version="7.0.0-alpha8.21302.6" />
@@ -485,7 +509,7 @@
     <PackageReference Update="System.CommandLine" Version="2.0.1" />
     <PackageReference Update="System.IO.Compression" Version="4.3.0" />
     <PackageReference Update="System.IO.FileSystem.AccessControl" Version="5.0.0" />
-    <PackageReference Update="System.IO.Pipelines" Version="10.0.1" />
+    <PackageReference Update="System.IO.Pipelines" Version="$(SystemIOPipelinesVersion)" />
     <PackageReference Update="System.Linq.AsyncEnumerable" Version="10.0.1" />
     <PackageReference Update="System.Net.WebSockets.Client" Version="4.3.2" />
     <PackageReference Update="System.Reflection.Emit" Version="4.7.0" />

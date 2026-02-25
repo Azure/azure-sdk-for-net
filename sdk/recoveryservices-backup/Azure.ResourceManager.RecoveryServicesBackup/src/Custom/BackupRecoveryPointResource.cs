@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation TriggerRestore(WaitUntil waitUntil, Models.TriggerRestoreContent content, CancellationToken cancellationToken)
         {
-            return TriggerRestore(waitUntil, content,xMsAuthorizationAuxiliary: null, cancellationToken: cancellationToken);
+            return TriggerRestore(waitUntil, content, xMsAuthorizationAuxiliary: null, cancellationToken: cancellationToken);
         }
 
         /// <summary>

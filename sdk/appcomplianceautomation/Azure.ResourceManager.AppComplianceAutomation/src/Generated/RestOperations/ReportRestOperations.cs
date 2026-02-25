@@ -47,7 +47,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
             uri.AppendPath(reportName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -62,7 +65,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
             uri.AppendPath(reportName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -79,7 +85,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
             uri.AppendPath(reportName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -96,7 +105,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
             uri.AppendPath(reportName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -109,7 +121,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (skipToken != null)
             {
                 uri.AppendQuery("$skipToken", skipToken, true);
@@ -149,8 +164,18 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string skipToken, int? maxCount, string @select, string filter, string @orderby, string offerGuid, string reportCreatorTenantId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -166,7 +191,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
             uri.AppendPath(reportName, true);
             uri.AppendPath("/syncCertRecord", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -184,7 +212,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
             uri.AppendPath(reportName, true);
             uri.AppendPath("/checkNameAvailability", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -202,7 +233,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
             uri.AppendPath(reportName, true);
             uri.AppendPath("/fix", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -218,7 +252,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
             uri.AppendPath(reportName, true);
             uri.AppendPath("/getScopingQuestions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -234,7 +271,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
             uri.AppendPath(reportName, true);
             uri.AppendPath("/verify", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.Core.Extensions;
 using Azure.Generator.Utilities;
@@ -69,6 +70,33 @@ namespace Azure.Generator.Providers
                 var methodReturnType = new CSharpType(typeof(IAzureClientBuilder<,>), client.Type,
                     client.ClientOptionsParameter.Type);
 
+                // Pre-collect the effective (non-credential, non-options) parameter types for credential constructors
+                // to avoid generating duplicate extension methods that favor non-credential versions.
+                var comparer = new CSharpType.CSharpTypeIgnoreNullableComparer();
+                var credentialParamSets = new HashSet<CSharpType>(comparer);
+                foreach (var ctor in client.CanonicalView.Constructors)
+                {
+                    if (!ctor.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public))
+                    {
+                        continue;
+                    }
+                    if (ctor.Signature.Parameters.LastOrDefault()?.Type.Name.Equals(client.ClientOptionsParameter.Type.Name) != true)
+                    {
+                        continue;
+                    }
+                    if (ctor.Signature.Parameters.Count >= 2)
+                    {
+                        var credType = ctor.Signature.Parameters[^2].Type;
+                        if (comparer.Equals(credType, typeof(TokenCredential)) || comparer.Equals(credType, typeof(AzureKeyCredential)))
+                        {
+                            foreach (var param in ctor.Signature.Parameters.SkipLast(2))
+                            {
+                                credentialParamSets.Add(param.Type);
+                            }
+                        }
+                    }
+                }
+
                 foreach (var constructor in client.CanonicalView.Constructors)
                 {
                     if (!constructor.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public))
@@ -87,6 +115,18 @@ namespace Azure.Generator.Providers
                     // get the second to last parameter, which is the location of the auth credential parameter if there is one
                     var authParameter = constructor.Signature.Parameters[^2];
                     var isTokenCredential = authParameter?.Type.Equals(typeof(TokenCredential)) == true;
+
+                    // Skip non-credential constructors that would produce the same extension method signature
+                    // as an existing TokenCredential constructor. Prefer the credential version.
+                    if (!isTokenCredential)
+                    {
+                        var nonCredParams = constructor.Signature.Parameters.SkipLast(1).ToArray();
+                        if (nonCredParams.Length > 0 && nonCredParams.All(p => credentialParamSets.Contains(p.Type)))
+                        {
+                            continue;
+                        }
+                    }
+
                     var parameters = new List<ParameterProvider>(constructor.Signature.Parameters.Count + 1);
                     parameters.Add(builderParameter);
                     parameters.AddRange(isTokenCredential ? constructor.Signature.Parameters.SkipLast(2) : constructor.Signature.Parameters.SkipLast(1));

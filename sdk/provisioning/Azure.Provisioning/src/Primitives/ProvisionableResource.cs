@@ -50,7 +50,8 @@ public abstract class ProvisionableResource(string bicepIdentifier, ResourceType
                 foreach (IBicepValue property in ProvisionableProperties.Values)
                 {
                     // Name is the only property that's still settable
-                    if (property.Self?.PropertyName == "Name") { continue; }
+                    if (property.Self?.PropertyName == "Name")
+                    { continue; }
                     property.SetReadOnly();
                 }
             }

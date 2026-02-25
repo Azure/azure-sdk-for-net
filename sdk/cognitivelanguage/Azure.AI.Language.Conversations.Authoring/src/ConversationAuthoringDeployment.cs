@@ -23,14 +23,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         WaitUntil waitUntil,
         ConversationAuthoringCreateDeploymentDetails details,
         CancellationToken cancellationToken = default)
-            {
-                Argument.AssertNotNull(details, nameof(details));
+        {
+            Argument.AssertNotNull(details, nameof(details));
 
-                using RequestContent content = CreateDeployProjectContent(details);
-                RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = CreateDeployProjectContent(details);
+            RequestContext context = FromCancellationToken(cancellationToken);
 
-                return await DeployProjectAsync(waitUntil, content, context).ConfigureAwait(false);
-            }
+            return await DeployProjectAsync(waitUntil, content, context).ConfigureAwait(false);
+        }
 
         /// <summary> Creates a new deployment or replaces an existing one. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>

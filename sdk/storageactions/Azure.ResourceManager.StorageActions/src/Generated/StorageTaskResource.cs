@@ -220,12 +220,12 @@ namespace Azure.ResourceManager.StorageActions
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="storageTaskPatch"> The parameters to provide to update the storage task resource. </param>
+        /// <param name="patch"> The parameters to provide to update the storage task resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageTaskPatch"/> is null. </exception>
-        public virtual async Task<ArmOperation<StorageTaskResource>> UpdateAsync(WaitUntil waitUntil, StorageTaskPatch storageTaskPatch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<StorageTaskResource>> UpdateAsync(WaitUntil waitUntil, StorageTaskPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(storageTaskPatch, nameof(storageTaskPatch));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _storageTasksClientDiagnostics.CreateScope("StorageTaskResource.Update");
             scope.Start();
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.StorageActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageTasksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StorageTaskPatch.ToRequestContent(storageTaskPatch), context);
+                HttpMessage message = _storageTasksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StorageTaskPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageActionsArmOperation<StorageTaskResource> operation = new StorageActionsArmOperation<StorageTaskResource>(
                     new StorageTaskOperationSource(Client),
@@ -279,12 +279,12 @@ namespace Azure.ResourceManager.StorageActions
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="storageTaskPatch"> The parameters to provide to update the storage task resource. </param>
+        /// <param name="patch"> The parameters to provide to update the storage task resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageTaskPatch"/> is null. </exception>
-        public virtual ArmOperation<StorageTaskResource> Update(WaitUntil waitUntil, StorageTaskPatch storageTaskPatch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<StorageTaskResource> Update(WaitUntil waitUntil, StorageTaskPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(storageTaskPatch, nameof(storageTaskPatch));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _storageTasksClientDiagnostics.CreateScope("StorageTaskResource.Update");
             scope.Start();
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.StorageActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageTasksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StorageTaskPatch.ToRequestContent(storageTaskPatch), context);
+                HttpMessage message = _storageTasksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StorageTaskPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageActionsArmOperation<StorageTaskResource> operation = new StorageActionsArmOperation<StorageTaskResource>(
                     new StorageTaskOperationSource(Client),

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             _resourceGroup = await GlobalClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
             //BackupPolicy = new ContinuousModeBackupPolicy()
-            _databaseAccountIdentifier = (await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.GlobalDocumentDB, null , true)).Id;
+            _databaseAccountIdentifier = (await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.GlobalDocumentDB, null, true)).Id;
             //_databaseAccountIdentifier =  (await CreateRestorableDatabaseAccount(Recording.GenerateAssetName("r-database-account-"))).Id;
             await StopSessionRecordingAsync();
         }

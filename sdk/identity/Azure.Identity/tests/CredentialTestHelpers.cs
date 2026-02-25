@@ -7,8 +7,8 @@ using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -562,6 +562,13 @@ namespace Azure.Identity.Tests
         private static Type GetMsalClientType(TokenCredential cred)
         {
             var targetCred = cred is EnvironmentCredential environmentCredential ? environmentCredential.Credential : cred;
+
+            if (targetCred is ConfigurableCredential configCred)
+            {
+                targetCred = new ConfigurableCredentials.ConfigurableCredentialTestHelper<TokenCredential>(string.Empty)
+                    .GetUnderlyingCredential(configCred);
+            }
+
             return targetCred.GetType().GetProperty("Client", BindingFlags.Instance | BindingFlags.NonPublic)?.PropertyType;
         }
 

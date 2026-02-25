@@ -47,7 +47,7 @@ public partial class Sample_PersistentAgents_FileSearch : SamplesBase<AIAgentsTe
         // Create a vector store with the file and wait for it to be processed.
         // If you do not specify a vector store, create_message will create a vector store with a default expiration policy of seven days after they were last active
         PersistentAgentsVectorStore vectorStore = await client.VectorStores.CreateVectorStoreAsync(
-            fileIds:  new List<string> { uploadedAgentFile.Id },
+            fileIds: new List<string> { uploadedAgentFile.Id },
             name: "my_vector_store");
         #endregion
 

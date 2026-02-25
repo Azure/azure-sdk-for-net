@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
         public async Task CreateOrUpdate()
         {
             string workspaceName = Recording.GenerateAssetName(_workspaceNamePrefix);
-            var workspace = await CreateHealthcareApisWorkspace(_resourceGroup,workspaceName);
+            var workspace = await CreateHealthcareApisWorkspace(_resourceGroup, workspaceName);
             ValidateHealthcareApisWorkspace(workspace.Data, workspaceName);
         }
 

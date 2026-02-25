@@ -8,76 +8,72 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.LoadTesting;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.LoadTesting.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableLoadTestingSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _loadTestingResourceLoadTestsClientDiagnostics;
-        private LoadTestsRestOperations _loadTestingResourceLoadTestsRestClient;
+        private ClientDiagnostics _loadTestMgmtClientClientDiagnostics;
+        private LoadTestMgmtClient _loadTestMgmtClientRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableLoadTestingSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableLoadTestingSubscriptionResource for mocking. </summary>
         protected MockableLoadTestingSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableLoadTestingSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableLoadTestingSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableLoadTestingSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics LoadTestingResourceLoadTestsClientDiagnostics => _loadTestingResourceLoadTestsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.LoadTesting", LoadTestingResource.ResourceType.Namespace, Diagnostics);
-        private LoadTestsRestOperations LoadTestingResourceLoadTestsRestClient => _loadTestingResourceLoadTestsRestClient ??= new LoadTestsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(LoadTestingResource.ResourceType));
+        private ClientDiagnostics LoadTestMgmtClientClientDiagnostics => _loadTestMgmtClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.LoadTesting.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private LoadTestMgmtClient LoadTestMgmtClientRestClient => _loadTestMgmtClientRestClient ??= new LoadTestMgmtClient(LoadTestMgmtClientClientDiagnostics, Pipeline, Endpoint, "2024-12-01-preview");
 
-        /// <summary> Gets a collection of LoadTestingQuotaResources in the SubscriptionResource. </summary>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <returns> An object representing collection of LoadTestingQuotaResources and their operations over a LoadTestingQuotaResource. </returns>
+        /// <summary> Gets a collection of LoadTestingQuota in the <see cref="SubscriptionResource"/>. </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <returns> An object representing collection of LoadTestingQuota and their operations over a LoadTestingQuotaResource. </returns>
         public virtual LoadTestingQuotaCollection GetAllLoadTestingQuota(AzureLocation location)
         {
-            return new LoadTestingQuotaCollection(Client, Id, location);
+            return GetCachedClient(client => new LoadTestingQuotaCollection(client, Id, location));
         }
 
         /// <summary>
         /// Get the available quota for a quota bucket per region per subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/locations/{location}/quotas/{quotaBucketName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/locations/{location}/quotas/{quotaBucketName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Quotas_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LoadTests_GetQuota. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LoadTestingQuotaResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="quotaBucketName"> Quota Bucket name. </param>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="quotaBucketName"> The quota name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="quotaBucketName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="quotaBucketName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<LoadTestingQuotaResource>> GetLoadTestingQuotaAsync(AzureLocation location, string quotaBucketName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(quotaBucketName, nameof(quotaBucketName));
+
             return await GetAllLoadTestingQuota(location).GetAsync(quotaBucketName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -85,82 +81,74 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         /// Get the available quota for a quota bucket per region per subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/locations/{location}/quotas/{quotaBucketName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/locations/{location}/quotas/{quotaBucketName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Quotas_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LoadTests_GetQuota. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LoadTestingQuotaResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="quotaBucketName"> Quota Bucket name. </param>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="quotaBucketName"> The quota name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="quotaBucketName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="quotaBucketName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<LoadTestingQuotaResource> GetLoadTestingQuota(AzureLocation location, string quotaBucketName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(quotaBucketName, nameof(quotaBucketName));
+
             return GetAllLoadTestingQuota(location).Get(quotaBucketName, cancellationToken);
         }
 
         /// <summary>
-        /// Lists loadtests resources in a subscription.
+        /// List LoadTestResource resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/loadTests</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/loadTests. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LoadTests_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> LoadTests_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LoadTestingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LoadTestingResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LoadTestingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LoadTestingResource> GetLoadTestingResourcesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => LoadTestingResourceLoadTestsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LoadTestingResourceLoadTestsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LoadTestingResource(Client, LoadTestingResourceData.DeserializeLoadTestingResourceData(e)), LoadTestingResourceLoadTestsClientDiagnostics, Pipeline, "MockableLoadTestingSubscriptionResource.GetLoadTestingResources", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<LoadTestingResourceData, LoadTestingResource>(new LoadTestMgmtClientGetBySubscriptionAsyncCollectionResultOfT(LoadTestMgmtClientRestClient, Guid.Parse(Id.SubscriptionId), context), data => new LoadTestingResource(Client, data));
         }
 
         /// <summary>
-        /// Lists loadtests resources in a subscription.
+        /// List LoadTestResource resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/loadTests</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/loadTests. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LoadTests_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> LoadTests_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LoadTestingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -168,9 +156,11 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         /// <returns> A collection of <see cref="LoadTestingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LoadTestingResource> GetLoadTestingResources(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => LoadTestingResourceLoadTestsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LoadTestingResourceLoadTestsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LoadTestingResource(Client, LoadTestingResourceData.DeserializeLoadTestingResourceData(e)), LoadTestingResourceLoadTestsClientDiagnostics, Pipeline, "MockableLoadTestingSubscriptionResource.GetLoadTestingResources", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<LoadTestingResourceData, LoadTestingResource>(new LoadTestMgmtClientGetBySubscriptionCollectionResultOfT(LoadTestMgmtClientRestClient, Guid.Parse(Id.SubscriptionId), context), data => new LoadTestingResource(Client, data));
         }
     }
 }

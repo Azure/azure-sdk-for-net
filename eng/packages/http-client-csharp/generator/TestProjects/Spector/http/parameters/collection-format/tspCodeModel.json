@@ -93,7 +93,27 @@
                     "scope": "Method",
                     "decorators": [],
                     "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query.multi.colors",
-                    "readOnly": false
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$id": "11",
+                        "kind": "method",
+                        "name": "colors",
+                        "serializedName": "colors",
+                        "doc": "Possible values for colors are [blue,red,green]",
+                        "type": {
+                          "$ref": "9"
+                        },
+                        "location": "Query",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query.multi.colors",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -117,22 +137,7 @@
               },
               "parameters": [
                 {
-                  "$id": "11",
-                  "kind": "method",
-                  "name": "colors",
-                  "serializedName": "colors",
-                  "doc": "Possible values for colors are [blue,red,green]",
-                  "type": {
-                    "$ref": "9"
-                  },
-                  "location": "Query",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query.multi.colors",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "11"
                 }
               ],
               "response": {},
@@ -169,7 +174,27 @@
                     "scope": "Method",
                     "decorators": [],
                     "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query.ssv.colors",
-                    "readOnly": false
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$id": "15",
+                        "kind": "method",
+                        "name": "colors",
+                        "serializedName": "colors",
+                        "doc": "Possible values for colors are [blue,red,green]",
+                        "type": {
+                          "$ref": "9"
+                        },
+                        "location": "Query",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query.ssv.colors",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -193,22 +218,7 @@
               },
               "parameters": [
                 {
-                  "$id": "15",
-                  "kind": "method",
-                  "name": "colors",
-                  "serializedName": "colors",
-                  "doc": "Possible values for colors are [blue,red,green]",
-                  "type": {
-                    "$ref": "9"
-                  },
-                  "location": "Query",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query.ssv.colors",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "15"
                 }
               ],
               "response": {},
@@ -245,7 +255,27 @@
                     "scope": "Method",
                     "decorators": [],
                     "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query.pipes.colors",
-                    "readOnly": false
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$id": "19",
+                        "kind": "method",
+                        "name": "colors",
+                        "serializedName": "colors",
+                        "doc": "Possible values for colors are [blue,red,green]",
+                        "type": {
+                          "$ref": "9"
+                        },
+                        "location": "Query",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query.pipes.colors",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -269,22 +299,7 @@
               },
               "parameters": [
                 {
-                  "$id": "19",
-                  "kind": "method",
-                  "name": "colors",
-                  "serializedName": "colors",
-                  "doc": "Possible values for colors are [blue,red,green]",
-                  "type": {
-                    "$ref": "9"
-                  },
-                  "location": "Query",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query.pipes.colors",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "19"
                 }
               ],
               "response": {},
@@ -321,7 +336,27 @@
                     "scope": "Method",
                     "decorators": [],
                     "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query.csv.colors",
-                    "readOnly": false
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$id": "23",
+                        "kind": "method",
+                        "name": "colors",
+                        "serializedName": "colors",
+                        "doc": "Possible values for colors are [blue,red,green]",
+                        "type": {
+                          "$ref": "9"
+                        },
+                        "location": "Query",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query.csv.colors",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -345,22 +380,7 @@
               },
               "parameters": [
                 {
-                  "$id": "23",
-                  "kind": "method",
-                  "name": "colors",
-                  "serializedName": "colors",
-                  "doc": "Possible values for colors are [blue,red,green]",
-                  "type": {
-                    "$ref": "9"
-                  },
-                  "location": "Query",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query.csv.colors",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "23"
                 }
               ],
               "response": {},
@@ -446,7 +466,27 @@
                     "scope": "Method",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Parameters.CollectionFormat.Header.csv.colors"
+                    "crossLanguageDefinitionId": "Parameters.CollectionFormat.Header.csv.colors",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "31",
+                        "kind": "method",
+                        "name": "colors",
+                        "serializedName": "colors",
+                        "doc": "Possible values for colors are [blue,red,green]",
+                        "type": {
+                          "$ref": "9"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Parameters.CollectionFormat.Header.csv.colors",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -470,22 +510,7 @@
               },
               "parameters": [
                 {
-                  "$id": "31",
-                  "kind": "method",
-                  "name": "colors",
-                  "serializedName": "colors",
-                  "doc": "Possible values for colors are [blue,red,green]",
-                  "type": {
-                    "$ref": "9"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Parameters.CollectionFormat.Header.csv.colors",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "31"
                 }
               ],
               "response": {},

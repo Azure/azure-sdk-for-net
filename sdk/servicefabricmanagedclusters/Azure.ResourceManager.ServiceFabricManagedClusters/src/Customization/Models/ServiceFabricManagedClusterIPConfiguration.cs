@@ -7,8 +7,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using System.Text.Json;
 using System.Text;
+using System.Text.Json;
 using Azure.ResourceManager.Resources.Models;
 
 // NOTE: The following customization is intentionally retained for backward compatibility.

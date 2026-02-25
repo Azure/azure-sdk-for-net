@@ -233,7 +233,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// Optional.  The POSIX access control list for the file or directory.
         /// </summary>
-        #pragma warning disable CA2227 // Collection properties should be read only
+#pragma warning disable CA2227 // Collection properties should be read only
         public IList<PathAccessControlItem> AccessControlList { get; set; }
 
         /// <summary>

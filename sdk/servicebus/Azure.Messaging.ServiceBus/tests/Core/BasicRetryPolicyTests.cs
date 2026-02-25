@@ -304,7 +304,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
             for (var index = 0; index < iterations; ++index)
             {
-                Assert.That(policy.CalculateRetryDelay(Mock.Of<TimeoutException>(), 88), Is.EqualTo(policy.Options.Delay).Within(variance), $"Iteration: { index } produced an unexpected delay.");
+                Assert.That(policy.CalculateRetryDelay(Mock.Of<TimeoutException>(), 88), Is.EqualTo(policy.Options.Delay).Within(variance), $"Iteration: {index} produced an unexpected delay.");
             }
         }
 
@@ -336,8 +336,8 @@ namespace Azure.Messaging.ServiceBus.Tests
                 var variance = TimeSpan.FromSeconds((policy.Options.Delay.TotalSeconds * index) * policy.JitterFactor);
                 TimeSpan? delay = policy.CalculateRetryDelay(Mock.Of<TimeoutException>(), index);
 
-                Assert.That(delay.HasValue, Is.True, $"Iteration: { index } did not have a value.");
-                Assert.That(delay.Value, Is.GreaterThan(previousDelay.Add(variance)), $"Iteration: { index } produced an unexpected delay.");
+                Assert.That(delay.HasValue, Is.True, $"Iteration: {index} did not have a value.");
+                Assert.That(delay.Value, Is.GreaterThan(previousDelay.Add(variance)), $"Iteration: {index} produced an unexpected delay.");
 
                 previousDelay = delay.Value;
             }

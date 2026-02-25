@@ -18,11 +18,11 @@ namespace Azure.AI.Language.Text.Authoring
         private static ResponseClassifier _pipelineMessageClassifier202;
         private static ResponseClassifier _pipelineMessageClassifier204;
 
-        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
-        private static ResponseClassifier PipelineMessageClassifier202 => _pipelineMessageClassifier202 = new StatusCodeClassifier(stackalloc ushort[] { 202 });
+        private static ResponseClassifier PipelineMessageClassifier202 => _pipelineMessageClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
 
-        private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 = new StatusCodeClassifier(stackalloc ushort[] { 204 });
+        private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
 
         internal HttpMessage CreateGetTrainedModelRequest(string projectName, string trainedModelLabel, RequestContext context)
         {
@@ -33,7 +33,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/models/", false);
             uri.AppendPath(trainedModelLabel, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -51,7 +54,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/models/", false);
             uri.AppendPath(trainedModelLabel, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
@@ -69,7 +75,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath("/models/", false);
             uri.AppendPath(trainedModelLabel, true);
             uri.AppendPath("/:evaluate", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
@@ -89,7 +98,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath("/models/", false);
             uri.AppendPath(trainedModelLabel, true);
             uri.AppendPath("/:load-snapshot", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
@@ -108,7 +120,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath(trainedModelLabel, true);
             uri.AppendPath("/evaluate/jobs/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -117,7 +132,7 @@ namespace Azure.AI.Language.Text.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetModelEvaluationResultsRequest(string projectName, string trainedModelLabel, string stringIndexType, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetModelEvaluationResultsRequest(string projectName, string trainedModelLabel, string stringIndexType, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -127,7 +142,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath("/models/", false);
             uri.AppendPath(trainedModelLabel, true);
             uri.AppendPath("/evaluation/result", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (maxCount != null)
             {
                 uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
@@ -136,9 +154,9 @@ namespace Azure.AI.Language.Text.Authoring
             {
                 uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
             }
             uri.AppendQuery("stringIndexType", stringIndexType, true);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
@@ -149,14 +167,24 @@ namespace Azure.AI.Language.Text.Authoring
             return message;
         }
 
-        internal HttpMessage CreateNextGetModelEvaluationResultsRequest(Uri nextPage, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetModelEvaluationResultsRequest(Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
-            if (maxpagesize != null)
+            if (nextPage.IsAbsoluteUri)
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize));
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            if (maxPageSize != null)
+            {
+                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -176,7 +204,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath("/models/", false);
             uri.AppendPath(trainedModelLabel, true);
             uri.AppendPath("/evaluation/summary-result", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -196,7 +227,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath(trainedModelLabel, true);
             uri.AppendPath("/load-snapshot/jobs/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;

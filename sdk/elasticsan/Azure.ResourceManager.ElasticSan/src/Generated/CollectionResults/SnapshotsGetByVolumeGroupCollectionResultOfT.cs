@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ElasticSan
                     yield break;
                 }
                 SnapshotList result = SnapshotList.FromResponse(response);
-                yield return Page<ElasticSanSnapshotData>.FromValues((IReadOnlyList<ElasticSanSnapshotData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ElasticSanSnapshotData>.FromValues((IReadOnlyList<ElasticSanSnapshotData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

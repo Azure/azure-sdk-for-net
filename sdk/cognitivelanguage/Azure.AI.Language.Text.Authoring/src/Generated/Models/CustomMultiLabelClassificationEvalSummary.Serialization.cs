@@ -20,6 +20,46 @@ namespace Azure.AI.Language.Text.Authoring
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override TextAuthoringEvalSummary PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CustomMultiLabelClassificationEvalSummary>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCustomMultiLabelClassificationEvalSummary(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CustomMultiLabelClassificationEvalSummary)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CustomMultiLabelClassificationEvalSummary>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextAuthoringContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CustomMultiLabelClassificationEvalSummary)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CustomMultiLabelClassificationEvalSummary>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CustomMultiLabelClassificationEvalSummary IPersistableModel<CustomMultiLabelClassificationEvalSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => (CustomMultiLabelClassificationEvalSummary)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CustomMultiLabelClassificationEvalSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CustomMultiLabelClassificationEvalSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -96,45 +136,5 @@ namespace Azure.AI.Language.Text.Authoring
             }
             return new CustomMultiLabelClassificationEvalSummary(projectKind, evaluationOptions, additionalBinaryDataProperties, customMultiLabelClassificationEvaluation);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CustomMultiLabelClassificationEvalSummary>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomMultiLabelClassificationEvalSummary>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextAuthoringContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(CustomMultiLabelClassificationEvalSummary)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CustomMultiLabelClassificationEvalSummary IPersistableModel<CustomMultiLabelClassificationEvalSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => (CustomMultiLabelClassificationEvalSummary)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override TextAuthoringEvalSummary PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomMultiLabelClassificationEvalSummary>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeCustomMultiLabelClassificationEvalSummary(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CustomMultiLabelClassificationEvalSummary)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CustomMultiLabelClassificationEvalSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

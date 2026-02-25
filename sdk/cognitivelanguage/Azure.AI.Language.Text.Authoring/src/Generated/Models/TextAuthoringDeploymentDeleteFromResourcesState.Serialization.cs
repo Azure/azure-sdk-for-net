@@ -22,6 +22,53 @@ namespace Azure.AI.Language.Text.Authoring
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TextAuthoringDeploymentDeleteFromResourcesState PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TextAuthoringDeploymentDeleteFromResourcesState>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTextAuthoringDeploymentDeleteFromResourcesState(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TextAuthoringDeploymentDeleteFromResourcesState)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TextAuthoringDeploymentDeleteFromResourcesState>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextAuthoringContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TextAuthoringDeploymentDeleteFromResourcesState)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TextAuthoringDeploymentDeleteFromResourcesState>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TextAuthoringDeploymentDeleteFromResourcesState IPersistableModel<TextAuthoringDeploymentDeleteFromResourcesState>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TextAuthoringDeploymentDeleteFromResourcesState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TextAuthoringDeploymentDeleteFromResourcesState"/> from. </param>
+        public static explicit operator TextAuthoringDeploymentDeleteFromResourcesState(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeTextAuthoringDeploymentDeleteFromResourcesState(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TextAuthoringDeploymentDeleteFromResourcesState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -223,53 +270,6 @@ namespace Azure.AI.Language.Text.Authoring
                 warnings ?? new ChangeTrackingList<ResponseError>(),
                 errors ?? new ChangeTrackingList<ResponseError>(),
                 additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TextAuthoringDeploymentDeleteFromResourcesState>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TextAuthoringDeploymentDeleteFromResourcesState>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextAuthoringContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(TextAuthoringDeploymentDeleteFromResourcesState)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        TextAuthoringDeploymentDeleteFromResourcesState IPersistableModel<TextAuthoringDeploymentDeleteFromResourcesState>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TextAuthoringDeploymentDeleteFromResourcesState PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TextAuthoringDeploymentDeleteFromResourcesState>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeTextAuthoringDeploymentDeleteFromResourcesState(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TextAuthoringDeploymentDeleteFromResourcesState)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TextAuthoringDeploymentDeleteFromResourcesState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TextAuthoringDeploymentDeleteFromResourcesState"/> from. </param>
-        public static explicit operator TextAuthoringDeploymentDeleteFromResourcesState(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeTextAuthoringDeploymentDeleteFromResourcesState(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

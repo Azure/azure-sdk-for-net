@@ -229,7 +229,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
         }
 
-        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ManagedServiceIdentityType ToResourceIdentityType(string value)
+        {
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None"))
+                return ManagedServiceIdentityType.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SystemAssigned"))
+                return ManagedServiceIdentityType.SystemAssigned;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UserAssigned"))
+                return ManagedServiceIdentityType.UserAssigned;
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResourceIdentityType value.");
+        }
+
         string IPersistableModel<ManagedClusterIdentity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Qumulo
                     yield break;
                 }
                 FileSystemResourceListResult result = FileSystemResourceListResult.FromResponse(response);
-                yield return Page<QumuloFileSystemResourceData>.FromValues((IReadOnlyList<QumuloFileSystemResourceData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<QumuloFileSystemResourceData>.FromValues((IReadOnlyList<QumuloFileSystemResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

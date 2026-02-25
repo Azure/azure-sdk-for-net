@@ -55,13 +55,13 @@ namespace Azure.ResourceManager.StorageSync
                     yield break;
                 }
                 CloudEndpointArray result = CloudEndpointArray.FromResponse(response);
-                yield return Page<CloudEndpointData>.FromValues((IReadOnlyList<CloudEndpointData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<CloudEndpointData>.FromValues((IReadOnlyList<CloudEndpointData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
                     yield break;
                 }
-                nextPage = new Uri(nextPageString);
+                nextPage = new Uri(nextPageString, UriKind.RelativeOrAbsolute);
             }
         }
 

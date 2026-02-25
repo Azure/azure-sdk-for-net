@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Peering
 {
     /// <summary>
-    /// A Class representing a PeeringServicePrefix along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PeeringServicePrefixResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetPeeringServicePrefixResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PeeringServiceResource"/> using the GetPeeringServicePrefix method.
+    /// A class representing a PeeringServicePrefix along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PeeringServicePrefixResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PeeringServiceResource"/> using the GetPeeringServicePrefixes method.
     /// </summary>
     public partial class PeeringServicePrefixResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="PeeringServicePrefixResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="peeringServiceName"> The peeringServiceName. </param>
-        /// <param name="prefixName"> The prefixName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string peeringServiceName, string prefixName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/prefixes/{prefixName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _peeringServicePrefixPrefixesClientDiagnostics;
-        private readonly PrefixesRestOperations _peeringServicePrefixPrefixesRestClient;
+        private readonly ClientDiagnostics _prefixesClientDiagnostics;
+        private readonly Prefixes _prefixesRestClient;
         private readonly PeeringServicePrefixData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Peering/peeringServices/prefixes";
 
-        /// <summary> Initializes a new instance of the <see cref="PeeringServicePrefixResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of PeeringServicePrefixResource for mocking. </summary>
         protected PeeringServicePrefixResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PeeringServicePrefixResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringServicePrefixResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PeeringServicePrefixResource(ArmClient client, PeeringServicePrefixData data) : this(client, data.Id)
@@ -54,72 +43,94 @@ namespace Azure.ResourceManager.Peering
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PeeringServicePrefixResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringServicePrefixResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PeeringServicePrefixResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _peeringServicePrefixPrefixesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Peering", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string peeringServicePrefixPrefixesApiVersion);
-            _peeringServicePrefixPrefixesRestClient = new PrefixesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, peeringServicePrefixPrefixesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string peeringServicePrefixApiVersion);
+            _prefixesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Peering", ResourceType.Namespace, Diagnostics);
+            _prefixesRestClient = new Prefixes(_prefixesClientDiagnostics, Pipeline, Endpoint, peeringServicePrefixApiVersion ?? "2025-05-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual PeeringServicePrefixData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="peeringServiceName"> The peeringServiceName. </param>
+        /// <param name="prefixName"> The prefixName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string peeringServiceName, string prefixName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/prefixes/{prefixName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Gets an existing prefix with the specified name under the given subscription, resource group and peering service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/prefixes/{prefixName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/prefixes/{prefixName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Prefixes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PeeringServicePrefixes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PeeringServicePrefixResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PeeringServicePrefixResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The properties to be expanded. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PeeringServicePrefixResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PeeringServicePrefixResource>> GetAsync(string expand = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _peeringServicePrefixPrefixesClientDiagnostics.CreateScope("PeeringServicePrefixResource.Get");
+            using DiagnosticScope scope = _prefixesClientDiagnostics.CreateScope("PeeringServicePrefixResource.Get");
             scope.Start();
             try
             {
-                var response = await _peeringServicePrefixPrefixesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _prefixesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PeeringServicePrefixData> response = Response.FromValue(PeeringServicePrefixData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PeeringServicePrefixResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -133,34 +144,42 @@ namespace Azure.ResourceManager.Peering
         /// Gets an existing prefix with the specified name under the given subscription, resource group and peering service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/prefixes/{prefixName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/prefixes/{prefixName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Prefixes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PeeringServicePrefixes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PeeringServicePrefixResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PeeringServicePrefixResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The properties to be expanded. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PeeringServicePrefixResource> Get(string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<PeeringServicePrefixResource> Get(string expand = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _peeringServicePrefixPrefixesClientDiagnostics.CreateScope("PeeringServicePrefixResource.Get");
+            using DiagnosticScope scope = _prefixesClientDiagnostics.CreateScope("PeeringServicePrefixResource.Get");
             scope.Start();
             try
             {
-                var response = _peeringServicePrefixPrefixesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _prefixesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PeeringServicePrefixData> response = Response.FromValue(PeeringServicePrefixData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PeeringServicePrefixResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -174,20 +193,20 @@ namespace Azure.ResourceManager.Peering
         /// Deletes an existing prefix with the specified name under the given subscription, resource group and peering service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/prefixes/{prefixName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/prefixes/{prefixName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Prefixes_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> PeeringServicePrefixes_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PeeringServicePrefixResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PeeringServicePrefixResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,16 +214,23 @@ namespace Azure.ResourceManager.Peering
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _peeringServicePrefixPrefixesClientDiagnostics.CreateScope("PeeringServicePrefixResource.Delete");
+            using DiagnosticScope scope = _prefixesClientDiagnostics.CreateScope("PeeringServicePrefixResource.Delete");
             scope.Start();
             try
             {
-                var response = await _peeringServicePrefixPrefixesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _peeringServicePrefixPrefixesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new PeeringArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _prefixesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                PeeringArmOperation operation = new PeeringArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -218,20 +244,20 @@ namespace Azure.ResourceManager.Peering
         /// Deletes an existing prefix with the specified name under the given subscription, resource group and peering service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/prefixes/{prefixName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/prefixes/{prefixName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Prefixes_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> PeeringServicePrefixes_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PeeringServicePrefixResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PeeringServicePrefixResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -239,16 +265,23 @@ namespace Azure.ResourceManager.Peering
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _peeringServicePrefixPrefixesClientDiagnostics.CreateScope("PeeringServicePrefixResource.Delete");
+            using DiagnosticScope scope = _prefixesClientDiagnostics.CreateScope("PeeringServicePrefixResource.Delete");
             scope.Start();
             try
             {
-                var response = _peeringServicePrefixPrefixesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _peeringServicePrefixPrefixesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new PeeringArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _prefixesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                PeeringArmOperation operation = new PeeringArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -259,23 +292,23 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary>
-        /// Creates a new prefix with the specified name under the given subscription, resource group and peering service.
+        /// Update a PeeringServicePrefix.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/prefixes/{prefixName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/prefixes/{prefixName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Prefixes_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> PeeringServicePrefixes_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PeeringServicePrefixResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PeeringServicePrefixResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -287,16 +320,24 @@ namespace Azure.ResourceManager.Peering
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _peeringServicePrefixPrefixesClientDiagnostics.CreateScope("PeeringServicePrefixResource.Update");
+            using DiagnosticScope scope = _prefixesClientDiagnostics.CreateScope("PeeringServicePrefixResource.Update");
             scope.Start();
             try
             {
-                var response = await _peeringServicePrefixPrefixesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _peeringServicePrefixPrefixesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new PeeringArmOperation<PeeringServicePrefixResource>(Response.FromValue(new PeeringServicePrefixResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _prefixesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, PeeringServicePrefixData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PeeringServicePrefixData> response = Response.FromValue(PeeringServicePrefixData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                PeeringArmOperation<PeeringServicePrefixResource> operation = new PeeringArmOperation<PeeringServicePrefixResource>(Response.FromValue(new PeeringServicePrefixResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -307,23 +348,23 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary>
-        /// Creates a new prefix with the specified name under the given subscription, resource group and peering service.
+        /// Update a PeeringServicePrefix.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/prefixes/{prefixName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/prefixes/{prefixName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Prefixes_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> PeeringServicePrefixes_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PeeringServicePrefixResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PeeringServicePrefixResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -335,16 +376,24 @@ namespace Azure.ResourceManager.Peering
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _peeringServicePrefixPrefixesClientDiagnostics.CreateScope("PeeringServicePrefixResource.Update");
+            using DiagnosticScope scope = _prefixesClientDiagnostics.CreateScope("PeeringServicePrefixResource.Update");
             scope.Start();
             try
             {
-                var response = _peeringServicePrefixPrefixesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var uri = _peeringServicePrefixPrefixesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new PeeringArmOperation<PeeringServicePrefixResource>(Response.FromValue(new PeeringServicePrefixResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _prefixesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, PeeringServicePrefixData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PeeringServicePrefixData> response = Response.FromValue(PeeringServicePrefixData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                PeeringArmOperation<PeeringServicePrefixResource> operation = new PeeringArmOperation<PeeringServicePrefixResource>(Response.FromValue(new PeeringServicePrefixResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

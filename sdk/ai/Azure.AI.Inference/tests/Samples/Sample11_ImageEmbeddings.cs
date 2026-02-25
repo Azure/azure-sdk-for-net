@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -43,7 +43,7 @@ namespace Azure.AI.Inference.Tests.Samples
                 List<float> embedding = item.Embedding.ToObjectFromJson<List<float>>();
                 Console.WriteLine($"Index: {item.Index}, Embedding: <{string.Join(", ", embedding)}>");
             }
-#endregion
+            #endregion
 
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.InstanceOf<EmbeddingsResult>());

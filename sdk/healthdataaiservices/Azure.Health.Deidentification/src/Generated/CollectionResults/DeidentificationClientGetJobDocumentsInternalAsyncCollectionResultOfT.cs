@@ -52,7 +52,7 @@ namespace Azure.Health.Deidentification
                     yield break;
                 }
                 PagedDeidentificationDocumentDetails result = (PagedDeidentificationDocumentDetails)response;
-                yield return Page<DeidentificationDocumentDetails>.FromValues((IReadOnlyList<DeidentificationDocumentDetails>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DeidentificationDocumentDetails>.FromValues((IReadOnlyList<DeidentificationDocumentDetails>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

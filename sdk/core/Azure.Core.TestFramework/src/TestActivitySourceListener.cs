@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class TestActivitySourceListener: IDisposable
+    public class TestActivitySourceListener : IDisposable
     {
         private readonly ActivityListener _listener;
 
