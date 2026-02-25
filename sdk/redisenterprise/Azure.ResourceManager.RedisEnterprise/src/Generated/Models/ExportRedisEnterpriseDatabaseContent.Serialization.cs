@@ -22,6 +22,23 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ExportRedisEnterpriseDatabaseContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExportRedisEnterpriseDatabaseContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeExportRedisEnterpriseDatabaseContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExportRedisEnterpriseDatabaseContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExportRedisEnterpriseDatabaseContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -120,23 +137,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ExportRedisEnterpriseDatabaseContent IPersistableModel<ExportRedisEnterpriseDatabaseContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExportRedisEnterpriseDatabaseContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ExportRedisEnterpriseDatabaseContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeExportRedisEnterpriseDatabaseContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ExportRedisEnterpriseDatabaseContent)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ExportRedisEnterpriseDatabaseContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

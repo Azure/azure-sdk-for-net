@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     /// <summary> Properties for creating Redis Enterprise databases. </summary>
     internal partial class DatabaseCreateProperties : DatabaseProperties, IJsonModel<DatabaseCreateProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DatabaseProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DatabaseCreateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDatabaseCreateProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DatabaseCreateProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DatabaseCreateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -226,23 +243,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         DatabaseCreateProperties IPersistableModel<DatabaseCreateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (DatabaseCreateProperties)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DatabaseProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DatabaseCreateProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDatabaseCreateProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DatabaseCreateProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DatabaseCreateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

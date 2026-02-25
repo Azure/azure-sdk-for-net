@@ -22,6 +22,30 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RedisEnterprisePrivateEndpointConnectionListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RedisEnterprisePrivateEndpointConnectionListResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRedisEnterprisePrivateEndpointConnectionListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RedisEnterprisePrivateEndpointConnectionListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RedisEnterprisePrivateEndpointConnectionListResult"/> from. </param>
+        internal static RedisEnterprisePrivateEndpointConnectionListResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeRedisEnterprisePrivateEndpointConnectionListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RedisEnterprisePrivateEndpointConnectionListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -146,31 +170,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         RedisEnterprisePrivateEndpointConnectionListResult IPersistableModel<RedisEnterprisePrivateEndpointConnectionListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RedisEnterprisePrivateEndpointConnectionListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RedisEnterprisePrivateEndpointConnectionListResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeRedisEnterprisePrivateEndpointConnectionListResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RedisEnterprisePrivateEndpointConnectionListResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RedisEnterprisePrivateEndpointConnectionListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RedisEnterprisePrivateEndpointConnectionListResult"/> from. </param>
-        internal static RedisEnterprisePrivateEndpointConnectionListResult FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeRedisEnterprisePrivateEndpointConnectionListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

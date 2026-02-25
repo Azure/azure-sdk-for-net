@@ -19,6 +19,23 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     /// <summary> A private link resource. </summary>
     public partial class RedisEnterprisePrivateLinkResource : ResourceData, IJsonModel<RedisEnterprisePrivateLinkResource>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RedisEnterprisePrivateLinkResource>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRedisEnterprisePrivateLinkResource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RedisEnterprisePrivateLinkResource)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RedisEnterprisePrivateLinkResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -152,23 +169,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         RedisEnterprisePrivateLinkResource IPersistableModel<RedisEnterprisePrivateLinkResource>.Create(BinaryData data, ModelReaderWriterOptions options) => (RedisEnterprisePrivateLinkResource)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RedisEnterprisePrivateLinkResource>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeRedisEnterprisePrivateLinkResource(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RedisEnterprisePrivateLinkResource)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RedisEnterprisePrivateLinkResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     /// <summary> All Customer-managed key encryption properties for the resource. Set this to an empty object to use Microsoft-managed key encryption. </summary>
     public partial class RedisEnterpriseCustomerManagedKeyEncryption : IJsonModel<RedisEnterpriseCustomerManagedKeyEncryption>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RedisEnterpriseCustomerManagedKeyEncryption PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseCustomerManagedKeyEncryption>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRedisEnterpriseCustomerManagedKeyEncryption(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RedisEnterpriseCustomerManagedKeyEncryption)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RedisEnterpriseCustomerManagedKeyEncryption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -136,23 +153,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         RedisEnterpriseCustomerManagedKeyEncryption IPersistableModel<RedisEnterpriseCustomerManagedKeyEncryption>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RedisEnterpriseCustomerManagedKeyEncryption PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseCustomerManagedKeyEncryption>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeRedisEnterpriseCustomerManagedKeyEncryption(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RedisEnterpriseCustomerManagedKeyEncryption)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RedisEnterpriseCustomerManagedKeyEncryption>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     /// <summary> Properties to configure geo replication for this database. </summary>
     public partial class ForceLinkParametersGeoReplication : IJsonModel<ForceLinkParametersGeoReplication>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ForceLinkParametersGeoReplication PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ForceLinkParametersGeoReplication>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeForceLinkParametersGeoReplication(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ForceLinkParametersGeoReplication)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ForceLinkParametersGeoReplication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -142,23 +159,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ForceLinkParametersGeoReplication IPersistableModel<ForceLinkParametersGeoReplication>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ForceLinkParametersGeoReplication PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ForceLinkParametersGeoReplication>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeForceLinkParametersGeoReplication(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ForceLinkParametersGeoReplication)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ForceLinkParametersGeoReplication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
