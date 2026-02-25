@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath(artifactSourceName, true);
             uri.AppendPath("/artifacts/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -81,7 +84,10 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/artifactsources/", false);
             uri.AppendPath(artifactSourceName, true);
             uri.AppendPath("/artifacts", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -109,8 +115,18 @@ namespace Azure.ResourceManager.DevTestLabs
         internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string labName, string artifactSourceName, string expand, string filter, int? top, string @orderby, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -134,7 +150,10 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/artifacts/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/generateArmTemplate", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

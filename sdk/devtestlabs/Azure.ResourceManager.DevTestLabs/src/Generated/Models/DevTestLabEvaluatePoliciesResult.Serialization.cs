@@ -34,6 +34,29 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DevTestLabEvaluatePoliciesResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevTestLabsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DevTestLabEvaluatePoliciesResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DevTestLabEvaluatePoliciesResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DevTestLabEvaluatePoliciesResult IPersistableModel<DevTestLabEvaluatePoliciesResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DevTestLabEvaluatePoliciesResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DevTestLabEvaluatePoliciesResult"/> from. </param>
         internal static DevTestLabEvaluatePoliciesResult FromResponse(Response response)
         {
@@ -136,28 +159,5 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             return new DevTestLabEvaluatePoliciesResult(results ?? new ChangeTrackingList<DevTestLabPolicySetResult>(), additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DevTestLabEvaluatePoliciesResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DevTestLabEvaluatePoliciesResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevTestLabsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DevTestLabEvaluatePoliciesResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DevTestLabEvaluatePoliciesResult IPersistableModel<DevTestLabEvaluatePoliciesResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DevTestLabEvaluatePoliciesResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

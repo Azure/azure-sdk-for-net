@@ -10,7 +10,7 @@ In this example we will demonstrate how to evaluate the data set using a custom 
 
 1. First, we need to create project client and read the environment variables which will be used in the next steps. We will also create an `EvaluationClient` for creating and running evaluations.
 
-```C# Snippet:Sampple_CreateClients_EvaluationsCatalogPromptBased
+```C# Snippet:Sample_CreateClients_EvaluationsCatalogPromptBased
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
@@ -19,7 +19,7 @@ EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
 
 2. Define the `EvaluatorVersion` object, which contains evaluation prompt.
 
-```C# Snippet:Sampple_PromptEvaluator_EvaluationsCatalogPromptBased
+```C# Snippet:Sample_PromptEvaluator_EvaluationsCatalogPromptBased
 private EvaluatorVersion promptVersion = new(
     categories: [EvaluatorCategory.Quality],
     definition: new PromptBasedEvaluatorDefinition(
@@ -137,7 +137,7 @@ BinaryData evaluationData = BinaryData.FromObjectAsJson(
 
 5. The `EvaluationClient` uses protocol methods i.e. they take in JSON in the form of `BinaryData` and return `ClientResult`, containing binary encoded JSON response, which can be retrieved using `GetRawResponse()` method. To simplify parsing JSON we will create helper methods. One of the methods is named `ParseClientResult`. It gets string values of the top-level JSON properties. In the next section we will use it to get evaluation name and ID.
 
-```C# Snippet:Sampple_GetStringValues_EvaluationsCatalogPromptBased
+```C# Snippet:Sample_GetStringValues_EvaluationsCatalogPromptBased
 private static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
 {
     Dictionary<string, string> results = [];
@@ -273,7 +273,7 @@ Console.WriteLine($"Evaluation run created (id: {runId})");
 
 9. Define the method to get the error message and code from the response if any.
 
-```C# Snippet:Sampple_GetError_EvaluationsCatalogPromptBased
+```C# Snippet:Sample_GetError_EvaluationsCatalogPromptBased
 private static string GetErrorMessageOrEmpty(ClientResult result)
 {
     string error = "";
@@ -343,7 +343,7 @@ if (runStatus == "failed")
 
 10. Like the `ParseClientResult` we will define the method, getting the result counts `GetResultsCounts`, which formats the `result_counts` property of the output JSON.
 
-```C# Snippet:Sampple_GetResultCounts_EvaluationsCatalogPromptBased
+```C# Snippet:Sample_GetResultCounts_EvaluationsCatalogPromptBased
 private static string GetResultsCounts(ClientResult result)
 {
     Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
@@ -374,7 +374,7 @@ private static string GetResultsCounts(ClientResult result)
 11. To get the results JSON we will define two methods `GetResultsList` and `GetResultsListAsync`, which are iterating over the pages containing results.
 
 Synchronous sample:
-```C# Snippet:Sampple_GetResultsList_EvaluationsCatalogPromptBased_Sync
+```C# Snippet:Sample_GetResultsList_EvaluationsCatalogPromptBased_Sync
 private static List<string> GetResultsList(EvaluationClient client, string evaluationId, string evaluationRunId)
 {
     List<string> resultJsons = [];
@@ -409,7 +409,7 @@ private static List<string> GetResultsList(EvaluationClient client, string evalu
 ```
 
 Asynchronous sample:
-```C# Snippet:Sampple_GetResultsList_EvaluationsCatalogPromptBased_Async
+```C# Snippet:Sample_GetResultsList_EvaluationsCatalogPromptBased_Async
 private static async Task<List<string>> GetResultsListAsync(EvaluationClient client, string evaluationId, string evaluationRunId)
 {
     List<string> resultJsons = [];

@@ -34,6 +34,41 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DevTestLabNotificationChannelNotifyContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevTestLabsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DevTestLabNotificationChannelNotifyContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DevTestLabNotificationChannelNotifyContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DevTestLabNotificationChannelNotifyContent IPersistableModel<DevTestLabNotificationChannelNotifyContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DevTestLabNotificationChannelNotifyContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="devTestLabNotificationChannelNotifyContent"> The <see cref="DevTestLabNotificationChannelNotifyContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DevTestLabNotificationChannelNotifyContent devTestLabNotificationChannelNotifyContent)
+        {
+            if (devTestLabNotificationChannelNotifyContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(devTestLabNotificationChannelNotifyContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DevTestLabNotificationChannelNotifyContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -129,41 +164,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             return new DevTestLabNotificationChannelNotifyContent(eventName, jsonPayload, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DevTestLabNotificationChannelNotifyContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DevTestLabNotificationChannelNotifyContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevTestLabsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DevTestLabNotificationChannelNotifyContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DevTestLabNotificationChannelNotifyContent IPersistableModel<DevTestLabNotificationChannelNotifyContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DevTestLabNotificationChannelNotifyContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="devTestLabNotificationChannelNotifyContent"> The <see cref="DevTestLabNotificationChannelNotifyContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DevTestLabNotificationChannelNotifyContent devTestLabNotificationChannelNotifyContent)
-        {
-            if (devTestLabNotificationChannelNotifyContent == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(devTestLabNotificationChannelNotifyContent, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

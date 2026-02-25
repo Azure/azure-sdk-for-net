@@ -70,6 +70,6 @@ public class RedTeamTests : ProjectsClientTestBase
             await Delay();
             redTeam = await projectClient.RedTeams.GetAsync(redTeam.Name);
         }
-        Assert.That(redTeam.Status, Is.EqualTo("Completed"), $"Wrong Red team statu {redTeam.Status}");
+        Assert.That(redTeam.Status, Is.EqualTo("Completed"), $"Wrong Red team status {redTeam.Status}");
     }
 }

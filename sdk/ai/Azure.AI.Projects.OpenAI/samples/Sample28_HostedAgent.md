@@ -70,7 +70,7 @@ AIProjectClient projectClient = new(endpoint: uriEndpoint, tokenProvider: new De
 2. For brevity we will create the method, returning the `ImageBasedHostedAgentDefinition` object.
 
 ```C# Snippet:Sample_ImageBasedHostedAgentDefinition_HostedAgent
-private static  HostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
+private static HostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
 {
     HostedAgentDefinition agentDefinition = new(
         containerProtocolVersions: [new ProtocolVersionRecord(AgentCommunicationMethod.ActivityProtocol, "v1")],

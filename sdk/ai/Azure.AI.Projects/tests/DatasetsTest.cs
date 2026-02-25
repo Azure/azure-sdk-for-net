@@ -25,7 +25,7 @@ namespace Azure.AI.Projects.Tests
         public async Task DatasetsFileTest()
         {
             var connectionName = TestEnvironment.STORAGECONNECTIONNAME;
-            // Use the nect code to crete the recording.
+            // Use the next code to create the recording.
             // var datasetName = string.Concat(TestEnvironment.DATASETNAME, "-", Guid.NewGuid().ToString("N").Substring(0, 8));
             // And record the created data set name into the next line.
             var datasetName = string.Concat(TestEnvironment.DATASETNAME, "-623621a9");

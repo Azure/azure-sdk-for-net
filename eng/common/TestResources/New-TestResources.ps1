@@ -179,7 +179,7 @@ try {
         }
         Write-Verbose "Overriding test resources search directory to '$root'"
     }
-    
+
     $templateFiles = @()
 
     "$ResourceType-resources.json", "$ResourceType-resources.bicep" | ForEach-Object {
@@ -203,7 +203,7 @@ try {
 
     # returns empty string if $ServiceDirectory is not set
     $serviceName = GetServiceLeafDirectoryName $ServiceDirectory
-    
+
     # in ci, random names are used
     # in non-ci, without BaseName, ResourceGroupName or ServiceDirectory, all invocations will
     # generate the same resource group name and base name for a given user
@@ -272,13 +272,13 @@ try {
             if ($context.Tenant.Name -like '*TME*') {
                 if ($currentSubscriptionId -ne '4d042dc6-fe17-4698-a23f-ec6a8d1e98f4') {
                     Log "Attempting to select subscription 'Azure SDK Test Resources - TME (4d042dc6-fe17-4698-a23f-ec6a8d1e98f4)'"
-                    $null = Select-AzSubscription -Subscription '4d042dc6-fe17-4698-a23f-ec6a8d1e98f4' -ErrorAction Ignore
+                    $null = Select-AzSubscription -Subscription '4d042dc6-fe17-4698-a23f-ec6a8d1e98f4' -ErrorAction Ignore -WarningAction Ignore
                     # Update the context.
                     $context = Get-AzContext
                 }
             } elseif ($currentSubcriptionId -ne 'faa080af-c1d8-40ad-9cce-e1a450ca5b57') {
                 Log "Attempting to select subscription 'Azure SDK Developer Playground (faa080af-c1d8-40ad-9cce-e1a450ca5b57)'"
-                $null = Select-AzSubscription -Subscription 'faa080af-c1d8-40ad-9cce-e1a450ca5b57' -ErrorAction Ignore
+                $null = Select-AzSubscription -Subscription 'faa080af-c1d8-40ad-9cce-e1a450ca5b57' -ErrorAction Ignore -WarningAction Ignore
                 # Update the context.
                 $context = Get-AzContext
             }
@@ -310,7 +310,7 @@ try {
         }
     }
 
-    # This needs to happen after we set the TenantId but before we use the ResourceGroupName	
+    # This needs to happen after we set the TenantId but before we use the ResourceGroupName
     if ($wellKnownTMETenants.Contains($TenantId)) {
         # Add a prefix to the resource group name to avoid flagging the usages of local auth
         # See details at https://eng.ms/docs/products/onecert-certificates-key-vault-and-dsms/key-vault-dsms/certandsecretmngmt/credfreefaqs#how-can-i-disable-s360-reporting-when-testing-customer-facing-3p-features-that-depend-on-use-of-unsafe-local-auth
@@ -627,22 +627,44 @@ try {
         }
         Log $msg
 
-        $deployment = Retry {
-            New-AzResourceGroupDeployment `
+        # Run a first pass outside of Retry to fail fast for
+        # template validation errors that won't be fixed with retries.
+        # Only run Test-AzResourceGroupDeployment after error because it can
+        # take a while for large templates even during success cases.
+        try {
+            $deployment = New-AzResourceGroupDeployment `
+                            -Name $BaseName `
+                            -ResourceGroupName $resourceGroup.ResourceGroupName `
+                            -TemplateFile $templateFile.jsonFilePath `
+                            -TemplateParameterObject $templateFileParameters `
+                            -Force:$Force
+        } catch {
+            # Throw if we hit a template validation error, otherwise proceed
+            if ($_.Exception.Message -like '*InvalidTemplateDeployment*') {
+                $validation = Test-AzResourceGroupDeployment `
+                    -ResourceGroupName $resourceGroup.ResourceGroupName `
+                    -TemplateFile $templateFile.jsonFilePath `
+                    -TemplateParameterObject $templateFileParameters
+
+                HandleTemplateDeploymentError $validation
+                throw
+            }
+        }
+
+        if (!$deployment -or $deployment.ProvisioningState -ne 'Succeeded') {
+            Write-Warning "Initial deployment attempt failed, retrying..."
+            $deployment = Retry -Attempts 4 -Action {
+                New-AzResourceGroupDeployment `
                     -Name $BaseName `
                     -ResourceGroupName $resourceGroup.ResourceGroupName `
                     -TemplateFile $templateFile.jsonFilePath `
                     -TemplateParameterObject $templateFileParameters `
                     -Force:$Force
+            }
         }
+
         if ($deployment.ProvisioningState -ne 'Succeeded') {
-            Write-Host "Deployment '$($deployment.DeploymentName)' has state '$($deployment.ProvisioningState)' with CorrelationId '$($deployment.CorrelationId)'. Exiting..."
-            Write-Host @'
-#####################################################
-# For help debugging live test provisioning issues, #
-# see http://aka.ms/azsdk/engsys/live-test-help     #
-#####################################################
-'@
+            HandleDeploymentFailure $deployment
             exit 1
         }
 

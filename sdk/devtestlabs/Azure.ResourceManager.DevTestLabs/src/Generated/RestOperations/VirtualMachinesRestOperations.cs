@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath(labName, true);
             uri.AppendPath("/virtualmachines/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -78,7 +81,10 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath(labName, true);
             uri.AppendPath("/virtualmachines/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -101,7 +107,10 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath(labName, true);
             uri.AppendPath("/virtualmachines/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -124,7 +133,10 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath(labName, true);
             uri.AppendPath("/virtualmachines/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -143,7 +155,10 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/providers/Microsoft.DevTestLab/labs/", false);
             uri.AppendPath(labName, true);
             uri.AppendPath("/virtualmachines", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -171,8 +186,18 @@ namespace Azure.ResourceManager.DevTestLabs
         internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string labName, string expand, string filter, int? top, string @orderby, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -194,7 +219,10 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/virtualmachines/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/addDataDisk", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -217,7 +245,10 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/virtualmachines/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/applyArtifacts", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -240,7 +271,10 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/virtualmachines/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/claim", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -261,7 +295,10 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/virtualmachines/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/detachDataDisk", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -284,7 +321,10 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/virtualmachines/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/getRdpFileContents", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -306,7 +346,10 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/virtualmachines/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/listApplicableSchedules", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -328,7 +371,10 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/virtualmachines/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/redeploy", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -349,7 +395,10 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/virtualmachines/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/resize", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -372,7 +421,10 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/virtualmachines/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/restart", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -393,7 +445,10 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/virtualmachines/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/start", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -414,7 +469,10 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/virtualmachines/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/stop", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -435,7 +493,10 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/virtualmachines/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/transferDisks", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -456,7 +517,10 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/virtualmachines/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/unClaim", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

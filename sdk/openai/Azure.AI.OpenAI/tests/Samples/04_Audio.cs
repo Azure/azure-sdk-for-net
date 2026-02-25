@@ -14,7 +14,6 @@ public partial class AzureOpenAISamples
 {
     public void AudioTranscription()
     {
-        #region Snippet:AudioTranscription
         AzureOpenAIClient azureClient = new(
             new Uri("https://your-azure-openai-resource.com"),
             new DefaultAzureCredential());
@@ -27,7 +26,6 @@ public partial class AzureOpenAISamples
         AudioTranscription transcription = audioClient.TranscribeAudio(audioFilePath);
 
         Console.WriteLine($"Transcribed text: {transcription.Text}");
-        #endregion
     }
 
     public void AudioTranscriptionWithOptions()
@@ -37,7 +35,6 @@ public partial class AzureOpenAISamples
             new DefaultAzureCredential());
         AudioClient audioClient = azureClient.GetAudioClient("my-whisper-deployment");
 
-        #region Snippet:AudioTranscriptionWithOptions
         string audioFilePath = "path/to/your/audio/file.wav";
 
         // Configure transcription options for enhanced output
@@ -64,7 +61,6 @@ public partial class AzureOpenAISamples
                 Console.WriteLine($"  {word.Word}: timestamps available");
             }
         }
-        #endregion
     }
 
     public void AudioTranslation()
@@ -74,7 +70,6 @@ public partial class AzureOpenAISamples
             new DefaultAzureCredential());
         AudioClient audioClient = azureClient.GetAudioClient("my-whisper-deployment");
 
-        #region Snippet:AudioTranslation
         // Load an audio file in any supported language
         string audioFilePath = "path/to/your/foreign/audio/file.wav";
 
@@ -82,7 +77,6 @@ public partial class AzureOpenAISamples
         AudioTranslation translation = audioClient.TranslateAudio(audioFilePath);
 
         Console.WriteLine($"Translated to English: {translation.Text}");
-        #endregion
     }
 
     public void AudioTranslationWithOptions()
@@ -92,7 +86,6 @@ public partial class AzureOpenAISamples
             new DefaultAzureCredential());
         AudioClient audioClient = azureClient.GetAudioClient("my-whisper-deployment");
 
-        #region Snippet:AudioTranslationWithOptions
         string audioFilePath = "path/to/your/foreign/audio/file.wav";
 
         // Configure translation options for enhanced output
@@ -107,7 +100,6 @@ public partial class AzureOpenAISamples
 
         Console.WriteLine($"Translated text: {translation.Text}");
         Console.WriteLine($"Duration: {translation.Duration}");
-        #endregion
     }
 
 #if !AZURE_OPENAI_GA
@@ -118,7 +110,6 @@ public partial class AzureOpenAISamples
             new DefaultAzureCredential());
         AudioClient audioClient = azureClient.GetAudioClient("my-tts-deployment");
 
-        #region Snippet:TextToSpeech
         string textToSpeak = "Hello! Welcome to Azure OpenAI text-to-speech. This technology can convert written text into natural-sounding speech.";
 
         // Generate speech from text
@@ -129,7 +120,6 @@ public partial class AzureOpenAISamples
         File.WriteAllBytes(outputPath, speechData.ToArray());
 
         Console.WriteLine($"Speech generated and saved to: {outputPath}");
-        #endregion
     }
 
     public void TextToSpeechWithOptions()
@@ -139,7 +129,6 @@ public partial class AzureOpenAISamples
             new DefaultAzureCredential());
         AudioClient audioClient = azureClient.GetAudioClient("my-tts-deployment");
 
-        #region Snippet:TextToSpeechWithOptions
         string textToSpeak = "This is a demonstration of advanced text-to-speech capabilities with customized voice settings.";
 
         // Generate speech with specific voice
@@ -151,7 +140,6 @@ public partial class AzureOpenAISamples
 
         Console.WriteLine($"Speech generated with Nova voice");
         Console.WriteLine($"Saved to: {outputPath}");
-        #endregion
     }
 
     public void AudioWorkflowExample()
@@ -163,7 +151,6 @@ public partial class AzureOpenAISamples
         AudioClient whisperClient = azureClient.GetAudioClient("my-whisper-deployment");
         AudioClient ttsClient = azureClient.GetAudioClient("my-tts-deployment");
 
-        #region Snippet:AudioWorkflowExample
         // Complete workflow: audio processing pipeline
         string inputAudioPath = "path/to/meeting/recording.wav";
 
@@ -196,7 +183,6 @@ public partial class AzureOpenAISamples
         Console.WriteLine("- meeting_transcript.txt: Full transcription");
         Console.WriteLine("- meeting_summary.txt: Key points summary");
         Console.WriteLine("- meeting_summary.mp3: Audio summary");
-        #endregion
     }
 #endif
 }
