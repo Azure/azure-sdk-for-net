@@ -1008,8 +1008,6 @@ namespace Azure.Storage.DataMovement.Tests
             await transferCheckpointer.GetStoredTransfersAsync();
 
             // Assert - The old semaphores should be disposed (they are replaced with new instances)
-            // Note: This test will FAIL with the current implementation because RefreshCache
-            // does not dispose the old instances before clearing the dictionary
             Assert.Throws<ObjectDisposedException>(() => jobPlanWriteLock.Wait(0),
                 "Old JobPlanFile.WriteLock should be disposed after RefreshCache");
             Assert.Throws<ObjectDisposedException>(() => jobPartWriteLock.Wait(0),
