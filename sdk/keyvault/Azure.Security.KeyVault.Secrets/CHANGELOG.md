@@ -5,9 +5,6 @@
 ### Features Added
 
 - Added `SecretClientSettings` to support creating a `SecretClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
-
-### Breaking Changes
-
 - Added the `outContentType` query parameter to the `SecretClient.GetSecret` and `SecretClient.GetSecretAsync` to specify the format in which the certificate will be returned.
 - Added the `previousVersion` property to `SecretProperties`.
 
