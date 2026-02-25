@@ -17,6 +17,30 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     /// <summary> Synchronize certification record response. </summary>
     public partial class SyncCertRecordResult : IJsonModel<SyncCertRecordResult>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SyncCertRecordResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SyncCertRecordResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSyncCertRecordResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SyncCertRecordResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SyncCertRecordResult"/> from. </param>
+        internal static SyncCertRecordResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSyncCertRecordResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SyncCertRecordResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -123,31 +147,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         SyncCertRecordResult IPersistableModel<SyncCertRecordResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SyncCertRecordResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SyncCertRecordResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSyncCertRecordResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SyncCertRecordResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SyncCertRecordResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SyncCertRecordResult"/> from. </param>
-        internal static SyncCertRecordResult FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSyncCertRecordResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

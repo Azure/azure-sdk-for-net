@@ -19,7 +19,7 @@ namespace Azure.AI.Projects
         /// <param name="spec"> The openapi function shape, described as a JSON Schema object. </param>
         /// <param name="auth"> Open API authentication details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="spec"/> or <paramref name="auth"/> is null. </exception>
-        public OpenApiFunctionDefinition(string name, BinaryData spec, OpenApiAuthDetails auth)
+        public OpenApiFunctionDefinition(string name, IDictionary<string, BinaryData> spec, OpenApiAuthDetails auth)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(spec, nameof(spec));
@@ -40,7 +40,7 @@ namespace Azure.AI.Projects
         /// <param name="defaultParams"> List of OpenAPI spec parameters that will use user-provided defaults. </param>
         /// <param name="functions"> List of function definitions used by OpenApi tool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OpenApiFunctionDefinition(string name, string description, BinaryData spec, OpenApiAuthDetails auth, IList<string> defaultParams, IReadOnlyList<OpenApiFunctionDefinitionFunction> functions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OpenApiFunctionDefinition(string name, string description, IDictionary<string, BinaryData> spec, OpenApiAuthDetails auth, IList<string> defaultParams, IReadOnlyList<OpenApiFunctionDefinitionFunction> functions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -59,7 +59,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// The openapi function shape, described as a JSON Schema object.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
@@ -83,7 +83,7 @@ namespace Azure.AI.Projects
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Spec { get; set; }
+        public IDictionary<string, BinaryData> Spec { get; }
 
         /// <summary> Open API authentication details. </summary>
         public OpenApiAuthDetails Auth { get; set; }

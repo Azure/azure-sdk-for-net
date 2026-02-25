@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> The information of the experiment run. </summary>
     internal partial class ExperimentExecutionDetailsPropertiesRunInformation : IJsonModel<ExperimentExecutionDetailsPropertiesRunInformation>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ExperimentExecutionDetailsPropertiesRunInformation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExperimentExecutionDetailsPropertiesRunInformation>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeExperimentExecutionDetailsPropertiesRunInformation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExperimentExecutionDetailsPropertiesRunInformation)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExperimentExecutionDetailsPropertiesRunInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -131,23 +148,6 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ExperimentExecutionDetailsPropertiesRunInformation IPersistableModel<ExperimentExecutionDetailsPropertiesRunInformation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExperimentExecutionDetailsPropertiesRunInformation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ExperimentExecutionDetailsPropertiesRunInformation>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeExperimentExecutionDetailsPropertiesRunInformation(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ExperimentExecutionDetailsPropertiesRunInformation)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ExperimentExecutionDetailsPropertiesRunInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

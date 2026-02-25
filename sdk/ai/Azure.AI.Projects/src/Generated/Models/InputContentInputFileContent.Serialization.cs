@@ -42,6 +42,16 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InputContentInputFileContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InputContentInputFileContent IPersistableModel<InputContentInputFileContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (InputContentInputFileContent)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InputContentInputFileContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InputContentInputFileContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -142,7 +152,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    fileUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    fileUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("file_data"u8))
@@ -163,15 +173,5 @@ namespace Azure.AI.Projects
                 fileUrl,
                 fileData);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InputContentInputFileContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InputContentInputFileContent IPersistableModel<InputContentInputFileContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (InputContentInputFileContent)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InputContentInputFileContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

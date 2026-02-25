@@ -5,7 +5,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
@@ -50,6 +49,16 @@ namespace Azure.AI.Projects.OpenAI
                     throw new FormatException($"The model {nameof(AgentTool)} does not support writing '{options.Format}' format.");
             }
         }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AgentTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AgentTool IPersistableModel<AgentTool>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AgentTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -137,7 +146,7 @@ namespace Azure.AI.Projects.OpenAI
                         return CaptureStructuredOutputsTool.DeserializeCaptureStructuredOutputsTool(element, options);
                     case "a2a_preview":
                         return A2APreviewTool.DeserializeA2APreviewTool(element, options);
-                    case "memory_search":
+                    case "memory_search_preview":
                         return MemorySearchPreviewTool.DeserializeMemorySearchPreviewTool(element, options);
                     case "code_interpreter":
                         return InternalCodeInterpreterTool.DeserializeInternalCodeInterpreterTool(element, options);
@@ -167,15 +176,5 @@ namespace Azure.AI.Projects.OpenAI
             }
             return UnknownTool.DeserializeUnknownTool(element, options);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AgentTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AgentTool IPersistableModel<AgentTool>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AgentTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

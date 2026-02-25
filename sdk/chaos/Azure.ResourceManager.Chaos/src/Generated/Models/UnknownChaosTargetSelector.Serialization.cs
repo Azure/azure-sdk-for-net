@@ -20,6 +20,23 @@ namespace Azure.ResourceManager.Chaos.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ChaosTargetSelector PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ChaosTargetSelector>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeChaosTargetSelector(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ChaosTargetSelector)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ChaosTargetSelector>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -118,23 +135,6 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ChaosTargetSelector IPersistableModel<ChaosTargetSelector>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ChaosTargetSelector PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ChaosTargetSelector>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeChaosTargetSelector(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ChaosTargetSelector)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ChaosTargetSelector>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

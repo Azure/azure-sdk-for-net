@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     /// <summary> Set workload type to optimize storage for SQL Server. </summary>
     internal partial class SqlWorkloadTypeUpdateSettings : IJsonModel<SqlWorkloadTypeUpdateSettings>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SqlWorkloadTypeUpdateSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SqlWorkloadTypeUpdateSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSqlWorkloadTypeUpdateSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SqlWorkloadTypeUpdateSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlWorkloadTypeUpdateSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -121,23 +138,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         SqlWorkloadTypeUpdateSettings IPersistableModel<SqlWorkloadTypeUpdateSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SqlWorkloadTypeUpdateSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SqlWorkloadTypeUpdateSettings>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSqlWorkloadTypeUpdateSettings(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SqlWorkloadTypeUpdateSettings)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SqlWorkloadTypeUpdateSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

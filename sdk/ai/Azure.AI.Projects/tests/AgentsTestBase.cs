@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
@@ -10,9 +9,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-using Azure.AI.Projects;
 using Azure.AI.Projects.OpenAI;
-using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI;
@@ -21,6 +18,7 @@ using OpenAI.VectorStores;
 
 namespace Azure.AI.Projects.Tests;
 #pragma warning disable OPENAICUA001
+#pragma warning disable AAIP001
 
 public class AgentsTestBase : ProjectsClientTestBase
 {
@@ -79,7 +77,7 @@ public class AgentsTestBase : ProjectsClientTestBase
                 "Enter the value 'MSFT', to get information about the Microsoft stock price.\n" +
                 "At the top of the resulting page you will see a default chart of Microsoft stock price.\n" +
                 "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it."},
-        {ToolType.MicrosoftFabric, "What was the number of public holidays in Norway in 2024?"},
+        {ToolType.MicrosoftFabric, "Tell me about the weather in Texas."},
         {ToolType.Sharepoint, "What is Contoso whistleblower policy?"},
         {ToolType.CodeInterpreter,  "Can you give me the documented codes for 'banana' and 'orange'?"},
         {ToolType.MCP, "Please summarize the Azure REST API specifications Readme"},
@@ -127,7 +125,6 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.Memory, "plagiarus"},
         {ToolType.AzureAISearch, "60"},
         {ToolType.BingGroundingCustom, "40.+gold.+44 silver.+42.+bronze"},
-        {ToolType.MicrosoftFabric, "62"},
         {ToolType.AzureFunction, "Bar"}
     };
 
@@ -136,7 +133,8 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.AzureAISearch, "product_info_7.md"},
         {ToolType.BingGrounding, "Wikipedia"},
         {ToolType.BingGroundingCustom, "Wikipedia"},
-        {ToolType.Sharepoint, "sharepoint"}
+        {ToolType.Sharepoint, "sharepoint"},
+        {ToolType.MicrosoftFabric, "Fabric Response for" },
     };
 
     public Dictionary<ToolType, Type> ExpectedUpdateTypes = new()
@@ -153,6 +151,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.AzureAISearch, typeof(UriCitationMessageAnnotation) },
         {ToolType.BingGrounding, typeof(UriCitationMessageAnnotation) },
         {ToolType.BingGroundingCustom, typeof(UriCitationMessageAnnotation) },
+        {ToolType.MicrosoftFabric, typeof(UriCitationMessageAnnotation) },
     };
 
     public Dictionary<ToolType, string> ExpectedItems = new()
@@ -330,8 +329,8 @@ public class AgentsTestBase : ProjectsClientTestBase
         }
         OpenAPIFunctionDefinition functionDefinition = new OpenAPIFunctionDefinition(
             name: withConnection ? "tripadvisor" : "get_weather",
-            spec: BinaryData.FromBytes(BinaryData.FromBytes(File.ReadAllBytes(filePath))),
-            auth: auth
+            specificationBytes: BinaryData.FromBytes(BinaryData.FromBytes(File.ReadAllBytes(filePath))),
+            authentication: auth
         );
         functionDefinition.Description = withConnection ? "Trip Advisor API to get travel information." : "Retrieve weather information for a location.";
         return new(functionDefinition);
@@ -548,11 +547,11 @@ public class AgentsTestBase : ProjectsClientTestBase
             }
         }
         // Remove Vector stores
-        VectorStoreClient oaiVctStoreClient = projectClient.OpenAI.GetVectorStoreClient();
-        foreach (VectorStore vct in oaiVctStoreClient.GetVectorStores().Where(x => (x.Name ?? "").Equals(VECTOR_STORE)))
-        {
-            oaiVctStoreClient.DeleteVectorStore(vectorStoreId: vct.Id);
-        }
+        //VectorStoreClient oaiVctStoreClient = projectClient.OpenAI.GetVectorStoreClient();
+        //foreach (VectorStore vct in oaiVctStoreClient.GetVectorStores().Where(x => (x.Name ?? "").Equals(VECTOR_STORE)))
+        //{
+        //    oaiVctStoreClient.DeleteVectorStore(vectorStoreId: vct.Id);
+        //}
         // Remove Agents.
         foreach (AgentVersion ag in projectClient.Agents.GetAgentVersions(agentName: AGENT_NAME))
         {

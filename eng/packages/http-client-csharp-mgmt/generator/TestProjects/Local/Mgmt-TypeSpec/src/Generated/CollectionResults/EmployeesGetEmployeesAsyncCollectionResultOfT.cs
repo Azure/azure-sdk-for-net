@@ -56,7 +56,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     yield break;
                 }
                 EmployeeListResult result = EmployeeListResult.FromResponse(response);
-                yield return Page<Employee>.FromValues((IReadOnlyList<Employee>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<Employee>.FromValues((IReadOnlyList<Employee>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

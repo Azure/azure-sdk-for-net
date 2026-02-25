@@ -6,9 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.OpenAI;
+using OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     internal partial class InternalFileSearchTool : AgentTool, IJsonModel<InternalFileSearchTool>
     {
@@ -46,6 +46,16 @@ namespace OpenAI
                     throw new FormatException($"The model {nameof(InternalFileSearchTool)} does not support writing '{options.Format}' format.");
             }
         }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InternalFileSearchTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InternalFileSearchTool IPersistableModel<InternalFileSearchTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalFileSearchTool)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InternalFileSearchTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -198,15 +208,5 @@ namespace OpenAI
                 rankingOptions,
                 filters);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalFileSearchTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InternalFileSearchTool IPersistableModel<InternalFileSearchTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalFileSearchTool)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalFileSearchTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

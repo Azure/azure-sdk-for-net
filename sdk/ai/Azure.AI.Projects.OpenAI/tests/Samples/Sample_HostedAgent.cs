@@ -10,16 +10,16 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Projects.OpenAI.Tests.Samples;
 
+# pragma warning disable AAIP001
 public class Sample_HostedAgent : ProjectsOpenAITestBase
 {
     #region Snippet:Sample_ImageBasedHostedAgentDefinition_HostedAgent
-    private static  ImageBasedHostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
+    private static  HostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
     {
-        ImageBasedHostedAgentDefinition agentDefinition = new(
+        HostedAgentDefinition agentDefinition = new(
             containerProtocolVersions: [new ProtocolVersionRecord(AgentCommunicationMethod.ActivityProtocol, "v1")],
             cpu: "1",
-            memory: "2Gi",
-            image: dockerImage
+            memory: "2Gi"
         )
         {
             EnvironmentVariables = {
@@ -28,7 +28,8 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
                 // Optional variables, used for logging
                 { "APPLICATIONINSIGHTS_CONNECTION_STRING", applicationInsightConnectionString },
                 { "AGENT_PROJECT_RESOURCE_ID", projectEndpoint },
-            }
+            },
+            Image = dockerImage,
         };
         return agentDefinition;
     }
@@ -59,7 +60,7 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_CreateAgent_HostedAgent_Async
-        ImageBasedHostedAgentDefinition agentDefinition = GetAgentDefinition(
+        HostedAgentDefinition agentDefinition = GetAgentDefinition(
             dockerImage: dockerImage,
             modelDeploymentName: modelDeploymentName,
             accountId: accountId,
@@ -142,7 +143,7 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
         AIProjectClient projectClient = new(endpoint: uriEndpoint, tokenProvider: new DefaultAzureCredential());
 
         #region Snippet:Sample_CreateAgent_HostedAgent_Sync
-        ImageBasedHostedAgentDefinition agentDefinition = GetAgentDefinition(
+        HostedAgentDefinition agentDefinition = GetAgentDefinition(
             dockerImage: dockerImage,
             modelDeploymentName: modelDeploymentName,
             accountId: accountId,

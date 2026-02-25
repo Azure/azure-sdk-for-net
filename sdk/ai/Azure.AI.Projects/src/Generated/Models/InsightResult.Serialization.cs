@@ -10,7 +10,7 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// The result of the insights.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EvalCompareReport"/>, <see cref="EvaluationRunClusterInsightResult"/>, and <see cref="AgentClusterInsightResult"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EvaluationComparisonInsightResult"/>, <see cref="EvaluationRunClusterInsightResult"/>, and <see cref="AgentClusterInsightResult"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownInsightResult))]
     public abstract partial class InsightResult : IJsonModel<InsightResult>
@@ -49,6 +49,16 @@ namespace Azure.AI.Projects
                     throw new FormatException($"The model {nameof(InsightResult)} does not support writing '{options.Format}' format.");
             }
         }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InsightResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InsightResult IPersistableModel<InsightResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InsightResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -117,7 +127,7 @@ namespace Azure.AI.Projects
                 switch (discriminator.GetString())
                 {
                     case "EvaluationComparison":
-                        return EvalCompareReport.DeserializeEvalCompareReport(element, options);
+                        return EvaluationComparisonInsightResult.DeserializeEvaluationComparisonInsightResult(element, options);
                     case "EvaluationRunClusterInsight":
                         return EvaluationRunClusterInsightResult.DeserializeEvaluationRunClusterInsightResult(element, options);
                     case "AgentClusterInsight":
@@ -126,15 +136,5 @@ namespace Azure.AI.Projects
             }
             return UnknownInsightResult.DeserializeUnknownInsightResult(element, options);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InsightResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InsightResult IPersistableModel<InsightResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InsightResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

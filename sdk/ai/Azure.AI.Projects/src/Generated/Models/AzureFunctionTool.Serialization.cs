@@ -47,6 +47,16 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AzureFunctionTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureFunctionTool IPersistableModel<AzureFunctionTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureFunctionTool)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AzureFunctionTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AzureFunctionTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -117,15 +127,5 @@ namespace Azure.AI.Projects
             }
             return new AzureFunctionTool(@type, additionalBinaryDataProperties, azureFunction);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AzureFunctionTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AzureFunctionTool IPersistableModel<AzureFunctionTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureFunctionTool)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AzureFunctionTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

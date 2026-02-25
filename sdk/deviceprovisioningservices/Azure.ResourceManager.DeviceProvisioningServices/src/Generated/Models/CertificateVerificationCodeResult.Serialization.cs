@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     /// <summary> Description of the response of the verification code. </summary>
     public partial class CertificateVerificationCodeResult : ResourceData, IJsonModel<CertificateVerificationCodeResult>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CertificateVerificationCodeResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCertificateVerificationCodeResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CertificateVerificationCodeResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CertificateVerificationCodeResult"/> from. </param>
+        internal static CertificateVerificationCodeResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeCertificateVerificationCodeResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CertificateVerificationCodeResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -175,31 +199,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         CertificateVerificationCodeResult IPersistableModel<CertificateVerificationCodeResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (CertificateVerificationCodeResult)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CertificateVerificationCodeResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeCertificateVerificationCodeResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CertificateVerificationCodeResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<CertificateVerificationCodeResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CertificateVerificationCodeResult"/> from. </param>
-        internal static CertificateVerificationCodeResult FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeCertificateVerificationCodeResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

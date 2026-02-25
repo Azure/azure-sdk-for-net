@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Datacenter instruction for given storage location. </summary>
     public partial class DataCenterAddressInstructionResult : DataCenterAddressResult, IJsonModel<DataCenterAddressInstructionResult>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataCenterAddressResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataCenterAddressInstructionResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataCenterAddressInstructionResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataCenterAddressInstructionResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataCenterAddressInstructionResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -142,23 +159,6 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         DataCenterAddressInstructionResult IPersistableModel<DataCenterAddressInstructionResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataCenterAddressInstructionResult)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DataCenterAddressResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataCenterAddressInstructionResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDataCenterAddressInstructionResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataCenterAddressInstructionResult)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataCenterAddressInstructionResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

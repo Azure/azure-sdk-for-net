@@ -10,16 +10,42 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Peering.Models;
 
 namespace Azure.ResourceManager.Peering
 {
-    public partial class PeeringServicePrefixData : IUtf8JsonSerializable, IJsonModel<PeeringServicePrefixData>
+    /// <summary> The peering service prefix class. </summary>
+    public partial class PeeringServicePrefixData : ResourceData, IJsonModel<PeeringServicePrefixData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeeringServicePrefixData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PeeringServicePrefixData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePeeringServicePrefixData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PeeringServicePrefixData)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PeeringServicePrefixData"/> from. </param>
+        internal static PeeringServicePrefixData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializePeeringServicePrefixData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PeeringServicePrefixData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,210 +57,114 @@ namespace Azure.ResourceManager.Peering
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PeeringServicePrefixData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PeeringServicePrefixData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PeeringServicePrefixData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Prefix))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("prefix"u8);
-                writer.WriteStringValue(Prefix);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrefixValidationState))
-            {
-                writer.WritePropertyName("prefixValidationState"u8);
-                writer.WriteStringValue(PrefixValidationState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(LearnedType))
-            {
-                writer.WritePropertyName("learnedType"u8);
-                writer.WriteStringValue(LearnedType.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
-            {
-                writer.WritePropertyName("errorMessage"u8);
-                writer.WriteStringValue(ErrorMessage);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Events))
-            {
-                writer.WritePropertyName("events"u8);
-                writer.WriteStartArray();
-                foreach (var item in Events)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(PeeringServicePrefixKey))
-            {
-                writer.WritePropertyName("peeringServicePrefixKey"u8);
-                writer.WriteStringValue(PeeringServicePrefixKey);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
         }
 
-        PeeringServicePrefixData IJsonModel<PeeringServicePrefixData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PeeringServicePrefixData IJsonModel<PeeringServicePrefixData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PeeringServicePrefixData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PeeringServicePrefixData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PeeringServicePrefixData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PeeringServicePrefixData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePeeringServicePrefixData(document.RootElement, options);
         }
 
-        internal static PeeringServicePrefixData DeserializePeeringServicePrefixData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static PeeringServicePrefixData DeserializePeeringServicePrefixData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            string prefix = default;
-            PeeringPrefixValidationState? prefixValidationState = default;
-            PeeringLearnedType? learnedType = default;
-            string errorMessage = default;
-            IReadOnlyList<PeeringServicePrefixEvent> events = default;
-            string peeringServicePrefixKey = default;
-            PeeringProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            PeeringServicePrefixProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerPeeringContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("prefix"u8))
-                        {
-                            prefix = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("prefixValidationState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            prefixValidationState = new PeeringPrefixValidationState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("learnedType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            learnedType = new PeeringLearnedType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("errorMessage"u8))
-                        {
-                            errorMessage = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("events"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<PeeringServicePrefixEvent> array = new List<PeeringServicePrefixEvent>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(PeeringServicePrefixEvent.DeserializePeeringServicePrefixEvent(item, options));
-                            }
-                            events = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("peeringServicePrefixKey"u8))
-                        {
-                            peeringServicePrefixKey = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new PeeringProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerPeeringContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = PeeringServicePrefixProperties.DeserializePeeringServicePrefixProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new PeeringServicePrefixData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                prefix,
-                prefixValidationState,
-                learnedType,
-                errorMessage,
-                events ?? new ChangeTrackingList<PeeringServicePrefixEvent>(),
-                peeringServicePrefixKey,
-                provisioningState,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties,
+                properties);
         }
 
-        BinaryData IPersistableModel<PeeringServicePrefixData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PeeringServicePrefixData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PeeringServicePrefixData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PeeringServicePrefixData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -244,22 +174,23 @@ namespace Azure.ResourceManager.Peering
             }
         }
 
-        PeeringServicePrefixData IPersistableModel<PeeringServicePrefixData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PeeringServicePrefixData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PeeringServicePrefixData IPersistableModel<PeeringServicePrefixData>.Create(BinaryData data, ModelReaderWriterOptions options) => (PeeringServicePrefixData)PersistableModelCreateCore(data, options);
 
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePeeringServicePrefixData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PeeringServicePrefixData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PeeringServicePrefixData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="peeringServicePrefixData"> The <see cref="PeeringServicePrefixData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(PeeringServicePrefixData peeringServicePrefixData)
+        {
+            if (peeringServicePrefixData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(peeringServicePrefixData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
     }
 }

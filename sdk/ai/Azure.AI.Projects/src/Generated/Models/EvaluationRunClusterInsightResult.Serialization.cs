@@ -47,6 +47,16 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<EvaluationRunClusterInsightResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EvaluationRunClusterInsightResult IPersistableModel<EvaluationRunClusterInsightResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (EvaluationRunClusterInsightResult)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EvaluationRunClusterInsightResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EvaluationRunClusterInsightResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -117,15 +127,5 @@ namespace Azure.AI.Projects
             }
             return new EvaluationRunClusterInsightResult(@type, additionalBinaryDataProperties, clusterInsight);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EvaluationRunClusterInsightResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        EvaluationRunClusterInsightResult IPersistableModel<EvaluationRunClusterInsightResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (EvaluationRunClusterInsightResult)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EvaluationRunClusterInsightResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

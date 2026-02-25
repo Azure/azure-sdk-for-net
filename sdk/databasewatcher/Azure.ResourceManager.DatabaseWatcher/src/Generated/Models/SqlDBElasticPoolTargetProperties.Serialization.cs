@@ -22,6 +22,23 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DatabaseWatcherTargetProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SqlDBElasticPoolTargetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSqlDBElasticPoolTargetProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SqlDBElasticPoolTargetProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlDBElasticPoolTargetProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -176,23 +193,6 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         SqlDBElasticPoolTargetProperties IPersistableModel<SqlDBElasticPoolTargetProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (SqlDBElasticPoolTargetProperties)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DatabaseWatcherTargetProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SqlDBElasticPoolTargetProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSqlDBElasticPoolTargetProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SqlDBElasticPoolTargetProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SqlDBElasticPoolTargetProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

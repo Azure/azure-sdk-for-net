@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.ComputeLimit
     /// <summary> Guest subscription that consumes shared compute limits. </summary>
     public partial class ComputeLimitGuestSubscriptionData : ResourceData, IJsonModel<ComputeLimitGuestSubscriptionData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeLimitGuestSubscriptionData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeComputeLimitGuestSubscriptionData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ComputeLimitGuestSubscriptionData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ComputeLimitGuestSubscriptionData"/> from. </param>
+        internal static ComputeLimitGuestSubscriptionData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeComputeLimitGuestSubscriptionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ComputeLimitGuestSubscriptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -154,23 +178,6 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="options"> The client options for reading and writing models. </param>
         ComputeLimitGuestSubscriptionData IPersistableModel<ComputeLimitGuestSubscriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ComputeLimitGuestSubscriptionData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeLimitGuestSubscriptionData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeComputeLimitGuestSubscriptionData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ComputeLimitGuestSubscriptionData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ComputeLimitGuestSubscriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -184,13 +191,6 @@ namespace Azure.ResourceManager.ComputeLimit
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(computeLimitGuestSubscriptionData, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ComputeLimitGuestSubscriptionData"/> from. </param>
-        internal static ComputeLimitGuestSubscriptionData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeComputeLimitGuestSubscriptionData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

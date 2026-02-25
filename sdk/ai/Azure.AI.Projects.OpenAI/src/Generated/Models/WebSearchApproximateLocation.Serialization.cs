@@ -42,6 +42,16 @@ namespace Azure.AI.Projects.OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<WebSearchApproximateLocation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WebSearchApproximateLocation IPersistableModel<WebSearchApproximateLocation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WebSearchApproximateLocation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WebSearchApproximateLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -59,11 +69,6 @@ namespace Azure.AI.Projects.OpenAI
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WebSearchApproximateLocation)} does not support writing '{format}' format.");
-            }
-            if (Optional.IsDefined(Type))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
             }
             if (Optional.IsDefined(Country))
             {
@@ -85,6 +90,8 @@ namespace Azure.AI.Projects.OpenAI
                 writer.WritePropertyName("timezone"u8);
                 writer.WriteStringValue(Timezone);
             }
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(Type);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -127,23 +134,14 @@ namespace Azure.AI.Projects.OpenAI
             {
                 return null;
             }
-            WebSearchApproximateLocationType? @type = default;
             string country = default;
             string region = default;
             string city = default;
             string timezone = default;
+            string @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("type"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    @type = new WebSearchApproximateLocationType(prop.Value.GetString());
-                    continue;
-                }
                 if (prop.NameEquals("country"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -184,28 +182,23 @@ namespace Azure.AI.Projects.OpenAI
                     timezone = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new WebSearchApproximateLocation(
-                @type,
                 country,
                 region,
                 city,
                 timezone,
+                @type,
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WebSearchApproximateLocation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        WebSearchApproximateLocation IPersistableModel<WebSearchApproximateLocation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<WebSearchApproximateLocation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -38,6 +38,7 @@ import {
   armResourceReadName,
   armResourceUpdateName,
   armResourceWithParameter,
+  customAzureResource,
   extensionResourceOperationName,
   legacyExtensionResourceOperationName,
   legacyResourceOperationName,
@@ -869,8 +870,53 @@ export function getAllClients(codeModel: CodeModel): InputClient[] {
   return clients;
 }
 
+/**
+ * Checks if a model or any of its base models has the @customAzureResource decorator.
+ *
+ * The @customAzureResource decorator (Azure.ResourceManager.Legacy.@customAzureResource) is used
+ * for ARM resources that don't follow standard ARM resource templates. This is commonly used for:
+ * - Legacy services that were converted from Swagger to TypeSpec (e.g., TrafficManager)
+ * - Services with custom resource hierarchies that don't fit standard ARM patterns
+ *
+ * Unlike standard ARM resources that use TrackedResource<T> or ProxyResource<T> templates
+ * (which automatically get @armResourceInternal decorator), custom resources define their own
+ * base Resource model with this decorator.
+ *
+ * @see https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#customazureresource
+ *
+ * @param model - The model to check for @customAzureResource decorator
+ * @returns true if the model or any ancestor has @customAzureResource decorator
+ */
+function hasCustomAzureResourceInHierarchy(model: InputModelType): boolean {
+  let current: InputModelType | undefined = model;
+  while (current) {
+    if (current.decorators?.some((d) => d.name === customAzureResource)) {
+      return true;
+    }
+    current = current.baseModel;
+  }
+  return false;
+}
+
+/**
+ * Collects all models that represent ARM resources from the code model.
+ *
+ * ARM resources are detected in two ways:
+ *
+ * 1. **Standard ARM resources**: Models that use standard ARM templates like TrackedResource<T>
+ *    or ProxyResource<T>. These models have @armResourceInternal or @armResourceWithParameter
+ *    decorators applied automatically by the typespec-azure-resource-manager library.
+ *
+ * 2. **Custom Azure resources**: Models that inherit from a custom base Resource model decorated
+ *    with @customAzureResource. This pattern is used by legacy services (e.g., TrafficManager)
+ *    that were converted from Swagger to TypeSpec and don't fit standard ARM templates.
+ *
+ * @param codeModel - The code model containing all models
+ * @returns Array of resource models
+ */
 function getAllResourceModels(codeModel: CodeModel): InputModelType[] {
   const resourceModels: InputModelType[] = [];
+
   for (const model of codeModel.models) {
     // Check for armResource decorators
     if (
@@ -879,6 +925,11 @@ function getAllResourceModels(codeModel: CodeModel): InputModelType[] {
           d.name == armResourceInternal || d.name == armResourceWithParameter
       )
     ) {
+      resourceModels.push(model);
+    }
+    // 2. Custom Azure resources: Models inheriting from a @customAzureResource base model
+    //    Used by legacy services like TrafficManager that don't use standard ARM templates
+    else if (hasCustomAzureResourceInHierarchy(model)) {
       resourceModels.push(model);
     }
   }

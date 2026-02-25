@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.Elastic.Models
     /// <summary> Marketplace Subscription. </summary>
     public partial class MarketplaceSaaSInfoMarketplaceSubscription : IJsonModel<MarketplaceSaaSInfoMarketplaceSubscription>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MarketplaceSaaSInfoMarketplaceSubscription PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MarketplaceSaaSInfoMarketplaceSubscription>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMarketplaceSaaSInfoMarketplaceSubscription(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MarketplaceSaaSInfoMarketplaceSubscription)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MarketplaceSaaSInfoMarketplaceSubscription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -144,23 +161,6 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         MarketplaceSaaSInfoMarketplaceSubscription IPersistableModel<MarketplaceSaaSInfoMarketplaceSubscription>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MarketplaceSaaSInfoMarketplaceSubscription PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MarketplaceSaaSInfoMarketplaceSubscription>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeMarketplaceSaaSInfoMarketplaceSubscription(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MarketplaceSaaSInfoMarketplaceSubscription)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MarketplaceSaaSInfoMarketplaceSubscription>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

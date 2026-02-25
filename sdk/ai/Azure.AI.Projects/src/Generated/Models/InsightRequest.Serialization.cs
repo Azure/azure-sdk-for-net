@@ -10,7 +10,7 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// The request of the insights report.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EvaluationRunClusterInsightsRequest"/>, <see cref="AgentClusterInsightsRequest"/>, and <see cref="EvaluationComparisonRequest"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EvaluationRunClusterInsightRequest"/>, <see cref="AgentClusterInsightRequest"/>, and <see cref="EvaluationComparisonInsightRequest"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownInsightRequest))]
     public abstract partial class InsightRequest : IJsonModel<InsightRequest>
@@ -49,6 +49,16 @@ namespace Azure.AI.Projects
                     throw new FormatException($"The model {nameof(InsightRequest)} does not support writing '{options.Format}' format.");
             }
         }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InsightRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InsightRequest IPersistableModel<InsightRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InsightRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -117,24 +127,14 @@ namespace Azure.AI.Projects
                 switch (discriminator.GetString())
                 {
                     case "EvaluationRunClusterInsight":
-                        return EvaluationRunClusterInsightsRequest.DeserializeEvaluationRunClusterInsightsRequest(element, options);
+                        return EvaluationRunClusterInsightRequest.DeserializeEvaluationRunClusterInsightRequest(element, options);
                     case "AgentClusterInsight":
-                        return AgentClusterInsightsRequest.DeserializeAgentClusterInsightsRequest(element, options);
+                        return AgentClusterInsightRequest.DeserializeAgentClusterInsightRequest(element, options);
                     case "EvaluationComparison":
-                        return EvaluationComparisonRequest.DeserializeEvaluationComparisonRequest(element, options);
+                        return EvaluationComparisonInsightRequest.DeserializeEvaluationComparisonInsightRequest(element, options);
                 }
             }
             return UnknownInsightRequest.DeserializeUnknownInsightRequest(element, options);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InsightRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InsightRequest IPersistableModel<InsightRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InsightRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -22,6 +22,30 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ProductSerialNumberRequestStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ProductSerialNumberRequestStatus>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeProductSerialNumberRequestStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ProductSerialNumberRequestStatus)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ProductSerialNumberRequestStatus"/> from. </param>
+        internal static ProductSerialNumberRequestStatus FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeProductSerialNumberRequestStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ProductSerialNumberRequestStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -121,31 +145,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         ProductSerialNumberRequestStatus IPersistableModel<ProductSerialNumberRequestStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProductSerialNumberRequestStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ProductSerialNumberRequestStatus>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeProductSerialNumberRequestStatus(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ProductSerialNumberRequestStatus)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ProductSerialNumberRequestStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ProductSerialNumberRequestStatus"/> from. </param>
-        internal static ProductSerialNumberRequestStatus FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeProductSerialNumberRequestStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

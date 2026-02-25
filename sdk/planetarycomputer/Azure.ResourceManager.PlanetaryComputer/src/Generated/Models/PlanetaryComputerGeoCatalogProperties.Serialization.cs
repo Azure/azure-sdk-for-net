@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.PlanetaryComputer.Models
     /// <summary> The details of the Microsoft Planetary Computer Pro GeoCatalog. </summary>
     public partial class PlanetaryComputerGeoCatalogProperties : IJsonModel<PlanetaryComputerGeoCatalogProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PlanetaryComputerGeoCatalogProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PlanetaryComputerGeoCatalogProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePlanetaryComputerGeoCatalogProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PlanetaryComputerGeoCatalogProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PlanetaryComputerGeoCatalogProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -166,23 +183,6 @@ namespace Azure.ResourceManager.PlanetaryComputer.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         PlanetaryComputerGeoCatalogProperties IPersistableModel<PlanetaryComputerGeoCatalogProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PlanetaryComputerGeoCatalogProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PlanetaryComputerGeoCatalogProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePlanetaryComputerGeoCatalogProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PlanetaryComputerGeoCatalogProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PlanetaryComputerGeoCatalogProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

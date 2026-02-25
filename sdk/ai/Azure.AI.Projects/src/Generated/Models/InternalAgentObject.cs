@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI;
 
 namespace Azure.AI.Projects
 {
@@ -29,7 +30,7 @@ namespace Azure.AI.Projects
         /// <param name="name"> The name of the agent. </param>
         /// <param name="versions"> The latest version of the agent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalAgentObject(string @object, string id, string name, AgentObjectVersions versions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalAgentObject(AgentObjectType @object, string id, string name, AgentObjectVersions versions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Object = @object;
             Id = id;
@@ -39,7 +40,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The object type, which is always 'agent'. </summary>
-        public string Object { get; } = "agent";
+        public AgentObjectType Object { get; } = "agent";
 
         /// <summary> The unique identifier of the agent. </summary>
         public string Id { get; }

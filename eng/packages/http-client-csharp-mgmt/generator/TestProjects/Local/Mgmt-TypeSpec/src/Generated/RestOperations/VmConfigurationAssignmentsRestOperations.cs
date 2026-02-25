@@ -49,7 +49,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/MgmtTypeSpec/vmConfigurationAssignments/", false);
             uri.AppendPath(vmConfigAssignmentName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

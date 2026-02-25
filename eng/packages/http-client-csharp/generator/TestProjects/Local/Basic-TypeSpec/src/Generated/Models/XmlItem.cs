@@ -20,8 +20,12 @@ namespace BasicTypeSpec
         /// <param name="itemName"> The item name. </param>
         /// <param name="itemValue"> The item value. </param>
         /// <param name="itemId"> Item ID as attribute. </param>
-        internal XmlItem(string itemName, int itemValue, string itemId)
+        /// <exception cref="ArgumentNullException"> <paramref name="itemName"/> or <paramref name="itemId"/> is null. </exception>
+        public XmlItem(string itemName, int itemValue, string itemId)
         {
+            Argument.AssertNotNull(itemName, nameof(itemName));
+            Argument.AssertNotNull(itemId, nameof(itemId));
+
             ItemName = itemName;
             ItemValue = itemValue;
             ItemId = itemId;
@@ -41,12 +45,12 @@ namespace BasicTypeSpec
         }
 
         /// <summary> The item name. </summary>
-        public string ItemName { get; }
+        public string ItemName { get; set; }
 
         /// <summary> The item value. </summary>
-        public int ItemValue { get; }
+        public int ItemValue { get; set; }
 
         /// <summary> Item ID as attribute. </summary>
-        public string ItemId { get; }
+        public string ItemId { get; set; }
     }
 }

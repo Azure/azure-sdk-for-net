@@ -157,3 +157,5 @@ namespace OpenAI;
 [CodeGenType("WebSearchToolCallItemParam")] internal partial class InternalWebSearchToolCallItemParam { }
 [CodeGenType("WebSearchToolCallItemResource")] internal partial class InternalWebSearchToolCallItemResource { }
 [CodeGenType("WebSearchToolCallItemResourceStatus")] internal readonly partial struct WebSearchToolCallItemResourceStatus { }
+[CodeGenType("AgentObjectType")] public readonly partial struct AgentObjectType { }
+[CodeGenType("MemoryStoreObjectType")] public readonly partial struct MemoryStoreObjectType { }

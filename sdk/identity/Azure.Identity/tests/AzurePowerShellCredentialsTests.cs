@@ -86,10 +86,11 @@ namespace Azure.Identity.Tests
         /// <summary>
         /// Returns the expected exception type for error scenarios.
         /// Base: AuthenticationFailedException when not chained, CredentialUnavailableException when chained.
-        /// ConfigurableCredential always wraps in DefaultAzureCredential (chained), so always CredentialUnavailableException.
         /// </summary>
-        protected virtual Type GetExpectedExceptionType(bool isChained)
+        protected Type GetExpectedExceptionType(bool isChained)
             => isChained ? typeof(CredentialUnavailableException) : typeof(AuthenticationFailedException);
+
+        protected virtual bool IsChainedCredentialSupported => true;
         #endregion
 
         [Test]
@@ -175,6 +176,10 @@ namespace Azure.Identity.Tests
         [TestCaseSource(nameof(ErrorScenarios_IsChained))]
         public void AuthenticateWithAzurePowerShellCredential_ErrorScenarios_IsChained(Action<object> exceptionOnStartHandler, string errorMessage, string expectedError, bool isChained)
         {
+            if (!IsChainedCredentialSupported)
+            {
+                Assert.Ignore("ConfigurableCredential with CredentialSource does not support chained credential scenarios.");
+            }
             var testProcess = new TestProcess { Error = errorMessage, ExceptionOnStartHandler = exceptionOnStartHandler };
             var credential = CreateCredentialWithChainedOption(new TestProcessService(testProcess), true);
             var ex = Assert.ThrowsAsync(GetExpectedExceptionType(isChained), async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
@@ -278,6 +283,10 @@ namespace Azure.Identity.Tests
         [Test]
         public void AuthenticateWithAzurePowerShellCredential_AzurePowerShellUnknownError([Values(true, false)] bool isChainedCredential)
         {
+            if (!IsChainedCredentialSupported && isChainedCredential)
+            {
+                Assert.Ignore("ConfigurableCredential with CredentialSource does not support chained credential scenarios.");
+            }
             string mockResult = "mock-result";
             var testProcess = new TestProcess { Error = mockResult };
             var credential = CreateCredentialWithChainedOption(new TestProcessService(testProcess), isChainedCredential);
