@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppConfiguration
         public virtual async Task<Response<AppConfigurationKeyValueResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             // Don't need to implement tags operations here since it's not a real tags, check this issue https://github.com/Azure/autorest.csharp/issues/5096
-            throw new NotSupportedException();
+            throw new NotSupportedException("This method is no longer supported because the resource does not have a tags property.");
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppConfiguration
         public virtual Response<AppConfigurationKeyValueResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             // Don't need to implement tags operations here since it's not a real tags, check this issue https://github.com/Azure/autorest.csharp/issues/5096
-            throw new NotSupportedException();
+            throw new NotSupportedException("This method is no longer supported because the resource does not have a tags property.");
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppConfiguration
         public virtual async Task<Response<AppConfigurationKeyValueResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             // Don't need to implement tags operations here since it's not a real tags, check this issue https://github.com/Azure/autorest.csharp/issues/5096
-            throw new NotSupportedException();
+            throw new NotSupportedException("This method is no longer supported because the resource does not have a tags property.");
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.AppConfiguration
         public virtual Response<AppConfigurationKeyValueResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             // Don't need to implement tags operations here since it's not a real tags, check this issue https://github.com/Azure/autorest.csharp/issues/5096
-            throw new NotSupportedException();
+            throw new NotSupportedException("This method is no longer supported because the resource does not have a tags property.");
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppConfiguration
         public virtual async Task<Response<AppConfigurationKeyValueResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             // Don't need to implement tags operations here since it's not a real tags, check this issue https://github.com/Azure/autorest.csharp/issues/5096
-            throw new NotSupportedException();
+            throw new NotSupportedException("This method is no longer supported because the resource does not have a tags property.");
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.AppConfiguration
         public virtual Response<AppConfigurationKeyValueResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             // Don't need to implement tags operations here since it's not a real tags, check this issue https://github.com/Azure/autorest.csharp/issues/5096
-            throw new NotSupportedException();
+            throw new NotSupportedException("This method is no longer supported because the resource does not have a tags property.");
         }
     }
 }
