@@ -6,7 +6,7 @@ using System.Text.Json;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// The add participant failed event.
+    /// The incoming call event.
     /// </summary>
     public class IncomingCall : CallAutomationEventBase
     {
