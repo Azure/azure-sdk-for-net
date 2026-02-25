@@ -15,6 +15,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
+using Azure.Search.Documents.Utilities;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 #pragma warning disable SA1402 // File may only contain a single type

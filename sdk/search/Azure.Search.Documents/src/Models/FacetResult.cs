@@ -6,6 +6,7 @@ using System.ClientModel.Primitives;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Search.Documents.Utilities;
 
 namespace Azure.Search.Documents.Models
 {

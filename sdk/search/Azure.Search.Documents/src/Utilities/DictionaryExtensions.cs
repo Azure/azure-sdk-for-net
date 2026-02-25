@@ -1,10 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Search.Documents;
 
-namespace System.Collections.Generic
+namespace Azure.Search.Documents.Utilities
 {
     /// <summary>
     /// Temporary helper extensions for dictionary conversions during migration.
@@ -66,30 +67,6 @@ namespace System.Collections.Generic
         /// JSON values are deserialized to their appropriate .NET types using Search's EDM type conversions.
         /// </remarks>
         public static IDictionary<string, object> ToObjectDictionary(this IDictionary<string, BinaryData> source)
-        {
-            if (source == null)
-            {
-                return null;
-            }
-
-            var result = new Dictionary<string, object>(source.Count);
-            foreach (var kvp in source)
-            {
-                result[kvp.Key] = DeserializeBinaryDataValue(kvp.Value);
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Converts an IReadOnlyDictionary&lt;string, BinaryData&gt; to IReadOnlyDictionary&lt;string, object&gt;.
-        /// </summary>
-        /// <param name="source">The source dictionary to convert.</param>
-        /// <returns>A new dictionary with object values, or null if source is null.</returns>
-        /// <remarks>
-        /// JSON values are deserialized to their appropriate .NET types using Search's EDM type conversions.
-        /// </remarks>
-        public static IReadOnlyDictionary<string, object> ToObjectDictionary(this IReadOnlyDictionary<string, BinaryData> source)
         {
             if (source == null)
             {

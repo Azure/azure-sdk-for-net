@@ -6,12 +6,14 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
 using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.Utilities;
 
 namespace Azure.Search.Documents.Indexes
 {
@@ -350,30 +352,21 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Pageable{T}"/> from the server containing a list of <see cref="SearchIndex"/> names.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual Pageable<string> GetIndexNames(
             CancellationToken cancellationToken = default)
         {
             return PageResponseEnumerator.CreateEnumerable((continuationToken) =>
             {
-                using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.GetIndexNames");
-                scope.Start();
-                try
+                if (continuationToken != null)
                 {
-                    if (continuationToken != null)
-                    {
-                        throw new NotSupportedException("A continuation token is unsupported.");
-                    }
+                    throw new NotSupportedException("A continuation token is unsupported.");
+                }
 
-                    // Get only names by specifying the select parameter
-                    Pageable<SearchIndexResponse> result = GetIndexesWithSelectedProperties([Constants.NameKey], cancellationToken);
-                    IReadOnlyList<string> names = [.. result.Select(value => value.Name)];
-                    return Page<string>.FromValues(names, continuationToken: null, null);
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
+                // Get only names by specifying the select parameter
+                Pageable<SearchIndexResponse> result = GetIndexesWithSelectedProperties([Constants.NameKey], cancellationToken);
+                IReadOnlyList<string> names = [.. result.Select(value => value.Name)];
+                return Page<string>.FromValues(names, continuationToken: null, null);
             });
         }
 
@@ -383,34 +376,25 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="AsyncPageable{T}"/> from the server containing a list of <see cref="SearchIndex"/> names.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual AsyncPageable<string> GetIndexNamesAsync(
             CancellationToken cancellationToken = default)
         {
             return PageResponseEnumerator.CreateAsyncEnumerable(async (continuationToken) =>
             {
-                using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.GetIndexNames");
-                scope.Start();
-                try
+                if (continuationToken != null)
                 {
-                    if (continuationToken != null)
-                    {
-                        throw new NotSupportedException("A continuation token is unsupported.");
-                    }
+                    throw new NotSupportedException("A continuation token is unsupported.");
+                }
 
-                    // Get only names by specifying the select parameter
-                    AsyncPageable<SearchIndexResponse> result = GetIndexesWithSelectedPropertiesAsync(new[] { Constants.NameKey }, cancellationToken);
-                    List<string> names = new List<string>();
-                    await foreach (SearchIndexResponse index in result.ConfigureAwait(false))
-                    {
-                        names.Add(index.Name);
-                    }
-                    return Page<string>.FromValues(names, null, null);
-                }
-                catch (Exception ex)
+                // Get only names by specifying the select parameter
+                AsyncPageable<SearchIndexResponse> result = GetIndexesWithSelectedPropertiesAsync(new[] { Constants.NameKey }, cancellationToken);
+                List<string> names = new List<string>();
+                await foreach (SearchIndexResponse index in result.ConfigureAwait(false))
                 {
-                    scope.Failed(ex);
-                    throw;
+                    names.Add(index.Name);
                 }
+                return Page<string>.FromValues(names, null, null);
             });
         }
 
@@ -420,70 +404,28 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Pageable{T}"/> from the server containing a list of <see cref="SearchIndex"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual Pageable<SearchIndex> GetIndexes(
             CancellationToken cancellationToken = default)
         {
-            return PageResponseEnumerator.CreateEnumerable((continuationToken) =>
-            {
-                using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.GetIndexes");
-                scope.Start();
-                try
-                {
-                    if (continuationToken != null)
-                    {
-                        throw new NotSupportedException("A continuation token is unsupported.");
-                    }
-
-                    Pageable<BinaryData> result = GetIndexes(cancellationToken.ToRequestContext());
-                    List<SearchIndex> indexes = new List<SearchIndex>();
-                    foreach (BinaryData item in result)
-                    {
-                        indexes.Add(ModelReaderWriter.Read<SearchIndex>(item, ModelSerializationExtensions.WireOptions, AzureSearchDocumentsContext.Default));
-                    }
-                    return Page<SearchIndex>.FromValues(indexes, null, null);
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            });
+            return new PageableWrapper<BinaryData, SearchIndex>(
+                GetIndexes(cancellationToken.ToRequestContext()),
+                data => SearchIndex.DeserializeSearchIndex(JsonElement.Parse(data), ModelSerializationExtensions.WireOptions));
         }
 
         /// <summary>
         /// Gets a list of all indexes.
         /// </summary>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="AsyncPageable{T}"/> from the server containing a list of <see cref="SearchIndex"/>.</returns>
+        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndex"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual AsyncPageable<SearchIndex> GetIndexesAsync(
             CancellationToken cancellationToken = default)
         {
-            return PageResponseEnumerator.CreateAsyncEnumerable(async (continuationToken) =>
-            {
-                using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.GetIndexes");
-                scope.Start();
-                try
-                {
-                    if (continuationToken != null)
-                    {
-                        throw new NotSupportedException("A continuation token is unsupported.");
-                    }
-
-                    AsyncPageable<BinaryData> result = GetIndexesAsync(cancellationToken.ToRequestContext());
-                    List<SearchIndex> indexes = new List<SearchIndex>();
-                    await foreach (BinaryData item in result.ConfigureAwait(false))
-                    {
-                        indexes.Add(ModelReaderWriter.Read<SearchIndex>(item, ModelSerializationExtensions.WireOptions, AzureSearchDocumentsContext.Default));
-                    }
-                    return Page<SearchIndex>.FromValues(indexes, null, null);
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            });
+            return new AsyncPageableWrapper<BinaryData, SearchIndex>(
+                GetIndexesAsync(cancellationToken.ToRequestContext()),
+                data => SearchIndex.DeserializeSearchIndex(JsonElement.Parse(data), ModelSerializationExtensions.WireOptions));
         }
 
         #endregion
@@ -626,21 +568,12 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SynonymMap"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual Response<IReadOnlyList<SynonymMap>> GetSynonymMaps(
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.GetSynonymMaps");
-            scope.Start();
-            try
-            {
-                Response<ListSynonymMapsResult> result = GetSynonymMaps(select: null, cancellationToken);
-                return Response.FromValue((IReadOnlyList<SynonymMap>)result.Value.SynonymMaps, result.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            Response<ListSynonymMapsResult> result = GetSynonymMaps(select: null, cancellationToken);
+            return Response.FromValue(result.Value.SynonymMaps, result.GetRawResponse());
         }
 
         /// <summary>
@@ -649,21 +582,12 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SynonymMap"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<IReadOnlyList<SynonymMap>>> GetSynonymMapsAsync(
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.GetSynonymMaps");
-            scope.Start();
-            try
-            {
-                Response<ListSynonymMapsResult> result = await GetSynonymMapsAsync(select: null, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue((IReadOnlyList<SynonymMap>)result.Value.SynonymMaps, result.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            Response<ListSynonymMapsResult> result = await GetSynonymMapsAsync(select: null, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(result.Value.SynonymMaps, result.GetRawResponse());
         }
 
         /// <summary>
@@ -672,22 +596,13 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SynonymMap"/> names.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual Response<IReadOnlyList<string>> GetSynonymMapNames(
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.GetSynonymMapNames");
-            scope.Start();
-            try
-            {
-                Response<ListSynonymMapsResult> result = GetSynonymMaps(new[] { Constants.NameKey }, cancellationToken);
-                IReadOnlyList<string> names = result.Value.SynonymMaps.Select(value => value.Name).ToArray();
-                return Response.FromValue(names, result.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            Response<ListSynonymMapsResult> result = GetSynonymMaps(new[] { Constants.NameKey }, cancellationToken);
+            IReadOnlyList<string> names = result.Value.SynonymMaps.Select(value => value.Name).ToArray();
+            return Response.FromValue(names, result.GetRawResponse());
         }
 
         /// <summary>
@@ -696,22 +611,13 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SynonymMap"/> names.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<IReadOnlyList<string>>> GetSynonymMapNamesAsync(
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.GetSynonymMapNames");
-            scope.Start();
-            try
-            {
-                Response<ListSynonymMapsResult> result = await GetSynonymMapsAsync(new[] { Constants.NameKey }, cancellationToken).ConfigureAwait(false);
-                IReadOnlyList<string> names = result.Value.SynonymMaps.Select(value => value.Name).ToArray();
-                return Response.FromValue(names, result.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            Response<ListSynonymMapsResult> result = await GetSynonymMapsAsync(new[] { Constants.NameKey }, cancellationToken).ConfigureAwait(false);
+            IReadOnlyList<string> names = result.Value.SynonymMaps.Select(value => value.Name).ToArray();
+            return Response.FromValue(names, result.GetRawResponse());
         }
 
         #endregion
@@ -729,6 +635,7 @@ namespace Azure.Search.Documents.Indexes
         /// </returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexName"/> or <paramref name="options"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual Response<IReadOnlyList<AnalyzedTokenInfo>> AnalyzeText(
             string indexName,
             AnalyzeTextOptions options,
@@ -737,19 +644,9 @@ namespace Azure.Search.Documents.Indexes
             Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
             Argument.AssertNotNull(options, nameof(options));
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.AnalyzeText");
-            scope.Start();
-            try
-            {
-                Response response = AnalyzeText(indexName, options, cancellationToken.ToRequestContext());
-                AnalyzeResult result = (AnalyzeResult) response;
-                return Response.FromValue((IReadOnlyList<AnalyzedTokenInfo>)result.Tokens, response);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            Response response = AnalyzeText(indexName, options, cancellationToken.ToRequestContext());
+            AnalyzeResult result = (AnalyzeResult)response;
+            return Response.FromValue((IReadOnlyList<AnalyzedTokenInfo>)result.Tokens, response);
         }
 
         /// <summary>
@@ -763,6 +660,7 @@ namespace Azure.Search.Documents.Indexes
         /// </returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexName"/> or <paramref name="options"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<IReadOnlyList<AnalyzedTokenInfo>>> AnalyzeTextAsync(
             string indexName,
             AnalyzeTextOptions options,
@@ -771,19 +669,9 @@ namespace Azure.Search.Documents.Indexes
             Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
             Argument.AssertNotNull(options, nameof(options));
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.AnalyzeText");
-            scope.Start();
-            try
-            {
-                Response response = await AnalyzeTextAsync(indexName, options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-                AnalyzeResult result = (AnalyzeResult) response;
-                return Response.FromValue((IReadOnlyList<AnalyzedTokenInfo>)result.Tokens, response);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            Response response = await AnalyzeTextAsync(indexName, options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            AnalyzeResult result = (AnalyzeResult)response;
+            return Response.FromValue((IReadOnlyList<AnalyzedTokenInfo>)result.Tokens, response);
         }
 
         #endregion

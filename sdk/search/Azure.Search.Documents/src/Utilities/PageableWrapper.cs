@@ -5,7 +5,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 
 namespace Azure.Search.Documents.Utilities
 {

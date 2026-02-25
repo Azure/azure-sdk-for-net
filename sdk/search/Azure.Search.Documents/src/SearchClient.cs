@@ -1526,14 +1526,13 @@ namespace Azure.Search.Documents
             try
             {
                 using HttpMessage message = CreateSearchPostRequest(RequestContent.Create(options), querySourceAuthorization, enableElevatedRead, cancellationToken.ToRequestContext());
-                Response response;
                 if (async)
                 {
-                    response = await Pipeline.ProcessMessageAsync(message, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+                    await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = Pipeline.ProcessMessage(message, cancellationToken.ToRequestContext());
+                    Pipeline.Send(message, cancellationToken);
                 }
                 switch (message.Response.Status)
                 {
@@ -1543,19 +1542,19 @@ namespace Azure.Search.Documents
                             // Deserialize the results
 #pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                             SearchResults<T> results = await deserializeResult(
-                                response.ContentStream,
+                                message.Response.ContentStream,
                                 async)
                                 .ConfigureAwait(false);
 #pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
 
                             // Cache the client and raw response so we can abstract
                             // away server-side paging
-                            results.ConfigurePaging(this, response);
+                            results.ConfigurePaging(this, message.Response);
 
-                            return Response.FromValue(results, response);
+                            return Response.FromValue(results, message.Response);
                         }
                     default:
-                        throw new RequestFailedException(response);
+                        throw new RequestFailedException(message.Response);
                 }
             }
             catch (Exception e)

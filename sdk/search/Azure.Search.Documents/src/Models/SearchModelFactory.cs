@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.KnowledgeBases.Models;
+using Azure.Search.Documents.Utilities;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Models
