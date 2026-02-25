@@ -53,6 +53,16 @@ namespace Azure.Developer.DevCenter.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DevBoxPool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DevBoxPool IPersistableModel<DevBoxPool>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DevBoxPool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DevBoxPool"/> from. </param>
         public static explicit operator DevBoxPool(Response response)
         {
@@ -273,15 +283,5 @@ namespace Azure.Developer.DevCenter.Models
                 healthStatus,
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DevBoxPool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DevBoxPool IPersistableModel<DevBoxPool>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DevBoxPool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -48,6 +48,16 @@ namespace Azure.Compute.Batch
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BatchJobScheduleConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchJobScheduleConfiguration IPersistableModel<BatchJobScheduleConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BatchJobScheduleConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BatchJobScheduleConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -178,15 +188,5 @@ namespace Azure.Compute.Batch
             }
             return new BatchJobScheduleConfiguration(doNotRunUntil, doNotRunAfter, startWindow, recurrenceInterval, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BatchJobScheduleConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BatchJobScheduleConfiguration IPersistableModel<BatchJobScheduleConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BatchJobScheduleConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

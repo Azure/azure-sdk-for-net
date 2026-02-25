@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> The update to be applied to the ManagedClusters. </summary>
     public partial class ContainerServiceFleetManagedClusterUpdate
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetManagedClusterUpdate"/>. </summary>
         /// <param name="upgrade"> The upgrade to apply to the ManagedClusters. </param>
@@ -58,21 +30,17 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetManagedClusterUpdate"/>. </summary>
         /// <param name="upgrade"> The upgrade to apply to the ManagedClusters. </param>
         /// <param name="nodeImageSelection"> The node image upgrade to be applied to the target nodes in update run. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetManagedClusterUpdate(ContainerServiceFleetManagedClusterUpgradeSpec upgrade, NodeImageSelection nodeImageSelection, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceFleetManagedClusterUpdate(ContainerServiceFleetManagedClusterUpgradeSpec upgrade, NodeImageSelection nodeImageSelection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Upgrade = upgrade;
             NodeImageSelection = nodeImageSelection;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetManagedClusterUpdate"/> for deserialization. </summary>
-        internal ContainerServiceFleetManagedClusterUpdate()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The upgrade to apply to the ManagedClusters. </summary>
         public ContainerServiceFleetManagedClusterUpgradeSpec Upgrade { get; set; }
+
         /// <summary> The node image upgrade to be applied to the target nodes in update run. </summary>
         public NodeImageSelection NodeImageSelection { get; set; }
     }

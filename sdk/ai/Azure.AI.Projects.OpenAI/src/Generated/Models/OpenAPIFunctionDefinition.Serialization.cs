@@ -83,14 +83,25 @@ namespace Azure.AI.Projects.OpenAI
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("spec"u8);
-#if NET6_0_OR_GREATER
-            writer.WriteRawValue(Spec);
-#else
-            using (JsonDocument document = JsonDocument.Parse(Spec))
+            writer.WriteStartObject();
+            foreach (var item in Spec)
             {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
+                writer.WritePropertyName(item.Key);
+                if (item.Value == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(item.Value);
+#else
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
+            }
+            writer.WriteEndObject();
             writer.WritePropertyName("auth"u8);
             writer.WriteObjectValue(Auth, options);
             if (Optional.IsCollectionDefined(DefaultParams))
@@ -162,7 +173,7 @@ namespace Azure.AI.Projects.OpenAI
             }
             string name = default;
             string description = default;
-            BinaryData spec = default;
+            IDictionary<string, BinaryData> spec = default;
             OpenAPIAuthenticationDetails auth = default;
             IList<string> defaultParams = default;
             IReadOnlyList<OpenAPIFunctionEntry> functions = default;
@@ -181,7 +192,19 @@ namespace Azure.AI.Projects.OpenAI
                 }
                 if (prop.NameEquals("spec"u8))
                 {
-                    spec = BinaryData.FromString(prop.Value.GetRawText());
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                        }
+                    }
+                    spec = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("auth"u8))

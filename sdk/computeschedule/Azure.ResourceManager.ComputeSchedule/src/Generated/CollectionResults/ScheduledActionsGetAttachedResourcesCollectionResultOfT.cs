@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeSchedule
                     yield break;
                 }
                 ResourceListResponse result = ResourceListResponse.FromResponse(response);
-                yield return Page<ScheduledActionResourceData>.FromValues((IReadOnlyList<ScheduledActionResourceData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ScheduledActionResourceData>.FromValues((IReadOnlyList<ScheduledActionResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

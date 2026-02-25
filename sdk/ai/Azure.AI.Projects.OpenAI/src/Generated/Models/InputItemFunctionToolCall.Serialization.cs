@@ -125,7 +125,7 @@ namespace Azure.AI.Projects.OpenAI
             string callId = default;
             string name = default;
             string arguments = default;
-            ItemResourceFunctionToolCallResourceStatus? status = default;
+            OutputItemFunctionToolCallStatus? status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -159,7 +159,7 @@ namespace Azure.AI.Projects.OpenAI
                     {
                         continue;
                     }
-                    status = prop.Value.GetString().ToItemResourceFunctionToolCallResourceStatus();
+                    status = prop.Value.GetString().ToOutputItemFunctionToolCallStatus();
                     continue;
                 }
                 if (options.Format != "W")

@@ -39,6 +39,29 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxScheduleAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxScheduleAvailabilityContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataBoxScheduleAvailabilityContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataBoxScheduleAvailabilityContent IPersistableModel<DataBoxScheduleAvailabilityContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataBoxScheduleAvailabilityContent)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataBoxScheduleAvailabilityContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataBoxScheduleAvailabilityContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -123,28 +146,5 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             return new DataBoxScheduleAvailabilityContent(storageLocation, skuName, country, model, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DataBoxScheduleAvailabilityContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataBoxScheduleAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataBoxScheduleAvailabilityContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DataBoxScheduleAvailabilityContent IPersistableModel<DataBoxScheduleAvailabilityContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataBoxScheduleAvailabilityContent)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DataBoxScheduleAvailabilityContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

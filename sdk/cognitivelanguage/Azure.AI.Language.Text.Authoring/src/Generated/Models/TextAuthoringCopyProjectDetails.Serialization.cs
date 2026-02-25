@@ -52,6 +52,28 @@ namespace Azure.AI.Language.Text.Authoring
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TextAuthoringCopyProjectDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TextAuthoringCopyProjectDetails IPersistableModel<TextAuthoringCopyProjectDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TextAuthoringCopyProjectDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="textAuthoringCopyProjectDetails"> The <see cref="TextAuthoringCopyProjectDetails"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(TextAuthoringCopyProjectDetails textAuthoringCopyProjectDetails)
+        {
+            if (textAuthoringCopyProjectDetails == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(textAuthoringCopyProjectDetails, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TextAuthoringCopyProjectDetails"/> from. </param>
         public static explicit operator TextAuthoringCopyProjectDetails(Response response)
         {
@@ -183,28 +205,6 @@ namespace Azure.AI.Language.Text.Authoring
                 targetResourceId,
                 targetResourceRegion,
                 additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TextAuthoringCopyProjectDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        TextAuthoringCopyProjectDetails IPersistableModel<TextAuthoringCopyProjectDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TextAuthoringCopyProjectDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="textAuthoringCopyProjectDetails"> The <see cref="TextAuthoringCopyProjectDetails"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(TextAuthoringCopyProjectDetails textAuthoringCopyProjectDetails)
-        {
-            if (textAuthoringCopyProjectDetails == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(textAuthoringCopyProjectDetails, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

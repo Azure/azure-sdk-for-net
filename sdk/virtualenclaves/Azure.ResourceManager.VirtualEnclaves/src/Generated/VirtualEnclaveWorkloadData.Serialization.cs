@@ -42,6 +42,41 @@ namespace Azure.ResourceManager.VirtualEnclaves
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveWorkloadData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerVirtualEnclavesContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(VirtualEnclaveWorkloadData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<VirtualEnclaveWorkloadData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualEnclaveWorkloadData IPersistableModel<VirtualEnclaveWorkloadData>.Create(BinaryData data, ModelReaderWriterOptions options) => (VirtualEnclaveWorkloadData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VirtualEnclaveWorkloadData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="virtualEnclaveWorkloadData"> The <see cref="VirtualEnclaveWorkloadData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(VirtualEnclaveWorkloadData virtualEnclaveWorkloadData)
+        {
+            if (virtualEnclaveWorkloadData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(virtualEnclaveWorkloadData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="VirtualEnclaveWorkloadData"/> from. </param>
         internal static VirtualEnclaveWorkloadData FromResponse(Response response)
         {
@@ -191,41 +226,6 @@ namespace Azure.ResourceManager.VirtualEnclaves
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VirtualEnclaveWorkloadData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveWorkloadData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerVirtualEnclavesContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(VirtualEnclaveWorkloadData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        VirtualEnclaveWorkloadData IPersistableModel<VirtualEnclaveWorkloadData>.Create(BinaryData data, ModelReaderWriterOptions options) => (VirtualEnclaveWorkloadData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VirtualEnclaveWorkloadData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="virtualEnclaveWorkloadData"> The <see cref="VirtualEnclaveWorkloadData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(VirtualEnclaveWorkloadData virtualEnclaveWorkloadData)
-        {
-            if (virtualEnclaveWorkloadData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(virtualEnclaveWorkloadData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

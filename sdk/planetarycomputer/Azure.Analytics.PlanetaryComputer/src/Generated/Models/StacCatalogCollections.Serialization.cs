@@ -54,6 +54,16 @@ namespace Azure.Analytics.PlanetaryComputer
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<StacCatalogCollections>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StacCatalogCollections IPersistableModel<StacCatalogCollections>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StacCatalogCollections>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StacCatalogCollections"/> from. </param>
         public static explicit operator StacCatalogCollections(Response response)
         {
@@ -167,15 +177,5 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             return new StacCatalogCollections(links, collections, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StacCatalogCollections>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        StacCatalogCollections IPersistableModel<StacCatalogCollections>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StacCatalogCollections>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

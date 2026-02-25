@@ -52,6 +52,28 @@ namespace Azure.Analytics.PlanetaryComputer
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<StacMosaic>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StacMosaic IPersistableModel<StacMosaic>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StacMosaic>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="stacMosaic"> The <see cref="StacMosaic"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(StacMosaic stacMosaic)
+        {
+            if (stacMosaic == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(stacMosaic, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StacMosaic"/> from. </param>
         public static explicit operator StacMosaic(Response response)
         {
@@ -215,28 +237,6 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
             }
             return new StacMosaic(id, name, description, cql, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StacMosaic>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        StacMosaic IPersistableModel<StacMosaic>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StacMosaic>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="stacMosaic"> The <see cref="StacMosaic"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(StacMosaic stacMosaic)
-        {
-            if (stacMosaic == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(stacMosaic, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

@@ -42,6 +42,41 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceTypeTestResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ResourceTypeTestResourceData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ResourceTypeTestResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ResourceTypeTestResourceData IPersistableModel<ResourceTypeTestResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ResourceTypeTestResourceData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ResourceTypeTestResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="resourceTypeTestResourceData"> The <see cref="ResourceTypeTestResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ResourceTypeTestResourceData resourceTypeTestResourceData)
+        {
+            if (resourceTypeTestResourceData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(resourceTypeTestResourceData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ResourceTypeTestResourceData"/> from. </param>
         internal static ResourceTypeTestResourceData FromResponse(Response response)
         {
@@ -184,41 +219,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResourceTypeTestResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceTypeTestResourceData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ResourceTypeTestResourceData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceTypeTestResourceData IPersistableModel<ResourceTypeTestResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ResourceTypeTestResourceData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResourceTypeTestResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="resourceTypeTestResourceData"> The <see cref="ResourceTypeTestResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ResourceTypeTestResourceData resourceTypeTestResourceData)
-        {
-            if (resourceTypeTestResourceData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(resourceTypeTestResourceData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

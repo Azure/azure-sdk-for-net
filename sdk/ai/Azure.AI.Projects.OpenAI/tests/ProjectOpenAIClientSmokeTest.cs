@@ -1,14 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects.OpenAI.Tests;
 
@@ -21,69 +20,90 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
     }
 
     [RecordedTest]
-    [TestCase("", "^AIProjectClient OpenAI/.+ [(][^)]+[)]$")]
-    [TestCase(null, "^AIProjectClient OpenAI/.+ [(][^)]+[)]$")]
-    [TestCase("MyClient", "^MyClient-AIProjectClient OpenAI/.+ [(][^)]+[)]$")]
-    public async Task TestUserAgentHeaders(string customUserAgent, string expectedRegex)
+    public async Task TestUserAgentHeaders()
     {
-        AIProjectClient proojectClient = GetTestProjectClient();
-        PromptAgentDefinition def = new(model: TestEnvironment.MODELDEPLOYMENTNAME)
-        {
-            Instructions = "You are helpful assistant",
-        };
-        AgentVersion agentVersion = await proojectClient.Agents.CreateAgentVersionAsync(
-            agentName: AGENT_NAME,
-            options: new(def)
-        );
-        PipelineMessageClassifier pipelineMessageClassifier200 = PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
-        ProjectOpenAIClientOptions options = CreateTestOpenAIClientOptions<ProjectOpenAIClientOptions>();
-        options.UserAgentApplicationId = customUserAgent;
-        ClientPipeline pipeline = ProjectOpenAIClient.CreatePipeline(new BearerTokenPolicy(TestEnvironment.Credential, "https://ai.azure.com/.default"), options);
-        ClientUriBuilder uri = new();
-        uri.Reset(new System.Uri(TestEnvironment.PROJECT_ENDPOINT));
-        uri.AppendPath("/openai/responses", false);
-        PipelineMessage msg = pipeline.CreateMessage(uri.ToUri(), "POST", pipelineMessageClassifier200);
-        PipelineRequest request = msg.Request;
-        request.Headers.Set("Accept", "application/json, text/event-stream");
-        request.Headers.Set("Content-Type", "application/json");
-        BinaryData contentData = BinaryData.FromObjectAsJson(new
-        {
-            input = new[]
+        List<string> userAgentsFetched = null;
+        PipelinePolicy fetchUserAgentAndFailPolicy = new TestPipelinePolicy(
+            processMessageAction: (PipelineMessage message) =>
             {
-                new
+                if (message.Request.Headers.TryGetValues("User-Agent", out IEnumerable<string> headers))
                 {
-                    type = "message",
-                    role = "user",
-                    content = new[]
-                    {
-                        new
-                        {
-                            type = "input_text",
-                            text = "Please greet me and tell me what would be good to wear outside today."
-                        }
-                    }
+                    userAgentsFetched = [..headers];
                 }
-            },
-            agent = new
+                else
+                {
+                    userAgentsFetched = null;
+                }
+                throw new NotImplementedException("This exception is expected as this policy is meant to short-circuit the pipeline after validating the User-Agent header.");
+            });
+
+        T WithExtraPolicy<T>(T options) where T : ClientPipelineOptions
+        {
+            options.RetryPolicy = new ClientRetryPolicy(maxRetries: 0);
+            options.AddPolicy(
+                fetchUserAgentAndFailPolicy,
+                PipelinePosition.BeforeTransport);
+            return options;
+        }
+
+        void VerifyCall(Task callTask, string expectedUserAgentPattern)
+        {
+            Assert.ThrowsAsync<NotImplementedException>(async () => await callTask);
+            Assert.That(userAgentsFetched, Has.Count.EqualTo(1));
+            Console.WriteLine($"{Regex.IsMatch(userAgentsFetched[0], expectedUserAgentPattern)} - {userAgentsFetched[0]}");
+        }
+
+        AIProjectClient projectClientWithoutApp = new(
+            endpoint: new Uri(TestEnvironment.PROJECT_ENDPOINT),
+            tokenProvider: new MockCredential(),
+            options: WithExtraPolicy(new AIProjectClientOptions()));
+
+        AIProjectClient projectClientWithApp = new(
+            endpoint: new Uri(TestEnvironment.PROJECT_ENDPOINT),
+            tokenProvider: new MockCredential(),
+            options: WithExtraPolicy(new AIProjectClientOptions()
             {
-                type = "agent_reference",
-                name = agentVersion.Name,
-                version = agentVersion.Version
-            }
-        });
-        using BinaryContent content = BinaryContent.Create(contentData);
-        request.Content = content;
-        PipelineResponse response = await pipeline.ProcessMessageAsync(msg, options: new());
-        if (msg.Request.Headers.TryGetValues("User-Agent", out IEnumerable<string> headers))
+                UserAgentApplicationId = "MyApplication",
+            }));
+
+        ProjectOpenAIClient openAIClientWithoutApp = new(
+            projectEndpoint: new Uri(TestEnvironment.PROJECT_ENDPOINT),
+            tokenProvider: new MockCredential(),
+            options: WithExtraPolicy(new ProjectResponsesClientOptions()));
+
+        ProjectOpenAIClient openAIClientWithApp = new(
+            projectEndpoint: new Uri(TestEnvironment.PROJECT_ENDPOINT),
+            tokenProvider: new MockCredential(),
+            options: WithExtraPolicy(new ProjectResponsesClientOptions()
+            {
+                UserAgentApplicationId = "MyOtherApplication",
+            }));
+
+        async Task DoCreateAgentAsync(AIProjectAgentsOperations agentsClient)
         {
-            List<string> userAgent = [..headers];
-            Assert.That(userAgent.Count, Is.EqualTo(1), $"Unexpectedly found {userAgent.Count} User-Agent headers.");
-            Assert.That(Regex.IsMatch(userAgent[0], expectedRegex), Is.True, $"The header {userAgent[0]} does not match the pattern {expectedRegex}");
+            await agentsClient.CreateAgentVersionAsync(
+                agentName: "foobar",
+                options: new AgentVersionCreationOptions(
+                    definition: new PromptAgentDefinition("mock-model")));
         }
-        else
+
+        ProjectResponsesClient responsesClientWithoutApp = new(
+            projectEndpoint: new(TestEnvironment.PROJECT_ENDPOINT),
+            tokenProvider: new MockCredential(),
+            options: WithExtraPolicy(new ProjectResponsesClientOptions()));
+
+        async Task DoResponseAsync(ResponsesClient responsesClient)
         {
-            Assert.Fail("No User-Agent headers were found.");
+            await responsesClient.CreateResponseAsync("hello, model");
         }
+
+        VerifyCall(DoCreateAgentAsync(projectClientWithoutApp.Agents), "Azure.AI.Projects.*");
+        VerifyCall(DoCreateAgentAsync(projectClientWithApp.Agents), "MyApplication Azure.AI.Projects.*");
+        VerifyCall(DoResponseAsync(projectClientWithoutApp.OpenAI.Responses), "Azure.AI.Projects.*");
+        VerifyCall(DoResponseAsync(projectClientWithApp.OpenAI.Responses), "MyApplication Azure.AI.Projects.*");
+        VerifyCall(DoResponseAsync(openAIClientWithoutApp.Responses), "AIProjectClient OpenAI.*");
+        VerifyCall(DoResponseAsync(openAIClientWithApp.Responses), "MyOtherApplication-AIProjectClient OpenAI.*");
+        VerifyCall(DoResponseAsync(responsesClientWithoutApp), "AIProjectClient.*");
     }
 
     [TearDown]

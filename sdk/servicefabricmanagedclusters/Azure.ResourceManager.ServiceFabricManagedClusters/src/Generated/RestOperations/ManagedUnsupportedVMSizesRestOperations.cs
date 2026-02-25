@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/managedUnsupportedVMSizes/", false);
             uri.AppendPath(vmSize, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -69,7 +72,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath("/providers/Microsoft.ServiceFabric/locations/", false);
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/managedUnsupportedVMSizes", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -81,8 +87,18 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         internal HttpMessage CreateNextGetManagedUnsupportedVmSizesRequest(Uri nextPage, string subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

@@ -46,6 +46,16 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BulkImportResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BulkImportResult IPersistableModel<BulkImportResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BulkImportResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BulkImportResult"/> from. </param>
         public static explicit operator BulkImportResult(Response response)
         {
@@ -173,15 +183,5 @@ namespace Azure.Analytics.Purview.DataMap
             }
             return new BulkImportResult(failedImportInfoList ?? new ChangeTrackingList<ImportInfo>(), successImportInfoList ?? new ChangeTrackingList<ImportInfo>(), additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BulkImportResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BulkImportResult IPersistableModel<BulkImportResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BulkImportResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

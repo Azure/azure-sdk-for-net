@@ -36,6 +36,29 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataReplicationPolicyCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataReplicationPolicyCustomProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataReplicationPolicyCustomProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataReplicationPolicyCustomProperties IPersistableModel<DataReplicationPolicyCustomProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataReplicationPolicyCustomProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataReplicationPolicyCustomProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -110,28 +133,5 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
             return UnknownDataReplicationPolicyCustomProperties.DeserializeUnknownDataReplicationPolicyCustomProperties(element, options);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DataReplicationPolicyCustomProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataReplicationPolicyCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataReplicationPolicyCustomProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DataReplicationPolicyCustomProperties IPersistableModel<DataReplicationPolicyCustomProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DataReplicationPolicyCustomProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

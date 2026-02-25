@@ -51,6 +51,16 @@ namespace Azure.AI.DocumentIntelligence
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PagedDocumentModelDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PagedDocumentModelDetails IPersistableModel<PagedDocumentModelDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PagedDocumentModelDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PagedDocumentModelDetails"/> from. </param>
         public static explicit operator PagedDocumentModelDetails(Response response)
         {
@@ -152,7 +162,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")
@@ -162,15 +172,5 @@ namespace Azure.AI.DocumentIntelligence
             }
             return new PagedDocumentModelDetails(value, nextLink, clientRequestId, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PagedDocumentModelDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PagedDocumentModelDetails IPersistableModel<PagedDocumentModelDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PagedDocumentModelDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

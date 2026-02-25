@@ -52,6 +52,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AppConfigurationSnapshotCreatedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AppConfigurationSnapshotCreatedEventData IPersistableModel<AppConfigurationSnapshotCreatedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AppConfigurationSnapshotCreatedEventData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AppConfigurationSnapshotCreatedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AppConfigurationSnapshotCreatedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -126,16 +136,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             return new AppConfigurationSnapshotCreatedEventData(name, eTag, syncToken, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AppConfigurationSnapshotCreatedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AppConfigurationSnapshotCreatedEventData IPersistableModel<AppConfigurationSnapshotCreatedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AppConfigurationSnapshotCreatedEventData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AppConfigurationSnapshotCreatedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class AppConfigurationSnapshotCreatedEventDataConverter : JsonConverter<AppConfigurationSnapshotCreatedEventData>
         {

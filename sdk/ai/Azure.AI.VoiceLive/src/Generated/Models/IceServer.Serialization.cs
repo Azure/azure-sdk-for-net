@@ -50,6 +50,16 @@ namespace Azure.AI.VoiceLive
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<IceServer>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IceServer IPersistableModel<IceServer>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IceServer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IceServer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -149,7 +159,7 @@ namespace Azure.AI.VoiceLive
                         }
                         else
                         {
-                            array.Add(string.IsNullOrEmpty(item.GetString()) ? null : new Uri(item.GetString()));
+                            array.Add(string.IsNullOrEmpty(item.GetString()) ? null : new Uri(item.GetString(), UriKind.RelativeOrAbsolute));
                         }
                     }
                     uris = array;
@@ -172,15 +182,5 @@ namespace Azure.AI.VoiceLive
             }
             return new IceServer(uris, username, credential, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IceServer>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        IceServer IPersistableModel<IceServer>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IceServer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

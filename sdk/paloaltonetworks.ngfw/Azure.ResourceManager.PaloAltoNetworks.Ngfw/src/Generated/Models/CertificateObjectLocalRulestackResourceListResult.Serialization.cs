@@ -39,6 +39,29 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CertificateObjectLocalRulestackResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CertificateObjectLocalRulestackResourceListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CertificateObjectLocalRulestackResourceListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CertificateObjectLocalRulestackResourceListResult IPersistableModel<CertificateObjectLocalRulestackResourceListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CertificateObjectLocalRulestackResourceListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CertificateObjectLocalRulestackResourceListResult"/> from. </param>
         internal static CertificateObjectLocalRulestackResourceListResult FromResponse(Response response)
         {
@@ -139,7 +162,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")
@@ -149,28 +172,5 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
             return new CertificateObjectLocalRulestackResourceListResult(value, nextLink, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CertificateObjectLocalRulestackResourceListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CertificateObjectLocalRulestackResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(CertificateObjectLocalRulestackResourceListResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CertificateObjectLocalRulestackResourceListResult IPersistableModel<CertificateObjectLocalRulestackResourceListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CertificateObjectLocalRulestackResourceListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

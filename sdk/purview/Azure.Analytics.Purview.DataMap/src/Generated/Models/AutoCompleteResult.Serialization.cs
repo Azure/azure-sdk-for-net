@@ -46,6 +46,16 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AutoCompleteResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AutoCompleteResult IPersistableModel<AutoCompleteResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AutoCompleteResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AutoCompleteResult"/> from. </param>
         public static explicit operator AutoCompleteResult(Response response)
         {
@@ -148,15 +158,5 @@ namespace Azure.Analytics.Purview.DataMap
             }
             return new AutoCompleteResult(value ?? new ChangeTrackingList<AutoCompleteResultValue>(), additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AutoCompleteResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AutoCompleteResult IPersistableModel<AutoCompleteResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AutoCompleteResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

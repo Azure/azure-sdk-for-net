@@ -41,11 +41,11 @@ namespace OpenAI
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the Token. </summary>
-        public string Token { get; }
+        /// <summary> Gets or sets the Token. </summary>
+        public string Token { get; set; }
 
-        /// <summary> Gets the Logprob. </summary>
-        public double Logprob { get; }
+        /// <summary> Gets or sets the Logprob. </summary>
+        public double Logprob { get; set; }
 
         /// <summary> Gets the Bytes. </summary>
         public IList<long> Bytes { get; }

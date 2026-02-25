@@ -10,7 +10,7 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// Base class for targets with discriminator support.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureAIAgentTarget"/> and <see cref="AzureAIModelTarget"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureAIModelTarget"/> and <see cref="AzureAIAgentTarget"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownTarget))]
     public abstract partial class Target : IJsonModel<Target>
@@ -126,10 +126,10 @@ namespace Azure.AI.Projects
             {
                 switch (discriminator.GetString())
                 {
-                    case "azure_ai_agent":
-                        return AzureAIAgentTarget.DeserializeAzureAIAgentTarget(element, options);
                     case "azure_ai_model":
                         return AzureAIModelTarget.DeserializeAzureAIModelTarget(element, options);
+                    case "azure_ai_agent":
+                        return AzureAIAgentTarget.DeserializeAzureAIAgentTarget(element, options);
                 }
             }
             return UnknownTarget.DeserializeUnknownTarget(element, options);

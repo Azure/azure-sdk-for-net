@@ -15,7 +15,7 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="id"> The unique identifier of the reasoning content. </param>
         /// <param name="summary"> Reasoning summary content. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="summary"/> is null. </exception>
-        public InputItemReasoningItem(string id, IEnumerable<Summary> summary) : base(InputItemType.Reasoning)
+        public InputItemReasoningItem(string id, IEnumerable<InternalSummaryTextObject> summary) : base(InputItemType.Reasoning)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(summary, nameof(summary));
@@ -36,7 +36,7 @@ namespace Azure.AI.Projects.OpenAI
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        internal InputItemReasoningItem(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string encryptedContent, IList<Summary> summary, IList<ReasoningTextContent> content, ItemReasoningItemStatus? status) : base(@type, additionalBinaryDataProperties)
+        internal InputItemReasoningItem(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string encryptedContent, IList<InternalSummaryTextObject> summary, IList<ReasoningTextContent> content, OutputItemReasoningItemStatus? status) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             EncryptedContent = encryptedContent;
@@ -52,7 +52,7 @@ namespace Azure.AI.Projects.OpenAI
         public string EncryptedContent { get; set; }
 
         /// <summary> Reasoning summary content. </summary>
-        public IList<Summary> Summary { get; }
+        public IList<InternalSummaryTextObject> Summary { get; }
 
         /// <summary> Reasoning text content. </summary>
         public IList<ReasoningTextContent> Content { get; }
@@ -61,6 +61,6 @@ namespace Azure.AI.Projects.OpenAI
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </summary>
-        public ItemReasoningItemStatus? Status { get; set; }
+        public OutputItemReasoningItemStatus? Status { get; set; }
     }
 }

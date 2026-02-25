@@ -34,6 +34,29 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AppComplianceGetOverviewStatusResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppComplianceAutomationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AppComplianceGetOverviewStatusResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AppComplianceGetOverviewStatusResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AppComplianceGetOverviewStatusResult IPersistableModel<AppComplianceGetOverviewStatusResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AppComplianceGetOverviewStatusResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AppComplianceGetOverviewStatusResult"/> from. </param>
         internal static AppComplianceGetOverviewStatusResult FromResponse(Response response)
         {
@@ -136,28 +159,5 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
             return new AppComplianceGetOverviewStatusResult(statusList ?? new ChangeTrackingList<OverviewStatusItem>(), additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AppComplianceGetOverviewStatusResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AppComplianceGetOverviewStatusResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppComplianceAutomationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AppComplianceGetOverviewStatusResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AppComplianceGetOverviewStatusResult IPersistableModel<AppComplianceGetOverviewStatusResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AppComplianceGetOverviewStatusResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

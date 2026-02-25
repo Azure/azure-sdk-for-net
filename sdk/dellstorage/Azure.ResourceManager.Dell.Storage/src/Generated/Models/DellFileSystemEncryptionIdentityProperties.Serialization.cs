@@ -34,6 +34,29 @@ namespace Azure.ResourceManager.Dell.Storage.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DellFileSystemEncryptionIdentityProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDellStorageContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DellFileSystemEncryptionIdentityProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DellFileSystemEncryptionIdentityProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DellFileSystemEncryptionIdentityProperties IPersistableModel<DellFileSystemEncryptionIdentityProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DellFileSystemEncryptionIdentityProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DellFileSystemEncryptionIdentityProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -134,28 +157,5 @@ namespace Azure.ResourceManager.Dell.Storage.Models
             }
             return new DellFileSystemEncryptionIdentityProperties(identityType, identityResourceId, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DellFileSystemEncryptionIdentityProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DellFileSystemEncryptionIdentityProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDellStorageContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DellFileSystemEncryptionIdentityProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DellFileSystemEncryptionIdentityProperties IPersistableModel<DellFileSystemEncryptionIdentityProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DellFileSystemEncryptionIdentityProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -28,7 +28,10 @@ namespace Azure.AI.Projects
             uri.AppendPath("/evaluators/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/versions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (@type != null)
             {
                 uri.AppendQuery("type", @type, true);
@@ -53,10 +56,12 @@ namespace Azure.AI.Projects
             }
             else
             {
-                uri.Reset(_endpoint);
-                uri.AppendPath(nextPage.OriginalString, false);
+                uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
             request.Headers.Set("Accept", "application/json");
@@ -69,7 +74,10 @@ namespace Azure.AI.Projects
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/evaluators", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (@type != null)
             {
                 uri.AppendQuery("type", @type, true);
@@ -94,10 +102,12 @@ namespace Azure.AI.Projects
             }
             else
             {
-                uri.Reset(_endpoint);
-                uri.AppendPath(nextPage.OriginalString, false);
+                uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
             request.Headers.Set("Accept", "application/json");
@@ -113,7 +123,10 @@ namespace Azure.AI.Projects
             uri.AppendPath(name, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(version, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
             request.Headers.Set("Accept", "application/json");
@@ -129,7 +142,10 @@ namespace Azure.AI.Projects
             uri.AppendPath(name, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(version, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "DELETE", PipelineMessageClassifier204);
             PipelineRequest request = message.Request;
             message.Apply(options);
@@ -143,7 +159,10 @@ namespace Azure.AI.Projects
             uri.AppendPath("/evaluators/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/versions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier201);
             PipelineRequest request = message.Request;
             request.Headers.Set("Content-Type", "application/json");
@@ -161,7 +180,10 @@ namespace Azure.AI.Projects
             uri.AppendPath(name, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(version, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "PATCH", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
             request.Headers.Set("Content-Type", "application/json");

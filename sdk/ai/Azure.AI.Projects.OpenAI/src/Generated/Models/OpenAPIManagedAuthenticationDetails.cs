@@ -13,7 +13,7 @@ namespace Azure.AI.Projects.OpenAI
         /// <summary> Initializes a new instance of <see cref="OpenAPIManagedAuthenticationDetails"/>. </summary>
         /// <param name="securityScheme"> Connection auth security details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="securityScheme"/> is null. </exception>
-        public OpenAPIManagedAuthenticationDetails(OpenApiManagedSecurityScheme securityScheme) : base(OpenApiAuthType.ManagedIdentity)
+        public OpenAPIManagedAuthenticationDetails(OpenAPIManagedSecurityScheme securityScheme) : base(OpenApiAuthType.ManagedIdentity)
         {
             Argument.AssertNotNull(securityScheme, nameof(securityScheme));
 
@@ -24,12 +24,12 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="type"> The type of authentication, must be anonymous/project_connection/managed_identity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="securityScheme"> Connection auth security details. </param>
-        internal OpenAPIManagedAuthenticationDetails(OpenApiAuthType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, OpenApiManagedSecurityScheme securityScheme) : base(@type, additionalBinaryDataProperties)
+        internal OpenAPIManagedAuthenticationDetails(OpenApiAuthType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, OpenAPIManagedSecurityScheme securityScheme) : base(@type, additionalBinaryDataProperties)
         {
             SecurityScheme = securityScheme;
         }
 
         /// <summary> Connection auth security details. </summary>
-        public OpenApiManagedSecurityScheme SecurityScheme { get; set; }
+        public OpenAPIManagedSecurityScheme SecurityScheme { get; set; }
     }
 }

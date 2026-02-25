@@ -39,6 +39,29 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AutonomousDatabaseCrossRegionDisasterRecoveryProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AutonomousDatabaseCrossRegionDisasterRecoveryProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AutonomousDatabaseCrossRegionDisasterRecoveryProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AutonomousDatabaseCrossRegionDisasterRecoveryProperties IPersistableModel<AutonomousDatabaseCrossRegionDisasterRecoveryProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (AutonomousDatabaseCrossRegionDisasterRecoveryProperties)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AutonomousDatabaseCrossRegionDisasterRecoveryProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AutonomousDatabaseCrossRegionDisasterRecoveryProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -486,7 +509,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    ociUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    ociUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("subnetId"u8))
@@ -742,7 +765,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    serviceConsoleUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    serviceConsoleUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("sqlWebDeveloperUrl"u8))
@@ -751,7 +774,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    sqlWebDeveloperUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    sqlWebDeveloperUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("supportedRegionsToCloneTo"u8))
@@ -1021,28 +1044,5 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 remoteDisasterRecoveryType,
                 isReplicateAutomaticBackups);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AutonomousDatabaseCrossRegionDisasterRecoveryProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AutonomousDatabaseCrossRegionDisasterRecoveryProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AutonomousDatabaseCrossRegionDisasterRecoveryProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AutonomousDatabaseCrossRegionDisasterRecoveryProperties IPersistableModel<AutonomousDatabaseCrossRegionDisasterRecoveryProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (AutonomousDatabaseCrossRegionDisasterRecoveryProperties)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AutonomousDatabaseCrossRegionDisasterRecoveryProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

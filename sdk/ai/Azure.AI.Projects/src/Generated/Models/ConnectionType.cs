@@ -30,7 +30,7 @@ namespace Azure.AI.Projects
         /// <summary> Custom Keys. </summary>
         private const string CustomValue = "CustomKeys";
         /// <summary> Remote tool. </summary>
-        private const string RemoteToolValue = "RemoteTool";
+        private const string RemoteToolValue = "RemoteTool_Preview";
 
         /// <summary> Initializes a new instance of <see cref="ConnectionType"/>. </summary>
         /// <param name="value"> The value. </param>

@@ -9,8 +9,8 @@ using System.Text.Json;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary>
-    /// Content item used to generate a response.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentStructuredOutputsResponseItem"/>, <see cref="AgentWorkflowActionResponseItem"/>, <see cref="OAuthConsentRequestResponseItem"/>, and <see cref="MemorySearchToolCallResponseItem"/>.
+    /// The AgentResponseItem.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentStructuredOutputsResponseItem"/>, <see cref="AgentWorkflowPreviewActionResponseItem"/>, <see cref="OAuthConsentRequestResponseItem"/>, <see cref="MemorySearchToolCallResponseItem"/>, <see cref="BingGroundingToolCall"/>, <see cref="BingGroundingToolCallOutput"/>, <see cref="SharepointGroundingToolCall"/>, <see cref="SharepointGroundingToolCallOutput"/>, <see cref="AzureAISearchToolCall"/>, <see cref="AzureAISearchToolCallOutput"/>, <see cref="BingCustomSearchToolCall"/>, <see cref="BingCustomSearchToolCallOutput"/>, <see cref="OpenApiToolCall"/>, <see cref="OpenApiToolCallOutput"/>, <see cref="BrowserAutomationToolCall"/>, <see cref="BrowserAutomationToolCallOutput"/>, <see cref="FabricDataAgentToolCall"/>, <see cref="FabricDataAgentToolCallOutput"/>, <see cref="AzureFunctionToolCall"/>, <see cref="AzureFunctionToolCallOutput"/>, <see cref="A2AToolCall"/>, and <see cref="A2AToolCallOutput"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAgentResponseItem))]
     public abstract partial class AgentResponseItem : IJsonModel<AgentResponseItem>
@@ -85,11 +85,6 @@ namespace Azure.AI.Projects.OpenAI
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(ItemSource))
-            {
-                writer.WritePropertyName("created_by"u8);
-                writer.WriteObjectValue(ItemSource, options);
-            }
             if (Optional.IsDefined(AgentReference))
             {
                 writer.WritePropertyName("agent_reference"u8);
@@ -149,51 +144,83 @@ namespace Azure.AI.Projects.OpenAI
                     case "structured_outputs":
                         return AgentStructuredOutputsResponseItem.DeserializeAgentStructuredOutputsResponseItem(element, options);
                     case "workflow_action":
-                        return AgentWorkflowActionResponseItem.DeserializeAgentWorkflowActionResponseItem(element, options);
+                        return AgentWorkflowPreviewActionResponseItem.DeserializeAgentWorkflowPreviewActionResponseItem(element, options);
                     case "oauth_consent_request":
                         return OAuthConsentRequestResponseItem.DeserializeOAuthConsentRequestResponseItem(element, options);
                     case "memory_search_call":
                         return MemorySearchToolCallResponseItem.DeserializeMemorySearchToolCallResponseItem(element, options);
-                    case "message":
-                        return InternalInputMessageResource.DeserializeInternalInputMessageResource(element, options);
+                    case "bing_grounding_call":
+                        return BingGroundingToolCall.DeserializeBingGroundingToolCall(element, options);
+                    case "bing_grounding_call_output":
+                        return BingGroundingToolCallOutput.DeserializeBingGroundingToolCallOutput(element, options);
+                    case "sharepoint_grounding_preview_call":
+                        return SharepointGroundingToolCall.DeserializeSharepointGroundingToolCall(element, options);
+                    case "sharepoint_grounding_preview_call_output":
+                        return SharepointGroundingToolCallOutput.DeserializeSharepointGroundingToolCallOutput(element, options);
+                    case "azure_ai_search_call":
+                        return AzureAISearchToolCall.DeserializeAzureAISearchToolCall(element, options);
+                    case "azure_ai_search_call_output":
+                        return AzureAISearchToolCallOutput.DeserializeAzureAISearchToolCallOutput(element, options);
+                    case "bing_custom_search_preview_call":
+                        return BingCustomSearchToolCall.DeserializeBingCustomSearchToolCall(element, options);
+                    case "bing_custom_search_preview_call_output":
+                        return BingCustomSearchToolCallOutput.DeserializeBingCustomSearchToolCallOutput(element, options);
+                    case "openapi_call":
+                        return OpenApiToolCall.DeserializeOpenApiToolCall(element, options);
+                    case "openapi_call_output":
+                        return OpenApiToolCallOutput.DeserializeOpenApiToolCallOutput(element, options);
+                    case "browser_automation_preview_call":
+                        return BrowserAutomationToolCall.DeserializeBrowserAutomationToolCall(element, options);
+                    case "browser_automation_preview_call_output":
+                        return BrowserAutomationToolCallOutput.DeserializeBrowserAutomationToolCallOutput(element, options);
+                    case "fabric_dataagent_preview_call":
+                        return FabricDataAgentToolCall.DeserializeFabricDataAgentToolCall(element, options);
+                    case "fabric_dataagent_preview_call_output":
+                        return FabricDataAgentToolCallOutput.DeserializeFabricDataAgentToolCallOutput(element, options);
+                    case "azure_function_call":
+                        return AzureFunctionToolCall.DeserializeAzureFunctionToolCall(element, options);
+                    case "azure_function_call_output":
+                        return AzureFunctionToolCallOutput.DeserializeAzureFunctionToolCallOutput(element, options);
+                    case "a2a_preview_call":
+                        return A2AToolCall.DeserializeA2AToolCall(element, options);
+                    case "a2a_preview_call_output":
+                        return A2AToolCallOutput.DeserializeA2AToolCallOutput(element, options);
                     case "output_message":
-                        return InternalItemResourceOutputMessage.DeserializeInternalItemResourceOutputMessage(element, options);
+                        return InternalOutputItemOutputMessage.DeserializeInternalOutputItemOutputMessage(element, options);
                     case "file_search_call":
-                        return InternalItemResourceFileSearchToolCall.DeserializeInternalItemResourceFileSearchToolCall(element, options);
-                    case "computer_call":
-                        return InternalItemResourceComputerToolCall.DeserializeInternalItemResourceComputerToolCall(element, options);
-                    case "computer_call_output":
-                        return InternalItemResourceComputerToolCallOutputResource.DeserializeInternalItemResourceComputerToolCallOutputResource(element, options);
-                    case "web_search_call":
-                        return InternalItemResourceWebSearchToolCall.DeserializeInternalItemResourceWebSearchToolCall(element, options);
+                        return InternalOutputItemFileSearchToolCall.DeserializeInternalOutputItemFileSearchToolCall(element, options);
                     case "function_call":
-                        return InternalItemResourceFunctionToolCallResource.DeserializeInternalItemResourceFunctionToolCallResource(element, options);
-                    case "function_call_output":
-                        return InternalItemResourceFunctionToolCallOutputResource.DeserializeInternalItemResourceFunctionToolCallOutputResource(element, options);
+                        return InternalOutputItemFunctionToolCall.DeserializeInternalOutputItemFunctionToolCall(element, options);
+                    case "web_search_call":
+                        return InternalOutputItemWebSearchToolCall.DeserializeInternalOutputItemWebSearchToolCall(element, options);
+                    case "computer_call":
+                        return InternalOutputItemComputerToolCall.DeserializeInternalOutputItemComputerToolCall(element, options);
+                    case "reasoning":
+                        return InternalOutputItemReasoningItem.DeserializeInternalOutputItemReasoningItem(element, options);
+                    case "compaction":
+                        return InternalOutputItemCompactionBody.DeserializeInternalOutputItemCompactionBody(element, options);
                     case "image_generation_call":
-                        return InternalItemResourceImageGenToolCall.DeserializeInternalItemResourceImageGenToolCall(element, options);
+                        return InternalOutputItemImageGenToolCall.DeserializeInternalOutputItemImageGenToolCall(element, options);
                     case "code_interpreter_call":
-                        return InternalItemResourceCodeInterpreterToolCall.DeserializeInternalItemResourceCodeInterpreterToolCall(element, options);
+                        return InternalOutputItemCodeInterpreterToolCall.DeserializeInternalOutputItemCodeInterpreterToolCall(element, options);
                     case "local_shell_call":
-                        return InternalItemResourceLocalShellToolCall.DeserializeInternalItemResourceLocalShellToolCall(element, options);
-                    case "local_shell_call_output":
-                        return InternalItemResourceLocalShellToolCallOutput.DeserializeInternalItemResourceLocalShellToolCallOutput(element, options);
+                        return InternalOutputItemLocalShellToolCall.DeserializeInternalOutputItemLocalShellToolCall(element, options);
                     case "shell_call":
-                        return InternalItemResourceFunctionShellCall.DeserializeInternalItemResourceFunctionShellCall(element, options);
+                        return InternalOutputItemFunctionShellCall.DeserializeInternalOutputItemFunctionShellCall(element, options);
                     case "shell_call_output":
-                        return InternalItemResourceFunctionShellCallOutput.DeserializeInternalItemResourceFunctionShellCallOutput(element, options);
+                        return InternalOutputItemFunctionShellCallOutput.DeserializeInternalOutputItemFunctionShellCallOutput(element, options);
                     case "apply_patch_call":
-                        return InternalItemResourceApplyPatchToolCall.DeserializeInternalItemResourceApplyPatchToolCall(element, options);
+                        return InternalOutputItemApplyPatchToolCall.DeserializeInternalOutputItemApplyPatchToolCall(element, options);
                     case "apply_patch_call_output":
-                        return InternalItemResourceApplyPatchToolCallOutput.DeserializeInternalItemResourceApplyPatchToolCallOutput(element, options);
-                    case "mcp_list_tools":
-                        return InternalItemResourceMcpListTools.DeserializeInternalItemResourceMcpListTools(element, options);
-                    case "mcp_approval_request":
-                        return InternalItemResourceMcpApprovalRequest.DeserializeInternalItemResourceMcpApprovalRequest(element, options);
-                    case "mcp_approval_response":
-                        return InternalItemResourceMcpApprovalResponseResource.DeserializeInternalItemResourceMcpApprovalResponseResource(element, options);
+                        return InternalOutputItemApplyPatchToolCallOutput.DeserializeInternalOutputItemApplyPatchToolCallOutput(element, options);
                     case "mcp_call":
-                        return InternalItemResourceMcpToolCall.DeserializeInternalItemResourceMcpToolCall(element, options);
+                        return InternalOutputItemMcpToolCall.DeserializeInternalOutputItemMcpToolCall(element, options);
+                    case "mcp_list_tools":
+                        return InternalOutputItemMcpListTools.DeserializeInternalOutputItemMcpListTools(element, options);
+                    case "mcp_approval_request":
+                        return InternalOutputItemMcpApprovalRequest.DeserializeInternalOutputItemMcpApprovalRequest(element, options);
+                    case "custom_tool_call":
+                        return InternalOutputItemCustomToolCall.DeserializeInternalOutputItemCustomToolCall(element, options);
                 }
             }
             return UnknownAgentResponseItem.DeserializeUnknownAgentResponseItem(element, options);

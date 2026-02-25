@@ -70,7 +70,7 @@ namespace Azure.Compute.Batch
                     yield break;
                 }
                 BatchJobPreparationAndReleaseTaskStatusListResult result = (BatchJobPreparationAndReleaseTaskStatusListResult)response;
-                yield return Page<BatchJobPreparationAndReleaseTaskStatus>.FromValues((IReadOnlyList<BatchJobPreparationAndReleaseTaskStatus>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<BatchJobPreparationAndReleaseTaskStatus>.FromValues((IReadOnlyList<BatchJobPreparationAndReleaseTaskStatus>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.OdataNextLink;
                 if (nextPage == null)
                 {

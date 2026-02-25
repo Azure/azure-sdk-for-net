@@ -51,6 +51,28 @@ namespace Azure.Communication.ProgrammableConnectivity
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NumberVerificationWithCodeContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NumberVerificationWithCodeContent IPersistableModel<NumberVerificationWithCodeContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NumberVerificationWithCodeContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="numberVerificationWithCodeContent"> The <see cref="NumberVerificationWithCodeContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(NumberVerificationWithCodeContent numberVerificationWithCodeContent)
+        {
+            if (numberVerificationWithCodeContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(numberVerificationWithCodeContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NumberVerificationWithCodeContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -128,28 +150,6 @@ namespace Azure.Communication.ProgrammableConnectivity
                 }
             }
             return new NumberVerificationWithCodeContent(apcCode, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NumberVerificationWithCodeContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NumberVerificationWithCodeContent IPersistableModel<NumberVerificationWithCodeContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NumberVerificationWithCodeContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="numberVerificationWithCodeContent"> The <see cref="NumberVerificationWithCodeContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(NumberVerificationWithCodeContent numberVerificationWithCodeContent)
-        {
-            if (numberVerificationWithCodeContent == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(numberVerificationWithCodeContent, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

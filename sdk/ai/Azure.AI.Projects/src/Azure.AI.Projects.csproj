@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This is the Azure.AI.Projects client library for developing .NET applications with rich experience.</Description>
     <AssemblyTitle>Microsoft Azure.AI.Projects client library</AssemblyTitle>
-    <Version>1.2.0-beta.6</Version>
+    <Version>2.0.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.1.0</ApiCompatVersion>
     <PackageTags>Azure.AI.Projects</PackageTags>
@@ -19,6 +19,8 @@
       ;OPENAI001
       <!-- Temporary suppression of XML doc requirement -->
       ;CS1591
+      <!-- Allow experimental features -->
+      ;AAIP001
     </NoWarn>
   </PropertyGroup>
 
@@ -36,8 +38,5 @@
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)Multipart\MultipartContent.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)Multipart\MultipartFormDataContent.cs" LinkBase="Shared" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Custom\NewFolder\" />
   </ItemGroup>
 </Project>

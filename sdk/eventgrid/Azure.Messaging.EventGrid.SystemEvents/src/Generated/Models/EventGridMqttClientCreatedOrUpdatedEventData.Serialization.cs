@@ -52,6 +52,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<EventGridMqttClientCreatedOrUpdatedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EventGridMqttClientCreatedOrUpdatedEventData IPersistableModel<EventGridMqttClientCreatedOrUpdatedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (EventGridMqttClientCreatedOrUpdatedEventData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EventGridMqttClientCreatedOrUpdatedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EventGridMqttClientCreatedOrUpdatedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -213,16 +223,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 updatedOn,
                 attributes);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EventGridMqttClientCreatedOrUpdatedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        EventGridMqttClientCreatedOrUpdatedEventData IPersistableModel<EventGridMqttClientCreatedOrUpdatedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (EventGridMqttClientCreatedOrUpdatedEventData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EventGridMqttClientCreatedOrUpdatedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class EventGridMqttClientCreatedOrUpdatedEventDataConverter : JsonConverter<EventGridMqttClientCreatedOrUpdatedEventData>
         {

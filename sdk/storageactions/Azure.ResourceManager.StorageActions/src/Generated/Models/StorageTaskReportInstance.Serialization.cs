@@ -36,6 +36,29 @@ namespace Azure.ResourceManager.StorageActions.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StorageTaskReportInstance>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageActionsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(StorageTaskReportInstance)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<StorageTaskReportInstance>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageTaskReportInstance IPersistableModel<StorageTaskReportInstance>.Create(BinaryData data, ModelReaderWriterOptions options) => (StorageTaskReportInstance)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StorageTaskReportInstance>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StorageTaskReportInstance>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -149,28 +172,5 @@ namespace Azure.ResourceManager.StorageActions.Models
                 additionalBinaryDataProperties,
                 properties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StorageTaskReportInstance>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageTaskReportInstance>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageActionsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(StorageTaskReportInstance)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        StorageTaskReportInstance IPersistableModel<StorageTaskReportInstance>.Create(BinaryData data, ModelReaderWriterOptions options) => (StorageTaskReportInstance)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StorageTaskReportInstance>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -49,6 +49,16 @@ namespace Azure.AI.ContentUnderstanding
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AudioVisualContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AudioVisualContent IPersistableModel<AudioVisualContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (AudioVisualContent)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AudioVisualContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AudioVisualContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -140,15 +150,5 @@ namespace Azure.AI.ContentUnderstanding
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAudioVisualContent(document.RootElement, options);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AudioVisualContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AudioVisualContent IPersistableModel<AudioVisualContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (AudioVisualContent)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AudioVisualContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

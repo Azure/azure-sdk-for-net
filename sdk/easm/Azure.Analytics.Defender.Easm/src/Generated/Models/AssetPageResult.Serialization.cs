@@ -45,6 +45,16 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AssetPageResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AssetPageResult IPersistableModel<AssetPageResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AssetPageResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AssetPageResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -177,15 +187,5 @@ namespace Azure.Analytics.Defender.Easm
             }
             return new AssetPageResult(totalElements, mark, nextLink, value ?? new ChangeTrackingList<AssetResource>(), additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AssetPageResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AssetPageResult IPersistableModel<AssetPageResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AssetPageResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

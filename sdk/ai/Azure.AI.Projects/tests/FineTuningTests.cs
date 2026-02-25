@@ -11,7 +11,6 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.AI.Projects.OpenAI;
 using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.CognitiveServices;
@@ -106,7 +105,7 @@ public class FineTuningTests : ProjectsClientTestBase
         string trainingType = null,
         int epochCount = 1,
         int batchSize = 4,
-        double learningRate = 0.0001)
+        double learningRate = 0.01)
     {
         object methodObject = jobType.ToLowerInvariant() switch
         {
@@ -165,7 +164,7 @@ public class FineTuningTests : ProjectsClientTestBase
         string trainingType = null,
         int epochCount = 1,
         int batchSize = 4,
-        double learningRate = 0.0001)
+        double learningRate = 0.01)
     {
         // Use raw JSON if trainingType is specified (required for Azure-specific field and OSS models)
         if (!string.IsNullOrEmpty(trainingType))
@@ -304,7 +303,7 @@ public class FineTuningTests : ProjectsClientTestBase
                 trainingType: trainingType,
                 epochCount: 1,
                 batchSize: 4,
-                learningRate: 0.0001);
+                learningRate: 0.01);
 
             Console.WriteLine($"Created SFT job with {trainingType} training type: {fineTuningJob.JobId}");
             ValidateFineTuningJob(fineTuningJob);
@@ -393,7 +392,7 @@ public class FineTuningTests : ProjectsClientTestBase
                 validationFile.Id,
                 epochCount: 1,
                 batchSize: 4,
-                learningRate: 0.0001);
+                learningRate: 0.01);
 
             Console.WriteLine($"Created SFT job: {fineTuningJob.JobId}");
             ValidateFineTuningJob(fineTuningJob);
@@ -442,7 +441,7 @@ public class FineTuningTests : ProjectsClientTestBase
                 trainingType: "GlobalStandard",
                 epochCount: 1,
                 batchSize: 4,
-                learningRate: 0.0001);
+                learningRate: 0.01);
 
             Console.WriteLine($"Created SFT OSS job: {fineTuningJob.JobId}");
             ValidateFineTuningJob(fineTuningJob);
@@ -630,23 +629,23 @@ public class FineTuningTests : ProjectsClientTestBase
         // When re-recording this test, ensure the job is in a running state.
         var (fileClient, fineTuningClient) = GetClients();
         //var (trainFile, validationFile) = await UploadTestFilesAsync(fileClient, "dpo");
-        //FineTuningJob job = await CreateDpoFineTuningJobAsync(
+        //FineTuningJob job_ = await CreateDpoFineTuningJobAsync(
         //        fineTuningClient,
         //        "gpt-4.1",
         //        trainFile.Id,
         //        validationFile.Id);
         //// Retrieve the job in running state
-        //while (job.Status != FineTuningStatus.Running && job.Status != FineTuningStatus.Failed)
+        //while (job_.Status != FineTuningStatus.Running && job.Status != FineTuningStatus.Failed)
         //{
         //    if (Mode != RecordedTestMode.Playback)
         //    {
         //        System.Threading.Thread.Sleep(1);
         //    }
-        //    job = await fineTuningClient.GetJobAsync(job.JobId);
+        //    job_ = await fineTuningClient.GetJobAsync(job.JobId);
         //}
         // We cannot check that the job status is FineTuningStatus.Running instead we need to
         // check the event logs and retry pause once Training started event is emitted.
-        FineTuningJob job = await fineTuningClient.GetJobAsync("ftjob-5b45a9d50470481fa8f6d91f0b07da0c");
+        FineTuningJob job = await fineTuningClient.GetJobAsync("ftjob-609d281b5c614ab78a8557fbe3ac9209");
         Assert.That(job.Status, Is.EqualTo(FineTuningStatus.Running), $"The job status is {job.Status}");
 
         // Pause the job
@@ -667,7 +666,7 @@ public class FineTuningTests : ProjectsClientTestBase
         // Note: This test uses a paused fine-tuning job ID to test resume functionality.
         // Resume is only valid for jobs that are currently paused.
         // When re-recording this test, ensure the job is in a paused state.
-        string pausedJobId = "ftjob-ed1d6ce69401454da5eeae9002ca8166";
+        string pausedJobId = "ftjob-609d281b5c614ab78a8557fbe3ac9209";
 
         var (_, fineTuningClient) = GetClients();
 
@@ -751,6 +750,7 @@ public class FineTuningTests : ProjectsClientTestBase
         Assert.That(checkpointsList[0].StepNumber, Is.GreaterThan(0));
     }
 
+    [Ignore("The service for fine tuning is only available internally.")]
     [RecordedTest]
     public async Task Test_FineTuning_Inference_With_Existing_Deployment()
     {
@@ -853,7 +853,7 @@ public class FineTuningTests : ProjectsClientTestBase
 
     private (OpenAIFileClient FileClient, FineTuningClient FineTuningClient) GetClients()
     {
-        AIProjectClient projectClient = GetTestProjectClient();
+        AIProjectClient projectClient = GetTestProjectClient(useDefaultEndpoint: true);
         return (projectClient.OpenAI.GetOpenAIFileClient(), projectClient.OpenAI.GetFineTuningClient());
     }
 

@@ -5,7 +5,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
@@ -147,7 +146,7 @@ namespace Azure.AI.Projects.OpenAI
                         return CaptureStructuredOutputsTool.DeserializeCaptureStructuredOutputsTool(element, options);
                     case "a2a_preview":
                         return A2APreviewTool.DeserializeA2APreviewTool(element, options);
-                    case "memory_search":
+                    case "memory_search_preview":
                         return MemorySearchPreviewTool.DeserializeMemorySearchPreviewTool(element, options);
                     case "code_interpreter":
                         return InternalCodeInterpreterTool.DeserializeInternalCodeInterpreterTool(element, options);

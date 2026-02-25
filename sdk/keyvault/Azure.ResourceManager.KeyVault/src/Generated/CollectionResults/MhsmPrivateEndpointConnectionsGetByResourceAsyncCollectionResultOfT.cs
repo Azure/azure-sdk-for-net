@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.KeyVault
                     yield break;
                 }
                 MHSMPrivateEndpointConnectionsListResult result = MHSMPrivateEndpointConnectionsListResult.FromResponse(response);
-                yield return Page<ManagedHsmPrivateEndpointConnectionData>.FromValues((IReadOnlyList<ManagedHsmPrivateEndpointConnectionData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ManagedHsmPrivateEndpointConnectionData>.FromValues((IReadOnlyList<ManagedHsmPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

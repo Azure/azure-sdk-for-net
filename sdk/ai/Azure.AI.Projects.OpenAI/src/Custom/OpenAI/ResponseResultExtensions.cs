@@ -17,7 +17,7 @@ public static partial class ResponseResultExtensions
 {
     extension(ResponseResult response)
     {
-        public AgentReference Agent => response.Patch.GetJsonModelEx<AgentReference>("$.agent"u8);
+        public AgentReference Agent => response.Patch.GetJsonModelEx<AgentReference>("$.agent_reference"u8);
 
         public string AgentConversationId => response.Patch.GetStringEx("$.conversation.id"u8);
     }

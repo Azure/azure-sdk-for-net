@@ -52,6 +52,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AcsSmsDeliveryReportReceivedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AcsSmsDeliveryReportReceivedEventData IPersistableModel<AcsSmsDeliveryReportReceivedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AcsSmsDeliveryReportReceivedEventData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AcsSmsDeliveryReportReceivedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AcsSmsDeliveryReportReceivedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -198,16 +208,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 receivedTimestamp,
                 tag);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AcsSmsDeliveryReportReceivedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AcsSmsDeliveryReportReceivedEventData IPersistableModel<AcsSmsDeliveryReportReceivedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AcsSmsDeliveryReportReceivedEventData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AcsSmsDeliveryReportReceivedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class AcsSmsDeliveryReportReceivedEventDataConverter : JsonConverter<AcsSmsDeliveryReportReceivedEventData>
         {

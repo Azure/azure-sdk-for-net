@@ -1,15 +1,12 @@
 # Release History
 
-## 4.9.0-beta.1 (Unreleased)
+## 4.9.0 (2026-02-25)
 
 ### Features Added
 
-### Breaking Changes
-
+- Added `SecretClientSettings` to support creating a `SecretClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
 - Added the `outContentType` query parameter to the `SecretClient.GetSecret` and `SecretClient.GetSecretAsync` to specify the format in which the certificate will be returned.
 - Added the `previousVersion` property to `SecretProperties`.
-
-### Bugs Fixed
 
 ### Other Changes
 

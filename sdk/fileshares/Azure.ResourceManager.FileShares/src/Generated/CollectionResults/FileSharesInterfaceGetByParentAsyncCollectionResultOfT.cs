@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.FileShares
                     yield break;
                 }
                 FileShareListResult result = FileShareListResult.FromResponse(response);
-                yield return Page<FileShareData>.FromValues((IReadOnlyList<FileShareData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<FileShareData>.FromValues((IReadOnlyList<FileShareData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -37,6 +37,41 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotaLimitListData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerQuotaContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(GroupQuotaLimitListData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<GroupQuotaLimitListData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GroupQuotaLimitListData IPersistableModel<GroupQuotaLimitListData>.Create(BinaryData data, ModelReaderWriterOptions options) => (GroupQuotaLimitListData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GroupQuotaLimitListData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="groupQuotaLimitListData"> The <see cref="GroupQuotaLimitListData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(GroupQuotaLimitListData groupQuotaLimitListData)
+        {
+            if (groupQuotaLimitListData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(groupQuotaLimitListData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GroupQuotaLimitListData"/> from. </param>
         internal static GroupQuotaLimitListData FromResponse(Response response)
         {
@@ -156,41 +191,6 @@ namespace Azure.ResourceManager.Quota
                 systemData,
                 additionalBinaryDataProperties,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GroupQuotaLimitListData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotaLimitListData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerQuotaContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(GroupQuotaLimitListData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        GroupQuotaLimitListData IPersistableModel<GroupQuotaLimitListData>.Create(BinaryData data, ModelReaderWriterOptions options) => (GroupQuotaLimitListData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GroupQuotaLimitListData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="groupQuotaLimitListData"> The <see cref="GroupQuotaLimitListData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(GroupQuotaLimitListData groupQuotaLimitListData)
-        {
-            if (groupQuotaLimitListData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(groupQuotaLimitListData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

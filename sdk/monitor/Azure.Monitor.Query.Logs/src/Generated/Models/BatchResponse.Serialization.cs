@@ -47,6 +47,16 @@ namespace Azure.Monitor.Query.Logs.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BatchResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchResponse IPersistableModel<BatchResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BatchResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BatchResponse"/> from. </param>
         public static explicit operator BatchResponse(Response response)
         {
@@ -149,15 +159,5 @@ namespace Azure.Monitor.Query.Logs.Models
             }
             return new BatchResponse(responses ?? new ChangeTrackingList<BatchQueryResponse>(), additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BatchResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BatchResponse IPersistableModel<BatchResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BatchResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -54,7 +54,7 @@ namespace Azure.AI.ContentSafety
                     yield break;
                 }
                 PagedTextBlocklistItem result = (PagedTextBlocklistItem)response;
-                yield return Page<TextBlocklistItem>.FromValues((IReadOnlyList<TextBlocklistItem>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<TextBlocklistItem>.FromValues((IReadOnlyList<TextBlocklistItem>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

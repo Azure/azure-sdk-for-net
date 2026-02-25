@@ -42,6 +42,41 @@ namespace Azure.ResourceManager.EdgeActions
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeActionData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEdgeActionsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(EdgeActionData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<EdgeActionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EdgeActionData IPersistableModel<EdgeActionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (EdgeActionData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EdgeActionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="edgeActionData"> The <see cref="EdgeActionData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(EdgeActionData edgeActionData)
+        {
+            if (edgeActionData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(edgeActionData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EdgeActionData"/> from. </param>
         internal static EdgeActionData FromResponse(Response response)
         {
@@ -200,41 +235,6 @@ namespace Azure.ResourceManager.EdgeActions
                 location,
                 properties,
                 sku);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EdgeActionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeActionData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEdgeActionsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(EdgeActionData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        EdgeActionData IPersistableModel<EdgeActionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (EdgeActionData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EdgeActionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="edgeActionData"> The <see cref="EdgeActionData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(EdgeActionData edgeActionData)
-        {
-            if (edgeActionData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(edgeActionData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

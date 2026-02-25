@@ -50,6 +50,16 @@ namespace Azure.Analytics.PlanetaryComputer
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<LineString>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LineString IPersistableModel<LineString>.Create(BinaryData data, ModelReaderWriterOptions options) => (LineString)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<LineString>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LineString>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -71,9 +81,19 @@ namespace Azure.Analytics.PlanetaryComputer
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("coordinates"u8);
             writer.WriteStartArray();
-            foreach (float item in Coordinates)
+            foreach (IList<float> item in Coordinates)
             {
-                writer.WriteNumberValue(item);
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                writer.WriteStartArray();
+                foreach (float item0 in item)
+                {
+                    writer.WriteNumberValue(item0);
+                }
+                writer.WriteEndArray();
             }
             writer.WriteEndArray();
         }
@@ -106,7 +126,7 @@ namespace Azure.Analytics.PlanetaryComputer
             GeometryType @type = default;
             IList<float> boundingBox = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<float> coordinates = default;
+            IList<IList<float>> coordinates = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -130,10 +150,22 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("coordinates"u8))
                 {
-                    List<float> array = new List<float>();
+                    List<IList<float>> array = new List<IList<float>>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetSingle());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            List<float> array0 = new List<float>();
+                            foreach (var item0 in item.EnumerateArray())
+                            {
+                                array0.Add(item0.GetSingle());
+                            }
+                            array.Add(array0);
+                        }
                     }
                     coordinates = array;
                     continue;
@@ -145,15 +177,5 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             return new LineString(@type, boundingBox ?? new ChangeTrackingList<float>(), additionalBinaryDataProperties, coordinates);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LineString>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        LineString IPersistableModel<LineString>.Create(BinaryData data, ModelReaderWriterOptions options) => (LineString)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LineString>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

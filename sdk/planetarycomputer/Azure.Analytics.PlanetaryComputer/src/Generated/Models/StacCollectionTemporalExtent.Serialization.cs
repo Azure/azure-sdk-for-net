@@ -53,6 +53,16 @@ namespace Azure.Analytics.PlanetaryComputer
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<StacCollectionTemporalExtent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StacCollectionTemporalExtent IPersistableModel<StacCollectionTemporalExtent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StacCollectionTemporalExtent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StacCollectionTemporalExtent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -175,15 +185,5 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             return new StacCollectionTemporalExtent(interval, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StacCollectionTemporalExtent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        StacCollectionTemporalExtent IPersistableModel<StacCollectionTemporalExtent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StacCollectionTemporalExtent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

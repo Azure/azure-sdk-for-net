@@ -461,7 +461,7 @@
                       },
                       "value": "2024-12-01-preview"
                     },
-                    "optional": false,
+                    "optional": true,
                     "scope": "Method",
                     "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.getWidget.apiVersion",
                     "readOnly": false,

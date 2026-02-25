@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CloudHealth
                     yield break;
                 }
                 AuthenticationSettingListResult result = AuthenticationSettingListResult.FromResponse(response);
-                yield return Page<HealthModelAuthenticationSettingData>.FromValues((IReadOnlyList<HealthModelAuthenticationSettingData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<HealthModelAuthenticationSettingData>.FromValues((IReadOnlyList<HealthModelAuthenticationSettingData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -39,6 +39,41 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ManageAgentInstallationContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDynatraceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ManageAgentInstallationContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ManageAgentInstallationContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManageAgentInstallationContent IPersistableModel<ManageAgentInstallationContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ManageAgentInstallationContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="manageAgentInstallationContent"> The <see cref="ManageAgentInstallationContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ManageAgentInstallationContent manageAgentInstallationContent)
+        {
+            if (manageAgentInstallationContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(manageAgentInstallationContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManageAgentInstallationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -134,41 +169,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             return new ManageAgentInstallationContent(manageAgentInstallationList, action, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ManageAgentInstallationContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ManageAgentInstallationContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDynatraceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ManageAgentInstallationContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ManageAgentInstallationContent IPersistableModel<ManageAgentInstallationContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ManageAgentInstallationContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="manageAgentInstallationContent"> The <see cref="ManageAgentInstallationContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ManageAgentInstallationContent manageAgentInstallationContent)
-        {
-            if (manageAgentInstallationContent == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(manageAgentInstallationContent, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

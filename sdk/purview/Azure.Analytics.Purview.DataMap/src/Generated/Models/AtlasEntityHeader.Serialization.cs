@@ -46,6 +46,16 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AtlasEntityHeader>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AtlasEntityHeader IPersistableModel<AtlasEntityHeader>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AtlasEntityHeader>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AtlasEntityHeader"/> from. </param>
         public static explicit operator AtlasEntityHeader(Response response)
         {
@@ -416,15 +426,5 @@ namespace Azure.Analytics.Purview.DataMap
                 status,
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AtlasEntityHeader>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AtlasEntityHeader IPersistableModel<AtlasEntityHeader>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AtlasEntityHeader>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

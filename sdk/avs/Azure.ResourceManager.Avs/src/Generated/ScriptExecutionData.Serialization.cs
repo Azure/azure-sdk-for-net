@@ -37,6 +37,41 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ScriptExecutionData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAvsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ScriptExecutionData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ScriptExecutionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ScriptExecutionData IPersistableModel<ScriptExecutionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ScriptExecutionData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ScriptExecutionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="scriptExecutionData"> The <see cref="ScriptExecutionData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ScriptExecutionData scriptExecutionData)
+        {
+            if (scriptExecutionData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(scriptExecutionData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ScriptExecutionData"/> from. </param>
         internal static ScriptExecutionData FromResponse(Response response)
         {
@@ -156,41 +191,6 @@ namespace Azure.ResourceManager.Avs
                 systemData,
                 additionalBinaryDataProperties,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ScriptExecutionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ScriptExecutionData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAvsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ScriptExecutionData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ScriptExecutionData IPersistableModel<ScriptExecutionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ScriptExecutionData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ScriptExecutionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="scriptExecutionData"> The <see cref="ScriptExecutionData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ScriptExecutionData scriptExecutionData)
-        {
-            if (scriptExecutionData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(scriptExecutionData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

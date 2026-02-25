@@ -39,6 +39,29 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EnterpriseMccCustomerResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConnectedCacheContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(EnterpriseMccCustomerResourceListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<EnterpriseMccCustomerResourceListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EnterpriseMccCustomerResourceListResult IPersistableModel<EnterpriseMccCustomerResourceListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EnterpriseMccCustomerResourceListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EnterpriseMccCustomerResourceListResult"/> from. </param>
         internal static EnterpriseMccCustomerResourceListResult FromResponse(Response response)
         {
@@ -139,7 +162,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                     {
                         continue;
                     }
-                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")
@@ -149,28 +172,5 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             }
             return new EnterpriseMccCustomerResourceListResult(value, nextLink, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EnterpriseMccCustomerResourceListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EnterpriseMccCustomerResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConnectedCacheContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(EnterpriseMccCustomerResourceListResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        EnterpriseMccCustomerResourceListResult IPersistableModel<EnterpriseMccCustomerResourceListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EnterpriseMccCustomerResourceListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

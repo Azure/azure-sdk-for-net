@@ -38,6 +38,29 @@ namespace Azure.ResourceManager.Nginx.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WebApplicationFirewallPackage>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNginxContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(WebApplicationFirewallPackage)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<WebApplicationFirewallPackage>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WebApplicationFirewallPackage IPersistableModel<WebApplicationFirewallPackage>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WebApplicationFirewallPackage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WebApplicationFirewallPackage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -124,28 +147,5 @@ namespace Azure.ResourceManager.Nginx.Models
             }
             return new WebApplicationFirewallPackage(version, revisionDatetime, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WebApplicationFirewallPackage>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WebApplicationFirewallPackage>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNginxContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(WebApplicationFirewallPackage)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        WebApplicationFirewallPackage IPersistableModel<WebApplicationFirewallPackage>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<WebApplicationFirewallPackage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

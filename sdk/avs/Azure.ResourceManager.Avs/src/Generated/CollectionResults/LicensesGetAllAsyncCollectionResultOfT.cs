@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Avs
                     yield break;
                 }
                 LicenseListResult result = LicenseListResult.FromResponse(response);
-                yield return Page<AvsLicenseData>.FromValues((IReadOnlyList<AvsLicenseData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<AvsLicenseData>.FromValues((IReadOnlyList<AvsLicenseData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

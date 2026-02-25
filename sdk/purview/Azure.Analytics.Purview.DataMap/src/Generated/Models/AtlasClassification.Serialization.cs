@@ -49,6 +49,16 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AtlasClassification>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AtlasClassification IPersistableModel<AtlasClassification>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AtlasClassification>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AtlasClassification"/> from. </param>
         public static explicit operator AtlasClassification(Response response)
         {
@@ -267,15 +277,5 @@ namespace Azure.Analytics.Purview.DataMap
                 validityPeriods ?? new ChangeTrackingList<TimeBoundary>(),
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AtlasClassification>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AtlasClassification IPersistableModel<AtlasClassification>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AtlasClassification>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

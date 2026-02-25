@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Dynatrace
                     yield break;
                 }
                 MonitorResourceListResult result = MonitorResourceListResult.FromResponse(response);
-                yield return Page<DynatraceMonitorData>.FromValues((IReadOnlyList<DynatraceMonitorData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DynatraceMonitorData>.FromValues((IReadOnlyList<DynatraceMonitorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

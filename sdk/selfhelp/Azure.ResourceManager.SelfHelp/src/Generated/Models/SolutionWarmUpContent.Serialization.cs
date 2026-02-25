@@ -34,6 +34,41 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SolutionWarmUpContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSelfHelpContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SolutionWarmUpContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SolutionWarmUpContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SolutionWarmUpContent IPersistableModel<SolutionWarmUpContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SolutionWarmUpContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="solutionWarmUpContent"> The <see cref="SolutionWarmUpContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(SolutionWarmUpContent solutionWarmUpContent)
+        {
+            if (solutionWarmUpContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(solutionWarmUpContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SolutionWarmUpContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -141,41 +176,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             return new SolutionWarmUpContent(parameters ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SolutionWarmUpContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SolutionWarmUpContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSelfHelpContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SolutionWarmUpContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SolutionWarmUpContent IPersistableModel<SolutionWarmUpContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SolutionWarmUpContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="solutionWarmUpContent"> The <see cref="SolutionWarmUpContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(SolutionWarmUpContent solutionWarmUpContent)
-        {
-            if (solutionWarmUpContent == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(solutionWarmUpContent, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

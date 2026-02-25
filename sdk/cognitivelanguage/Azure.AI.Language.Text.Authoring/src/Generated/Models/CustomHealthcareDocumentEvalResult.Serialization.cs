@@ -50,6 +50,16 @@ namespace Azure.AI.Language.Text.Authoring
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CustomHealthcareDocumentEvalResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CustomHealthcareDocumentEvalResult IPersistableModel<CustomHealthcareDocumentEvalResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (CustomHealthcareDocumentEvalResult)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CustomHealthcareDocumentEvalResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CustomHealthcareDocumentEvalResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -132,15 +142,5 @@ namespace Azure.AI.Language.Text.Authoring
             }
             return new CustomHealthcareDocumentEvalResult(projectKind, location, language, additionalBinaryDataProperties, customHealthcareResult);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CustomHealthcareDocumentEvalResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CustomHealthcareDocumentEvalResult IPersistableModel<CustomHealthcareDocumentEvalResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (CustomHealthcareDocumentEvalResult)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CustomHealthcareDocumentEvalResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

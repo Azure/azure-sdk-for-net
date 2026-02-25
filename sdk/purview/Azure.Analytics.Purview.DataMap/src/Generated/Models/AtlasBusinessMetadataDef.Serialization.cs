@@ -46,6 +46,16 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AtlasBusinessMetadataDef>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AtlasBusinessMetadataDef IPersistableModel<AtlasBusinessMetadataDef>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AtlasBusinessMetadataDef>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AtlasBusinessMetadataDef"/> from. </param>
         public static explicit operator AtlasBusinessMetadataDef(Response response)
         {
@@ -365,15 +375,5 @@ namespace Azure.Analytics.Purview.DataMap
                 attributeDefs ?? new ChangeTrackingList<AtlasAttributeDef>(),
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AtlasBusinessMetadataDef>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AtlasBusinessMetadataDef IPersistableModel<AtlasBusinessMetadataDef>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AtlasBusinessMetadataDef>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

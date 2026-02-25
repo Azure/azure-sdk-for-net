@@ -52,6 +52,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AcsMessageDeliveryStatusUpdatedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AcsMessageDeliveryStatusUpdatedEventData IPersistableModel<AcsMessageDeliveryStatusUpdatedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AcsMessageDeliveryStatusUpdatedEventData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AcsMessageDeliveryStatusUpdatedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AcsMessageDeliveryStatusUpdatedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -189,16 +199,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 status,
                 channelKind);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AcsMessageDeliveryStatusUpdatedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AcsMessageDeliveryStatusUpdatedEventData IPersistableModel<AcsMessageDeliveryStatusUpdatedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AcsMessageDeliveryStatusUpdatedEventData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AcsMessageDeliveryStatusUpdatedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class AcsMessageDeliveryStatusUpdatedEventDataConverter : JsonConverter<AcsMessageDeliveryStatusUpdatedEventData>
         {

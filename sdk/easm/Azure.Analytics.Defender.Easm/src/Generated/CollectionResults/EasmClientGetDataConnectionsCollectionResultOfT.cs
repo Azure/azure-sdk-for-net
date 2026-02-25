@@ -48,7 +48,7 @@ namespace Azure.Analytics.Defender.Easm
                     yield break;
                 }
                 PagedDataConnection result = (PagedDataConnection)response;
-                yield return Page<DataConnection>.FromValues((IReadOnlyList<DataConnection>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DataConnection>.FromValues((IReadOnlyList<DataConnection>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

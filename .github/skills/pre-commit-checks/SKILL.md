@@ -31,6 +31,8 @@ Identify affected csproj files by looking at the full changed file list: include
 
 ## 3. Conditionally run `dotnet build /t:GenerateCode` (per src csproj)
 
+**Exclusion:** Skip this step entirely for the `provisioning` service directory. Provisioning libraries use their own generator and are not generated via TypeSpec/AutoRest.
+
 **Trigger condition — for each affected package's src csproj:** Run this if ANY of the following files are in the changed file list:
 
 - Any file matching `sdk/{service}/{package}/src/Generated/**`

@@ -39,6 +39,29 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciDiskInput>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(VMwareToAzStackHciDiskInput)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<VMwareToAzStackHciDiskInput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VMwareToAzStackHciDiskInput IPersistableModel<VMwareToAzStackHciDiskInput>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VMwareToAzStackHciDiskInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VMwareToAzStackHciDiskInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -254,28 +277,5 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 diskController,
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VMwareToAzStackHciDiskInput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciDiskInput>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(VMwareToAzStackHciDiskInput)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        VMwareToAzStackHciDiskInput IPersistableModel<VMwareToAzStackHciDiskInput>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VMwareToAzStackHciDiskInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

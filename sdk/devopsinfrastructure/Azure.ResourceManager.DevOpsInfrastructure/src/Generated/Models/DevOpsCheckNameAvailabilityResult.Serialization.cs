@@ -39,6 +39,29 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DevOpsCheckNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevOpsInfrastructureContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DevOpsCheckNameAvailabilityResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DevOpsCheckNameAvailabilityResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DevOpsCheckNameAvailabilityResult IPersistableModel<DevOpsCheckNameAvailabilityResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DevOpsCheckNameAvailabilityResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DevOpsCheckNameAvailabilityResult"/> from. </param>
         internal static DevOpsCheckNameAvailabilityResult FromResponse(Response response)
         {
@@ -148,28 +171,5 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             }
             return new DevOpsCheckNameAvailabilityResult(available, message, name, reason, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DevOpsCheckNameAvailabilityResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DevOpsCheckNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevOpsInfrastructureContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DevOpsCheckNameAvailabilityResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DevOpsCheckNameAvailabilityResult IPersistableModel<DevOpsCheckNameAvailabilityResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DevOpsCheckNameAvailabilityResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

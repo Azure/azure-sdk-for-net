@@ -33,6 +33,29 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetScheduledEventsProfile>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeFleetContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ComputeFleetScheduledEventsProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ComputeFleetScheduledEventsProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ComputeFleetScheduledEventsProfile IPersistableModel<ComputeFleetScheduledEventsProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ComputeFleetScheduledEventsProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ComputeFleetScheduledEventsProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -133,28 +156,5 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
             return new ComputeFleetScheduledEventsProfile(terminateNotificationProfile, osImageNotificationProfile, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ComputeFleetScheduledEventsProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetScheduledEventsProfile>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeFleetContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ComputeFleetScheduledEventsProfile)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ComputeFleetScheduledEventsProfile IPersistableModel<ComputeFleetScheduledEventsProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ComputeFleetScheduledEventsProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

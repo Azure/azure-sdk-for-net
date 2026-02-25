@@ -49,7 +49,10 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Resources/deploymentStacksWhatIfResults/", false);
             uri.AppendPath(deploymentStacksWhatIfResultName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -65,7 +68,10 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
             uri.AppendPath("/", false);
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Resources/deploymentStacksWhatIfResults", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,8 +83,18 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
         internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string scope, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -95,7 +111,10 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Resources/deploymentStacksWhatIfResults/", false);
             uri.AppendPath(deploymentStacksWhatIfResultName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -114,7 +133,10 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Resources/deploymentStacksWhatIfResults/", false);
             uri.AppendPath(deploymentStacksWhatIfResultName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (unmanageActionResources != null)
             {
                 uri.AppendQuery("unmanageAction.Resources", unmanageActionResources, true);
@@ -151,7 +173,10 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
             uri.AppendPath("/providers/Microsoft.Resources/deploymentStacksWhatIfResults/", false);
             uri.AppendPath(deploymentStacksWhatIfResultName, true);
             uri.AppendPath("/whatIf", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

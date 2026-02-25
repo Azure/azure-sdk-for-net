@@ -38,6 +38,29 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NodeTypeVaultCertificate>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NodeTypeVaultCertificate)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NodeTypeVaultCertificate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NodeTypeVaultCertificate IPersistableModel<NodeTypeVaultCertificate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NodeTypeVaultCertificate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NodeTypeVaultCertificate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -109,7 +132,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 if (prop.NameEquals("certificateUrl"u8))
                 {
-                    certificateUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    certificateUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("certificateStore"u8))
@@ -124,28 +147,5 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
             return new NodeTypeVaultCertificate(certificateUri, certificateStore, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NodeTypeVaultCertificate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NodeTypeVaultCertificate>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NodeTypeVaultCertificate)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NodeTypeVaultCertificate IPersistableModel<NodeTypeVaultCertificate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NodeTypeVaultCertificate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

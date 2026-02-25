@@ -42,6 +42,41 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AppComplianceReportWebhookData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppComplianceAutomationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AppComplianceReportWebhookData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AppComplianceReportWebhookData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AppComplianceReportWebhookData IPersistableModel<AppComplianceReportWebhookData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AppComplianceReportWebhookData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AppComplianceReportWebhookData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="appComplianceReportWebhookData"> The <see cref="AppComplianceReportWebhookData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(AppComplianceReportWebhookData appComplianceReportWebhookData)
+        {
+            if (appComplianceReportWebhookData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(appComplianceReportWebhookData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AppComplianceReportWebhookData"/> from. </param>
         internal static AppComplianceReportWebhookData FromResponse(Response response)
         {
@@ -154,41 +189,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 systemData,
                 additionalBinaryDataProperties,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AppComplianceReportWebhookData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AppComplianceReportWebhookData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppComplianceAutomationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AppComplianceReportWebhookData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AppComplianceReportWebhookData IPersistableModel<AppComplianceReportWebhookData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AppComplianceReportWebhookData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AppComplianceReportWebhookData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="appComplianceReportWebhookData"> The <see cref="AppComplianceReportWebhookData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(AppComplianceReportWebhookData appComplianceReportWebhookData)
-        {
-            if (appComplianceReportWebhookData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(appComplianceReportWebhookData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

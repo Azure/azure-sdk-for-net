@@ -51,6 +51,28 @@ namespace Azure.AI.DocumentIntelligence
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AuthorizeModelCopyOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AuthorizeModelCopyOptions IPersistableModel<AuthorizeModelCopyOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AuthorizeModelCopyOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="authorizeModelCopyOptions"> The <see cref="AuthorizeModelCopyOptions"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(AuthorizeModelCopyOptions authorizeModelCopyOptions)
+        {
+            if (authorizeModelCopyOptions == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(authorizeModelCopyOptions, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AuthorizeModelCopyOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -177,28 +199,6 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             return new AuthorizeModelCopyOptions(modelId, description, tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AuthorizeModelCopyOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AuthorizeModelCopyOptions IPersistableModel<AuthorizeModelCopyOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AuthorizeModelCopyOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="authorizeModelCopyOptions"> The <see cref="AuthorizeModelCopyOptions"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(AuthorizeModelCopyOptions authorizeModelCopyOptions)
-        {
-            if (authorizeModelCopyOptions == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(authorizeModelCopyOptions, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

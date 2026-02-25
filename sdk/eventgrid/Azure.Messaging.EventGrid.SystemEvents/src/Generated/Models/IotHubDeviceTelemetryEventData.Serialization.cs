@@ -52,6 +52,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<IotHubDeviceTelemetryEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IotHubDeviceTelemetryEventData IPersistableModel<IotHubDeviceTelemetryEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (IotHubDeviceTelemetryEventData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IotHubDeviceTelemetryEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IotHubDeviceTelemetryEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -150,16 +160,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             return new IotHubDeviceTelemetryEventData(body, properties, systemProperties, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IotHubDeviceTelemetryEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        IotHubDeviceTelemetryEventData IPersistableModel<IotHubDeviceTelemetryEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (IotHubDeviceTelemetryEventData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IotHubDeviceTelemetryEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class IotHubDeviceTelemetryEventDataConverter : JsonConverter<IotHubDeviceTelemetryEventData>
         {
