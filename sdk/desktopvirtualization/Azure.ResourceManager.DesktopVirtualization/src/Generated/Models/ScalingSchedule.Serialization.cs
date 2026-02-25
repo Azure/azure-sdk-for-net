@@ -79,10 +79,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DaysOfWeek))
+            if (Optional.IsCollectionDefined(DaysOfWeek))
             {
                 writer.WritePropertyName("daysOfWeek"u8);
-                writer.WriteStringValue(DaysOfWeek.Value.ToString());
+                writer.WriteStartArray();
+                foreach (ScalingScheduleDaysOfWeekItem item in DaysOfWeek)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(ScalingMethod))
             {
@@ -217,7 +222,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 return null;
             }
             string name = default;
-            ScalingScheduleDaysOfWeekItem? daysOfWeek = default;
+            IList<ScalingScheduleDaysOfWeekItem> daysOfWeek = default;
             ScalingMethodType? scalingMethod = default;
             CreateDeleteProperties createDelete = default;
             ScalingActionTime rampUpStartTime = default;
@@ -250,7 +255,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    daysOfWeek = new ScalingScheduleDaysOfWeekItem(prop.Value.GetString());
+                    List<ScalingScheduleDaysOfWeekItem> array = new List<ScalingScheduleDaysOfWeekItem>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(new ScalingScheduleDaysOfWeekItem(item.GetString()));
+                    }
+                    daysOfWeek = array;
                     continue;
                 }
                 if (prop.NameEquals("scalingMethod"u8))
@@ -418,7 +428,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             return new ScalingSchedule(
                 name,
-                daysOfWeek,
+                daysOfWeek ?? new ChangeTrackingList<ScalingScheduleDaysOfWeekItem>(),
                 scalingMethod,
                 createDelete,
                 rampUpStartTime,

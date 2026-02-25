@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> List of package dependencies. </summary>
         [WirePath("packageDependencies")]
-        public IList<MsixPackageDependencies> PackageDependencies { get; } = new ChangeTrackingList<MsixPackageDependencies>();
+        public IList<MsixPackageDependencies> PackageDependencies { get; set; } = new ChangeTrackingList<MsixPackageDependencies>();
 
         /// <summary> Package version found in the appxmanifest.xml. </summary>
         [WirePath("version")]

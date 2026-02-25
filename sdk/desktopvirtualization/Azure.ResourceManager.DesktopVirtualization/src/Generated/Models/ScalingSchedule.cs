@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of <see cref="ScalingSchedule"/>. </summary>
         public ScalingSchedule()
         {
+            DaysOfWeek = new ChangeTrackingList<ScalingScheduleDaysOfWeekItem>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ScalingSchedule"/>. </summary>
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="offPeakStartTime"> Starting time for off-peak period. </param>
         /// <param name="offPeakLoadBalancingAlgorithm"> Load balancing algorithm for off-peak period. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScalingSchedule(string name, ScalingScheduleDaysOfWeekItem? daysOfWeek, ScalingMethodType? scalingMethod, CreateDeleteProperties createDelete, ScalingActionTime rampUpStartTime, SessionHostLoadBalancingAlgorithm? rampUpLoadBalancingAlgorithm, int? rampUpMinimumHostsPct, int? rampUpCapacityThresholdPct, ScalingActionTime peakStartTime, SessionHostLoadBalancingAlgorithm? peakLoadBalancingAlgorithm, ScalingActionTime rampDownStartTime, SessionHostLoadBalancingAlgorithm? rampDownLoadBalancingAlgorithm, int? rampDownMinimumHostsPct, int? rampDownCapacityThresholdPct, bool? rampDownForceLogoffUsers, DesktopVirtualizationStopHostsWhen? rampDownStopHostsWhen, int? rampDownWaitTimeMinutes, string rampDownNotificationMessage, ScalingActionTime offPeakStartTime, SessionHostLoadBalancingAlgorithm? offPeakLoadBalancingAlgorithm, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScalingSchedule(string name, IList<ScalingScheduleDaysOfWeekItem> daysOfWeek, ScalingMethodType? scalingMethod, CreateDeleteProperties createDelete, ScalingActionTime rampUpStartTime, SessionHostLoadBalancingAlgorithm? rampUpLoadBalancingAlgorithm, int? rampUpMinimumHostsPct, int? rampUpCapacityThresholdPct, ScalingActionTime peakStartTime, SessionHostLoadBalancingAlgorithm? peakLoadBalancingAlgorithm, ScalingActionTime rampDownStartTime, SessionHostLoadBalancingAlgorithm? rampDownLoadBalancingAlgorithm, int? rampDownMinimumHostsPct, int? rampDownCapacityThresholdPct, bool? rampDownForceLogoffUsers, DesktopVirtualizationStopHostsWhen? rampDownStopHostsWhen, int? rampDownWaitTimeMinutes, string rampDownNotificationMessage, ScalingActionTime offPeakStartTime, SessionHostLoadBalancingAlgorithm? offPeakLoadBalancingAlgorithm, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             DaysOfWeek = daysOfWeek;
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Set of days of the week on which this schedule is active. </summary>
         [WirePath("daysOfWeek")]
-        public ScalingScheduleDaysOfWeekItem? DaysOfWeek { get; set; }
+        public IList<ScalingScheduleDaysOfWeekItem> DaysOfWeek { get; }
 
         /// <summary> The desired scaling method to be used to scale the hosts in the assigned host pool. </summary>
         [WirePath("scalingMethod")]

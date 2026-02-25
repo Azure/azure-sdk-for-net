@@ -86,6 +86,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 return Properties.ApplicationGroupReferences;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspacePatchProperties();
+                }
+                Properties.ApplicationGroupReferences = value;
+            }
         }
 
         /// <summary> Enabled to allow this resource to be access from the public network. </summary>

@@ -12,7 +12,7 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Represents URI referring to MSIX Image. </summary>
-    internal partial class MsixImageUri
+    public partial class MsixImageUri
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

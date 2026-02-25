@@ -15,7 +15,7 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Represents URI referring to MSIX Image. </summary>
-    internal partial class MsixImageUri : IJsonModel<MsixImageUri>
+    public partial class MsixImageUri : IJsonModel<MsixImageUri>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

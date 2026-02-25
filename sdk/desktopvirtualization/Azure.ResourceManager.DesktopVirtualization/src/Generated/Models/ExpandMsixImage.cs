@@ -215,6 +215,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 return Properties.PackageDependencies;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpandMsixImageProperties();
+                }
+                Properties.PackageDependencies = value;
+            }
         }
 
         /// <summary> Package version found in the appxmanifest.xml. </summary>

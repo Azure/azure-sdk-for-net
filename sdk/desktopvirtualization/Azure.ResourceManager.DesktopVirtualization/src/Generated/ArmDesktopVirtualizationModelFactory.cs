@@ -591,6 +591,56 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new RegistrationTokenMinimal(expireOn, token, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> A ScalingPlanPooledSchedule. </summary>
+        /// <param name="name"> Name of the ScalingPlanPooledSchedule. </param>
+        /// <param name="daysOfWeek"> Set of days of the week on which this schedule is active. </param>
+        /// <param name="scalingMethod"> The desired scaling method to be used to scale the hosts in the assigned host pool. </param>
+        /// <param name="createDelete"> The properties that control how Scaling will manage the size of the hostpool by creating and deleting hosts. </param>
+        /// <param name="rampUpStartTime"> Starting time for ramp up period. </param>
+        /// <param name="rampUpLoadBalancingAlgorithm"> Load balancing algorithm for ramp up period. </param>
+        /// <param name="rampUpMinimumHostsPct"> Minimum host percentage for ramp up period. </param>
+        /// <param name="rampUpCapacityThresholdPct"> Capacity threshold for ramp up period. </param>
+        /// <param name="peakStartTime"> Starting time for peak period. </param>
+        /// <param name="peakLoadBalancingAlgorithm"> Load balancing algorithm for peak period. </param>
+        /// <param name="rampDownStartTime"> Starting time for ramp down period. </param>
+        /// <param name="rampDownLoadBalancingAlgorithm"> Load balancing algorithm for ramp down period. </param>
+        /// <param name="rampDownMinimumHostsPct"> Minimum host percentage for ramp down period. </param>
+        /// <param name="rampDownCapacityThresholdPct"> Capacity threshold for ramp down period. </param>
+        /// <param name="rampDownForceLogoffUsers"> Should users be logged off forcefully from hosts. </param>
+        /// <param name="rampDownStopHostsWhen"> Specifies when to stop hosts during ramp down period. </param>
+        /// <param name="rampDownWaitTimeMinutes"> Number of minutes to wait to stop hosts during ramp down period. </param>
+        /// <param name="rampDownNotificationMessage"> Notification message for users during ramp down period. </param>
+        /// <param name="offPeakStartTime"> Starting time for off-peak period. </param>
+        /// <param name="offPeakLoadBalancingAlgorithm"> Load balancing algorithm for off-peak period. </param>
+        /// <returns> A new <see cref="Models.ScalingSchedule"/> instance for mocking. </returns>
+        public static ScalingSchedule ScalingSchedule(string name = default, IEnumerable<ScalingScheduleDaysOfWeekItem> daysOfWeek = default, ScalingMethodType? scalingMethod = default, CreateDeleteProperties createDelete = default, ScalingActionTime rampUpStartTime = default, SessionHostLoadBalancingAlgorithm? rampUpLoadBalancingAlgorithm = default, int? rampUpMinimumHostsPct = default, int? rampUpCapacityThresholdPct = default, ScalingActionTime peakStartTime = default, SessionHostLoadBalancingAlgorithm? peakLoadBalancingAlgorithm = default, ScalingActionTime rampDownStartTime = default, SessionHostLoadBalancingAlgorithm? rampDownLoadBalancingAlgorithm = default, int? rampDownMinimumHostsPct = default, int? rampDownCapacityThresholdPct = default, bool? rampDownForceLogoffUsers = default, DesktopVirtualizationStopHostsWhen? rampDownStopHostsWhen = default, int? rampDownWaitTimeMinutes = default, string rampDownNotificationMessage = default, ScalingActionTime offPeakStartTime = default, SessionHostLoadBalancingAlgorithm? offPeakLoadBalancingAlgorithm = default)
+        {
+            daysOfWeek ??= new ChangeTrackingList<ScalingScheduleDaysOfWeekItem>();
+
+            return new ScalingSchedule(
+                name,
+                daysOfWeek.ToList(),
+                scalingMethod,
+                createDelete,
+                rampUpStartTime,
+                rampUpLoadBalancingAlgorithm,
+                rampUpMinimumHostsPct,
+                rampUpCapacityThresholdPct,
+                peakStartTime,
+                peakLoadBalancingAlgorithm,
+                rampDownStartTime,
+                rampDownLoadBalancingAlgorithm,
+                rampDownMinimumHostsPct,
+                rampDownCapacityThresholdPct,
+                rampDownForceLogoffUsers,
+                rampDownStopHostsWhen,
+                rampDownWaitTimeMinutes,
+                rampDownNotificationMessage,
+                offPeakStartTime,
+                offPeakLoadBalancingAlgorithm,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -642,51 +692,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 managedBy,
                 plan,
                 sku);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="objectId"> ObjectId of Application. (internal use). </param>
-        /// <param name="description"> Description of Application. </param>
-        /// <param name="friendlyName"> Friendly name of Application. </param>
-        /// <param name="filePath"> Specifies a path for the executable file for the application. </param>
-        /// <param name="msixPackageFamilyName"> Specifies the package family name for MSIX applications. </param>
-        /// <param name="msixPackageApplicationId"> Specifies the package application Id for MSIX applications. </param>
-        /// <param name="applicationType"> Resource Type of Application. </param>
-        /// <param name="commandLineSetting"> Specifies whether this published application can be launched with command line arguments provided by the client, command line arguments specified at publish time, or no command line arguments at all. </param>
-        /// <param name="commandLineArguments"> Command Line Arguments for Application. </param>
-        /// <param name="showInPortal"> Specifies whether to show the RemoteApp program in the RD Web Access server. </param>
-        /// <param name="iconPath"> Path to icon. </param>
-        /// <param name="iconIndex"> Index of the icon. </param>
-        /// <param name="iconHash"> Hash of the icon. </param>
-        /// <param name="iconContent"> the icon a 64 bit string as a byte array. </param>
-        /// <returns> A new <see cref="DesktopVirtualization.VirtualApplicationData"/> instance for mocking. </returns>
-        public static VirtualApplicationData VirtualApplicationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string objectId = default, string description = default, string friendlyName = default, string filePath = default, string msixPackageFamilyName = default, string msixPackageApplicationId = default, RemoteApplicationType? applicationType = default, VirtualApplicationCommandLineSetting? commandLineSetting = default, string commandLineArguments = default, bool? showInPortal = default, string iconPath = default, int? iconIndex = default, string iconHash = default, BinaryData iconContent = default)
-        {
-            return new VirtualApplicationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                objectId is null && description is null && friendlyName is null && filePath is null && msixPackageFamilyName is null && msixPackageApplicationId is null && applicationType is null && commandLineSetting is null && commandLineArguments is null && showInPortal is null && iconPath is null && iconIndex is null && iconHash is null && iconContent is null ? default : new ApplicationProperties(
-                    objectId,
-                    description,
-                    friendlyName,
-                    filePath,
-                    msixPackageFamilyName,
-                    msixPackageApplicationId,
-                    applicationType,
-                    commandLineSetting.Value,
-                    commandLineArguments,
-                    showInPortal,
-                    iconPath,
-                    iconIndex,
-                    iconHash,
-                    iconContent,
-                    null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
