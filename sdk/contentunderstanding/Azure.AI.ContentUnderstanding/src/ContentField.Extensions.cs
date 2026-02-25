@@ -14,8 +14,8 @@ namespace Azure.AI.ContentUnderstanding
     /// </summary>
     public partial class ContentField
     {
-        // CUSTOMIZATION: Replaces the generated Source (string) with parsed ContentSource[] property.
-        // Wire format (string) preserved via internal backing property for serialization.
+        // CUSTOMIZATION: The service returns "source" as a single string (e.g., "D(1,0.5712,...);D(2,...)")
+        // which we parse into strongly-typed ContentSource[] via the public Sources property.
         [CodeGenMember("Source")]
         internal string SourceValue { get; }
 
@@ -68,13 +68,11 @@ namespace Azure.AI.ContentUnderstanding
         /// <example>
         /// <code>
         /// // Simple field access
-        /// var customerName = documentContent.Fields["CustomerName"].Value?.ToString();
+        /// var customerName = result.Fields["CustomerName"].Value?.ToString();
         ///
-        /// // Nested object access
-        /// // Note: Use Value (not this Value) to access nested fields because this Value returns object,
-        /// // which cannot be indexed with []. ContentObjectField.Value is the IDictionary&lt;string, ContentField&gt;.
-        /// var totalAmountObj = (ContentObjectField)documentContent.Fields["TotalAmount"];
-        /// var amount = totalAmountObj.Value["Amount"].Value;
+        /// // Nested object access via indexer
+        /// var totalAmount = (ContentObjectField)result.Fields["TotalAmount"];
+        /// var amount = totalAmount["Amount"].Value;
         /// </code>
         /// </example>
         public object Value => this switch
