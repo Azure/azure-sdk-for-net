@@ -161,7 +161,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (prop.NameEquals("resourceLocation"u8))
                 {
-                    resourceLocation = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    resourceLocation = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("apiVersion"u8))

@@ -40,15 +40,15 @@ namespace Azure.AI.Projects.OpenAI
         }
 
         /// <summary> The x-coordinate where the scroll occurred. </summary>
-        public long X { get; }
+        public long X { get; set; }
 
         /// <summary> The y-coordinate where the scroll occurred. </summary>
-        public long Y { get; }
+        public long Y { get; set; }
 
         /// <summary> The horizontal scroll distance. </summary>
-        public long ScrollX { get; }
+        public long ScrollX { get; set; }
 
         /// <summary> The vertical scroll distance. </summary>
-        public long ScrollY { get; }
+        public long ScrollY { get; set; }
     }
 }

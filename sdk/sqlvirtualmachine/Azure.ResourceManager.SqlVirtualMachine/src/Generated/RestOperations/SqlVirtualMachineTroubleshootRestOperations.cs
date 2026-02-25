@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             uri.AppendPath("/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/", false);
             uri.AppendPath(sqlVmName, true);
             uri.AppendPath("/troubleshoot", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

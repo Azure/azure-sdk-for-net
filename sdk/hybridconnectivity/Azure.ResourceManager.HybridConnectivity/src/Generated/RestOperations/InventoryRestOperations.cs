@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.HybridConnectivity
             uri.AppendPath(solutionConfiguration, true);
             uri.AppendPath("/inventory/", false);
             uri.AppendPath(inventoryId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -69,7 +72,10 @@ namespace Azure.ResourceManager.HybridConnectivity
             uri.AppendPath("/providers/Microsoft.HybridConnectivity/solutionConfigurations/", false);
             uri.AppendPath(solutionConfiguration, true);
             uri.AppendPath("/inventory", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -81,8 +87,18 @@ namespace Azure.ResourceManager.HybridConnectivity
         internal HttpMessage CreateNextGetBySolutionConfigurationRequest(Uri nextPage, string resourceUri, string solutionConfiguration, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

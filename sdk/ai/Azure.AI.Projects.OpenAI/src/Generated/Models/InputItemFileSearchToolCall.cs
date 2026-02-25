@@ -19,7 +19,7 @@ namespace Azure.AI.Projects.OpenAI
         /// </param>
         /// <param name="queries"> The queries used to search for files. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="queries"/> is null. </exception>
-        public InputItemFileSearchToolCall(string id, ItemResourceFileSearchToolCallStatus status, IEnumerable<string> queries) : base(InputItemType.FileSearchCall)
+        public InputItemFileSearchToolCall(string id, OutputItemFileSearchToolCallStatus status, IEnumerable<string> queries) : base(InputItemType.FileSearchCall)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(queries, nameof(queries));
@@ -40,7 +40,7 @@ namespace Azure.AI.Projects.OpenAI
         /// </param>
         /// <param name="queries"> The queries used to search for files. </param>
         /// <param name="results"></param>
-        internal InputItemFileSearchToolCall(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, ItemResourceFileSearchToolCallStatus status, IList<string> queries, IList<FileSearchToolCallResults> results) : base(@type, additionalBinaryDataProperties)
+        internal InputItemFileSearchToolCall(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, OutputItemFileSearchToolCallStatus status, IList<string> queries, IList<FileSearchToolCallResults> results) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             Status = status;
@@ -55,7 +55,7 @@ namespace Azure.AI.Projects.OpenAI
         /// The status of the file search tool call. One of `in_progress`,
         ///   `searching`, `incomplete` or `failed`,
         /// </summary>
-        public ItemResourceFileSearchToolCallStatus Status { get; }
+        public OutputItemFileSearchToolCallStatus Status { get; }
 
         /// <summary> The queries used to search for files. </summary>
         public IList<string> Queries { get; }

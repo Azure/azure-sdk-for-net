@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.StorageMover
                     yield break;
                 }
                 JobDefinitionList result = JobDefinitionList.FromResponse(response);
-                yield return Page<JobDefinitionData>.FromValues(result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<JobDefinitionData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

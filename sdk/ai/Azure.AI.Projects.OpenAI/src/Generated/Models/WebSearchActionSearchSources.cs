@@ -35,9 +35,9 @@ namespace Azure.AI.Projects.OpenAI
         }
 
         /// <summary> Gets the Type. </summary>
-        internal string Type { get; } = "url";
+        public string Type { get; } = "url";
 
-        /// <summary> Gets the Url. </summary>
-        public string Url { get; }
+        /// <summary> Gets or sets the Url. </summary>
+        public string Url { get; set; }
     }
 }

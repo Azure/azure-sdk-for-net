@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ComputeFleet
                     yield break;
                 }
                 FleetListResult result = FleetListResult.FromResponse(response);
-                yield return Page<ComputeFleetData>.FromValues((IReadOnlyList<ComputeFleetData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ComputeFleetData>.FromValues((IReadOnlyList<ComputeFleetData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

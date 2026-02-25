@@ -5,8 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     internal partial class InternalComparisonFilter
     {

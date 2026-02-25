@@ -24,8 +24,8 @@ public static partial class CreateResponseOptionsExtensions
     {
         public AgentReference Agent
         {
-            get => options.Patch.GetJsonModelEx<AgentReference>("$.agent"u8);
-            set => options.Patch.SetOrClearEx("$.agent"u8, "$.agent"u8, value);
+            get => options.Patch.GetJsonModelEx<AgentReference>("$.agent_reference"u8);
+            set => options.Patch.SetOrClearEx("$.agent_reference"u8, "$.agent_reference"u8, value);
         }
 
         public string AgentConversationId

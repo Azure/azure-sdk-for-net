@@ -42,6 +42,41 @@ namespace Azure.ResourceManager.ResourceConnector
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceConnectorApplianceData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourceConnectorContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ResourceConnectorApplianceData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ResourceConnectorApplianceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ResourceConnectorApplianceData IPersistableModel<ResourceConnectorApplianceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ResourceConnectorApplianceData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ResourceConnectorApplianceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="resourceConnectorApplianceData"> The <see cref="ResourceConnectorApplianceData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ResourceConnectorApplianceData resourceConnectorApplianceData)
+        {
+            if (resourceConnectorApplianceData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(resourceConnectorApplianceData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ResourceConnectorApplianceData"/> from. </param>
         internal static ResourceConnectorApplianceData FromResponse(Response response)
         {
@@ -207,41 +242,6 @@ namespace Azure.ResourceManager.ResourceConnector
                 location,
                 properties,
                 identity);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResourceConnectorApplianceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceConnectorApplianceData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourceConnectorContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ResourceConnectorApplianceData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceConnectorApplianceData IPersistableModel<ResourceConnectorApplianceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ResourceConnectorApplianceData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResourceConnectorApplianceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="resourceConnectorApplianceData"> The <see cref="ResourceConnectorApplianceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ResourceConnectorApplianceData resourceConnectorApplianceData)
-        {
-            if (resourceConnectorApplianceData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(resourceConnectorApplianceData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

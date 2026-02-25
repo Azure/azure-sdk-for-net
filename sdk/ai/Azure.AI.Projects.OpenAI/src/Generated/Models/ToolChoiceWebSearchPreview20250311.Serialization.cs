@@ -13,11 +13,11 @@ namespace Azure.AI.Projects.OpenAI
     /// Indicates that the model should use a built-in tool to generate a response.
     /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
     /// </summary>
-    public partial class ToolChoiceWebSearchPreview20250311 : ToolChoiceParam, IJsonModel<ToolChoiceWebSearchPreview20250311>
+    internal partial class ToolChoiceWebSearchPreview20250311 : InternalToolChoiceParam, IJsonModel<ToolChoiceWebSearchPreview20250311>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ToolChoiceParam PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override InternalToolChoiceParam PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ToolChoiceWebSearchPreview20250311>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -82,7 +82,7 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ToolChoiceParam JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override InternalToolChoiceParam JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ToolChoiceWebSearchPreview20250311>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

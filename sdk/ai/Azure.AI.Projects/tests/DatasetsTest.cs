@@ -19,7 +19,7 @@ namespace Azure.AI.Projects.Tests
 
         [Test]
         // The call UploadFileAsync will Get the BlobClient and
-        // use it to upload the data. This call will not beintercepted and hence
+        // use it to upload the data. This call will not be intercepted and hence
         // cannot be recorded.
         [LiveOnly]
         public async Task DatasetsFileTest()

@@ -43,12 +43,12 @@ namespace Azure.AI.Projects
         /// can specify which tool to use by setting the `tool_choice` parameter.
         /// </param>
         /// <param name="toolChoice">
-        /// How the model should select which tool (or tools) to use when generating a response. 
+        /// How the model should select which tool (or tools) to use when generating a response.
         /// See the `tools` parameter to see how to specify which tools the model can call.
         /// </param>
         /// <param name="text"> Configuration options for a text response from the model. Can be plain text or structured JSON data. </param>
         /// <param name="structuredInputs"> Set of structured inputs that can participate in prompt template substitution or tool argument bindings. </param>
-        internal InternalPromptAgentDefinition(AgentKind kind, RaiConfig raiConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties, string model, string instructions, float? temperature, float? topP, InternalReasoning reasoning, IList<InternalTool> tools, BinaryData toolChoice, PromptAgentDefinitionText text, IDictionary<string, StructuredInputDefinition> structuredInputs) : base(kind, raiConfig, additionalBinaryDataProperties)
+        internal InternalPromptAgentDefinition(AgentKind kind, RaiConfig raiConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties, string model, string instructions, float? temperature, float? topP, InternalReasoning reasoning, IList<InternalTool> tools, BinaryData toolChoice, PromptAgentDefinitionTextOptions text, IDictionary<string, StructuredInputDefinition> structuredInputs) : base(kind, raiConfig, additionalBinaryDataProperties)
         {
             Model = model;
             Instructions = instructions;
@@ -92,7 +92,7 @@ namespace Azure.AI.Projects
         public IList<InternalTool> Tools { get; }
 
         /// <summary>
-        /// How the model should select which tool (or tools) to use when generating a response. 
+        /// How the model should select which tool (or tools) to use when generating a response.
         /// See the `tools` parameter to see how to specify which tools the model can call.
         /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
@@ -134,7 +134,7 @@ namespace Azure.AI.Projects
         public BinaryData ToolChoice { get; set; }
 
         /// <summary> Configuration options for a text response from the model. Can be plain text or structured JSON data. </summary>
-        public PromptAgentDefinitionText Text { get; set; }
+        public PromptAgentDefinitionTextOptions Text { get; set; }
 
         /// <summary> Set of structured inputs that can participate in prompt template substitution or tool argument bindings. </summary>
         public IDictionary<string, StructuredInputDefinition> StructuredInputs { get; }

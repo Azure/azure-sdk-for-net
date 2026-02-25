@@ -5,12 +5,12 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using Azure.Identity;
+using System.Threading.Tasks;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace Azure.AI.Projects.Tests.Samples;
 

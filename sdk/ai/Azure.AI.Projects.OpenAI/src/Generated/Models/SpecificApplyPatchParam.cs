@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Specific apply patch tool choice. </summary>
-    public partial class SpecificApplyPatchParam : ToolChoiceParam
+    internal partial class SpecificApplyPatchParam : InternalToolChoiceParam
     {
         /// <summary> Initializes a new instance of <see cref="SpecificApplyPatchParam"/>. </summary>
         public SpecificApplyPatchParam() : base(ToolChoiceParamType.ApplyPatch)

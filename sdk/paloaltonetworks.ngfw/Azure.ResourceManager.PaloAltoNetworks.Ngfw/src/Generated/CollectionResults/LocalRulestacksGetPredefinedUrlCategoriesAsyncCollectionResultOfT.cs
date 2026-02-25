@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     yield break;
                 }
                 PredefinedUrlCategoryListResult result = PredefinedUrlCategoryListResult.FromResponse(response);
-                yield return Page<PredefinedUrlCategory>.FromValues((IReadOnlyList<PredefinedUrlCategory>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<PredefinedUrlCategory>.FromValues((IReadOnlyList<PredefinedUrlCategory>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

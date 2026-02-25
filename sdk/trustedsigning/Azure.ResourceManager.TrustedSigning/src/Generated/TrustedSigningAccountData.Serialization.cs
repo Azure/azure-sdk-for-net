@@ -42,6 +42,41 @@ namespace Azure.ResourceManager.TrustedSigning
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TrustedSigningAccountData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerTrustedSigningContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TrustedSigningAccountData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TrustedSigningAccountData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TrustedSigningAccountData IPersistableModel<TrustedSigningAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => (TrustedSigningAccountData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TrustedSigningAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="trustedSigningAccountData"> The <see cref="TrustedSigningAccountData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(TrustedSigningAccountData trustedSigningAccountData)
+        {
+            if (trustedSigningAccountData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(trustedSigningAccountData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TrustedSigningAccountData"/> from. </param>
         internal static TrustedSigningAccountData FromResponse(Response response)
         {
@@ -191,41 +226,6 @@ namespace Azure.ResourceManager.TrustedSigning
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TrustedSigningAccountData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TrustedSigningAccountData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerTrustedSigningContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(TrustedSigningAccountData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        TrustedSigningAccountData IPersistableModel<TrustedSigningAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => (TrustedSigningAccountData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TrustedSigningAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="trustedSigningAccountData"> The <see cref="TrustedSigningAccountData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(TrustedSigningAccountData trustedSigningAccountData)
-        {
-            if (trustedSigningAccountData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(trustedSigningAccountData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

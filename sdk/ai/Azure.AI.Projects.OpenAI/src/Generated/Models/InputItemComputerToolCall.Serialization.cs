@@ -125,7 +125,7 @@ namespace Azure.AI.Projects.OpenAI
             string callId = default;
             InternalComputerAction action = default;
             IList<ComputerCallSafetyCheckParam> pendingSafetyChecks = default;
-            ItemResourceComputerToolCallStatus status = default;
+            OutputItemComputerToolCallStatus status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -160,7 +160,7 @@ namespace Azure.AI.Projects.OpenAI
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToItemResourceComputerToolCallStatus();
+                    status = prop.Value.GetString().ToOutputItemComputerToolCallStatus();
                     continue;
                 }
                 if (options.Format != "W")

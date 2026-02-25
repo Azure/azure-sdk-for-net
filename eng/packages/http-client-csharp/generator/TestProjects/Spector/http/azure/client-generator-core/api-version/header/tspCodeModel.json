@@ -117,7 +117,7 @@
                       },
                       "value": "2025-01-01"
                     },
-                    "optional": false,
+                    "optional": true,
                     "scope": "Method",
                     "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Header.headerApiVersion.version",
                     "readOnly": false,

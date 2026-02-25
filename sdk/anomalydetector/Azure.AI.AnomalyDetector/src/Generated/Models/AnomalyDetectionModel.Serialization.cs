@@ -51,6 +51,16 @@ namespace Azure.AI.AnomalyDetector
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AnomalyDetectionModel>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AnomalyDetectionModel IPersistableModel<AnomalyDetectionModel>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AnomalyDetectionModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AnomalyDetectionModel"/> from. </param>
         public static explicit operator AnomalyDetectionModel(Response response)
         {
@@ -167,15 +177,5 @@ namespace Azure.AI.AnomalyDetector
             }
             return new AnomalyDetectionModel(modelId, createdTime, lastUpdatedTime, modelInfo, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AnomalyDetectionModel>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AnomalyDetectionModel IPersistableModel<AnomalyDetectionModel>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AnomalyDetectionModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

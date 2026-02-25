@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                     yield break;
                 }
                 SolutionConfigurationListResult result = SolutionConfigurationListResult.FromResponse(response);
-                yield return Page<PublicCloudConnectorSolutionConfigurationData>.FromValues((IReadOnlyList<PublicCloudConnectorSolutionConfigurationData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<PublicCloudConnectorSolutionConfigurationData>.FromValues((IReadOnlyList<PublicCloudConnectorSolutionConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

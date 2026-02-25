@@ -6,7 +6,7 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using Azure.Core.Foundations;
+using Azure.Core;
 
 namespace Azure.AI.Projects
 {

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerServiceFleet
 {
-    internal class ContainerServiceFleetMemberOperationSource : IOperationSource<ContainerServiceFleetMemberResource>
+    /// <summary></summary>
+    internal partial class ContainerServiceFleetMemberOperationSource : IOperationSource<ContainerServiceFleetMemberResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ContainerServiceFleetMemberOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ContainerServiceFleetMemberResource IOperationSource<ContainerServiceFleetMemberResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ContainerServiceFleetMemberData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerServiceFleetContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ContainerServiceFleetMemberData data = ContainerServiceFleetMemberData.DeserializeContainerServiceFleetMemberData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ContainerServiceFleetMemberResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ContainerServiceFleetMemberResource> IOperationSource<ContainerServiceFleetMemberResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ContainerServiceFleetMemberData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerServiceFleetContext.Default);
-            return await Task.FromResult(new ContainerServiceFleetMemberResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ContainerServiceFleetMemberData data = ContainerServiceFleetMemberData.DeserializeContainerServiceFleetMemberData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ContainerServiceFleetMemberResource(_client, data);
         }
     }
 }

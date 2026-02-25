@@ -11,7 +11,7 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Projects.OpenAI;
 
-[CodeGenType("CreateConversationRequest")]
+[CodeGenType("CreateConversationBody")]
 [CodeGenSerialization(nameof(Items), SerializationName = "items", DeserializationValueHook = nameof(DeserializeItemsValue), SerializationValueHook = nameof(SerializeItemsValue))]
 public partial class ProjectConversationCreationOptions
 {

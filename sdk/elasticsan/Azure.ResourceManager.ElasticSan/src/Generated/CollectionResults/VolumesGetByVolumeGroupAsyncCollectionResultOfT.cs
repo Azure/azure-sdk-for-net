@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ElasticSan
                     yield break;
                 }
                 ElasticSanVolumeList result = ElasticSanVolumeList.FromResponse(response);
-                yield return Page<ElasticSanVolumeData>.FromValues((IReadOnlyList<ElasticSanVolumeData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ElasticSanVolumeData>.FromValues((IReadOnlyList<ElasticSanVolumeData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

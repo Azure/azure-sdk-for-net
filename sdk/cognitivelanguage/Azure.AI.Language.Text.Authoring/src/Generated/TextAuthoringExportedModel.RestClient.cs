@@ -29,7 +29,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/exported-models/", false);
             uri.AppendPath(exportedModelName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -47,7 +50,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/exported-models/", false);
             uri.AppendPath(exportedModelName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
@@ -66,7 +72,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/exported-models/", false);
             uri.AppendPath(exportedModelName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
@@ -85,7 +94,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath(exportedModelName, true);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -104,7 +116,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath("/exported-models/", false);
             uri.AppendPath(exportedModelName, true);
             uri.AppendPath("/manifest", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;

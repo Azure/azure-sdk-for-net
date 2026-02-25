@@ -37,6 +37,41 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OracleSubscriptionData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(OracleSubscriptionData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<OracleSubscriptionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OracleSubscriptionData IPersistableModel<OracleSubscriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (OracleSubscriptionData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<OracleSubscriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="oracleSubscriptionData"> The <see cref="OracleSubscriptionData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(OracleSubscriptionData oracleSubscriptionData)
+        {
+            if (oracleSubscriptionData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(oracleSubscriptionData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="OracleSubscriptionData"/> from. </param>
         internal static OracleSubscriptionData FromResponse(Response response)
         {
@@ -168,41 +203,6 @@ namespace Azure.ResourceManager.OracleDatabase
                 additionalBinaryDataProperties,
                 properties,
                 plan);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OracleSubscriptionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<OracleSubscriptionData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(OracleSubscriptionData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        OracleSubscriptionData IPersistableModel<OracleSubscriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (OracleSubscriptionData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OracleSubscriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="oracleSubscriptionData"> The <see cref="OracleSubscriptionData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(OracleSubscriptionData oracleSubscriptionData)
-        {
-            if (oracleSubscriptionData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(oracleSubscriptionData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

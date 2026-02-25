@@ -30,7 +30,10 @@ namespace Azure.AI.DocumentIntelligence
             uri.Reset(_endpoint);
             uri.AppendPath("/documentintelligence", false);
             uri.AppendPath("/documentModels:build", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
@@ -46,7 +49,10 @@ namespace Azure.AI.DocumentIntelligence
             uri.Reset(_endpoint);
             uri.AppendPath("/documentintelligence", false);
             uri.AppendPath("/documentModels:compose", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
@@ -62,7 +68,10 @@ namespace Azure.AI.DocumentIntelligence
             uri.Reset(_endpoint);
             uri.AppendPath("/documentintelligence", false);
             uri.AppendPath("/documentModels:authorizeCopy", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -81,7 +90,10 @@ namespace Azure.AI.DocumentIntelligence
             uri.AppendPath("/documentModels/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath(":copyTo", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
@@ -98,7 +110,10 @@ namespace Azure.AI.DocumentIntelligence
             uri.AppendPath("/documentintelligence", false);
             uri.AppendPath("/documentModels/", false);
             uri.AppendPath(modelId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -113,7 +128,10 @@ namespace Azure.AI.DocumentIntelligence
             uri.Reset(_endpoint);
             uri.AppendPath("/documentintelligence", false);
             uri.AppendPath("/documentModels", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -133,7 +151,10 @@ namespace Azure.AI.DocumentIntelligence
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -149,7 +170,10 @@ namespace Azure.AI.DocumentIntelligence
             uri.AppendPath("/documentintelligence", false);
             uri.AppendPath("/documentModels/", false);
             uri.AppendPath(modelId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
@@ -163,7 +187,10 @@ namespace Azure.AI.DocumentIntelligence
             uri.Reset(_endpoint);
             uri.AppendPath("/documentintelligence", false);
             uri.AppendPath("/info", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -179,7 +206,10 @@ namespace Azure.AI.DocumentIntelligence
             uri.AppendPath("/documentintelligence", false);
             uri.AppendPath("/operations/", false);
             uri.AppendPath(operationId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -194,7 +224,10 @@ namespace Azure.AI.DocumentIntelligence
             uri.Reset(_endpoint);
             uri.AppendPath("/documentintelligence", false);
             uri.AppendPath("/operations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -214,7 +247,10 @@ namespace Azure.AI.DocumentIntelligence
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -229,7 +265,10 @@ namespace Azure.AI.DocumentIntelligence
             uri.Reset(_endpoint);
             uri.AppendPath("/documentintelligence", false);
             uri.AppendPath("/documentClassifiers:build", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
@@ -245,7 +284,10 @@ namespace Azure.AI.DocumentIntelligence
             uri.Reset(_endpoint);
             uri.AppendPath("/documentintelligence", false);
             uri.AppendPath("/documentClassifiers:authorizeCopy", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -264,7 +306,10 @@ namespace Azure.AI.DocumentIntelligence
             uri.AppendPath("/documentClassifiers/", false);
             uri.AppendPath(classifierId, true);
             uri.AppendPath(":copyTo", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
@@ -281,7 +326,10 @@ namespace Azure.AI.DocumentIntelligence
             uri.AppendPath("/documentintelligence", false);
             uri.AppendPath("/documentClassifiers/", false);
             uri.AppendPath(classifierId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -296,7 +344,10 @@ namespace Azure.AI.DocumentIntelligence
             uri.Reset(_endpoint);
             uri.AppendPath("/documentintelligence", false);
             uri.AppendPath("/documentClassifiers", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -316,7 +367,10 @@ namespace Azure.AI.DocumentIntelligence
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -332,7 +386,10 @@ namespace Azure.AI.DocumentIntelligence
             uri.AppendPath("/documentintelligence", false);
             uri.AppendPath("/documentClassifiers/", false);
             uri.AppendPath(classifierId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                     yield break;
                 }
                 StorageClassResourceListResult result = StorageClassResourceListResult.FromResponse(response);
-                yield return Page<ConnectedClusterStorageClassData>.FromValues((IReadOnlyList<ConnectedClusterStorageClassData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ConnectedClusterStorageClassData>.FromValues((IReadOnlyList<ConnectedClusterStorageClassData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

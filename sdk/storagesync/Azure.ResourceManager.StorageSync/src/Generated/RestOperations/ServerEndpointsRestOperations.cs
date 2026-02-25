@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.StorageSync
             uri.AppendPath(syncGroupName, true);
             uri.AppendPath("/serverEndpoints/", false);
             uri.AppendPath(serverEndpointName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -78,7 +81,10 @@ namespace Azure.ResourceManager.StorageSync
             uri.AppendPath(syncGroupName, true);
             uri.AppendPath("/serverEndpoints/", false);
             uri.AppendPath(serverEndpointName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -103,7 +109,10 @@ namespace Azure.ResourceManager.StorageSync
             uri.AppendPath(syncGroupName, true);
             uri.AppendPath("/serverEndpoints/", false);
             uri.AppendPath(serverEndpointName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -131,7 +140,10 @@ namespace Azure.ResourceManager.StorageSync
             uri.AppendPath(syncGroupName, true);
             uri.AppendPath("/serverEndpoints/", false);
             uri.AppendPath(serverEndpointName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -152,7 +164,10 @@ namespace Azure.ResourceManager.StorageSync
             uri.AppendPath("/syncGroups/", false);
             uri.AppendPath(syncGroupName, true);
             uri.AppendPath("/serverEndpoints", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -164,8 +179,18 @@ namespace Azure.ResourceManager.StorageSync
         internal HttpMessage CreateNextGetBySyncGroupRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -189,7 +214,10 @@ namespace Azure.ResourceManager.StorageSync
             uri.AppendPath("/serverEndpoints/", false);
             uri.AppendPath(serverEndpointName, true);
             uri.AppendPath("/recallAction", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

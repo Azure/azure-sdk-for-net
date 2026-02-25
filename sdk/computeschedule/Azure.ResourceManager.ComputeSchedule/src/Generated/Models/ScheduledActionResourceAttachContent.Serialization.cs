@@ -39,6 +39,41 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionResourceAttachContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeScheduleContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ScheduledActionResourceAttachContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ScheduledActionResourceAttachContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ScheduledActionResourceAttachContent IPersistableModel<ScheduledActionResourceAttachContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ScheduledActionResourceAttachContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="scheduledActionResourceAttachContent"> The <see cref="ScheduledActionResourceAttachContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ScheduledActionResourceAttachContent scheduledActionResourceAttachContent)
+        {
+            if (scheduledActionResourceAttachContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(scheduledActionResourceAttachContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ScheduledActionResourceAttachContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -126,41 +161,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 }
             }
             return new ScheduledActionResourceAttachContent(resources, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ScheduledActionResourceAttachContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionResourceAttachContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeScheduleContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ScheduledActionResourceAttachContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ScheduledActionResourceAttachContent IPersistableModel<ScheduledActionResourceAttachContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ScheduledActionResourceAttachContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="scheduledActionResourceAttachContent"> The <see cref="ScheduledActionResourceAttachContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ScheduledActionResourceAttachContent scheduledActionResourceAttachContent)
-        {
-            if (scheduledActionResourceAttachContent == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(scheduledActionResourceAttachContent, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

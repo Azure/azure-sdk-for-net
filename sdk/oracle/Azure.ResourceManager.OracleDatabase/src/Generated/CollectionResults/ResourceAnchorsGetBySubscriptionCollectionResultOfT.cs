@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.OracleDatabase
                     yield break;
                 }
                 ResourceAnchorListResult result = ResourceAnchorListResult.FromResponse(response);
-                yield return Page<OracleResourceAnchorData>.FromValues((IReadOnlyList<OracleResourceAnchorData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<OracleResourceAnchorData>.FromValues((IReadOnlyList<OracleResourceAnchorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

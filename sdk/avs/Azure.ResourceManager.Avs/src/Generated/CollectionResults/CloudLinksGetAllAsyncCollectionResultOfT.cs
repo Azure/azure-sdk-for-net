@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Avs
                     yield break;
                 }
                 CloudLinkList result = CloudLinkList.FromResponse(response);
-                yield return Page<AvsCloudLinkData>.FromValues((IReadOnlyList<AvsCloudLinkData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<AvsCloudLinkData>.FromValues((IReadOnlyList<AvsCloudLinkData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

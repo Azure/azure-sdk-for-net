@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SignalR
                     yield break;
                 }
                 SignalRCustomCertificateList result = SignalRCustomCertificateList.FromResponse(response);
-                yield return Page<SignalRCustomCertificateData>.FromValues((IReadOnlyList<SignalRCustomCertificateData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<SignalRCustomCertificateData>.FromValues((IReadOnlyList<SignalRCustomCertificateData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
