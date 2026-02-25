@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     yield break;
                 }
                 DeletedConfigurationStoreListResult result = DeletedConfigurationStoreListResult.FromResponse(response);
-                yield return Page<DeletedAppConfigurationStoreData>.FromValues((IReadOnlyList<DeletedAppConfigurationStoreData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DeletedAppConfigurationStoreData>.FromValues((IReadOnlyList<DeletedAppConfigurationStoreData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

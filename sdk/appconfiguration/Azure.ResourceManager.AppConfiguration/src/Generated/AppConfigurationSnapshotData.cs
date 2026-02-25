@@ -68,7 +68,11 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             get
             {
-                return Properties is null ? default : Properties.Filters;
+                if (Properties is null)
+                {
+                    Properties = new SnapshotProperties();
+                }
+                return Properties.Filters;
             }
         }
 
@@ -154,7 +158,11 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             get
             {
-                return Properties is null ? default : Properties.Tags;
+                if (Properties is null)
+                {
+                    Properties = new SnapshotProperties();
+                }
+                return Properties.Tags;
             }
         }
 

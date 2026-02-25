@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     yield break;
                 }
                 ReplicaListResult result = ReplicaListResult.FromResponse(response);
-                yield return Page<AppConfigurationReplicaData>.FromValues((IReadOnlyList<AppConfigurationReplicaData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<AppConfigurationReplicaData>.FromValues((IReadOnlyList<AppConfigurationReplicaData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

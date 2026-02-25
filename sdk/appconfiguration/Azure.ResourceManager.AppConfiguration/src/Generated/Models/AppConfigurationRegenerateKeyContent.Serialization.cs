@@ -34,6 +34,41 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AppConfigurationRegenerateKeyContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppConfigurationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AppConfigurationRegenerateKeyContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AppConfigurationRegenerateKeyContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AppConfigurationRegenerateKeyContent IPersistableModel<AppConfigurationRegenerateKeyContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AppConfigurationRegenerateKeyContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="appConfigurationRegenerateKeyContent"> The <see cref="AppConfigurationRegenerateKeyContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(AppConfigurationRegenerateKeyContent appConfigurationRegenerateKeyContent)
+        {
+            if (appConfigurationRegenerateKeyContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(appConfigurationRegenerateKeyContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AppConfigurationRegenerateKeyContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -114,41 +149,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
             }
             return new AppConfigurationRegenerateKeyContent(id, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AppConfigurationRegenerateKeyContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AppConfigurationRegenerateKeyContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppConfigurationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AppConfigurationRegenerateKeyContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AppConfigurationRegenerateKeyContent IPersistableModel<AppConfigurationRegenerateKeyContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AppConfigurationRegenerateKeyContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="appConfigurationRegenerateKeyContent"> The <see cref="AppConfigurationRegenerateKeyContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(AppConfigurationRegenerateKeyContent appConfigurationRegenerateKeyContent)
-        {
-            if (appConfigurationRegenerateKeyContent == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(appConfigurationRegenerateKeyContent, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

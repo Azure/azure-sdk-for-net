@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     yield break;
                 }
                 AppConfigurationPrivateLinkResourceListResult result = AppConfigurationPrivateLinkResourceListResult.FromResponse(response);
-                yield return Page<AppConfigurationPrivateLinkResourceData>.FromValues((IReadOnlyList<AppConfigurationPrivateLinkResourceData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<AppConfigurationPrivateLinkResourceData>.FromValues((IReadOnlyList<AppConfigurationPrivateLinkResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

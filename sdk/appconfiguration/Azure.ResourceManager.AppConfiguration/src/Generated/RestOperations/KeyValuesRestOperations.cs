@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.AppConfiguration
             uri.AppendPath(configStoreName, true);
             uri.AppendPath("/keyValues/", false);
             uri.AppendPath(keyValueName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +77,10 @@ namespace Azure.ResourceManager.AppConfiguration
             uri.AppendPath(configStoreName, true);
             uri.AppendPath("/keyValues/", false);
             uri.AppendPath(keyValueName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -97,7 +103,10 @@ namespace Azure.ResourceManager.AppConfiguration
             uri.AppendPath(configStoreName, true);
             uri.AppendPath("/keyValues/", false);
             uri.AppendPath(keyValueName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

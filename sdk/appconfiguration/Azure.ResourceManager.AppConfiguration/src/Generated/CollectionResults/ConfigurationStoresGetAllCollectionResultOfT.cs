@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     yield break;
                 }
                 ConfigurationStoreListResult result = ConfigurationStoreListResult.FromResponse(response);
-                yield return Page<AppConfigurationStoreData>.FromValues((IReadOnlyList<AppConfigurationStoreData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<AppConfigurationStoreData>.FromValues((IReadOnlyList<AppConfigurationStoreData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
