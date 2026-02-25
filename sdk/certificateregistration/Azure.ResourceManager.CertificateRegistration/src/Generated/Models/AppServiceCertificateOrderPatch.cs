@@ -44,7 +44,11 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         {
             get
             {
-                return Properties is null ? default : Properties.Certificates;
+                if (Properties is null)
+                {
+                    Properties = new AppServiceCertificateOrderPatchResourceProperties();
+                }
+                return Properties.Certificates;
             }
         }
 
@@ -237,7 +241,11 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         {
             get
             {
-                return Properties is null ? default : Properties.AppServiceCertificateNotRenewableReasons;
+                if (Properties is null)
+                {
+                    Properties = new AppServiceCertificateOrderPatchResourceProperties();
+                }
+                return Properties.AppServiceCertificateNotRenewableReasons;
             }
         }
 

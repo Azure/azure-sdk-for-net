@@ -42,6 +42,41 @@ namespace Azure.ResourceManager.CertificateRegistration
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AppServiceCertificateOrderData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCertificateRegistrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AppServiceCertificateOrderData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AppServiceCertificateOrderData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AppServiceCertificateOrderData IPersistableModel<AppServiceCertificateOrderData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AppServiceCertificateOrderData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AppServiceCertificateOrderData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="appServiceCertificateOrderData"> The <see cref="AppServiceCertificateOrderData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(AppServiceCertificateOrderData appServiceCertificateOrderData)
+        {
+            if (appServiceCertificateOrderData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(appServiceCertificateOrderData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AppServiceCertificateOrderData"/> from. </param>
         internal static AppServiceCertificateOrderData FromResponse(Response response)
         {
@@ -203,41 +238,6 @@ namespace Azure.ResourceManager.CertificateRegistration
                 location,
                 properties,
                 kind);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AppServiceCertificateOrderData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AppServiceCertificateOrderData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCertificateRegistrationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AppServiceCertificateOrderData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AppServiceCertificateOrderData IPersistableModel<AppServiceCertificateOrderData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AppServiceCertificateOrderData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AppServiceCertificateOrderData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="appServiceCertificateOrderData"> The <see cref="AppServiceCertificateOrderData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(AppServiceCertificateOrderData appServiceCertificateOrderData)
-        {
-            if (appServiceCertificateOrderData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(appServiceCertificateOrderData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

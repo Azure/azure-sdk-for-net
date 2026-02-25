@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CertificateRegistration
                     yield break;
                 }
                 AppServiceCertificateOrderListResult result = AppServiceCertificateOrderListResult.FromResponse(response);
-                yield return Page<AppServiceCertificateOrderData>.FromValues((IReadOnlyList<AppServiceCertificateOrderData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<AppServiceCertificateOrderData>.FromValues((IReadOnlyList<AppServiceCertificateOrderData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

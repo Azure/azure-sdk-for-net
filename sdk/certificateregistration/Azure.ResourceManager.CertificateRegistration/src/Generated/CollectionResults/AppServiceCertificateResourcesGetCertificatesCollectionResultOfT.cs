@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CertificateRegistration
                     yield break;
                 }
                 AppServiceCertificateListResult result = AppServiceCertificateListResult.FromResponse(response);
-                yield return Page<AppServiceCertificateData>.FromValues((IReadOnlyList<AppServiceCertificateData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<AppServiceCertificateData>.FromValues((IReadOnlyList<AppServiceCertificateData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -37,6 +37,29 @@ namespace Azure.ResourceManager.CertificateRegistration
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AppServiceDetectorData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCertificateRegistrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AppServiceDetectorData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AppServiceDetectorData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AppServiceDetectorData IPersistableModel<AppServiceDetectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AppServiceDetectorData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AppServiceDetectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AppServiceDetectorData"/> from. </param>
         internal static AppServiceDetectorData FromResponse(Response response)
         {
@@ -169,28 +192,5 @@ namespace Azure.ResourceManager.CertificateRegistration
                 properties,
                 kind);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AppServiceDetectorData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AppServiceDetectorData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCertificateRegistrationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AppServiceDetectorData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AppServiceDetectorData IPersistableModel<AppServiceDetectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AppServiceDetectorData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AppServiceDetectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

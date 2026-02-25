@@ -36,6 +36,41 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RenewCertificateOrderContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCertificateRegistrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RenewCertificateOrderContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RenewCertificateOrderContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RenewCertificateOrderContent IPersistableModel<RenewCertificateOrderContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (RenewCertificateOrderContent)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RenewCertificateOrderContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="renewCertificateOrderContent"> The <see cref="RenewCertificateOrderContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(RenewCertificateOrderContent renewCertificateOrderContent)
+        {
+            if (renewCertificateOrderContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(renewCertificateOrderContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RenewCertificateOrderContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -148,41 +183,6 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 systemData,
                 additionalBinaryDataProperties,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RenewCertificateOrderContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RenewCertificateOrderContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCertificateRegistrationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(RenewCertificateOrderContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        RenewCertificateOrderContent IPersistableModel<RenewCertificateOrderContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (RenewCertificateOrderContent)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RenewCertificateOrderContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="renewCertificateOrderContent"> The <see cref="RenewCertificateOrderContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(RenewCertificateOrderContent renewCertificateOrderContent)
-        {
-            if (renewCertificateOrderContent == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(renewCertificateOrderContent, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

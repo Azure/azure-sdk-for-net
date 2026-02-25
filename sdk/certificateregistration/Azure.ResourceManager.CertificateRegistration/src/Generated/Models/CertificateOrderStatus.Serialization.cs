@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
             CertificateOrderStatus.Revoked => "Revoked",
             CertificateOrderStatus.Canceled => "Canceled",
             CertificateOrderStatus.Denied => "Denied",
-            CertificateOrderStatus.Pendingrevocation => "Pendingrevocation",
+            CertificateOrderStatus.PendingRevocation => "Pendingrevocation",
             CertificateOrderStatus.PendingRekey => "PendingRekey",
             CertificateOrderStatus.Unused => "Unused",
             CertificateOrderStatus.Expired => "Expired",
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Pendingrevocation"))
             {
-                return CertificateOrderStatus.Pendingrevocation;
+                return CertificateOrderStatus.PendingRevocation;
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "PendingRekey"))
             {

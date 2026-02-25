@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         Canceled,
         /// <summary> Denied. </summary>
         Denied,
-        /// <summary> Pendingrevocation. </summary>
-        Pendingrevocation,
+        /// <summary> PendingRevocation. </summary>
+        PendingRevocation,
         /// <summary> PendingRekey. </summary>
         PendingRekey,
         /// <summary> Unused. </summary>

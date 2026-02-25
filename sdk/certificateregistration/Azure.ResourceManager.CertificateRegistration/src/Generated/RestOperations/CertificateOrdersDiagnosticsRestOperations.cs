@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.CertificateRegistration
             uri.AppendPath(certificateOrderName, true);
             uri.AppendPath("/detectors/", false);
             uri.AppendPath(detectorName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (startOn != null)
             {
                 uri.AppendQuery("startTime", TypeFormatters.ConvertToString(startOn, SerializationFormat.DateTime_RFC3339), true);
@@ -85,7 +88,10 @@ namespace Azure.ResourceManager.CertificateRegistration
             uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
             uri.AppendPath(certificateOrderName, true);
             uri.AppendPath("/detectors", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -97,8 +103,18 @@ namespace Azure.ResourceManager.CertificateRegistration
         internal HttpMessage CreateNextGetAppServiceCertificateOrderDetectorResponseRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string certificateOrderName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

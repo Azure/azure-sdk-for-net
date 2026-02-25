@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         Revoked = 2,
         Canceled = 3,
         Denied = 4,
-        Pendingrevocation = 5,
+        PendingRevocation = 5,
         PendingRekey = 6,
         Unused = 7,
         Expired = 8,
