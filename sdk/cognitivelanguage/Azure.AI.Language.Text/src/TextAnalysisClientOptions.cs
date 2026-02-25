@@ -5,6 +5,7 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text
 {
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenType("TextAnalysisOptions")]
     public partial class TextAnalysisClientOptions : ClientOptions
     {
         /// <summary>

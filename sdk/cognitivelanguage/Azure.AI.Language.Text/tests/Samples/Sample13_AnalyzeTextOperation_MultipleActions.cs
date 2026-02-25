@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -55,25 +55,25 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
 
             var analyzeTextOperationActions = new AnalyzeTextOperationAction[]
             {
-                new EntitiesOperationAction
+                new EntitiesLROTask
                 {
                     Name = "EntitiesOperationActionSample", // Optional string for humans to identify action by name.
                 },
-                new KeyPhraseOperationAction
+                new KeyPhraseLROTask
                 {
                     Name = "KeyPhraseOperationActionSample", // Optional string for humans to identify action by name.
                 },
             };
 
-            Response<AnalyzeTextOperationState> response = client.AnalyzeTextOperation(multiLanguageTextInput, analyzeTextOperationActions);
+            Response<AnalyzeTextJobState> response = client.AnalyzeTextOperation(multiLanguageTextInput, analyzeTextOperationActions);
 
-            AnalyzeTextOperationState analyzeTextJobState = response.Value;
+            AnalyzeTextJobState analyzeTextJobState = response.Value;
 
-            foreach (AnalyzeTextOperationResult AnalyzeTextOperationResult in analyzeTextJobState.Actions.Items)
+            foreach (AnalyzeTextLROResult AnalyzeTextLROResult in analyzeTextJobState.Tasks.Items)
             {
-                if (AnalyzeTextOperationResult is EntityRecognitionOperationResult)
+                if (AnalyzeTextLROResult is EntityRecognitionOperationResult)
                 {
-                    EntityRecognitionOperationResult EntityRecognitionOperationResult = (EntityRecognitionOperationResult)AnalyzeTextOperationResult;
+                    EntityRecognitionOperationResult EntityRecognitionOperationResult = (EntityRecognitionOperationResult)AnalyzeTextLROResult;
 
                     // View the classifications recognized in the input documents.
                     foreach (EntityActionResultWithMetadata nerResult in EntityRecognitionOperationResult.Results.Documents)
@@ -109,9 +109,9 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                     }
                 }
                 Console.WriteLine();
-                if (AnalyzeTextOperationResult is KeyPhraseExtractionOperationResult)
+                if (AnalyzeTextLROResult is KeyPhraseExtractionOperationResult)
                 {
-                    KeyPhraseExtractionOperationResult keyPhraseExtractionLROResult = (KeyPhraseExtractionOperationResult)AnalyzeTextOperationResult;
+                    KeyPhraseExtractionOperationResult keyPhraseExtractionLROResult = (KeyPhraseExtractionOperationResult)AnalyzeTextLROResult;
 
                     // View the classifications recognized in the input documents.
                     foreach (KeyPhrasesActionResult kpeResult in keyPhraseExtractionLROResult.Results.Documents)

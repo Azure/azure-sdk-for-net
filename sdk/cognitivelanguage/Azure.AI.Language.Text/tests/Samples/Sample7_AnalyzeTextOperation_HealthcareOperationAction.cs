@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -14,7 +14,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
     {
         [Test]
         [SyncOnly]
-        public void HealthcareOperationAction()
+        public void HealthcareLROTask()
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
@@ -54,21 +54,21 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
 
             var analyzeTextOperationActions = new AnalyzeTextOperationAction[]
             {
-                new HealthcareOperationAction
+                new HealthcareLROTask
                 {
                     Name = "HealthcareOperationActionSample", // Optional string for humans to identify action by name.
                 },
             };
 
-            Response<AnalyzeTextOperationState> response = client.AnalyzeTextOperation(multiLanguageTextInput, analyzeTextOperationActions);
+            Response<AnalyzeTextJobState> response = client.AnalyzeTextOperation(multiLanguageTextInput, analyzeTextOperationActions);
 
-            AnalyzeTextOperationState analyzeTextJobState = response.Value;
+            AnalyzeTextJobState analyzeTextJobState = response.Value;
 
-            foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.Actions.Items)
+            foreach (AnalyzeTextLROResult analyzeTextLROResult in analyzeTextJobState.Tasks.Items)
             {
-                if (analyzeTextLROResult is HealthcareOperationResult)
+                if (analyzeTextLROResult is HealthcareLROResult)
                 {
-                    HealthcareOperationResult healthcareLROResult = (HealthcareOperationResult)analyzeTextLROResult;
+                    HealthcareLROResult healthcareLROResult = (HealthcareLROResult)analyzeTextLROResult;
                     Console.WriteLine($"Analyze Healthcare Entities, model version: \"{healthcareLROResult.Results.ModelVersion}\"");
                     Console.WriteLine();
 

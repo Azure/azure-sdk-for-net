@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -14,7 +14,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
     {
         [Test]
         [AsyncOnly]
-        public async Task CustomEntitiesOperationAction()
+        public async Task CustomEntitiesLROTask()
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
@@ -57,18 +57,18 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             // Perform the text analysis operation.
             var analyzeTextOperationActions = new AnalyzeTextOperationAction[]
             {
-                new CustomEntitiesOperationAction
+                new CustomEntitiesLROTask
                 {
                     Name = "CustomEntitiesOperationActionSample", // Optional string for humans to identify action by name.
-                    ActionContent = customEntitiesActionContent
+                    Parameters = customEntitiesActionContent
                 },
             };
 
-            Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
+            Response<AnalyzeTextJobState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
 
-            AnalyzeTextOperationState analyzeTextJobState = response.Value;
+            AnalyzeTextJobState analyzeTextJobState = response.Value;
 
-            foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.Actions.Items)
+            foreach (AnalyzeTextLROResult analyzeTextLROResult in analyzeTextJobState.Tasks.Items)
             {
                 if (analyzeTextLROResult is CustomEntityRecognitionOperationResult)
                 {

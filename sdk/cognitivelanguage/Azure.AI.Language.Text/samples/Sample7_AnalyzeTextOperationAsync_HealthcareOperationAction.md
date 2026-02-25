@@ -53,21 +53,21 @@ MultiLanguageTextInput multiLanguageTextInput = new MultiLanguageTextInput()
 
 var analyzeTextOperationActions = new AnalyzeTextOperationAction[]
 {
-    new HealthcareOperationAction
+    new HealthcareLROTask
     {
         Name = "HealthcareOperationActionSample", // Optional string for humans to identify action by name.
     },
 };
 
-Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
+Response<AnalyzeTextJobState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
 
-AnalyzeTextOperationState analyzeTextJobState = response.Value;
+AnalyzeTextJobState analyzeTextJobState = response.Value;
 
-foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.Actions.Items)
+foreach (AnalyzeTextLROResult analyzeTextLROResult in analyzeTextJobState.Tasks.Items)
 {
-    if (analyzeTextLROResult is HealthcareOperationResult)
+    if (analyzeTextLROResult is HealthcareLROResult)
     {
-        HealthcareOperationResult healthcareLROResult = (HealthcareOperationResult)analyzeTextLROResult;
+        HealthcareLROResult healthcareLROResult = (HealthcareLROResult)analyzeTextLROResult;
         Console.WriteLine($"Analyze Healthcare Entities, model version: \"{healthcareLROResult.Results.ModelVersion}\"");
         Console.WriteLine();
 

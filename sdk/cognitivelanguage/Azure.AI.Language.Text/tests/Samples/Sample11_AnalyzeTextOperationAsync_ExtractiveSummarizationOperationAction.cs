@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -76,11 +76,11 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                 },
             };
 
-            Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
+            Response<AnalyzeTextJobState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
 
-            AnalyzeTextOperationState analyzeTextJobState = response.Value;
+            AnalyzeTextJobState analyzeTextJobState = response.Value;
 
-            foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.Actions.Items)
+            foreach (AnalyzeTextLROResult analyzeTextLROResult in analyzeTextJobState.Tasks.Items)
             {
                 if (analyzeTextLROResult is ExtractiveSummarizationOperationResult)
                 {

@@ -705,7 +705,7 @@ AnalyzeTextInput body = new TextPiiEntitiesRecognitionInput()
 Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(body);
 AnalyzeTextPiiResult piiTaskResult = (AnalyzeTextPiiResult)response.Value;
 
-foreach (PiiActionResult piiResult in piiTaskResult.Results.Documents)
+foreach (PiiResultWithDetectedLanguage piiResult in piiTaskResult.Results.Documents)
 {
     Console.WriteLine($"Result for document with Id = \"{piiResult.Id}\":");
     Console.WriteLine($"  Redacted Text: \"{piiResult.RedactedText}\":");
@@ -1038,21 +1038,21 @@ MultiLanguageTextInput multiLanguageTextInput = new MultiLanguageTextInput()
 
 var analyzeTextOperationActions = new AnalyzeTextOperationAction[]
 {
-    new HealthcareOperationAction
+    new HealthcareLROTask
     {
         Name = "HealthcareOperationActionSample", // Optional string for humans to identify action by name.
     },
 };
 
-Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
+Response<AnalyzeTextJobState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
 
-AnalyzeTextOperationState analyzeTextJobState = response.Value;
+AnalyzeTextJobState analyzeTextJobState = response.Value;
 
-foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.Actions.Items)
+foreach (AnalyzeTextLROResult analyzeTextLROResult in analyzeTextJobState.Tasks.Items)
 {
-    if (analyzeTextLROResult is HealthcareOperationResult)
+    if (analyzeTextLROResult is HealthcareLROResult)
     {
-        HealthcareOperationResult healthcareLROResult = (HealthcareOperationResult)analyzeTextLROResult;
+        HealthcareLROResult healthcareLROResult = (HealthcareLROResult)analyzeTextLROResult;
         Console.WriteLine($"Analyze Healthcare Entities, model version: \"{healthcareLROResult.Results.ModelVersion}\"");
         Console.WriteLine();
 
@@ -1239,18 +1239,18 @@ CustomEntitiesActionContent customEntitiesActionContent = new CustomEntitiesActi
 // Perform the text analysis operation.
 var analyzeTextOperationActions = new AnalyzeTextOperationAction[]
 {
-    new CustomEntitiesOperationAction
+    new CustomEntitiesLROTask
     {
         Name = "CustomEntitiesOperationActionSample", // Optional string for humans to identify action by name.
-        ActionContent = customEntitiesActionContent
+        Parameters = customEntitiesActionContent
     },
 };
 
-Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
+Response<AnalyzeTextJobState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
 
-AnalyzeTextOperationState analyzeTextJobState = response.Value;
+AnalyzeTextJobState analyzeTextJobState = response.Value;
 
-foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.Actions.Items)
+foreach (AnalyzeTextLROResult analyzeTextLROResult in analyzeTextJobState.Tasks.Items)
 {
     if (analyzeTextLROResult is CustomEntityRecognitionOperationResult)
     {
@@ -1371,11 +1371,11 @@ var analyzeTextOperationActions = new AnalyzeTextOperationAction[]
     },
 };
 
-Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
+Response<AnalyzeTextJobState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
 
-AnalyzeTextOperationState analyzeTextJobState = response.Value;
+AnalyzeTextJobState analyzeTextJobState = response.Value;
 
-foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.Actions.Items)
+foreach (AnalyzeTextLROResult analyzeTextLROResult in analyzeTextJobState.Tasks.Items)
 {
     if (analyzeTextLROResult is CustomSingleLabelClassificationOperationResult)
     {
@@ -1491,11 +1491,11 @@ var analyzeTextOperationActions = new AnalyzeTextOperationAction[]
     },
 };
 
-Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
+Response<AnalyzeTextJobState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
 
-AnalyzeTextOperationState analyzeTextJobState = response.Value;
+AnalyzeTextJobState analyzeTextJobState = response.Value;
 
-foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.Actions.Items)
+foreach (AnalyzeTextLROResult analyzeTextLROResult in analyzeTextJobState.Tasks.Items)
 {
     if (analyzeTextLROResult is CustomMultiLabelClassificationOperationResult)
     {
@@ -1666,11 +1666,11 @@ var analyzeTextOperationActions = new AnalyzeTextOperationAction[]
     },
 };
 
-Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
+Response<AnalyzeTextJobState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
 
-AnalyzeTextOperationState analyzeTextJobState = response.Value;
+AnalyzeTextJobState analyzeTextJobState = response.Value;
 
-foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.Actions.Items)
+foreach (AnalyzeTextLROResult analyzeTextLROResult in analyzeTextJobState.Tasks.Items)
 {
     if (analyzeTextLROResult is ExtractiveSummarizationOperationResult)
     {
@@ -1849,11 +1849,11 @@ var analyzeTextOperationActions = new AnalyzeTextOperationAction[]
     },
 };
 
-Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
+Response<AnalyzeTextJobState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
 
-AnalyzeTextOperationState analyzeTextJobState = response.Value;
+AnalyzeTextJobState analyzeTextJobState = response.Value;
 
-foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.Actions.Items)
+foreach (AnalyzeTextLROResult analyzeTextLROResult in analyzeTextJobState.Tasks.Items)
 {
     if (analyzeTextLROResult is AbstractiveSummarizationOperationResult)
     {
@@ -2035,21 +2035,21 @@ MultiLanguageTextInput multiLanguageTextInput = new MultiLanguageTextInput()
 
 var analyzeTextOperationActions = new AnalyzeTextOperationAction[]
 {
-    new EntitiesOperationAction
+    new EntitiesLROTask
     {
         Name = "EntitiesOperationActionSample", // Optional string for humans to identify action by name.
     },
-    new KeyPhraseOperationAction
+    new KeyPhraseLROTask
     {
         Name = "KeyPhraseOperationActionSample", // Optional string for humans to identify action by name.
     },
 };
 
-Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
+Response<AnalyzeTextJobState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
 
-AnalyzeTextOperationState analyzeTextJobState = response.Value;
+AnalyzeTextJobState analyzeTextJobState = response.Value;
 
-foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.Actions.Items)
+foreach (AnalyzeTextLROResult analyzeTextLROResult in analyzeTextJobState.Tasks.Items)
 {
     if (analyzeTextLROResult is EntityRecognitionOperationResult)
     {

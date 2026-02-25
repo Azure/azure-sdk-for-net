@@ -64,21 +64,21 @@ MultiLanguageTextInput multiLanguageTextInput = new MultiLanguageTextInput()
 
 var analyzeTextOperationActions = new AnalyzeTextOperationAction[]
 {
-    new EntitiesOperationAction
+    new EntitiesLROTask
     {
         Name = "EntitiesOperationActionSample", // Optional string for humans to identify action by name.
     },
-    new KeyPhraseOperationAction
+    new KeyPhraseLROTask
     {
         Name = "KeyPhraseOperationActionSample", // Optional string for humans to identify action by name.
     },
 };
 
-Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
+Response<AnalyzeTextJobState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
 
-AnalyzeTextOperationState analyzeTextJobState = response.Value;
+AnalyzeTextJobState analyzeTextJobState = response.Value;
 
-foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.Actions.Items)
+foreach (AnalyzeTextLROResult analyzeTextLROResult in analyzeTextJobState.Tasks.Items)
 {
     if (analyzeTextLROResult is EntityRecognitionOperationResult)
     {
