@@ -958,7 +958,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-
                     DiskEncryptionConfiguration = new DiskEncryptionConfiguration
                     {
                         Targets = { BatchDiskEncryptionTarget.OSDisk },
-                        CustomerManagedKey = new DiskCustomerManagedKey
+                        CustomerManagedKey = new BatchDiskCustomerManagedKey
                         {
                             KeyUri = new Uri("http://sample.vault.azure.net//keys/cmk/bb60031a6d4545d3a60d3f94588538c9"),
                             IdentityReferenceResourceId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789012/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1"),
@@ -1106,7 +1106,7 @@ SourcePortRanges = {"*"},
 }},
                     PublicIPAddressConfiguration = new BatchPublicIPAddressConfiguration
                     {
-                        IPFamilies = { IPFamily.IPv4, IPFamily.IPv6 },
+                        IPFamilies = { BatchIPFamily.IPv4, BatchIPFamily.IPv6 },
                     },
                 },
             };

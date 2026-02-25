@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             IList<BatchDiskEncryptionTarget> targets = default;
-            DiskCustomerManagedKey customerManagedKey = default;
+            BatchDiskCustomerManagedKey customerManagedKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    customerManagedKey = DiskCustomerManagedKey.DeserializeDiskCustomerManagedKey(property.Value, options);
+                    customerManagedKey = BatchDiskCustomerManagedKey.DeserializeBatchDiskCustomerManagedKey(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

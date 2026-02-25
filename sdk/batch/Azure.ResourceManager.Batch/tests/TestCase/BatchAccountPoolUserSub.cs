@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
                     IsSecureBootEnabled = true,
                     IsVTpmEnabled = true,
                 },
-                ProxyAgentSettings = new ProxyAgentSettings
+                ProxyAgentSettings = new BatchProxyAgentSettings
                 {
-                    Imds = new HostEndpointSettings
+                    Imds = new BatchHostEndpointSettings
                     {
-                        Mode = HostEndpointSettingsModeType.Audit,
+                        Mode = BatchHostEndpointSettingsModeType.Audit,
                     },
                     Enabled = false,
                 },
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
             Assert.AreEqual(batchPool.DeploymentConfiguration.VmConfiguration.SecurityProfile.UefiSettings.IsSecureBootEnabled, true);
             Assert.AreEqual(batchPool.DeploymentConfiguration.VmConfiguration.SecurityProfile.UefiSettings.IsVTpmEnabled, true);
             Assert.AreEqual(batchPool.DeploymentConfiguration.VmConfiguration.SecurityProfile.ProxyAgentSettings.Enabled, false);
-            Assert.AreEqual(batchPool.DeploymentConfiguration.VmConfiguration.SecurityProfile.ProxyAgentSettings.Imds.Mode, HostEndpointSettingsModeType.Audit);
+            Assert.AreEqual(batchPool.DeploymentConfiguration.VmConfiguration.SecurityProfile.ProxyAgentSettings.Imds.Mode, BatchHostEndpointSettingsModeType.Audit);
             Assert.AreEqual(batchPool.DeploymentConfiguration.VmConfiguration.OSDisk.Caching, BatchDiskCachingType.ReadWrite);
             Assert.AreEqual(batchPool.DeploymentConfiguration.VmConfiguration.OSDisk.ManagedDisk.SecurityProfile.SecurityEncryptionType, BatchSecurityEncryptionType.VmGuestStateOnly);
             Assert.AreEqual(batchPool.DeploymentConfiguration.VmConfiguration.OSDisk.ManagedDisk.DiskEncryptionSet.Id.ToString(), DiskEncryptionSetId);

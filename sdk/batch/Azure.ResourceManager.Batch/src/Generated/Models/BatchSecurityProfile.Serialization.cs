@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Batch.Models
             BatchSecurityType? securityType = default;
             bool? encryptionAtHost = default;
             BatchUefiSettings uefiSettings = default;
-            ProxyAgentSettings proxyAgentSettings = default;
+            BatchProxyAgentSettings proxyAgentSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    proxyAgentSettings = ProxyAgentSettings.DeserializeProxyAgentSettings(property.Value, options);
+                    proxyAgentSettings = BatchProxyAgentSettings.DeserializeBatchProxyAgentSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

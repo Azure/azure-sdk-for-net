@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class DiskCustomerManagedKey : IUtf8JsonSerializable, IJsonModel<DiskCustomerManagedKey>
+    public partial class BatchDiskCustomerManagedKey : IUtf8JsonSerializable, IJsonModel<BatchDiskCustomerManagedKey>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskCustomerManagedKey>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchDiskCustomerManagedKey>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DiskCustomerManagedKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BatchDiskCustomerManagedKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiskCustomerManagedKey>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchDiskCustomerManagedKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskCustomerManagedKey)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchDiskCustomerManagedKey)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(KeyUri))
@@ -66,19 +66,19 @@ namespace Azure.ResourceManager.Batch.Models
             }
         }
 
-        DiskCustomerManagedKey IJsonModel<DiskCustomerManagedKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BatchDiskCustomerManagedKey IJsonModel<BatchDiskCustomerManagedKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiskCustomerManagedKey>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchDiskCustomerManagedKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskCustomerManagedKey)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchDiskCustomerManagedKey)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDiskCustomerManagedKey(document.RootElement, options);
+            return DeserializeBatchDiskCustomerManagedKey(document.RootElement, options);
         }
 
-        internal static DiskCustomerManagedKey DeserializeDiskCustomerManagedKey(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static BatchDiskCustomerManagedKey DeserializeBatchDiskCustomerManagedKey(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -126,38 +126,38 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DiskCustomerManagedKey(keyUrl, rotationToLatestKeyVersionEnabled, identityReference, serializedAdditionalRawData);
+            return new BatchDiskCustomerManagedKey(keyUrl, rotationToLatestKeyVersionEnabled, identityReference, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DiskCustomerManagedKey>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<BatchDiskCustomerManagedKey>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiskCustomerManagedKey>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchDiskCustomerManagedKey>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerBatchContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DiskCustomerManagedKey)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchDiskCustomerManagedKey)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DiskCustomerManagedKey IPersistableModel<DiskCustomerManagedKey>.Create(BinaryData data, ModelReaderWriterOptions options)
+        BatchDiskCustomerManagedKey IPersistableModel<BatchDiskCustomerManagedKey>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiskCustomerManagedKey>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchDiskCustomerManagedKey>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDiskCustomerManagedKey(document.RootElement, options);
+                        return DeserializeBatchDiskCustomerManagedKey(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiskCustomerManagedKey)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchDiskCustomerManagedKey)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DiskCustomerManagedKey>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BatchDiskCustomerManagedKey>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

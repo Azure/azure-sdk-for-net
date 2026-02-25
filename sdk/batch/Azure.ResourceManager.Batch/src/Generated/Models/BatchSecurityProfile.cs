@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="uefiSettings"> Specifies the security settings like secure boot and vTPM used while creating the virtual machine. </param>
         /// <param name="proxyAgentSettings"> Specifies ProxyAgent settings while creating the virtual machine. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchSecurityProfile(BatchSecurityType? securityType, bool? encryptionAtHost, BatchUefiSettings uefiSettings, ProxyAgentSettings proxyAgentSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchSecurityProfile(BatchSecurityType? securityType, bool? encryptionAtHost, BatchUefiSettings uefiSettings, BatchProxyAgentSettings proxyAgentSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SecurityType = securityType;
             EncryptionAtHost = encryptionAtHost;
@@ -72,6 +72,6 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Specifies the security settings like secure boot and vTPM used while creating the virtual machine. </summary>
         public BatchUefiSettings UefiSettings { get; set; }
         /// <summary> Specifies ProxyAgent settings while creating the virtual machine. </summary>
-        public ProxyAgentSettings ProxyAgentSettings { get; set; }
+        public BatchProxyAgentSettings ProxyAgentSettings { get; set; }
     }
 }

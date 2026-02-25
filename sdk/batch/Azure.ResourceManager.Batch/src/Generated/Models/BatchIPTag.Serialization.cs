@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class IPTag : IUtf8JsonSerializable, IJsonModel<IPTag>
+    public partial class BatchIPTag : IUtf8JsonSerializable, IJsonModel<BatchIPTag>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IPTag>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchIPTag>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<IPTag>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BatchIPTag>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPTag>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchIPTag>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPTag)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchIPTag)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(IPTagType))
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.Batch.Models
             }
         }
 
-        IPTag IJsonModel<IPTag>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BatchIPTag IJsonModel<BatchIPTag>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPTag>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchIPTag>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPTag)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchIPTag)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIPTag(document.RootElement, options);
+            return DeserializeBatchIPTag(document.RootElement, options);
         }
 
-        internal static IPTag DeserializeIPTag(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static BatchIPTag DeserializeBatchIPTag(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -103,38 +103,38 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new IPTag(ipTagType, tag, serializedAdditionalRawData);
+            return new BatchIPTag(ipTagType, tag, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<IPTag>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<BatchIPTag>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPTag>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchIPTag>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerBatchContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(IPTag)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchIPTag)} does not support writing '{options.Format}' format.");
             }
         }
 
-        IPTag IPersistableModel<IPTag>.Create(BinaryData data, ModelReaderWriterOptions options)
+        BatchIPTag IPersistableModel<BatchIPTag>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPTag>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchIPTag>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeIPTag(document.RootElement, options);
+                        return DeserializeBatchIPTag(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IPTag)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchIPTag)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<IPTag>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BatchIPTag>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

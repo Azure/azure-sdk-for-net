@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    /// <summary> Specifies particular host endpoint settings. </summary>
-    public partial class HostEndpointSettings
+    /// <summary> Specifies ProxyAgent settings while creating the virtual machine. </summary>
+    public partial class BatchProxyAgentSettings
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,25 +45,29 @@ namespace Azure.ResourceManager.Batch.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="HostEndpointSettings"/>. </summary>
-        public HostEndpointSettings()
+        /// <summary> Initializes a new instance of <see cref="BatchProxyAgentSettings"/>. </summary>
+        public BatchProxyAgentSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HostEndpointSettings"/>. </summary>
-        /// <param name="mode"> Specifies the access control policy execution mode. </param>
-        /// <param name="inVmAccessControlProfileReferenceId"> Specifies the reference to the InVMAccessControlProfileVersion resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{profile}/versions/{version}. </param>
+        /// <summary> Initializes a new instance of <see cref="BatchProxyAgentSettings"/>. </summary>
+        /// <param name="enabled"> Specifies whether Metadata Security Protocol feature should be enabled on the virtual machine or virtual machine scale set. Default is False. </param>
+        /// <param name="imds"> Settings for the IMDS endpoint. </param>
+        /// <param name="wireServer"> Settings for the WireServer endpoint. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HostEndpointSettings(HostEndpointSettingsModeType? mode, ResourceIdentifier inVmAccessControlProfileReferenceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchProxyAgentSettings(bool? enabled, BatchHostEndpointSettings imds, BatchHostEndpointSettings wireServer, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Mode = mode;
-            InVmAccessControlProfileReferenceId = inVmAccessControlProfileReferenceId;
+            Enabled = enabled;
+            Imds = imds;
+            WireServer = wireServer;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Specifies the access control policy execution mode. </summary>
-        public HostEndpointSettingsModeType? Mode { get; set; }
-        /// <summary> Specifies the reference to the InVMAccessControlProfileVersion resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{profile}/versions/{version}. </summary>
-        public ResourceIdentifier InVmAccessControlProfileReferenceId { get; set; }
+        /// <summary> Specifies whether Metadata Security Protocol feature should be enabled on the virtual machine or virtual machine scale set. Default is False. </summary>
+        public bool? Enabled { get; set; }
+        /// <summary> Settings for the IMDS endpoint. </summary>
+        public BatchHostEndpointSettings Imds { get; set; }
+        /// <summary> Settings for the WireServer endpoint. </summary>
+        public BatchHostEndpointSettings WireServer { get; set; }
     }
 }

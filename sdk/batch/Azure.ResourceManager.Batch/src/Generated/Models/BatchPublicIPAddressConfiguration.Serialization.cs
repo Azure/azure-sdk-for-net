@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.Batch.Models
             }
             BatchIPAddressProvisioningType? provision = default;
             IList<ResourceIdentifier> ipAddressIds = default;
-            IList<IPFamily> ipFamilies = default;
-            IList<IPTag> ipTags = default;
+            IList<BatchIPFamily> ipFamilies = default;
+            IList<BatchIPTag> ipTags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    List<IPFamily> array = new List<IPFamily>();
+                    List<BatchIPFamily> array = new List<BatchIPFamily>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new IPFamily(item.GetString()));
+                        array.Add(new BatchIPFamily(item.GetString()));
                     }
                     ipFamilies = array;
                     continue;
@@ -169,10 +169,10 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    List<IPTag> array = new List<IPTag>();
+                    List<BatchIPTag> array = new List<BatchIPTag>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPTag.DeserializeIPTag(item, options));
+                        array.Add(BatchIPTag.DeserializeBatchIPTag(item, options));
                     }
                     ipTags = array;
                     continue;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BatchPublicIPAddressConfiguration(provision, ipAddressIds ?? new ChangeTrackingList<ResourceIdentifier>(), ipFamilies ?? new ChangeTrackingList<IPFamily>(), ipTags ?? new ChangeTrackingList<IPTag>(), serializedAdditionalRawData);
+            return new BatchPublicIPAddressConfiguration(provision, ipAddressIds ?? new ChangeTrackingList<ResourceIdentifier>(), ipFamilies ?? new ChangeTrackingList<BatchIPFamily>(), ipTags ?? new ChangeTrackingList<BatchIPTag>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchPublicIPAddressConfiguration>.Write(ModelReaderWriterOptions options)

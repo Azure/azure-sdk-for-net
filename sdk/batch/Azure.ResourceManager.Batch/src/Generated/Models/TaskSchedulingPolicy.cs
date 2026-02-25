@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="jobDefaultOrder"> The order for scheduling tasks from different jobs with the same priority. </param>
         /// <param name="nodeFillType"> How tasks should be distributed across compute nodes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TaskSchedulingPolicy(JobDefaultOrder? jobDefaultOrder, BatchNodeFillType nodeFillType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TaskSchedulingPolicy(BatchJobDefaultOrder? jobDefaultOrder, BatchNodeFillType nodeFillType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             JobDefaultOrder = jobDefaultOrder;
             NodeFillType = nodeFillType;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> The order for scheduling tasks from different jobs with the same priority. </summary>
-        public JobDefaultOrder? JobDefaultOrder { get; set; }
+        public BatchJobDefaultOrder? JobDefaultOrder { get; set; }
         /// <summary> How tasks should be distributed across compute nodes. </summary>
         public BatchNodeFillType NodeFillType { get; set; }
     }

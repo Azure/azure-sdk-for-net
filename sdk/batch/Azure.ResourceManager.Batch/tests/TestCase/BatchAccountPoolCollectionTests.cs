@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
                 PublicIPAddressConfiguration = new BatchPublicIPAddressConfiguration()
             };
 
-            input.NetworkConfiguration.PublicIPAddressConfiguration.IPFamilies.Add(IPFamily.IPv4);
-            input.NetworkConfiguration.PublicIPAddressConfiguration.IPFamilies.Add(IPFamily.IPv6);
+            input.NetworkConfiguration.PublicIPAddressConfiguration.IPFamilies.Add(BatchIPFamily.IPv4);
+            input.NetworkConfiguration.PublicIPAddressConfiguration.IPFamilies.Add(BatchIPFamily.IPv6);
             input.NetworkConfiguration.PublicIPAddressConfiguration.IPTags.Add(
-                new IPTag()
+                new BatchIPTag()
                 {
                     IPTagType = "tagType1",
                     Tag = "tag1"
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
 
             input.TaskSchedulingPolicy = new TaskSchedulingPolicy(BatchNodeFillType.Pack)
             {
-                JobDefaultOrder = JobDefaultOrder.CreationTime,
+                JobDefaultOrder = BatchJobDefaultOrder.CreationTime,
             };
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             BatchAccountPoolData batchNodeRemoteLoginSettings = lro.Value.Data;
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
             Assert.AreEqual(3389,batchNodeRemoteLoginSettings.NetworkConfiguration.EndpointConfiguration.InboundNatPools[0].BackendPort);
             Assert.NotNull(batchNodeRemoteLoginSettings.NetworkConfiguration.PublicIPAddressConfiguration);
             Assert.NotNull(batchNodeRemoteLoginSettings.NetworkConfiguration.PublicIPAddressConfiguration.IPFamilies);
-            Assert.AreEqual(IPFamily.IPv4, batchNodeRemoteLoginSettings.NetworkConfiguration.PublicIPAddressConfiguration.IPFamilies[0]);
-            Assert.AreEqual(IPFamily.IPv6, batchNodeRemoteLoginSettings.NetworkConfiguration.PublicIPAddressConfiguration.IPFamilies[1]);
+            Assert.AreEqual(BatchIPFamily.IPv4, batchNodeRemoteLoginSettings.NetworkConfiguration.PublicIPAddressConfiguration.IPFamilies[0]);
+            Assert.AreEqual(BatchIPFamily.IPv6, batchNodeRemoteLoginSettings.NetworkConfiguration.PublicIPAddressConfiguration.IPFamilies[1]);
             Assert.NotNull(batchNodeRemoteLoginSettings.NetworkConfiguration.PublicIPAddressConfiguration.IPTags);
             Assert.NotNull(batchNodeRemoteLoginSettings.NetworkConfiguration.PublicIPAddressConfiguration.IPTags[0]);
             Assert.AreEqual("tagType1", batchNodeRemoteLoginSettings.NetworkConfiguration.PublicIPAddressConfiguration.IPTags[0].IPTagType);
             Assert.AreEqual("tag1", batchNodeRemoteLoginSettings.NetworkConfiguration.PublicIPAddressConfiguration.IPTags[0].Tag);
             Assert.NotNull(batchNodeRemoteLoginSettings.TaskSchedulingPolicy);
-            Assert.AreEqual(JobDefaultOrder.CreationTime, batchNodeRemoteLoginSettings.TaskSchedulingPolicy.JobDefaultOrder);
+            Assert.AreEqual(BatchJobDefaultOrder.CreationTime, batchNodeRemoteLoginSettings.TaskSchedulingPolicy.JobDefaultOrder);
         }
 
         [TestCase]
@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
                     IsSecureBootEnabled = true,
                     IsVTpmEnabled = true,
                 },
-                ProxyAgentSettings = new ProxyAgentSettings
+                ProxyAgentSettings = new BatchProxyAgentSettings
                 {
-                   Imds = new HostEndpointSettings
+                   Imds = new BatchHostEndpointSettings
                    {
-                       Mode = HostEndpointSettingsModeType.Audit,
+                       Mode = BatchHostEndpointSettingsModeType.Audit,
                    },
                    Enabled = true,
                 },
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
             Assert.NotNull(batchPool.DeploymentConfiguration.VmConfiguration.SecurityProfile.ProxyAgentSettings);
             Assert.AreEqual(true, batchPool.DeploymentConfiguration.VmConfiguration.SecurityProfile.ProxyAgentSettings.Enabled);
             Assert.NotNull(batchPool.DeploymentConfiguration.VmConfiguration.SecurityProfile.ProxyAgentSettings.Imds);
-            Assert.AreEqual(HostEndpointSettingsModeType.Audit, batchPool.DeploymentConfiguration.VmConfiguration.SecurityProfile.ProxyAgentSettings.Imds.Mode);
+            Assert.AreEqual(BatchHostEndpointSettingsModeType.Audit, batchPool.DeploymentConfiguration.VmConfiguration.SecurityProfile.ProxyAgentSettings.Imds.Mode);
         }
 
         [TestCase]
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
             input.DeploymentConfiguration.VmConfiguration.DiskEncryptionConfiguration = new DiskEncryptionConfiguration
             {
                 Targets = { BatchDiskEncryptionTarget.OSDisk },
-                CustomerManagedKey = new DiskCustomerManagedKey
+                CustomerManagedKey = new BatchDiskCustomerManagedKey
                 {
                     KeyUri = new Uri(cmkKeyUri),
                     RotationToLatestKeyVersionEnabled = true,
@@ -231,11 +231,11 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
                     IsSecureBootEnabled = true,
                     IsVTpmEnabled = true,
                 },
-                ProxyAgentSettings = new ProxyAgentSettings
+                ProxyAgentSettings = new BatchProxyAgentSettings
                 {
-                    Imds = new HostEndpointSettings
+                    Imds = new BatchHostEndpointSettings
                     {
-                        Mode = HostEndpointSettingsModeType.Audit,
+                        Mode = BatchHostEndpointSettingsModeType.Audit,
                     },
                     Enabled = false,
                 },
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
             Assert.AreEqual(batchPool.DeploymentConfiguration.VmConfiguration.SecurityProfile.UefiSettings.IsSecureBootEnabled, true);
             Assert.AreEqual(batchPool.DeploymentConfiguration.VmConfiguration.SecurityProfile.UefiSettings.IsVTpmEnabled, true);
             Assert.AreEqual(batchPool.DeploymentConfiguration.VmConfiguration.SecurityProfile.ProxyAgentSettings.Enabled, false);
-            Assert.AreEqual(batchPool.DeploymentConfiguration.VmConfiguration.SecurityProfile.ProxyAgentSettings.Imds.Mode, HostEndpointSettingsModeType.Audit);
+            Assert.AreEqual(batchPool.DeploymentConfiguration.VmConfiguration.SecurityProfile.ProxyAgentSettings.Imds.Mode, BatchHostEndpointSettingsModeType.Audit);
             Assert.AreEqual(batchPool.DeploymentConfiguration.VmConfiguration.OSDisk.Caching, BatchDiskCachingType.ReadWrite);
             Assert.AreEqual(batchPool.DeploymentConfiguration.VmConfiguration.OSDisk.ManagedDisk.SecurityProfile.SecurityEncryptionType, BatchSecurityEncryptionType.VmGuestStateOnly);
             Assert.AreEqual(input.DeploymentConfiguration.VmConfiguration.DiskEncryptionConfiguration.CustomerManagedKey.KeyUri, new Uri(cmkKeyUri));

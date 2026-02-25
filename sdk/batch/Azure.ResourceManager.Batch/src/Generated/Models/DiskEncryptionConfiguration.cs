@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="targets"> On Linux pool, only "TemporaryDisk" is supported; on Windows pool, "OsDisk" and "TemporaryDisk" must be specified. </param>
         /// <param name="customerManagedKey"> Customer Managed Key will encrypt OS Disk by EncryptionAtRest, and by default we will encrypt the data disk as well. It can be used only when the pool is configured with an identity and OsDisk is set as one of the targets of DiskEncryption. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiskEncryptionConfiguration(IList<BatchDiskEncryptionTarget> targets, DiskCustomerManagedKey customerManagedKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DiskEncryptionConfiguration(IList<BatchDiskEncryptionTarget> targets, BatchDiskCustomerManagedKey customerManagedKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Targets = targets;
             CustomerManagedKey = customerManagedKey;
@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> On Linux pool, only "TemporaryDisk" is supported; on Windows pool, "OsDisk" and "TemporaryDisk" must be specified. </summary>
         public IList<BatchDiskEncryptionTarget> Targets { get; }
         /// <summary> Customer Managed Key will encrypt OS Disk by EncryptionAtRest, and by default we will encrypt the data disk as well. It can be used only when the pool is configured with an identity and OsDisk is set as one of the targets of DiskEncryption. </summary>
-        public DiskCustomerManagedKey CustomerManagedKey { get; set; }
+        public BatchDiskCustomerManagedKey CustomerManagedKey { get; set; }
     }
 }

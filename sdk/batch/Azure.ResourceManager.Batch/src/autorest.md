@@ -211,7 +211,14 @@ rename-mapping:
   UefiSettings.vTpmEnabled: IsVTpmEnabled
   SecurityTypes: BatchSecurityType
   StorageAccountType.StandardSSD_LRS: StandardSsdLrs
-
+  DiskCustomerManagedKey: BatchDiskCustomerManagedKey
+  HostEndpointSettings: BatchHostEndpointSettings
+  HostEndpointSettingsModeTypes: BatchHostEndpointSettingsModeTypes
+  IPFamily: BatchIPFamily
+  IPTag: BatchIPTag
+  JobDefaultOrder: BatchJobDefaultOrder
+  ProxyAgentSettings: BatchProxyAgentSettings
+  
 directive:
 # TODO -- remove this and use rename-mapping when it is supported
   - from: openapi.json

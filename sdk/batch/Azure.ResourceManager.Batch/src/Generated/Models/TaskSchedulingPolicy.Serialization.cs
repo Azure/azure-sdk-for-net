@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            JobDefaultOrder? jobDefaultOrder = default;
+            BatchJobDefaultOrder? jobDefaultOrder = default;
             BatchNodeFillType nodeFillType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    jobDefaultOrder = new JobDefaultOrder(property.Value.GetString());
+                    jobDefaultOrder = new BatchJobDefaultOrder(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("nodeFillType"u8))
