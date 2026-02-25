@@ -15,6 +15,7 @@ public class RedTeamTests : ProjectsClientTestBase
     {
     }
 
+    [Ignore("The V1 API is not supported")]
     [RecordedTest]
     public async Task TestRedTeamCRUD()
     {
@@ -47,6 +48,7 @@ public class RedTeamTests : ProjectsClientTestBase
         Assert.That(hshStatuses, Contains.Item(initialName), $"The red team names {initialName} was not listed.");
     }
 
+    [Ignore("The V1 API is not supported")]
     [RecordedTest]
     public async Task TestRedTeamScan()
     {

@@ -28,12 +28,12 @@ namespace Azure.AI.Projects.OpenAI
         private const string BrowserAutomationPreviewValue = "browser_automation_preview";
         private const string FabricDataagentPreviewValue = "fabric_dataagent_preview";
         private const string SharepointGroundingPreviewValue = "sharepoint_grounding_preview";
+        private const string MemorySearchPreviewValue = "memory_search_preview";
         private const string AzureAiSearchValue = "azure_ai_search";
         private const string AzureFunctionValue = "azure_function";
         private const string BingGroundingValue = "bing_grounding";
         private const string CaptureStructuredOutputsValue = "capture_structured_outputs";
         private const string OpenapiValue = "openapi";
-        private const string MemorySearchValue = "memory_search";
 
         /// <summary> Initializes a new instance of <see cref="ToolType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -96,6 +96,9 @@ namespace Azure.AI.Projects.OpenAI
         /// <summary> Gets the SharepointGroundingPreview. </summary>
         public static ToolType SharepointGroundingPreview { get; } = new ToolType(SharepointGroundingPreviewValue);
 
+        /// <summary> Gets the MemorySearchPreview. </summary>
+        public static ToolType MemorySearchPreview { get; } = new ToolType(MemorySearchPreviewValue);
+
         /// <summary> Gets the AzureAiSearch. </summary>
         public static ToolType AzureAiSearch { get; } = new ToolType(AzureAiSearchValue);
 
@@ -110,9 +113,6 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <summary> Gets the Openapi. </summary>
         public static ToolType Openapi { get; } = new ToolType(OpenapiValue);
-
-        /// <summary> Gets the MemorySearch. </summary>
-        public static ToolType MemorySearch { get; } = new ToolType(MemorySearchValue);
 
         /// <summary> Determines if two <see cref="ToolType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

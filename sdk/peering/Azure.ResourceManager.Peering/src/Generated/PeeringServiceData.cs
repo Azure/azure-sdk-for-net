@@ -13,107 +13,150 @@ using Azure.ResourceManager.Peering.Models;
 
 namespace Azure.ResourceManager.Peering
 {
-    /// <summary>
-    /// A class representing the PeeringService data model.
-    /// Peering Service
-    /// </summary>
+    /// <summary> Peering Service. </summary>
     public partial class PeeringServiceData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PeeringServiceData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public PeeringServiceData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="PeeringServiceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The properties that define a peering service. </param>
         /// <param name="sku"> The SKU that defines the type of the peering service. </param>
-        /// <param name="peeringServiceLocation"> The location (state/province) of the customer. </param>
-        /// <param name="peeringServiceProvider"> The name of the service provider. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="providerPrimaryPeeringLocation"> The primary peering (Microsoft/service provider) location to be used for customer traffic. </param>
-        /// <param name="providerBackupPeeringLocation"> The backup peering (Microsoft/service provider) location to be used for customer traffic. </param>
-        /// <param name="logAnalyticsWorkspaceProperties"> The Log Analytics Workspace Properties. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PeeringServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PeeringServiceSku sku, string peeringServiceLocation, string peeringServiceProvider, PeeringProvisioningState? provisioningState, string providerPrimaryPeeringLocation, string providerBackupPeeringLocation, PeeringLogAnalyticsWorkspaceProperties logAnalyticsWorkspaceProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal PeeringServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, PeeringServiceProperties properties, PeeringServiceSku sku) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Sku = sku;
-            PeeringServiceLocation = peeringServiceLocation;
-            PeeringServiceProvider = peeringServiceProvider;
-            ProvisioningState = provisioningState;
-            ProviderPrimaryPeeringLocation = providerPrimaryPeeringLocation;
-            ProviderBackupPeeringLocation = providerBackupPeeringLocation;
-            LogAnalyticsWorkspaceProperties = logAnalyticsWorkspaceProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PeeringServiceData"/> for deserialization. </summary>
-        internal PeeringServiceData()
-        {
-        }
+        /// <summary> The properties that define a peering service. </summary>
+        internal PeeringServiceProperties Properties { get; set; }
 
         /// <summary> The SKU that defines the type of the peering service. </summary>
         internal PeeringServiceSku Sku { get; set; }
-        /// <summary> The name of the peering service SKU. </summary>
-        public string SkuName
+
+        /// <summary> The location (state/province) of the customer. </summary>
+        public string PeeringServiceLocation
         {
-            get => Sku is null ? default : Sku.Name;
+            get
+            {
+                return Properties is null ? default : Properties.PeeringServiceLocation;
+            }
             set
             {
-                if (Sku is null)
-                    Sku = new PeeringServiceSku();
-                Sku.Name = value;
+                if (Properties is null)
+                {
+                    Properties = new PeeringServiceProperties();
+                }
+                Properties.PeeringServiceLocation = value;
             }
         }
 
-        /// <summary> The location (state/province) of the customer. </summary>
-        public string PeeringServiceLocation { get; set; }
         /// <summary> The name of the service provider. </summary>
-        public string PeeringServiceProvider { get; set; }
+        public string PeeringServiceProvider
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PeeringServiceProvider;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PeeringServiceProperties();
+                }
+                Properties.PeeringServiceProvider = value;
+            }
+        }
+
         /// <summary> The provisioning state of the resource. </summary>
-        public PeeringProvisioningState? ProvisioningState { get; }
+        public PeeringProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The primary peering (Microsoft/service provider) location to be used for customer traffic. </summary>
-        public string ProviderPrimaryPeeringLocation { get; set; }
+        public string ProviderPrimaryPeeringLocation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProviderPrimaryPeeringLocation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PeeringServiceProperties();
+                }
+                Properties.ProviderPrimaryPeeringLocation = value;
+            }
+        }
+
         /// <summary> The backup peering (Microsoft/service provider) location to be used for customer traffic. </summary>
-        public string ProviderBackupPeeringLocation { get; set; }
+        public string ProviderBackupPeeringLocation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProviderBackupPeeringLocation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PeeringServiceProperties();
+                }
+                Properties.ProviderBackupPeeringLocation = value;
+            }
+        }
+
         /// <summary> The Log Analytics Workspace Properties. </summary>
-        public PeeringLogAnalyticsWorkspaceProperties LogAnalyticsWorkspaceProperties { get; set; }
+        public PeeringLogAnalyticsWorkspaceProperties LogAnalyticsWorkspaceProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LogAnalyticsWorkspaceProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PeeringServiceProperties();
+                }
+                Properties.LogAnalyticsWorkspaceProperties = value;
+            }
+        }
+
+        /// <summary> The name of the peering service SKU. </summary>
+        public string SkuName
+        {
+            get
+            {
+                return Sku is null ? default : Sku.Name;
+            }
+            set
+            {
+                if (Sku is null)
+                {
+                    Sku = new PeeringServiceSku();
+                }
+                Sku.Name = value;
+            }
+        }
     }
 }

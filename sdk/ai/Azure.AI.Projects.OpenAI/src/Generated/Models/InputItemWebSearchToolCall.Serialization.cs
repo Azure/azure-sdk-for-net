@@ -119,7 +119,7 @@ namespace Azure.AI.Projects.OpenAI
             InputItemType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
-            ItemResourceWebSearchToolCallStatus status = default;
+            OutputItemWebSearchToolCallStatus status = default;
             BinaryData action = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -135,7 +135,7 @@ namespace Azure.AI.Projects.OpenAI
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToItemResourceWebSearchToolCallStatus();
+                    status = prop.Value.GetString().ToOutputItemWebSearchToolCallStatus();
                     continue;
                 }
                 if (prop.NameEquals("action"u8))

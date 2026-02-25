@@ -142,6 +142,262 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
         }
 
         [Fact]
+        public void AzureMonitorOptions_EnableStandardMetrics_DefaultValue_IsTrue()
+        {
+            // Arrange & Act
+            var options = new AzureMonitorOptions();
+
+            // Assert
+            Assert.True(options.EnableStandardMetrics);
+        }
+
+        [Fact]
+        public void AzureMonitorOptions_EnableStandardMetrics_CanBeDisabled()
+        {
+            // Arrange & Act
+            var options = new AzureMonitorOptions
+            {
+                EnableStandardMetrics = false
+            };
+
+            // Assert
+            Assert.False(options.EnableStandardMetrics);
+        }
+
+        [Fact]
+        public void AzureMonitorOptions_SetValueToExporterOptions_CopiesEnableStandardMetrics()
+        {
+            // Arrange
+            var azureMonitorOptions = new AzureMonitorOptions
+            {
+                ConnectionString = TestConnectionString,
+                EnableStandardMetrics = false
+            };
+
+            var exporterOptions = new AzureMonitorExporterOptions();
+
+            // Act
+            azureMonitorOptions.SetValueToExporterOptions(exporterOptions);
+
+            // Assert
+            Assert.False(exporterOptions.EnableStandardMetrics);
+            Assert.Equal(TestConnectionString, exporterOptions.ConnectionString);
+        }
+
+        [Fact]
+        public void UseAzureMonitor_DefaultEnableStandardMetrics()
+        {
+            // Arrange
+            var serviceCollection = new ServiceCollection();
+
+            // Act
+            serviceCollection.AddOpenTelemetry()
+                .UseAzureMonitor(options =>
+                {
+                    options.ConnectionString = TestConnectionString;
+                    options.DisableOfflineStorage = true;
+                });
+
+            var serviceProvider = serviceCollection.BuildServiceProvider();
+
+            // Assert
+            var azureMonitorOptions = serviceProvider.GetRequiredService<IOptionsMonitor<AzureMonitorOptions>>()
+                .Get(Options.DefaultName);
+
+            Assert.True(azureMonitorOptions.EnableStandardMetrics);
+
+            var exporterOptions = serviceProvider.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>()
+                .Get(Options.DefaultName);
+
+            Assert.True(exporterOptions.EnableStandardMetrics);
+        }
+
+        [Fact]
+        public void UseAzureMonitor_CanDisableStandardMetrics()
+        {
+            // Arrange
+            var serviceCollection = new ServiceCollection();
+
+            // Act
+            serviceCollection.AddOpenTelemetry()
+                .UseAzureMonitor(options =>
+                {
+                    options.ConnectionString = TestConnectionString;
+                    options.EnableStandardMetrics = false;
+                    options.DisableOfflineStorage = true;
+                });
+
+            var serviceProvider = serviceCollection.BuildServiceProvider();
+
+            // Assert
+            var azureMonitorOptions = serviceProvider.GetRequiredService<IOptionsMonitor<AzureMonitorOptions>>()
+                .Get(Options.DefaultName);
+
+            Assert.False(azureMonitorOptions.EnableStandardMetrics);
+
+            var exporterOptions = serviceProvider.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>()
+                .Get(Options.DefaultName);
+
+            Assert.False(exporterOptions.EnableStandardMetrics);
+        }
+
+        [Fact]
+        public void UseAzureMonitor_EnableStandardMetrics_PropagatesCorrectly()
+        {
+            // Arrange
+            var serviceCollection = new ServiceCollection();
+
+            // Act - Test with true
+            serviceCollection.AddOpenTelemetry()
+                .UseAzureMonitor(options =>
+                {
+                    options.ConnectionString = TestConnectionString;
+                    options.EnableStandardMetrics = true;
+                    options.DisableOfflineStorage = true;
+                });
+
+            var serviceProvider = serviceCollection.BuildServiceProvider();
+
+            // Assert
+            var azureMonitorOptions = serviceProvider.GetRequiredService<IOptionsMonitor<AzureMonitorOptions>>()
+                .Get(Options.DefaultName);
+
+            var exporterOptions = serviceProvider.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>()
+                .Get(Options.DefaultName);
+
+            Assert.Equal(azureMonitorOptions.EnableStandardMetrics, exporterOptions.EnableStandardMetrics);
+            Assert.True(exporterOptions.EnableStandardMetrics);
+        }
+
+        [Fact]
+        public void AzureMonitorOptions_EnablePerfCounters_DefaultValue_IsTrue()
+        {
+            // Arrange & Act
+            var options = new AzureMonitorOptions();
+
+            // Assert
+            Assert.True(options.EnablePerfCounters);
+        }
+
+        [Fact]
+        public void AzureMonitorOptions_EnablePerfCounters_CanBeDisabled()
+        {
+            // Arrange & Act
+            var options = new AzureMonitorOptions
+            {
+                EnablePerfCounters = false
+            };
+
+            // Assert
+            Assert.False(options.EnablePerfCounters);
+        }
+
+        [Fact]
+        public void AzureMonitorOptions_SetValueToExporterOptions_CopiesEnablePerfCounters()
+        {
+            // Arrange
+            var azureMonitorOptions = new AzureMonitorOptions
+            {
+                ConnectionString = TestConnectionString,
+                EnablePerfCounters = false
+            };
+
+            var exporterOptions = new AzureMonitorExporterOptions();
+
+            // Act
+            azureMonitorOptions.SetValueToExporterOptions(exporterOptions);
+
+            // Assert
+            Assert.False(exporterOptions.EnablePerfCounters);
+            Assert.Equal(TestConnectionString, exporterOptions.ConnectionString);
+        }
+
+        [Fact]
+        public void UseAzureMonitor_DefaultEnablePerfCounters()
+        {
+            // Arrange
+            var serviceCollection = new ServiceCollection();
+
+            // Act
+            serviceCollection.AddOpenTelemetry()
+                .UseAzureMonitor(options =>
+                {
+                    options.ConnectionString = TestConnectionString;
+                    options.DisableOfflineStorage = true;
+                });
+
+            var serviceProvider = serviceCollection.BuildServiceProvider();
+
+            // Assert
+            var azureMonitorOptions = serviceProvider.GetRequiredService<IOptionsMonitor<AzureMonitorOptions>>()
+                .Get(Options.DefaultName);
+
+            Assert.True(azureMonitorOptions.EnablePerfCounters);
+
+            var exporterOptions = serviceProvider.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>()
+                .Get(Options.DefaultName);
+
+            Assert.True(exporterOptions.EnablePerfCounters);
+        }
+
+        [Fact]
+        public void UseAzureMonitor_CanDisablePerfCounters()
+        {
+            // Arrange
+            var serviceCollection = new ServiceCollection();
+
+            // Act
+            serviceCollection.AddOpenTelemetry()
+                .UseAzureMonitor(options =>
+                {
+                    options.ConnectionString = TestConnectionString;
+                    options.EnablePerfCounters = false;
+                    options.DisableOfflineStorage = true;
+                });
+
+            var serviceProvider = serviceCollection.BuildServiceProvider();
+
+            // Assert
+            var azureMonitorOptions = serviceProvider.GetRequiredService<IOptionsMonitor<AzureMonitorOptions>>()
+                .Get(Options.DefaultName);
+
+            Assert.False(azureMonitorOptions.EnablePerfCounters);
+
+            var exporterOptions = serviceProvider.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>()
+                .Get(Options.DefaultName);
+
+            Assert.False(exporterOptions.EnablePerfCounters);
+        }
+
+        [Fact]
+        public void UseAzureMonitor_EnablePerfCounters_PropagatesCorrectly()
+        {
+            // Arrange
+            var serviceCollection = new ServiceCollection();
+
+            // Act - Test with true
+            serviceCollection.AddOpenTelemetry()
+                .UseAzureMonitor(options =>
+                {
+                    options.ConnectionString = TestConnectionString;
+                    options.EnablePerfCounters = true;
+                    options.DisableOfflineStorage = true;
+                });
+
+            var serviceProvider = serviceCollection.BuildServiceProvider();
+
+            // Assert
+            var azureMonitorOptions = serviceProvider.GetRequiredService<IOptionsMonitor<AzureMonitorOptions>>()
+                .Get(Options.DefaultName);
+
+            var exporterOptions = serviceProvider.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>()
+                .Get(Options.DefaultName);
+
+            Assert.Equal(azureMonitorOptions.EnablePerfCounters, exporterOptions.EnablePerfCounters);
+            Assert.True(exporterOptions.EnablePerfCounters);
+        }
+
+        [Fact]
         public void UseAzureMonitor_WithoutConfiguration_UsesDefaultValue()
         {
             // Arrange

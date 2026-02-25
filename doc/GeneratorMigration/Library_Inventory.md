@@ -20,8 +20,8 @@
   - Old TypeSpec: 0
 - Data Plane (DPG): 144
   - Autorest/Swagger: 55
-  - New Emitter (TypeSpec): 34
-  - Old TypeSpec: 6
+  - New Emitter (TypeSpec): 35
+  - Old TypeSpec: 5
 - Provisioning: 31
   - Custom reflection-based generator: 31
 - No generator: 49
@@ -31,7 +31,7 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 34 / 40 (85%)
+**Migration Status**: 35 / 40 (87.5%)
 
 | Service | Library | New Emitter | Using SCM |
 | ------- | ------- | ----------- | --------- |
@@ -48,7 +48,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | cognitivelanguage | Azure.AI.Language.QuestionAnswering.Inference | ✅ |  |
 | cognitivelanguage | Azure.AI.Language.Text |  |  |
 | cognitivelanguage | Azure.AI.Language.Text.Authoring | ✅ |  |
-| communication | Azure.Communication.JobRouter |  |  |
+| communication | Azure.Communication.JobRouter | ✅ |  |
 | communication | Azure.Communication.Messages |  |  |
 | communication | Azure.Communication.ProgrammableConnectivity | ✅ |  |
 | confidentialledger | Azure.Security.CodeTransparency | ✅ |  |

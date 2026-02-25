@@ -1,5 +1,11 @@
 # Sample on getting the responses from hosted Agent in Azure.AI.Projects.OpenAI.
 
+**Note:** This feature is in the preview, to use it, please disable the `AAIP001` warning.
+
+```C#
+#pragma warning disable AAIP001
+```
+
 Hosted agents simplify the custom agent deployment on fully controlled environment [see more](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/hosted-agents). `Azure.AI.Projects` allow interactions with hosted agents using `ImageBasedHostedAgentDefinition`. In this example we will deploy the hosted agent and use it from the `Azure.AI.Projects.OpenAI`.
 
 ## Hosted Agent Deployment prerequisites
@@ -33,7 +39,7 @@ curl --request PUT \
 
 ```bash
 git clone https://github.com/azure-ai-foundry/foundry-samples.git
-cd foundry-samples/samples/python/hosted-agents/agent_framework/agents_in_workflow/
+cd foundry-samples/samples/python/hosted-agents/agent-framework/agents-in-workflow/
 ```
 
 5. Build the docker image and push it to the Azure Container registry you have created.
@@ -64,13 +70,12 @@ AIProjectClient projectClient = new(endpoint: uriEndpoint, tokenProvider: new De
 2. For brevity we will create the method, returning the `ImageBasedHostedAgentDefinition` object.
 
 ```C# Snippet:Sample_ImageBasedHostedAgentDefinition_HostedAgent
-private static  ImageBasedHostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
+private static  HostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
 {
-    ImageBasedHostedAgentDefinition agentDefinition = new(
+    HostedAgentDefinition agentDefinition = new(
         containerProtocolVersions: [new ProtocolVersionRecord(AgentCommunicationMethod.ActivityProtocol, "v1")],
         cpu: "1",
-        memory: "2Gi",
-        image: dockerImage
+        memory: "2Gi"
     )
     {
         EnvironmentVariables = {
@@ -79,7 +84,8 @@ private static  ImageBasedHostedAgentDefinition GetAgentDefinition(string docker
             // Optional variables, used for logging
             { "APPLICATIONINSIGHTS_CONNECTION_STRING", applicationInsightConnectionString },
             { "AGENT_PROJECT_RESOURCE_ID", projectEndpoint },
-        }
+        },
+        Image = dockerImage,
     };
     return agentDefinition;
 }
@@ -89,7 +95,7 @@ private static  ImageBasedHostedAgentDefinition GetAgentDefinition(string docker
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_HostedAgent_Sync
-ImageBasedHostedAgentDefinition agentDefinition = GetAgentDefinition(
+HostedAgentDefinition agentDefinition = GetAgentDefinition(
     dockerImage: dockerImage,
     modelDeploymentName: modelDeploymentName,
     accountId: accountId,
@@ -103,7 +109,7 @@ AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_HostedAgent_Async
-ImageBasedHostedAgentDefinition agentDefinition = GetAgentDefinition(
+HostedAgentDefinition agentDefinition = GetAgentDefinition(
     dockerImage: dockerImage,
     modelDeploymentName: modelDeploymentName,
     accountId: accountId,

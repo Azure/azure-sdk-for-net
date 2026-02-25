@@ -23,7 +23,7 @@ namespace Azure.AI.Projects.OpenAI.Tests;
 /// </summary>
 public class ConversationsTests : ProjectsOpenAITestBase
 {
-    public ConversationsTests(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
+    public ConversationsTests(bool isAsync) : base(isAsync)
     {
     }
 

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 2.0.0-beta.1 (2026-02-24)
 
 ### Features Added
 
@@ -24,6 +24,8 @@
   * Rename class `BrowserAutomationAgentTool` to `BrowserAutomationPreviewTool`
   * Rename class `A2ATool` to `A2APreviewTool`
   * Removed class `LocalShellAgentTool`
+* `ImageBasedHostedAgentDefinition` has been merged into `HostedAgentDefinition`
+  * `Image` is now an optional property on `HostedAgentDefinition`; no other net change
 
 ## 1.0.0-beta.5 (2025-12-12)
 

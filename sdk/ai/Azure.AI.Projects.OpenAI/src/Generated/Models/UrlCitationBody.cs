@@ -44,15 +44,15 @@ namespace Azure.AI.Projects.OpenAI
         }
 
         /// <summary> The URL of the web resource. </summary>
-        public Uri Url { get; }
+        public Uri Url { get; set; }
 
         /// <summary> The index of the first character of the URL citation in the message. </summary>
-        public long StartIndex { get; }
+        public long StartIndex { get; set; }
 
         /// <summary> The index of the last character of the URL citation in the message. </summary>
-        public long EndIndex { get; }
+        public long EndIndex { get; set; }
 
         /// <summary> The title of the web resource. </summary>
-        public string Title { get; }
+        public string Title { get; set; }
     }
 }

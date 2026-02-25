@@ -44,6 +44,7 @@ The client library uses version `v1` of the AI Foundry [data plane REST APIs](ht
     - [Evaluation with Application Insights](#evaluation-with-application-insights)
     - [Evaluating responses](#evaluating-responses)
     - [Evaluation rules](#evaluation-rules)
+  - [Red teams](#red-teams)
 - [Tracing](#tracing)
     - [Azure Monitor Tracing](#tracing-to-azure-monitor)
     - [Console Tracing](#tracing-to-console)
@@ -558,6 +559,12 @@ Console.WriteLine($"Status: {fineTuningJob.Status}");
 
 ### Memory store operations
 
+**Note:** Memory stores is an experimental feature, to use it, please disable the `AAIP001` warning.
+
+```C#
+#pragma warning disable AAIP001
+```
+
 Memory in Foundry Agent Service is a managed, long-term memory solution. It enables Agent continuity across sessions, devices, and workflows.
 Project client can be used to manage memory stores. In the examples below we show only synchronous version of API for brevity.
 
@@ -623,7 +630,7 @@ MemorySearchOptions opts = new(scope)
 };
 MemoryStoreSearchResponse resp = projectClient.MemoryStores.SearchMemories(
     memoryStoreName: memoryStore.Name,
-    options: new(scope)
+    options: opts
 );
 Console.WriteLine("==The output from memory tool.==");
 foreach (Azure.AI.Projects.MemorySearchItem item in resp.Memories)
@@ -915,6 +922,12 @@ using BinaryContent runDataContent = BinaryContent.Create(runData);
 
 #### Using custom prompt-based evaluator
 
+**Note:** Storing evaluators in catalog is an experimental feature, to use it, please disable the `AAIP001` warning.
+
+```C#
+#pragma warning disable AAIP001
+```
+
 Side by side with built in evaluators, it is possible to define ones with custom logic. After the
 evaluator has been created and uploaded to catalog, it can be used as a regular evaluator:
 
@@ -998,6 +1011,11 @@ object[] testingCriteria = [
 ```
 
 #### Using custom code-based evaluator
+**Note:** Storing evaluators in catalog is an experimental feature, to use it, please disable the `AAIP001` warning.
+
+```C#
+#pragma warning disable AAIP001
+```
 
 Custom evaluators may rely on code-based rules as shown below.
 
@@ -1012,47 +1030,47 @@ private EvaluatorVersion GetCodeEvaluatorVersion()
         MaxValue = 1.0f
     };
     EvaluatorVersion evaluatorVersion = new(
-        categories: [EvaluatorCategory.Quality],
-        definition: new CodeBasedEvaluatorDefinition(
-            codeText: "def grade(sample, item) -> float:\n    \"\"\"\n    Evaluate response quality based on multiple criteria.\n    Note: All data is in the \\'item\\' parameter, \\'sample\\' is empty.\n    \"\"\"\n    # Extract data from item (not sample!)\n    response = item.get(\"response\", \"\").lower() if isinstance(item, dict) else \"\"\n    ground_truth = item.get(\"ground_truth\", \"\").lower() if isinstance(item, dict) else \"\"\n    query = item.get(\"query\", \"\").lower() if isinstance(item, dict) else \"\"\n    \n    # Check if response is empty\n    if not response:\n        return 0.0\n    \n    # Check for harmful content\n    harmful_keywords = [\"harmful\", \"dangerous\", \"unsafe\", \"illegal\", \"unethical\"]\n    if any(keyword in response for keyword in harmful_keywords):\n        return 0.0\n    \n    # Length check\n    if len(response) < 10:\n        return 0.1\n    elif len(response) < 50:\n        return 0.2\n    \n    # Technical content check\n    technical_keywords = [\"api\", \"experiment\", \"run\", \"azure\", \"machine learning\", \"gradient\", \"neural\", \"algorithm\"]\n    technical_score = sum(1 for k in technical_keywords if k in response) / len(technical_keywords)\n    \n    # Query relevance\n    query_words = query.split()[:3] if query else []\n    relevance_score = 0.7 if any(word in response for word in query_words) else 0.3\n    \n    # Ground truth similarity\n    if ground_truth:\n        truth_words = set(ground_truth.split())\n        response_words = set(response.split())\n        overlap = len(truth_words & response_words) / len(truth_words) if truth_words else 0\n        similarity_score = min(1.0, overlap)\n    else:\n        similarity_score = 0.5\n    \n    return min(1.0, (technical_score * 0.3) + (relevance_score * 0.3) + (similarity_score * 0.4))",
-            initParameters: BinaryData.FromObjectAsJson(
-                new
+    categories: [EvaluatorCategory.Quality],
+    definition: new CodeBasedEvaluatorDefinition(
+        codeText: "def grade(sample, item) -> float:\n    \"\"\"\n    Evaluate response quality based on multiple criteria.\n    Note: All data is in the \\'item\\' parameter, \\'sample\\' is empty.\n    \"\"\"\n    # Extract data from item (not sample!)\n    response = item.get(\"response\", \"\").lower() if isinstance(item, dict) else \"\"\n    ground_truth = item.get(\"ground_truth\", \"\").lower() if isinstance(item, dict) else \"\"\n    query = item.get(\"query\", \"\").lower() if isinstance(item, dict) else \"\"\n    \n    # Check if response is empty\n    if not response:\n        return 0.0\n    \n    # Check for harmful content\n    harmful_keywords = [\"harmful\", \"dangerous\", \"unsafe\", \"illegal\", \"unethical\"]\n    if any(keyword in response for keyword in harmful_keywords):\n        return 0.0\n    \n    # Length check\n    if len(response) < 10:\n        return 0.1\n    elif len(response) < 50:\n        return 0.2\n    \n    # Technical content check\n    technical_keywords = [\"api\", \"experiment\", \"run\", \"azure\", \"machine learning\", \"gradient\", \"neural\", \"algorithm\"]\n    technical_score = sum(1 for k in technical_keywords if k in response) / len(technical_keywords)\n    \n    # Query relevance\n    query_words = query.split()[:3] if query else []\n    relevance_score = 0.7 if any(word in response for word in query_words) else 0.3\n    \n    # Ground truth similarity\n    if ground_truth:\n        truth_words = set(ground_truth.split())\n        response_words = set(response.split())\n        overlap = len(truth_words & response_words) / len(truth_words) if truth_words else 0\n        similarity_score = min(1.0, overlap)\n    else:\n        similarity_score = 0.5\n    \n    return min(1.0, (technical_score * 0.3) + (relevance_score * 0.3) + (similarity_score * 0.4))",
+        initParameters: BinaryData.FromObjectAsJson(
+            new
+            {
+                required = new[] { "deployment_name", "pass_threshold" },
+                type = "object",
+                properties = new
                 {
-                    required = new[] { "deployment_name", "pass_threshold" },
-                    type = "object",
-                    properties = new
-                    {
-                        deployment_name = new { type = "string" },
-                        pass_threshold = new { type = "string" }
-                    }
+                    deployment_name = new { type = "string" },
+                    pass_threshold = new { type = "string" }
                 }
-            ),
-            dataSchema: BinaryData.FromObjectAsJson(
-                new
+            }
+        ),
+        dataSchema: BinaryData.FromObjectAsJson(
+            new
+            {
+                required = new[] { "item" },
+                type = "object",
+                properties = new
                 {
-                    required = new[] { "item" },
-                    type = "object",
-                    properties = new
+                    item = new
                     {
-                        item = new
+                        type = "object",
+                        properties = new
                         {
-                            type = "object",
-                            properties = new
-                            {
-                                query = new { type = "string" },
-                                response = new { type = "string" },
-                                ground_truth = new { type = "string" },
-                            }
+                            query = new { type = "string" },
+                            response = new { type = "string" },
+                            ground_truth = new { type = "string" },
                         }
                     }
                 }
-            ),
-            metrics: new Dictionary<string, EvaluatorMetric> {
-                { "result", resultMetric }
             }
         ),
-        evaluatorType: EvaluatorType.Custom
-    )
+        metrics: new Dictionary<string, EvaluatorMetric> {
+            { "result", resultMetric }
+        }
+    ),
+    evaluatorType: EvaluatorType.Custom
+)
     {
         DisplayName = "Custom code evaluator example",
         Description = "Custom evaluator to detect violent content",
@@ -1291,6 +1309,43 @@ AppContext.SetSwitch("Azure.Experimental.TraceGenAIMessageContent", true);
 If neither the environment variable nor the `AppContext` switch is set, content recording defaults to `false`.
 
 > **Precedence:** If both the `AppContext` switch and the environment variable are set, the `AppContext` switch takes priority. No exception is thrown on conflict.
+
+### Red teams
+**Note:** Red teams is an experimental feature, to use it, please disable the `AAIP001` warning.
+```C#
+#pragma warning disable AAIP001
+```
+Red teams allow to check how models behave in response to attack attempts.
+To test the model using Base64-encoded strings, with the prompts asking it to generate violent content, we can use the next code.
+
+```C# Snippet:Sample_CreateRedTeam_RedTeam
+AzureOpenAIModelConfiguration config = new(modelDeploymentName: modelDeploymentName);
+RedTeam redTeam = new(target: config)
+{
+    AttackStrategies = { AttackStrategy.Base64 },
+    RiskCategories = { RiskCategory.Violence },
+    DisplayName = "redteamtest1"
+};
+```
+
+Start the Read-Teaming task.
+
+```C# Snippet:Sample_RunScan_RedTeam_Async
+RequestOptions options = new();
+options.AddHeader("model-endpoint", modelEndpoint);
+options.AddHeader("model-api-key", modelApiKey);
+redTeam = await projectClient.RedTeams.CreateAsync(redTeam: redTeam, options: options);
+Console.WriteLine($"Red Team scan created with scan name: {redTeam.Name}");
+```
+
+Get Read-Teaming task and output its status.
+
+```C# Snippet:Sample_GetScanDetails_RedTeam_Async
+redTeam = await projectClient.RedTeams.GetAsync(name: redTeam.Name);
+Console.WriteLine($"Red Team scan status: {redTeam.Status}");
+```
+
+To get the results of the red teaming experiment, open Microsoft Foundry used for the experiments, on the left panel select **Evaluation** and choose **AI red teaming** tab.
 
 ## Troubleshooting
 

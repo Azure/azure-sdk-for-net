@@ -47,7 +47,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath("MgmtTypeSpec", true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     internal partial class InternalCodeInterpreterOutputLogs
     {
@@ -31,9 +31,9 @@ namespace OpenAI
         }
 
         /// <summary> The type of the output. Always `logs`. </summary>
-        internal string Type { get; } = "logs";
+        public string Type { get; } = "logs";
 
         /// <summary> The logs output from the code interpreter. </summary>
-        public string Logs { get; }
+        public string Logs { get; set; }
     }
 }

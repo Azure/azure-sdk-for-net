@@ -201,6 +201,14 @@ namespace Azure.Data.Tables.Tests
         }
 
         [Test]
+        public void GetSecondaryUriFromPrimaryLoopbackWithoutAccountName()
+        {
+            Uri secondaryEndpoint = TableConnectionString.GetSecondaryUriFromPrimary(new Uri("http://localhost:8902/"));
+
+            Assert.That(secondaryEndpoint, Is.Null, "Secondary endpoint should be null for loopback URI without account name segment");
+        }
+
+        [Test]
         public void GetSecondaryUriFromPrimaryAzurite()
         {
             Uri secondaryEndpoint = TableConnectionString.GetSecondaryUriFromPrimary(new Uri($"https://127.0.0.1:10002/{AccountName}/"), AccountName);

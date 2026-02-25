@@ -10,14 +10,32 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    public partial class PeeringBgpSession : IUtf8JsonSerializable, IJsonModel<PeeringBgpSession>
+    /// <summary> The properties that define a BGP session. </summary>
+    public partial class PeeringBgpSession : IJsonModel<PeeringBgpSession>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeeringBgpSession>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PeeringBgpSession PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PeeringBgpSession>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePeeringBgpSession(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PeeringBgpSession)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PeeringBgpSession>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +47,11 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PeeringBgpSession>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PeeringBgpSession>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PeeringBgpSession)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(SessionPrefixV4))
             {
                 writer.WritePropertyName("sessionPrefixV4"u8);
@@ -90,15 +107,15 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WritePropertyName("md5AuthenticationKey"u8);
                 writer.WriteStringValue(Md5AuthenticationKey);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -107,22 +124,27 @@ namespace Azure.ResourceManager.Peering.Models
             }
         }
 
-        PeeringBgpSession IJsonModel<PeeringBgpSession>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PeeringBgpSession IJsonModel<PeeringBgpSession>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PeeringBgpSession JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PeeringBgpSession>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PeeringBgpSession>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PeeringBgpSession)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePeeringBgpSession(document.RootElement, options);
         }
 
-        internal static PeeringBgpSession DeserializePeeringBgpSession(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static PeeringBgpSession DeserializePeeringBgpSession(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -138,103 +160,101 @@ namespace Azure.ResourceManager.Peering.Models
             int? maxPrefixesAdvertisedV4 = default;
             int? maxPrefixesAdvertisedV6 = default;
             string md5AuthenticationKey = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("sessionPrefixV4"u8))
+                if (prop.NameEquals("sessionPrefixV4"u8))
                 {
-                    sessionPrefixV4 = property.Value.GetString();
+                    sessionPrefixV4 = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sessionPrefixV6"u8))
+                if (prop.NameEquals("sessionPrefixV6"u8))
                 {
-                    sessionPrefixV6 = property.Value.GetString();
+                    sessionPrefixV6 = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("microsoftSessionIPv4Address"u8))
+                if (prop.NameEquals("microsoftSessionIPv4Address"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    microsoftSessionIPv4Address = IPAddress.Parse(property.Value.GetString());
+                    microsoftSessionIPv4Address = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("microsoftSessionIPv6Address"u8))
+                if (prop.NameEquals("microsoftSessionIPv6Address"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    microsoftSessionIPv6Address = IPAddress.Parse(property.Value.GetString());
+                    microsoftSessionIPv6Address = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("peerSessionIPv4Address"u8))
+                if (prop.NameEquals("peerSessionIPv4Address"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    peerSessionIPv4Address = IPAddress.Parse(property.Value.GetString());
+                    peerSessionIPv4Address = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("peerSessionIPv6Address"u8))
+                if (prop.NameEquals("peerSessionIPv6Address"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    peerSessionIPv6Address = IPAddress.Parse(property.Value.GetString());
+                    peerSessionIPv6Address = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sessionStateV4"u8))
+                if (prop.NameEquals("sessionStateV4"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sessionStateV4 = new PeeringSessionStateV4(property.Value.GetString());
+                    sessionStateV4 = new PeeringSessionStateV4(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sessionStateV6"u8))
+                if (prop.NameEquals("sessionStateV6"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sessionStateV6 = new PeeringSessionStateV6(property.Value.GetString());
+                    sessionStateV6 = new PeeringSessionStateV6(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("maxPrefixesAdvertisedV4"u8))
+                if (prop.NameEquals("maxPrefixesAdvertisedV4"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxPrefixesAdvertisedV4 = property.Value.GetInt32();
+                    maxPrefixesAdvertisedV4 = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxPrefixesAdvertisedV6"u8))
+                if (prop.NameEquals("maxPrefixesAdvertisedV6"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxPrefixesAdvertisedV6 = property.Value.GetInt32();
+                    maxPrefixesAdvertisedV6 = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("md5AuthenticationKey"u8))
+                if (prop.NameEquals("md5AuthenticationKey"u8))
                 {
-                    md5AuthenticationKey = property.Value.GetString();
+                    md5AuthenticationKey = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new PeeringBgpSession(
                 sessionPrefixV4,
                 sessionPrefixV6,
@@ -247,13 +267,16 @@ namespace Azure.ResourceManager.Peering.Models
                 maxPrefixesAdvertisedV4,
                 maxPrefixesAdvertisedV6,
                 md5AuthenticationKey,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<PeeringBgpSession>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PeeringBgpSession>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PeeringBgpSession>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PeeringBgpSession>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -263,22 +286,11 @@ namespace Azure.ResourceManager.Peering.Models
             }
         }
 
-        PeeringBgpSession IPersistableModel<PeeringBgpSession>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PeeringBgpSession>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PeeringBgpSession IPersistableModel<PeeringBgpSession>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePeeringBgpSession(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PeeringBgpSession)} does not support reading '{options.Format}' format.");
-            }
-        }
-
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PeeringBgpSession>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

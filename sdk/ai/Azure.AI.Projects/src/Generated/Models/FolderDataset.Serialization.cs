@@ -117,7 +117,7 @@ namespace Azure.AI.Projects
             {
                 if (prop.NameEquals("dataUri"u8))
                 {
-                    dataUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    dataUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("type"u8))

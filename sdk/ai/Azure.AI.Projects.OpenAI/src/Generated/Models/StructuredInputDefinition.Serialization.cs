@@ -87,17 +87,28 @@ namespace Azure.AI.Projects.OpenAI
                 }
 #endif
             }
-            if (Optional.IsDefined(Schema))
+            if (Optional.IsCollectionDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(Schema);
-#else
-                using (JsonDocument document = JsonDocument.Parse(Schema))
+                writer.WriteStartObject();
+                foreach (var item in Schema)
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
+                writer.WriteEndObject();
             }
             if (Optional.IsDefined(IsRequired))
             {
@@ -148,7 +159,7 @@ namespace Azure.AI.Projects.OpenAI
             }
             string description = default;
             BinaryData defaultValue = default;
-            BinaryData schema = default;
+            IDictionary<string, BinaryData> schema = default;
             bool? isRequired = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -173,7 +184,19 @@ namespace Azure.AI.Projects.OpenAI
                     {
                         continue;
                     }
-                    schema = BinaryData.FromString(prop.Value.GetRawText());
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                        }
+                    }
+                    schema = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("required"u8))
@@ -190,7 +213,7 @@ namespace Azure.AI.Projects.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StructuredInputDefinition(description, defaultValue, schema, isRequired, additionalBinaryDataProperties);
+            return new StructuredInputDefinition(description, defaultValue, schema ?? new ChangeTrackingDictionary<string, BinaryData>(), isRequired, additionalBinaryDataProperties);
         }
     }
 }

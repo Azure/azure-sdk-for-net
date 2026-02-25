@@ -7,8 +7,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection.Metadata;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
@@ -16,15 +14,16 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.OpenAI;
 using Azure.AI.Projects.Tests.Utils;
-using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI;
 using OpenAI.Files;
 using OpenAI.Responses;
+using OpenAI.VectorStores;
 
 namespace Azure.AI.Projects.Tests;
 #pragma warning disable OPENAICUA001
+#pragma warning disable AAIP001
 
 public class AgentsTests : AgentsTestBase
 {
@@ -491,70 +490,6 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
-    public async Task StructuredInputsWork()
-    {
-        AIProjectClient projectClient = GetTestProjectClient();
-        ResponsesClient responseClient = projectClient.OpenAI.Responses;
-
-        AgentVersion agent = await projectClient.Agents.CreateAgentVersionAsync(
-            "TestPromptAgentFromDotnetTests2343",
-            new AgentVersionCreationOptions(
-                new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME)
-                {
-                    Instructions = "You are a friendly agent. The name of the user talking to you is {{user_name}}.",
-                    StructuredInputs =
-                    {
-                        ["user_name"] = new StructuredInputDefinition()
-                        {
-                            DefaultValue = BinaryData.FromObjectAsJson(JsonValue.Create("Ishmael")),
-                        }
-                    }
-                })
-            {
-                Metadata =
-                {
-                    ["test_delete_me"] = "true",
-                }
-            });
-
-        CreateResponseOptions responseOptions = new()
-        {
-            Agent = agent,
-            InputItems =
-            {
-                ResponseItem.CreateUserMessageItem("What's my name?")
-            }
-        };
-
-        ResponseResult response = await responseClient.CreateResponseAsync(responseOptions);
-        Assert.That(response.GetOutputText(), Does.Contain("Ishmael"));
-
-        responseOptions = new()
-        {
-            Agent = agent,
-            InputItems =
-            {
-                ResponseItem.CreateUserMessageItem("What's my name?")
-            },
-            StructuredInputs =
-            {
-                ["user_name"] = BinaryData.FromString(@"""Mr. Jingles"""),
-            },
-        };
-
-        response = await responseClient.CreateResponseAsync(responseOptions);
-        Assert.That(response.GetOutputText(), Does.Contain("Mr. Jingles"));
-
-        responseOptions.StructuredInputs["user_name"] = BinaryData.FromString(@"""Le Flufferkins""");
-        response = await responseClient.CreateResponseAsync(responseOptions);
-        Assert.That(response.GetOutputText(), Does.Contain("Le Flufferkins"));
-
-        responseOptions.StructuredInputs.Remove("user_name");
-        response = await responseClient.CreateResponseAsync(responseOptions);
-        Assert.That(response.GetOutputText(), Does.Contain("Ishmael"));
-    }
-
-    [RecordedTest]
     public async Task SimpleWorkflowAgent()
     {
         AIProjectClient projectClient = GetTestProjectClient();
@@ -580,7 +515,7 @@ public class AgentsTests : AgentsTestBase
 
         Assert.That(response.OutputItems.Count, Is.GreaterThan(0));
         AgentResponseItem agentResponseItem = response.OutputItems[0].AsAgentResponseItem();
-        Assert.That(agentResponseItem, Is.InstanceOf<AgentWorkflowActionResponseItem>());
+        Assert.That(agentResponseItem, Is.InstanceOf<AgentWorkflowPreviewActionResponseItem>());
 
         // This line will fix the failure:
         // System.InvalidOperationException : Cannot write a JSON property within an array or as the first JSON token. Current token type is 'EndObject'.
@@ -607,13 +542,13 @@ public class AgentsTests : AgentsTestBase
 
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(newAgentVersion, newConversation);
 
-        AgentWorkflowActionResponseItem streamedWorkflowActionItem = null;
+        AgentWorkflowPreviewActionResponseItem streamedWorkflowActionItem = null;
 
         await foreach (StreamingResponseUpdate responseUpdate in responseClient.CreateResponseStreamingAsync("Hello, agent!"))
         {
             if (responseUpdate is StreamingResponseOutputItemDoneUpdate itemDoneUpdate)
             {
-                if (itemDoneUpdate.Item.AsAgentResponseItem() is AgentWorkflowActionResponseItem workflowActionItem)
+                if (itemDoneUpdate.Item.AsAgentResponseItem() is AgentWorkflowPreviewActionResponseItem workflowActionItem)
                 {
                     streamedWorkflowActionItem = workflowActionItem;
                 }
@@ -820,7 +755,7 @@ public class AgentsTests : AgentsTestBase
                 Assert.That(Regex.Match(response.GetOutputText().ToLower(), expectedResponse.ToLower()).Success, Is.True, $"The output: \"{response.GetOutputText()}\" does not contain {expectedResponse}");
             }
         }
-        if (toolType == ToolType.AzureAISearch | toolType == ToolType.BingGrounding | toolType == ToolType.BingGroundingCustom | toolType == ToolType.Sharepoint)
+        if (toolType == ToolType.AzureAISearch | toolType == ToolType.BingGrounding | toolType == ToolType.BingGroundingCustom | toolType == ToolType.Sharepoint | toolType ==ToolType.MicrosoftFabric)
         {
             bool isUriCitationFound = false;
 
@@ -899,7 +834,7 @@ public class AgentsTests : AgentsTestBase
                             }
                         }
                     }
-                    if (toolType == ToolType.AzureAISearch | toolType == ToolType.BingGrounding | toolType == ToolType.BingGroundingCustom | toolType == ToolType.Sharepoint)
+                    if (toolType == ToolType.AzureAISearch | toolType == ToolType.BingGrounding | toolType == ToolType.BingGroundingCustom | toolType == ToolType.Sharepoint | toolType == ToolType.MicrosoftFabric)
                     {
                         annotationMet = ContainsAnnotation(itemDoneUpdate.Item, toolType);
                     }
@@ -1183,8 +1118,9 @@ public class AgentsTests : AgentsTestBase
         };
     }
 
+    [Ignore("Blocked by ADO Items 4806071, 5028868 and 5028464.")]
     [RecordedTest]
-    // [TestCase(true)] File upload mechanism is blocked by the Bug 4806071 (ADO)
+    [TestCase(true)] //File upload mechanism is blocked by the Bug 4806071 (ADO)
     [TestCase(false)]
     public async Task TestComputerUse(bool useFileUpload)
     {
@@ -1194,7 +1130,7 @@ public class AgentsTests : AgentsTestBase
         // If the files are not in the foundry (used only for file upload),uncomment the code below and
         // set the serializedScreenshots value to COMPUTER_SCREENSHOTS environment variable;
         // comment out these lines and run the test again.
-        // string serializedScreenshots = await UploadScreenshots(openAIClient);
+        // string serializedScreenshots = await UploadScreenshots(projectClient.OpenAI);
         // Console.WriteLine(serializedScreenshots);
         // End of file upload code.
         Dictionary<string, string> screenshots = useFileUpload ? JsonSerializer.Deserialize<Dictionary<string, string>>(TestEnvironment.COMPUTER_SCREENSHOTS) : [];
@@ -1224,7 +1160,6 @@ public class AgentsTests : AgentsTestBase
         do
         {
             response = await responseClient.CreateResponseAsync(responseOptions);
-            response = await WaitForRun(responseClient, response);
             responseOptions.InputItems.Clear();
             responseOptions.PreviousResponseId = response.Id;
             computerUseCalled = false;
@@ -1368,7 +1303,7 @@ public class AgentsTests : AgentsTestBase
                     ["can_delete_this"] = "true"
                 }
             },
-            cts.Token);
+            cancellationToken: cts.Token);
 
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(newAgentVersion);
 
@@ -1467,13 +1402,13 @@ public class AgentsTests : AgentsTestBase
         string[] pathParts = uriEndpoint.AbsolutePath.Split('/');
         string projectName = pathParts[pathParts.Length - 1];
         string accountId = uriEndpoint.Authority.Substring(0, uriEndpoint.Authority.IndexOf('.'));
-        ImageBasedHostedAgentDefinition agentDefinition = new(
+        HostedAgentDefinition agentDefinition = new(
             containerProtocolVersions: [new ProtocolVersionRecord(AgentCommunicationMethod.ActivityProtocol, "v1")],
             cpu: "1",
-            memory: "2Gi",
-            image: TestEnvironment.AGENT_DOCKER_IMAGE
+            memory: "2Gi"
         )
         {
+            Image = TestEnvironment.AGENT_DOCKER_IMAGE,
             EnvironmentVariables = {
                 { "AZURE_OPENAI_ENDPOINT", $"https://{accountId}.cognitiveservices.azure.com/" },
                 { "AZURE_OPENAI_CHAT_DEPLOYMENT_NAME", TestEnvironment.MODELDEPLOYMENTNAME },
@@ -1485,10 +1420,100 @@ public class AgentsTests : AgentsTestBase
         AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: AGENT_NAME2,
             options: new(agentDefinition));
-        Assert.That(agentVersion.Definition.GetType().ToString(), Does.Contain("ImageBasedHostedAgentDefinition"));
+        Assert.That(agentVersion.Definition.GetType().ToString(), Does.Contain("Azure.AI.Projects.OpenAI.HostedAgentDefinition"));
         await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         Assert.ThrowsAsync<ClientResultException>(async () => await projectClient.Agents.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version));
     }
+
+    [RecordedTest]
+    [TestCase(ToolType.None)]
+    [TestCase(ToolType.FileSearch)]
+    public async Task StructuredInputsWorkWithTools(ToolType toolType)
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+
+        PromptAgentDefinition agentDefinition = new(TestEnvironment.MODELDEPLOYMENTNAME)
+        {
+            Instructions = "You are a helpful agent that uses tools to answer questions.",
+        };
+
+        if (toolType == ToolType.FileSearch)
+        {
+            agentDefinition.Tools.Add(ResponseTool.CreateFileSearchTool(vectorStoreIds: ["{{PerRequestVectorStoreId}}"]));
+            agentDefinition.StructuredInputs["PerRequestVectorStoreId"] = new StructuredInputDefinition()
+            {
+                IsRequired = true,
+            };
+            OpenAIFile uploadedFile = await projectClient.OpenAI.Files.UploadFileAsync(
+                file: BinaryData.FromString("Travis's favorite food is pizza."),
+                filename: "test_favorite_foods.txt",
+                purpose: FileUploadPurpose.Assistants);
+            VectorStore vectorStore = await projectClient.OpenAI.VectorStores.CreateVectorStoreAsync(
+                options: new VectorStoreCreationOptions()
+                {
+                    Name = VECTOR_STORE,
+                    FileIds = { uploadedFile.Id },
+                });
+
+            AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+                    agentName: AGENT_NAME,
+                    options: new AgentVersionCreationOptions(agentDefinition));
+
+            ResponseResult response = await projectClient.OpenAI.Responses.CreateResponseAsync(
+                options: new CreateResponseOptions()
+                {
+                    Agent = agentVersion,
+                    InputItems = { ResponseItem.CreateUserMessageItem("Based on searchable files, what's Travis's favorite food?") },
+                    StructuredInputs =
+                    {
+                        ["PerRequestVectorStoreId"] = BinaryData.FromString(@$"""{vectorStore.Id}"""),
+                    },
+                });
+
+            Assert.That(response.OutputItems?.Any(item => item is FileSearchCallResponseItem) == true);
+            Assert.That(response.GetOutputText().ToLowerInvariant(), Does.Contain("pizza"));
+        }
+        else if (toolType == ToolType.None)
+        {
+            agentDefinition.Instructions = "You are a friendly agent. The name of the user talking to you is {{user_name}}.";
+            agentDefinition.StructuredInputs.Add(
+                key: "user_name",
+                value: new StructuredInputDefinition()
+                {
+                    DefaultValue = BinaryData.FromObjectAsJson(JsonValue.Create("Ishmael")),
+                });
+            AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+                agentName: AGENT_NAME,
+                options: new AgentVersionCreationOptions(agentDefinition));
+
+            ResponseResult response = await projectClient.OpenAI.Responses.CreateResponseAsync(
+                options: new CreateResponseOptions()
+                {
+                    Agent = agentVersion,
+                    InputItems = { ResponseItem.CreateUserMessageItem("What's my name?") },
+                    StructuredInputs =
+                    {
+                        ["user_name"] = BinaryData.FromObjectAsJson(JsonValue.Create("Travis")),
+                    }
+                });
+
+            Assert.That(response.GetOutputText().ToLowerInvariant(), Does.Contain("travis"));
+
+            response = await projectClient.OpenAI.Responses.CreateResponseAsync(
+                options: new CreateResponseOptions()
+                {
+                    Agent = agentVersion,
+                    InputItems = { ResponseItem.CreateUserMessageItem("What's my name?") },
+                });
+            Assert.That(response.GetOutputText().ToLowerInvariant(), Does.Contain("ishmael"));
+            Assert.That(response.GetOutputText().ToLowerInvariant(), Does.Not.Contain("travis"));
+        }
+        else
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     private bool ContainsAnnotation(ResponseItem item, ToolType type)
     {
         bool isUriCitationFound = false;

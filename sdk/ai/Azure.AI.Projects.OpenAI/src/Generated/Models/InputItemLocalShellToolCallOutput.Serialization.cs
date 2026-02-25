@@ -116,7 +116,7 @@ namespace Azure.AI.Projects.OpenAI
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             string output = default;
-            ItemResourceLocalShellToolCallOutputStatus? status = default;
+            ItemLocalShellToolCallOutputStatus? status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -141,7 +141,7 @@ namespace Azure.AI.Projects.OpenAI
                         status = null;
                         continue;
                     }
-                    status = prop.Value.GetString().ToItemResourceLocalShellToolCallOutputStatus();
+                    status = prop.Value.GetString().ToItemLocalShellToolCallOutputStatus();
                     continue;
                 }
                 if (options.Format != "W")
