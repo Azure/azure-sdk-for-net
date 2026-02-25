@@ -831,10 +831,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="privateEndpointId"> The ARM identifier for private endpoint. </param>
-        /// <returns> A new <see cref="DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static DesktopVirtualizationPrivateEndpointConnectionData DesktopVirtualizationPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> groupIds = default, DesktopVirtualizationPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, DesktopVirtualizationPrivateEndpointConnectionProvisioningState? provisioningState = default, string privateEndpointId = default)
+        /// <returns> A new <see cref="DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionDataData"/> instance for mocking. </returns>
+        public static DesktopVirtualizationPrivateEndpointConnectionDataData DesktopVirtualizationPrivateEndpointConnectionDataData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> groupIds = default, DesktopVirtualizationPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, DesktopVirtualizationPrivateEndpointConnectionProvisioningState? provisioningState = default, string privateEndpointId = default)
         {
-            return new DesktopVirtualizationPrivateEndpointConnectionData(
+            return new DesktopVirtualizationPrivateEndpointConnectionDataData(
                 id,
                 name,
                 resourceType,
@@ -1596,6 +1596,28 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="name"></param>
         /// <param name="resourceType"></param>
         /// <param name="systemData"></param>
+        /// <param name="groupIds"></param>
+        /// <param name="privateEndpointId"></param>
+        /// <param name="connectionState"></param>
+        /// <param name="provisioningState"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DesktopVirtualizationPrivateEndpointConnectionDataData DesktopVirtualizationPrivateEndpointConnectionDataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IEnumerable<string> groupIds, ResourceIdentifier privateEndpointId, DesktopVirtualizationPrivateLinkServiceConnectionState connectionState, DesktopVirtualizationPrivateEndpointConnectionProvisioningState? provisioningState)
+        {
+            groupIds ??= new ChangeTrackingList<string>();
+
+            return new DesktopVirtualizationPrivateEndpointConnectionDataData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default);
+        }
+
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="systemData"></param>
         /// <param name="tags"></param>
         /// <param name="location"></param>
         /// <param name="objectId"></param>
@@ -2060,6 +2082,25 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static DesktopVirtualizationPrivateEndpointConnection DesktopVirtualizationPrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier privateEndpointId, DesktopVirtualizationPrivateLinkServiceConnectionState connectionState, DesktopVirtualizationPrivateEndpointConnectionProvisioningState? provisioningState)
         {
             return new DesktopVirtualizationPrivateEndpointConnection(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default);
+        }
+
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="systemData"></param>
+        /// <param name="privateEndpointId"></param>
+        /// <param name="connectionState"></param>
+        /// <param name="provisioningState"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DesktopVirtualizationPrivateEndpointConnectionDataData DesktopVirtualizationPrivateEndpointConnectionDataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier privateEndpointId, DesktopVirtualizationPrivateLinkServiceConnectionState connectionState, DesktopVirtualizationPrivateEndpointConnectionProvisioningState? provisioningState)
+        {
+            return new DesktopVirtualizationPrivateEndpointConnectionDataData(
                 id,
                 name,
                 resourceType,

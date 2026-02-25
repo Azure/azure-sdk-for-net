@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<WorkspacePrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, DesktopVirtualizationPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<WorkspacePrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, DesktopVirtualizationPrivateEndpointConnectionDataData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
             Argument.AssertNotNull(data, nameof(data));
@@ -90,9 +90,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateUpdateByWorkspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, DesktopVirtualizationPrivateEndpointConnectionData.ToRequestContent(data), context);
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateUpdateByWorkspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, DesktopVirtualizationPrivateEndpointConnectionDataData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DesktopVirtualizationPrivateEndpointConnectionData> response = Response.FromValue(DesktopVirtualizationPrivateEndpointConnectionData.FromResponse(result), result);
+                Response<DesktopVirtualizationPrivateEndpointConnectionDataData> response = Response.FromValue(DesktopVirtualizationPrivateEndpointConnectionDataData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 DesktopVirtualizationArmOperation<WorkspacePrivateEndpointConnectionResource> operation = new DesktopVirtualizationArmOperation<WorkspacePrivateEndpointConnectionResource>(Response.FromValue(new WorkspacePrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<WorkspacePrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, DesktopVirtualizationPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<WorkspacePrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, DesktopVirtualizationPrivateEndpointConnectionDataData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
             Argument.AssertNotNull(data, nameof(data));
@@ -145,9 +145,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateUpdateByWorkspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, DesktopVirtualizationPrivateEndpointConnectionData.ToRequestContent(data), context);
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateUpdateByWorkspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, DesktopVirtualizationPrivateEndpointConnectionDataData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DesktopVirtualizationPrivateEndpointConnectionData> response = Response.FromValue(DesktopVirtualizationPrivateEndpointConnectionData.FromResponse(result), result);
+                Response<DesktopVirtualizationPrivateEndpointConnectionDataData> response = Response.FromValue(DesktopVirtualizationPrivateEndpointConnectionDataData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 DesktopVirtualizationArmOperation<WorkspacePrivateEndpointConnectionResource> operation = new DesktopVirtualizationArmOperation<WorkspacePrivateEndpointConnectionResource>(Response.FromValue(new WorkspacePrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 };
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetByWorkspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DesktopVirtualizationPrivateEndpointConnectionData> response = Response.FromValue(DesktopVirtualizationPrivateEndpointConnectionData.FromResponse(result), result);
+                Response<DesktopVirtualizationPrivateEndpointConnectionDataData> response = Response.FromValue(DesktopVirtualizationPrivateEndpointConnectionDataData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 };
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetByWorkspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DesktopVirtualizationPrivateEndpointConnectionData> response = Response.FromValue(DesktopVirtualizationPrivateEndpointConnectionData.FromResponse(result), result);
+                Response<DesktopVirtualizationPrivateEndpointConnectionDataData> response = Response.FromValue(DesktopVirtualizationPrivateEndpointConnectionDataData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DesktopVirtualizationPrivateEndpointConnectionData, WorkspacePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByWorkspaceAsyncCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new WorkspacePrivateEndpointConnectionResource(Client, data));
+            return new AsyncPageableWrapper<DesktopVirtualizationPrivateEndpointConnectionDataData, WorkspacePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByWorkspaceAsyncCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new WorkspacePrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DesktopVirtualizationPrivateEndpointConnectionData, WorkspacePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByWorkspaceCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new WorkspacePrivateEndpointConnectionResource(Client, data));
+            return new PageableWrapper<DesktopVirtualizationPrivateEndpointConnectionDataData, WorkspacePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByWorkspaceCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new WorkspacePrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -354,14 +354,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetByWorkspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<DesktopVirtualizationPrivateEndpointConnectionData> response = default;
+                Response<DesktopVirtualizationPrivateEndpointConnectionDataData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(DesktopVirtualizationPrivateEndpointConnectionData.FromResponse(result), result);
+                        response = Response.FromValue(DesktopVirtualizationPrivateEndpointConnectionDataData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((DesktopVirtualizationPrivateEndpointConnectionData)null, result);
+                        response = Response.FromValue((DesktopVirtualizationPrivateEndpointConnectionDataData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -411,14 +411,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetByWorkspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<DesktopVirtualizationPrivateEndpointConnectionData> response = default;
+                Response<DesktopVirtualizationPrivateEndpointConnectionDataData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(DesktopVirtualizationPrivateEndpointConnectionData.FromResponse(result), result);
+                        response = Response.FromValue(DesktopVirtualizationPrivateEndpointConnectionDataData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((DesktopVirtualizationPrivateEndpointConnectionData)null, result);
+                        response = Response.FromValue((DesktopVirtualizationPrivateEndpointConnectionDataData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -468,14 +468,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetByWorkspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<DesktopVirtualizationPrivateEndpointConnectionData> response = default;
+                Response<DesktopVirtualizationPrivateEndpointConnectionDataData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(DesktopVirtualizationPrivateEndpointConnectionData.FromResponse(result), result);
+                        response = Response.FromValue(DesktopVirtualizationPrivateEndpointConnectionDataData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((DesktopVirtualizationPrivateEndpointConnectionData)null, result);
+                        response = Response.FromValue((DesktopVirtualizationPrivateEndpointConnectionDataData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -529,14 +529,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetByWorkspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<DesktopVirtualizationPrivateEndpointConnectionData> response = default;
+                Response<DesktopVirtualizationPrivateEndpointConnectionDataData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(DesktopVirtualizationPrivateEndpointConnectionData.FromResponse(result), result);
+                        response = Response.FromValue(DesktopVirtualizationPrivateEndpointConnectionDataData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((DesktopVirtualizationPrivateEndpointConnectionData)null, result);
+                        response = Response.FromValue((DesktopVirtualizationPrivateEndpointConnectionDataData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

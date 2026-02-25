@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
     {
         private readonly ClientDiagnostics _privateEndpointConnectionsClientDiagnostics;
         private readonly PrivateEndpointConnections _privateEndpointConnectionsRestClient;
-        private readonly DesktopVirtualizationPrivateEndpointConnectionData _data;
+        private readonly DesktopVirtualizationPrivateEndpointConnectionDataData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DesktopVirtualization/hostPools/privateEndpointConnections";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <summary> Initializes a new instance of <see cref="HostPoolPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal HostPoolPrivateEndpointConnectionResource(ArmClient client, DesktopVirtualizationPrivateEndpointConnectionData data) : this(client, data.Id)
+        internal HostPoolPrivateEndpointConnectionResource(ArmClient client, DesktopVirtualizationPrivateEndpointConnectionDataData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual DesktopVirtualizationPrivateEndpointConnectionData Data
+        public virtual DesktopVirtualizationPrivateEndpointConnectionDataData Data
         {
             get
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 };
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetByHostPoolRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DesktopVirtualizationPrivateEndpointConnectionData> response = Response.FromValue(DesktopVirtualizationPrivateEndpointConnectionData.FromResponse(result), result);
+                Response<DesktopVirtualizationPrivateEndpointConnectionDataData> response = Response.FromValue(DesktopVirtualizationPrivateEndpointConnectionDataData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 };
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetByHostPoolRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DesktopVirtualizationPrivateEndpointConnectionData> response = Response.FromValue(DesktopVirtualizationPrivateEndpointConnectionData.FromResponse(result), result);
+                Response<DesktopVirtualizationPrivateEndpointConnectionDataData> response = Response.FromValue(DesktopVirtualizationPrivateEndpointConnectionDataData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<HostPoolPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, DesktopVirtualizationPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HostPoolPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, DesktopVirtualizationPrivateEndpointConnectionDataData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -326,9 +326,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateUpdateByHostPoolRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DesktopVirtualizationPrivateEndpointConnectionData.ToRequestContent(data), context);
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateUpdateByHostPoolRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DesktopVirtualizationPrivateEndpointConnectionDataData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DesktopVirtualizationPrivateEndpointConnectionData> response = Response.FromValue(DesktopVirtualizationPrivateEndpointConnectionData.FromResponse(result), result);
+                Response<DesktopVirtualizationPrivateEndpointConnectionDataData> response = Response.FromValue(DesktopVirtualizationPrivateEndpointConnectionDataData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 DesktopVirtualizationArmOperation<HostPoolPrivateEndpointConnectionResource> operation = new DesktopVirtualizationArmOperation<HostPoolPrivateEndpointConnectionResource>(Response.FromValue(new HostPoolPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<HostPoolPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, DesktopVirtualizationPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HostPoolPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, DesktopVirtualizationPrivateEndpointConnectionDataData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -382,9 +382,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateUpdateByHostPoolRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DesktopVirtualizationPrivateEndpointConnectionData.ToRequestContent(data), context);
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateUpdateByHostPoolRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DesktopVirtualizationPrivateEndpointConnectionDataData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DesktopVirtualizationPrivateEndpointConnectionData> response = Response.FromValue(DesktopVirtualizationPrivateEndpointConnectionData.FromResponse(result), result);
+                Response<DesktopVirtualizationPrivateEndpointConnectionDataData> response = Response.FromValue(DesktopVirtualizationPrivateEndpointConnectionDataData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 DesktopVirtualizationArmOperation<HostPoolPrivateEndpointConnectionResource> operation = new DesktopVirtualizationArmOperation<HostPoolPrivateEndpointConnectionResource>(Response.FromValue(new HostPoolPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);

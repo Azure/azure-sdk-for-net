@@ -36,6 +36,7 @@ class ModelType:
     type_name: str
     type_kind: str  # "class", "struct", "enum"
     file_path: str
+    visibility: str = "public"  # "public" or "internal"
     public_members: list[PublicMember] = field(default_factory=list)
     enum_members: list[str] = field(default_factory=list)
 
@@ -168,24 +169,24 @@ def find_matching_brace(text: str, open_index: int) -> int:
     return -1
 
 
-def extract_type_block(content: str) -> tuple[Optional[str], Optional[str], str]:
-    """Return (type_kind, type_name, body) for the first public type."""
+def extract_type_block(content: str) -> tuple[Optional[str], Optional[str], Optional[str], str]:
+    """Return (visibility, type_kind, type_name, body) for the first public/internal type."""
     m = re.search(
-        r"^\s*public\s+(?:readonly\s+|sealed\s+|abstract\s+|partial\s+)*"
+        r"^\s*(public|internal)\s+(?:readonly\s+|sealed\s+|abstract\s+|partial\s+)*"
         r"(class|struct|enum)\s+(\w+)\b",
         content,
         re.MULTILINE,
     )
     if not m:
-        return None, None, ""
-    type_kind, type_name = m.group(1), m.group(2)
+        return None, None, None, ""
+    visibility, type_kind, type_name = m.group(1), m.group(2), m.group(3)
     open_idx = content.find("{", m.end())
     if open_idx < 0:
-        return type_kind, type_name, ""
+        return visibility, type_kind, type_name, ""
     close_idx = find_matching_brace(content, open_idx)
     if close_idx < 0:
-        return type_kind, type_name, ""
-    return type_kind, type_name, content[open_idx + 1 : close_idx]
+        return visibility, type_kind, type_name, ""
+    return visibility, type_kind, type_name, content[open_idx + 1 : close_idx]
 
 
 def extract_enum_members(body: str) -> list[str]:
@@ -307,11 +308,12 @@ def extract_public_members(type_name: str, body: str) -> list[PublicMember]:
 # ---------------------------------------------------------------------------
 
 def parse_model(content: str, file_path: str) -> Optional[ModelType]:
-    type_kind, type_name, body = extract_type_block(content)
+    visibility, type_kind, type_name, body = extract_type_block(content)
     if not type_kind or not type_name:
         return None
     model = ModelType(
-        type_name=type_name, type_kind=type_kind, file_path=file_path
+        type_name=type_name, type_kind=type_kind, file_path=file_path,
+        visibility=visibility or "public",
     )
     if type_kind == "enum":
         model.enum_members = extract_enum_members(body)
@@ -461,16 +463,62 @@ def main() -> None:
     added_models = sorted(current_names - baseline_names)
     common_models = sorted(baseline_names & current_names)
 
+    # ── Separate truly removed from visibility-changed ────────────────
+    truly_removed: list[str] = []
+    visibility_changed: list[tuple[str, str, str]] = []  # (name, old_vis, new_vis)
+    for name in removed_models:
+        old_m = baseline_models[name]
+        # Skip types that were already internal in baseline (not public API)
+        if old_m.visibility != "public":
+            continue
+        # Check if type exists in current but with different visibility
+        if name in current_models:
+            new_vis = current_models[name].visibility
+            if old_m.visibility != new_vis:
+                visibility_changed.append((name, old_m.visibility, new_vis))
+            else:
+                truly_removed.append(name)
+        else:
+            truly_removed.append(name)
+
+    # Also check common models for visibility changes
+    for name in common_models:
+        old_vis = baseline_models[name].visibility
+        new_vis = current_models[name].visibility
+        if old_vis != new_vis:
+            visibility_changed.append((name, old_vis, new_vis))
+
+    # Filter added_models to only public types
+    added_models = [n for n in added_models if current_models[n].visibility == "public"]
+
+    # Filter common_models to skip pairs where both are internal
+    common_models = [
+        n for n in common_models
+        if baseline_models[n].visibility == "public" or current_models[n].visibility == "public"
+    ]
+
     # ── Removed ───────────────────────────────────────────────────────
-    if removed_models:
+    if truly_removed:
         lines.append("")
         lines.append("-" * 80)
         lines.append("REMOVED MODELS (in baseline but not in current)")
         lines.append("-" * 80)
-        for name in removed_models:
+        for name in truly_removed:
             m = baseline_models[name]
             lines.append(f"\n  {name} ({m.type_kind})")
             lines.append(f"    File: {Path(m.file_path).name}")
+
+    # ── Visibility changed ────────────────────────────────────────────
+    if visibility_changed:
+        lines.append("")
+        lines.append("-" * 80)
+        lines.append("VISIBILITY CHANGED MODELS")
+        lines.append("-" * 80)
+        for name, old_vis, new_vis in sorted(visibility_changed):
+            m = baseline_models.get(name) or current_models[name]
+            lines.append(f"\n  {name} ({m.type_kind})")
+            lines.append(f"    File: {Path(m.file_path).name}")
+            lines.append(f"    {old_vis} → {new_vis}")
 
     # ── Added ─────────────────────────────────────────────────────────
     if added_models:
@@ -611,9 +659,13 @@ def main() -> None:
     lines.append(f"Models in baseline:     {len(baseline_models)}")
     lines.append(f"Models in current:      {len(current_models)}")
     lines.append("")
-    lines.append(f"Removed models ({len(removed_models)}):")
-    for name in removed_models:
+    lines.append(f"Removed models ({len(truly_removed)}):")
+    for name in truly_removed:
         lines.append(f"  - {name}")
+    if visibility_changed:
+        lines.append(f"Visibility changed models ({len(visibility_changed)}):")
+        for name, old_vis, new_vis in sorted(visibility_changed):
+            lines.append(f"  ! {name} ({old_vis} → {new_vis})")
     lines.append(f"Added models ({len(added_models)}):")
     for name in added_models:
         lines.append(f"  + {name}")
@@ -648,7 +700,7 @@ def main() -> None:
             for p in props:
                 lines.append(f"    - {p}")
 
-    if not removed_models and not added_models and not modified_models:
+    if not truly_removed and not added_models and not modified_models and not visibility_changed:
         lines.append("")
         lines.append("No differences found between baseline and current generated models.")
 

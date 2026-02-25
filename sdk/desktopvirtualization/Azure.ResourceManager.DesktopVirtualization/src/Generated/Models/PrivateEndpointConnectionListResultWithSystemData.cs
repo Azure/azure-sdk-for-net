@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionListResultWithSystemData"/>. </summary>
         /// <param name="value"> The PrivateEndpointConnectionWithSystemData items on this page. </param>
-        internal PrivateEndpointConnectionListResultWithSystemData(IEnumerable<DesktopVirtualizationPrivateEndpointConnectionData> value)
+        internal PrivateEndpointConnectionListResultWithSystemData(IEnumerable<DesktopVirtualizationPrivateEndpointConnectionDataData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="value"> The PrivateEndpointConnectionWithSystemData items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateEndpointConnectionListResultWithSystemData(IList<DesktopVirtualizationPrivateEndpointConnectionData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateEndpointConnectionListResultWithSystemData(IList<DesktopVirtualizationPrivateEndpointConnectionDataData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> The PrivateEndpointConnectionWithSystemData items on this page. </summary>
         [WirePath("value")]
-        public IList<DesktopVirtualizationPrivateEndpointConnectionData> Value { get; }
+        public IList<DesktopVirtualizationPrivateEndpointConnectionDataData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

@@ -13,23 +13,23 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> List of MSIX Package definitions. </summary>
-    internal partial class MSIXPackageList
+    internal partial class MsixPackageList
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MSIXPackageList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MsixPackageList"/>. </summary>
         /// <param name="value"> The MSIXPackage items on this page. </param>
-        internal MSIXPackageList(IEnumerable<MsixPackageData> value)
+        internal MsixPackageList(IEnumerable<MsixPackageData> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MSIXPackageList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MsixPackageList"/>. </summary>
         /// <param name="value"> The MSIXPackage items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MSIXPackageList(IList<MsixPackageData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MsixPackageList(IList<MsixPackageData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;

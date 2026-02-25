@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     yield break;
                 }
-                MSIXPackageList result = MSIXPackageList.FromResponse(response);
+                MsixPackageList result = MsixPackageList.FromResponse(response);
                 yield return Page<MsixPackageData>.FromValues((IReadOnlyList<MsixPackageData>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)

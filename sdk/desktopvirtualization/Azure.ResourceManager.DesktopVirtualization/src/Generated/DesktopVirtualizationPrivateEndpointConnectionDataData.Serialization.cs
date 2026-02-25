@@ -18,11 +18,11 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DesktopVirtualization
 {
     /// <summary> The Private Endpoint Connection resource. </summary>
-    public partial class DesktopVirtualizationPrivateEndpointConnectionData : ResourceData, IJsonModel<DesktopVirtualizationPrivateEndpointConnectionData>
+    public partial class DesktopVirtualizationPrivateEndpointConnectionDataData : ResourceData, IJsonModel<DesktopVirtualizationPrivateEndpointConnectionDataData>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DesktopVirtualizationPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DesktopVirtualizationPrivateEndpointConnectionDataData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationPrivateEndpointConnectionDataData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DesktopVirtualizationPrivateEndpointConnectionData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DesktopVirtualizationPrivateEndpointConnectionDataData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -48,24 +48,24 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DesktopVirtualizationPrivateEndpointConnectionData IJsonModel<DesktopVirtualizationPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DesktopVirtualizationPrivateEndpointConnectionData)JsonModelCreateCore(ref reader, options);
+        DesktopVirtualizationPrivateEndpointConnectionDataData IJsonModel<DesktopVirtualizationPrivateEndpointConnectionDataData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DesktopVirtualizationPrivateEndpointConnectionDataData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationPrivateEndpointConnectionDataData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DesktopVirtualizationPrivateEndpointConnectionData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DesktopVirtualizationPrivateEndpointConnectionDataData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDesktopVirtualizationPrivateEndpointConnectionData(document.RootElement, options);
+            return DeserializeDesktopVirtualizationPrivateEndpointConnectionDataData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DesktopVirtualizationPrivateEndpointConnectionData DeserializeDesktopVirtualizationPrivateEndpointConnectionData(JsonElement element, ModelReaderWriterOptions options)
+        internal static DesktopVirtualizationPrivateEndpointConnectionDataData DeserializeDesktopVirtualizationPrivateEndpointConnectionDataData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DesktopVirtualizationPrivateEndpointConnectionData(
+            return new DesktopVirtualizationPrivateEndpointConnectionDataData(
                 id,
                 name,
                 resourceType,
@@ -135,62 +135,62 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DesktopVirtualizationPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DesktopVirtualizationPrivateEndpointConnectionDataData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationPrivateEndpointConnectionDataData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDesktopVirtualizationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DesktopVirtualizationPrivateEndpointConnectionData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DesktopVirtualizationPrivateEndpointConnectionDataData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DesktopVirtualizationPrivateEndpointConnectionData IPersistableModel<DesktopVirtualizationPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DesktopVirtualizationPrivateEndpointConnectionData)PersistableModelCreateCore(data, options);
+        DesktopVirtualizationPrivateEndpointConnectionDataData IPersistableModel<DesktopVirtualizationPrivateEndpointConnectionDataData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DesktopVirtualizationPrivateEndpointConnectionDataData)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationPrivateEndpointConnectionDataData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDesktopVirtualizationPrivateEndpointConnectionData(document.RootElement, options);
+                        return DeserializeDesktopVirtualizationPrivateEndpointConnectionDataData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DesktopVirtualizationPrivateEndpointConnectionData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DesktopVirtualizationPrivateEndpointConnectionDataData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DesktopVirtualizationPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DesktopVirtualizationPrivateEndpointConnectionDataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="desktopVirtualizationPrivateEndpointConnectionData"> The <see cref="DesktopVirtualizationPrivateEndpointConnectionData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DesktopVirtualizationPrivateEndpointConnectionData desktopVirtualizationPrivateEndpointConnectionData)
+        /// <param name="desktopVirtualizationPrivateEndpointConnectionDataData"> The <see cref="DesktopVirtualizationPrivateEndpointConnectionDataData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DesktopVirtualizationPrivateEndpointConnectionDataData desktopVirtualizationPrivateEndpointConnectionDataData)
         {
-            if (desktopVirtualizationPrivateEndpointConnectionData == null)
+            if (desktopVirtualizationPrivateEndpointConnectionDataData == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(desktopVirtualizationPrivateEndpointConnectionData, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(desktopVirtualizationPrivateEndpointConnectionDataData, ModelSerializationExtensions.WireOptions);
             return content;
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DesktopVirtualizationPrivateEndpointConnectionData"/> from. </param>
-        internal static DesktopVirtualizationPrivateEndpointConnectionData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DesktopVirtualizationPrivateEndpointConnectionDataData"/> from. </param>
+        internal static DesktopVirtualizationPrivateEndpointConnectionDataData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDesktopVirtualizationPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeDesktopVirtualizationPrivateEndpointConnectionDataData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

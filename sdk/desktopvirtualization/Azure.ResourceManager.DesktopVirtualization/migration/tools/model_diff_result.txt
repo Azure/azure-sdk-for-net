@@ -4,14 +4,12 @@ Comparing baseline (76a1981de09009736808bc6a80fdd10d73f0097b) vs Current (post-g
 ====================================================================================================
 
 --------------------------------------------------------------------------------
-REMOVED MODELS (in baseline but not in current)
+VISIBILITY CHANGED MODELS
 --------------------------------------------------------------------------------
-
-  DesktopVirtualizationPrivateEndpointConnectionDataData (class)
-    File: DesktopVirtualizationPrivateEndpointConnectionDataData.cs
 
   MsixImageUri (class)
     File: MsixImageUri.cs
+    public → internal
 
 --------------------------------------------------------------------------------
 ADDED MODELS (in current but not in baseline)
@@ -43,9 +41,6 @@ ADDED MODELS (in current but not in baseline)
 
   DeploymentScope (struct)
     File: DeploymentScope.cs
-
-  DesktopVirtualizationPrivateEndpointConnectionData (class)
-    File: DesktopVirtualizationPrivateEndpointConnectionData.cs
 
   DiffDiskOption (struct)
     File: DiffDiskOption.cs
@@ -293,6 +288,26 @@ DesktopVirtualizationPrivateEndpointConnection
 
   - Removed members (2):
       - public DesktopVirtualizationPrivateEndpointConnection()
+      - public DesktopVirtualizationPrivateLinkServiceConnectionState ConnectionState { get; set; }
+
+  ~ Changed members (1):
+      ~ property PrivateEndpointId
+        OLD:
+          - public ResourceIdentifier PrivateEndpointId { get; }
+        NEW:
+          + public string PrivateEndpointId { get; }
+
+--------------------------------------------------------------------------------
+MODIFIED MODELS (public member changes)
+--------------------------------------------------------------------------------
+
+DesktopVirtualizationPrivateEndpointConnectionDataData
+  File: DesktopVirtualizationPrivateEndpointConnectionDataData.cs
+
+  + Added members (1):
+      + public DesktopVirtualizationPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+
+  - Removed members (1):
       - public DesktopVirtualizationPrivateLinkServiceConnectionState ConnectionState { get; set; }
 
   ~ Changed members (1):
@@ -595,6 +610,7 @@ VirtualApplicationGroupData
 
   - Removed members (1):
       - public bool? IsCloudPCResource { get; }
+      
 
   ~ Changed members (1):
       ~ property ETag
@@ -686,13 +702,13 @@ VirtualWorkspacePatch
 ====================================================================================================
 SUMMARY
 ====================================================================================================
-Models in baseline:     83
-Models in current:      153
+Models in baseline:     99
+Models in current:      206
 
-Removed models (2):
-  - DesktopVirtualizationPrivateEndpointConnectionDataData
-  - MsixImageUri
-Added models (72):
+Removed models (0):
+Visibility changed models (1):
+  ! MsixImageUri (public → internal)
+Added models (71):
   + ActiveDirectoryInfoProperties
   + ActiveSessionHostConfigurationData
   + ActiveSessionHostConfigurationProperties
@@ -702,7 +718,6 @@ Added models (72):
   + CanaryPolicy
   + CreateDeleteProperties
   + DeploymentScope
-  + DesktopVirtualizationPrivateEndpointConnectionData
   + DiffDiskOption
   + DiffDiskPlacement
   + DiffDiskProperties
@@ -765,12 +780,13 @@ Added models (72):
   + UpdateStatus
   + VirtualMachineDiskType
   + VirtualMachineSecurityType
-Modified models (28):
+Modified models (29):
   ~ AppAttachPackageInfoProperties
   ~ AppAttachPackagePatch
   ~ AppAttachPackagePatchProperties
   ~ AppAttachPackageProperties
   ~ DesktopVirtualizationPrivateEndpointConnection
+  ~ DesktopVirtualizationPrivateEndpointConnectionDataData
   ~ DesktopVirtualizationPrivateLinkResourceData
   ~ ExpandMsixImage
   ~ HostPoolData
@@ -794,7 +810,7 @@ Modified models (28):
   ~ VirtualDesktopPatch
   ~ VirtualWorkspaceData
   ~ VirtualWorkspacePatch
-Unchanged models (53):
+Unchanged models (54):
 
 --------------------------------------------------------------------------------
 MISSING SETTERS (baseline had { get; set; } but current only has { get; })
