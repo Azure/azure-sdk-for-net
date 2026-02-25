@@ -1,14 +1,12 @@
 # Release History
 
-## 1.18.0-beta.4 (Unreleased)
+## 1.18.0 (2026-02-25)
 
 ### Features Added
 
-### Breaking Changes
+- Added experimental `Microsoft.Extensions.Configuration` and `Microsoft.Extensions.DependencyInjection` integration for Azure SDK clients. For details, see the [Configuration and Dependency Injection](https://github.com/Azure/azure-sdk-for-net/blob/release/Azure.Identity_1.18.0/sdk/core/Azure.Core/src/docs/ConfigurationAndDependencyInjection.md) documentation.
 
-### Bugs Fixed
-
-### Other Changes
+- The `WorkloadIdentityCredentialOptions.IsAzureProxyEnabled` property, which enables Azure Kubernetes token proxy mode, is only available in beta releases of this package.
 
 ## 1.18.0-beta.3 (2026-02-20)
 
