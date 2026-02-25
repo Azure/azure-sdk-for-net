@@ -19,6 +19,30 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> List Restore Ranges Response. </summary>
     public partial class BackupFindRestorableTimeRangeResult : DppResource, IJsonModel<BackupFindRestorableTimeRangeResult>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DppResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BackupFindRestorableTimeRangeResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBackupFindRestorableTimeRangeResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BackupFindRestorableTimeRangeResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BackupFindRestorableTimeRangeResult"/> from. </param>
+        internal static BackupFindRestorableTimeRangeResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeBackupFindRestorableTimeRangeResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BackupFindRestorableTimeRangeResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -145,31 +169,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         BackupFindRestorableTimeRangeResult IPersistableModel<BackupFindRestorableTimeRangeResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (BackupFindRestorableTimeRangeResult)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DppResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupFindRestorableTimeRangeResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBackupFindRestorableTimeRangeResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BackupFindRestorableTimeRangeResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BackupFindRestorableTimeRangeResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BackupFindRestorableTimeRangeResult"/> from. </param>
-        internal static BackupFindRestorableTimeRangeResult FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeBackupFindRestorableTimeRangeResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

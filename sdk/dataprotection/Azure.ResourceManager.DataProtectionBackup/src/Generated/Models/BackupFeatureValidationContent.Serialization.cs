@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Base class for feature object. </summary>
     public partial class BackupFeatureValidationContent : BackupFeatureValidationContentBase, IJsonModel<BackupFeatureValidationContent>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BackupFeatureValidationContentBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BackupFeatureValidationContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBackupFeatureValidationContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BackupFeatureValidationContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BackupFeatureValidationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -124,23 +141,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         BackupFeatureValidationContent IPersistableModel<BackupFeatureValidationContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (BackupFeatureValidationContent)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BackupFeatureValidationContentBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupFeatureValidationContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBackupFeatureValidationContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BackupFeatureValidationContent)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BackupFeatureValidationContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

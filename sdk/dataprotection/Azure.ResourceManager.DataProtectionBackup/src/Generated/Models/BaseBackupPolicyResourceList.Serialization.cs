@@ -17,6 +17,30 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> List of BaseBackupPolicy resources. </summary>
     internal partial class BaseBackupPolicyResourceList : DppResourceList, IJsonModel<BaseBackupPolicyResourceList>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DppResourceList PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BaseBackupPolicyResourceList>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBaseBackupPolicyResourceList(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BaseBackupPolicyResourceList)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BaseBackupPolicyResourceList"/> from. </param>
+        internal static BaseBackupPolicyResourceList FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeBaseBackupPolicyResourceList(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BaseBackupPolicyResourceList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -125,31 +149,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         BaseBackupPolicyResourceList IPersistableModel<BaseBackupPolicyResourceList>.Create(BinaryData data, ModelReaderWriterOptions options) => (BaseBackupPolicyResourceList)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DppResourceList PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BaseBackupPolicyResourceList>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBaseBackupPolicyResourceList(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BaseBackupPolicyResourceList)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BaseBackupPolicyResourceList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BaseBackupPolicyResourceList"/> from. </param>
-        internal static BaseBackupPolicyResourceList FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeBaseBackupPolicyResourceList(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

@@ -25,6 +25,30 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BackupFeatureValidationResultBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BackupFeatureValidationResultBase>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBackupFeatureValidationResultBase(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BackupFeatureValidationResultBase)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BackupFeatureValidationResultBase"/> from. </param>
+        internal static BackupFeatureValidationResultBase FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeBackupFeatureValidationResultBase(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BackupFeatureValidationResultBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -118,31 +142,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         BackupFeatureValidationResultBase IPersistableModel<BackupFeatureValidationResultBase>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BackupFeatureValidationResultBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupFeatureValidationResultBase>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBackupFeatureValidationResultBase(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BackupFeatureValidationResultBase)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BackupFeatureValidationResultBase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BackupFeatureValidationResultBase"/> from. </param>
-        internal static BackupFeatureValidationResultBase FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeBackupFeatureValidationResultBase(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

@@ -17,6 +17,30 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Operation Job Extended Info. </summary>
     public partial class DataProtectionOperationJobExtendedInfo : DataProtectionOperationExtendedInfo, IJsonModel<DataProtectionOperationJobExtendedInfo>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataProtectionOperationExtendedInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataProtectionOperationJobExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataProtectionOperationJobExtendedInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataProtectionOperationJobExtendedInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DataProtectionOperationJobExtendedInfo"/> from. </param>
+        internal static DataProtectionOperationJobExtendedInfo FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDataProtectionOperationJobExtendedInfo(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataProtectionOperationJobExtendedInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -111,31 +135,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         DataProtectionOperationJobExtendedInfo IPersistableModel<DataProtectionOperationJobExtendedInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataProtectionOperationJobExtendedInfo)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DataProtectionOperationExtendedInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataProtectionOperationJobExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDataProtectionOperationJobExtendedInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataProtectionOperationJobExtendedInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataProtectionOperationJobExtendedInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DataProtectionOperationJobExtendedInfo"/> from. </param>
-        internal static DataProtectionOperationJobExtendedInfo FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDataProtectionOperationJobExtendedInfo(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Item Level target info for restore operation. </summary>
     public partial class RangeBasedItemLevelRestoreCriteria : ItemLevelRestoreCriteria, IJsonModel<RangeBasedItemLevelRestoreCriteria>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ItemLevelRestoreCriteria PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RangeBasedItemLevelRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRangeBasedItemLevelRestoreCriteria(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RangeBasedItemLevelRestoreCriteria)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RangeBasedItemLevelRestoreCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -120,23 +137,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         RangeBasedItemLevelRestoreCriteria IPersistableModel<RangeBasedItemLevelRestoreCriteria>.Create(BinaryData data, ModelReaderWriterOptions options) => (RangeBasedItemLevelRestoreCriteria)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ItemLevelRestoreCriteria PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RangeBasedItemLevelRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeRangeBasedItemLevelRestoreCriteria(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RangeBasedItemLevelRestoreCriteria)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RangeBasedItemLevelRestoreCriteria>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
