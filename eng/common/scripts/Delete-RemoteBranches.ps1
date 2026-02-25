@@ -8,6 +8,12 @@ param(
   # For sync-eng/common work, we use regex as "^sync-eng/common.*-(?<PrNumber>\d+).*$".
   # For sync-.github/workflows work, we use regex as "^sync-.github/workflows.*-(?<PrNumber>\d+).*$".
   $BranchRegex,
+  # When set, directly delete this exact branch name without querying all branches.
+  # This is a fast path that avoids the expensive GraphQL branch listing and rate limit
+  # checks, useful when the caller already knows the exact branch name to delete (e.g.
+  # the eng/common sync pipeline). If the branch does not exist, a warning is
+  # logged and the script exits successfully.
+  [string]$TargetBranch,
   # Date format: e.g. Tuesday, April 12, 2022 1:36:02 PM. Allow to use other date format.
   [AllowNull()]
   [DateTime]$LastCommitOlderThan,
@@ -65,6 +71,33 @@ if ($AuthToken) {
 }
 
 $owner, $repo = $RepoId -split "/"
+
+# Fast path: when the caller already knows the exact branch name, skip the expensive
+# GraphQL query that lists all branches and the associated rate limit checks. This
+# reduces the number of GitHub API calls from ~5+ down to 1 per repo, which helps
+# avoid hitting the secondary rate limit when deleting branches across many repos.
+if ($TargetBranch) {
+  LogDebug "TargetBranch specified, using direct deletion for branch '$TargetBranch' in '$RepoId'"
+  if ($PSCmdlet.ShouldProcess("'$TargetBranch' in '$RepoId'", "Deleting branch (target)")) {
+    $response = gh api "repos/${RepoId}/git/refs/heads/${TargetBranch}" -X DELETE 2>&1
+    if ($LASTEXITCODE) {
+      # GitHub returns 422 when the ref doesn't exist. Treat that as a non-fatal warning
+      # since the goal (branch gone) is already achieved.
+      if ($response -match "Reference does not exist" -or $response -match "422") {
+        LogWarning "Branch '$TargetBranch' does not exist in '$RepoId'. It may have already been deleted."
+      }
+      else {
+        LogError "Deletion of branch '$TargetBranch' in '$RepoId' failed: $response"
+        exit 1
+      }
+    }
+    else {
+      LogDebug "Successfully deleted branch '$TargetBranch' in '$RepoId'."
+    }
+  }
+  # Nothing else to do, exit early.
+  exit 0
+}
 
 # These will always be output at the end of the script. Their only purpose is for information gathering
 # Total number returned from query
