@@ -177,12 +177,12 @@ namespace Azure.Identity
                     throw new CredentialUnavailableException(AzdCliNotInstalled);
                 }
 
-                bool isAADSTSError = errorText.Contains("AADSTS"); // Exclude AADSTS errors which may also mention login
-                bool isAzdNotLoggedInError = errorText.IndexOf("azd auth login", StringComparison.OrdinalIgnoreCase) != -1;
+                bool isAADSTSError = errorText.Contains("AADSTS");
+                bool isLoginError  = errorText.IndexOf("azd auth login", StringComparison.OrdinalIgnoreCase) != -1;
 
-                if (isAzdNotLoggedInError && !isAADSTSError)
+                if (isLoginError && !isAADSTSError)
                 {
-                    throw new CredentialUnavailableException(errorText);
+                    throw new CredentialUnavailableException(AzdNotLogIn);
                 }
 
                 bool isRefreshTokenFailedError = errorText.IndexOf(AzdCliFailedError, StringComparison.OrdinalIgnoreCase) != -1 &&
