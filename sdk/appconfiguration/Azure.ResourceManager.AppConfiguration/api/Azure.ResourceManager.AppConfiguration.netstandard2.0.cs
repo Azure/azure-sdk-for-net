@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.AppConfiguration
         public Azure.ResourceManager.AppConfiguration.Models.AppConfigurationProvisioningState? ProvisioningState { get { throw null; } }
         public long? RetentionPeriod { get { throw null; } set { } }
         public long? Size { get { throw null; } }
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
         public string SnapshotType { get { throw null; } }
         public Azure.ResourceManager.AppConfiguration.Models.AppConfigurationSnapshotStatus? Status { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
