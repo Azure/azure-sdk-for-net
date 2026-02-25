@@ -306,7 +306,7 @@ namespace Azure.AI.Projects.OpenAI.Tests.Utilities
                 case JsonValueKind.Object:
                     var expectedProps = expected.EnumerateObject().OrderBy(p => p.Name).ToList();
                     var actualProps = actual.EnumerateObject().OrderBy(p => p.Name).ToList();
-                    Assert.That(actualProps.Count, Is.EqualTo(expectedProps.Count), $"The number of propertie for {key} was different. Expected: {expectedProps.Count}, but was {actualProps.Count}.\nExpected: {expectedProps}\nActual: {actualProps}.");
+                    Assert.That(actualProps.Count, Is.EqualTo(expectedProps.Count), $"The number of properties for {key} was different. Expected: {expectedProps.Count}, but was {actualProps.Count}.\nExpected: {expectedProps}\nActual: {actualProps}.");
                     for (int i = 0; i < expectedProps.Count; i++)
                     {
                         Assert.That(actualProps[i].Name, Is.EqualTo(expectedProps[i].Name), $"The {i}-th property of {key} is named {actualProps[i].Name} bit expected property is {expectedProps[i].Name}");
