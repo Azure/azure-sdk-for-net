@@ -17,7 +17,7 @@ namespace Azure.AI.Projects.OpenAI.Tests
         public string MODELDEPLOYMENTNAME => WrappedGetRecordedVariable("MODEL_DEPLOYMENT_NAME", isSecret: false);
         public string EMBEDDINGMODELDEPLOYMENTNAME => WrappedGetRecordedVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME", isSecret: false);
         public string INGRESS_SUBDOMAIN_SUFFIX => WrappedGetRecordedVariable(nameof(INGRESS_SUBDOMAIN_SUFFIX), isSecret: false);
-        public string OPENAI_FILE_ID => WrappedGetRecordedVariable(nameof(OPENAI_FILE_ID), isSecret: false    );
+        public string OPENAI_FILE_ID => WrappedGetRecordedVariable(nameof(OPENAI_FILE_ID), isSecret: false);
         public string COMPUTER_SCREENSHOTS => WrappedGetRecordedVariable(nameof(COMPUTER_SCREENSHOTS), isSecret: false);
         public string IMAGE_GENERATION_DEPLOYMENT_NAME => WrappedGetRecordedVariable(nameof(IMAGE_GENERATION_DEPLOYMENT_NAME), isSecret: false);
         public string COMPUTER_USE_DEPLOYMENT_NAME => WrappedGetRecordedVariable(nameof(COMPUTER_USE_DEPLOYMENT_NAME), isSecret: false);
@@ -37,6 +37,7 @@ namespace Azure.AI.Projects.OpenAI.Tests
         public string PUBLISHED_ENDPOINT => GetRecordedOptionalVariable(nameof(PUBLISHED_ENDPOINT));
         public string APPLICATIONINSIGHTS_CONNECTION_STRING => WrappedGetRecordedVariable(nameof(APPLICATIONINSIGHTS_CONNECTION_STRING), isSecret: true);
         public string AGENT_DOCKER_IMAGE => GetRecordedOptionalVariable(nameof(AGENT_DOCKER_IMAGE));
+        public string STORAGE_QUEUE_URI => GetRecordedVariable(nameof(STORAGE_QUEUE_URI));
         public string WrappedGetRecordedVariable(string key, bool isSecret = true)
         {
             try

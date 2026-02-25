@@ -22,6 +22,58 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ConfigTemplateVersionWithUpdateType PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConfigTemplateVersionWithUpdateType>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeConfigTemplateVersionWithUpdateType(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConfigTemplateVersionWithUpdateType)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConfigTemplateVersionWithUpdateType>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadOrchestrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ConfigTemplateVersionWithUpdateType)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ConfigTemplateVersionWithUpdateType>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConfigTemplateVersionWithUpdateType IPersistableModel<ConfigTemplateVersionWithUpdateType>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ConfigTemplateVersionWithUpdateType>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="configTemplateVersionWithUpdateType"> The <see cref="ConfigTemplateVersionWithUpdateType"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ConfigTemplateVersionWithUpdateType configTemplateVersionWithUpdateType)
+        {
+            if (configTemplateVersionWithUpdateType == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(configTemplateVersionWithUpdateType, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConfigTemplateVersionWithUpdateType>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -125,58 +177,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 }
             }
             return new ConfigTemplateVersionWithUpdateType(updateType, version, configTemplateVersion, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConfigTemplateVersionWithUpdateType>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfigTemplateVersionWithUpdateType>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadOrchestrationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ConfigTemplateVersionWithUpdateType)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ConfigTemplateVersionWithUpdateType IPersistableModel<ConfigTemplateVersionWithUpdateType>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ConfigTemplateVersionWithUpdateType PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfigTemplateVersionWithUpdateType>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeConfigTemplateVersionWithUpdateType(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ConfigTemplateVersionWithUpdateType)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConfigTemplateVersionWithUpdateType>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="configTemplateVersionWithUpdateType"> The <see cref="ConfigTemplateVersionWithUpdateType"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ConfigTemplateVersionWithUpdateType configTemplateVersionWithUpdateType)
-        {
-            if (configTemplateVersionWithUpdateType == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(configTemplateVersionWithUpdateType, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

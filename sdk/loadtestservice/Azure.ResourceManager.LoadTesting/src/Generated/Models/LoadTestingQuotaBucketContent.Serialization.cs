@@ -19,6 +19,58 @@ namespace Azure.ResourceManager.LoadTesting.Models
     /// <summary> Request object of new quota for a quota bucket. </summary>
     public partial class LoadTestingQuotaBucketContent : ResourceData, IJsonModel<LoadTestingQuotaBucketContent>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LoadTestingQuotaBucketContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeLoadTestingQuotaBucketContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LoadTestingQuotaBucketContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LoadTestingQuotaBucketContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerLoadTestingContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(LoadTestingQuotaBucketContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<LoadTestingQuotaBucketContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LoadTestingQuotaBucketContent IPersistableModel<LoadTestingQuotaBucketContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (LoadTestingQuotaBucketContent)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<LoadTestingQuotaBucketContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="loadTestingQuotaBucketContent"> The <see cref="LoadTestingQuotaBucketContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(LoadTestingQuotaBucketContent loadTestingQuotaBucketContent)
+        {
+            if (loadTestingQuotaBucketContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(loadTestingQuotaBucketContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LoadTestingQuotaBucketContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -131,58 +183,6 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 systemData,
                 additionalBinaryDataProperties,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LoadTestingQuotaBucketContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LoadTestingQuotaBucketContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerLoadTestingContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(LoadTestingQuotaBucketContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        LoadTestingQuotaBucketContent IPersistableModel<LoadTestingQuotaBucketContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (LoadTestingQuotaBucketContent)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LoadTestingQuotaBucketContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeLoadTestingQuotaBucketContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(LoadTestingQuotaBucketContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LoadTestingQuotaBucketContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="loadTestingQuotaBucketContent"> The <see cref="LoadTestingQuotaBucketContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(LoadTestingQuotaBucketContent loadTestingQuotaBucketContent)
-        {
-            if (loadTestingQuotaBucketContent == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(loadTestingQuotaBucketContent, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

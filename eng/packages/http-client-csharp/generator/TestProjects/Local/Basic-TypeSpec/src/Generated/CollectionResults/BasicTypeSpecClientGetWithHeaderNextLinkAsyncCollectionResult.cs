@@ -49,10 +49,10 @@ namespace BasicTypeSpec
                 {
                     items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default));
                 }
-                yield return Page<BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
+                yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (response.Headers.TryGetValue("next", out string value) && !string.IsNullOrEmpty(value))
                 {
-                    nextPage = new Uri(value);
+                    nextPage = new Uri(value, UriKind.RelativeOrAbsolute);
                 }
                 else
                 {

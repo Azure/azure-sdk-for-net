@@ -886,7 +886,7 @@
                       },
                       "value": "2022-12-01-preview"
                     },
-                    "optional": false,
+                    "optional": true,
                     "scope": "Method",
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.createOrUpdate.apiVersion",
                     "readOnly": false,

@@ -35,6 +35,39 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EvaluationRule>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(EvaluationRule)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<EvaluationRule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EvaluationRule IPersistableModel<EvaluationRule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EvaluationRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="evaluationRule"> The <see cref="EvaluationRule"/> to serialize into <see cref="BinaryContent"/>. </param>
+        public static implicit operator BinaryContent(EvaluationRule evaluationRule)
+        {
+            if (evaluationRule == null)
+            {
+                return null;
+            }
+            return BinaryContent.Create(evaluationRule, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="EvaluationRule"/> from. </param>
         public static explicit operator EvaluationRule(ClientResult result)
         {
@@ -227,39 +260,6 @@ namespace Azure.AI.Projects
                 enabled,
                 systemData,
                 additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EvaluationRule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EvaluationRule>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(EvaluationRule)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        EvaluationRule IPersistableModel<EvaluationRule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EvaluationRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="evaluationRule"> The <see cref="EvaluationRule"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(EvaluationRule evaluationRule)
-        {
-            if (evaluationRule == null)
-            {
-                return null;
-            }
-            return BinaryContent.Create(evaluationRule, ModelSerializationExtensions.WireOptions);
         }
     }
 }

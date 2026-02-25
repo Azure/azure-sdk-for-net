@@ -18,17 +18,9 @@ namespace Client.Naming.Model
 
         protected virtual ClientModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        void IJsonModel<ClientModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        ClientModel IJsonModel<ClientModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual ClientModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<ClientModel>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         ClientModel IPersistableModel<ClientModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
@@ -36,5 +28,13 @@ namespace Client.Naming.Model
 
         /// <param name="clientModel"> The <see cref="ClientModel"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(ClientModel clientModel) => throw null;
+
+        void IJsonModel<ClientModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        ClientModel IJsonModel<ClientModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual ClientModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }
 }

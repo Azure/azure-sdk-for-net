@@ -35,6 +35,39 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EvaluatorVersion>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(EvaluatorVersion)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<EvaluatorVersion>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EvaluatorVersion IPersistableModel<EvaluatorVersion>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EvaluatorVersion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="evaluatorVersion"> The <see cref="EvaluatorVersion"/> to serialize into <see cref="BinaryContent"/>. </param>
+        public static implicit operator BinaryContent(EvaluatorVersion evaluatorVersion)
+        {
+            if (evaluatorVersion == null)
+            {
+                return null;
+            }
+            return BinaryContent.Create(evaluatorVersion, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="EvaluatorVersion"/> from. </param>
         public static explicit operator EvaluatorVersion(ClientResult result)
         {
@@ -324,39 +357,6 @@ namespace Azure.AI.Projects
                 description,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EvaluatorVersion>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EvaluatorVersion>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(EvaluatorVersion)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        EvaluatorVersion IPersistableModel<EvaluatorVersion>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EvaluatorVersion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="evaluatorVersion"> The <see cref="EvaluatorVersion"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(EvaluatorVersion evaluatorVersion)
-        {
-            if (evaluatorVersion == null)
-            {
-                return null;
-            }
-            return BinaryContent.Create(evaluatorVersion, ModelSerializationExtensions.WireOptions);
         }
     }
 }

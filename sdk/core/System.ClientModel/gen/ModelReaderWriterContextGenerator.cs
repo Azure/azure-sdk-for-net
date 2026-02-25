@@ -49,33 +49,59 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
             TypeSymbolKindCache SymbolToKindCache,
             TypeSymbolTypeRefCache SymbolToTypeRefCache) data)
     {
-        if (data.TypesWithAttribute.Length == 0 || data.TypesWithAttribute[0].Context is null || data.TypesWithAttribute[0].Context!.ContainingType is not null)
+        // Filter to only valid contexts (non-null, not nested types, and inheriting from ModelReaderWriterContext)
+        var validTypes = data.TypesWithAttribute
+            .Where(t => t.Context is not null
+                && t.Context.ContainingType is null
+                && IsModelReaderWriterContext(t.Context))
+            .ToImmutableArray();
+
+        if (validTypes.Length == 0)
         {
             return;
         }
 
-        if (data.TypesWithAttribute.Length == 1)
+        if (validTypes.Length == 1)
         {
-            ProcessContext(context, data, data.TypesWithAttribute[0].Attributes);
+            ProcessContext(context, data, validTypes[0].Context!, validTypes[0].Attributes);
             return;
         }
 
-        var first = data.TypesWithAttribute[0].Context;
+        var first = validTypes[0].Context;
 
-        for (int i = 1; i < data.TypesWithAttribute.Length; i++)
+        for (int i = 1; i < validTypes.Length; i++)
         {
-            if (!SymbolEqualityComparer.Default.Equals(first, data.TypesWithAttribute[i].Context))
+            if (!SymbolEqualityComparer.Default.Equals(first, validTypes[i].Context))
             {
-                // Verify all contexts are partials of each other SCM0001.
-                context.ReportDiagnostic(Diagnostic.Create(
-                    DiagnosticDescriptors.MultipleContextsNotSupported,
-                    data.TypesWithAttribute[0].Context?.Locations.First(),
-                    data.TypesWithAttribute.Skip(1).Where(s => s.Context is not null).Select(s => s.Context!.Locations.First())));
+                // Multiple different contexts detected - the MultipleContextAnalyzer will report the diagnostic.
                 return;
             }
         }
 
-        ProcessContext(context, data, data.TypesWithAttribute.SelectMany(c => c.Attributes));
+        ProcessContext(context, data, first!, validTypes.SelectMany(c => c.Attributes));
+    }
+
+    private bool IsModelReaderWriterContext(INamedTypeSymbol typeSymbol)
+    {
+        var mrwContextSymbol = GetMrwContextSymbol(typeSymbol);
+        return mrwContextSymbol is
+        {
+            Name: "ModelReaderWriterContext",
+            ContainingType: null,
+            ContainingNamespace:
+            {
+                Name: "Primitives",
+                ContainingNamespace:
+                {
+                    Name: "ClientModel",
+                    ContainingNamespace:
+                    {
+                        Name: "System",
+                        ContainingNamespace.IsGlobalNamespace: true
+                    }
+                }
+            }
+        };
     }
 
     private void ProcessContext(
@@ -84,11 +110,10 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
             ImmutableArray<AttributeData> Attributes)> TypesWithAttribute,
             TypeSymbolKindCache SymbolToKindCache,
             TypeSymbolTypeRefCache SymbolToTypeRefCache) data,
+        INamedTypeSymbol contextSymbol,
         IEnumerable<AttributeData> allAttributes)
     {
-        var contextSymbol = data.TypesWithAttribute[0].Context!;
-
-        var mrwContextSymbol = GetMrwContextSymbol(contextSymbol);
+        // Note: The caller already validated that contextSymbol inherits from ModelReaderWriterContext
 
         var contextType = data.SymbolToTypeRefCache.Get(contextSymbol, data.SymbolToKindCache);
 
@@ -103,7 +128,7 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
 
         if (!IsPartialClass(contextSymbol))
         {
-            context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.ContextMustBePartial, Location.None));
+            // Not partial - the PartialModifierAnalyzer will report the diagnostic.
             return;
         }
 
@@ -147,7 +172,7 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
 
         if (!HasAccessibleParameterlessConstructor(typeSymbol, symbolKindCache) && itemType.IsSameAssembly(contextType))
         {
-            context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.TypeMustHaveParameterlessConstructor, typeSymbol.Locations.FirstOrDefault(), type.Name));
+            // No accessible parameterless constructor - the ParameterlessConstructorAnalyzer will report the diagnostic.
             return null;
         }
 
@@ -160,7 +185,7 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
 
         if (typeSymbol.IsAbstract && proxy is null)
         {
-            context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.AbstractTypeWithoutProxy, typeSymbol.Locations.FirstOrDefault(), type.Name));
+            // Abstract type without proxy - the AbstractTypeWithoutProxyAnalyzer will report the diagnostic.
             return null;
         }
 

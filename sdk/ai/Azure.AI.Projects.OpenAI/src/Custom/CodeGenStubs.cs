@@ -7,15 +7,14 @@ namespace Azure.AI.Projects.OpenAI;
 
 // Public type renames
 
-[CodeGenType("AgentRecord")] public partial class AgentRecord
+[CodeGenType("AgentRecord")]
+public partial class AgentRecord
 {
     [CodeGenMember("Object")]
     private string Object { get; } = "agent";
 }
 
-[CodeGenType("AgentResponseItemKind")] public readonly partial struct AgentResponseItemKind { }
 [CodeGenType("MemorySearchToolCallItemResourceStatus")] public readonly partial struct MemorySearchToolCallStatus { }
-[CodeGenType("WorkflowActionOutputItemResourceStatus")] public readonly partial struct AgentWorkflowActionStatus { }
+[CodeGenType("WorkflowActionOutputItemStatus")] public readonly partial struct AgentWorkflowPreviewActionStatus { }
 [CodeGenType("OpenApiFunctionDefinitionFunction")] public partial class OpenAPIFunctionEntry { }
-[CodeGenType("AgentItemSource")] public partial class AgentItemSource { }
 [CodeGenType("WebSearchConfiguration")] public partial class ProjectWebSearchConfiguration { }

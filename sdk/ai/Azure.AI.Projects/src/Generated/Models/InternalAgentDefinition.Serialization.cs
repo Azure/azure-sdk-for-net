@@ -33,6 +33,29 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InternalAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(InternalAgentDefinition)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InternalAgentDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InternalAgentDefinition IPersistableModel<InternalAgentDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InternalAgentDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InternalAgentDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -104,40 +127,17 @@ namespace Azure.AI.Projects
             {
                 switch (discriminator.GetString())
                 {
+                    case "prompt":
+                        return InternalPromptAgentDefinition.DeserializeInternalPromptAgentDefinition(element, options);
                     case "workflow":
                         return WorkflowAgentDefinition.DeserializeWorkflowAgentDefinition(element, options);
                     case "hosted":
                         return HostedAgentDefinition.DeserializeHostedAgentDefinition(element, options);
                     case "container_app":
                         return ContainerAppAgentDefinition.DeserializeContainerAppAgentDefinition(element, options);
-                    case "prompt":
-                        return InternalPromptAgentDefinition.DeserializeInternalPromptAgentDefinition(element, options);
                 }
             }
             return UnknownAgentDefinition.DeserializeUnknownAgentDefinition(element, options);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalAgentDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(InternalAgentDefinition)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InternalAgentDefinition IPersistableModel<InternalAgentDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalAgentDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

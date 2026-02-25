@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Type for this recommendation.
-    /// Serialized Name: RecommendationTypeEnum
-    /// </summary>
+    /// <summary> Type for this recommendation. </summary>
     public readonly partial struct PostgreSqlFlexibleServerRecommendationType : IEquatable<PostgreSqlFlexibleServerRecommendationType>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string ReIndexValue = "ReIndex";
         private const string AnalyzeTableValue = "AnalyzeTable";
 
-        /// <summary>
-        /// CreateIndex
-        /// Serialized Name: RecommendationTypeEnum.CreateIndex
-        /// </summary>
+        /// <summary> CreateIndex. </summary>
         public static PostgreSqlFlexibleServerRecommendationType CreateIndex { get; } = new PostgreSqlFlexibleServerRecommendationType(CreateIndexValue);
-        /// <summary>
-        /// DropIndex
-        /// Serialized Name: RecommendationTypeEnum.DropIndex
-        /// </summary>
+        /// <summary> DropIndex. </summary>
         public static PostgreSqlFlexibleServerRecommendationType DropIndex { get; } = new PostgreSqlFlexibleServerRecommendationType(DropIndexValue);
-        /// <summary>
-        /// ReIndex
-        /// Serialized Name: RecommendationTypeEnum.ReIndex
-        /// </summary>
+        /// <summary> ReIndex. </summary>
         public static PostgreSqlFlexibleServerRecommendationType ReIndex { get; } = new PostgreSqlFlexibleServerRecommendationType(ReIndexValue);
-        /// <summary>
-        /// AnalyzeTable
-        /// Serialized Name: RecommendationTypeEnum.AnalyzeTable
-        /// </summary>
+        /// <summary> AnalyzeTable. </summary>
         public static PostgreSqlFlexibleServerRecommendationType AnalyzeTable { get; } = new PostgreSqlFlexibleServerRecommendationType(AnalyzeTableValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerRecommendationType"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerRecommendationType left, PostgreSqlFlexibleServerRecommendationType right) => left.Equals(right);

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
                     yield break;
                 }
                 InstanceResourceListResult result = InstanceResourceListResult.FromResponse(response);
-                yield return Page<WeightsAndBiasesInstanceData>.FromValues((IReadOnlyList<WeightsAndBiasesInstanceData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<WeightsAndBiasesInstanceData>.FromValues((IReadOnlyList<WeightsAndBiasesInstanceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

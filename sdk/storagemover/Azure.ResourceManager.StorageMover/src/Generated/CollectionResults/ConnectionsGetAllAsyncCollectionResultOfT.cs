@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.StorageMover
                     yield break;
                 }
                 ConnectionList result = ConnectionList.FromResponse(response);
-                yield return Page<StorageMoverConnectionData>.FromValues(result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<StorageMoverConnectionData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

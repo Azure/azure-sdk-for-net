@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Allowed tools. </summary>
-    public partial class ToolChoiceAllowed : ToolChoiceParam, IJsonModel<ToolChoiceAllowed>
+    internal partial class ToolChoiceAllowed : InternalToolChoiceParam, IJsonModel<ToolChoiceAllowed>
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceAllowed"/> for deserialization. </summary>
         internal ToolChoiceAllowed()
@@ -19,7 +19,7 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ToolChoiceParam PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override InternalToolChoiceParam PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ToolChoiceAllowed>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -33,6 +33,29 @@ namespace Azure.AI.Projects.OpenAI
                     throw new FormatException($"The model {nameof(ToolChoiceAllowed)} does not support reading '{options.Format}' format.");
             }
         }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ToolChoiceAllowed>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsOpenAIContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ToolChoiceAllowed)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ToolChoiceAllowed>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ToolChoiceAllowed IPersistableModel<ToolChoiceAllowed>.Create(BinaryData data, ModelReaderWriterOptions options) => (ToolChoiceAllowed)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ToolChoiceAllowed>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -93,7 +116,7 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ToolChoiceParam JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override InternalToolChoiceParam JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ToolChoiceAllowed>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -164,28 +187,5 @@ namespace Azure.AI.Projects.OpenAI
             }
             return new ToolChoiceAllowed(@type, additionalBinaryDataProperties, mode, tools);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ToolChoiceAllowed>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ToolChoiceAllowed>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsOpenAIContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ToolChoiceAllowed)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ToolChoiceAllowed IPersistableModel<ToolChoiceAllowed>.Create(BinaryData data, ModelReaderWriterOptions options) => (ToolChoiceAllowed)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ToolChoiceAllowed>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

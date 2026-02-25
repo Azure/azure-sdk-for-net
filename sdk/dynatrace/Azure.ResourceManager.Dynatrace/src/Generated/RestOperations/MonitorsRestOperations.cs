@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.Dynatrace
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Dynatrace.Observability/monitors/", false);
             uri.AppendPath(monitorName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -70,7 +73,10 @@ namespace Azure.ResourceManager.Dynatrace
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Dynatrace.Observability/monitors/", false);
             uri.AppendPath(monitorName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -91,7 +97,10 @@ namespace Azure.ResourceManager.Dynatrace
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Dynatrace.Observability/monitors/", false);
             uri.AppendPath(monitorName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -112,7 +121,10 @@ namespace Azure.ResourceManager.Dynatrace
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Dynatrace.Observability/monitors/", false);
             uri.AppendPath(monitorName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -129,7 +141,10 @@ namespace Azure.ResourceManager.Dynatrace
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Dynatrace.Observability/monitors", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -141,8 +156,18 @@ namespace Azure.ResourceManager.Dynatrace
         internal HttpMessage CreateNextGetByResourceGroupRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -158,7 +183,10 @@ namespace Azure.ResourceManager.Dynatrace
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Dynatrace.Observability/monitors", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -170,8 +198,18 @@ namespace Azure.ResourceManager.Dynatrace
         internal HttpMessage CreateNextGetBySubscriptionIdRequest(Uri nextPage, Guid subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -191,7 +229,10 @@ namespace Azure.ResourceManager.Dynatrace
             uri.AppendPath("/providers/Dynatrace.Observability/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/listMonitoredResources", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -208,8 +249,18 @@ namespace Azure.ResourceManager.Dynatrace
         internal HttpMessage CreateNextGetMonitoredResourcesRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string monitorName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -233,7 +284,10 @@ namespace Azure.ResourceManager.Dynatrace
             uri.AppendPath("/providers/Dynatrace.Observability/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/getVMHostPayload", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -253,7 +307,10 @@ namespace Azure.ResourceManager.Dynatrace
             uri.AppendPath("/providers/Dynatrace.Observability/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/manageAgentInstallation", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -274,7 +331,10 @@ namespace Azure.ResourceManager.Dynatrace
             uri.AppendPath("/providers/Dynatrace.Observability/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/listHosts", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -286,8 +346,18 @@ namespace Azure.ResourceManager.Dynatrace
         internal HttpMessage CreateNextGetHostsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string monitorName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -307,7 +377,10 @@ namespace Azure.ResourceManager.Dynatrace
             uri.AppendPath("/providers/Dynatrace.Observability/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/getMetricStatus", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -332,7 +405,10 @@ namespace Azure.ResourceManager.Dynatrace
             uri.AppendPath("/providers/Dynatrace.Observability/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/listAppServices", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -344,8 +420,18 @@ namespace Azure.ResourceManager.Dynatrace
         internal HttpMessage CreateNextGetAppServicesRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string monitorName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -365,7 +451,10 @@ namespace Azure.ResourceManager.Dynatrace
             uri.AppendPath("/providers/Dynatrace.Observability/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/upgradePlan", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -386,7 +475,10 @@ namespace Azure.ResourceManager.Dynatrace
             uri.AppendPath("/providers/Dynatrace.Observability/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/getSSODetails", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -411,7 +503,10 @@ namespace Azure.ResourceManager.Dynatrace
             uri.AppendPath("/providers/Dynatrace.Observability/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/listLinkableEnvironments", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -425,8 +520,18 @@ namespace Azure.ResourceManager.Dynatrace
         internal HttpMessage CreateNextGetLinkableEnvironmentsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string monitorName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -443,7 +548,10 @@ namespace Azure.ResourceManager.Dynatrace
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Dynatrace.Observability/getMarketplaceSaaSResourceDetails", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

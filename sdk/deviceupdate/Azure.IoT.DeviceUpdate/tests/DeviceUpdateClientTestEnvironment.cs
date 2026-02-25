@@ -6,7 +6,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.IoT.DeviceUpdate.Tests
 {
-    public class DeviceUpdateClientTestEnvironment: TestEnvironment
+    public class DeviceUpdateClientTestEnvironment : TestEnvironment
     {
         public Uri AccountEndPoint => new Uri($"https://{GetRecordedVariable("DEVICEUPDATE_ACCOUNT_ENDPOINT")}");
 

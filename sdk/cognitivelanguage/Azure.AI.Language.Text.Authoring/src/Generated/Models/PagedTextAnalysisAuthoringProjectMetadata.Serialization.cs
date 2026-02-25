@@ -38,6 +38,29 @@ namespace Azure.AI.Language.Text.Authoring
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PagedTextAnalysisAuthoringProjectMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextAuthoringContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PagedTextAnalysisAuthoringProjectMetadata)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PagedTextAnalysisAuthoringProjectMetadata>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PagedTextAnalysisAuthoringProjectMetadata IPersistableModel<PagedTextAnalysisAuthoringProjectMetadata>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PagedTextAnalysisAuthoringProjectMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PagedTextAnalysisAuthoringProjectMetadata"/> from. </param>
         public static explicit operator PagedTextAnalysisAuthoringProjectMetadata(Response response)
         {
@@ -138,7 +161,7 @@ namespace Azure.AI.Language.Text.Authoring
                     {
                         continue;
                     }
-                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")
@@ -148,28 +171,5 @@ namespace Azure.AI.Language.Text.Authoring
             }
             return new PagedTextAnalysisAuthoringProjectMetadata(value, nextLink, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PagedTextAnalysisAuthoringProjectMetadata>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PagedTextAnalysisAuthoringProjectMetadata>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextAuthoringContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PagedTextAnalysisAuthoringProjectMetadata)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PagedTextAnalysisAuthoringProjectMetadata IPersistableModel<PagedTextAnalysisAuthoringProjectMetadata>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PagedTextAnalysisAuthoringProjectMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

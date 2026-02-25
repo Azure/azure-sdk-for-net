@@ -17,6 +17,58 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Troubleshooter ContinueRequest body. </summary>
     public partial class TroubleshooterContinueContent : IJsonModel<TroubleshooterContinueContent>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TroubleshooterContinueContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TroubleshooterContinueContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTroubleshooterContinueContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TroubleshooterContinueContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TroubleshooterContinueContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSelfHelpContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TroubleshooterContinueContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TroubleshooterContinueContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TroubleshooterContinueContent IPersistableModel<TroubleshooterContinueContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TroubleshooterContinueContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="troubleshooterContinueContent"> The <see cref="TroubleshooterContinueContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(TroubleshooterContinueContent troubleshooterContinueContent)
+        {
+            if (troubleshooterContinueContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(troubleshooterContinueContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TroubleshooterContinueContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -122,58 +174,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             return new TroubleshooterContinueContent(stepId, responses ?? new ChangeTrackingList<TroubleshooterResult>(), additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TroubleshooterContinueContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TroubleshooterContinueContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSelfHelpContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(TroubleshooterContinueContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        TroubleshooterContinueContent IPersistableModel<TroubleshooterContinueContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TroubleshooterContinueContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TroubleshooterContinueContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeTroubleshooterContinueContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TroubleshooterContinueContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TroubleshooterContinueContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="troubleshooterContinueContent"> The <see cref="TroubleshooterContinueContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(TroubleshooterContinueContent troubleshooterContinueContent)
-        {
-            if (troubleshooterContinueContent == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(troubleshooterContinueContent, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

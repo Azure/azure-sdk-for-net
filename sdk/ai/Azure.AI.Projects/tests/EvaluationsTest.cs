@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -11,7 +11,6 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.AI.Projects;
 using Azure.AI.Projects.OpenAI;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
@@ -38,6 +37,7 @@ public class EvaluationsTest : ProjectsClientTestBase
     };
     #endregion
 
+    [Ignore("The V1 API is not supported")]
     [RecordedTest]
     public async Task SearchIndexesTest()
     {
@@ -147,6 +147,7 @@ public class EvaluationsTest : ProjectsClientTestBase
         await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
     }
 
+    [Ignore("The V1 API is not supported")]
     [RecordedTest]
     public async Task TestEvaluatorsCRUD()
     {
@@ -160,7 +161,7 @@ public class EvaluationsTest : ProjectsClientTestBase
         Assert.That(string.IsNullOrEmpty(promptEvaluator.Id), Is.False);
         string id = promptEvaluator.Id;
         // Update
-        BinaryData evalustorVersionUpdate = BinaryData.FromObjectAsJson(
+        BinaryData evaluatorVersionUpdate = BinaryData.FromObjectAsJson(
             new
             {
                 categories = new[] { EvaluatorCategory.Quality.ToString() },
@@ -168,11 +169,11 @@ public class EvaluationsTest : ProjectsClientTestBase
                 description = "Custom evaluator description changed"
             }
         );
-        using BinaryContent evalustorVersionUpdateContent = BinaryContent.Create(evalustorVersionUpdate);
+        using BinaryContent evaluatorVersionUpdateContent = BinaryContent.Create(evaluatorVersionUpdate);
         ClientResult response = await projectClient.Evaluators.UpdateVersionAsync(
             name: promptEvaluator.Name,
             version: promptEvaluator.Version,
-            content: evalustorVersionUpdateContent
+            content: evaluatorVersionUpdateContent
         );
         EvaluatorVersion updatedEvaluator = ClientResult.FromValue((EvaluatorVersion)response, response.GetRawResponse());
         Assert.That(updatedEvaluator.Id, Is.EqualTo(id));
@@ -233,6 +234,7 @@ public class EvaluationsTest : ProjectsClientTestBase
         }
     }
 
+    [Ignore("The V1 API is not supported")]
     [RecordedTest]
     public async Task TestBuiltInEvaluators()
     {
@@ -241,6 +243,7 @@ public class EvaluationsTest : ProjectsClientTestBase
         Assert.That(builtInEvaluators.Count, Is.GreaterThan(0), "No built-in evaluators were found.");
     }
 
+    [Ignore("The V1 API is not supported")]
     [RecordedTest]
     [TestCase(CustomEvaluatorType.PromptBased)]
     [TestCase(CustomEvaluatorType.CodeBased)]
@@ -364,6 +367,7 @@ public class EvaluationsTest : ProjectsClientTestBase
         await projectClient.Evaluators.DeleteVersionAsync(name: promptEvaluator.Name, version: promptEvaluator.Version);
     }
 
+    [Ignore("The V1 API is not supported")]
     [RecordedTest]
     public async Task TestEvaluationRule()
     {

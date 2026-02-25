@@ -35,6 +35,39 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AgentManifestOptions>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AgentManifestOptions)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AgentManifestOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AgentManifestOptions IPersistableModel<AgentManifestOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AgentManifestOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="agentManifestOptions"> The <see cref="AgentManifestOptions"/> to serialize into <see cref="BinaryContent"/>. </param>
+        public static implicit operator BinaryContent(AgentManifestOptions agentManifestOptions)
+        {
+            if (agentManifestOptions == null)
+            {
+                return null;
+            }
+            return BinaryContent.Create(agentManifestOptions, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AgentManifestOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -199,39 +232,6 @@ namespace Azure.AI.Projects
                 }
             }
             return new AgentManifestOptions(metadata ?? new ChangeTrackingDictionary<string, string>(), description, manifestId, parameterValues, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AgentManifestOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentManifestOptions>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AgentManifestOptions)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AgentManifestOptions IPersistableModel<AgentManifestOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AgentManifestOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="agentManifestOptions"> The <see cref="AgentManifestOptions"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(AgentManifestOptions agentManifestOptions)
-        {
-            if (agentManifestOptions == null)
-            {
-                return null;
-            }
-            return BinaryContent.Create(agentManifestOptions, ModelSerializationExtensions.WireOptions);
         }
     }
 }

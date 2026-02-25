@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Grafana
                     yield break;
                 }
                 GrafanaPrivateLinkResourceListResult result = GrafanaPrivateLinkResourceListResult.FromResponse(response);
-                yield return Page<GrafanaPrivateLinkResourceData>.FromValues((IReadOnlyList<GrafanaPrivateLinkResourceData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<GrafanaPrivateLinkResourceData>.FromValues((IReadOnlyList<GrafanaPrivateLinkResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Status of the feature. Indicates if the feature is enabled or not.
-    /// Serialized Name: FeatureStatus
-    /// </summary>
+    /// <summary> Status of the feature. Indicates if the feature is enabled or not. </summary>
     public readonly partial struct PostgreSqlFlexibleServerFeatureStatus : IEquatable<PostgreSqlFlexibleServerFeatureStatus>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: FeatureStatus.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static PostgreSqlFlexibleServerFeatureStatus Enabled { get; } = new PostgreSqlFlexibleServerFeatureStatus(EnabledValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: FeatureStatus.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static PostgreSqlFlexibleServerFeatureStatus Disabled { get; } = new PostgreSqlFlexibleServerFeatureStatus(DisabledValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerFeatureStatus"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerFeatureStatus left, PostgreSqlFlexibleServerFeatureStatus right) => left.Equals(right);

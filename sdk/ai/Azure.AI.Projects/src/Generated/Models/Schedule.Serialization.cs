@@ -35,6 +35,39 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<Schedule>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(Schedule)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<Schedule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        Schedule IPersistableModel<Schedule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<Schedule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="schedule"> The <see cref="Schedule"/> to serialize into <see cref="BinaryContent"/>. </param>
+        public static implicit operator BinaryContent(Schedule schedule)
+        {
+            if (schedule == null)
+            {
+                return null;
+            }
+            return BinaryContent.Create(schedule, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="Schedule"/> from. </param>
         public static explicit operator Schedule(ClientResult result)
         {
@@ -305,39 +338,6 @@ namespace Azure.AI.Projects
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 systemData,
                 additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<Schedule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<Schedule>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(Schedule)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        Schedule IPersistableModel<Schedule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<Schedule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="schedule"> The <see cref="Schedule"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(Schedule schedule)
-        {
-            if (schedule == null)
-            {
-                return null;
-            }
-            return BinaryContent.Create(schedule, ModelSerializationExtensions.WireOptions);
         }
     }
 }

@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.4.1 (2026-02-12)
+
+### Other Changes
+
+- Removed `show-serialized-names` debug configuration to clean up unnecessary serialized name annotations from XML docs.
+
 ## 1.4.0 (2026-01-30)
 
 ### Features Added

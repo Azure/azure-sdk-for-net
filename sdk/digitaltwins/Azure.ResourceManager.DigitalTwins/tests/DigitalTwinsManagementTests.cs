@@ -4,11 +4,11 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.ResourceManager.Resources;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.DigitalTwins.Models;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DigitalTwins.Tests
 {

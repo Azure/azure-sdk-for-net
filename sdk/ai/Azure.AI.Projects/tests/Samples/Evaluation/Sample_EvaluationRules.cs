@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -20,7 +20,7 @@ namespace Azure.AI.Projects.Tests.Samples.Evaluation;
 
 public class Sample_EvaluationRules : SamplesBase
 {
-    #region Snippet:Sampple_GetError_EvaluationRules
+    #region Snippet:Sample_GetError_EvaluationRules
     private static string GetErrorMessageOrEmpty(ClientResult result)
     {
         string error = "";
@@ -55,7 +55,7 @@ public class Sample_EvaluationRules : SamplesBase
         return error;
     }
     #endregion
-    #region Snippet:Sampple_GetStringValues_EvaluationRules
+    #region Snippet:Sample_GetStringValues_EvaluationRules
     private static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
     {
         Dictionary<string, string> results = [];

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using OpenAI;
@@ -17,6 +18,7 @@ namespace Azure.AI.Projects;
 [CodeGenSuppress("GetMemoryStores", typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetMemoryStoresAsync", typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenType("MemoryStores")]
+[Experimental("AAIP001")]
 public partial class AIProjectMemoryStoresOperations
 {
     /// <summary> Search for relevant memories from a memory store based on conversation context. </summary>

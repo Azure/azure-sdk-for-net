@@ -7,7 +7,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Core.Foundations;
+using Azure.Core;
 
 namespace Azure.AI.Projects
 {
@@ -59,7 +59,7 @@ namespace Azure.AI.Projects
             Uri nextPage = ((PagedEvaluationTaxonomy)page).NextLink;
             if (nextPage != null)
             {
-                return ContinuationToken.FromBytes(BinaryData.FromString(nextPage.AbsoluteUri));
+                return ContinuationToken.FromBytes(BinaryData.FromString(nextPage.IsAbsoluteUri ? nextPage.AbsoluteUri : nextPage.OriginalString));
             }
             else
             {

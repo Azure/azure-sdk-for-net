@@ -130,7 +130,8 @@ Previously in `Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker`, you could 
 ```C# Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_CreateKnowledgeBase
 Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models.Operation createOp = await client.Knowledgebase.CreateAsync(new CreateKbDTO
 {
-    Name = "{KnowledgeBaseName}", QnaList = new List<QnADTO>
+    Name = "{KnowledgeBaseName}",
+    QnaList = new List<QnADTO>
     {
         new QnADTO
         {
@@ -149,15 +150,16 @@ Now in `Azure.AI.Language.QuestionAnswering.Authoring`, you can create a new Que
 ```C# Snippet:Language_QnA_Maker_Snippets_MigrationGuide_CreateProject
 string newProjectName = "{ProjectName}";
 RequestContent creationRequestContent = RequestContent.Create(
-    new {
-            description = "This is the description for a test project",
-            language = "en",
-            multilingualResource = false,
-            settings = new
-            {
-                defaultAnswer = "No answer found for your question."
-            }
+    new
+    {
+        description = "This is the description for a test project",
+        language = "en",
+        multilingualResource = false,
+        settings = new
+        {
+            defaultAnswer = "No answer found for your question."
         }
+    }
     );
 
 Response creationResponse = await client.CreateProjectAsync(newProjectName, creationRequestContent);

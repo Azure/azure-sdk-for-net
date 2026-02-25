@@ -13,6 +13,7 @@ Thank you to our developer community members who helped to make Azure Tables bet
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed an `IndexOutOfRangeException` when constructing `TableServiceClient` or `TableClient` with a loopback URI that does not contain an account name in the path, such as the Cosmos DB emulator endpoint `http://localhost:8902/`.
 - Fixed an issue where `TimeSpan` properties in strongly typed table entities were not being deserialized.
 - Fixed an issue when deserializing strongly typed table entities with enum properties. Enum values that aren't defined in the enum type are now skipped during deserialization of the table entity.
 - Fixed an issue when comparing `TableErrorCode` with null strings using equality operators.

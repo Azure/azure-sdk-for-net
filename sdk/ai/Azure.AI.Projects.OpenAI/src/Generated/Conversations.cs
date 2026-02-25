@@ -13,7 +13,6 @@ namespace Azure.AI.Projects.OpenAI
     internal partial class Conversations
     {
         private readonly Uri _endpoint;
-        private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of Conversations for mocking. </summary>
         protected Conversations()
@@ -23,12 +22,10 @@ namespace Azure.AI.Projects.OpenAI
         /// <summary> Initializes a new instance of Conversations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="apiVersion"></param>
-        internal Conversations(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal Conversations(ClientPipeline pipeline, Uri endpoint)
         {
             _endpoint = endpoint;
             Pipeline = pipeline;
-            _apiVersion = apiVersion;
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -118,7 +115,7 @@ namespace Azure.AI.Projects.OpenAI
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         public virtual ClientResult<ProjectConversation> UpdateConversation(string conversationId, InternalMetadataContainer metadata, CancellationToken cancellationToken = default)
         {
-            ProjectConversationUpdateOptions spreadModel = new ProjectConversationUpdateOptions(default, default);
+            UpdateConversationRequest spreadModel = new UpdateConversationRequest(metadata, default);
             ClientResult result = UpdateConversation(conversationId, spreadModel, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((ProjectConversation)result, result.GetRawResponse());
         }
@@ -133,7 +130,7 @@ namespace Azure.AI.Projects.OpenAI
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         public virtual async Task<ClientResult<ProjectConversation>> UpdateConversationAsync(string conversationId, InternalMetadataContainer metadata, CancellationToken cancellationToken = default)
         {
-            ProjectConversationUpdateOptions spreadModel = new ProjectConversationUpdateOptions(default, default);
+            UpdateConversationRequest spreadModel = new UpdateConversationRequest(metadata, default);
             ClientResult result = await UpdateConversationAsync(conversationId, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((ProjectConversation)result, result.GetRawResponse());
         }

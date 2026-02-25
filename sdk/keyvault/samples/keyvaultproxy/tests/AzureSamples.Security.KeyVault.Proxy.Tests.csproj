@@ -1,9 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>$(RequiredRunnableTargetFrameworks)</TargetFrameworks>
-    <SupportsNetStandard20>false</SupportsNetStandard20>
-    <TargetFrameworks Condition="'$(OS)' == 'Windows_NT'">$(TargetFrameworks);$(NetFxTargetFramework)</TargetFrameworks>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 

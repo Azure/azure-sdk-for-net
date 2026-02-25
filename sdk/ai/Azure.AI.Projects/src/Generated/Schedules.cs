@@ -185,12 +185,14 @@ namespace Azure.AI.Projects
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="type"> Filter by the type of schedule. </param>
+        /// <param name="enabled"> Filter by the enabled status. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual CollectionResult GetAll(RequestOptions options)
+        public virtual CollectionResult GetAll(string @type, bool? enabled, RequestOptions options)
         {
-            return new SchedulesGetAllCollectionResult(this, options);
+            return new SchedulesGetAllCollectionResult(this, @type, enabled, options);
         }
 
         /// <summary>
@@ -201,32 +203,38 @@ namespace Azure.AI.Projects
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="type"> Filter by the type of schedule. </param>
+        /// <param name="enabled"> Filter by the enabled status. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncCollectionResult GetAllAsync(RequestOptions options)
+        public virtual AsyncCollectionResult GetAllAsync(string @type, bool? enabled, RequestOptions options)
         {
-            return new SchedulesGetAllAsyncCollectionResult(this, options);
+            return new SchedulesGetAllAsyncCollectionResult(this, @type, enabled, options);
         }
 
         /// <summary> List all schedules. </summary>
+        /// <param name="type"> Filter by the type of schedule. </param>
+        /// <param name="enabled"> Filter by the enabled status. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<Schedule> GetAll(CancellationToken cancellationToken = default)
+        public virtual CollectionResult<Schedule> GetAll(ScheduleTaskType? @type = default, bool? enabled = default, CancellationToken cancellationToken = default)
         {
-            return new SchedulesGetAllCollectionResultOfT(this, cancellationToken.ToRequestOptions());
+            return new SchedulesGetAllCollectionResultOfT(this, @type?.ToString(), enabled, cancellationToken.ToRequestOptions());
         }
 
         /// <summary> List all schedules. </summary>
+        /// <param name="type"> Filter by the type of schedule. </param>
+        /// <param name="enabled"> Filter by the enabled status. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<Schedule> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncCollectionResult<Schedule> GetAllAsync(ScheduleTaskType? @type = default, bool? enabled = default, CancellationToken cancellationToken = default)
         {
-            return new SchedulesGetAllAsyncCollectionResultOfT(this, cancellationToken.ToRequestOptions());
+            return new SchedulesGetAllAsyncCollectionResultOfT(this, @type?.ToString(), enabled, cancellationToken.ToRequestOptions());
         }
 
         /// <summary>
-        /// [Protocol Method] Create or update a schedule by id.
+        /// [Protocol Method] Create or update operation template.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -250,7 +258,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Create or update a schedule by id.
+        /// [Protocol Method] Create or update operation template.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -273,35 +281,35 @@ namespace Azure.AI.Projects
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Create or update a schedule by id. </summary>
+        /// <summary> Create or update operation template. </summary>
         /// <param name="id"> Identifier of the schedule. </param>
-        /// <param name="schedule"> Schedule resource. </param>
+        /// <param name="resource"> The resource instance. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="schedule"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="resource"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<Schedule> CreateOrUpdate(string id, Schedule schedule, CancellationToken cancellationToken = default)
+        public virtual ClientResult<Schedule> CreateOrUpdate(string id, Schedule resource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(schedule, nameof(schedule));
+            Argument.AssertNotNull(resource, nameof(resource));
 
-            ClientResult result = CreateOrUpdate(id, schedule, cancellationToken.ToRequestOptions());
+            ClientResult result = CreateOrUpdate(id, resource, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((Schedule)result, result.GetRawResponse());
         }
 
-        /// <summary> Create or update a schedule by id. </summary>
+        /// <summary> Create or update operation template. </summary>
         /// <param name="id"> Identifier of the schedule. </param>
-        /// <param name="schedule"> Schedule resource. </param>
+        /// <param name="resource"> The resource instance. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="schedule"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="resource"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<Schedule>> CreateOrUpdateAsync(string id, Schedule schedule, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<Schedule>> CreateOrUpdateAsync(string id, Schedule resource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(schedule, nameof(schedule));
+            Argument.AssertNotNull(resource, nameof(resource));
 
-            ClientResult result = await CreateOrUpdateAsync(id, schedule, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await CreateOrUpdateAsync(id, resource, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((Schedule)result, result.GetRawResponse());
         }
 
@@ -313,8 +321,8 @@ namespace Azure.AI.Projects
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scheduleId"> Identifier of the schedule. </param>
-        /// <param name="runId"> Identifier of the schedule run. </param>
+        /// <param name="scheduleId"> The unique identifier of the schedule. </param>
+        /// <param name="runId"> The unique identifier of the schedule run. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scheduleId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -337,8 +345,8 @@ namespace Azure.AI.Projects
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scheduleId"> Identifier of the schedule. </param>
-        /// <param name="runId"> Identifier of the schedule run. </param>
+        /// <param name="scheduleId"> The unique identifier of the schedule. </param>
+        /// <param name="runId"> The unique identifier of the schedule run. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scheduleId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -354,8 +362,8 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Get a schedule run by id. </summary>
-        /// <param name="scheduleId"> Identifier of the schedule. </param>
-        /// <param name="runId"> Identifier of the schedule run. </param>
+        /// <param name="scheduleId"> The unique identifier of the schedule. </param>
+        /// <param name="runId"> The unique identifier of the schedule run. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scheduleId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -370,8 +378,8 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Get a schedule run by id. </summary>
-        /// <param name="scheduleId"> Identifier of the schedule. </param>
-        /// <param name="runId"> Identifier of the schedule run. </param>
+        /// <param name="scheduleId"> The unique identifier of the schedule. </param>
+        /// <param name="runId"> The unique identifier of the schedule run. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scheduleId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -394,16 +402,18 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="id"> Identifier of the schedule. </param>
+        /// <param name="type"> Filter by the type of schedule. </param>
+        /// <param name="enabled"> Filter by the enabled status. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual CollectionResult GetRuns(string id, RequestOptions options)
+        public virtual CollectionResult GetRuns(string id, string @type, bool? enabled, RequestOptions options)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            return new SchedulesGetRunsCollectionResult(this, id, options);
+            return new SchedulesGetRunsCollectionResult(this, id, @type, enabled, options);
         }
 
         /// <summary>
@@ -415,42 +425,48 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="id"> Identifier of the schedule. </param>
+        /// <param name="type"> Filter by the type of schedule. </param>
+        /// <param name="enabled"> Filter by the enabled status. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncCollectionResult GetRunsAsync(string id, RequestOptions options)
+        public virtual AsyncCollectionResult GetRunsAsync(string id, string @type, bool? enabled, RequestOptions options)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            return new SchedulesGetRunsAsyncCollectionResult(this, id, options);
+            return new SchedulesGetRunsAsyncCollectionResult(this, id, @type, enabled, options);
         }
 
         /// <summary> List all schedule runs. </summary>
         /// <param name="id"> Identifier of the schedule. </param>
+        /// <param name="type"> Filter by the type of schedule. </param>
+        /// <param name="enabled"> Filter by the enabled status. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<ScheduleRun> GetRuns(string id, CancellationToken cancellationToken = default)
+        public virtual CollectionResult<ScheduleRun> GetRuns(string id, ScheduleTaskType? @type = default, bool? enabled = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            return new SchedulesGetRunsCollectionResultOfT(this, id, cancellationToken.ToRequestOptions());
+            return new SchedulesGetRunsCollectionResultOfT(this, id, @type?.ToString(), enabled, cancellationToken.ToRequestOptions());
         }
 
         /// <summary> List all schedule runs. </summary>
         /// <param name="id"> Identifier of the schedule. </param>
+        /// <param name="type"> Filter by the type of schedule. </param>
+        /// <param name="enabled"> Filter by the enabled status. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<ScheduleRun> GetRunsAsync(string id, CancellationToken cancellationToken = default)
+        public virtual AsyncCollectionResult<ScheduleRun> GetRunsAsync(string id, ScheduleTaskType? @type = default, bool? enabled = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            return new SchedulesGetRunsAsyncCollectionResultOfT(this, id, cancellationToken.ToRequestOptions());
+            return new SchedulesGetRunsAsyncCollectionResultOfT(this, id, @type?.ToString(), enabled, cancellationToken.ToRequestOptions());
         }
     }
 }

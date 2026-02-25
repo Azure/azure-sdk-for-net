@@ -18,7 +18,7 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="name"> The name of the function to be called. </param>
         /// <param name="parameters"> The parameters the functions accepts, described as a JSON Schema object. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameters"/> is null. </exception>
-        public OpenAPIFunctionEntry(string name, BinaryData parameters)
+        public OpenAPIFunctionEntry(string name, IDictionary<string, BinaryData> parameters)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -32,7 +32,7 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="description"> A description of what the function does, used by the model to choose when and how to call the function. </param>
         /// <param name="parameters"> The parameters the functions accepts, described as a JSON Schema object. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OpenAPIFunctionEntry(string name, string description, BinaryData parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OpenAPIFunctionEntry(string name, string description, IDictionary<string, BinaryData> parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -48,7 +48,7 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <summary>
         /// The parameters the functions accepts, described as a JSON Schema object.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
@@ -72,6 +72,6 @@ namespace Azure.AI.Projects.OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Parameters { get; set; }
+        public IDictionary<string, BinaryData> Parameters { get; }
     }
 }

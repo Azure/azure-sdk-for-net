@@ -34,6 +34,29 @@ namespace Azure.AI.Projects.OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InputItemLocalShellToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsOpenAIContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(InputItemLocalShellToolCall)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InputItemLocalShellToolCall>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InputItemLocalShellToolCall IPersistableModel<InputItemLocalShellToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => (InputItemLocalShellToolCall)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InputItemLocalShellToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InputItemLocalShellToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -93,7 +116,7 @@ namespace Azure.AI.Projects.OpenAI
             string id = default;
             string callId = default;
             LocalShellExecAction action = default;
-            ItemResourceLocalShellToolCallStatus status = default;
+            OutputItemLocalShellToolCallStatus status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -118,7 +141,7 @@ namespace Azure.AI.Projects.OpenAI
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToItemResourceLocalShellToolCallStatus();
+                    status = prop.Value.GetString().ToOutputItemLocalShellToolCallStatus();
                     continue;
                 }
                 if (options.Format != "W")
@@ -134,28 +157,5 @@ namespace Azure.AI.Projects.OpenAI
                 action,
                 status);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InputItemLocalShellToolCall>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<InputItemLocalShellToolCall>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsOpenAIContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(InputItemLocalShellToolCall)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InputItemLocalShellToolCall IPersistableModel<InputItemLocalShellToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => (InputItemLocalShellToolCall)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InputItemLocalShellToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

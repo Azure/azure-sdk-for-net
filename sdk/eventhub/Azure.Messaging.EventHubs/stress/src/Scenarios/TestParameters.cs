@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Producer;
-using System.Security.Cryptography;
 
 namespace Azure.Messaging.EventHubs.Stress;
 

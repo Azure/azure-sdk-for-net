@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     yield break;
                 }
                 FirewallResourceListResult result = FirewallResourceListResult.FromResponse(response);
-                yield return Page<PaloAltoNetworksFirewallData>.FromValues((IReadOnlyList<PaloAltoNetworksFirewallData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<PaloAltoNetworksFirewallData>.FromValues((IReadOnlyList<PaloAltoNetworksFirewallData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

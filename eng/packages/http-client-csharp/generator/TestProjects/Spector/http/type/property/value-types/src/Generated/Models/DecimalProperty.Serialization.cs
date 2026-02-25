@@ -19,6 +19,17 @@ namespace _Type.Property.ValueTypes
 
         protected virtual DecimalProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        BinaryData IPersistableModel<DecimalProperty>.Write(ModelReaderWriterOptions options) => throw null;
+
+        DecimalProperty IPersistableModel<DecimalProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        string IPersistableModel<DecimalProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
+        /// <param name="decimalProperty"> The <see cref="DecimalProperty"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(DecimalProperty decimalProperty) => throw null;
+
         public static explicit operator DecimalProperty(Response response) => throw null;
 
         void IJsonModel<DecimalProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -28,16 +39,5 @@ namespace _Type.Property.ValueTypes
         DecimalProperty IJsonModel<DecimalProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual DecimalProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<DecimalProperty>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
-        DecimalProperty IPersistableModel<DecimalProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        string IPersistableModel<DecimalProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        /// <param name="decimalProperty"> The <see cref="DecimalProperty"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(DecimalProperty decimalProperty) => throw null;
     }
 }

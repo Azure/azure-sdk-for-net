@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SignalR
                     yield break;
                 }
                 SignalRSharedPrivateLinkResourceListResult result = SignalRSharedPrivateLinkResourceListResult.FromResponse(response);
-                yield return Page<SignalRSharedPrivateLinkResourceData>.FromValues((IReadOnlyList<SignalRSharedPrivateLinkResourceData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<SignalRSharedPrivateLinkResourceData>.FromValues((IReadOnlyList<SignalRSharedPrivateLinkResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SignalR
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _resourceName, _replicaName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _resourceName, _replicaName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableSignalRResourceGroupResource.GetSignalRReplicaSharedPrivateLinkResources");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SignalRReplicaSharedPrivateLinkResourceCollection.GetAll");
             scope.Start();
             try
             {

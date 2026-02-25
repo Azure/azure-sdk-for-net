@@ -34,6 +34,29 @@ namespace Azure.AI.Projects.OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MemorySearchToolCallResponseItem>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsOpenAIContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MemorySearchToolCallResponseItem)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MemorySearchToolCallResponseItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MemorySearchToolCallResponseItem IPersistableModel<MemorySearchToolCallResponseItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (MemorySearchToolCallResponseItem)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MemorySearchToolCallResponseItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MemorySearchToolCallResponseItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -94,7 +117,6 @@ namespace Azure.AI.Projects.OpenAI
             }
             AgentResponseItemKind @type = default;
             string id = default;
-            AgentItemSource itemSource = default;
             AgentReference agentReference = default;
             string responseId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -110,15 +132,6 @@ namespace Azure.AI.Projects.OpenAI
                 if (prop.NameEquals("id"u8))
                 {
                     id = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("created_by"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    itemSource = AgentItemSource.DeserializeAgentItemSource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("agent_reference"u8))
@@ -162,35 +175,11 @@ namespace Azure.AI.Projects.OpenAI
             return new MemorySearchToolCallResponseItem(
                 @type,
                 id,
-                itemSource,
                 agentReference,
                 responseId,
                 additionalBinaryDataProperties,
                 status,
                 results ?? new ChangeTrackingList<MemorySearchItem>());
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MemorySearchToolCallResponseItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MemorySearchToolCallResponseItem>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsOpenAIContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MemorySearchToolCallResponseItem)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MemorySearchToolCallResponseItem IPersistableModel<MemorySearchToolCallResponseItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (MemorySearchToolCallResponseItem)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MemorySearchToolCallResponseItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

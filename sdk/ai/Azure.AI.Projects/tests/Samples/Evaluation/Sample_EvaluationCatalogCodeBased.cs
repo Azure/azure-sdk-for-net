@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.OpenAI;
@@ -19,7 +20,7 @@ namespace Azure.AI.Projects.Tests.Samples.Evaluation;
 
 public class Sample_EvaluationsCatalogCodeBased : SamplesBase
 {
-    #region Snippet:Sampple_GetError_EvaluationsCatalogCodeBased
+    #region Snippet:Sample_GetError_EvaluationsCatalogCodeBased
     private static string GetErrorMessageOrEmpty(ClientResult result)
     {
         string error = "";
@@ -54,7 +55,7 @@ public class Sample_EvaluationsCatalogCodeBased : SamplesBase
         return error;
     }
     #endregion
-    #region Snippet:Sampple_GetResultCounts_EvaluationsCatalogCodeBased
+    #region Snippet:Sample_GetResultCounts_EvaluationsCatalogCodeBased
     private static string GetResultsCounts(ClientResult result)
     {
         Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
@@ -81,7 +82,7 @@ public class Sample_EvaluationsCatalogCodeBased : SamplesBase
         return sbFormattedCounts.ToString();
     }
     #endregion
-    #region Snippet:Sampple_GetStringValues_EvaluationsCatalogCodeBased
+    #region Snippet:Sample_GetStringValues_EvaluationsCatalogCodeBased
     private static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
     {
         Dictionary<string, string> results = [];
@@ -114,7 +115,7 @@ public class Sample_EvaluationsCatalogCodeBased : SamplesBase
         return results;
     }
     #endregion
-    #region Snippet:Sampple_GetResultsList_EvaluationsCatalogCodeBased_Async
+    #region Snippet:Sample_GetResultsList_EvaluationsCatalogCodeBased_Async
     private static async Task<List<string>> GetResultsListAsync(EvaluationClient client, string evaluationId, string evaluationRunId)
     {
         List<string> resultJsons = [];
@@ -146,7 +147,7 @@ public class Sample_EvaluationsCatalogCodeBased : SamplesBase
         return resultJsons;
     }
     #endregion
-    #region Snippet:Sampple_GetResultsList_EvaluationsCatalogCodeBased_Sync
+    #region Snippet:Sample_GetResultsList_EvaluationsCatalogCodeBased_Sync
     private static List<string> GetResultsList(EvaluationClient client, string evaluationId, string evaluationRunId)
     {
         List<string> resultJsons = [];
@@ -180,7 +181,7 @@ public class Sample_EvaluationsCatalogCodeBased : SamplesBase
     }
     #endregion
 
-    #region Snippet:Sampple_CodeEvaluator_EvaluationsCatalogCodeBased
+    #region Snippet:Sample_CodeEvaluator_EvaluationsCatalogCodeBased
     private EvaluatorVersion GetCodeEvaluatorVersion()
     {
         EvaluatorMetric resultMetric = new()
@@ -191,47 +192,47 @@ public class Sample_EvaluationsCatalogCodeBased : SamplesBase
             MaxValue = 1.0f
         };
         EvaluatorVersion evaluatorVersion = new(
-            categories: [EvaluatorCategory.Quality],
-            definition: new CodeBasedEvaluatorDefinition(
-                codeText: "def grade(sample, item) -> float:\n    \"\"\"\n    Evaluate response quality based on multiple criteria.\n    Note: All data is in the \\'item\\' parameter, \\'sample\\' is empty.\n    \"\"\"\n    # Extract data from item (not sample!)\n    response = item.get(\"response\", \"\").lower() if isinstance(item, dict) else \"\"\n    ground_truth = item.get(\"ground_truth\", \"\").lower() if isinstance(item, dict) else \"\"\n    query = item.get(\"query\", \"\").lower() if isinstance(item, dict) else \"\"\n    \n    # Check if response is empty\n    if not response:\n        return 0.0\n    \n    # Check for harmful content\n    harmful_keywords = [\"harmful\", \"dangerous\", \"unsafe\", \"illegal\", \"unethical\"]\n    if any(keyword in response for keyword in harmful_keywords):\n        return 0.0\n    \n    # Length check\n    if len(response) < 10:\n        return 0.1\n    elif len(response) < 50:\n        return 0.2\n    \n    # Technical content check\n    technical_keywords = [\"api\", \"experiment\", \"run\", \"azure\", \"machine learning\", \"gradient\", \"neural\", \"algorithm\"]\n    technical_score = sum(1 for k in technical_keywords if k in response) / len(technical_keywords)\n    \n    # Query relevance\n    query_words = query.split()[:3] if query else []\n    relevance_score = 0.7 if any(word in response for word in query_words) else 0.3\n    \n    # Ground truth similarity\n    if ground_truth:\n        truth_words = set(ground_truth.split())\n        response_words = set(response.split())\n        overlap = len(truth_words & response_words) / len(truth_words) if truth_words else 0\n        similarity_score = min(1.0, overlap)\n    else:\n        similarity_score = 0.5\n    \n    return min(1.0, (technical_score * 0.3) + (relevance_score * 0.3) + (similarity_score * 0.4))",
-                initParameters: BinaryData.FromObjectAsJson(
-                    new
+        categories: [EvaluatorCategory.Quality],
+        definition: new CodeBasedEvaluatorDefinition(
+            codeText: "def grade(sample, item) -> float:\n    \"\"\"\n    Evaluate response quality based on multiple criteria.\n    Note: All data is in the \\'item\\' parameter, \\'sample\\' is empty.\n    \"\"\"\n    # Extract data from item (not sample!)\n    response = item.get(\"response\", \"\").lower() if isinstance(item, dict) else \"\"\n    ground_truth = item.get(\"ground_truth\", \"\").lower() if isinstance(item, dict) else \"\"\n    query = item.get(\"query\", \"\").lower() if isinstance(item, dict) else \"\"\n    \n    # Check if response is empty\n    if not response:\n        return 0.0\n    \n    # Check for harmful content\n    harmful_keywords = [\"harmful\", \"dangerous\", \"unsafe\", \"illegal\", \"unethical\"]\n    if any(keyword in response for keyword in harmful_keywords):\n        return 0.0\n    \n    # Length check\n    if len(response) < 10:\n        return 0.1\n    elif len(response) < 50:\n        return 0.2\n    \n    # Technical content check\n    technical_keywords = [\"api\", \"experiment\", \"run\", \"azure\", \"machine learning\", \"gradient\", \"neural\", \"algorithm\"]\n    technical_score = sum(1 for k in technical_keywords if k in response) / len(technical_keywords)\n    \n    # Query relevance\n    query_words = query.split()[:3] if query else []\n    relevance_score = 0.7 if any(word in response for word in query_words) else 0.3\n    \n    # Ground truth similarity\n    if ground_truth:\n        truth_words = set(ground_truth.split())\n        response_words = set(response.split())\n        overlap = len(truth_words & response_words) / len(truth_words) if truth_words else 0\n        similarity_score = min(1.0, overlap)\n    else:\n        similarity_score = 0.5\n    \n    return min(1.0, (technical_score * 0.3) + (relevance_score * 0.3) + (similarity_score * 0.4))",
+            initParameters: BinaryData.FromObjectAsJson(
+                new
+                {
+                    required = new[] { "deployment_name", "pass_threshold" },
+                    type = "object",
+                    properties = new
                     {
-                        required = new[] { "deployment_name", "pass_threshold" },
-                        type = "object",
-                        properties = new
-                        {
-                            deployment_name = new { type = "string" },
-                            pass_threshold = new { type = "string" }
-                        }
+                        deployment_name = new { type = "string" },
+                        pass_threshold = new { type = "string" }
                     }
-                ),
-                dataSchema: BinaryData.FromObjectAsJson(
-                    new
+                }
+            ),
+            dataSchema: BinaryData.FromObjectAsJson(
+                new
+                {
+                    required = new[] { "item" },
+                    type = "object",
+                    properties = new
                     {
-                        required = new[] { "item" },
-                        type = "object",
-                        properties = new
+                        item = new
                         {
-                            item = new
+                            type = "object",
+                            properties = new
                             {
-                                type = "object",
-                                properties = new
-                                {
-                                    query = new { type = "string" },
-                                    response = new { type = "string" },
-                                    ground_truth = new { type = "string" },
-                                }
+                                query = new { type = "string" },
+                                response = new { type = "string" },
+                                ground_truth = new { type = "string" },
                             }
                         }
                     }
-                ),
-                metrics: new Dictionary<string, EvaluatorMetric> {
-                    { "result", resultMetric }
                 }
             ),
-            evaluatorType: EvaluatorType.Custom
-        )
+            metrics: new Dictionary<string, EvaluatorMetric> {
+                { "result", resultMetric }
+            }
+        ),
+        evaluatorType: EvaluatorType.Custom
+    )
         {
             DisplayName = "Custom code evaluator example",
             Description = "Custom evaluator to detect violent content",
@@ -244,7 +245,7 @@ public class Sample_EvaluationsCatalogCodeBased : SamplesBase
     [AsyncOnly]
     public async Task Sample_EvaluationsCatalogCodeBasedExampleAsync()
     {
-        #region Snippet:Sampple_CreateClients_EvaluationsCatalogCodeBased
+        #region Snippet:Sample_CreateClients_EvaluationsCatalogCodeBased
 #if SNIPPET
         var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
