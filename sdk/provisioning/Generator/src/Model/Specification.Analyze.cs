@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -611,114 +612,84 @@ public abstract partial class Specification
 
     /// <summary>
     /// Find the api-version used by the mgmt library for a given resource
-    /// by scanning the resource's Get method IL to identify the correct
-    /// RestOperations field, then extracting the version from its constructor.
-    /// A resource may have multiple RestOperations fields but only the one
-    /// referenced in Get (or CreateOrUpdate on the collection) is authoritative.
+    /// by creating a RestOperations instance and reading its _apiVersion field.
+    /// All RestOperations classes within a library share the same default api-version,
+    /// so we can use any RestOperations field from the resource type.
     /// </summary>
     private static string? FindMgmtApiVersion(Resource resource)
     {
         Type armType = resource.ArmType!;
 
-        // First, try to find the RestOperations used by the resource's Get method
-        Type? restOpsType = FindRestOperationsFromMethod(armType, "Get");
-
-        // Fall back to scanning all RestOperations fields
-        if (restOpsType is null)
+        // Find any RestOperations field on the ArmResource type
+        foreach (FieldInfo field in armType.GetFields(BindingFlags.NonPublic | BindingFlags.Instance))
         {
-            foreach (FieldInfo field in armType.GetFields(BindingFlags.NonPublic | BindingFlags.Instance))
-            {
-                if (field.FieldType.Name.EndsWith("RestOperations"))
-                {
-                    restOpsType = field.FieldType;
-                    break;
-                }
-            }
-        }
+            if (!field.FieldType.Name.EndsWith("RestOperations")) { continue; }
 
-        return restOpsType is not null ? ExtractApiVersionFromRestOperations(restOpsType) : null;
-    }
-
-    /// <summary>
-    /// Scan a method's IL to find which RestOperations field it references (via ldfld).
-    /// Returns the type of the first RestOperations field found.
-    /// </summary>
-    private static Type? FindRestOperationsFromMethod(Type declaringType, string methodName)
-    {
-        MethodInfo? method = declaringType.GetMethods(BindingFlags.Public | BindingFlags.Instance)
-            .FirstOrDefault(m => m.Name == methodName && !m.IsAbstract);
-        if (method is null) { return null; }
-
-        MethodBody? body = method.GetMethodBody();
-        if (body is null) { return null; }
-
-        byte[] il = body.GetILAsByteArray()!;
-        Module module = declaringType.Module;
-
-        // Search for ldfld opcodes (0x7B) that reference RestOperations fields
-        for (int i = 0; i < il.Length - 4; i++)
-        {
-            if (il[i] != 0x7B) { continue; } // OpCodes.Ldfld
-
-            int token = il[i + 1] | (il[i + 2] << 8) | (il[i + 3] << 16) | (il[i + 4] << 24);
-            try
-            {
-                FieldInfo? field = module.ResolveField(token);
-                if (field is not null && field.FieldType.Name.EndsWith("RestOperations"))
-                {
-                    return field.FieldType;
-                }
-            }
-            catch
-            {
-                // Skip invalid tokens
-            }
-            i += 4;
+            string? version = ExtractApiVersionFromRestOperations(field.FieldType);
+            if (version is not null) { return version; }
         }
 
         return null;
     }
 
     /// <summary>
-    /// Extract the default api-version string from a RestOperations constructor
-    /// by parsing its IL for string literals matching the api-version pattern.
+    /// Extract the default api-version from a RestOperations type by creating
+    /// an instance with null apiVersion (triggering the hardcoded default)
+    /// and reading the private _apiVersion field via reflection.
     /// </summary>
     private static string? ExtractApiVersionFromRestOperations(Type restOperationsType)
     {
-        ConstructorInfo? constructor = restOperationsType
+        // Find a constructor that accepts HttpPipeline as the first parameter
+        ConstructorInfo? ctor = restOperationsType
             .GetConstructors(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
             .FirstOrDefault();
-        if (constructor is null) { return null; }
+        if (ctor is null) { return null; }
 
-        MethodBody? body = constructor.GetMethodBody();
-        if (body is null) { return null; }
-
-        byte[] il = body.GetILAsByteArray()!;
-        Module module = restOperationsType.Module;
-
-        // Search for ldstr opcodes (0x72) and find api-version string literals
-        for (int i = 0; i < il.Length - 4; i++)
+        try
         {
-            if (il[i] != 0x72) { continue; } // OpCodes.Ldstr
+            // Build parameter values: pipeline is required, everything else can be null/default.
+            // Constructor signature is typically:
+            //   (HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+            // or for older libraries:
+            //   (ClientDiagnostics diagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = default)
+            ParameterInfo[] parameters = ctor.GetParameters();
+            object?[] args = new object?[parameters.Length];
 
-            int token = il[i + 1] | (il[i + 2] << 8) | (il[i + 3] << 16) | (il[i + 4] << 24);
-            try
+            ArmClientOptions options = new();
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options);
+
+            for (int i = 0; i < parameters.Length; i++)
             {
-                string str = module.ResolveString(token);
-                // Match api-version pattern: YYYY-MM-DD with optional suffix
-                if (Regex.IsMatch(str, @"^\d{4}-\d{2}-\d{2}"))
+                Type paramType = parameters[i].ParameterType;
+                if (paramType == typeof(HttpPipeline))
                 {
-                    return str;
+                    args[i] = pipeline;
                 }
+                else if (paramType.Name == "ClientDiagnostics")
+                {
+                    // ClientDiagnostics is internal; create via reflection
+                    args[i] = Activator.CreateInstance(paramType,
+                        BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance,
+                        binder: null,
+                        args: [options],
+                        culture: null);
+                }
+                // Leave apiVersion, applicationId, endpoint, etc. as null
+                // so the constructor falls through to its hardcoded default
             }
-            catch
-            {
-                // Skip invalid tokens
-            }
-            i += 4;
-        }
 
-        return null;
+            object? instance = ctor.Invoke(args);
+            if (instance is null) { return null; }
+
+            // Read the private _apiVersion field
+            FieldInfo? versionField = restOperationsType.GetField("_apiVersion",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            return versionField?.GetValue(instance) as string;
+        }
+        catch
+        {
+            return null;
+        }
     }
 
     /// <summary>
