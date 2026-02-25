@@ -36,7 +36,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>The operation context provided by client.</summary>
         public string OperationContext { get; }
         /// <summary>
-        /// The invitation ID used to add the participants.
+        /// The source call connection ID from which the participants were moved.
         /// </summary>
         public string FromCall { get; }
 
