@@ -333,21 +333,21 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="IdentityBindingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ManagedClusterIdentityBindingResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetIdentityBindingResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetManagedClusterIdentityBindingResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="IdentityBindingResource"/> object. </returns>
-        public static IdentityBindingResource GetIdentityBindingResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedClusterIdentityBindingResource"/> object. </returns>
+        public static ManagedClusterIdentityBindingResource GetManagedClusterIdentityBindingResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableContainerServiceArmClient(client).GetIdentityBindingResource(id);
+            return GetMockableContainerServiceArmClient(client).GetManagedClusterIdentityBindingResource(id);
         }
 
         /// <summary>

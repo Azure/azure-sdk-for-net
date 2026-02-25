@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (IdentityBindingData item in Value)
+            foreach (ManagedClusterIdentityBindingData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            IList<IdentityBindingData> value = default;
+            IList<ManagedClusterIdentityBindingData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<IdentityBindingData> array = new List<IdentityBindingData>();
+                    List<ManagedClusterIdentityBindingData> array = new List<ManagedClusterIdentityBindingData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IdentityBindingData.DeserializeIdentityBindingData(item, options));
+                        array.Add(ManagedClusterIdentityBindingData.DeserializeManagedClusterIdentityBindingData(item, options));
                     }
                     value = array;
                     continue;

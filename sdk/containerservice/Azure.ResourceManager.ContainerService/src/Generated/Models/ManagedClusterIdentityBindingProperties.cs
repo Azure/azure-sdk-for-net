@@ -12,27 +12,27 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> IdentityBinding properties. </summary>
-    public partial class IdentityBindingProperties
+    public partial class ManagedClusterIdentityBindingProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IdentityBindingProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterIdentityBindingProperties"/>. </summary>
         /// <param name="managedIdentity"> Managed identity profile for the identity binding. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managedIdentity"/> is null. </exception>
-        public IdentityBindingProperties(IdentityBindingManagedIdentityProfile managedIdentity)
+        public ManagedClusterIdentityBindingProperties(IdentityBindingManagedIdentityProfile managedIdentity)
         {
             Argument.AssertNotNull(managedIdentity, nameof(managedIdentity));
 
             ManagedIdentity = managedIdentity;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IdentityBindingProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterIdentityBindingProperties"/>. </summary>
         /// <param name="managedIdentity"> Managed identity profile for the identity binding. </param>
         /// <param name="oidcIssuer"> The OIDC issuer URL of the IdentityBinding. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IdentityBindingProperties(IdentityBindingManagedIdentityProfile managedIdentity, IdentityBindingOidcIssuerProfile oidcIssuer, IdentityBindingProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterIdentityBindingProperties(IdentityBindingManagedIdentityProfile managedIdentity, IdentityBindingOidcIssuerProfile oidcIssuer, IdentityBindingProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ManagedIdentity = managedIdentity;
             OidcIssuer = oidcIssuer;

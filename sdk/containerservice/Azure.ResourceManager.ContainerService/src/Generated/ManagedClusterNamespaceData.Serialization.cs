@@ -18,8 +18,13 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ContainerService
 {
     /// <summary> Namespace managed by ARM. </summary>
-    public partial class ManagedClusterNamespaceData : ResourceData, IJsonModel<ManagedClusterNamespaceData>
+    public partial class ManagedClusterNamespaceData : TrackedResourceData, IJsonModel<ManagedClusterNamespaceData>
     {
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterNamespaceData"/> for deserialization. </summary>
+        internal ManagedClusterNamespaceData()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -119,11 +124,6 @@ namespace Azure.ResourceManager.ContainerService
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
-            }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
@@ -161,9 +161,9 @@ namespace Azure.ResourceManager.ContainerService
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            AzureLocation location = default;
             ManagedClusterNamespaceProperties properties = default;
             IDictionary<string, string> tags = default;
-            string location = default;
             ETag? eTag = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -199,6 +199,11 @@ namespace Azure.ResourceManager.ContainerService
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerContainerServiceContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -229,11 +234,6 @@ namespace Azure.ResourceManager.ContainerService
                     tags = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("location"u8))
-                {
-                    location = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("eTag"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -254,9 +254,9 @@ namespace Azure.ResourceManager.ContainerService
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
+                location,
                 properties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
                 eTag);
         }
     }

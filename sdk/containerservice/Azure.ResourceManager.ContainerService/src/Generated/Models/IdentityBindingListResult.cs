@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="IdentityBindingListResult"/>. </summary>
         /// <param name="value"> The IdentityBinding items on this page. </param>
-        internal IdentityBindingListResult(IEnumerable<IdentityBindingData> value)
+        internal IdentityBindingListResult(IEnumerable<ManagedClusterIdentityBindingData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="value"> The IdentityBinding items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IdentityBindingListResult(IList<IdentityBindingData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IdentityBindingListResult(IList<ManagedClusterIdentityBindingData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The IdentityBinding items on this page. </summary>
         [WirePath("value")]
-        public IList<IdentityBindingData> Value { get; }
+        public IList<ManagedClusterIdentityBindingData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

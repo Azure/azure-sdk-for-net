@@ -17,40 +17,40 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ContainerService
 {
     /// <summary>
-    /// A class representing a IdentityBinding along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="IdentityBindingResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerServiceManagedClusterResource"/> using the GetIdentityBindings method.
+    /// A class representing a ManagedClusterIdentityBinding along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagedClusterIdentityBindingResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerServiceManagedClusterResource"/> using the GetManagedClusterIdentityBindings method.
     /// </summary>
-    public partial class IdentityBindingResource : ArmResource
+    public partial class ManagedClusterIdentityBindingResource : ArmResource
     {
         private readonly ClientDiagnostics _identityBindingsClientDiagnostics;
         private readonly IdentityBindings _identityBindingsRestClient;
-        private readonly IdentityBindingData _data;
+        private readonly ManagedClusterIdentityBindingData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ContainerService/managedClusters/identityBindings";
 
-        /// <summary> Initializes a new instance of IdentityBindingResource for mocking. </summary>
-        protected IdentityBindingResource()
+        /// <summary> Initializes a new instance of ManagedClusterIdentityBindingResource for mocking. </summary>
+        protected ManagedClusterIdentityBindingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="IdentityBindingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterIdentityBindingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal IdentityBindingResource(ArmClient client, IdentityBindingData data) : this(client, data.Id)
+        internal ManagedClusterIdentityBindingResource(ArmClient client, ManagedClusterIdentityBindingData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IdentityBindingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterIdentityBindingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal IdentityBindingResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ManagedClusterIdentityBindingResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string identityBindingApiVersion);
+            TryGetApiVersion(ResourceType, out string managedClusterIdentityBindingApiVersion);
             _identityBindingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ResourceType.Namespace, Diagnostics);
-            _identityBindingsRestClient = new IdentityBindings(_identityBindingsClientDiagnostics, Pipeline, Endpoint, identityBindingApiVersion ?? "2025-10-02-preview");
+            _identityBindingsRestClient = new IdentityBindings(_identityBindingsClientDiagnostics, Pipeline, Endpoint, managedClusterIdentityBindingApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ContainerService
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual IdentityBindingData Data
+        public virtual ManagedClusterIdentityBindingData Data
         {
             get
             {
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="IdentityBindingResource"/>. </description>
+        /// <description> <see cref="ManagedClusterIdentityBindingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IdentityBindingResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedClusterIdentityBindingResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _identityBindingsClientDiagnostics.CreateScope("IdentityBindingResource.Get");
+            using DiagnosticScope scope = _identityBindingsClientDiagnostics.CreateScope("ManagedClusterIdentityBindingResource.Get");
             scope.Start();
             try
             {
@@ -125,12 +125,12 @@ namespace Azure.ResourceManager.ContainerService
                 };
                 HttpMessage message = _identityBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<IdentityBindingData> response = Response.FromValue(IdentityBindingData.FromResponse(result), result);
+                Response<ManagedClusterIdentityBindingData> response = Response.FromValue(ManagedClusterIdentityBindingData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new IdentityBindingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedClusterIdentityBindingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="IdentityBindingResource"/>. </description>
+        /// <description> <see cref="ManagedClusterIdentityBindingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IdentityBindingResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ManagedClusterIdentityBindingResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _identityBindingsClientDiagnostics.CreateScope("IdentityBindingResource.Get");
+            using DiagnosticScope scope = _identityBindingsClientDiagnostics.CreateScope("ManagedClusterIdentityBindingResource.Get");
             scope.Start();
             try
             {
@@ -173,12 +173,12 @@ namespace Azure.ResourceManager.ContainerService
                 };
                 HttpMessage message = _identityBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<IdentityBindingData> response = Response.FromValue(IdentityBindingData.FromResponse(result), result);
+                Response<ManagedClusterIdentityBindingData> response = Response.FromValue(ManagedClusterIdentityBindingData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new IdentityBindingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedClusterIdentityBindingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="IdentityBindingResource"/>. </description>
+        /// <description> <see cref="ManagedClusterIdentityBindingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _identityBindingsClientDiagnostics.CreateScope("IdentityBindingResource.Delete");
+            using DiagnosticScope scope = _identityBindingsClientDiagnostics.CreateScope("ManagedClusterIdentityBindingResource.Delete");
             scope.Start();
             try
             {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="IdentityBindingResource"/>. </description>
+        /// <description> <see cref="ManagedClusterIdentityBindingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _identityBindingsClientDiagnostics.CreateScope("IdentityBindingResource.Delete");
+            using DiagnosticScope scope = _identityBindingsClientDiagnostics.CreateScope("ManagedClusterIdentityBindingResource.Delete");
             scope.Start();
             try
             {
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Update a IdentityBinding.
+        /// Update a ManagedClusterIdentityBinding.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="IdentityBindingResource"/>. </description>
+        /// <description> <see cref="ManagedClusterIdentityBindingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -310,11 +310,11 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="data"> The identity binding to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<IdentityBindingResource>> UpdateAsync(WaitUntil waitUntil, IdentityBindingData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ManagedClusterIdentityBindingResource>> UpdateAsync(WaitUntil waitUntil, ManagedClusterIdentityBindingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _identityBindingsClientDiagnostics.CreateScope("IdentityBindingResource.Update");
+            using DiagnosticScope scope = _identityBindingsClientDiagnostics.CreateScope("ManagedClusterIdentityBindingResource.Update");
             scope.Start();
             try
             {
@@ -322,10 +322,10 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _identityBindingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IdentityBindingData.ToRequestContent(data), context);
+                HttpMessage message = _identityBindingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ManagedClusterIdentityBindingData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ContainerServiceArmOperation<IdentityBindingResource> operation = new ContainerServiceArmOperation<IdentityBindingResource>(
-                    new IdentityBindingOperationSource(Client),
+                ContainerServiceArmOperation<ManagedClusterIdentityBindingResource> operation = new ContainerServiceArmOperation<ManagedClusterIdentityBindingResource>(
+                    new ManagedClusterIdentityBindingOperationSource(Client),
                     _identityBindingsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Update a IdentityBinding.
+        /// Update a ManagedClusterIdentityBinding.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="IdentityBindingResource"/>. </description>
+        /// <description> <see cref="ManagedClusterIdentityBindingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -369,11 +369,11 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="data"> The identity binding to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<IdentityBindingResource> Update(WaitUntil waitUntil, IdentityBindingData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ManagedClusterIdentityBindingResource> Update(WaitUntil waitUntil, ManagedClusterIdentityBindingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _identityBindingsClientDiagnostics.CreateScope("IdentityBindingResource.Update");
+            using DiagnosticScope scope = _identityBindingsClientDiagnostics.CreateScope("ManagedClusterIdentityBindingResource.Update");
             scope.Start();
             try
             {
@@ -381,10 +381,10 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _identityBindingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IdentityBindingData.ToRequestContent(data), context);
+                HttpMessage message = _identityBindingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ManagedClusterIdentityBindingData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ContainerServiceArmOperation<IdentityBindingResource> operation = new ContainerServiceArmOperation<IdentityBindingResource>(
-                    new IdentityBindingOperationSource(Client),
+                ContainerServiceArmOperation<ManagedClusterIdentityBindingResource> operation = new ContainerServiceArmOperation<ManagedClusterIdentityBindingResource>(
+                    new ManagedClusterIdentityBindingOperationSource(Client),
                     _identityBindingsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -14,7 +14,7 @@ using Azure.ResourceManager.ContainerService.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    internal partial class IdentityBindingsGetByManagedClusterCollectionResultOfT : Pageable<IdentityBindingData>
+    internal partial class IdentityBindingsGetByManagedClusterCollectionResultOfT : Pageable<ManagedClusterIdentityBindingData>
     {
         private readonly IdentityBindings _client;
         private readonly Guid _subscriptionId;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of IdentityBindingsGetByManagedClusterCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<IdentityBindingData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<ManagedClusterIdentityBindingData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService
                     yield break;
                 }
                 IdentityBindingListResult result = IdentityBindingListResult.FromResponse(response);
-                yield return Page<IdentityBindingData>.FromValues((IReadOnlyList<IdentityBindingData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ManagedClusterIdentityBindingData>.FromValues((IReadOnlyList<ManagedClusterIdentityBindingData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerService
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByManagedClusterRequest(nextLink, _subscriptionId, _resourceGroupName, _resourceName, _context) : _client.CreateGetByManagedClusterRequest(_subscriptionId, _resourceGroupName, _resourceName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("IdentityBindingCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ManagedClusterIdentityBindingCollection.GetAll");
             scope.Start();
             try
             {

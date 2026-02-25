@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteObjectValue(PrivateEndpoint, options);
             }
             writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-            writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
+            writer.WriteObjectValue(ConnectionState, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             ContainerServicePrivateEndpointConnectionProvisioningState? provisioningState = default;
             PrivateEndpoint privateEndpoint = default;
-            ContainerServicePrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            ContainerServicePrivateLinkServiceConnectionState connectionState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (prop.NameEquals("privateLinkServiceConnectionState"u8))
                 {
-                    privateLinkServiceConnectionState = ContainerServicePrivateLinkServiceConnectionState.DeserializeContainerServicePrivateLinkServiceConnectionState(prop.Value, options);
+                    connectionState = ContainerServicePrivateLinkServiceConnectionState.DeserializeContainerServicePrivateLinkServiceConnectionState(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerServicePrivateEndpointConnectionProperties(provisioningState, privateEndpoint, privateLinkServiceConnectionState, additionalBinaryDataProperties);
+            return new ContainerServicePrivateEndpointConnectionProperties(provisioningState, privateEndpoint, connectionState, additionalBinaryDataProperties);
         }
     }
 }

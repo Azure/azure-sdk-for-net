@@ -170,13 +170,13 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             return new ManagedClusterLoadBalancerDataResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="IdentityBindingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ManagedClusterIdentityBindingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IdentityBindingResource"/> object. </returns>
-        public virtual IdentityBindingResource GetIdentityBindingResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedClusterIdentityBindingResource"/> object. </returns>
+        public virtual ManagedClusterIdentityBindingResource GetManagedClusterIdentityBindingResource(ResourceIdentifier id)
         {
-            IdentityBindingResource.ValidateResourceId(id);
-            return new IdentityBindingResource(Client, id);
+            ManagedClusterIdentityBindingResource.ValidateResourceId(id);
+            return new ManagedClusterIdentityBindingResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ManagedClusterJwtAuthenticatorResource"/> along with the instance operations that can be performed on it but with no data. </summary>

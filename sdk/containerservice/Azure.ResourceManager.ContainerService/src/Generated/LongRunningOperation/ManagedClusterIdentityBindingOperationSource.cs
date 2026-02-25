@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ContainerService
 {
     /// <summary></summary>
-    internal partial class IdentityBindingOperationSource : IOperationSource<IdentityBindingResource>
+    internal partial class ManagedClusterIdentityBindingOperationSource : IOperationSource<ManagedClusterIdentityBindingResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal IdentityBindingOperationSource(ArmClient client)
+        internal ManagedClusterIdentityBindingOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        IdentityBindingResource IOperationSource<IdentityBindingResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ManagedClusterIdentityBindingResource IOperationSource<ManagedClusterIdentityBindingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            IdentityBindingData data = IdentityBindingData.DeserializeIdentityBindingData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new IdentityBindingResource(_client, data);
+            ManagedClusterIdentityBindingData data = ManagedClusterIdentityBindingData.DeserializeManagedClusterIdentityBindingData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ManagedClusterIdentityBindingResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<IdentityBindingResource> IOperationSource<IdentityBindingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ManagedClusterIdentityBindingResource> IOperationSource<ManagedClusterIdentityBindingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            IdentityBindingData data = IdentityBindingData.DeserializeIdentityBindingData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new IdentityBindingResource(_client, data);
+            ManagedClusterIdentityBindingData data = ManagedClusterIdentityBindingData.DeserializeManagedClusterIdentityBindingData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ManagedClusterIdentityBindingResource(_client, data);
         }
     }
 }

@@ -2717,11 +2717,11 @@ namespace Azure.ResourceManager.ContainerService
             return GetAllManagedClusterLoadBalancerData().Get(loadBalancerName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of IdentityBindings in the <see cref="ContainerServiceManagedClusterResource"/>. </summary>
-        /// <returns> An object representing collection of IdentityBindings and their operations over a IdentityBindingResource. </returns>
-        public virtual IdentityBindingCollection GetIdentityBindings()
+        /// <summary> Gets a collection of ManagedClusterIdentityBindings in the <see cref="ContainerServiceManagedClusterResource"/>. </summary>
+        /// <returns> An object representing collection of ManagedClusterIdentityBindings and their operations over a ManagedClusterIdentityBindingResource. </returns>
+        public virtual ManagedClusterIdentityBindingCollection GetManagedClusterIdentityBindings()
         {
-            return GetCachedClient(client => new IdentityBindingCollection(client, Id));
+            return GetCachedClient(client => new ManagedClusterIdentityBindingCollection(client, Id));
         }
 
         /// <summary> Gets the specified Identity Binding. </summary>
@@ -2730,11 +2730,11 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="identityBindingName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="identityBindingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<IdentityBindingResource>> GetIdentityBindingAsync(string identityBindingName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedClusterIdentityBindingResource>> GetManagedClusterIdentityBindingAsync(string identityBindingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(identityBindingName, nameof(identityBindingName));
 
-            return await GetIdentityBindings().GetAsync(identityBindingName, cancellationToken).ConfigureAwait(false);
+            return await GetManagedClusterIdentityBindings().GetAsync(identityBindingName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the specified Identity Binding. </summary>
@@ -2743,11 +2743,11 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="identityBindingName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="identityBindingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<IdentityBindingResource> GetIdentityBinding(string identityBindingName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedClusterIdentityBindingResource> GetManagedClusterIdentityBinding(string identityBindingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(identityBindingName, nameof(identityBindingName));
 
-            return GetIdentityBindings().Get(identityBindingName, cancellationToken);
+            return GetManagedClusterIdentityBindings().Get(identityBindingName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ManagedClusterJwtAuthenticators in the <see cref="ContainerServiceManagedClusterResource"/>. </summary>

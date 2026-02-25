@@ -15,17 +15,17 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ContainerService
 {
     /// <summary> The IdentityBinding resource. </summary>
-    public partial class IdentityBindingData : ResourceData
+    public partial class ManagedClusterIdentityBindingData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IdentityBindingData"/>. </summary>
-        public IdentityBindingData()
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterIdentityBindingData"/>. </summary>
+        public ManagedClusterIdentityBindingData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="IdentityBindingData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterIdentityBindingData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        internal IdentityBindingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IdentityBindingProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
+        internal ManagedClusterIdentityBindingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ManagedClusterIdentityBindingProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary> The resource-specific properties for this resource. </summary>
         [WirePath("properties")]
-        public IdentityBindingProperties Properties { get; set; }
+        public ManagedClusterIdentityBindingProperties Properties { get; set; }
 
         /// <summary> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </summary>
         [WirePath("eTag")]

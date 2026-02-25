@@ -19,25 +19,25 @@ namespace Azure.ResourceManager.ContainerService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerServicePrivateEndpointConnectionProperties"/>. </summary>
-        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkServiceConnectionState"/> is null. </exception>
-        public ContainerServicePrivateEndpointConnectionProperties(ContainerServicePrivateLinkServiceConnectionState privateLinkServiceConnectionState)
+        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionState"/> is null. </exception>
+        public ContainerServicePrivateEndpointConnectionProperties(ContainerServicePrivateLinkServiceConnectionState connectionState)
         {
-            Argument.AssertNotNull(privateLinkServiceConnectionState, nameof(privateLinkServiceConnectionState));
+            Argument.AssertNotNull(connectionState, nameof(connectionState));
 
-            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            ConnectionState = connectionState;
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServicePrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="provisioningState"> The current provisioning state. </param>
         /// <param name="privateEndpoint"> The resource of private endpoint. </param>
-        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServicePrivateEndpointConnectionProperties(ContainerServicePrivateEndpointConnectionProvisioningState? provisioningState, PrivateEndpoint privateEndpoint, ContainerServicePrivateLinkServiceConnectionState privateLinkServiceConnectionState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServicePrivateEndpointConnectionProperties(ContainerServicePrivateEndpointConnectionProvisioningState? provisioningState, PrivateEndpoint privateEndpoint, ContainerServicePrivateLinkServiceConnectionState connectionState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
-            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            ConnectionState = connectionState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         [WirePath("privateLinkServiceConnectionState")]
-        public ContainerServicePrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+        public ContainerServicePrivateLinkServiceConnectionState ConnectionState { get; set; }
 
         /// <summary> The resource ID of the private endpoint. </summary>
         [WirePath("privateEndpoint.id")]

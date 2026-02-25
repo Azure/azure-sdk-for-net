@@ -14,56 +14,56 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> IdentityBinding properties. </summary>
-    public partial class IdentityBindingProperties : IJsonModel<IdentityBindingProperties>
+    public partial class ManagedClusterIdentityBindingProperties : IJsonModel<ManagedClusterIdentityBindingProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="IdentityBindingProperties"/> for deserialization. </summary>
-        internal IdentityBindingProperties()
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterIdentityBindingProperties"/> for deserialization. </summary>
+        internal ManagedClusterIdentityBindingProperties()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IdentityBindingProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ManagedClusterIdentityBindingProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IdentityBindingProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterIdentityBindingProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeIdentityBindingProperties(document.RootElement, options);
+                        return DeserializeManagedClusterIdentityBindingProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IdentityBindingProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterIdentityBindingProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IdentityBindingProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterIdentityBindingProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(IdentityBindingProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterIdentityBindingProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IdentityBindingProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ManagedClusterIdentityBindingProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IdentityBindingProperties IPersistableModel<IdentityBindingProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ManagedClusterIdentityBindingProperties IPersistableModel<ManagedClusterIdentityBindingProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IdentityBindingProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ManagedClusterIdentityBindingProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<IdentityBindingProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ManagedClusterIdentityBindingProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IdentityBindingProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterIdentityBindingProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IdentityBindingProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterIdentityBindingProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("managedIdentity"u8);
             writer.WriteObjectValue(ManagedIdentity, options);
@@ -110,24 +110,24 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IdentityBindingProperties IJsonModel<IdentityBindingProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ManagedClusterIdentityBindingProperties IJsonModel<ManagedClusterIdentityBindingProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IdentityBindingProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ManagedClusterIdentityBindingProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IdentityBindingProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterIdentityBindingProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IdentityBindingProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterIdentityBindingProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIdentityBindingProperties(document.RootElement, options);
+            return DeserializeManagedClusterIdentityBindingProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static IdentityBindingProperties DeserializeIdentityBindingProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static ManagedClusterIdentityBindingProperties DeserializeManagedClusterIdentityBindingProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new IdentityBindingProperties(managedIdentity, oidcIssuer, provisioningState, additionalBinaryDataProperties);
+            return new ManagedClusterIdentityBindingProperties(managedIdentity, oidcIssuer, provisioningState, additionalBinaryDataProperties);
         }
     }
 }

@@ -1417,31 +1417,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Properties of a namespace. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="ContainerService.ManagedClusterNamespaceData"/> instance for mocking. </returns>
-        public static ManagedClusterNamespaceData ManagedClusterNamespaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedClusterNamespaceProperties properties = default, IDictionary<string, string> tags = default, string location = default, ETag? etag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ManagedClusterNamespaceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                properties,
-                tags,
-                location,
-                etag);
-        }
-
         /// <summary> Properties of a namespace managed by ARM. </summary>
         /// <param name="provisioningState"> The current provisioning state of the namespace. </param>
         /// <param name="labels"> The labels of managed namespace. </param>
@@ -1640,25 +1615,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="provisioningState"> The current provisioning state. </param>
-        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <param name="privateEndpointId"> The resource ID of the private endpoint. </param>
-        /// <returns> A new <see cref="ContainerService.ContainerServicePrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static ContainerServicePrivateEndpointConnectionData ContainerServicePrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ContainerServicePrivateEndpointConnectionProvisioningState? provisioningState = default, ContainerServicePrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, ResourceIdentifier privateEndpointId = default)
-        {
-            return new ContainerServicePrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                provisioningState is null && privateLinkServiceConnectionState is null && privateEndpointId is null ? default : new ContainerServicePrivateEndpointConnectionProperties(provisioningState, new PrivateEndpoint(privateEndpointId, null), privateLinkServiceConnectionState, null));
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="snapshotType"> The type of a snapshot. The default is NodePool. </param>
@@ -1787,10 +1743,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="ContainerService.IdentityBindingData"/> instance for mocking. </returns>
-        public static IdentityBindingData IdentityBindingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IdentityBindingProperties properties = default, ETag? etag = default)
+        /// <returns> A new <see cref="ContainerService.ManagedClusterIdentityBindingData"/> instance for mocking. </returns>
+        public static ManagedClusterIdentityBindingData ManagedClusterIdentityBindingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedClusterIdentityBindingProperties properties = default, ETag? etag = default)
         {
-            return new IdentityBindingData(
+            return new ManagedClusterIdentityBindingData(
                 id,
                 name,
                 resourceType,
@@ -1803,10 +1759,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="managedIdentity"> Managed identity profile for the identity binding. </param>
         /// <param name="oidcIssuerUri"> The OIDC issuer URL of the IdentityBinding. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <returns> A new <see cref="Models.IdentityBindingProperties"/> instance for mocking. </returns>
-        public static IdentityBindingProperties IdentityBindingProperties(IdentityBindingManagedIdentityProfile managedIdentity = default, Uri oidcIssuerUri = default, IdentityBindingProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="Models.ManagedClusterIdentityBindingProperties"/> instance for mocking. </returns>
+        public static ManagedClusterIdentityBindingProperties ManagedClusterIdentityBindingProperties(IdentityBindingManagedIdentityProfile managedIdentity = default, Uri oidcIssuerUri = default, IdentityBindingProvisioningState? provisioningState = default)
         {
-            return new IdentityBindingProperties(managedIdentity, oidcIssuerUri is null ? default : new IdentityBindingOidcIssuerProfile(oidcIssuerUri, null), provisioningState, additionalBinaryDataProperties: null);
+            return new ManagedClusterIdentityBindingProperties(managedIdentity, oidcIssuerUri is null ? default : new IdentityBindingOidcIssuerProfile(oidcIssuerUri, null), provisioningState, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Managed identity profile for the identity binding. </summary>
@@ -3062,8 +3018,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         ///             Serialized Name: ManagedNamespace.properties
         /// </param>
         /// <returns> A new <see cref="ContainerService.ManagedClusterNamespaceData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ManagedClusterNamespaceData ManagedClusterNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ManagedClusterNamespaceProperties properties)
+        public static ManagedClusterNamespaceData ManagedClusterNamespaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? etag = default, ManagedClusterNamespaceProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -3073,9 +3028,9 @@ namespace Azure.ResourceManager.ContainerService.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                location,
                 properties,
                 tags,
-                location,
                 default);
         }
 
@@ -3402,8 +3357,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         ///             Serialized Name: PrivateEndpointConnection.properties.privateLinkServiceConnectionState
         /// </param>
         /// <returns> A new <see cref="ContainerService.ContainerServicePrivateEndpointConnectionData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerServicePrivateEndpointConnectionData ContainerServicePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerServicePrivateEndpointConnectionProvisioningState? provisioningState, ResourceIdentifier privateEndpointId, ContainerServicePrivateLinkServiceConnectionState connectionState)
+        public static ContainerServicePrivateEndpointConnectionData ContainerServicePrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ContainerServicePrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default, ContainerServicePrivateLinkServiceConnectionState connectionState = default)
         {
             return new ContainerServicePrivateEndpointConnectionData(
                 id,
