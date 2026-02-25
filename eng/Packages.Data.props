@@ -220,7 +220,7 @@
     <PackageReference Update="Azure.Search.Documents" Version="11.7.0" />
     <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.8.0" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.8.0" />
-    <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.8.0" />
+    <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.9.0" />
     <PackageReference Update="Azure.Storage.Blobs" Version="12.26.0" />
     <PackageReference Update="Azure.Storage.Common" Version="12.25.0" />
     <PackageReference Update="Azure.Storage.Files.Shares" Version="12.24.0" />
