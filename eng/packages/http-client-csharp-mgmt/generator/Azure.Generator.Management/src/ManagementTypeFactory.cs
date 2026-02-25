@@ -18,6 +18,7 @@ using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
