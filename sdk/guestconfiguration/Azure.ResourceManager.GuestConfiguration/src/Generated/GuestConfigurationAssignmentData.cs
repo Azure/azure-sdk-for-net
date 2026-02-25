@@ -29,22 +29,17 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="id"> ARM resource id of the guest configuration assignment. </param>
         /// <param name="name"> The guest configuration assignment name. </param>
         /// <param name="location"> Region where the VM is located. </param>
-        /// <param name="type"> The type of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the Guest configuration assignment. </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        internal GuestConfigurationAssignmentData(ResourceIdentifier id, string name, string location, ResourceType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, GuestConfigurationAssignmentProperties properties, SystemData systemData) : base(id, name, location, @type, additionalBinaryDataProperties)
+        internal GuestConfigurationAssignmentData(ResourceIdentifier id, string name, AzureLocation? location, ResourceType? resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, GuestConfigurationAssignmentProperties properties) : base(id, name, location, resourceType, systemData, additionalBinaryDataProperties)
         {
             Properties = properties;
-            SystemData = systemData;
         }
 
         /// <summary> Properties of the Guest configuration assignment. </summary>
         [WirePath("properties")]
         public GuestConfigurationAssignmentProperties Properties { get; set; }
-
-        /// <summary> Azure Resource Manager metadata containing createdBy and modifiedBy information. </summary>
-        [WirePath("systemData")]
-        public SystemData SystemData { get; }
     }
 }

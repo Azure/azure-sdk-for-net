@@ -8,20 +8,17 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.GuestConfiguration;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
     /// <summary> ARM proxy resource. </summary>
     public partial class GuestConfigurationResourceData : IJsonModel<GuestConfigurationResourceData>
     {
-        /// <summary> Initializes a new instance of <see cref="GuestConfigurationResourceData"/> for deserialization. </summary>
-        internal GuestConfigurationResourceData()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual GuestConfigurationResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -90,12 +87,17 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Type))
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value);
+                writer.WriteStringValue(ResourceType.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                ((IJsonModel<SystemData>)SystemData).Write(writer, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -141,8 +143,9 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
             ResourceIdentifier id = default;
             string name = default;
-            string location = default;
-            ResourceType? @type = default;
+            AzureLocation? location = default;
+            ResourceType? resourceType = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -162,7 +165,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    DeserializeLocationValue(prop, ref location);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
@@ -171,7 +178,16 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     {
                         continue;
                     }
-                    @type = new ResourceType(prop.Value.GetString());
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerGuestConfigurationContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -179,7 +195,13 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GuestConfigurationResourceData(id, name, location, @type, additionalBinaryDataProperties);
+            return new GuestConfigurationResourceData(
+                id,
+                name,
+                location,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties);
         }
     }
 }

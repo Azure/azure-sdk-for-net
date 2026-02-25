@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -19,11 +20,6 @@ namespace Azure.ResourceManager.GuestConfiguration
     /// <summary> Guest configuration assignment is an association between a machine and guest configuration. </summary>
     public partial class GuestConfigurationAssignmentData : GuestConfigurationResourceData, IJsonModel<GuestConfigurationAssignmentData>
     {
-        /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentData"/> for deserialization. </summary>
-        internal GuestConfigurationAssignmentData()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override GuestConfigurationResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -107,11 +103,6 @@ namespace Azure.ResourceManager.GuestConfiguration
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                ((IJsonModel<SystemData>)SystemData).Write(writer, options);
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -141,11 +132,11 @@ namespace Azure.ResourceManager.GuestConfiguration
             }
             ResourceIdentifier id = default;
             string name = default;
-            string location = default;
-            ResourceType? @type = default;
+            AzureLocation? location = default;
+            ResourceType? resourceType = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             GuestConfigurationAssignmentProperties properties = default;
-            SystemData systemData = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -164,7 +155,11 @@ namespace Azure.ResourceManager.GuestConfiguration
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    DeserializeLocationValue(prop, ref location);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
@@ -173,7 +168,16 @@ namespace Azure.ResourceManager.GuestConfiguration
                     {
                         continue;
                     }
-                    @type = new ResourceType(prop.Value.GetString());
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerGuestConfigurationContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -185,11 +189,6 @@ namespace Azure.ResourceManager.GuestConfiguration
                     properties = GuestConfigurationAssignmentProperties.DeserializeGuestConfigurationAssignmentProperties(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("systemData"u8))
-                {
-                    DeserializeSystemDataValue(prop, ref systemData);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -199,10 +198,10 @@ namespace Azure.ResourceManager.GuestConfiguration
                 id,
                 name,
                 location,
-                @type,
+                resourceType,
+                systemData,
                 additionalBinaryDataProperties,
-                properties,
-                systemData);
+                properties);
         }
     }
 }

@@ -1,38 +1,17 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.ClientModel.Primitives;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Text.Json;
-using Azure.Core;
-using Azure.ResourceManager.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
     /// <summary> ARM proxy resource. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [CodeGenSerialization(nameof(SystemData), DeserializationValueHook = nameof(DeserializeSystemDataValue))]
-    [CodeGenSerialization(nameof(Location), DeserializationValueHook = nameof(DeserializeLocationValue))]
     public partial class GuestConfigurationResourceData
     {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void DeserializeSystemDataValue(JsonProperty property, ref SystemData systemData)
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationResourceData"/>. </summary>
+        public GuestConfigurationResourceData()
         {
-            if (property.Value.ValueKind == JsonValueKind.Null)
-            {
-                return;
-            }
-            systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerGuestConfigurationContext.Default);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void DeserializeLocationValue(JsonProperty property, ref string location)
-        {
-            location = property.Value.GetString();
         }
     }
 }

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.GuestConfiguration;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
@@ -32,14 +33,16 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="id"> ARM resource id of the guest configuration assignment. </param>
         /// <param name="name"> The guest configuration assignment name. </param>
         /// <param name="location"> Region where the VM is located. </param>
-        /// <param name="type"> The type of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GuestConfigurationResourceData(ResourceIdentifier id, string name, string location, ResourceType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GuestConfigurationResourceData(ResourceIdentifier id, string name, AzureLocation? location, ResourceType? resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
             Location = location;
-            Type = @type;
+            ResourceType = resourceType;
+            SystemData = systemData;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -53,10 +56,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         /// <summary> Region where the VM is located. </summary>
         [WirePath("location")]
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
 
         /// <summary> The type of the resource. </summary>
         [WirePath("type")]
-        public ResourceType? Type { get; }
+        public ResourceType? ResourceType { get; }
+
+        /// <summary> Azure Resource Manager metadata containing createdBy and modifiedBy information. </summary>
+        [WirePath("systemData")]
+        public SystemData SystemData { get; }
     }
 }
