@@ -435,7 +435,7 @@ namespace Azure.Identity.Tests
         [Test]
         public void AzdJsonErrorOutput_LoginRequiredInJson_UsesAzdMessage()
         {
-            // When azd returns a JSON error about login, use azd's message directly and throw CredentialUnavailableException
+            // When azd returns a JSON error about login, use our standard message and throw CredentialUnavailableException
             string jsonLoginError = "{\"type\":\"consoleMessage\",\"data\":{\"message\":\"ERROR: no auth configuration found. Please run `azd auth login` to setup account\"}}";
             var testProcess = new TestProcess { Error = jsonLoginError };
             var credential = CreateCredential(new TestProcessService(testProcess));
@@ -443,8 +443,8 @@ namespace Azure.Identity.Tests
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(
                 async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
 
-            // Should use azd's parsed message, not substitute with our own, and not show raw JSON
-            Assert.That(ex.Message, Does.Contain("ERROR: no auth configuration found. Please run `azd auth login` to setup account"));
+            // Should use our standard AzdNotLogIn message, not the parsed JSON message
+            Assert.That(ex.Message, Does.Contain(AzureDeveloperCliCredential.AzdNotLogIn));
             Assert.That(ex.Message, Does.Not.Contain("{\"type\":\"consoleMessage\""));
         }
     }
