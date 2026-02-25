@@ -4,6 +4,8 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
@@ -154,6 +156,63 @@ public class ResponsesSmokeTests : ProjectsOpenAITestBase
             """));
         Assert.That(options.StructuredInputs.Keys, Has.Count.EqualTo(2));
         Assert.That(options.StructuredInputs["direct_value_2"].ToString(), Is.EqualTo("42"));
+    }
+
+    [Test]
+    public void RequestOptionsOverloadCreateResponseExists()
+    {
+        Uri mockProjectEndpoint = new("https://microsoft.com/mock/endpoint");
+        ProjectResponsesClient client = new(mockProjectEndpoint, new MockCredential());
+
+        CreateResponseOptions options = new()
+        {
+            Model = "test-model",
+            InputItems = { ResponseItem.CreateUserMessageItem("Hello") },
+        };
+
+        // Verify the overload exists by checking that the method is resolvable.
+        // The actual call will fail because there's no real service, but we verify
+        // that argument validation and defaults application work.
+        Assert.Throws<ArgumentNullException>(() => client.CreateResponse((CreateResponseOptions)null, new RequestOptions()));
+    }
+
+    [Test]
+    public void RequestOptionsHeaderWorks()
+    {
+        const string expectedHeaderKey = "x-test-header-key";
+        const string expectedHeaderValue = "some header value";
+
+        bool headerChecked = false;
+
+        ProjectResponsesClientOptions options = new();
+        options.AddPolicy(
+            new GenericActionPipelinePolicy(
+                requestAction: (request) =>
+                {
+                    IEnumerable<string> values = [];
+                    Assert.That(request?.Headers?.TryGetValues(expectedHeaderKey, out values), Is.True);
+                    Assert.That(values.ToList(), Has.Count.EqualTo(1));
+                    Assert.That(values.FirstOrDefault(), Is.EqualTo(expectedHeaderValue));
+                    headerChecked = true;
+                }),
+            PipelinePosition.PerCall);
+
+        Uri mockProjectEndpoint = new("https://microsoft.com/mock/endpoint");
+        ProjectResponsesClient client = new(mockProjectEndpoint, new MockCredential(), options);
+
+        RequestOptions requestOptions = new();
+        requestOptions.AddHeader(expectedHeaderKey, expectedHeaderValue);
+
+        Assert.ThrowsAsync<ClientResultException>(async ()
+            => await client.CreateResponseAsync(
+                options: new CreateResponseOptions()
+                {
+                    Model = "mock-model",
+                    InputItems = { ResponseItem.CreateUserMessageItem("Hello") },
+                },
+                requestOptions));
+
+        Assert.That(headerChecked, Is.True, "The request header validation in the pipeline policy was not executed.");
     }
 
     [Test]
