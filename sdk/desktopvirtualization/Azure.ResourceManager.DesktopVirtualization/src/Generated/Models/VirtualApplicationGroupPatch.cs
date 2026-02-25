@@ -40,10 +40,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             Properties = properties;
         }
 
-        /// <summary> tags to be updated. </summary>
-        [WirePath("tags")]
-        public IDictionary<string, string> Tags { get; }
-
         /// <summary> ApplicationGroup properties that can be patched. </summary>
         [WirePath("properties")]
         internal ApplicationGroupPatchProperties Properties { get; set; }

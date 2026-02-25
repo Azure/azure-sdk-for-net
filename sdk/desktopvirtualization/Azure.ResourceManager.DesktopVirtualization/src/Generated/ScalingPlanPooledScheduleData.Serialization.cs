@@ -20,11 +20,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
     /// <summary> Represents a ScalingPlanPooledSchedule definition. </summary>
     public partial class ScalingPlanPooledScheduleData : ResourceData, IJsonModel<ScalingPlanPooledScheduleData>
     {
-        /// <summary> Initializes a new instance of <see cref="ScalingPlanPooledScheduleData"/> for deserialization. </summary>
-        internal ScalingPlanPooledScheduleData()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ScalingPlanPooledScheduleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)

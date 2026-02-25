@@ -55,37 +55,6 @@ Fix: [TSP]
   DaysOfWeek property type (IList -> single nullable) needs fixing.
 
 ================================================================================
-BREAKING #4: Tags setter removed on Patch types
-================================================================================
-Affected types (Tags { get; set; } -> Tags { get; }):
-  - HostPoolPatch.Tags.set
-  - ScalingPlanPatch.Tags.set
-  - VirtualApplicationGroupPatch.Tags.set
-  - VirtualWorkspacePatch.Tags.set
-
-Root cause: The new generator creates IDictionary<string,string> properties as
-getter-only (the collection itself is mutable via Add/Remove). The old generator
-had an explicit setter.
-
-Fix: [SDK]
-  Add partial class for each Patch type in Customize/ with a Tags setter:
-
-  Example (src/Customize/Models/HostPoolPatch.cs):
-    public partial class HostPoolPatch
-    {
-        // Backward compat: allow setting Tags dictionary
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new IDictionary<string, string> Tags
-        {
-            get => base.Tags;
-            set { base.Tags.Clear(); foreach(var kv in value) base.Tags.Add(kv); }
-        }
-    }
-
-  Note: May need careful implementation depending on the exact generated shape.
-  The setter pattern of "clear and re-add" preserves backward compat.
-
-================================================================================
 BREAKING #5: Tags property entirely missing on VirtualApplicationPatch and VirtualDesktopPatch
 ================================================================================
 Affected types:
@@ -135,18 +104,6 @@ Fix: [SDK]
     }
 
 ================================================================================
-BREAKING #7: VirtualWorkspaceData.ApplicationGroupReferences setter removed
-================================================================================
-Affected:
-  - VirtualWorkspaceData.ApplicationGroupReferences.set(IList<string>)
-
-Root cause: Same pattern as #6. The IList<string> is now getter-only.
-
-Fix: [SDK]
-  Add partial class with setter shim in src/Customize/VirtualWorkspaceData.cs
-  (file already exists for other customizations, may need extending).
-
-================================================================================
 BREAKING #8: MsixImageUri type now internal
 ================================================================================
 Affected: Type 'Azure.ResourceManager.DesktopVirtualization.Models.MsixImageUri'
@@ -160,66 +117,6 @@ Fix: [SDK] (@@access decorator was tried but did not work - type remained intern
   Add a public stub class in src/Customize/Models/MsixImageUri.cs:
   Make the generated internal partial class public by adding a custom partial
   with public visibility, or create a new public class wrapping the internal one.
-
-================================================================================
-BREAKING #9: Missing public constructors (types sealed)
-================================================================================
-Affected types:
-  - MsixPackageData..ctor()                              (CannotSealType + MembersMustExist)
-  - ScalingPlanPersonalScheduleData..ctor()              (CannotSealType + MembersMustExist)
-  - ScalingPlanPooledScheduleData..ctor()                (CannotSealType + MembersMustExist)
-  - DesktopVirtualizationPrivateEndpointConnection..ctor() (CannotSealType + MembersMustExist) [FIXED via TSP]
-  - DesktopVirtualizationPrivateLinkResourceData..ctor()  (CannotSealType + MembersMustExist) [FIXED via TSP]
-
-Each also has: CannotMakeMemberNonVirtual for JsonModelWriteCore (consequence of
-being sealed).
-
-Root cause: The new TSP generator treats these as output-only models, generating
-only internal constructors. The old API had public parameterless constructors.
-
-Fix (partially applied):
-  [TSP] @@usage decorators added for all 5 types in client.tsp.
-  Result: PrivateEndpointConnection and PrivateLinkResource ctors are now public.
-  MsixPackageData, ScalingPlanPersonalScheduleData, ScalingPlanPooledScheduleData
-  remain internal — ARM resource Data types ignore @@usage for ctor generation.
-
-  Remaining fix for 3 types: [SDK]
-  Add public parameterless constructors in custom partial classes:
-    src/Customize/MsixPackageData.cs
-    src/Customize/ScalingPlanPersonalScheduleData.cs
-    src/Customize/ScalingPlanPooledScheduleData.cs
-
-================================================================================
-BREAKING #10: SessionHostData property setters removed
-================================================================================
-Affected properties (all had set in old API, now get-only):
-  - SessionHostData.AgentVersion.set(string)
-  - SessionHostData.LastHeartBeatOn.set(Nullable<DateTimeOffset>)
-  - SessionHostData.OSVersion.set(string)
-  - SessionHostData.Sessions.set(Nullable<int>)
-  - SessionHostData.Status.set(Nullable<SessionHostStatus>)
-  - SessionHostData.SxsStackVersion.set(string)
-  - SessionHostData.UpdateErrorMessage.set(string)
-  - SessionHostData.UpdateState.set(Nullable<SessionHostUpdateState>)
-
-Root cause: The new TSP correctly models these as read-only (server-populated)
-properties. The old swagger-generated code incorrectly had setters.
-However, the client.tsp already has:
-  @@usage(SessionHostProperties, Usage.input, "csharp");
-This makes some properties writable, but not the ones listed above (which
-are genuinely server-only).
-
-Fix: [SDK]
-  Add setters via partial class in src/Customize/SessionHostData.cs (may
-  already exist) with [EditorBrowsable(Never)] and [Obsolete] markers.
-
-  Note: The generated code should have the properties as get-only since
-  they are read-only in the TSP. The setters existed in the old swagger
-  code erroneously. For backward compat, add setters that are no-ops or
-  store into backing fields.
-
-  Alternatively, check if changing @@usage to mark specific properties
-  as input would work in TSP. But that would be incorrect semantically.
 
 ================================================================================
 BREAKING #12: HostPoolResource.ExpandMsixImages moved to extension method
@@ -515,15 +412,11 @@ TSP-side fixes (client.tsp):
   2. IsCloudPCResource clientName casing (#2) - 3 decorator fixes
   3. ScalingScheduleDaysOfWeekItem/DaysOfWeek fix (#3) - alternateType fix
   4. MsixImageUri access (#8) - 1 access decorator
-  5. Public ctor @@usage decorators (#9) - 5 usage decorators
-  6. PrivateEndpointId alternateType (#22, #23) - alternateType decorators
+  5. PrivateEndpointId alternateType (#22, #23) - alternateType decorators
 
 SDK-side fixes (src/Customize/):
-  4. Tags setter on Patch types (#4) - 4 partial classes
   5. Tags property on VirtualApplicationPatch/VirtualDesktopPatch (#5) - 2 partial classes
   6. List property setters (#6) - 5 partial classes
-  7. VirtualWorkspaceData.ApplicationGroupReferences setter (#7) - 1 partial class
- 10. SessionHostData property setters (#10) - 1 partial class (8 properties)
  11. AppAttachPackageResource.Delete overload (#11) - 1 partial class
  12-15. HostPoolResource method shims (#12-15) - 1 partial class (8 methods)
  16-17. UserSessionResource method shims (#16-17) - 1 partial class (4 methods)
@@ -541,12 +434,11 @@ Phase 1: TSP-side fixes (regenerate after all TSP changes)
   - Fix clientName casing (#2)
   - Fix ETag alternateType (#1)
   - Fix MsixImageUri access (#8)
-  - Fix @@usage for public ctors (#9)
   - Fix ScalingScheduleDaysOfWeekItem (#3)
   - Fix PrivateEndpointId alternateType (#22, #23)
 
 Phase 2: SDK-side fixes (after regeneration)
-  - Add property setters/shims (#4, #5, #6, #7, #10)
+  - Add property setters/shims (#5, #6)
   - Add method overloads (#11, #12, #13, #14, #15, #16, #17, #18, #19, #20)
   - Add backward-compat operation overloads (#21)
   - Add ConnectionState property shims (#22, #23)

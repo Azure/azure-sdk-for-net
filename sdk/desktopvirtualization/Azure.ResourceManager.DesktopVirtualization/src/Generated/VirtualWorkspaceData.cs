@@ -127,20 +127,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
         }
 
-        /// <summary> List of applicationGroup resource Ids. </summary>
-        [WirePath("properties.applicationGroupReferences")]
-        public IList<string> ApplicationGroupReferences
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new WorkspaceProperties();
-                }
-                return Properties.ApplicationGroupReferences;
-            }
-        }
-
         /// <summary> Is cloud pc resource. </summary>
         [WirePath("properties.cloudPcResource")]
         public bool? IsCloudPCResource

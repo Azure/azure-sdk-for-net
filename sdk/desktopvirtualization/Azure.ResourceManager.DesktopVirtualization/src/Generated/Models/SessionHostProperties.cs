@@ -12,7 +12,6 @@ using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    /// <summary> Schema for SessionHost properties. </summary>
     internal partial class SessionHostProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -91,18 +90,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         [WirePath("objectId")]
         public string ObjectId { get; }
 
-        /// <summary> Last heart beat from SessionHost. </summary>
-        [WirePath("lastHeartBeat")]
-        public DateTimeOffset? LastHeartBeatOn { get; }
-
-        /// <summary> Number of sessions on SessionHost. </summary>
-        [WirePath("sessions")]
-        public int? Sessions { get; }
-
-        /// <summary> Version of agent on SessionHost. </summary>
-        [WirePath("agentVersion")]
-        public string AgentVersion { get; }
-
         /// <summary> Allow a new session. </summary>
         [WirePath("allowNewSession")]
         public bool? AllowNewSession { get; set; }
@@ -123,33 +110,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         [WirePath("friendlyName")]
         public string FriendlyName { get; set; }
 
-        /// <summary> Status for a SessionHost. </summary>
-        [WirePath("status")]
-        public SessionHostStatus? Status { get; }
-
         /// <summary> The timestamp of the status. </summary>
         [WirePath("statusTimestamp")]
         public DateTimeOffset? StatusTimestamp { get; }
 
-        /// <summary> The version of the OS on the session host. </summary>
-        [WirePath("osVersion")]
-        public string OSVersion { get; }
-
-        /// <summary> The version of the side by side stack on the session host. </summary>
-        [WirePath("sxSStackVersion")]
-        public string SxsStackVersion { get; }
-
-        /// <summary> Update state of a SessionHost. </summary>
-        [WirePath("updateState")]
-        public SessionHostUpdateState? UpdateState { get; }
-
         /// <summary> The timestamp of the last update. </summary>
         [WirePath("lastUpdateTime")]
         public DateTimeOffset? LastUpdatedOn { get; }
-
-        /// <summary> The error message. </summary>
-        [WirePath("updateErrorMessage")]
-        public string UpdateErrorMessage { get; }
 
         /// <summary> The last time update was completed. </summary>
         [WirePath("lastSessionHostUpdateTime")]

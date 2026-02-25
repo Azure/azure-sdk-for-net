@@ -611,28 +611,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new RegistrationTokenMinimal(expireOn, token, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="tags"> tags to be updated. </param>
-        /// <param name="description"> Description of scaling plan. </param>
-        /// <param name="friendlyName"> User friendly name of scaling plan. </param>
-        /// <param name="timeZone"> Timezone of the scaling plan. </param>
-        /// <param name="exclusionTag"> Exclusion tag for scaling plan. </param>
-        /// <param name="schedules"> List of ScalingSchedule definitions. </param>
-        /// <param name="hostPoolReferences"> List of ScalingHostPoolReference definitions. </param>
-        /// <returns> A new <see cref="Models.ScalingPlanPatch"/> instance for mocking. </returns>
-        public static ScalingPlanPatch ScalingPlanPatch(IDictionary<string, string> tags = default, string description = default, string friendlyName = default, string timeZone = default, string exclusionTag = default, IEnumerable<ScalingSchedule> schedules = default, IEnumerable<ScalingHostPoolReference> hostPoolReferences = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ScalingPlanPatch(tags, description is null && friendlyName is null && timeZone is null && exclusionTag is null && schedules is null && hostPoolReferences is null ? default : new ScalingPlanPatchProperties(
-                description,
-                friendlyName,
-                timeZone,
-                exclusionTag,
-                (schedules ?? new ChangeTrackingList<ScalingSchedule>()).ToList(),
-                (hostPoolReferences ?? new ChangeTrackingList<ScalingHostPoolReference>()).ToList(),
-                null), additionalBinaryDataProperties: null);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -642,12 +620,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="objectId"> ObjectId of Workspace. (internal use). </param>
         /// <param name="description"> Description of Workspace. </param>
         /// <param name="friendlyName"> Friendly name of Workspace. </param>
-        /// <param name="applicationGroupReferences"> List of applicationGroup resource Ids. </param>
         /// <param name="isCloudPCResource"> Is cloud pc resource. </param>
         /// <param name="publicNetworkAccess"> Enabled allows this resource to be accessed from both public and private networks, Disabled allows this resource to only be accessed via private endpoints. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connection associated with the specified resource. </param>
         /// <param name="oboTenantId"> Tenant that the resource is being requested on behalf of. </param>
         /// <param name="deploymentScope"> DeploymentScope type for Workspace. </param>
+        /// <param name="applicationGroupReferences"> List of applicationGroup resource Ids. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="etag"> If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
@@ -655,7 +633,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="plan"> Details of the resource plan. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <returns> A new <see cref="DesktopVirtualization.VirtualWorkspaceData"/> instance for mocking. </returns>
-        public static VirtualWorkspaceData VirtualWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string objectId = default, string description = default, string friendlyName = default, IEnumerable<string> applicationGroupReferences = default, bool? isCloudPCResource = default, DesktopVirtualizationPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections = default, string oboTenantId = default, DeploymentScope? deploymentScope = default, ManagedServiceIdentity identity = default, ETag? etag = default, string kind = default, ResourceIdentifier managedBy = default, ArmPlan plan = default, DesktopVirtualizationSku sku = default)
+        public static VirtualWorkspaceData VirtualWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string objectId = default, string description = default, string friendlyName = default, bool? isCloudPCResource = default, DesktopVirtualizationPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections = default, string oboTenantId = default, DeploymentScope? deploymentScope = default, IEnumerable<string> applicationGroupReferences = default, ManagedServiceIdentity identity = default, ETag? etag = default, string kind = default, ResourceIdentifier managedBy = default, ArmPlan plan = default, DesktopVirtualizationSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -667,7 +645,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                objectId is null && description is null && friendlyName is null && applicationGroupReferences is null && isCloudPCResource is null && publicNetworkAccess is null && privateEndpointConnections is null && oboTenantId is null && deploymentScope is null ? default : new WorkspaceProperties(
+                objectId is null && description is null && friendlyName is null && isCloudPCResource is null && publicNetworkAccess is null && privateEndpointConnections is null && oboTenantId is null && deploymentScope is null && applicationGroupReferences is null ? default : new WorkspaceProperties(
                     objectId,
                     description,
                     friendlyName,
@@ -684,19 +662,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 managedBy,
                 plan,
                 sku);
-        }
-
-        /// <param name="tags"> tags to be updated. </param>
-        /// <param name="description"> Description of Workspace. </param>
-        /// <param name="friendlyName"> Friendly name of Workspace. </param>
-        /// <param name="applicationGroupReferences"> List of applicationGroup links. </param>
-        /// <param name="publicNetworkAccess"> Enabled to allow this resource to be access from the public network. </param>
-        /// <returns> A new <see cref="Models.VirtualWorkspacePatch"/> instance for mocking. </returns>
-        public static VirtualWorkspacePatch VirtualWorkspacePatch(IDictionary<string, string> tags = default, string description = default, string friendlyName = default, IEnumerable<string> applicationGroupReferences = default, DesktopVirtualizationPublicNetworkAccess? publicNetworkAccess = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new VirtualWorkspacePatch(tags, description is null && friendlyName is null && applicationGroupReferences is null && publicNetworkAccess is null ? default : new WorkspacePatchProperties(description, friendlyName, (applicationGroupReferences ?? new ChangeTrackingList<string>()).ToList(), publicNetworkAccess, null), additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -799,26 +764,26 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="disconnectedSessions"> Number of disconnected sessions on SessionHost. </param>
         /// <param name="pendingSessions"> Number of pending sessions on SessionHost. </param>
         /// <param name="objectId"> ObjectId of SessionHost. (internal use). </param>
-        /// <param name="lastHeartBeatOn"> Last heart beat from SessionHost. </param>
-        /// <param name="sessions"> Number of sessions on SessionHost. </param>
-        /// <param name="agentVersion"> Version of agent on SessionHost. </param>
         /// <param name="allowNewSession"> Allow a new session. </param>
         /// <param name="vmId"> Virtual Machine Id of SessionHost's underlying virtual machine. </param>
         /// <param name="resourceId"> Resource Id of SessionHost's underlying virtual machine. </param>
         /// <param name="assignedUser"> User assigned to SessionHost. </param>
         /// <param name="friendlyName"> Friendly name of SessionHost. </param>
-        /// <param name="status"> Status for a SessionHost. </param>
         /// <param name="statusTimestamp"> The timestamp of the status. </param>
-        /// <param name="osVersion"> The version of the OS on the session host. </param>
-        /// <param name="sxsStackVersion"> The version of the side by side stack on the session host. </param>
-        /// <param name="updateState"> Update state of a SessionHost. </param>
         /// <param name="lastUpdatedOn"> The timestamp of the last update. </param>
-        /// <param name="updateErrorMessage"> The error message. </param>
         /// <param name="lastSessionHostUpdateOn"> The last time update was completed. </param>
         /// <param name="sessionHostConfiguration"> SessionHostConfiguration version reference at the time the update is initiated, in the format of date time. Example: 2024-04-26T04:56:45Z. </param>
         /// <param name="sessionHostHealthCheckResults"> List of SessionHostHealthCheckReports. </param>
+        /// <param name="agentVersion"> Version of agent on SessionHost. </param>
+        /// <param name="lastHeartBeatOn"> Last heart beat from SessionHost. </param>
+        /// <param name="osVersion"> The version of the OS on the session host. </param>
+        /// <param name="sessions"> Number of sessions on SessionHost. </param>
+        /// <param name="status"> Status for a SessionHost. </param>
+        /// <param name="sxsStackVersion"> The version of the side by side stack on the session host. </param>
+        /// <param name="updateErrorMessage"> The error message. </param>
+        /// <param name="updateState"> Update state of a SessionHost. </param>
         /// <returns> A new <see cref="DesktopVirtualization.SessionHostData"/> instance for mocking. </returns>
-        public static SessionHostData SessionHostData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? activeSessions = default, int? disconnectedSessions = default, int? pendingSessions = default, string objectId = default, DateTimeOffset? lastHeartBeatOn = default, int? sessions = default, string agentVersion = default, bool? allowNewSession = default, string vmId = default, ResourceIdentifier resourceId = default, string assignedUser = default, string friendlyName = default, SessionHostStatus? status = default, DateTimeOffset? statusTimestamp = default, string osVersion = default, string sxsStackVersion = default, SessionHostUpdateState? updateState = default, DateTimeOffset? lastUpdatedOn = default, string updateErrorMessage = default, DateTimeOffset? lastSessionHostUpdateOn = default, string sessionHostConfiguration = default, IEnumerable<SessionHostHealthCheckReport> sessionHostHealthCheckResults = default)
+        public static SessionHostData SessionHostData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? activeSessions = default, int? disconnectedSessions = default, int? pendingSessions = default, string objectId = default, bool? allowNewSession = default, string vmId = default, ResourceIdentifier resourceId = default, string assignedUser = default, string friendlyName = default, DateTimeOffset? statusTimestamp = default, DateTimeOffset? lastUpdatedOn = default, DateTimeOffset? lastSessionHostUpdateOn = default, string sessionHostConfiguration = default, IEnumerable<SessionHostHealthCheckReport> sessionHostHealthCheckResults = default, string agentVersion = default, DateTimeOffset? lastHeartBeatOn = default, string osVersion = default, int? sessions = default, SessionHostStatus? status = default, string sxsStackVersion = default, string updateErrorMessage = default, SessionHostUpdateState? updateState = default)
         {
             return new SessionHostData(
                 id,
@@ -826,7 +791,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                activeSessions is null && disconnectedSessions is null && pendingSessions is null && objectId is null && lastHeartBeatOn is null && sessions is null && agentVersion is null && allowNewSession is null && vmId is null && resourceId is null && assignedUser is null && friendlyName is null && status is null && statusTimestamp is null && osVersion is null && sxsStackVersion is null && updateState is null && lastUpdatedOn is null && updateErrorMessage is null && lastSessionHostUpdateOn is null && sessionHostConfiguration is null && sessionHostHealthCheckResults is null ? default : new SessionHostProperties(
+                activeSessions is null && disconnectedSessions is null && pendingSessions is null && objectId is null && allowNewSession is null && vmId is null && resourceId is null && assignedUser is null && friendlyName is null && statusTimestamp is null && lastUpdatedOn is null && lastSessionHostUpdateOn is null && sessionHostConfiguration is null && sessionHostHealthCheckResults is null && agentVersion is null && lastHeartBeatOn is null && osVersion is null && sessions is null && status is null && sxsStackVersion is null && updateErrorMessage is null && updateState is null ? default : new SessionHostProperties(
                     activeSessions,
                     disconnectedSessions,
                     pendingSessions,
@@ -1497,7 +1462,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VirtualWorkspaceData VirtualWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string objectId, string description, string friendlyName, IEnumerable<string> applicationGroupReferences, bool? isCloudPCResource, DesktopVirtualizationPublicNetworkAccess? publicNetworkAccess, IEnumerable<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections, ResourceIdentifier managedBy, string kind, ETag? etag, ManagedServiceIdentity identity, DesktopVirtualizationSku sku, ArmPlan plan)
         {
-            return VirtualWorkspaceData(id, name, resourceType, systemData, tags, location, objectId, description, friendlyName, applicationGroupReferences, isCloudPCResource, publicNetworkAccess, privateEndpointConnections, oboTenantId: default, deploymentScope: default, identity, etag, kind, managedBy, plan, sku);
+            return VirtualWorkspaceData(id, name, resourceType, systemData, tags, location, objectId, description, friendlyName, isCloudPCResource, publicNetworkAccess, privateEndpointConnections, oboTenantId: default, deploymentScope: default, applicationGroupReferences, identity, etag, kind, managedBy, plan, sku);
         }
 
         /// <param name="id"></param>
@@ -1762,7 +1727,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SessionHostData SessionHostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string objectId, DateTimeOffset? lastHeartBeatOn, int? sessions, string agentVersion, bool? allowNewSession, string vmId, ResourceIdentifier resourceId, string assignedUser, string friendlyName, SessionHostStatus? status, DateTimeOffset? statusTimestamp, string osVersion, string sxsStackVersion, SessionHostUpdateState? updateState, DateTimeOffset? lastUpdatedOn, string updateErrorMessage, IEnumerable<SessionHostHealthCheckReport> sessionHostHealthCheckResults)
         {
-            return SessionHostData(id, name, resourceType, systemData, activeSessions: default, disconnectedSessions: default, pendingSessions: default, objectId, lastHeartBeatOn, sessions, agentVersion, allowNewSession, vmId, resourceId, assignedUser, friendlyName, status, statusTimestamp, osVersion, sxsStackVersion, updateState, lastUpdatedOn, updateErrorMessage, lastSessionHostUpdateOn: default, sessionHostConfiguration: default, sessionHostHealthCheckResults);
+            return SessionHostData(id, name, resourceType, systemData, activeSessions: default, disconnectedSessions: default, pendingSessions: default, objectId, allowNewSession, vmId, resourceId, assignedUser, friendlyName, statusTimestamp, lastUpdatedOn, lastSessionHostUpdateOn: default, sessionHostConfiguration: default, sessionHostHealthCheckResults, agentVersion, lastHeartBeatOn, osVersion, sessions, status, sxsStackVersion, updateErrorMessage, updateState);
         }
 
         /// <param name="provisioningState"></param>
@@ -1912,7 +1877,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VirtualWorkspaceData VirtualWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string objectId, string description, string friendlyName, IEnumerable<string> applicationGroupReferences, bool? isCloudPCResource, ResourceIdentifier managedBy, string kind, ETag? etag, ManagedServiceIdentity identity, DesktopVirtualizationSku sku, ArmPlan plan)
         {
-            return VirtualWorkspaceData(id, name, resourceType, systemData, tags, location, objectId, description, friendlyName, applicationGroupReferences, isCloudPCResource, publicNetworkAccess: default, privateEndpointConnections: default, oboTenantId: default, deploymentScope: default, identity, etag, kind, managedBy, plan, sku);
+            return VirtualWorkspaceData(id, name, resourceType, systemData, tags, location, objectId, description, friendlyName, isCloudPCResource, publicNetworkAccess: default, privateEndpointConnections: default, oboTenantId: default, deploymentScope: default, applicationGroupReferences, identity, etag, kind, managedBy, plan, sku);
         }
 
         /// <param name="id"></param>

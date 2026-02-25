@@ -14,7 +14,6 @@ using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    /// <summary> Schema for SessionHost properties. </summary>
     internal partial class SessionHostProperties : IJsonModel<SessionHostProperties>
     {
         /// <param name="writer"> The JSON writer. </param>

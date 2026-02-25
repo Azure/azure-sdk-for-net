@@ -11,7 +11,6 @@ using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    /// <summary> Schema for Workspace properties. </summary>
     internal partial class WorkspaceProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -60,10 +59,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Friendly name of Workspace. </summary>
         [WirePath("friendlyName")]
         public string FriendlyName { get; set; }
-
-        /// <summary> List of applicationGroup resource Ids. </summary>
-        [WirePath("applicationGroupReferences")]
-        public IList<string> ApplicationGroupReferences { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Is cloud pc resource. </summary>
         [WirePath("cloudPcResource")]

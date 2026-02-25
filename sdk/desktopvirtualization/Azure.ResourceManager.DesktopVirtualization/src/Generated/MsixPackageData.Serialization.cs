@@ -20,11 +20,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
     /// <summary> Schema for MSIX Package properties. </summary>
     public partial class MsixPackageData : ResourceData, IJsonModel<MsixPackageData>
     {
-        /// <summary> Initializes a new instance of <see cref="MsixPackageData"/> for deserialization. </summary>
-        internal MsixPackageData()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MsixPackageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)

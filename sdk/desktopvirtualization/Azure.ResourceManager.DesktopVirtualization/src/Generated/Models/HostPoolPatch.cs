@@ -42,10 +42,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             Identity = identity;
         }
 
-        /// <summary> tags to be updated. </summary>
-        [WirePath("tags")]
-        public IDictionary<string, string> Tags { get; }
-
         /// <summary> HostPool properties that can be patched. </summary>
         [WirePath("properties")]
         internal HostPoolPatchProperties Properties { get; set; }

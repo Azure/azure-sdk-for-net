@@ -81,36 +81,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
         }
 
-        /// <summary> Last heart beat from SessionHost. </summary>
-        [WirePath("properties.lastHeartBeat")]
-        public DateTimeOffset? LastHeartBeatOn
-        {
-            get
-            {
-                return Properties is null ? default : Properties.LastHeartBeatOn;
-            }
-        }
-
-        /// <summary> Number of sessions on SessionHost. </summary>
-        [WirePath("properties.sessions")]
-        public int? Sessions
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Sessions;
-            }
-        }
-
-        /// <summary> Version of agent on SessionHost. </summary>
-        [WirePath("properties.agentVersion")]
-        public string AgentVersion
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AgentVersion;
-            }
-        }
-
         /// <summary> Allow a new session. </summary>
         [WirePath("properties.allowNewSession")]
         public bool? AllowNewSession
@@ -185,16 +155,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
         }
 
-        /// <summary> Status for a SessionHost. </summary>
-        [WirePath("properties.status")]
-        public SessionHostStatus? Status
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Status;
-            }
-        }
-
         /// <summary> The timestamp of the status. </summary>
         [WirePath("properties.statusTimestamp")]
         public DateTimeOffset? StatusTimestamp
@@ -205,36 +165,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
         }
 
-        /// <summary> The version of the OS on the session host. </summary>
-        [WirePath("properties.osVersion")]
-        public string OSVersion
-        {
-            get
-            {
-                return Properties is null ? default : Properties.OSVersion;
-            }
-        }
-
-        /// <summary> The version of the side by side stack on the session host. </summary>
-        [WirePath("properties.sxSStackVersion")]
-        public string SxsStackVersion
-        {
-            get
-            {
-                return Properties is null ? default : Properties.SxsStackVersion;
-            }
-        }
-
-        /// <summary> Update state of a SessionHost. </summary>
-        [WirePath("properties.updateState")]
-        public SessionHostUpdateState? UpdateState
-        {
-            get
-            {
-                return Properties is null ? default : Properties.UpdateState;
-            }
-        }
-
         /// <summary> The timestamp of the last update. </summary>
         [WirePath("properties.lastUpdateTime")]
         public DateTimeOffset? LastUpdatedOn
@@ -242,16 +172,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
             get
             {
                 return Properties is null ? default : Properties.LastUpdatedOn;
-            }
-        }
-
-        /// <summary> The error message. </summary>
-        [WirePath("properties.updateErrorMessage")]
-        public string UpdateErrorMessage
-        {
-            get
-            {
-                return Properties is null ? default : Properties.UpdateErrorMessage;
             }
         }
 

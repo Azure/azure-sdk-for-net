@@ -34,10 +34,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> tags to be updated. </summary>
-        [WirePath("tags")]
-        public IDictionary<string, string> Tags { get; }
-
         /// <summary> Detailed properties for scaling plan. </summary>
         [WirePath("properties")]
         internal ScalingPlanPatchProperties Properties { get; set; }

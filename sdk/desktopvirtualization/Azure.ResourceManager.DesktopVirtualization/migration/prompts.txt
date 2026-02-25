@@ -1,3 +1,10 @@
 Use migration/handle_renamemapping.md to handle rename mapping.
 Use migration/handle_rp_prefix.md to handle prepend-rp-prefix.
 Use migration/handle_format_by_name_rules.md to handle format-by-name-rules.
+
+
+run dotnet build your see there're lots of breaking changes. your task is to analysis these breakings, and make a plan to fix them. There're two ways to fix a breaking
+
+fix by do changes in Custome code (sdk side)
+fix by do chagnes in the client.tsp (tsp side)
+fix by tsp side is always the prefered way. Do not make actually changes!!! you just give me a plan for how to fix each breaking. Write your plan in fixing_plan.txt
