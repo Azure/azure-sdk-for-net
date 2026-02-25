@@ -74,28 +74,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
         }
 
-        /// <summary> List of applicationGroup links. </summary>
-        [WirePath("properties.applicationGroupReferences")]
-        public IList<string> ApplicationGroupReferences
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new WorkspacePatchProperties();
-                }
-                return Properties.ApplicationGroupReferences;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new WorkspacePatchProperties();
-                }
-                Properties.ApplicationGroupReferences = value;
-            }
-        }
-
         /// <summary> Enabled to allow this resource to be access from the public network. </summary>
         [WirePath("properties.publicNetworkAccess")]
         public DesktopVirtualizationPublicNetworkAccess? PublicNetworkAccess

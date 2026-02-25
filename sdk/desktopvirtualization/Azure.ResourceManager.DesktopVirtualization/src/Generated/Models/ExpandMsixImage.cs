@@ -203,28 +203,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
         }
 
-        /// <summary> List of package dependencies. </summary>
-        [WirePath("properties.packageDependencies")]
-        public IList<MsixPackageDependencies> PackageDependencies
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new ExpandMsixImageProperties();
-                }
-                return Properties.PackageDependencies;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ExpandMsixImageProperties();
-                }
-                Properties.PackageDependencies = value;
-            }
-        }
-
         /// <summary> Package version found in the appxmanifest.xml. </summary>
         [WirePath("properties.version")]
         public string Version

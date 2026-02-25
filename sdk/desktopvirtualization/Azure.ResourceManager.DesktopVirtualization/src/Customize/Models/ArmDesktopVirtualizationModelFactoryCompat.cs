@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -12,6 +13,32 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     public static partial class ArmDesktopVirtualizationModelFactory
     {
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="systemData"></param>
+        /// <param name="privateEndpointId"></param>
+        /// <param name="connectionState"></param>
+        /// <param name="provisioningState"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DesktopVirtualizationPrivateEndpointConnection DesktopVirtualizationPrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier privateEndpointId, DesktopVirtualizationPrivateLinkServiceConnectionState connectionState, DesktopVirtualizationPrivateEndpointConnectionProvisioningState? provisioningState)
+        {
+            return DesktopVirtualizationPrivateEndpointConnection(id, name, resourceType, systemData, groupIds: default, privateEndpointId, connectionState, provisioningState);
+        }
+
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="systemData"></param>
+        /// <param name="privateEndpointId"></param>
+        /// <param name="connectionState"></param>
+        /// <param name="provisioningState"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DesktopVirtualizationPrivateEndpointConnectionDataData DesktopVirtualizationPrivateEndpointConnectionDataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier privateEndpointId, DesktopVirtualizationPrivateLinkServiceConnectionState connectionState, DesktopVirtualizationPrivateEndpointConnectionProvisioningState? provisioningState)
+        {
+            return DesktopVirtualizationPrivateEndpointConnectionDataData(id, name, resourceType, systemData, groupIds: default, privateEndpointId, connectionState, provisioningState);
+        }
+
         /// <summary> Initializes a new instance of <see cref="DesktopVirtualization.VirtualApplicationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>

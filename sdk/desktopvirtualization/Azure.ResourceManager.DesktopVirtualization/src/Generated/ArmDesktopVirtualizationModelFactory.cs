@@ -476,19 +476,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 sku);
         }
 
-        /// <summary> The session host configuration for updating agent, monitoring agent, and stack component. </summary>
-        /// <param name="updateType"> The type of maintenance for session host components. </param>
-        /// <param name="doesUseSessionHostLocalTime"> Whether to use localTime of the virtual machine. </param>
-        /// <param name="maintenanceWindowTimeZone"> Time zone for maintenance as defined in https://docs.microsoft.com/en-us/dotnet/api/system.timezoneinfo.findsystemtimezonebyid?view=net-5.0. Must be set if useLocalTime is true. </param>
-        /// <param name="maintenanceWindows"> List of maintenance windows. Maintenance windows are 2 hours long. </param>
-        /// <returns> A new <see cref="Models.SessionHostAgentUpdateProperties"/> instance for mocking. </returns>
-        public static SessionHostAgentUpdateProperties SessionHostAgentUpdateProperties(SessionHostComponentUpdateType? updateType = default, bool? doesUseSessionHostLocalTime = default, string maintenanceWindowTimeZone = default, IEnumerable<SessionHostMaintenanceWindowProperties> maintenanceWindows = default)
-        {
-            maintenanceWindows ??= new ChangeTrackingList<SessionHostMaintenanceWindowProperties>();
-
-            return new SessionHostAgentUpdateProperties(updateType, doesUseSessionHostLocalTime, maintenanceWindowTimeZone, maintenanceWindows.ToList(), additionalBinaryDataProperties: null);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -556,19 +543,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     allowRDPShortPathWithPrivateLink,
                     null),
                 identity);
-        }
-
-        /// <summary> The session host configuration for updating agent, monitoring agent, and stack component. </summary>
-        /// <param name="updateType"> The type of maintenance for session host components. </param>
-        /// <param name="doesUseSessionHostLocalTime"> Whether to use localTime of the virtual machine. </param>
-        /// <param name="maintenanceWindowTimeZone"> Time zone for maintenance as defined in https://docs.microsoft.com/en-us/dotnet/api/system.timezoneinfo.findsystemtimezonebyid?view=net-5.0. Must be set if useLocalTime is true. </param>
-        /// <param name="maintenanceWindows"> List of maintenance windows. Maintenance windows are 2 hours long. </param>
-        /// <returns> A new <see cref="Models.SessionHostAgentUpdatePatchProperties"/> instance for mocking. </returns>
-        public static SessionHostAgentUpdatePatchProperties SessionHostAgentUpdatePatchProperties(SessionHostComponentUpdateType? updateType = default, bool? doesUseSessionHostLocalTime = default, string maintenanceWindowTimeZone = default, IEnumerable<MaintenanceWindowPatchProperties> maintenanceWindows = default)
-        {
-            maintenanceWindows ??= new ChangeTrackingList<MaintenanceWindowPatchProperties>();
-
-            return new SessionHostAgentUpdatePatchProperties(updateType, doesUseSessionHostLocalTime, maintenanceWindowTimeZone, maintenanceWindows.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> List of RegistrationToken definitions. </summary>
@@ -1841,32 +1815,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static VirtualWorkspaceData VirtualWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string objectId, string description, string friendlyName, IEnumerable<string> applicationGroupReferences, bool? isCloudPCResource, ResourceIdentifier managedBy, string kind, ETag? etag, ManagedServiceIdentity identity, DesktopVirtualizationSku sku, ArmPlan plan)
         {
             return VirtualWorkspaceData(id, name, resourceType, systemData, tags, location, objectId, description, friendlyName, isCloudPCResource, publicNetworkAccess: default, privateEndpointConnections: default, oboTenantId: default, deploymentScope: default, applicationGroupReferences, identity, etag, kind, managedBy, plan, sku);
-        }
-
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
-        /// <param name="privateEndpointId"></param>
-        /// <param name="connectionState"></param>
-        /// <param name="provisioningState"></param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DesktopVirtualizationPrivateEndpointConnection DesktopVirtualizationPrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier privateEndpointId, DesktopVirtualizationPrivateLinkServiceConnectionState connectionState, DesktopVirtualizationPrivateEndpointConnectionProvisioningState? provisioningState)
-        {
-            return DesktopVirtualizationPrivateEndpointConnection(id, name, resourceType, systemData, groupIds: default, privateEndpointId: privateEndpointId, connectionState: connectionState, provisioningState: provisioningState);
-        }
-
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
-        /// <param name="privateEndpointId"></param>
-        /// <param name="connectionState"></param>
-        /// <param name="provisioningState"></param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DesktopVirtualizationPrivateEndpointConnectionDataData DesktopVirtualizationPrivateEndpointConnectionDataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier privateEndpointId, DesktopVirtualizationPrivateLinkServiceConnectionState connectionState, DesktopVirtualizationPrivateEndpointConnectionProvisioningState? provisioningState)
-        {
-            return DesktopVirtualizationPrivateEndpointConnectionDataData(id, name, resourceType, systemData, groupIds: default, privateEndpointId: privateEndpointId, connectionState: connectionState, provisioningState: provisioningState);
         }
 
         /// <param name="id"></param>

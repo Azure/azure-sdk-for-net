@@ -99,10 +99,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         [WirePath("isActive")]
         public bool? IsActive { get; set; }
 
-        /// <summary> List of package dependencies. </summary>
-        [WirePath("packageDependencies")]
-        public IList<MsixPackageDependencies> PackageDependencies { get; set; }
-
         /// <summary> Package version found in the appxmanifest.xml. </summary>
         [WirePath("version")]
         public string Version { get; set; }

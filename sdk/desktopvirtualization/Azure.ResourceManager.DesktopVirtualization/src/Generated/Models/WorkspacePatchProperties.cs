@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> List of applicationGroup links. </summary>
         [WirePath("applicationGroupReferences")]
-        public IList<string> ApplicationGroupReferences { get; set; } = new ChangeTrackingList<string>();
+        public IList<string> ApplicationGroupReferences { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Enabled to allow this resource to be access from the public network. </summary>
         [WirePath("publicNetworkAccess")]

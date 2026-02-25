@@ -15,5 +15,34 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         [WirePath("tags")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary> List of applicationGroup links. </summary>
+        [WirePath("properties.applicationGroupReferences")]
+        public IList<string> ApplicationGroupReferences
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspacePatchProperties();
+                }
+                return Properties.ApplicationGroupReferences;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspacePatchProperties();
+                }
+                Properties.ApplicationGroupReferences.Clear();
+                if (value != null)
+                {
+                    foreach (var item in value)
+                    {
+                        Properties.ApplicationGroupReferences.Add(item);
+                    }
+                }
+            }
+        }
     }
 }
