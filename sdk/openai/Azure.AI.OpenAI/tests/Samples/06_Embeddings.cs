@@ -15,7 +15,6 @@ public partial class AzureOpenAISamples
 {
     public void BasicEmbeddings()
     {
-        #region Snippet:BasicEmbeddings
         AzureOpenAIClient azureClient = new(
             new Uri("https://your-azure-openai-resource.com"),
             new DefaultAzureCredential());
@@ -29,7 +28,6 @@ public partial class AzureOpenAISamples
         var floats = embedding.ToFloats();
         Console.WriteLine($"Generated embedding with {floats.Length} dimensions");
         Console.WriteLine($"First few values: [{string.Join(", ", floats.Span.Slice(0, Math.Min(5, floats.Length)).ToArray().Select(v => v.ToString("F4")))}...]");
-        #endregion
     }
 
     public void BatchEmbeddings()
@@ -39,7 +37,6 @@ public partial class AzureOpenAISamples
             new DefaultAzureCredential());
         EmbeddingClient embeddingClient = azureClient.GetEmbeddingClient("my-text-embedding-deployment");
 
-        #region Snippet:BatchEmbeddings
         // Generate embeddings for multiple texts in a single request
         string[] texts = {
             "Machine learning is a subset of artificial intelligence.",
@@ -58,7 +55,6 @@ public partial class AzureOpenAISamples
             Console.WriteLine($"  Embedding dimensions: {floats.Length}");
             Console.WriteLine($"  First few values: [{string.Join(", ", floats.Span.Slice(0, Math.Min(3, floats.Length)).ToArray().Select(v => v.ToString("F4")))}...]");
         }
-        #endregion
     }
 
     public void SemanticSearch()
@@ -68,7 +64,6 @@ public partial class AzureOpenAISamples
             new DefaultAzureCredential());
         EmbeddingClient embeddingClient = azureClient.GetEmbeddingClient("my-text-embedding-deployment");
 
-        #region Snippet:SemanticSearch
         // Create a knowledge base of documents
         string[] documents = {
             "The Azure cloud platform provides scalable computing resources and services for businesses.",
@@ -114,7 +109,6 @@ public partial class AzureOpenAISamples
             Console.WriteLine($"   Document: {result.Document}");
             Console.WriteLine();
         }
-        #endregion
     }
 
     public void TextClustering()
@@ -124,7 +118,6 @@ public partial class AzureOpenAISamples
             new DefaultAzureCredential());
         EmbeddingClient embeddingClient = azureClient.GetEmbeddingClient("my-text-embedding-deployment");
 
-        #region Snippet:TextClustering
         // Sample customer feedback texts for clustering
         string[] customerFeedback = {
             "The delivery was very fast and the product arrived in perfect condition.",
@@ -191,7 +184,6 @@ public partial class AzureOpenAISamples
         Console.WriteLine("- Common themes in customer feedback");
         Console.WriteLine("- Similar complaints or compliments");
         Console.WriteLine("- Areas for business improvement");
-        #endregion
     }
 
     public void EmbeddingBasedRecommendations()
@@ -201,7 +193,6 @@ public partial class AzureOpenAISamples
             new DefaultAzureCredential());
         EmbeddingClient embeddingClient = azureClient.GetEmbeddingClient("my-text-embedding-deployment");
 
-        #region Snippet:EmbeddingBasedRecommendations
         // Product catalog with descriptions
         var products = new Dictionary<string, string>
         {
@@ -256,7 +247,6 @@ public partial class AzureOpenAISamples
         Console.WriteLine("- E-commerce product suggestions");
         Console.WriteLine("- Content recommendation engines");
         Console.WriteLine("- Personalized search results");
-        #endregion
     }
 
     #region Helper Methods

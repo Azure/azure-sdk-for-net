@@ -43,7 +43,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         {
             get
             {
-                return PropertySelector is null ? default : PropertySelector.MatchExpressions;
+                if (PropertySelector is null)
+                {
+                    PropertySelector = new PropertySelector();
+                }
+                return PropertySelector.MatchExpressions;
             }
         }
     }

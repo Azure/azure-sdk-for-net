@@ -106,7 +106,7 @@ namespace Azure.AI.Projects.Tests
         {
             // Apply sanitizers to protect sensitive information in recordings
             ProjectsTestSanitizers.ApplySanitizers(this);
-            // Icrease Test timeout because ComputerUse tool test can take a little
+            // Increase Test timeout because ComputerUse tool test can take a little
             // more then 10 sec (default).
             TestTimeoutInSeconds = 20;
         }

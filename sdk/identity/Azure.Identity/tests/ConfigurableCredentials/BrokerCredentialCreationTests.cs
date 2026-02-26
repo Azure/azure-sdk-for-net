@@ -30,7 +30,7 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.Broker
     /// </summary>
     internal class BrokerCredentialCreationTests : CredentialCreationTestBase<BrokerCredential>
     {
-        protected override string CredentialSource => "Broker";
+        protected override string CredentialSource => nameof(BrokerCredential);
 
         private static Dictionary<string, string> AllNulledEnvVars() => new()
         {

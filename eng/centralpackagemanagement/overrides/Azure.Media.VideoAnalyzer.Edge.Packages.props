@@ -1,0 +1,10 @@
+<Project>
+  <!--
+    Some modern Azure.* test/sample projects depend on legacy Track 1 packages
+    for integration scenarios.
+  -->
+  <ItemGroup Condition="'$(IsTestProject)' == 'true' or '$(IsSamplesProject)' == 'true'">
+    <PackageVersion Include="Microsoft.Rest.ClientRuntime" Version="$(MicrosoftRestClientRuntimeVersion)" />
+    <PackageVersion Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" Version="$(MicrosoftRestClientRuntimeAzureAuthenticationVersion)" />
+  </ItemGroup>
+</Project>

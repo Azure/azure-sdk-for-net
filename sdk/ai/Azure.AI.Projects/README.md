@@ -656,7 +656,7 @@ status = deleteResponse.Deleted ? "" : " not";
 Console.WriteLine($"The memory store {deleteResponse.Name} was{status} deleted.");
 ```
 
-For more information abouit memory stores please refer [this article](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/agent-memory)
+For more information about memory stores please refer [this article](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/agent-memory)
 
 ### Evaluations
 
@@ -806,7 +806,7 @@ if (runStatus == "failed")
 
 Get the results using `GetResultsListAsync` method. It calls `GetEvaluationRunOutputItemsAsync` on the `EvaluationClient` returning the object representing `ClientResult`, which contains binary encoded JSON response that can be retrieved using `GetRawResponse()`.
 
-```C# Snippet:Sampple_GetResultsList_Evaluations_Async
+```C# Snippet:Sample_GetResultsList_Evaluations_Async
 private static async Task<List<string>> GetResultsListAsync(EvaluationClient client, string evaluationId, string evaluationRunId)
 {
     List<string> resultJsons = [];
@@ -933,7 +933,7 @@ evaluator has been created and uploaded to catalog, it can be used as a regular 
 
 Create a prompt-based evaluator.
 
-```C# Snippet:Sampple_PromptEvaluator_EvaluationsCatalogPromptBased
+```C# Snippet:Sample_PromptEvaluator_EvaluationsCatalogPromptBased
 private EvaluatorVersion promptVersion = new(
     categories: [EvaluatorCategory.Quality],
     definition: new PromptBasedEvaluatorDefinition(
@@ -1019,7 +1019,7 @@ object[] testingCriteria = [
 
 Custom evaluators may rely on code-based rules as shown below.
 
-```C# Snippet:Sampple_CodeEvaluator_EvaluationsCatalogCodeBased
+```C# Snippet:Sample_CodeEvaluator_EvaluationsCatalogCodeBased
 private EvaluatorVersion GetCodeEvaluatorVersion()
 {
     EvaluatorMetric resultMetric = new()

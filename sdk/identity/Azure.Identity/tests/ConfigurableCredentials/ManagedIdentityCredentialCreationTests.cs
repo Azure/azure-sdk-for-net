@@ -17,7 +17,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.ManagedIdentity
     /// </summary>
     internal class ManagedIdentityCredentialCreationTests : CredentialCreationTestBase<ManagedIdentityCredential>
     {
-        protected override string CredentialSource => "ManagedIdentity";
+        protected override string CredentialSource => nameof(ManagedIdentityCredential);
 
         private static Dictionary<string, string> AllNulledEnvVars() => new()
         {
