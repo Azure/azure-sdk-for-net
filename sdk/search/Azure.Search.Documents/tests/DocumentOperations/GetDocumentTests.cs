@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
 
@@ -15,7 +14,7 @@ namespace Azure.Search.Documents.Tests
     public class GetDocumentTests : SearchTestBase
     {
         public GetDocumentTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion, RecordedTestMode.Live /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 

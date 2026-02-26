@@ -8,7 +8,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Azure.Core.Serialization;
-using Azure.Core.TestFramework;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
 
@@ -17,7 +16,7 @@ namespace Azure.Search.Documents.Tests
     public class IndexingTests : SearchTestBase
     {
         public IndexingTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion, RecordedTestMode.Live /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
