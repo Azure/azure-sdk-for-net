@@ -280,5 +280,46 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(loadBalancer.LoadBalanceInterval, Is.EqualTo(options.LoadBalancingUpdateInterval), "The load balancing interval was incorrect.");
             Assert.That(loadBalancer.OwnershipExpirationInterval, Is.EqualTo(options.PartitionOwnershipExpirationInterval), "The ownership expiration interval is incorrect.");
         }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessor{TPartition}.ListPartitionIdsAsync" />
+        ///   method when called before the processor has been started.
+        /// </summary>
+        ///
+        /// <remarks>
+        ///   This test covers the regression scenario from issue #51777 where calling
+        ///   <see cref="EventProcessor{TPartition}.ListPartitionIdsAsync" /> before
+        ///   <see cref="EventProcessor{TPartition}.StartProcessingAsync" /> would throw
+        ///   a <see cref="NullReferenceException" /> due to <c>EventHubProperties</c> being null.
+        /// </remarks>
+        ///
+        [Test]
+        public async Task ListPartitionIdsAsyncQueriesServiceWhenEventHubPropertiesIsNull()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var expectedPartitionIds = new[] { "0", "1", "2" };
+            var mockConnection = new Mock<EventHubConnection>();
+            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(25, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
+
+            mockConnection
+                .Setup(conn => conn.GetPartitionIdsAsync(It.IsAny<EventHubsRetryPolicy>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(expectedPartitionIds);
+
+            mockProcessor
+                .Setup(processor => processor.CreateConnection())
+                .Returns(mockConnection.Object);
+
+            // Call ListPartitionIdsAsync before StartProcessingAsync, which means EventHubProperties is null.
+            // This should not throw and should fall back to querying the service.
+
+            var partitionIds = await InvokeListPartitionIdsAsync(mockProcessor.Object, mockConnection.Object, cancellationSource.Token);
+
+            Assert.That(partitionIds, Is.EqualTo(expectedPartitionIds), "The partition IDs should match those returned by the service.");
+
+            mockConnection
+                .Verify(conn => conn.GetPartitionIdsAsync(It.IsAny<EventHubsRetryPolicy>(), It.IsAny<CancellationToken>()), Times.Once, "The service should have been queried for partition IDs.");
+        }
     }
 }
