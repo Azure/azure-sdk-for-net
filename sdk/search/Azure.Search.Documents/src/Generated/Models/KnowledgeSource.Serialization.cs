@@ -112,15 +112,15 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
+            if (Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("@odata.etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
             if (Optional.IsDefined(EncryptionKey))
             {
                 writer.WritePropertyName("encryptionKey"u8);
                 writer.WriteObjectValue(EncryptionKey, options);
-            }
-            if (Optional.IsDefined(_eTag))
-            {
-                writer.WritePropertyName("@odata.etag"u8);
-                writer.WriteStringValue(_eTag);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

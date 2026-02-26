@@ -7,7 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes.Models;
@@ -1820,13 +1822,13 @@ namespace Azure.Search.Documents.Models
         /// <param name="models"> Contains configuration options on how to connect to AI models. </param>
         /// <param name="retrievalReasoningEffort"> The retrieval reasoning effort configuration. </param>
         /// <param name="outputMode"> The output mode for the knowledge base. </param>
+        /// <param name="eTag"> The ETag of the knowledge base. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. </param>
         /// <param name="description"> The description of the knowledge base. </param>
         /// <param name="retrievalInstructions"> Instructions considered by the knowledge base when developing query plan. </param>
         /// <param name="answerInstructions"> Instructions considered by the knowledge base when generating answers. </param>
-        /// <param name="etag"> The ETag of the knowledge base. </param>
         /// <returns> A new <see cref="Indexes.Models.KnowledgeBase"/> instance for mocking. </returns>
-        public static KnowledgeBase KnowledgeBase(string name = default, IEnumerable<KnowledgeSourceReference> knowledgeSources = default, IEnumerable<KnowledgeBaseModel> models = default, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort = default, KnowledgeRetrievalOutputMode? outputMode = default, SearchResourceEncryptionKey encryptionKey = default, string description = default, string retrievalInstructions = default, string answerInstructions = default, string etag = default)
+        public static KnowledgeBase KnowledgeBase(string name = default, IEnumerable<KnowledgeSourceReference> knowledgeSources = default, IEnumerable<KnowledgeBaseModel> models = default, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort = default, KnowledgeRetrievalOutputMode? outputMode = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, string description = default, string retrievalInstructions = default, string answerInstructions = default)
         {
             knowledgeSources ??= new ChangeTrackingList<KnowledgeSourceReference>();
             models ??= new ChangeTrackingList<KnowledgeBaseModel>();
@@ -1837,11 +1839,11 @@ namespace Azure.Search.Documents.Models
                 models.ToList(),
                 retrievalReasoningEffort,
                 outputMode,
+                eTag,
                 encryptionKey,
                 description,
                 retrievalInstructions,
                 answerInstructions,
-                etag,
                 additionalBinaryDataProperties: null);
         }
 
@@ -1911,35 +1913,35 @@ namespace Azure.Search.Documents.Models
         /// <param name="name"> The name of the knowledge source. </param>
         /// <param name="description"> Optional user-defined description. </param>
         /// <param name="kind"> The type of the knowledge source. </param>
-        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="eTag"> The ETag of the knowledge source. </param>
+        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <returns> A new <see cref="Indexes.Models.KnowledgeSource"/> instance for mocking. </returns>
-        public static KnowledgeSource KnowledgeSource(string name = default, string description = default, string kind = default, SearchResourceEncryptionKey encryptionKey = default, string eTag = default)
+        public static KnowledgeSource KnowledgeSource(string name = default, string description = default, string kind = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default)
         {
             return new UnknownKnowledgeSource(
                 name,
                 description,
                 new KnowledgeSourceKind(kind),
-                encryptionKey,
                 eTag,
+                encryptionKey,
                 additionalBinaryDataProperties: null);
         }
 
         /// <summary> Knowledge Source targeting a search index. </summary>
         /// <param name="name"> The name of the knowledge source. </param>
         /// <param name="description"> Optional user-defined description. </param>
-        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="eTag"> The ETag of the knowledge source. </param>
+        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="searchIndexParameters"> The parameters for the knowledge source. </param>
         /// <returns> A new <see cref="Indexes.Models.SearchIndexKnowledgeSource"/> instance for mocking. </returns>
-        public static SearchIndexKnowledgeSource SearchIndexKnowledgeSource(string name = default, string description = default, SearchResourceEncryptionKey encryptionKey = default, string eTag = default, SearchIndexKnowledgeSourceParameters searchIndexParameters = default)
+        public static SearchIndexKnowledgeSource SearchIndexKnowledgeSource(string name = default, string description = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, SearchIndexKnowledgeSourceParameters searchIndexParameters = default)
         {
             return new SearchIndexKnowledgeSource(
                 name,
                 description,
                 KnowledgeSourceKind.SearchIndex,
-                encryptionKey,
                 eTag,
+                encryptionKey,
                 additionalBinaryDataProperties: null,
                 searchIndexParameters);
         }
@@ -1969,18 +1971,18 @@ namespace Azure.Search.Documents.Models
         /// <summary> Configuration for Azure Blob Storage knowledge source. </summary>
         /// <param name="name"> The name of the knowledge source. </param>
         /// <param name="description"> Optional user-defined description. </param>
-        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="eTag"> The ETag of the knowledge source. </param>
+        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="azureBlobParameters"> The type of the knowledge source. </param>
         /// <returns> A new <see cref="Indexes.Models.AzureBlobKnowledgeSource"/> instance for mocking. </returns>
-        public static AzureBlobKnowledgeSource AzureBlobKnowledgeSource(string name = default, string description = default, SearchResourceEncryptionKey encryptionKey = default, string eTag = default, AzureBlobKnowledgeSourceParameters azureBlobParameters = default)
+        public static AzureBlobKnowledgeSource AzureBlobKnowledgeSource(string name = default, string description = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, AzureBlobKnowledgeSourceParameters azureBlobParameters = default)
         {
             return new AzureBlobKnowledgeSource(
                 name,
                 description,
                 KnowledgeSourceKind.AzureBlob,
-                encryptionKey,
                 eTag,
+                encryptionKey,
                 additionalBinaryDataProperties: null,
                 azureBlobParameters);
         }
@@ -2081,18 +2083,18 @@ namespace Azure.Search.Documents.Models
         /// <summary> Configuration for SharePoint knowledge source. </summary>
         /// <param name="name"> The name of the knowledge source. </param>
         /// <param name="description"> Optional user-defined description. </param>
-        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="eTag"> The ETag of the knowledge source. </param>
+        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="indexedSharePointParameters"> The parameters for the knowledge source. </param>
         /// <returns> A new <see cref="Indexes.Models.IndexedSharePointKnowledgeSource"/> instance for mocking. </returns>
-        public static IndexedSharePointKnowledgeSource IndexedSharePointKnowledgeSource(string name = default, string description = default, SearchResourceEncryptionKey encryptionKey = default, string eTag = default, IndexedSharePointKnowledgeSourceParameters indexedSharePointParameters = default)
+        public static IndexedSharePointKnowledgeSource IndexedSharePointKnowledgeSource(string name = default, string description = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, IndexedSharePointKnowledgeSourceParameters indexedSharePointParameters = default)
         {
             return new IndexedSharePointKnowledgeSource(
                 name,
                 description,
                 KnowledgeSourceKind.IndexedSharePoint,
-                encryptionKey,
                 eTag,
+                encryptionKey,
                 additionalBinaryDataProperties: null,
                 indexedSharePointParameters);
         }
@@ -2118,18 +2120,18 @@ namespace Azure.Search.Documents.Models
         /// <summary> Configuration for OneLake knowledge source. </summary>
         /// <param name="name"> The name of the knowledge source. </param>
         /// <param name="description"> Optional user-defined description. </param>
-        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="eTag"> The ETag of the knowledge source. </param>
+        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="indexedOneLakeParameters"> The parameters for the knowledge source. </param>
         /// <returns> A new <see cref="Indexes.Models.IndexedOneLakeKnowledgeSource"/> instance for mocking. </returns>
-        public static IndexedOneLakeKnowledgeSource IndexedOneLakeKnowledgeSource(string name = default, string description = default, SearchResourceEncryptionKey encryptionKey = default, string eTag = default, IndexedOneLakeKnowledgeSourceParameters indexedOneLakeParameters = default)
+        public static IndexedOneLakeKnowledgeSource IndexedOneLakeKnowledgeSource(string name = default, string description = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, IndexedOneLakeKnowledgeSourceParameters indexedOneLakeParameters = default)
         {
             return new IndexedOneLakeKnowledgeSource(
                 name,
                 description,
                 KnowledgeSourceKind.IndexedOneLake,
-                encryptionKey,
                 eTag,
+                encryptionKey,
                 additionalBinaryDataProperties: null,
                 indexedOneLakeParameters);
         }
@@ -2155,18 +2157,18 @@ namespace Azure.Search.Documents.Models
         /// <summary> Knowledge Source targeting web results. </summary>
         /// <param name="name"> The name of the knowledge source. </param>
         /// <param name="description"> Optional user-defined description. </param>
-        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="eTag"> The ETag of the knowledge source. </param>
+        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="webParameters"> The parameters for the web knowledge source. </param>
         /// <returns> A new <see cref="Indexes.Models.WebKnowledgeSource"/> instance for mocking. </returns>
-        public static WebKnowledgeSource WebKnowledgeSource(string name = default, string description = default, SearchResourceEncryptionKey encryptionKey = default, string eTag = default, WebKnowledgeSourceParameters webParameters = default)
+        public static WebKnowledgeSource WebKnowledgeSource(string name = default, string description = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, WebKnowledgeSourceParameters webParameters = default)
         {
             return new WebKnowledgeSource(
                 name,
                 description,
                 KnowledgeSourceKind.Web,
-                encryptionKey,
                 eTag,
+                encryptionKey,
                 additionalBinaryDataProperties: null,
                 webParameters);
         }
@@ -2203,18 +2205,18 @@ namespace Azure.Search.Documents.Models
         /// <summary> Configuration for remote SharePoint knowledge source. </summary>
         /// <param name="name"> The name of the knowledge source. </param>
         /// <param name="description"> Optional user-defined description. </param>
-        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="eTag"> The ETag of the knowledge source. </param>
+        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="remoteSharePointParameters"> The parameters for the remote SharePoint knowledge source. </param>
         /// <returns> A new <see cref="Indexes.Models.RemoteSharePointKnowledgeSource"/> instance for mocking. </returns>
-        public static RemoteSharePointKnowledgeSource RemoteSharePointKnowledgeSource(string name = default, string description = default, SearchResourceEncryptionKey encryptionKey = default, string eTag = default, RemoteSharePointKnowledgeSourceParameters remoteSharePointParameters = default)
+        public static RemoteSharePointKnowledgeSource RemoteSharePointKnowledgeSource(string name = default, string description = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, RemoteSharePointKnowledgeSourceParameters remoteSharePointParameters = default)
         {
             return new RemoteSharePointKnowledgeSource(
                 name,
                 description,
                 KnowledgeSourceKind.RemoteSharePoint,
-                encryptionKey,
                 eTag,
+                encryptionKey,
                 additionalBinaryDataProperties: null,
                 remoteSharePointParameters);
         }
@@ -2355,16 +2357,6 @@ namespace Azure.Search.Documents.Models
             return new ServiceIndexersRuntime(usedSeconds, remainingSeconds, beginningTime, endingTime, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Response from a request to retrieve stats summary of all indexes. If successful, it includes the stats of each index in the service. </summary>
-        /// <param name="indexesStatistics"> The Statistics summary of all indexes in the Search service. </param>
-        /// <returns> A new <see cref="Indexes.Models.ListIndexStatsSummary"/> instance for mocking. </returns>
-        public static ListIndexStatsSummary ListIndexStatsSummary(IEnumerable<IndexStatisticsSummary> indexesStatistics = default)
-        {
-            indexesStatistics ??= new ChangeTrackingList<IndexStatisticsSummary>();
-
-            return new ListIndexStatsSummary(indexesStatistics.ToList(), additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Statistics for a given index. Statistics are collected periodically and are not guaranteed to always be up-to-date. </summary>
         /// <param name="name"> The name of the index. </param>
         /// <param name="documentCount"> The number of documents in the index. </param>
@@ -2429,7 +2421,7 @@ namespace Azure.Search.Documents.Models
         /// <summary> The type of the keysOrIds. </summary>
         /// <param name="documentKeys"> document keys to be reset. </param>
         /// <param name="dataSourceDocumentIds"> datasource document identifiers to be reset. </param>
-        /// <returns> A new <see cref="Models.ResetDocumentOptions"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Indexes.Models.ResetDocumentOptions"/> instance for mocking. </returns>
         public static ResetDocumentOptions ResetDocumentOptions(IEnumerable<string> documentKeys = default, IEnumerable<string> dataSourceDocumentIds = default)
         {
             documentKeys ??= new ChangeTrackingList<string>();
@@ -2449,11 +2441,11 @@ namespace Azure.Search.Documents.Models
         /// <param name="fieldMappings"> Defines mappings between fields in the data source and corresponding target fields in the index. </param>
         /// <param name="outputFieldMappings"> Output field mappings are applied after enrichment and immediately before indexing. </param>
         /// <param name="isDisabled"> A value indicating whether the indexer is disabled. Default is false. </param>
+        /// <param name="eTag"> The ETag of the indexer. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your indexer definition (as well as indexer execution status) when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your indexer definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your indexer definition (and indexer execution status) will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="cache"> Adds caching to an enrichment pipeline to allow for incremental modification steps without having to rebuild the index every time. </param>
-        /// <param name="etag"> The ETag of the indexer. </param>
         /// <returns> A new <see cref="Indexes.Models.SearchIndexer"/> instance for mocking. </returns>
-        public static SearchIndexer SearchIndexer(string name = default, string description = default, string dataSourceName = default, string skillsetName = default, string targetIndexName = default, IndexingSchedule schedule = default, IndexingParameters parameters = default, IEnumerable<FieldMapping> fieldMappings = default, IEnumerable<FieldMapping> outputFieldMappings = default, bool? isDisabled = default, SearchResourceEncryptionKey encryptionKey = default, SearchIndexerCache cache = default, string etag = default)
+        public static SearchIndexer SearchIndexer(string name = default, string description = default, string dataSourceName = default, string skillsetName = default, string targetIndexName = default, IndexingSchedule schedule = default, IndexingParameters parameters = default, IEnumerable<FieldMapping> fieldMappings = default, IEnumerable<FieldMapping> outputFieldMappings = default, bool? isDisabled = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, SearchIndexerCache cache = default)
         {
             fieldMappings ??= new ChangeTrackingList<FieldMapping>();
             outputFieldMappings ??= new ChangeTrackingList<FieldMapping>();
@@ -2469,9 +2461,9 @@ namespace Azure.Search.Documents.Models
                 fieldMappings.ToList(),
                 outputFieldMappings.ToList(),
                 isDisabled,
+                eTag,
                 encryptionKey,
                 cache,
-                etag,
                 additionalBinaryDataProperties: null);
         }
 
@@ -2671,10 +2663,10 @@ namespace Azure.Search.Documents.Models
         /// <param name="cognitiveServicesAccount"> Details about the Azure AI service to be used when running skills. </param>
         /// <param name="knowledgeStore"> Definition of additional projections to Azure blob, table, or files, of enriched data. </param>
         /// <param name="indexProjection"> Definition of additional projections to secondary search index(es). </param>
+        /// <param name="eTag"> The ETag of the skillset. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your skillset definition when you want full assurance that no one, not even Microsoft, can decrypt your skillset definition. Once you have encrypted your skillset definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your skillset definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
-        /// <param name="etag"> The ETag of the skillset. </param>
         /// <returns> A new <see cref="Indexes.Models.SearchIndexerSkillset"/> instance for mocking. </returns>
-        public static SearchIndexerSkillset SearchIndexerSkillset(string name = default, string description = default, IEnumerable<SearchIndexerSkill> skills = default, CognitiveServicesAccount cognitiveServicesAccount = default, KnowledgeStore knowledgeStore = default, SearchIndexerIndexProjection indexProjection = default, SearchResourceEncryptionKey encryptionKey = default, string etag = default)
+        public static SearchIndexerSkillset SearchIndexerSkillset(string name = default, string description = default, IEnumerable<SearchIndexerSkill> skills = default, CognitiveServicesAccount cognitiveServicesAccount = default, KnowledgeStore knowledgeStore = default, SearchIndexerIndexProjection indexProjection = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default)
         {
             skills ??= new ChangeTrackingList<SearchIndexerSkill>();
 
@@ -2685,8 +2677,8 @@ namespace Azure.Search.Documents.Models
                 cognitiveServicesAccount,
                 knowledgeStore,
                 indexProjection,
+                eTag,
                 encryptionKey,
-                etag,
                 additionalBinaryDataProperties: null);
         }
 
@@ -3325,12 +3317,12 @@ namespace Azure.Search.Documents.Models
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
         /// <param name="scoringUri"> (Required for no authentication or key authentication) The scoring URI of the AML service to which the JSON payload will be sent. Only the https URI scheme is allowed. </param>
         /// <param name="authenticationKey"> (Required for key authentication) The key for the AML service. </param>
-        /// <param name="rawResourceId"> (Required for token authentication). The Azure Resource Manager resource ID of the AML service. It should be in the format subscriptions/{guid}/resourceGroups/{resource-group-name}/Microsoft.MachineLearningServices/workspaces/{workspace-name}/services/{service_name}. </param>
+        /// <param name="resourceId"> (Required for token authentication). The Azure Resource Manager resource ID of the AML service. It should be in the format subscriptions/{guid}/resourceGroups/{resource-group-name}/Microsoft.MachineLearningServices/workspaces/{workspace-name}/services/{service_name}. </param>
         /// <param name="timeout"> (Optional) When specified, indicates the timeout for the http client making the API call. </param>
-        /// <param name="rawLocation"> (Optional for token authentication). The region the AML service is deployed in. </param>
+        /// <param name="location"> (Optional for token authentication). The region the AML service is deployed in. </param>
         /// <param name="degreeOfParallelism"> (Optional) When specified, indicates the number of calls the indexer will make in parallel to the endpoint you have provided. You can decrease this value if your endpoint is failing under too high of a request load, or raise it if your endpoint is able to accept more requests and you would like an increase in the performance of the indexer. If not set, a default value of 5 is used. The degreeOfParallelism can be set to a maximum of 10 and a minimum of 1. </param>
         /// <returns> A new <see cref="Indexes.Models.AzureMachineLearningSkill"/> instance for mocking. </returns>
-        public static AzureMachineLearningSkill AzureMachineLearningSkill(string name = default, string description = default, string context = default, IEnumerable<InputFieldMappingEntry> inputs = default, IEnumerable<OutputFieldMappingEntry> outputs = default, Uri scoringUri = default, string authenticationKey = default, string rawResourceId = default, TimeSpan? timeout = default, string rawLocation = default, int? degreeOfParallelism = default)
+        public static AzureMachineLearningSkill AzureMachineLearningSkill(string name = default, string description = default, string context = default, IEnumerable<InputFieldMappingEntry> inputs = default, IEnumerable<OutputFieldMappingEntry> outputs = default, Uri scoringUri = default, string authenticationKey = default, ResourceIdentifier resourceId = default, TimeSpan? timeout = default, AzureLocation? location = default, int? degreeOfParallelism = default)
         {
             inputs ??= new ChangeTrackingList<InputFieldMappingEntry>();
             outputs ??= new ChangeTrackingList<OutputFieldMappingEntry>();
@@ -3345,9 +3337,9 @@ namespace Azure.Search.Documents.Models
                 additionalBinaryDataProperties: null,
                 scoringUri,
                 authenticationKey,
-                rawResourceId,
+                resourceId,
                 timeout,
-                rawLocation,
+                location,
                 degreeOfParallelism);
         }
 
@@ -3618,23 +3610,23 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Description for what data to store in Azure Tables. </summary>
         /// <param name="referenceKeyName"> Name of reference key to different projection. </param>
-        /// <param name="generatedKeyName"> Name of generated key to store projection under. </param>
         /// <param name="source"> Source data to project. </param>
         /// <param name="sourceContext"> Source context for complex projections. </param>
         /// <param name="inputs"> Nested inputs for complex projections. </param>
+        /// <param name="generatedKeyName"> Name of generated key to store projection under. </param>
         /// <param name="tableName"> Name of the Azure table to store projected data in. </param>
         /// <returns> A new <see cref="Indexes.Models.KnowledgeStoreTableProjectionSelector"/> instance for mocking. </returns>
-        public static KnowledgeStoreTableProjectionSelector KnowledgeStoreTableProjectionSelector(string referenceKeyName = default, string generatedKeyName = default, string source = default, string sourceContext = default, IEnumerable<InputFieldMappingEntry> inputs = default, string tableName = default)
+        public static KnowledgeStoreTableProjectionSelector KnowledgeStoreTableProjectionSelector(string referenceKeyName = default, string source = default, string sourceContext = default, IEnumerable<InputFieldMappingEntry> inputs = default, string generatedKeyName = default, string tableName = default)
         {
             inputs ??= new ChangeTrackingList<InputFieldMappingEntry>();
 
             return new KnowledgeStoreTableProjectionSelector(
                 referenceKeyName,
-                generatedKeyName,
                 source,
                 sourceContext,
                 inputs.ToList(),
                 additionalBinaryDataProperties: null,
+                generatedKeyName,
                 tableName);
         }
 
@@ -3772,7 +3764,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> The type of the skill names. </summary>
         /// <param name="skillNameList"> the names of skills to be reset. </param>
-        /// <returns> A new <see cref="Models.ResetSkillsOptions"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Indexes.Models.ResetSkillsOptions"/> instance for mocking. </returns>
         public static ResetSkillsOptions ResetSkillsOptions(IEnumerable<string> skillNameList = default)
         {
             skillNameList ??= new ChangeTrackingList<string>();
@@ -4309,6 +4301,44 @@ namespace Azure.Search.Documents.Models
                 priority,
                 color,
                 isEncrypted,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SearchModelFactory.SearchIndexer(string,string,string,string,string,Indexes.Models.IndexingSchedule,Indexes.Models.IndexingParameters,IList{Indexes.Models.FieldMapping},IList{Indexes.Models.FieldMapping},bool?,string,SearchResourceEncryptionKey,IDictionary{string,BinaryData})"/>. </summary>
+        /// <param name="name"> The name of the indexer. </param>
+        /// <param name="description"> The description of the indexer. </param>
+        /// <param name="dataSourceName"> The name of the datasource from which this indexer reads data. </param>
+        /// <param name="skillsetName"> The name of the skillset executing with this indexer. </param>
+        /// <param name="targetIndexName"> The name of the index to which this indexer writes data. </param>
+        /// <param name="schedule"> The schedule for this indexer. </param>
+        /// <param name="parameters"> Parameters for indexer execution. </param>
+        /// <param name="fieldMappings"> Defines mappings between fields in the data source and corresponding target fields in the index. </param>
+        /// <param name="outputFieldMappings"> Output field mappings are applied after enrichment and immediately before indexing. </param>
+        /// <param name="isDisabled"> A value indicating whether the indexer is disabled. Default is false. </param>
+        /// <param name="etag"> The ETag of the indexer. </param>
+        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your indexer definition (as well as indexer execution status) when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your indexer definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your indexer definition (and indexer execution status) will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SearchIndexer SearchIndexer(string name, string description, string dataSourceName, string skillsetName, string targetIndexName, IndexingSchedule schedule, IndexingParameters parameters, IList<FieldMapping> fieldMappings, IList<FieldMapping> outputFieldMappings, bool? isDisabled, string etag, SearchResourceEncryptionKey encryptionKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            fieldMappings ??= new ChangeTrackingList<FieldMapping>();
+            outputFieldMappings ??= new ChangeTrackingList<FieldMapping>();
+            serializedAdditionalRawData ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new SearchIndexer(
+                name,
+                description,
+                dataSourceName,
+                skillsetName,
+                targetIndexName,
+                schedule,
+                parameters,
+                fieldMappings.ToList(),
+                outputFieldMappings.ToList(),
+                isDisabled,
+                default,
+                encryptionKey,
+                default,
                 additionalBinaryDataProperties: null);
         }
     }

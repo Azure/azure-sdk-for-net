@@ -3,18 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.TypeSpec.Generator.Customizations;
-
-#pragma warning disable SA1402 // File may only contain a single type
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    [CodeGenType("EdgeNGramTokenFilterV2")]
-    internal partial class InternalEdgeNGramTokenFilterV2 { }
-
-    [CodeGenType("EdgeNGramTokenFilter")]
-    internal partial class InternalEdgeNGramTokenFilter { }
-
     /// <summary> Generates n-grams of the given size(s) starting from the front or the back of an input token. This token filter is implemented using Apache Lucene. </summary>
     public partial class EdgeNGramTokenFilter : TokenFilter
     {

@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes.Models;
-using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.Indexes
 {

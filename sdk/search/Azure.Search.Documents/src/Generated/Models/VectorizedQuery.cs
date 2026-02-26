@@ -36,5 +36,8 @@ namespace Azure.Search.Documents.Models
         {
             Vector = vector;
         }
+
+        /// <summary> The vector representation of a search query. </summary>
+        public ReadOnlyMemory<float> Vector { get; }
     }
 }

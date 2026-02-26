@@ -45,6 +45,9 @@ namespace Azure.Search.Documents.Indexes.Models
             OnlyLongestMatch = onlyLongestMatch;
         }
 
+        /// <summary> The list of words to match against. </summary>
+        public IList<string> WordList { get; }
+
         /// <summary> The minimum word size. Only words longer than this get processed. Default is 5. Maximum is 300. </summary>
         public int? MinWordSize { get; set; }
 

@@ -15,6 +15,11 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Base type for similarity algorithms. Similarity algorithms are used to calculate scores that tie queries to documents. The higher the score, the more relevant the document is to that specific query. Those scores are used to rank the search results. </summary>
     public partial class SimilarityAlgorithm : IJsonModel<SimilarityAlgorithm>
     {
+        /// <summary> Initializes a new instance of <see cref="SimilarityAlgorithm"/> for deserialization. </summary>
+        internal SimilarityAlgorithm()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SimilarityAlgorithm PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

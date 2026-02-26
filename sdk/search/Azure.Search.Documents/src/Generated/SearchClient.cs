@@ -928,7 +928,7 @@ namespace Azure.Search.Documents
         /// <param name="batch"> The batch of index actions. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<IndexDocumentsResult> Index(InternalIndexBatch batch, CancellationToken cancellationToken = default)
+        internal virtual Response<IndexDocumentsResult> Index(IndexBatch batch, CancellationToken cancellationToken = default)
         {
             Response result = Index(batch, cancellationToken.ToRequestContext());
             return Response.FromValue((IndexDocumentsResult)result, result);
@@ -938,7 +938,7 @@ namespace Azure.Search.Documents
         /// <param name="batch"> The batch of index actions. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<IndexDocumentsResult>> IndexAsync(InternalIndexBatch batch, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<IndexDocumentsResult>> IndexAsync(IndexBatch batch, CancellationToken cancellationToken = default)
         {
             Response result = await IndexAsync(batch, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((IndexDocumentsResult)result, result);

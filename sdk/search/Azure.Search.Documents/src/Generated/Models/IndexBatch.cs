@@ -11,22 +11,22 @@ using System.Linq;
 
 namespace Azure.Search.Documents.Models
 {
-    internal partial class InternalIndexBatch
+    internal partial class IndexBatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalIndexBatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IndexBatch"/>. </summary>
         /// <param name="actions"> The actions in the batch. </param>
-        public InternalIndexBatch(IEnumerable<IndexAction> actions)
+        public IndexBatch(IEnumerable<IndexAction> actions)
         {
             Actions = actions.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalIndexBatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IndexBatch"/>. </summary>
         /// <param name="actions"> The actions in the batch. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalIndexBatch(IList<IndexAction> actions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IndexBatch(IList<IndexAction> actions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Actions = actions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -14,8 +14,7 @@ using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Response from a request to retrieve stats summary of all indexes. If successful, it includes the stats of each index in the service. </summary>
-    public partial class ListIndexStatsSummary : IJsonModel<ListIndexStatsSummary>
+    internal partial class ListIndexStatsSummary : IJsonModel<ListIndexStatsSummary>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

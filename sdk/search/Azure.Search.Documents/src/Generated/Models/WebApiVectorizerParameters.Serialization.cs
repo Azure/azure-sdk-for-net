@@ -215,7 +215,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        authResourceId = null;
                         continue;
                     }
                     authResourceId = new ResourceIdentifier(prop.Value.GetString());

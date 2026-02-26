@@ -6,7 +6,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    [CodeGenType("SearchResourceEncryptionKey")]
     [CodeGenSuppress(nameof(SearchResourceEncryptionKey), typeof(string), typeof(string))]
     public partial class SearchResourceEncryptionKey
     {

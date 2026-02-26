@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using TypeSpec = Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -16,31 +15,6 @@ namespace Azure.Search.Documents.Indexes.Models
     /// </summary>
     public partial class AzureMachineLearningSkill
     {
-        [TypeSpec.CodeGenMember("ResourceId")]
-        internal string RawResourceId
-        {
-            get => ResourceId?.ToString();
-            set => ResourceId = (value == null) ? null : new ResourceIdentifier(value);
-        }
-
-        /// <summary>The <see href="https://docs.microsoft.com/dotnet/api/azure.core.resourceidentifier">Azure Resource Manager resource ID</see> of the Azure Machine Learning service.
-        /// This is required for token-based authentication.
-        /// <para>It should be in the format "subscriptions/{guid}/resourceGroups/{resource-group-name}/Microsoft.MachineLearningServices/workspaces/{workspace-name}/services/{service_name}".</para>
-        /// </summary>
-        public ResourceIdentifier ResourceId { get; private set; }
-
-        [TypeSpec.CodeGenMember("Region")]
-        internal string RawLocation
-        {
-            get => Location?.ToString();
-            set => Location = (value == null) ? default : new AzureLocation(value);
-        }
-
-        /// <summary> The <see href="https://docs.microsoft.com/dotnet/api/azure.core.azurelocation">region</see> the Azure Machine Learning service is deployed in.
-        /// This is optional for token-based authentication.
-        /// </summary>
-        public AzureLocation? Location { get; private set; }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureMachineLearningSkill"/> class.
         /// </summary>

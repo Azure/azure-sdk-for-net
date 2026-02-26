@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The type of the skill names. </summary>
     public partial class ResetSkillsOptions

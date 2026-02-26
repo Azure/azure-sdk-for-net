@@ -211,7 +211,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        entitiesDefinitionUri = null;
                         continue;
                     }
                     entitiesDefinitionUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);

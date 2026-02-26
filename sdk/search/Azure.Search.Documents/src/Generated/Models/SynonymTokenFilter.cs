@@ -41,6 +41,9 @@ namespace Azure.Search.Documents.Indexes.Models
             Expand = expand;
         }
 
+        /// <summary> A list of synonyms in following one of two formats: 1. incredible, unbelievable, fabulous =&gt; amazing - all terms on the left side of =&gt; symbol will be replaced with all terms on its right side; 2. incredible, unbelievable, fabulous, amazing - comma separated list of equivalent words. Set the expand option to change how this list is interpreted. </summary>
+        public IList<string> Synonyms { get; }
+
         /// <summary> A value indicating whether to case-fold input for matching. Default is false. </summary>
         public bool? IgnoreCase { get; set; }
 

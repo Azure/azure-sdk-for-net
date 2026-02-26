@@ -16,16 +16,11 @@ using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
 using Azure.Search.Documents.Utilities;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 #pragma warning disable SA1402 // File may only contain a single type
 
 namespace Azure.Search.Documents.Models
 {
-    // Hide the untyped SearchDocumentsResult by making the generated type internal
-    [CodeGenType("SearchDocumentsResult")]
-    internal partial class SearchDocumentsResult { }
-
     /// <summary>
     /// Response containing search results from an index.
     /// </summary>

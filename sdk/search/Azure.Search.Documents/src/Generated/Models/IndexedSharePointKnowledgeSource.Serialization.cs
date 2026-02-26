@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -112,8 +113,8 @@ namespace Azure.Search.Documents.Indexes.Models
             string name = default;
             string description = default;
             KnowledgeSourceKind kind = default;
+            ETag? eTag = default;
             SearchResourceEncryptionKey encryptionKey = default;
-            string eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IndexedSharePointKnowledgeSourceParameters indexedSharePointParameters = default;
             foreach (var prop in element.EnumerateObject())
@@ -133,6 +134,15 @@ namespace Azure.Search.Documents.Indexes.Models
                     kind = new KnowledgeSourceKind(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("@odata.etag"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("encryptionKey"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -141,11 +151,6 @@ namespace Azure.Search.Documents.Indexes.Models
                         continue;
                     }
                     encryptionKey = SearchResourceEncryptionKey.DeserializeSearchResourceEncryptionKey(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("@odata.etag"u8))
-                {
-                    eTag = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("indexedSharePointParameters"u8))
@@ -162,8 +167,8 @@ namespace Azure.Search.Documents.Indexes.Models
                 name,
                 description,
                 kind,
-                encryptionKey,
                 eTag,
+                encryptionKey,
                 additionalBinaryDataProperties,
                 indexedSharePointParameters);
         }

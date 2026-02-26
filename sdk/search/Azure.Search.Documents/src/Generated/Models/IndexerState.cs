@@ -72,5 +72,8 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> The list of document keys that have been reset. The document key is the document's unique identifier for the data in the search index. The indexer will prioritize selectively re-ingesting these keys. </summary>
         public IReadOnlyList<string> ResetDocumentKeys { get; }
+
+        /// <summary> The list of datasource document ids that have been reset. The datasource document id is the unique identifier for the data in the datasource. The indexer will prioritize selectively re-ingesting these ids. </summary>
+        public IReadOnlyList<string> ResetDataSourceDocumentIds { get; }
     }
 }

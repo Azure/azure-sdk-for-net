@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The type of the keysOrIds. </summary>
     public partial class ResetDocumentOptions
@@ -37,5 +37,8 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> document keys to be reset. </summary>
         public IList<string> DocumentKeys { get; }
+
+        /// <summary> datasource document identifiers to be reset. </summary>
+        public IList<string> DataSourceDocumentIds { get; }
     }
 }

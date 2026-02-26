@@ -15,6 +15,11 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Base type for describing any Azure AI service resource attached to a skillset. </summary>
     public partial class CognitiveServicesAccount : IJsonModel<CognitiveServicesAccount>
     {
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccount"/> for deserialization. </summary>
+        internal CognitiveServicesAccount()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual CognitiveServicesAccount PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

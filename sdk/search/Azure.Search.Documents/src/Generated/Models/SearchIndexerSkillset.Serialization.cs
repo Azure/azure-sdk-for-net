@@ -129,15 +129,15 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("indexProjections"u8);
                 writer.WriteObjectValue(IndexProjection, options);
             }
+            if (Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("@odata.etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
             if (Optional.IsDefined(EncryptionKey))
             {
                 writer.WritePropertyName("encryptionKey"u8);
                 writer.WriteObjectValue(EncryptionKey, options);
-            }
-            if (Optional.IsDefined(_etag))
-            {
-                writer.WritePropertyName("@odata.etag"u8);
-                writer.WriteStringValue(_etag);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -187,8 +187,8 @@ namespace Azure.Search.Documents.Indexes.Models
             CognitiveServicesAccount cognitiveServicesAccount = default;
             KnowledgeStore knowledgeStore = default;
             SearchIndexerIndexProjection indexProjection = default;
+            ETag? eTag = default;
             SearchResourceEncryptionKey encryptionKey = default;
-            string etag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -239,6 +239,15 @@ namespace Azure.Search.Documents.Indexes.Models
                     indexProjection = SearchIndexerIndexProjection.DeserializeSearchIndexerIndexProjection(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("@odata.etag"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("encryptionKey"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -247,11 +256,6 @@ namespace Azure.Search.Documents.Indexes.Models
                         continue;
                     }
                     encryptionKey = SearchResourceEncryptionKey.DeserializeSearchResourceEncryptionKey(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("@odata.etag"u8))
-                {
-                    etag = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -266,8 +270,8 @@ namespace Azure.Search.Documents.Indexes.Models
                 cognitiveServicesAccount,
                 knowledgeStore,
                 indexProjection,
+                eTag,
                 encryptionKey,
-                etag,
                 additionalBinaryDataProperties);
         }
     }

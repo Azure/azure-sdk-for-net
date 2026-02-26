@@ -36,5 +36,8 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             Rules = rules;
         }
+
+        /// <summary> A list of stemming rules in the following format: "word =&gt; stem", for example: "ran =&gt; run". </summary>
+        public IList<string> Rules { get; }
     }
 }

@@ -11,8 +11,7 @@ using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Response from a request to retrieve stats summary of all indexes. If successful, it includes the stats of each index in the service. </summary>
-    public partial class ListIndexStatsSummary
+    internal partial class ListIndexStatsSummary
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

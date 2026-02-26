@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -90,20 +91,20 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(AuthenticationKey);
             }
-            if (Optional.IsDefined(RawResourceId))
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
-                writer.WriteStringValue(RawResourceId);
+                writer.WriteStringValue(ResourceId);
             }
             if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");
             }
-            if (Optional.IsDefined(RawLocation))
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("region"u8);
-                writer.WriteStringValue(RawLocation);
+                writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsDefined(DegreeOfParallelism))
             {
@@ -146,9 +147,9 @@ namespace Azure.Search.Documents.Indexes.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             Uri scoringUri = default;
             string authenticationKey = default;
-            string rawResourceId = default;
+            ResourceIdentifier resourceId = default;
             TimeSpan? timeout = default;
-            string rawLocation = default;
+            AzureLocation? location = default;
             int? degreeOfParallelism = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -216,10 +217,9 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        rawResourceId = null;
                         continue;
                     }
-                    rawResourceId = prop.Value.GetString();
+                    resourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("timeout"u8))
@@ -236,10 +236,9 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        rawLocation = null;
                         continue;
                     }
-                    rawLocation = prop.Value.GetString();
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("degreeOfParallelism"u8))
@@ -267,9 +266,9 @@ namespace Azure.Search.Documents.Indexes.Models
                 additionalBinaryDataProperties,
                 scoringUri,
                 authenticationKey,
-                rawResourceId,
+                resourceId,
                 timeout,
-                rawLocation,
+                location,
                 degreeOfParallelism);
         }
     }

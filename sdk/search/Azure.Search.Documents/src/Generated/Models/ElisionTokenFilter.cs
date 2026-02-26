@@ -33,5 +33,8 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             Articles = articles;
         }
+
+        /// <summary> The set of articles to remove. </summary>
+        public IList<string> Articles { get; }
     }
 }

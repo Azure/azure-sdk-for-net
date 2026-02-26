@@ -12,16 +12,11 @@ using System.Text.Json.Serialization.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Serialization;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 #pragma warning disable SA1402 // File may only contain a single type
 
 namespace Azure.Search.Documents.Models
 {
-    // Hide the untyped SearchResult by making the generated type internal
-    [CodeGenType("SearchResult")]
-    internal partial class SearchResult { }
-
     /// <summary>
     /// Contains a document found by a search query, plus associated metadata.
     /// </summary>

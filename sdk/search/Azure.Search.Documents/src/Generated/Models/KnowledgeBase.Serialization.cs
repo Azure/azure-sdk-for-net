@@ -130,6 +130,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("outputMode"u8);
                 writer.WriteStringValue(OutputMode.Value.ToString());
             }
+            if (Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("@odata.etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
             if (Optional.IsDefined(EncryptionKey))
             {
                 writer.WritePropertyName("encryptionKey"u8);
@@ -149,11 +154,6 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 writer.WritePropertyName("answerInstructions"u8);
                 writer.WriteStringValue(AnswerInstructions);
-            }
-            if (Optional.IsDefined(_etag))
-            {
-                writer.WritePropertyName("@odata.etag"u8);
-                writer.WriteStringValue(_etag);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -202,11 +202,11 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<KnowledgeBaseModel> models = default;
             KnowledgeRetrievalReasoningEffort retrievalReasoningEffort = default;
             KnowledgeRetrievalOutputMode? outputMode = default;
+            ETag? eTag = default;
             SearchResourceEncryptionKey encryptionKey = default;
             string description = default;
             string retrievalInstructions = default;
             string answerInstructions = default;
-            string etag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -257,6 +257,15 @@ namespace Azure.Search.Documents.Indexes.Models
                     outputMode = new KnowledgeRetrievalOutputMode(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("@odata.etag"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("encryptionKey"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -282,11 +291,6 @@ namespace Azure.Search.Documents.Indexes.Models
                     answerInstructions = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("@odata.etag"u8))
-                {
-                    etag = prop.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -298,11 +302,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 models ?? new ChangeTrackingList<KnowledgeBaseModel>(),
                 retrievalReasoningEffort,
                 outputMode,
+                eTag,
                 encryptionKey,
                 description,
                 retrievalInstructions,
                 answerInstructions,
-                etag,
                 additionalBinaryDataProperties);
         }
     }

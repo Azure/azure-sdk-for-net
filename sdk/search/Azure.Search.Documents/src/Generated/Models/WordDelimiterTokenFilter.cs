@@ -78,5 +78,8 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> A value indicating whether to remove trailing "'s" for each subword. Default is true. </summary>
         public bool? StemEnglishPossessive { get; set; }
+
+        /// <summary> A list of tokens to protect from being delimited. </summary>
+        public IList<string> ProtectedWords { get; }
     }
 }

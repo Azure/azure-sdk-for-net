@@ -41,6 +41,9 @@ namespace Azure.Search.Documents.Indexes.Models
             UseQueryMode = useQueryMode;
         }
 
+        /// <summary> The set of common words. </summary>
+        public IList<string> CommonWords { get; }
+
         /// <summary> A value indicating whether common words matching will be case insensitive. Default is false. </summary>
         public bool? IgnoreCase { get; set; }
 

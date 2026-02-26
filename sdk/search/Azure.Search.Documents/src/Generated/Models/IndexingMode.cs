@@ -16,9 +16,9 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         private readonly string _value;
         /// <summary> The indexer is indexing all documents in the datasource. </summary>
-        private const string IndexingAllDocsValue = "indexingAllDocs";
+        private const string AllDocumentsValue = "indexingAllDocs";
         /// <summary> The indexer is indexing selective, reset documents in the datasource. The documents being indexed are defined on indexer status. </summary>
-        private const string IndexingResetDocsValue = "indexingResetDocs";
+        private const string ResetDocumentsValue = "indexingResetDocs";
         /// <summary> The indexer is resyncing and indexing selective option(s) from the datasource. </summary>
         private const string IndexingResyncValue = "indexingResync";
 
@@ -31,6 +31,12 @@ namespace Azure.Search.Documents.Indexes.Models
 
             _value = value;
         }
+
+        /// <summary> The indexer is indexing all documents in the datasource. </summary>
+        public static IndexingMode AllDocuments { get; } = new IndexingMode(AllDocumentsValue);
+
+        /// <summary> The indexer is indexing selective, reset documents in the datasource. The documents being indexed are defined on indexer status. </summary>
+        public static IndexingMode ResetDocuments { get; } = new IndexingMode(ResetDocumentsValue);
 
         /// <summary> The indexer is resyncing and indexing selective option(s) from the datasource. </summary>
         public static IndexingMode IndexingResync { get; } = new IndexingMode(IndexingResyncValue);

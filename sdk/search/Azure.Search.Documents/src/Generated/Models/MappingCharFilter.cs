@@ -36,5 +36,8 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             Mappings = mappings;
         }
+
+        /// <summary> A list of mappings of the following format: "a=&gt;b" (all occurrences of the character "a" will be replaced with character "b"). </summary>
+        public IList<string> Mappings { get; }
     }
 }

@@ -680,13 +680,13 @@ namespace Azure.Search.Documents.Models
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your indexer definition (as well as indexer execution status) when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your indexer definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your indexer definition (and indexer execution status) will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SearchIndexer SearchIndexer(string name = null, string description = null, string dataSourceName = null, string skillsetName = null, string targetIndexName = null, IndexingSchedule schedule = null, IndexingParameters parameters = null, IList<FieldMapping> fieldMappings = null, IList<FieldMapping> outputFieldMappings = null, bool? isDisabled = null, string etag = null, SearchResourceEncryptionKey encryptionKey = null, IDictionary<string, BinaryData> additionalBinaryDataProperties = null)
+        public static SearchIndexer SearchIndexer(string name = null, string description = null, string dataSourceName = null, string skillsetName = null, string targetIndexName = null, IndexingSchedule schedule = null, IndexingParameters parameters = null, IList<FieldMapping> fieldMappings = null, IList<FieldMapping> outputFieldMappings = null, bool? isDisabled = null, ETag? etag = null, SearchResourceEncryptionKey encryptionKey = null, IDictionary<string, BinaryData> additionalBinaryDataProperties = null)
         {
             fieldMappings ??= new List<FieldMapping>();
             outputFieldMappings ??= new List<FieldMapping>();
             additionalBinaryDataProperties ??= new Dictionary<string, BinaryData>();
 
-            return new SearchIndexer(name, description, dataSourceName, skillsetName, targetIndexName, schedule, parameters, fieldMappings, outputFieldMappings, isDisabled, encryptionKey, cache: null, etag, additionalBinaryDataProperties);
+            return new SearchIndexer(name, description, dataSourceName, skillsetName, targetIndexName, schedule, parameters, fieldMappings, outputFieldMappings, isDisabled, etag, encryptionKey, cache: null, additionalBinaryDataProperties);
         }
 
         /// <summary> Initializes a new instance of SearchIndexer. </summary>
@@ -704,13 +704,13 @@ namespace Azure.Search.Documents.Models
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your indexer definition (as well as indexer execution status) when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your indexer definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your indexer definition (and indexer execution status) will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="cache"> Adds caching to an enrichment pipeline to allow for incremental modification steps without having to rebuild the index every time. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        public static SearchIndexer SearchIndexer(string name = null, string description = null, string dataSourceName = null, string skillsetName = null, string targetIndexName = null, IndexingSchedule schedule = null, IndexingParameters parameters = null, IList<FieldMapping> fieldMappings = null, IList<FieldMapping> outputFieldMappings = null, bool? isDisabled = null, string etag = null, SearchResourceEncryptionKey encryptionKey = null, SearchIndexerCache cache = null, IDictionary<string, BinaryData> additionalBinaryDataProperties = null)
+        public static SearchIndexer SearchIndexer(string name = null, string description = null, string dataSourceName = null, string skillsetName = null, string targetIndexName = null, IndexingSchedule schedule = null, IndexingParameters parameters = null, IList<FieldMapping> fieldMappings = null, IList<FieldMapping> outputFieldMappings = null, bool? isDisabled = null, ETag? etag = null, SearchResourceEncryptionKey encryptionKey = null, SearchIndexerCache cache = null, IDictionary<string, BinaryData> additionalBinaryDataProperties = null)
         {
             fieldMappings ??= new List<FieldMapping>();
             outputFieldMappings ??= new List<FieldMapping>();
             additionalBinaryDataProperties ??= new Dictionary<string, BinaryData>();
 
-            return new SearchIndexer(name, description, dataSourceName, skillsetName, targetIndexName, schedule, parameters, fieldMappings, outputFieldMappings, isDisabled, encryptionKey, cache, etag, additionalBinaryDataProperties);
+            return new SearchIndexer(name, description, dataSourceName, skillsetName, targetIndexName, schedule, parameters, fieldMappings, outputFieldMappings, isDisabled, etag, encryptionKey, cache, additionalBinaryDataProperties);
         }
 
         /// <summary> Initializes a new instance of SynonymMap. </summary>
@@ -748,11 +748,11 @@ namespace Azure.Search.Documents.Models
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your agent definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your agent definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your agent definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="azureBlobParameters"> The type of the knowledge source. </param>
-        public static KnowledgeSource AzureBlobKnowledgeSource(string name = null, string description = null, string kind = null, string eTag = null, SearchResourceEncryptionKey encryptionKey = null, IDictionary<string, BinaryData> additionalBinaryDataProperties = null, AzureBlobKnowledgeSourceParameters azureBlobParameters = null)
+        public static KnowledgeSource AzureBlobKnowledgeSource(string name = null, string description = null, string kind = null, ETag? eTag = null, SearchResourceEncryptionKey encryptionKey = null, IDictionary<string, BinaryData> additionalBinaryDataProperties = null, AzureBlobKnowledgeSourceParameters azureBlobParameters = null)
         {
             additionalBinaryDataProperties ??= new Dictionary<string, BinaryData>();
 
-            return new AzureBlobKnowledgeSource(name, description, kind, encryptionKey, eTag, additionalBinaryDataProperties, azureBlobParameters);
+            return new AzureBlobKnowledgeSource(name, description, kind, eTag, encryptionKey, additionalBinaryDataProperties, azureBlobParameters);
         }
 
         /// <summary> Initializes a new instance of SearchIndexKnowledgeSource. </summary>
@@ -763,11 +763,11 @@ namespace Azure.Search.Documents.Models
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your agent definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your agent definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your agent definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="searchIndexParameters"> The parameters for the knowledge source. </param>
-        public static KnowledgeSource SearchIndexKnowledgeSource(string name = null, string description = null, string kind = null, string eTag = null, SearchResourceEncryptionKey encryptionKey = null, IDictionary<string, BinaryData> additionalBinaryDataProperties = null, SearchIndexKnowledgeSourceParameters searchIndexParameters = null)
+        public static KnowledgeSource SearchIndexKnowledgeSource(string name = null, string description = null, string kind = null, ETag? eTag = null, SearchResourceEncryptionKey encryptionKey = null, IDictionary<string, BinaryData> additionalBinaryDataProperties = null, SearchIndexKnowledgeSourceParameters searchIndexParameters = null)
         {
             additionalBinaryDataProperties ??= new Dictionary<string, BinaryData>();
 
-            return new SearchIndexKnowledgeSource(name, description, kind, encryptionKey, eTag, additionalBinaryDataProperties, searchIndexParameters);
+            return new SearchIndexKnowledgeSource(name, description, kind, eTag, encryptionKey, additionalBinaryDataProperties, searchIndexParameters);
         }
 
         /// <summary> Initializes a new instance of KnowledgeBase. </summary>
@@ -789,7 +789,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="retrievalInstructions"> Instructions considered by the knowledge knowledge base when developing query plan. </param>
         /// <param name="answerInstructions"> Instructions considered by the knowledge knowledge base when generating answers. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        public static KnowledgeBase KnowledgeBase(string name = null, IEnumerable<KnowledgeSourceReference> knowledgeSources = null, IEnumerable<KnowledgeBaseModel> models = null, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort = null, KnowledgeRetrievalOutputMode? outputMode = null, string eTag = null, SearchResourceEncryptionKey encryptionKey = null, string description = null, string retrievalInstructions = null, string answerInstructions = null, IDictionary<string, BinaryData> additionalBinaryDataProperties = null)
+        public static KnowledgeBase KnowledgeBase(string name = null, IEnumerable<KnowledgeSourceReference> knowledgeSources = null, IEnumerable<KnowledgeBaseModel> models = null, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort = null, KnowledgeRetrievalOutputMode? outputMode = null, ETag? eTag = null, SearchResourceEncryptionKey encryptionKey = null, string description = null, string retrievalInstructions = null, string answerInstructions = null, IDictionary<string, BinaryData> additionalBinaryDataProperties = null)
         {
             knowledgeSources ??= new List<KnowledgeSourceReference>();
             models ??= new List<KnowledgeBaseModel>();
@@ -801,11 +801,11 @@ namespace Azure.Search.Documents.Models
                 models?.ToList(),
                 retrievalReasoningEffort,
                 outputMode,
+                eTag,
                 encryptionKey,
                 description,
                 retrievalInstructions,
                 answerInstructions,
-                eTag,
                 additionalBinaryDataProperties);
         }
 

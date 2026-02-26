@@ -39,6 +39,9 @@ namespace Azure.Search.Documents.Indexes.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The list of origins from which JavaScript code will be granted access to your index. Can contain a list of hosts of the form {protocol}://{fully-qualified-domain-name}[:{port#}], or a single '*' to allow all origins (not recommended). </summary>
+        public IList<string> AllowedOrigins { get; }
+
         /// <summary> The duration for which browsers should cache CORS preflight responses. Defaults to 5 minutes. </summary>
         public long? MaxAgeInSeconds { get; set; }
     }

@@ -15,10 +15,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Models
 {
-    // Hide the untyped SuggestDocumentsResult by making the generated type internal
-    [CodeGenType("SuggestDocumentsResult")]
-    internal partial class SuggestDocumentsResult { }
-
     /// <summary>
     /// Response containing suggestion query results from an index.
     /// </summary>

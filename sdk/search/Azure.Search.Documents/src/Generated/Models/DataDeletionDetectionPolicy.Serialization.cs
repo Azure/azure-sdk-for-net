@@ -15,6 +15,11 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Base type for data deletion detection policies. </summary>
     public partial class DataDeletionDetectionPolicy : IJsonModel<DataDeletionDetectionPolicy>
     {
+        /// <summary> Initializes a new instance of <see cref="DataDeletionDetectionPolicy"/> for deserialization. </summary>
+        internal DataDeletionDetectionPolicy()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DataDeletionDetectionPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

@@ -189,7 +189,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        parsingMode = null;
                         continue;
                     }
                     parsingMode = new BlobIndexerParsingMode(prop.Value.GetString());
@@ -199,7 +198,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        dataToExtract = null;
                         continue;
                     }
                     dataToExtract = new BlobIndexerDataToExtract(prop.Value.GetString());

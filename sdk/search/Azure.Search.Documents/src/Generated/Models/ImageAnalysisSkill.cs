@@ -47,5 +47,11 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> A value indicating which language code to use. Default is `en`. </summary>
         public ImageAnalysisSkillLanguage? DefaultLanguageCode { get; set; }
+
+        /// <summary> A list of visual features. </summary>
+        public IList<VisualFeature> VisualFeatures { get; }
+
+        /// <summary> A string indicating which domain-specific details to return. </summary>
+        public IList<ImageDetail> Details { get; }
     }
 }

@@ -33,5 +33,8 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             Stopwords = stopwords;
         }
+
+        /// <summary> A list of stopwords. </summary>
+        public IList<string> Stopwords { get; }
     }
 }

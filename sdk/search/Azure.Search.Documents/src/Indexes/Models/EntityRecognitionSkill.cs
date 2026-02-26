@@ -6,14 +6,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Microsoft.TypeSpec.Generator.Customizations;
 
-#pragma warning disable SA1402 // File may only contain a single type
-
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary>
-    /// Extracts entities of different types from text using the Text Analytics API.
-    /// </summary>
-    [CodeGenType("EntityRecognitionSkillV3")]
     public partial class EntityRecognitionSkill
     {
         /// <summary> Initializes a new instance of <see cref="EntityRecognitionSkill"/>. </summary>

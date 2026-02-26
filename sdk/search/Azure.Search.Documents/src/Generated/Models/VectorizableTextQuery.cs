@@ -43,6 +43,9 @@ namespace Azure.Search.Documents.Models
             QueryRewrites = queryRewrites;
         }
 
+        /// <summary> The text to be vectorized to perform a vector search query. </summary>
+        public string Text { get; set; }
+
         /// <summary> Can be configured to let a generative model rewrite the query before sending it to be vectorized. </summary>
         public QueryRewritesType? QueryRewrites { get; set; }
     }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -38,10 +39,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="cognitiveServicesAccount"> Details about the Azure AI service to be used when running skills. </param>
         /// <param name="knowledgeStore"> Definition of additional projections to Azure blob, table, or files, of enriched data. </param>
         /// <param name="indexProjection"> Definition of additional projections to secondary search index(es). </param>
+        /// <param name="eTag"> The ETag of the skillset. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your skillset definition when you want full assurance that no one, not even Microsoft, can decrypt your skillset definition. Once you have encrypted your skillset definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your skillset definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
-        /// <param name="etag"> The ETag of the skillset. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchIndexerSkillset(string name, string description, IList<SearchIndexerSkill> skills, CognitiveServicesAccount cognitiveServicesAccount, KnowledgeStore knowledgeStore, SearchIndexerIndexProjection indexProjection, SearchResourceEncryptionKey encryptionKey, string etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchIndexerSkillset(string name, string description, IList<SearchIndexerSkill> skills, CognitiveServicesAccount cognitiveServicesAccount, KnowledgeStore knowledgeStore, SearchIndexerIndexProjection indexProjection, ETag? eTag, SearchResourceEncryptionKey encryptionKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -49,8 +50,8 @@ namespace Azure.Search.Documents.Indexes.Models
             CognitiveServicesAccount = cognitiveServicesAccount;
             KnowledgeStore = knowledgeStore;
             IndexProjection = indexProjection;
+            ETag = eTag;
             EncryptionKey = encryptionKey;
-            _etag = etag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -71,6 +72,9 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Definition of additional projections to secondary search index(es). </summary>
         public SearchIndexerIndexProjection IndexProjection { get; set; }
+
+        /// <summary> The ETag of the skillset. </summary>
+        public ETag? ETag { get; set; }
 
         /// <summary> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your skillset definition when you want full assurance that no one, not even Microsoft, can decrypt your skillset definition. Once you have encrypted your skillset definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your skillset definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </summary>
         public SearchResourceEncryptionKey EncryptionKey { get; set; }
