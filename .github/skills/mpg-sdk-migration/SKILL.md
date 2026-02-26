@@ -156,12 +156,12 @@ sdk/<service>/<PACKAGE_NAME>/
 
 ## Phase 5 — Customization (Naming Review)
 
-Apply naming rules from the `azure-sdk-pr-review` skill. For detailed customization techniques, see [customization-patterns.md](customization-patterns.md).
+Apply naming rules from the `azure-sdk-pr-review` skill. For detailed customization techniques, see [customization-patterns.md](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/mpg-sdk-migration/customization-patterns.md).
 
 Key approaches:
 - **SDK-side**: Partial classes under `Custom/` or `Customization/` with `[CodeGenType]`, `[CodeGenSuppress]`, `[CodeGenMember]`
 - **Spec-side**: `@@clientName`, `@@access`, `@@markAsPageable`, `@@alternateType` decorators in `client.tsp`
-- **Extension resources**: Parameterized scopes, `ActionSync<>` for sub-resource ops (see [customization-patterns.md](customization-patterns.md))
+- **Extension resources**: Parameterized scopes, `ActionSync<>` for sub-resource ops (see [customization-patterns.md](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/mpg-sdk-migration/customization-patterns.md))
 
 ## Phase 6 — Code Generation
 
@@ -205,7 +205,7 @@ pwsh eng/packages/http-client-csharp-mgmt/eng/scripts/RegenSdkLocal.ps1 -Service
 
 ### Handling ApiCompat Errors
 
-ApiCompat errors surface via `dotnet pack` (not `dotnet build`). See [error-reference.md](error-reference.md) for the full ApiCompat error pattern table and fix strategies.
+ApiCompat errors surface via `dotnet pack` (not `dotnet build`). See [error-reference.md](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/mpg-sdk-migration/error-reference.md) for the full ApiCompat error pattern table and fix strategies.
 
 ## Phase 7 — CI & Changelog
 
@@ -259,7 +259,7 @@ CREATE TABLE build_errors (
 
 ### Step 2 — Triage Each Error
 
-For each build error, determine the root cause and look up the fix in [error-reference.md](error-reference.md). The error reference contains:
+For each build error, determine the root cause and look up the fix in [error-reference.md](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/mpg-sdk-migration/error-reference.md). The error reference contains:
 - **Root cause triage table** — how to classify errors as spec, generator, or customization issues
 - **Common build error patterns** — CS0234, CS0051, CS0246, AZC0030, etc. with specific fixes
 - **ApiCompat error patterns** — MembersMustExist, TypesMustExist, etc.
@@ -400,16 +400,16 @@ Execute these in order after planning:
 
 After completing (or making significant progress on) a migration, review what was learned and update the skill files:
 
-1. **New error patterns**: Add to [error-reference.md](error-reference.md).
-2. **New decorators or TypeSpec patterns**: Add to [customization-patterns.md](customization-patterns.md).
-3. **New workarounds or pitfalls**: Add to [error-reference.md](error-reference.md) Common Pitfalls section.
+1. **New error patterns**: Add to [error-reference.md](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/mpg-sdk-migration/error-reference.md).
+2. **New decorators or TypeSpec patterns**: Add to [customization-patterns.md](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/mpg-sdk-migration/customization-patterns.md).
+3. **New workarounds or pitfalls**: Add to [error-reference.md](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/mpg-sdk-migration/error-reference.md) Common Pitfalls section.
 4. **Migration flow changes**: Update this file (SKILL.md).
 
 > **Goal**: Each migration should leave these skill files slightly better than they were before.
 
 ## Common Pitfalls
 
-See [error-reference.md](error-reference.md) for the full list of common pitfalls. Key ones to remember during the migration flow:
+See [error-reference.md](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/mpg-sdk-migration/error-reference.md) for the full list of common pitfalls. Key ones to remember during the migration flow:
 
 - **Do NOT use `tsp-client update`** — use `dotnet build /t:GenerateCode`.
 - **Do NOT blindly copy all renames from `autorest.md`** — the mgmt emitter handles many automatically.
