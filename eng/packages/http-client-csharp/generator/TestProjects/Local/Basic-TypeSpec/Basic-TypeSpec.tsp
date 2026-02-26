@@ -749,3 +749,23 @@ interface PlantOperations {
     @body body: Tree;
   };
 }
+
+@Xml.name("SignedIdentifiers")
+model SignedIdentifiers is SignedIdentifier[];
+
+/** The signed identifier. */
+@Xml.name("SignedIdentifier")
+model SignedIdentifier {
+  /** The unique ID for the signed identifier. */
+  @Xml.name("Id") id: string;
+}
+
+@post
+op Foo(@body body: SignedIdentifiers, @header contentType: "application/xml"): void;
+
+@get
+@route("/foo")
+op GetFoo(): {
+  @header contentType: "application/xml";
+  @body body: SignedIdentifiers;
+};

@@ -28,6 +28,7 @@ namespace BasicTypeSpec
     [ModelReaderWriterBuildable(typeof(RenamedModel))]
     [ModelReaderWriterBuildable(typeof(ReturnsAnonymousModelResponse))]
     [ModelReaderWriterBuildable(typeof(RoundTripModel))]
+    [ModelReaderWriterBuildable(typeof(SignedIdentifier))]
     [ModelReaderWriterBuildable(typeof(ThingModel))]
     [ModelReaderWriterBuildable(typeof(Tree))]
     [ModelReaderWriterBuildable(typeof(UnknownPlant))]

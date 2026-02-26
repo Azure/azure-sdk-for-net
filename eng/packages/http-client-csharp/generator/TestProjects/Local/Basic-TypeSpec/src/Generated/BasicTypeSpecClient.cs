@@ -5,14 +5,17 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace BasicTypeSpec
 {
@@ -2569,6 +2572,193 @@ namespace BasicTypeSpec
 
             Response result = await UpdateXmlAdvancedModelAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((XmlAdvancedModel)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Foo
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response Foo(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.Foo");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateFooRequest(content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Foo
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> FooAsync(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.Foo");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateFooRequest(content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Foo. </summary>
+        /// <param name="body"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response Foo(IEnumerable<SignedIdentifier> body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = BinaryContentHelper.FromEnumerable(body, "SignedIdentifiers", "SignedIdentifier");
+            return Foo(content, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Foo. </summary>
+        /// <param name="body"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> FooAsync(IEnumerable<SignedIdentifier> body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = BinaryContentHelper.FromEnumerable(body, "SignedIdentifiers", "SignedIdentifier");
+            return await FooAsync(content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] GetFoo
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetFoo(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetFoo");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetFooRequest(context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] GetFoo
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetFooAsync(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetFoo");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetFooRequest(context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> GetFoo. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<IReadOnlyList<SignedIdentifier>> GetFoo(CancellationToken cancellationToken = default)
+        {
+            Response result = GetFoo(cancellationToken.ToRequestContext());
+            IReadOnlyList<SignedIdentifier> value = default;
+            BinaryData data = result.Content;
+            using Stream stream = data.ToStream();
+            XDocument document = XDocument.Load(stream, LoadOptions.PreserveWhitespace);
+            if (document.Element("SignedIdentifiers") is XElement signedIdentifiersElement)
+            {
+                List<SignedIdentifier> array = new List<SignedIdentifier>();
+                foreach (XElement item in signedIdentifiersElement.Elements("SignedIdentifier"))
+                {
+                    array.Add(SignedIdentifier.DeserializeSignedIdentifier(item, ModelSerializationExtensions.WireOptions));
+                }
+                value = array;
+            }
+            return Response.FromValue((IReadOnlyList<SignedIdentifier>)value, result);
+        }
+
+        /// <summary> GetFoo. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<IReadOnlyList<SignedIdentifier>>> GetFooAsync(CancellationToken cancellationToken = default)
+        {
+            Response result = await GetFooAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            IReadOnlyList<SignedIdentifier> value = default;
+            BinaryData data = result.Content;
+            using Stream stream = data.ToStream();
+            XDocument document = XDocument.Load(stream, LoadOptions.PreserveWhitespace);
+
+            if (document.Element("SignedIdentifiers") is XElement signedIdentifiersElement)
+            {
+                List<SignedIdentifier> array = new List<SignedIdentifier>();
+                foreach (XElement item in signedIdentifiersElement.Elements("SignedIdentifier"))
+                {
+                    array.Add(SignedIdentifier.DeserializeSignedIdentifier(item, ModelSerializationExtensions.WireOptions));
+                }
+                value = array;
+            }
+            return Response.FromValue((IReadOnlyList<SignedIdentifier>)value, result);
         }
 
         /// <summary> Initializes a new instance of PlantOperations. </summary>
