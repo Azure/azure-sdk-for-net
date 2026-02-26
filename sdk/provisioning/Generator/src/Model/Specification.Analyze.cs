@@ -98,12 +98,23 @@ public abstract partial class Specification
                 }
 
                 /**/
-                // Extract api-versions from the CreateOrUpdate method's XML doc comments
+                // Extract api-versions from the CreateOrUpdate method's XML doc comments,
+                // falling back to the Get method if CreateOrUpdate has no version
                 foreach (Resource resource in Resources)
                 {
                     if (resource.ResourceType is null) { continue; }
                     MethodInfo creator = resources[resource.ArmType!];
                     resource.DefaultResourceVersion = ExtractApiVersionFromXmlDoc(creator);
+
+                    if (resource.DefaultResourceVersion is null)
+                    {
+                        // Try the Get method on the resource type itself
+                        MethodInfo? getter = resource.ArmType!.GetMethod("Get", BindingFlags.Public | BindingFlags.Instance, null, [typeof(CancellationToken)], null);
+                        if (getter is not null)
+                        {
+                            resource.DefaultResourceVersion = ExtractApiVersionFromXmlDoc(getter);
+                        }
+                    }
                 }
 
                 // Try to resolve missing versions from related types
