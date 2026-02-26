@@ -1,3 +1,0 @@
-spec path: /home/codespace/code/spec/specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/DesktopVirtualization
-sdk  path: /home/codespace/code/sdk/sdk/desktopvirtualization/Azure.ResourceManager.DesktopVirtualization
-baseline commit id: 76a1981de09009736808bc6a80fdd10d73f0097b
