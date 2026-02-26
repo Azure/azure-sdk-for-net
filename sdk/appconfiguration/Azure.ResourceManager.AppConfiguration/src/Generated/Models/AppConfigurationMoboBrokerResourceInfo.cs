@@ -8,30 +8,32 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppConfiguration;
 
-namespace Azure.ResourceManager.Quantum.Models
+namespace Azure.ResourceManager.AppConfiguration.Models
 {
     /// <summary> Managed-On-Behalf-Of broker resource. This resource is created by the Resource Provider to manage some resources on behalf of the user. </summary>
-    public partial class MoboBrokerInfo
+    public partial class AppConfigurationMoboBrokerResourceInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MoboBrokerInfo"/>. </summary>
-        internal MoboBrokerInfo()
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationMoboBrokerResourceInfo"/>. </summary>
+        internal AppConfigurationMoboBrokerResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MoboBrokerInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationMoboBrokerResourceInfo"/>. </summary>
         /// <param name="id"> Resource identifier of a Managed-On-Behalf-Of broker resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MoboBrokerInfo(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppConfigurationMoboBrokerResourceInfo(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource identifier of a Managed-On-Behalf-Of broker resource. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
     }
 }
