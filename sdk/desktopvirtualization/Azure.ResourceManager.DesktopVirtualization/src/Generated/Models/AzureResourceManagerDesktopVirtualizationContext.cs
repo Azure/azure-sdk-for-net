@@ -132,7 +132,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
     [ModelReaderWriterBuildable(typeof(ScopedRegistrationTokenProperties))]
     [ModelReaderWriterBuildable(typeof(SecurityInfoPatchProperties))]
     [ModelReaderWriterBuildable(typeof(SecurityInfoProperties))]
-    [ModelReaderWriterBuildable(typeof(SendMessageParameterBody))]
     [ModelReaderWriterBuildable(typeof(ServiceSpecification))]
     [ModelReaderWriterBuildable(typeof(SessionHostAgentUpdatePatchProperties))]
     [ModelReaderWriterBuildable(typeof(SessionHostAgentUpdateProperties))]
