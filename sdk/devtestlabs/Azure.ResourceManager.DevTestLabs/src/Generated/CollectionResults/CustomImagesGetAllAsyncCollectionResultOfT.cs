@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     yield break;
                 }
                 CustomImageList result = CustomImageList.FromResponse(response);
-                yield return Page<DevTestLabCustomImageData>.FromValues((IReadOnlyList<DevTestLabCustomImageData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DevTestLabCustomImageData>.FromValues((IReadOnlyList<DevTestLabCustomImageData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

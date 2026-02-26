@@ -34,6 +34,41 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DevTestLabGenerateUploadUriContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevTestLabsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DevTestLabGenerateUploadUriContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DevTestLabGenerateUploadUriContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DevTestLabGenerateUploadUriContent IPersistableModel<DevTestLabGenerateUploadUriContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DevTestLabGenerateUploadUriContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="devTestLabGenerateUploadUriContent"> The <see cref="DevTestLabGenerateUploadUriContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DevTestLabGenerateUploadUriContent devTestLabGenerateUploadUriContent)
+        {
+            if (devTestLabGenerateUploadUriContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(devTestLabGenerateUploadUriContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DevTestLabGenerateUploadUriContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -114,41 +149,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             return new DevTestLabGenerateUploadUriContent(blobName, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DevTestLabGenerateUploadUriContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DevTestLabGenerateUploadUriContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevTestLabsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DevTestLabGenerateUploadUriContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DevTestLabGenerateUploadUriContent IPersistableModel<DevTestLabGenerateUploadUriContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DevTestLabGenerateUploadUriContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="devTestLabGenerateUploadUriContent"> The <see cref="DevTestLabGenerateUploadUriContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DevTestLabGenerateUploadUriContent devTestLabGenerateUploadUriContent)
-        {
-            if (devTestLabGenerateUploadUriContent == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(devTestLabGenerateUploadUriContent, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

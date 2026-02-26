@@ -1,0 +1,292 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <CentralPackageVersionOverrideEnabled>false</CentralPackageVersionOverrideEnabled>
+  </PropertyGroup>
+
+  <!-- ============================================================== -->
+  <!--                    SHARED VERSION STAMPS                       -->
+  <!--                                                                -->
+  <!-- these packages are intentionally scoped but should generally   -->
+  <!-- sync to the same version.                                      -->
+  <!-- ============================================================== -->
+  <PropertyGroup>
+    <!-- Library, sample, and test packages -->
+    <CastleCoreVersion>5.1.0</CastleCoreVersion>
+    <CloudNativeCloudEventsSystemTextJsonVersion>2.8.0</CloudNativeCloudEventsSystemTextJsonVersion>
+    <MicrosoftAspNetCoreHttpVersion>2.3.0</MicrosoftAspNetCoreHttpVersion>
+    <MicrosoftAspNetCoreVersion>2.3.0</MicrosoftAspNetCoreVersion>
+    <MicrosoftExtensionsAzureVersion>1.13.1</MicrosoftExtensionsAzureVersion>
+    <MicrosoftExtensionsConfigurationAbstractionsVersion>10.0.3</MicrosoftExtensionsConfigurationAbstractionsVersion>
+    <MicrosoftExtensionsConfigurationBinderVersion>10.0.3</MicrosoftExtensionsConfigurationBinderVersion>
+    <MicrosoftExtensionsConfigurationEnvironmentVariablesVersion>10.0.3</MicrosoftExtensionsConfigurationEnvironmentVariablesVersion>
+    <MicrosoftExtensionsConfigurationJsonVersion>10.0.3</MicrosoftExtensionsConfigurationJsonVersion>
+    <MicrosoftExtensionsConfigurationVersion>10.0.3</MicrosoftExtensionsConfigurationVersion>
+    <MicrosoftExtensionsConfigurationUserSecretsVersion>10.0.3</MicrosoftExtensionsConfigurationUserSecretsVersion>
+    <MicrosoftExtensionsDependencyInjectionAbstractionsVersion>10.0.3</MicrosoftExtensionsDependencyInjectionAbstractionsVersion>
+    <MicrosoftExtensionsDependencyInjectionVersion>10.0.3</MicrosoftExtensionsDependencyInjectionVersion>
+    <MicrosoftExtensionsHostingVersion>10.0.3</MicrosoftExtensionsHostingVersion>
+    <MicrosoftExtensionsHttpVersion>10.0.3</MicrosoftExtensionsHttpVersion>
+    <MicrosoftExtensionsLoggingConfigurationVersion>10.0.3</MicrosoftExtensionsLoggingConfigurationVersion>
+    <MicrosoftExtensionsLoggingConsoleVersion>10.0.3</MicrosoftExtensionsLoggingConsoleVersion>
+    <MicrosoftExtensionsLoggingVersion>10.0.3</MicrosoftExtensionsLoggingVersion>
+    <MicrosoftExtensionsPrimitivesVersion>10.0.3</MicrosoftExtensionsPrimitivesVersion>
+    <SystemIOPipelinesVersion>10.0.3</SystemIOPipelinesVersion>
+    <MicrosoftSpatialVersion>7.5.3</MicrosoftSpatialVersion>
+    <NewtonsoftJsonVersion>13.0.4</NewtonsoftJsonVersion>
+    <MSTestVersion>1.3.2</MSTestVersion>
+    <NUnitVersion>3.14.0</NUnitVersion>
+    <OpenTelemetryExtensionsHostingVersion>1.14.0</OpenTelemetryExtensionsHostingVersion>
+    <OpenTelemetryInstrumentationHttpVersion>1.14.0</OpenTelemetryInstrumentationHttpVersion>
+    <OpenTelemetryVersion>1.14.0</OpenTelemetryVersion>
+  </PropertyGroup>
+
+  <!-- ============================================================== -->
+  <!--  APPROVED DEPENDENCIES FOR CURRENT GENERATION AZURE LIBRARIES  -->
+  <!--                                                                -->
+  <!-- Dependency versions for current generation Azure libraries and -->
+  <!-- support projects. Only packages that are approved dependencies -->
+  <!-- for public releases should go here.                            -->
+  <!--                                                                -->
+  <!-- New dependencies must be specifically approved by the .NET     -->
+  <!-- architects and Azure SDK team.                                 -->
+  <!-- ============================================================== -->
+
+  <!--
+    Prior to making any updates to this section, potential version
+    conflicts with Functions need to be investigated.
+
+    For Functions, this file can be referenced:
+    https://github.com/Azure/azure-functions-host/blob/dev/src/WebJobs.Script/runtimeassemblies.json
+      - If the assembly is not there or there is a resolutionPolicy of private,
+        there is no issue from the Functions perspective of upgrading the version.
+      - If the assembly is there and there is a resolutionPolicy of minorMatchOrLower
+        then the version needs to be less than or equal to the version listed here:
+        - https://github.com/Azure/azure-functions-host/blob/dev/test/WebJobs.Script.Tests/Microsoft.Azure.WebJobs.Script.WebHost.deps.json
+      - If resolutionPolicy is runtimeVersion, then the version needs to match the
+        version in the file below exactly:
+        - https://github.com/Azure/azure-functions-host/blob/dev/test/WebJobs.Script.Tests/Microsoft.Azure.WebJobs.Script.WebHost.deps.json
+  -->
+  <ItemGroup Condition="'$(IsClientLibrary)' == 'true'
+      or '$(IsGeneratorLibrary)' == 'true'
+      or '$(IsToolProject)' == 'true'
+      or '$(IsSamplesProject)' == 'true'
+      or '$(IsTestProject)' == 'true'
+      or '$(IsTestSupportProject)' == 'true'
+      or '$(IsPerfProject)' == 'true'
+      or '$(IsStressProject)' == 'true'">
+
+    <!-- BCL packages -->
+    <PackageVersion Include="Microsoft.Bcl.AsyncInterfaces" Version="10.0.3" />
+    <PackageVersion Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.3" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.3" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.3" />
+    <PackageVersion Include="System.Buffers" Version="4.6.1" />
+    <PackageVersion Include="System.ClientModel" Version="1.9.0" />
+    <PackageVersion Include="System.Diagnostics.DiagnosticSource" Version="10.0.3" />
+    <PackageVersion Include="System.IO.Hashing" Version="10.0.3" />
+    <PackageVersion Include="System.Memory" Version="4.6.3" />
+    <PackageVersion Include="System.Memory.Data" Version="10.0.3" />
+    <PackageVersion Include="System.Net.Http" Version="4.3.4" />
+    <PackageVersion Include="System.Net.ServerSentEvents" Version="10.0.3" />
+    <PackageVersion Include="System.Numerics.Vectors" Version="4.6.1" />
+    <PackageVersion Include="System.Reflection.TypeExtensions" Version="4.7.0" />
+    <PackageVersion Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
+    <PackageVersion Include="System.Security.Cryptography.Cose" Version="10.0.3" />
+    <PackageVersion Include="System.Text.Encodings.Web" Version="10.0.3" />
+    <PackageVersion Include="System.Text.Json" Version="10.0.3" />
+    <PackageVersion Include="System.Threading.Channels" Version="10.0.3" />
+    <PackageVersion Include="System.Threading.Tasks.Extensions" Version="4.6.3" />
+    <PackageVersion Include="System.ValueTuple" Version="4.6.2" />
+
+    <!-- Azure SDK packages -->
+    <PackageVersion Include="Azure.AI.Inference" Version="1.0.0-beta.5" />
+    <PackageVersion Include="Azure.AI.OpenAI" Version="2.0.0" />
+    <PackageVersion Include="Azure.AI.Projects" Version="1.1.0" />
+    <PackageVersion Include="Azure.Communication.Common" Version="1.4.0" />
+    <PackageVersion Include="Azure.Core" Version="1.51.1" />
+    <PackageVersion Include="Azure.Core.Amqp" Version="1.3.1" />
+    <PackageVersion Include="Azure.Core.Experimental" Version="0.1.0-preview.36" />
+    <PackageVersion Include="Azure.Core.Expressions.DataFactory" Version="1.0.0" />
+    <PackageVersion Include="Azure.Data.AppConfiguration" Version="1.8.0"/>
+    <PackageVersion Include="Azure.Data.Tables" Version="12.11.0" />
+    <PackageVersion Include="Azure.Identity" Version="1.17.1" />
+    <PackageVersion Include="Azure.Messaging.EventGrid" Version="4.21.0" />
+    <PackageVersion Include="Azure.Messaging.EventGrid.SystemEvents" Version="1.0.0" />
+    <PackageVersion Include="Azure.Messaging.EventHubs" Version="5.12.2" />
+    <PackageVersion Include="Azure.Messaging.ServiceBus" Version="7.20.1" />
+    <PackageVersion Include="Azure.Messaging.WebPubSub" Version="1.6.0" />
+    <PackageVersion Include="Azure.Monitor.OpenTelemetry.Exporter" Version="1.5.0" />
+    <PackageVersion Include="Azure.Monitor.Query.Logs" Version="1.0.0" />
+    <PackageVersion Include="Azure.ResourceManager" Version="1.13.2" />
+    <PackageVersion Include="Azure.ResourceManager.AppConfiguration" Version="1.4.0" />
+    <PackageVersion Include="Azure.ResourceManager.AppContainers" Version="1.5.0" />
+    <PackageVersion Include="Azure.ResourceManager.ApplicationInsights" Version="1.0.1" />
+    <PackageVersion Include="Azure.ResourceManager.AppService" Version="1.4.1" />
+    <PackageVersion Include="Azure.ResourceManager.Authorization" Version="1.1.6" />
+    <PackageVersion Include="Azure.ResourceManager.Batch" Version="1.5.0" />
+    <PackageVersion Include="Azure.ResourceManager.CognitiveServices" Version="1.5.2" />
+    <PackageVersion Include="Azure.ResourceManager.Communication" Version="1.3.0" />
+    <PackageVersion Include="Azure.ResourceManager.ContainerRegistry" Version="1.4.0" />
+    <PackageVersion Include="Azure.ResourceManager.ContainerService" Version="1.3.0" />
+    <PackageVersion Include="Azure.ResourceManager.CosmosDB" Version="1.4.0-beta.12" />
+    <PackageVersion Include="Azure.ResourceManager.Dns" Version="1.2.0-beta.2" />
+    <PackageVersion Include="Azure.ResourceManager.EventGrid" Version="1.1.0" />
+    <PackageVersion Include="Azure.ResourceManager.EventHubs" Version="1.2.1" />
+    <PackageVersion Include="Azure.ResourceManager.FrontDoor" Version="1.4.1" />
+    <PackageVersion Include="Azure.ResourceManager.IotHub" Version="1.1.1" />
+    <PackageVersion Include="Azure.ResourceManager.KeyVault" Version="1.3.3" />
+    <PackageVersion Include="Azure.ResourceManager.Kubernetes" Version="1.0.0-beta.5" />
+    <PackageVersion Include="Azure.ResourceManager.KubernetesConfiguration" Version="1.2.0" />
+    <PackageVersion Include="Azure.ResourceManager.Kusto" Version="1.6.2" />
+    <PackageVersion Include="Azure.ResourceManager.Logic" Version="1.1.0" />
+    <PackageVersion Include="Azure.ResourceManager.ManagedServiceIdentities" Version="1.4.0" />
+    <PackageVersion Include="Azure.ResourceManager.Network" Version="1.14.0" />
+    <PackageVersion Include="Azure.ResourceManager.OperationalInsights" Version="1.3.1" />
+    <PackageVersion Include="Azure.ResourceManager.PostgreSql" Version="1.3.1" />
+    <PackageVersion Include="Azure.ResourceManager.Redis" Version="1.5.1" />
+    <PackageVersion Include="Azure.ResourceManager.RedisEnterprise" Version="1.3.0" />
+    <PackageVersion Include="Azure.ResourceManager.Resources" Version="1.11.2" />
+    <PackageVersion Include="Azure.ResourceManager.Search" Version="1.3.0-beta.5" />
+    <PackageVersion Include="Azure.ResourceManager.ServiceBus" Version="1.1.0" />
+    <PackageVersion Include="Azure.ResourceManager.SignalR" Version="1.1.4" />
+    <PackageVersion Include="Azure.ResourceManager.Sql" Version="1.3.0" />
+    <PackageVersion Include="Azure.ResourceManager.Storage" Version="1.4.2" />
+    <PackageVersion Include="Azure.ResourceManager.WebPubSub" Version="1.2.0" />
+    <PackageVersion Include="Azure.Search.Documents" Version="11.7.0" />
+    <PackageVersion Include="Azure.Security.KeyVault.Certificates" Version="4.8.0" />
+    <PackageVersion Include="Azure.Security.KeyVault.Keys" Version="4.8.0" />
+    <PackageVersion Include="Azure.Security.KeyVault.Secrets" Version="4.9.0" />
+    <PackageVersion Include="Azure.Storage.Blobs" Version="12.26.0" />
+    <PackageVersion Include="Azure.Storage.Common" Version="12.25.0" />
+    <PackageVersion Include="Azure.Storage.Files.Shares" Version="12.24.0" />
+    <PackageVersion Include="Azure.Storage.Queues" Version="12.24.0" />
+
+    <!-- CDK -->
+    <PackageVersion Include="Azure.Provisioning" Version="1.4.0" />
+    <PackageVersion Include="Azure.Provisioning.AppService" Version="1.2.0" />
+    <PackageVersion Include="Azure.Provisioning.CognitiveServices" Version="1.2.0" />
+    <PackageVersion Include="Azure.Provisioning.CosmosDB" Version="1.0.0" />
+    <PackageVersion Include="Azure.Provisioning.EventGrid" Version="1.1.0" />
+    <PackageVersion Include="Azure.Provisioning.EventHubs" Version="1.1.0" />
+    <PackageVersion Include="Azure.Provisioning.KeyVault" Version="1.1.0" />
+    <PackageVersion Include="Azure.Provisioning.ServiceBus" Version="1.1.0" />
+    <PackageVersion Include="Azure.Provisioning.Storage" Version="1.1.2" />
+    <PackageVersion Include="Microsoft.Bcl.Numerics" Version="10.0.3" />
+
+    <!-- Other approved packages -->
+    <PackageVersion Include="Microsoft.Azure.Amqp" Version="2.7.0" />
+    <PackageVersion Include="Microsoft.Azure.WebPubSub.Common" Version="1.5.0" />
+    <PackageVersion Include="Microsoft.Identity.Client" Version="4.78.0" />
+    <PackageVersion Include="Microsoft.Identity.Client.Extensions.Msal" Version="4.78.0" />
+    <PackageVersion Include="Microsoft.Identity.Client.Broker" Version="4.78.0" />
+    <PackageVersion Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="8.15.0" />
+    <PackageVersion Include="Microsoft.IdentityModel.Tokens" Version="8.15.0" />
+    <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="8.15.0" />
+  </ItemGroup>
+
+  <!-- Packages intended for WCF/CoreWCF Extensions libraries only -->
+  <ItemGroup Condition="'$(IsWcfLibrary)' == 'true'">
+    <PackageVersion Include="CoreWCF.Queue" Version="1.7.0" />
+    <PackageVersion Include="CoreWCF.Primitives" Version="1.7.0" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.UserSecrets" Version="$(MicrosoftExtensionsConfigurationUserSecretsVersion)" />
+    <PackageVersion Include="System.Formats.Asn1" Version="10.0.1" />
+    <PackageVersion Include="System.Security.Cryptography.Pkcs" Version="10.0.1" />
+    <PackageVersion Include="System.ServiceModel.Primitives" Version="6.2.0" />
+    <PackageVersion Update="Azure.Storage.Files.Shares" Version="12.21.0" />
+    <PackageVersion Update="Azure.Storage.Queues" Version="12.21.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IsWcfLibrary)' == 'true'
+      and '$(IsTestProject)' != 'true'
+      and '$(IsTestSupportProject)' != 'true'
+      and '$(IsPerfProject)' != 'true'
+      and '$(IsStressProject)' != 'true'
+      and '$(IsSamplesProject)' != 'true'">
+    <PackageVersion Include="Microsoft.AspNetCore" Version="$(MicrosoftAspNetCoreVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Http" Version="$(MicrosoftExtensionsHttpVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Configuration" Version="$(MicrosoftExtensionsLoggingConfigurationVersion)" />
+    <PackageVersion Include="System.IO.Pipelines" Version="$(SystemIOPipelinesVersion)" />
+  </ItemGroup>
+
+  <ItemGroup Condition="('$(IsWcfLibrary)' == 'true') AND ($(TargetFramework.StartsWith('net4')))">
+    <PackageVersion Update="Microsoft.Extensions.Configuration.UserSecrets" Version="3.1.32" />
+    <PackageVersion Update="Microsoft.Extensions.Http" Version="3.1.32" />
+    <PackageVersion Update="Microsoft.Extensions.Logging.Configuration" Version="3.1.32" />
+    <PackageVersion Update="Microsoft.Extensions.Logging.Configuration" Version="3.1.32" />
+  </ItemGroup>
+
+  <!-- ============================================================== -->
+  <!--                        BUILD TIME PACKAGES                     -->
+  <!--                                                                -->
+  <!-- All should have PrivateAssets="All" set so they don't become   -->
+  <!--                  package dependencies                          -->
+  <!-- ============================================================== -->
+  <ItemGroup>
+    <PackageVersion Include="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20260129.1" PrivateAssets="All" />
+    <PackageVersion Include="coverlet.collector" Version="6.0.4" PrivateAssets="All" />
+    <PackageVersion Include="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20251023.1" PrivateAssets="All" />
+
+    <!-- Note: Upgrading the .NET SDK version needs to be synchronized with the autorest.csharp repository -->
+    <PackageVersion Include="Microsoft.CodeAnalysis.Analyzers" Version="3.11.0" PrivateAssets="All"/>
+    <PackageVersion Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.4" PrivateAssets="All" />
+
+    <!-- Note: 4.3.0 is required to keep our shipped source generators compatible with most project targets like netstandard2.0-->
+    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version ="4.3.0" PrivateAssets="All" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.3.0" PrivateAssets="All" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Analyzer.Testing" Version="1.1.3" PrivateAssets="All" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.CodeFix.Testing" Version="1.1.3" PrivateAssets="All" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="10.0.101" PrivateAssets="All" />
+    <PackageVersion Include="Microsoft.DotNet.ApiCompat" Version="5.0.0-beta.20467.1" PrivateAssets="All" />
+    <PackageVersion Include="Microsoft.DotNet.GenAPI" Version="5.0.0-beta.19552.1" PrivateAssets="All" />
+    <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
+    <!--
+      Note: SauceControl.InheritDoc 2.0.x causes NuGet restore loops in Visual Studio with multi-targeting projects.
+      See https://github.com/saucecontrol/InheritDoc/releases for v2.0 release notes about incremental build fixes.
+      Do not upgrade until this issue is resolved upstream.
+    -->
+    <PackageVersion Include="SauceControl.InheritDoc" Version="1.2.0" PrivateAssets="All" />
+    <PackageVersion Include="StyleCop.Analyzers" Version="1.2.0-beta.333" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
+    <PackageDownload Update="NETStandard.Library.Ref" Version="[2.1.0]" />
+  </ItemGroup>
+
+  <!-- Import extensions packages package versions -->
+  <Import Project="$(MSBuildThisFileDirectory)Directory.Extensions.Packages.props" />
+
+  <!-- Import generation packages package versions -->
+  <Import Project="$(MSBuildThisFileDirectory)Directory.Generation.Packages.props" />
+
+  <!-- Import integration packages package versions -->
+  <Import Project="$(MSBuildThisFileDirectory)Directory.Integration.Packages.props" />
+
+  <!-- Import test packages package versions -->
+  <Import Project="$(MSBuildThisFileDirectory)Directory.Support.Packages.props" />
+
+  <!-- Import legacy packages package versions -->
+  <Import Project="$(MSBuildThisFileDirectory)Directory.Legacy.Packages.props" />
+
+  <!-- ============================================================== -->
+  <!--              PER-PACKAGE OVERRIDE AUTO-IMPORT                  -->
+  <!--                                                                -->
+  <!-- If an override file named <PackageName>.Packages.props exists  -->
+  <!-- in the overrides/ folder, import it automatically.  This       -->
+  <!-- eliminates the need for each package to manually redirect      -->
+  <!-- DirectoryPackagesPropsPath in its Directory.Build.props.        -->
+  <!--                                                                -->
+  <!-- For .Tests, .Perf, and .Samples projects we also check for    -->
+  <!-- an override matching the base package name (without suffix).   -->
+  <!-- ============================================================== -->
+  <PropertyGroup>
+    <_OverrideDir>$(MSBuildThisFileDirectory)overrides\</_OverrideDir>
+    <_OverridePath Condition="Exists('$(_OverrideDir)$(MSBuildProjectName).Packages.props')">$(_OverrideDir)$(MSBuildProjectName).Packages.props</_OverridePath>
+    <_OverridePath Condition="'$(_OverridePath)' == '' and $(MSBuildProjectName.EndsWith('.Tests'))">$(_OverrideDir)$(MSBuildProjectName.Substring(0, $(MSBuildProjectName.LastIndexOf('.Tests')))).Packages.props</_OverridePath>
+    <_OverridePath Condition="'$(_OverridePath)' == '' and $(MSBuildProjectName.EndsWith('.Perf'))">$(_OverrideDir)$(MSBuildProjectName.Substring(0, $(MSBuildProjectName.LastIndexOf('.Perf')))).Packages.props</_OverridePath>
+    <_OverridePath Condition="'$(_OverridePath)' == '' and $(MSBuildProjectName.EndsWith('.Samples'))">$(_OverrideDir)$(MSBuildProjectName.Substring(0, $(MSBuildProjectName.LastIndexOf('.Samples')))).Packages.props</_OverridePath>
+  </PropertyGroup>
+
+  <Import Project="$(_OverridePath)" Condition="'$(_OverridePath)' != '' and Exists('$(_OverridePath)')" />
+</Project>

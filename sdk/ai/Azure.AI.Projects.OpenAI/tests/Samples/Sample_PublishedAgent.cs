@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -14,7 +14,7 @@ public class Sample_PublishedAgent : ProjectsOpenAITestBase
 {
     [Test]
     [AsyncOnly]
-    public async Task PublishedAgentAync()
+    public async Task PublishedAgentAsync()
     {
         IgnoreSampleMayBe();
         #region Snippet:Sample_ReadEndpoint_PublishedAgent

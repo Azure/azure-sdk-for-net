@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     yield break;
                 }
                 LabVhdList result = LabVhdList.FromResponse(response);
-                yield return Page<DevTestLabVhd>.FromValues((IReadOnlyList<DevTestLabVhd>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DevTestLabVhd>.FromValues((IReadOnlyList<DevTestLabVhd>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

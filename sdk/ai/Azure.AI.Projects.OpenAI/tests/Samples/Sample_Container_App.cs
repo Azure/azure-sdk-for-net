@@ -65,7 +65,7 @@ public class Sample_Container_App : ProjectsOpenAITestBase
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:Sample_Cleanup_ContainerApp_Async
-        await projectClient.OpenAI.Conversations.DeleteConversationAsync(conversationId:conversation.Id);
+        await projectClient.OpenAI.Conversations.DeleteConversationAsync(conversationId: conversation.Id);
         await projectClient.Agents.DeleteAgentVersionAsync(agentName: containerAgentVersion.Name, agentVersion: containerAgentVersion.Version);
         #endregion
     }

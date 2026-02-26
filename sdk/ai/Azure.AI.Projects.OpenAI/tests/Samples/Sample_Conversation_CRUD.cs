@@ -40,7 +40,8 @@ public class Sample_conversation_CRUD : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_ListConversations_ConversationCRUD_Async
-        await foreach (ProjectConversation res in projectClient.OpenAI.Conversations.GetProjectConversationsAsync()){
+        await foreach (ProjectConversation res in projectClient.OpenAI.Conversations.GetProjectConversationsAsync())
+        {
             Console.WriteLine($"Listed conversation (id: {res.Id})");
         }
         #endregion

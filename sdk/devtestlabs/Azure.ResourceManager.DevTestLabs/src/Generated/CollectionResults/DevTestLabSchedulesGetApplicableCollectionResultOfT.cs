@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     yield break;
                 }
                 ScheduleList result = ScheduleList.FromResponse(response);
-                yield return Page<DevTestLabScheduleData>.FromValues((IReadOnlyList<DevTestLabScheduleData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DevTestLabScheduleData>.FromValues((IReadOnlyList<DevTestLabScheduleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

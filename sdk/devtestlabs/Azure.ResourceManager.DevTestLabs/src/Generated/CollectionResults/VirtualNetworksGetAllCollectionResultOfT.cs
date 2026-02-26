@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     yield break;
                 }
                 VirtualNetworkList result = VirtualNetworkList.FromResponse(response);
-                yield return Page<DevTestLabVirtualNetworkData>.FromValues((IReadOnlyList<DevTestLabVirtualNetworkData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DevTestLabVirtualNetworkData>.FromValues((IReadOnlyList<DevTestLabVirtualNetworkData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

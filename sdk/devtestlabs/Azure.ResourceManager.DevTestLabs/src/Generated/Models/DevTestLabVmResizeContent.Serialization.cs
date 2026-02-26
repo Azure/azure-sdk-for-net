@@ -34,6 +34,41 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DevTestLabVmResizeContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevTestLabsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DevTestLabVmResizeContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DevTestLabVmResizeContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DevTestLabVmResizeContent IPersistableModel<DevTestLabVmResizeContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DevTestLabVmResizeContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="devTestLabVmResizeContent"> The <see cref="DevTestLabVmResizeContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DevTestLabVmResizeContent devTestLabVmResizeContent)
+        {
+            if (devTestLabVmResizeContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(devTestLabVmResizeContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DevTestLabVmResizeContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -114,41 +149,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             return new DevTestLabVmResizeContent(size, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DevTestLabVmResizeContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DevTestLabVmResizeContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevTestLabsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DevTestLabVmResizeContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DevTestLabVmResizeContent IPersistableModel<DevTestLabVmResizeContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DevTestLabVmResizeContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="devTestLabVmResizeContent"> The <see cref="DevTestLabVmResizeContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DevTestLabVmResizeContent devTestLabVmResizeContent)
-        {
-            if (devTestLabVmResizeContent == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(devTestLabVmResizeContent, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }
