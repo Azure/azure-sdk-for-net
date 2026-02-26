@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Sphere
                     yield break;
                 }
                 DeviceGroupListResult result = DeviceGroupListResult.FromResponse(response);
-                yield return Page<SphereDeviceGroupData>.FromValues((IReadOnlyList<SphereDeviceGroupData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<SphereDeviceGroupData>.FromValues((IReadOnlyList<SphereDeviceGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

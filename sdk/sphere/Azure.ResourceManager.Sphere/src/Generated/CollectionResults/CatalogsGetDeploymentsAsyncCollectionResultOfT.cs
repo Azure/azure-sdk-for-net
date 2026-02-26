@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Sphere
                     yield break;
                 }
                 DeploymentListResult result = DeploymentListResult.FromResponse(response);
-                yield return Page<SphereDeploymentData>.FromValues((IReadOnlyList<SphereDeploymentData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<SphereDeploymentData>.FromValues((IReadOnlyList<SphereDeploymentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

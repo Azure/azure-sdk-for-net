@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Sphere
                     yield break;
                 }
                 CatalogListResult result = CatalogListResult.FromResponse(response);
-                yield return Page<SphereCatalogData>.FromValues((IReadOnlyList<SphereCatalogData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<SphereCatalogData>.FromValues((IReadOnlyList<SphereCatalogData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

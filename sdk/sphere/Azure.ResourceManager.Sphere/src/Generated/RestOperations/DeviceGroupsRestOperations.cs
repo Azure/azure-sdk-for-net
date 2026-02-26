@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.Sphere
             uri.AppendPath(productName, true);
             uri.AppendPath("/deviceGroups/", false);
             uri.AppendPath(deviceGroupName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -78,7 +81,10 @@ namespace Azure.ResourceManager.Sphere
             uri.AppendPath(productName, true);
             uri.AppendPath("/deviceGroups/", false);
             uri.AppendPath(deviceGroupName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -103,7 +109,10 @@ namespace Azure.ResourceManager.Sphere
             uri.AppendPath(productName, true);
             uri.AppendPath("/deviceGroups/", false);
             uri.AppendPath(deviceGroupName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -128,7 +137,10 @@ namespace Azure.ResourceManager.Sphere
             uri.AppendPath(productName, true);
             uri.AppendPath("/deviceGroups/", false);
             uri.AppendPath(deviceGroupName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -149,7 +161,10 @@ namespace Azure.ResourceManager.Sphere
             uri.AppendPath("/products/", false);
             uri.AppendPath(productName, true);
             uri.AppendPath("/deviceGroups", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
@@ -177,8 +192,18 @@ namespace Azure.ResourceManager.Sphere
         internal HttpMessage CreateNextGetByProductRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string catalogName, string productName, string filter, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -202,7 +227,10 @@ namespace Azure.ResourceManager.Sphere
             uri.AppendPath("/deviceGroups/", false);
             uri.AppendPath(deviceGroupName, true);
             uri.AppendPath("/claimDevices", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -227,7 +255,10 @@ namespace Azure.ResourceManager.Sphere
             uri.AppendPath("/deviceGroups/", false);
             uri.AppendPath(deviceGroupName, true);
             uri.AppendPath("/countDevices", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
