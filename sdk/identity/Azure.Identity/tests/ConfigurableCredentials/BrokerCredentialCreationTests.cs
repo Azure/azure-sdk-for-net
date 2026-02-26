@@ -680,7 +680,6 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.Broker
         // is published with the internal virtual method.
         [Test]
         [NonParallelizable]
-        [Ignore("Requires Broker DBO override of CopyMsalSettableProperties — see https://github.com/Azure/azure-sdk-for-net/issues/56384")]
         public void IsLegacyMsaPassthroughEnabled_ConfigSetsFalse()
         {
             using (new TestEnvVar(AllNulledEnvVars()))
@@ -696,7 +695,6 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.Broker
 
         [Test]
         [NonParallelizable]
-        [Ignore("Requires Broker DBO override of CopyMsalSettableProperties — see https://github.com/Azure/azure-sdk-for-net/issues/56384")]
         public void IsLegacyMsaPassthroughEnabled_ConfigSetsTrue()
         {
             using (new TestEnvVar(AllNulledEnvVars()))
