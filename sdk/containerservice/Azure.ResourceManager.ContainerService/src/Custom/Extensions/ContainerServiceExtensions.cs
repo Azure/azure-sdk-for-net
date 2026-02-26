@@ -4,9 +4,12 @@
 #nullable disable
 
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.ContainerService.Mocking;
+using Azure.ResourceManager.ContainerService.Models;
 using Azure.ResourceManager.Resources;
 
 // NOTE: The following customization is intentionally retained for backward compatibility.
@@ -46,5 +49,45 @@ namespace Azure.ResourceManager.ContainerService
 
             return GetMockableContainerServiceArmClient(client).GetOSOptionProfileResource(id);
         }
+
+        /// <summary>
+        /// Contains extra metadata on the version, including supported patch versions, capabilities, available upgrades, and details on preview status of the version
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/kubernetesVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusters_ListKubernetesVersions</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static async Task<Response<KubernetesVersionListResult>> GetKubernetesVersionsManagedClusterAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+            => await GetKubernetesVersionsAsync(subscriptionResource, location, cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Contains extra metadata on the version, including supported patch versions, capabilities, available upgrades, and details on preview status of the version
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/kubernetesVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusters_ListKubernetesVersions</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static Response<KubernetesVersionListResult> GetKubernetesVersionsManagedCluster(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+            => GetKubernetesVersions(subscriptionResource, location, cancellationToken);
     }
 }
