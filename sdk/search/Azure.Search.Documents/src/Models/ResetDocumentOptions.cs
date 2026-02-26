@@ -6,10 +6,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary>
-    /// Renames generated DocumentKeysOrIds to ResetDocumentOptions and customizes property name.
-    /// </summary>
-    [CodeGenType("ResetDocumentOptions")]
+    [CodeGenType("DocumentKeysOrIds")]
     public partial class ResetDocumentOptions
     {
         /// <summary> DataSource document identifiers to be reset. </summary>

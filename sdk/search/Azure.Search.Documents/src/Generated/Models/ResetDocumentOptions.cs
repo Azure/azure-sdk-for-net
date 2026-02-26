@@ -9,36 +9,33 @@ using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Indexes.Models
+namespace Azure.Search.Documents.Models
 {
     /// <summary> The type of the keysOrIds. </summary>
-    public partial class DocumentKeysOrIds
+    public partial class ResetDocumentOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentKeysOrIds"/>. </summary>
-        public DocumentKeysOrIds()
+        /// <summary> Initializes a new instance of <see cref="ResetDocumentOptions"/>. </summary>
+        public ResetDocumentOptions()
         {
             DocumentKeys = new ChangeTrackingList<string>();
-            DatasourceDocumentIds = new ChangeTrackingList<string>();
+            DataSourceDocumentIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentKeysOrIds"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResetDocumentOptions"/>. </summary>
         /// <param name="documentKeys"> document keys to be reset. </param>
-        /// <param name="datasourceDocumentIds"> datasource document identifiers to be reset. </param>
+        /// <param name="dataSourceDocumentIds"> datasource document identifiers to be reset. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentKeysOrIds(IList<string> documentKeys, IList<string> datasourceDocumentIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResetDocumentOptions(IList<string> documentKeys, IList<string> dataSourceDocumentIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DocumentKeys = documentKeys;
-            DatasourceDocumentIds = datasourceDocumentIds;
+            DataSourceDocumentIds = dataSourceDocumentIds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> document keys to be reset. </summary>
         public IList<string> DocumentKeys { get; }
-
-        /// <summary> datasource document identifiers to be reset. </summary>
-        public IList<string> DatasourceDocumentIds { get; }
     }
 }

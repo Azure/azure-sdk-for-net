@@ -410,7 +410,10 @@ namespace Azure.Search.Documents.Indexes
         {
             return new PageableWrapper<BinaryData, SearchIndex>(
                 GetIndexes(cancellationToken.ToRequestContext()),
-                data => SearchIndex.DeserializeSearchIndex(JsonElement.Parse(data), ModelSerializationExtensions.WireOptions));
+                data => SearchIndex.DeserializeSearchIndex(JsonElement.Parse(data), ModelSerializationExtensions.WireOptions),
+                supportsContinuationToken: false,
+                ClientDiagnostics,
+                "SearchIndexClient.GetIndexes");
         }
 
         /// <summary>
@@ -425,7 +428,10 @@ namespace Azure.Search.Documents.Indexes
         {
             return new AsyncPageableWrapper<BinaryData, SearchIndex>(
                 GetIndexesAsync(cancellationToken.ToRequestContext()),
-                data => SearchIndex.DeserializeSearchIndex(JsonElement.Parse(data), ModelSerializationExtensions.WireOptions));
+                data => SearchIndex.DeserializeSearchIndex(JsonElement.Parse(data), ModelSerializationExtensions.WireOptions),
+                supportsContinuationToken: false,
+                ClientDiagnostics,
+                "SearchIndexClient.GetIndexes");
         }
 
         #endregion

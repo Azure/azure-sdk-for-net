@@ -42,7 +42,7 @@ namespace Azure.Search.Documents.Indexes
             return Response.FromValue((KnowledgeBase)response, response);
         }
 
-        /// <summary> Creates a new knowledge base or updates an knowledge base if it already exists. </summary>
+        /// <summary> Creates a new knowledge base or updates a knowledge base if it already exists. </summary>
         /// <param name="knowledgeBase"> The definition of the knowledge base to create or update. </param>
         /// <param name="onlyIfUnchanged">
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="KnowledgeBase.ETag"/> does not match the current service version;
@@ -59,7 +59,7 @@ namespace Azure.Search.Documents.Indexes
             return CreateOrUpdateKnowledgeBase(knowledgeBase?.Name, knowledgeBase, matchConditions, cancellationToken);
         }
 
-        /// <summary> Creates a new knowledge base or updates an knowledge base if it already exists. </summary>
+        /// <summary> Creates a new knowledge base or updates a knowledge base if it already exists. </summary>
         /// <param name="knowledgeBase"> The definition of the knowledge base to create or update. </param>
         /// <param name="onlyIfUnchanged">
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="KnowledgeBase.ETag"/> does not match the current service version;

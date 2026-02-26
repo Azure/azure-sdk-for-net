@@ -5,9 +5,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary>
-    /// Renames generated AutocompleteResult to AutocompleteResults for backward compatibility.
-    /// </summary>
     [CodeGenType("AutocompleteResult")]
     public partial class AutocompleteResults
     {

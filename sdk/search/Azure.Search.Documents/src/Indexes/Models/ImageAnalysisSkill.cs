@@ -2,12 +2,9 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using Azure.Search.Documents.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    [CodeGenType("ImageAnalysisSkill")]
     public partial class ImageAnalysisSkill
     {
         /// <summary> A list of visual features. </summary>

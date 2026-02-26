@@ -2428,14 +2428,14 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> The type of the keysOrIds. </summary>
         /// <param name="documentKeys"> document keys to be reset. </param>
-        /// <param name="datasourceDocumentIds"> datasource document identifiers to be reset. </param>
-        /// <returns> A new <see cref="Indexes.Models.DocumentKeysOrIds"/> instance for mocking. </returns>
-        public static DocumentKeysOrIds DocumentKeysOrIds(IEnumerable<string> documentKeys = default, IEnumerable<string> datasourceDocumentIds = default)
+        /// <param name="dataSourceDocumentIds"> datasource document identifiers to be reset. </param>
+        /// <returns> A new <see cref="Models.ResetDocumentOptions"/> instance for mocking. </returns>
+        public static ResetDocumentOptions ResetDocumentOptions(IEnumerable<string> documentKeys = default, IEnumerable<string> dataSourceDocumentIds = default)
         {
             documentKeys ??= new ChangeTrackingList<string>();
-            datasourceDocumentIds ??= new ChangeTrackingList<string>();
+            dataSourceDocumentIds ??= new ChangeTrackingList<string>();
 
-            return new DocumentKeysOrIds(documentKeys.ToList(), datasourceDocumentIds.ToList(), additionalBinaryDataProperties: null);
+            return new ResetDocumentOptions(documentKeys.ToList(), dataSourceDocumentIds.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents an indexer. </summary>

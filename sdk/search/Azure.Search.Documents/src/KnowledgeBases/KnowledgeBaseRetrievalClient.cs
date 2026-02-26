@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Search.Documents.KnowledgeBases.Models;
-using Typespec = Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.KnowledgeBases
 {
@@ -29,14 +28,9 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// </summary>
         public virtual string KnowledgeBaseName { get; }
 
-        /// <summary>
-        /// Gets the generated document operations to make requests.
-        /// </summary>
-        private KnowledgeBaseRetrievalClient RestClient { get; }
-
         #region ctors
         /// <summary>
-        /// Initializes a new instance of the SearchClient class for
+        /// Initializes a new instance of the KnowledgeBaseRetrievalClient class for
         /// mocking.
         /// </summary>
         protected KnowledgeBaseRetrievalClient() { }
@@ -98,12 +92,6 @@ namespace Azure.Search.Documents.KnowledgeBases
             Endpoint = endpoint;
             KnowledgeBaseName = knowledgeBaseName;
             _apiVersion = options.Version.ToVersionString();
-
-            RestClient = new KnowledgeBaseRetrievalClient(
-                endpoint,
-                KnowledgeBaseName,
-                credential,
-                options);
         }
 
         /// <summary>
@@ -130,12 +118,6 @@ namespace Azure.Search.Documents.KnowledgeBases
             KnowledgeBaseName = knowledgeBaseName;
             _pipeline = options.Build(tokenCredential);
             _apiVersion = options.Version.ToVersionString();
-
-            RestClient = new KnowledgeBaseRetrievalClient(
-                endpoint,
-                knowledgeBaseName,
-                tokenCredential,
-                options);
         }
 
         /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient. </summary>
@@ -183,9 +165,10 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// <param name="xMsQuerySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="retrievalRequest"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<KnowledgeBaseRetrievalResponse> Retrieve(KnowledgeBaseRetrievalRequest retrievalRequest, string xMsQuerySourceAuthorization = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.Retrieve(KnowledgeBaseName, retrievalRequest, xMsQuerySourceAuthorization, cancellationToken);
+            return Retrieve(KnowledgeBaseName, retrievalRequest, xMsQuerySourceAuthorization, cancellationToken);
         }
 
         /// <summary> KnowledgeBase retrieves relevant data from backing stores. </summary>
@@ -193,9 +176,10 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// <param name="xMsQuerySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="retrievalRequest"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<KnowledgeBaseRetrievalResponse>> RetrieveAsync(KnowledgeBaseRetrievalRequest retrievalRequest, string xMsQuerySourceAuthorization = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.RetrieveAsync(KnowledgeBaseName, retrievalRequest, xMsQuerySourceAuthorization, cancellationToken).ConfigureAwait(false);
+            return await RetrieveAsync(KnowledgeBaseName, retrievalRequest, xMsQuerySourceAuthorization, cancellationToken).ConfigureAwait(false);
         }
         #endregion Service operations
     }

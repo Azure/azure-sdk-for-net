@@ -12,66 +12,66 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Indexes.Models
+namespace Azure.Search.Documents.Models
 {
     /// <summary> The type of the keysOrIds. </summary>
-    public partial class DocumentKeysOrIds : IJsonModel<DocumentKeysOrIds>
+    public partial class ResetDocumentOptions : IJsonModel<ResetDocumentOptions>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DocumentKeysOrIds PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResetDocumentOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentKeysOrIds>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResetDocumentOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDocumentKeysOrIds(document.RootElement, options);
+                        return DeserializeResetDocumentOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentKeysOrIds)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResetDocumentOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentKeysOrIds>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResetDocumentOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentKeysOrIds)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResetDocumentOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DocumentKeysOrIds>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ResetDocumentOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentKeysOrIds IPersistableModel<DocumentKeysOrIds>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ResetDocumentOptions IPersistableModel<ResetDocumentOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DocumentKeysOrIds>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ResetDocumentOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="documentKeysOrIds"> The <see cref="DocumentKeysOrIds"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(DocumentKeysOrIds documentKeysOrIds)
+        /// <param name="resetDocumentOptions"> The <see cref="ResetDocumentOptions"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(ResetDocumentOptions resetDocumentOptions)
         {
-            if (documentKeysOrIds == null)
+            if (resetDocumentOptions == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(documentKeysOrIds, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(resetDocumentOptions, ModelSerializationExtensions.WireOptions);
             return content;
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DocumentKeysOrIds>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ResetDocumentOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,10 +82,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentKeysOrIds>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResetDocumentOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentKeysOrIds)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ResetDocumentOptions)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(DocumentKeys))
             {
@@ -102,11 +102,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DatasourceDocumentIds))
+            if (Optional.IsCollectionDefined(DataSourceDocumentIds))
             {
                 writer.WritePropertyName("datasourceDocumentIds"u8);
                 writer.WriteStartArray();
-                foreach (string item in DatasourceDocumentIds)
+                foreach (string item in DataSourceDocumentIds)
                 {
                     if (item == null)
                     {
@@ -136,31 +136,31 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentKeysOrIds IJsonModel<DocumentKeysOrIds>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ResetDocumentOptions IJsonModel<ResetDocumentOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DocumentKeysOrIds JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResetDocumentOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentKeysOrIds>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResetDocumentOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentKeysOrIds)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ResetDocumentOptions)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDocumentKeysOrIds(document.RootElement, options);
+            return DeserializeResetDocumentOptions(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DocumentKeysOrIds DeserializeDocumentKeysOrIds(JsonElement element, ModelReaderWriterOptions options)
+        internal static ResetDocumentOptions DeserializeResetDocumentOptions(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<string> documentKeys = default;
-            IList<string> datasourceDocumentIds = default;
+            IList<string> dataSourceDocumentIds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -203,7 +203,7 @@ namespace Azure.Search.Documents.Indexes.Models
                             array.Add(item.GetString());
                         }
                     }
-                    datasourceDocumentIds = array;
+                    dataSourceDocumentIds = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -211,7 +211,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DocumentKeysOrIds(documentKeys ?? new ChangeTrackingList<string>(), datasourceDocumentIds ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new ResetDocumentOptions(documentKeys ?? new ChangeTrackingList<string>(), dataSourceDocumentIds ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

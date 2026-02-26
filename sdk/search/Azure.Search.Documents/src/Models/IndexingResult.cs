@@ -5,9 +5,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary>
-    /// Customizes the generated IndexingResult to rename StatusCode to Status.
-    /// </summary>
     [CodeGenType("IndexingResult")]
     public partial class IndexingResult
     {
