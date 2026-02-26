@@ -572,19 +572,8 @@ public abstract partial class Specification
                     // If there are any GA (non-preview) versions, use them; otherwise keep all (preview-only) versions
                     resource.ResourceVersions = nonPreviewVersions.Count > 0 ? nonPreviewVersions : orderedVersions;
 
-                    // Choose default version: prefer mgmtApiVersion if it's present in ResourceVersions,
-                    // otherwise fall back to the first non-preview or, if none, the first available version
-                    string? defaultVersion = null;
-                    if (mgmtApiVersion is not null && resource.ResourceVersions.Contains(mgmtApiVersion))
-                    {
-                        defaultVersion = mgmtApiVersion;
-                    }
-                    else
-                    {
-                        defaultVersion = resource.ResourceVersions
-                            .FirstOrDefault(v => !v.EndsWith("preview", StringComparison.OrdinalIgnoreCase))
-                            ?? resource.ResourceVersions.FirstOrDefault();
-                    }
+                    // Choose default version: use the latest (first after descending sort) available version
+                    string? defaultVersion = resource.ResourceVersions.FirstOrDefault();
 
                     resource.DefaultResourceVersion = defaultVersion;
 
