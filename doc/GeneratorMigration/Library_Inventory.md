@@ -15,8 +15,8 @@
 
 - Total libraries: 404
 - Management Plane (MPG): 229
-  - Autorest/Swagger: 137
-  - New Emitter (TypeSpec): 92
+  - Autorest/Swagger: 136
+  - New Emitter (TypeSpec): 93
   - Old TypeSpec: 0
 - Data Plane (DPG): 144
   - Autorest/Swagger: 55
@@ -144,13 +144,14 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 55
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 92 / 92 (100%)
+**Migration Status**: 93 / 93 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
 | advisor | Azure.ResourceManager.Advisor | ✅ |
 | agricultureplatform | Azure.ResourceManager.AgriculturePlatform | ✅ |
 | appcomplianceautomation | Azure.ResourceManager.AppComplianceAutomation | ✅ |
+| appconfiguration | Azure.ResourceManager.AppConfiguration | ✅ |
 | arizeaiobservabilityeval | Azure.ResourceManager.ArizeAIObservabilityEval | ✅ |
 | artifactsigning | Azure.ResourceManager.ArtifactSigning | ✅ |
 | astronomer | Azure.ResourceManager.Astro | ✅ |
@@ -244,7 +245,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 137
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 136
 
 | Service | Library |
 | ------- | ------- |
@@ -253,7 +254,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 13
 | analysisservices | Azure.ResourceManager.Analysis |
 | apicenter | Azure.ResourceManager.ApiCenter |
 | apimanagement | Azure.ResourceManager.ApiManagement |
-| appconfiguration | Azure.ResourceManager.AppConfiguration |
 | applicationinsights | Azure.ResourceManager.ApplicationInsights |
 | appplatform | Azure.ResourceManager.AppPlatform |
 | arc-scvmm | Azure.ResourceManager.ScVmm |
