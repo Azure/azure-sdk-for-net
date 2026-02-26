@@ -338,5 +338,21 @@ namespace BasicTypeSpec
                     throw new NotSupportedException($"Not supported type {typeof(T)}");
             }
         }
+
+        /// <param name="enumerable"> The enumerable. </param>
+        /// <param name="rootNameHint"> The root element name. </param>
+        /// <param name="childNameHint"> The child element name. </param>
+        public static RequestContent FromEnumerable<T>(IEnumerable<T> enumerable, string rootNameHint, string childNameHint)
+            where T : notnull
+        {
+            XmlWriterContent content = new XmlWriterContent();
+            content.XmlWriter.WriteStartElement(rootNameHint);
+            foreach (T item in enumerable)
+            {
+                content.XmlWriter.WriteObjectValue(item, WireOptions, childNameHint);
+            }
+            content.XmlWriter.WriteEndElement();
+            return content;
+        }
     }
 }

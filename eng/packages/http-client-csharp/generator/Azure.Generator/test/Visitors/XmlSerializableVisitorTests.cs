@@ -442,6 +442,39 @@ namespace Azure.Generator.Tests.Visitors
             Assert.AreEqual(Helpers.GetExpectedFromFile(), bodyString);
         }
 
+        [Test]
+        public void AddsFromEnumerableMethodToModelSerializationExtensions()
+        {
+            var visitor = new TestXmlSerializableVisitor();
+            var inputModel = InputFactory.Model(
+                "TestXmlModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Xml);
+            MockHelpers.LoadMockGenerator(inputModels: () => [inputModel]);
+
+            var modelSerializationExtensions = new ModelSerializationExtensionsDefinition();
+
+            var methodCountBefore = modelSerializationExtensions.Methods.Count;
+
+            visitor.InvokeVisitType(modelSerializationExtensions);
+
+            var fromEnumerableMethod = modelSerializationExtensions.Methods
+                .FirstOrDefault(m => m.Signature.Name == "FromEnumerable" &&
+                                     m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public) &&
+                                     m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Static) &&
+                                     m.Signature.ReturnType?.Equals(typeof(RequestContent)) == true);
+            Assert.IsNotNull(fromEnumerableMethod, "FromEnumerable method should be added");
+            Assert.AreEqual(3, fromEnumerableMethod!.Signature.Parameters.Count, "FromEnumerable should have 3 parameters");
+            Assert.AreEqual("enumerable", fromEnumerableMethod.Signature.Parameters[0].Name);
+            Assert.AreEqual("rootNameHint", fromEnumerableMethod.Signature.Parameters[1].Name);
+            Assert.AreEqual("childNameHint", fromEnumerableMethod.Signature.Parameters[2].Name);
+            Assert.AreEqual(1, fromEnumerableMethod.Signature.GenericArguments?.Count, "Should have 1 generic argument");
+            Assert.AreEqual(1, fromEnumerableMethod.Signature.GenericParameterConstraints?.Count, "Should have 1 generic constraint");
+
+            var bodyString = fromEnumerableMethod.BodyStatements?.ToDisplayString();
+            Assert.IsNotNull(bodyString);
+            Assert.AreEqual(Helpers.GetExpectedFromFile(), bodyString);
+        }
+
         private static bool ContainsIXmlSerializableCase(MethodBodyStatement body)
         {
             return body.ToDisplayString().Contains(nameof(IXmlSerializable));
