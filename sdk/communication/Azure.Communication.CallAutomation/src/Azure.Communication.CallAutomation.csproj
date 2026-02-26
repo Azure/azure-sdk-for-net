@@ -15,6 +15,7 @@
     <NoWarn>$(NoWarn);AZC0035</NoWarn>
     <IncludeAutorestDependency>true</IncludeAutorestDependency>
     <AotCompatOptOut>true</AotCompatOptOut>
+    <HasReleaseVersion>false</HasReleaseVersion>
   </PropertyGroup>
 
   <ItemGroup>
