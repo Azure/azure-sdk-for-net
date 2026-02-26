@@ -17,6 +17,7 @@ namespace Azure.AI.Projects.OpenAI
         /// <summary> Initializes a new instance of <see cref="StructuredInputDefinition"/>. </summary>
         public StructuredInputDefinition()
         {
+            Schema = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StructuredInputDefinition"/>. </summary>
@@ -25,7 +26,7 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="schema"> The JSON schema for the structured input (optional). </param>
         /// <param name="isRequired"> Whether the input property is required when the agent is invoked. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StructuredInputDefinition(string description, BinaryData defaultValue, BinaryData schema, bool? isRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StructuredInputDefinition(string description, BinaryData defaultValue, IDictionary<string, BinaryData> schema, bool? isRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             DefaultValue = defaultValue;
@@ -67,7 +68,7 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <summary>
         /// The JSON schema for the structured input (optional).
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
@@ -91,6 +92,6 @@ namespace Azure.AI.Projects.OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Schema { get; set; }
+        public IDictionary<string, BinaryData> Schema { get; }
     }
 }

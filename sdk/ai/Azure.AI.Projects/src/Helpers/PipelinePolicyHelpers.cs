@@ -28,17 +28,35 @@ internal static partial class PipelinePolicyHelpers
         => AddQueryParameterPolicy(options, key, () => value);
 
     /// <summary>
+    /// Adds a policy to <paramref name="options"/> that ensures a query parameter with the provided/key value is present, with an optional condition to determine whether the parameter should be added for a given request.
+    /// </summary>
+    /// <param name="options"></param>
+    /// <param name="key"></param>
+    /// <param name="value"></param>
+    /// <param name="conditionToEvaluate"></param>
+    public static void AddQueryParameterPolicyIf(ClientPipelineOptions options, string key, string value, Func<PipelineRequest, bool> conditionToEvaluate)
+        => AddQueryParameterPolicy(options, key, () => value, conditionToEvaluate);
+
+    /// <summary>
     /// Adds a policy to <paramref name="options"/> that ensures a query parameter with the key is present, delay-invoking the provided value generator.
     /// </summary>
     /// <param name="options"></param>
     /// <param name="key"></param>
     /// <param name="valueGenerator"></param>
-    public static void AddQueryParameterPolicy(ClientPipelineOptions options, string key, Func<string> valueGenerator)
+    /// <param name="conditionToEvaluate">
+    /// An optional condition to determine whether the query parameter should be added for a given request.
+    /// If this is provided and evaluates to false for a request, the query parameter will not be added for that request.
+    /// </param>
+    public static void AddQueryParameterPolicy(ClientPipelineOptions options, string key, Func<string> valueGenerator, Func<PipelineRequest, bool> conditionToEvaluate = null)
     {
         options.AddPolicy(
             new GenericActionPipelinePolicy(
                 requestAction: request =>
                 {
+                    if (conditionToEvaluate?.Invoke(request) == false)
+                    {
+                        return;
+                    }
                     if (request?.Uri is Uri requestUri)
                     {
                         RawRequestUriBuilder builder = new();
@@ -57,7 +75,7 @@ internal static partial class PipelinePolicyHelpers
                 PipelinePosition.PerCall);
     }
 
-    public static void AddRequestHeaderPolicy(ClientPipelineOptions options, string key, string value, bool replaceExisting = false)
+    public static void AddRequestHeaderPolicy(ClientPipelineOptions options, string key, string value, bool replaceExisting = false, Func<PipelineRequest, bool> conditionToEvaluate = null)
         => AddRequestHeaderPolicy(options, key, () => value);
 
     public static void AddRequestHeaderPolicy(ClientPipelineOptions options, string key, Func<string> valueGenerator, bool replaceExisting = false)

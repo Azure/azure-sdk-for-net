@@ -35,6 +35,41 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SqlVmTroubleshooting>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlVirtualMachineContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SqlVmTroubleshooting)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SqlVmTroubleshooting>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlVmTroubleshooting IPersistableModel<SqlVmTroubleshooting>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SqlVmTroubleshooting>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="sqlVmTroubleshooting"> The <see cref="SqlVmTroubleshooting"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(SqlVmTroubleshooting sqlVmTroubleshooting)
+        {
+            if (sqlVmTroubleshooting == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(sqlVmTroubleshooting, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SqlVmTroubleshooting"/> from. </param>
         internal static SqlVmTroubleshooting FromResponse(Response response)
         {
@@ -188,41 +223,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 properties,
                 virtualMachineResourceId,
                 additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SqlVmTroubleshooting>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SqlVmTroubleshooting>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlVirtualMachineContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SqlVmTroubleshooting)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SqlVmTroubleshooting IPersistableModel<SqlVmTroubleshooting>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SqlVmTroubleshooting>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="sqlVmTroubleshooting"> The <see cref="SqlVmTroubleshooting"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(SqlVmTroubleshooting sqlVmTroubleshooting)
-        {
-            if (sqlVmTroubleshooting == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(sqlVmTroubleshooting, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

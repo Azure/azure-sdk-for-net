@@ -17,6 +17,7 @@ namespace Azure.AI.Projects;
 [CodeGenType("AgentObject")] internal partial class InternalAgentObject { }
 [CodeGenType("AgentProtocol")] internal readonly partial struct InternalAgentProtocol { }
 [CodeGenType("AgentVersionObject")] internal partial class InternalAgentVersionObject { }
+[CodeGenType("InternalAzureFunctionDefinitionFunction")] internal partial class AzureFunctionDefinitionFunction { }
 [CodeGenType("CreateMemoryStoreRequest")] internal partial class InternalCreateMemoryStoreRequest { }
 [CodeGenType("PromptAgentDefinition")] internal partial class InternalPromptAgentDefinition { }
 [CodeGenType("SearchMemoriesRequest")] internal partial class InternalMemorySearchOptions { }

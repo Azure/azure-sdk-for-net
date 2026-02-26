@@ -42,6 +42,41 @@ namespace Azure.ResourceManager.RecoveryServices
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesVaultData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RecoveryServicesVaultData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RecoveryServicesVaultData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RecoveryServicesVaultData IPersistableModel<RecoveryServicesVaultData>.Create(BinaryData data, ModelReaderWriterOptions options) => (RecoveryServicesVaultData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RecoveryServicesVaultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="recoveryServicesVaultData"> The <see cref="RecoveryServicesVaultData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(RecoveryServicesVaultData recoveryServicesVaultData)
+        {
+            if (recoveryServicesVaultData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(recoveryServicesVaultData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RecoveryServicesVaultData"/> from. </param>
         internal static RecoveryServicesVaultData FromResponse(Response response)
         {
@@ -239,41 +274,6 @@ namespace Azure.ResourceManager.RecoveryServices
                 identity,
                 sku,
                 eTag);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RecoveryServicesVaultData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesVaultData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(RecoveryServicesVaultData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        RecoveryServicesVaultData IPersistableModel<RecoveryServicesVaultData>.Create(BinaryData data, ModelReaderWriterOptions options) => (RecoveryServicesVaultData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RecoveryServicesVaultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="recoveryServicesVaultData"> The <see cref="RecoveryServicesVaultData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(RecoveryServicesVaultData recoveryServicesVaultData)
-        {
-            if (recoveryServicesVaultData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(recoveryServicesVaultData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

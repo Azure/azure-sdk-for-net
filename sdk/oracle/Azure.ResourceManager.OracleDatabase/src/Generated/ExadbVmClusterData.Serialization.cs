@@ -42,6 +42,41 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExadbVmClusterData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ExadbVmClusterData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ExadbVmClusterData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExadbVmClusterData IPersistableModel<ExadbVmClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ExadbVmClusterData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ExadbVmClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="exadbVmClusterData"> The <see cref="ExadbVmClusterData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ExadbVmClusterData exadbVmClusterData)
+        {
+            if (exadbVmClusterData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(exadbVmClusterData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ExadbVmClusterData"/> from. </param>
         internal static ExadbVmClusterData FromResponse(Response response)
         {
@@ -229,41 +264,6 @@ namespace Azure.ResourceManager.OracleDatabase
                 location,
                 properties,
                 zones ?? new ChangeTrackingList<string>());
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExadbVmClusterData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ExadbVmClusterData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ExadbVmClusterData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ExadbVmClusterData IPersistableModel<ExadbVmClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ExadbVmClusterData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExadbVmClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="exadbVmClusterData"> The <see cref="ExadbVmClusterData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ExadbVmClusterData exadbVmClusterData)
-        {
-            if (exadbVmClusterData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(exadbVmClusterData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

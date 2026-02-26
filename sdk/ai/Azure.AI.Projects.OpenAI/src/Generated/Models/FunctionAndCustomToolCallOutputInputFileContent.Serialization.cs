@@ -152,7 +152,7 @@ namespace Azure.AI.Projects.OpenAI
                     {
                         continue;
                     }
-                    fileUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    fileUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("file_data"u8))

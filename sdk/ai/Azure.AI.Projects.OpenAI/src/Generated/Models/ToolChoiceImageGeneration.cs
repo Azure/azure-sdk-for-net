@@ -11,7 +11,7 @@ namespace Azure.AI.Projects.OpenAI
     /// Indicates that the model should use a built-in tool to generate a response.
     /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
     /// </summary>
-    public partial class ToolChoiceImageGeneration : ToolChoiceParam
+    internal partial class ToolChoiceImageGeneration : InternalToolChoiceParam
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceImageGeneration"/>. </summary>
         public ToolChoiceImageGeneration() : base(ToolChoiceParamType.ImageGeneration)

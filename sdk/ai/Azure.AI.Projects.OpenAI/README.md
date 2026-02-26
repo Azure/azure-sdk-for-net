@@ -321,8 +321,8 @@ ResponseResult response = await responseClient.CreateResponseAsync(responseOptio
 
 ### Logging
 
-Logging ofservice requests and responses may be a useful tool for troubleshooting of the issues.
-It can be implemented through custom policy. In the example bwlow we implement `LoggingPolicy` by inheriting the `PipelinePolicy`.
+Logging of service requests and responses may be a useful tool for troubleshooting of the issues.
+It can be implemented through custom policy. In the example below we implement `LoggingPolicy` by inheriting the `PipelinePolicy`.
 This class implements two methods `Process` and `ProcessAsync`. The Azure pipeline calls the chain of policies, where the preceding
 one calls the next policy, hence by placing calls to `ProcessMessage` method before and after `ProcessNext` we can print request
 and response. The `ProcessMessage` method contains logic to show the contents of web request and response along with headers and URI paths.
@@ -390,7 +390,7 @@ public class LoggingPolicy : PipelinePolicy
         }
     }
 
-    public LoggingPolicy(){}
+    public LoggingPolicy() { }
 
     public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
@@ -437,7 +437,7 @@ After the Agent is published, you will be provided with two URLs
 - `https://<Account name>.services.ai.azure.com/api/projects/<Project Name>/applications/<Agent Name>/protocols/activityprotocol?api-version=2025-11-15-preview`
 - `https://<Account name>.services.ai.azure.com/api/projects/<Project Name>/applications/<Agent Name>/protocols/openai/responses?=2025-11-15-preview`
 
-The second URL can be usedto call responses API, we will use it to run sample.
+The second URL can be used to call responses API, we will use it to run sample.
 
 ### Use the published Agent
 The URL, returned during Agent publishing contains `/openai/responses` path and query parameter, setting `api-version`. These parts need to be removed.
@@ -457,6 +457,12 @@ Console.WriteLine(response.GetOutputText());
 
 ### Container App
 
+**Note:** This feature is in the preview, to use it, please disable the `AAIP001` warning.
+
+```C#
+#pragma warning disable AAIP001
+```
+
 [Azure Container App](https://learn.microsoft.com/azure/container-apps/ai-integration) may act as an agent if it implements the OpenAI-like protocol. Azure.AI.Projects.OpenAI allow you to interact with these applications as with regular agents. The main difference is that in this case agent needs to be created with `ContainerAppAgentDefinition`. This agent can be used in responses API as a regular agent.
 
 ```C# Snippet:Sample_CreateContainerApp_ContainerApp_Async
@@ -470,18 +476,23 @@ AgentVersion containerAgentVersion = await projectClient.Agents.CreateAgentVersi
 
 ### Hosted Agents
 
+**Note:** This feature is in the preview, to use it, please disable the `AAIP001` warning.
+
+```C#
+#pragma warning disable AAIP001
+```
+
 Hosted agents simplify the custom agent deployment on fully controlled environment [see more](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/hosted-agents).
 
 To create the hosted agent, please use the `ImageBasedHostedAgentDefinition` while creating the AgentVersion object.
 
 ```C# Snippet:Sample_ImageBasedHostedAgentDefinition_HostedAgent
-private static  ImageBasedHostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
+private static HostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
 {
-    ImageBasedHostedAgentDefinition agentDefinition = new(
+    HostedAgentDefinition agentDefinition = new(
         containerProtocolVersions: [new ProtocolVersionRecord(AgentCommunicationMethod.ActivityProtocol, "v1")],
         cpu: "1",
-        memory: "2Gi",
-        image: dockerImage
+        memory: "2Gi"
     )
     {
         EnvironmentVariables = {
@@ -490,7 +501,8 @@ private static  ImageBasedHostedAgentDefinition GetAgentDefinition(string docker
             // Optional variables, used for logging
             { "APPLICATIONINSIGHTS_CONNECTION_STRING", applicationInsightConnectionString },
             { "AGENT_PROJECT_RESOURCE_ID", projectEndpoint },
-        }
+        },
+        Image = dockerImage,
     };
     return agentDefinition;
 }
@@ -519,27 +531,32 @@ The Agent can be instructed to give the response in JSON format, compliant with 
 For example, if we have the scheme as the one below:
 
 ```C# Snippet:Sample_Schema_StructuredOutput
-private static readonly BinaryData s_calendatSchema = BinaryData.FromObjectAsJson(
-    new {
+private static readonly BinaryData s_calendarSchema = BinaryData.FromObjectAsJson(
+    new
+    {
         additionalProperties = false,
-        properties = new {
-            name = new {
+        properties = new
+        {
+            name = new
+            {
                 title = "Name",
                 type = "string"
             },
-            date = new {
+            date = new
+            {
                 description = "Date in YYYY-MM-DD format",
                 title = "Date",
                 type = "string"
             },
-            participants = new {
+            participants = new
+            {
                 items = new { type = "string" },
                 title = "Participants",
                 type = "array"
             }
         },
         required = new List<string> { "name", "date", "participants" },
-        title ="CalendarEvent",
+        title = "CalendarEvent",
         type = "object",
     }
 );
@@ -552,7 +569,7 @@ var textOptions = new ResponseTextOptions()
 {
     TextFormat = ResponseTextFormat.CreateJsonSchemaFormat(
         jsonSchemaFormatName: "Calendar",
-        jsonSchema: s_calendatSchema
+        jsonSchema: s_calendarSchema
     )
 };
 PromptAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
@@ -1272,8 +1289,8 @@ To use the OpenAPI tool, we need to Create the `OpenAPIFunctionDefinition` objec
 string filePath = GetFile();
 OpenAPIFunctionDefinition toolDefinition = new(
     name: "get_weather",
-    spec: BinaryData.FromBytes(BinaryData.FromBytes(File.ReadAllBytes(filePath))),
-    auth: new OpenAPIAnonymousAuthenticationDetails()
+    specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
+    authentication: new OpenAPIAnonymousAuthenticationDetails()
 );
 toolDefinition.Description = "Retrieve weather information for a location.";
 OpenAPITool openapiTool = new(toolDefinition);
@@ -1281,7 +1298,7 @@ OpenAPITool openapiTool = new(toolDefinition);
 PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",
-    Tools = {openapiTool}
+    Tools = { openapiTool }
 };
 AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
@@ -1310,8 +1327,8 @@ string filePath = GetFile();
 AIProjectConnection tripadvisorConnection = projectClient.Connections.GetConnection("tripadvisor");
 OpenAPIFunctionDefinition toolDefinition = new(
     name: "tripadvisor",
-    spec: BinaryData.FromBytes(BinaryData.FromBytes(File.ReadAllBytes(filePath))),
-    auth: new OpenAPIProjectConnectionAuthenticationDetails(new OpenAPIProjectConnectionSecurityScheme(
+    specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
+    authentication: new OpenAPIProjectConnectionAuthenticationDetails(new OpenAPIProjectConnectionSecurityScheme(
         projectConnectionId: tripadvisorConnection.Id
     ))
 );
@@ -1393,7 +1410,7 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are an Agent helping with browser automation tasks.\n" +
     "You can answer questions, provide information, and assist with various tasks\n" +
     "related to web browsing using the Browser Automation tool available to you.",
-    Tools = {playwrightTool}
+    Tools = { playwrightTool }
 };
 AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",

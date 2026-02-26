@@ -20,7 +20,6 @@ public partial class AzureOpenAISamples
 {
     public async Task BasicBatchProcessing()
     {
-        #region Snippet:BasicBatchProcessing
         AzureOpenAIClient azureClient = new(
             new Uri("https://your-azure-openai-resource.com"),
             new DefaultAzureCredential());
@@ -59,12 +58,10 @@ public partial class AzureOpenAISamples
 
         Console.WriteLine($"Created batch job: {batch.BatchId}");
         Console.WriteLine("Batch processing initiated. Use the batch ID to monitor progress.");
-        #endregion
     }
 
     public async Task BatchMonitoringExample()
     {
-        #region Snippet:BatchMonitoringExample
         AzureOpenAIClient azureClient = new(
             new Uri("https://your-azure-openai-resource.com"),
             new DefaultAzureCredential());
@@ -97,6 +94,5 @@ public partial class AzureOpenAISamples
         {
             Console.WriteLine($"Error retrieving batch information: {ex.Message}");
         }
-        #endregion
     }
 }

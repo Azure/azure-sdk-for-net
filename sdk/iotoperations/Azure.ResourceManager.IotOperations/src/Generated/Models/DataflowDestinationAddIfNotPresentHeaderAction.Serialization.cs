@@ -38,6 +38,29 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataflowDestinationAddIfNotPresentHeaderAction>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataflowDestinationAddIfNotPresentHeaderAction)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataflowDestinationAddIfNotPresentHeaderAction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataflowDestinationAddIfNotPresentHeaderAction IPersistableModel<DataflowDestinationAddIfNotPresentHeaderAction>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataflowDestinationAddIfNotPresentHeaderAction)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataflowDestinationAddIfNotPresentHeaderAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataflowDestinationAddIfNotPresentHeaderAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -116,28 +139,5 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
             return new DataflowDestinationAddIfNotPresentHeaderAction(actionType, additionalBinaryDataProperties, key, value);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DataflowDestinationAddIfNotPresentHeaderAction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataflowDestinationAddIfNotPresentHeaderAction>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataflowDestinationAddIfNotPresentHeaderAction)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DataflowDestinationAddIfNotPresentHeaderAction IPersistableModel<DataflowDestinationAddIfNotPresentHeaderAction>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataflowDestinationAddIfNotPresentHeaderAction)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DataflowDestinationAddIfNotPresentHeaderAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

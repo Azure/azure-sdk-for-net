@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.FileShares
                     yield break;
                 }
                 FileSharesPrivateLinkResourceListResult result = FileSharesPrivateLinkResourceListResult.FromResponse(response);
-                yield return Page<FileSharePrivateLinkResourceData>.FromValues((IReadOnlyList<FileSharePrivateLinkResourceData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<FileSharePrivateLinkResourceData>.FromValues((IReadOnlyList<FileSharePrivateLinkResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

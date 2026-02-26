@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Custom tool. </summary>
-    public partial class ToolChoiceCustom : ToolChoiceParam, IJsonModel<ToolChoiceCustom>
+    internal partial class ToolChoiceCustom : InternalToolChoiceParam, IJsonModel<ToolChoiceCustom>
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceCustom"/> for deserialization. </summary>
         internal ToolChoiceCustom()
@@ -19,7 +19,7 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ToolChoiceParam PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override InternalToolChoiceParam PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ToolChoiceCustom>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -86,7 +86,7 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ToolChoiceParam JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override InternalToolChoiceParam JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ToolChoiceCustom>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

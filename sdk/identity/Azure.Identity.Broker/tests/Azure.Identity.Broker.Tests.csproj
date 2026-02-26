@@ -27,6 +27,8 @@
     <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" LinkBase="Shared" />
     <Compile Include="..\..\Azure.Identity\tests\ConfigurableCredentials\ConfigurableCredentialTestHelper.cs" LinkBase="ConfigurableCredentials" />
     <Compile Include="..\..\Azure.Identity\tests\ConfigurableCredentials\CredentialCreationTestBase.cs" LinkBase="ConfigurableCredentials" />
+    <Compile Include="..\..\Azure.Identity\tests\ConfigurableCredentials\E2ETestSettings.cs" LinkBase="ConfigurableCredentials" />
+    <Compile Include="..\..\Azure.Identity\tests\ConfigurableCredentials\DITestClient.cs" LinkBase="ConfigurableCredentials" />
     <Compile Include="..\..\Azure.Identity\tests\ConfigurableCredentials\BrokerCredentialCreationTests.cs" LinkBase="ConfigurableCredentials" />
     <Compile Include="..\..\Azure.Identity\tests\ConfigurableCredentials\InteractiveBrowserCredentialCreationTests.cs" LinkBase="ConfigurableCredentials" />
     <Compile Include="*.cs" Exclude="*Manual*.cs" />

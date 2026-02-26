@@ -33,6 +33,29 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceNetworkingIPAccessRulesPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceNetworkingContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ServiceNetworkingIPAccessRulesPolicy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ServiceNetworkingIPAccessRulesPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServiceNetworkingIPAccessRulesPolicy IPersistableModel<ServiceNetworkingIPAccessRulesPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ServiceNetworkingIPAccessRulesPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServiceNetworkingIPAccessRulesPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -128,28 +151,5 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             }
             return new ServiceNetworkingIPAccessRulesPolicy(rules ?? new ChangeTrackingList<ServiceNetworkingIPAccessRule>(), additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ServiceNetworkingIPAccessRulesPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ServiceNetworkingIPAccessRulesPolicy>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceNetworkingContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ServiceNetworkingIPAccessRulesPolicy)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ServiceNetworkingIPAccessRulesPolicy IPersistableModel<ServiceNetworkingIPAccessRulesPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ServiceNetworkingIPAccessRulesPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

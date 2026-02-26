@@ -39,6 +39,29 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DatabaseWatcherDatastore>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDatabaseWatcherContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DatabaseWatcherDatastore)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DatabaseWatcherDatastore>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DatabaseWatcherDatastore IPersistableModel<DatabaseWatcherDatastore>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DatabaseWatcherDatastore>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DatabaseWatcherDatastore>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -145,12 +168,12 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
                 }
                 if (prop.NameEquals("kustoClusterUri"u8))
                 {
-                    kustoClusterUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    kustoClusterUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("kustoDataIngestionUri"u8))
                 {
-                    kustoDataIngestionUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    kustoDataIngestionUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("kustoDatabaseName"u8))
@@ -160,7 +183,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
                 }
                 if (prop.NameEquals("kustoManagementUrl"u8))
                 {
-                    kustoManagementUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    kustoManagementUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("kustoOfferingType"u8))
@@ -183,28 +206,5 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
                 kustoOfferingType,
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DatabaseWatcherDatastore>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DatabaseWatcherDatastore>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDatabaseWatcherContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DatabaseWatcherDatastore)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DatabaseWatcherDatastore IPersistableModel<DatabaseWatcherDatastore>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DatabaseWatcherDatastore>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

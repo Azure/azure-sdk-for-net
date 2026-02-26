@@ -70,7 +70,6 @@ public sealed class FileService
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to read directory field from tsp-location.yaml at {FilePath}", tspLocationPath);
             throw new InvalidOperationException($"Failed to read tsp-location.yaml at {tspLocationPath}: {ex.Message}", ex);
         }
     }
@@ -111,12 +110,10 @@ public sealed class FileService
 
             await File.WriteAllTextAsync(tspLocationPath, updatedYaml, cancellationToken).ConfigureAwait(false);
 
-            _logger.LogInformation("Successfully updated field {Field} to {NewValue} in {FilePath}",
-                field, value, tspLocationPath);
+            _logger.LogDebug("Updated field {Field} in {FilePath}", field, tspLocationPath);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to write field {Field} to tsp-location.yaml at {FilePath}", field, tspLocationPath);
             throw new InvalidOperationException($"Failed to write tsp-location.yaml at {tspLocationPath}: {ex.Message}", ex);
         }
     }

@@ -23,7 +23,7 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.InteractiveBrowser
     /// </summary>
     internal class InteractiveBrowserCredentialCreationTests : CredentialCreationTestBase<InteractiveBrowserCredential>
     {
-        protected override string CredentialSource => "InteractiveBrowser";
+        protected override string CredentialSource => nameof(InteractiveBrowserCredential);
 
         private static Dictionary<string, string> AllNulledEnvVars() => new()
         {

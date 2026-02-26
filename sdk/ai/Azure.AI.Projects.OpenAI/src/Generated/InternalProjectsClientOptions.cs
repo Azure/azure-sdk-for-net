@@ -9,7 +9,7 @@ namespace Azure.AI.Projects
 {
     internal partial class InternalProjectsClientOptions : ClientPipelineOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2025_11_15_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V1;
 
         /// <summary> Initializes a new instance of InternalProjectsClientOptions. </summary>
         /// <param name="version"> The service version. </param>
@@ -17,7 +17,7 @@ namespace Azure.AI.Projects
         {
             Version = version switch
             {
-                ServiceVersion.V2025_11_15_Preview => "2025-11-15-preview",
+                ServiceVersion.V1 => "v1",
                 _ => throw new NotSupportedException()
             };
         }
@@ -27,8 +27,8 @@ namespace Azure.AI.Projects
 
         internal enum ServiceVersion
         {
-            /// <summary> Microsoft Foundry API version 2025-11-15-preview. </summary>
-            V2025_11_15_Preview = 1
+            /// <summary> Microsoft Foundry API version v1. </summary>
+            V1 = 1
         }
     }
 }

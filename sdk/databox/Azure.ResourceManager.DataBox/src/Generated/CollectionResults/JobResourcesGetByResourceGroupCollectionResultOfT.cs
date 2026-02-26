@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataBox
                     yield break;
                 }
                 DataBoxJobListResult result = DataBoxJobListResult.FromResponse(response);
-                yield return Page<DataBoxJobData>.FromValues((IReadOnlyList<DataBoxJobData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DataBoxJobData>.FromValues((IReadOnlyList<DataBoxJobData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

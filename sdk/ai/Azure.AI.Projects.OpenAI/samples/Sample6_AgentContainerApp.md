@@ -1,5 +1,11 @@
 # Sample of using Azure Container App with Agent in Azure.AI.Projects.OpenAI.
 
+**Note:** This feature is in the preview, to use it, please disable the `AAIP001` warning.
+
+```C#
+#pragma warning disable AAIP001
+```
+
 In this example we will demonstrate how to use [Azure Container App](https://learn.microsoft.com/azure/container-apps/ai-integration) in Azure.AI.Agents
 
 1. First, we need to create project client and read the environment variables, which will be used in the next steps.
@@ -100,6 +106,6 @@ projectClient.Agents.DeleteAgentVersion(agentName: containerAgentVersion.Name, a
 
 Asynchronous sample:
 ```C# Snippet:Sample_Cleanup_ContainerApp_Async
-await projectClient.OpenAI.Conversations.DeleteConversationAsync(conversationId:conversation.Id);
+await projectClient.OpenAI.Conversations.DeleteConversationAsync(conversationId: conversation.Id);
 await projectClient.Agents.DeleteAgentVersionAsync(agentName: containerAgentVersion.Name, agentVersion: containerAgentVersion.Version);
 ```

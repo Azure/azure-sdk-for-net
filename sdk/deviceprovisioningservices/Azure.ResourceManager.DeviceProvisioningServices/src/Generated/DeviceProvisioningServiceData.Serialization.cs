@@ -42,6 +42,41 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeviceProvisioningServiceData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDeviceProvisioningServicesContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DeviceProvisioningServiceData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DeviceProvisioningServiceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeviceProvisioningServiceData IPersistableModel<DeviceProvisioningServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DeviceProvisioningServiceData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DeviceProvisioningServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="deviceProvisioningServiceData"> The <see cref="DeviceProvisioningServiceData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DeviceProvisioningServiceData deviceProvisioningServiceData)
+        {
+            if (deviceProvisioningServiceData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(deviceProvisioningServiceData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DeviceProvisioningServiceData"/> from. </param>
         internal static DeviceProvisioningServiceData FromResponse(Response response)
         {
@@ -249,41 +284,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 properties,
                 sku,
                 identity);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DeviceProvisioningServiceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DeviceProvisioningServiceData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDeviceProvisioningServicesContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DeviceProvisioningServiceData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DeviceProvisioningServiceData IPersistableModel<DeviceProvisioningServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DeviceProvisioningServiceData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DeviceProvisioningServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="deviceProvisioningServiceData"> The <see cref="DeviceProvisioningServiceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DeviceProvisioningServiceData deviceProvisioningServiceData)
-        {
-            if (deviceProvisioningServiceData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(deviceProvisioningServiceData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

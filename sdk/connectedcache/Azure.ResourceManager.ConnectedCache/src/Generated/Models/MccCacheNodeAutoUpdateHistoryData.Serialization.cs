@@ -42,6 +42,29 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MccCacheNodeAutoUpdateHistoryData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConnectedCacheContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MccCacheNodeAutoUpdateHistoryData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MccCacheNodeAutoUpdateHistoryData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MccCacheNodeAutoUpdateHistoryData IPersistableModel<MccCacheNodeAutoUpdateHistoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => (MccCacheNodeAutoUpdateHistoryData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MccCacheNodeAutoUpdateHistoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MccCacheNodeAutoUpdateHistoryData"/> from. </param>
         internal static MccCacheNodeAutoUpdateHistoryData FromResponse(Response response)
         {
@@ -192,28 +215,5 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 location,
                 properties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MccCacheNodeAutoUpdateHistoryData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MccCacheNodeAutoUpdateHistoryData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConnectedCacheContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MccCacheNodeAutoUpdateHistoryData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MccCacheNodeAutoUpdateHistoryData IPersistableModel<MccCacheNodeAutoUpdateHistoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => (MccCacheNodeAutoUpdateHistoryData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MccCacheNodeAutoUpdateHistoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

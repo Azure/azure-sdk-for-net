@@ -2,11 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Reflection;
 using Azure.Core;
+using Azure.Identity.Tests.ConfigurableCredentials;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests.ConfigurableCredentials.ApiKey
@@ -150,6 +154,129 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.ApiKey
             ConfigurableCredential credential = CreateFromConfig(config);
 
             Assert.AreEqual(longKey, GetApiKeyToken(credential).Token);
+        }
+
+        [Test]
+        public void CreatesCredentialFromConfiguration_WithAzureCredential_E2E()
+        {
+            var config = new ConfigurationBuilder()
+                .AddInMemoryCollection(new Dictionary<string, string>
+                {
+                    ["MyClient:Endpoint"] = "https://test.example.com",
+                    ["MyClient:Credential:CredentialSource"] = "ApiKey",
+                    ["MyClient:Credential:Key"] = "test-api-key",
+                })
+                .Build();
+
+            var settings = config.GetAzureClientSettings<E2ETestSettings>("MyClient");
+            Assert.IsNotNull(settings.CredentialProvider, "CredentialProvider should be set for ApiKey");
+            Assert.IsInstanceOf<ConfigurableCredential>(settings.CredentialProvider, "CredentialProvider should be ConfigurableCredential for ApiKey");
+
+            var credential = (ConfigurableCredential)settings.CredentialProvider;
+            Assert.IsNull(GetTokenCredential(credential), "ApiKey credential should not have an inner TokenCredential");
+            Assert.AreEqual("test-api-key", GetApiKeyToken(credential).Token);
+
+            var policy = AuthenticationPolicy.Create(settings);
+            Assert.IsNotNull(policy);
+        }
+
+        [Test]
+        public void CreatesCredentialFromConfiguration_WithoutWithAzureCredential_E2E()
+        {
+            var config = new ConfigurationBuilder()
+                .AddInMemoryCollection(new Dictionary<string, string>
+                {
+                    ["MyClient:Endpoint"] = "https://test.example.com",
+                    ["MyClient:Credential:CredentialSource"] = "ApiKey",
+                    ["MyClient:Credential:Key"] = "test-api-key",
+                })
+                .Build();
+
+            var settings = config.GetClientSettings<E2ETestSettings>("MyClient");
+            Assert.IsNull(settings.CredentialProvider, "CredentialProvider should be null without WithAzureCredential");
+
+            var policy = AuthenticationPolicy.Create(settings);
+            Assert.IsNotNull(policy);
+        }
+
+        [Test]
+        public void AddClient_WithAzureCredential_ResolvesClient()
+        {
+            HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+            builder.Configuration.AddInMemoryCollection(new Dictionary<string, string>
+            {
+                ["MyClient:Endpoint"] = "https://test.example.com",
+                ["MyClient:Credential:CredentialSource"] = "ApiKeyCredential",
+                ["MyClient:Credential:Key"] = "test-api-key",
+            });
+
+            builder.AddClient<DITestClient, E2ETestSettings>("MyClient").WithAzureCredential();
+
+            IHost host = builder.Build();
+            var client = host.Services.GetRequiredService<DITestClient>();
+
+            Assert.IsNotNull(client);
+            Assert.IsNotNull(client.Endpoint);
+            Assert.IsNotNull(client.Credential);
+            Assert.IsInstanceOf<ConfigurableCredential>(client.Credential);
+        }
+
+        [Test]
+        public void AddClient_WithoutWithAzureCredential_ThrowsOnResolve()
+        {
+            HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+            builder.Configuration.AddInMemoryCollection(new Dictionary<string, string>
+            {
+                ["MyClient:Endpoint"] = "https://test.example.com",
+                ["MyClient:Credential:CredentialSource"] = "ApiKeyCredential",
+                ["MyClient:Credential:Key"] = "test-api-key",
+            });
+
+            builder.AddClient<DITestClient, E2ETestSettings>("MyClient");
+
+            IHost host = builder.Build();
+            var ex = Assert.Throws<ArgumentNullException>(() => host.Services.GetRequiredService<DITestClient>());
+            Assert.That(ex.ParamName, Is.EqualTo("credential"));
+        }
+
+        [Test]
+        public void AddKeyedClient_WithAzureCredential_ResolvesClient()
+        {
+            HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+            builder.Configuration.AddInMemoryCollection(new Dictionary<string, string>
+            {
+                ["MyClient:Endpoint"] = "https://test.example.com",
+                ["MyClient:Credential:CredentialSource"] = "ApiKeyCredential",
+                ["MyClient:Credential:Key"] = "test-api-key",
+            });
+
+            builder.AddKeyedClient<DITestClient, E2ETestSettings>("myKey", "MyClient").WithAzureCredential();
+
+            IHost host = builder.Build();
+            var client = host.Services.GetRequiredKeyedService<DITestClient>("myKey");
+
+            Assert.IsNotNull(client);
+            Assert.IsNotNull(client.Endpoint);
+            Assert.IsNotNull(client.Credential);
+            Assert.IsInstanceOf<ConfigurableCredential>(client.Credential);
+        }
+
+        [Test]
+        public void AddKeyedClient_WithoutWithAzureCredential_ThrowsOnResolve()
+        {
+            HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+            builder.Configuration.AddInMemoryCollection(new Dictionary<string, string>
+            {
+                ["MyClient:Endpoint"] = "https://test.example.com",
+                ["MyClient:Credential:CredentialSource"] = "ApiKeyCredential",
+                ["MyClient:Credential:Key"] = "test-api-key",
+            });
+
+            builder.AddKeyedClient<DITestClient, E2ETestSettings>("myKey", "MyClient");
+
+            IHost host = builder.Build();
+            var ex = Assert.Throws<ArgumentNullException>(() => host.Services.GetRequiredKeyedService<DITestClient>("myKey"));
+            Assert.That(ex.ParamName, Is.EqualTo("credential"));
         }
     }
 }

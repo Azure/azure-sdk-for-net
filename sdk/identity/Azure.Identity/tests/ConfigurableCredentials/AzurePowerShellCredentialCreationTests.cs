@@ -18,7 +18,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.AzurePowerShell
     /// </summary>
     internal class AzurePowerShellCredentialCreationTests : CredentialCreationTestBase<AzurePowerShellCredential>
     {
-        protected override string CredentialSource => "AzurePowerShell";
+        protected override string CredentialSource => nameof(AzurePowerShellCredential);
 
         private static Dictionary<string, string> AllNulledEnvVars() => new()
         {

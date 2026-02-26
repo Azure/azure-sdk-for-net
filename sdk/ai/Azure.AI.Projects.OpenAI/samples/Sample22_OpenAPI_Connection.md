@@ -26,8 +26,8 @@ string filePath = GetFile();
 AIProjectConnection tripadvisorConnection = projectClient.Connections.GetConnection("tripadvisor");
 OpenAPIFunctionDefinition toolDefinition = new(
     name: "tripadvisor",
-    spec: BinaryData.FromBytes(BinaryData.FromBytes(File.ReadAllBytes(filePath))),
-    auth: new OpenAPIProjectConnectionAuthenticationDetails(new OpenAPIProjectConnectionSecurityScheme(
+    specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
+    authentication: new OpenAPIProjectConnectionAuthenticationDetails(new OpenAPIProjectConnectionSecurityScheme(
         projectConnectionId: tripadvisorConnection.Id
     ))
 );
@@ -50,8 +50,8 @@ string filePath = GetFile();
 AIProjectConnection tripadvisorConnection = await projectClient.Connections.GetConnectionAsync("tripadvisor");
 OpenAPIFunctionDefinition toolDefinition = new(
     name: "tripadvisor",
-    spec: BinaryData.FromBytes(BinaryData.FromBytes(File.ReadAllBytes(filePath))),
-    auth:  new OpenAPIProjectConnectionAuthenticationDetails(new OpenAPIProjectConnectionSecurityScheme(
+    specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
+    authentication: new OpenAPIProjectConnectionAuthenticationDetails(new OpenAPIProjectConnectionSecurityScheme(
         projectConnectionId: tripadvisorConnection.Id
     ))
 );
@@ -61,7 +61,7 @@ OpenAPITool openapiTool = new(toolDefinition);
 PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",
-    Tools = {openapiTool}
+    Tools = { openapiTool }
 };
 AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Quota
                     yield break;
                 }
                 SubmittedResourceRequestStatusList result = SubmittedResourceRequestStatusList.FromResponse(response);
-                yield return Page<GroupQuotaRequestStatusData>.FromValues((IReadOnlyList<GroupQuotaRequestStatusData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<GroupQuotaRequestStatusData>.FromValues((IReadOnlyList<GroupQuotaRequestStatusData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

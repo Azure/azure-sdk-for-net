@@ -42,6 +42,41 @@ namespace Azure.ResourceManager.PowerBIDedicated
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AutoScaleVCoreData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPowerBIDedicatedContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AutoScaleVCoreData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AutoScaleVCoreData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AutoScaleVCoreData IPersistableModel<AutoScaleVCoreData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AutoScaleVCoreData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AutoScaleVCoreData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="autoScaleVCoreData"> The <see cref="AutoScaleVCoreData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(AutoScaleVCoreData autoScaleVCoreData)
+        {
+            if (autoScaleVCoreData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(autoScaleVCoreData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AutoScaleVCoreData"/> from. </param>
         internal static AutoScaleVCoreData FromResponse(Response response)
         {
@@ -200,41 +235,6 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 location,
                 properties,
                 sku);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AutoScaleVCoreData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AutoScaleVCoreData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPowerBIDedicatedContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AutoScaleVCoreData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AutoScaleVCoreData IPersistableModel<AutoScaleVCoreData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AutoScaleVCoreData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AutoScaleVCoreData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="autoScaleVCoreData"> The <see cref="AutoScaleVCoreData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(AutoScaleVCoreData autoScaleVCoreData)
-        {
-            if (autoScaleVCoreData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(autoScaleVCoreData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

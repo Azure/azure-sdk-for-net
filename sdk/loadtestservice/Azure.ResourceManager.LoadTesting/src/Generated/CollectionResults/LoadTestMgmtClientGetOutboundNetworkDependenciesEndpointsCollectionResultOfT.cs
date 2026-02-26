@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.LoadTesting
                     yield break;
                 }
                 PagedOutboundEnvironmentEndpoint result = PagedOutboundEnvironmentEndpoint.FromResponse(response);
-                yield return Page<LoadTestingOutboundEnvironmentEndpoint>.FromValues((IReadOnlyList<LoadTestingOutboundEnvironmentEndpoint>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<LoadTestingOutboundEnvironmentEndpoint>.FromValues((IReadOnlyList<LoadTestingOutboundEnvironmentEndpoint>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

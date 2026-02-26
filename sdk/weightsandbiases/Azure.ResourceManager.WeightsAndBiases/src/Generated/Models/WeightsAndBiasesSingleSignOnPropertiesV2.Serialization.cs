@@ -38,6 +38,29 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WeightsAndBiasesSingleSignOnPropertiesV2>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWeightsAndBiasesContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(WeightsAndBiasesSingleSignOnPropertiesV2)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<WeightsAndBiasesSingleSignOnPropertiesV2>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WeightsAndBiasesSingleSignOnPropertiesV2 IPersistableModel<WeightsAndBiasesSingleSignOnPropertiesV2>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WeightsAndBiasesSingleSignOnPropertiesV2>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WeightsAndBiasesSingleSignOnPropertiesV2>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -196,28 +219,5 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
                 aadDomains ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WeightsAndBiasesSingleSignOnPropertiesV2>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WeightsAndBiasesSingleSignOnPropertiesV2>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWeightsAndBiasesContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(WeightsAndBiasesSingleSignOnPropertiesV2)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        WeightsAndBiasesSingleSignOnPropertiesV2 IPersistableModel<WeightsAndBiasesSingleSignOnPropertiesV2>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<WeightsAndBiasesSingleSignOnPropertiesV2>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
