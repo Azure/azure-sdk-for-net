@@ -12,8 +12,8 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using Azure.AI.Projects;
-using Azure.AI.Projects.OpenAI;
-using Azure.AI.Projects.OpenAI.Tests.Utils;
+using Azure.AI.Extensions.OpenAI;
+using Azure.AI.Extensions.OpenAI.Tests.Utils;
 using Azure.Core.Pipeline;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
@@ -21,7 +21,7 @@ using NUnit.Framework;
 using OpenAI;
 using OpenAI.Responses;
 
-namespace Azure.AI.Projects.OpenAI.Tests;
+namespace Azure.AI.Extensions.OpenAI.Tests;
 
 [LiveParallelizable(ParallelScope.All)]
 public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnvironment>

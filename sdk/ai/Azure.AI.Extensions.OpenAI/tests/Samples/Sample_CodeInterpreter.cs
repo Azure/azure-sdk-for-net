@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
-using Azure.AI.Projects.OpenAI;
+using Azure.AI.Extensions.OpenAI;
 using OpenAI;
 using OpenAI.Responses;
 
-namespace Azure.AI.Projects.OpenAI.Tests.Samples;
+namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
 public class Sample_CodeInterpreter : ProjectsOpenAITestBase
 {

@@ -3,12 +3,12 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.AI.Projects.OpenAI;
+using Azure.AI.Extensions.OpenAI;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.AI.Projects.OpenAI.Tests.Samples;
+namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
 public class Sample_conversation_CRUD : ProjectsOpenAITestBase
 {

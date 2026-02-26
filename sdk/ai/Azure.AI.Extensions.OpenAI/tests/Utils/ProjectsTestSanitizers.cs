@@ -4,7 +4,7 @@
 using Microsoft.ClientModel.TestFramework;
 using Microsoft.ClientModel.TestFramework.TestProxy.Admin;
 
-namespace Azure.AI.Projects.OpenAI.Tests.Utils
+namespace Azure.AI.Extensions.OpenAI.Tests.Utils
 {
     /// <summary>
     /// Provides sanitization configuration for Azure.AI.Projects test recordings.

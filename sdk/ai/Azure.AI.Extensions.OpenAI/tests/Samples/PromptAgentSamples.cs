@@ -10,7 +10,7 @@ using NUnit.Framework;
 using OpenAI.Responses;
 using System.ClientModel;
 
-namespace Azure.AI.Projects.OpenAI.Tests.Samples;
+namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
 public class PromptAgentSamples : ProjectsOpenAITestBase
 {

@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.AI.Projects.OpenAI;
+using Azure.AI.Extensions.OpenAI;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI;
@@ -16,7 +16,7 @@ using OpenAI.Files;
 using OpenAI.Responses;
 using OpenAI.VectorStores;
 
-namespace Azure.AI.Projects.OpenAI.Tests;
+namespace Azure.AI.Extensions.OpenAI.Tests;
 
 /// <summary>
 /// Many of these tests are adapted from https://github.com/openai/openai-dotnet/tree/main/tests/Responses.

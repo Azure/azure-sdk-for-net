@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-//namespace Azure.AI.Projects.OpenAI.Telemetry;
+//namespace Azure.AI.Extensions.OpenAI.Telemetry;
 
 //internal class OpenTelemetryConstants
 //{
@@ -68,7 +68,7 @@
 //    public const string EventNameUserMessage = "gen_ai.user.message";
 //    public const string EventNameAssistantMessage = "gen_ai.assistant.message";
 
-//    public const string ClientName = "Azure.AI.Projects.OpenAI.AgentClient";
+//    public const string ClientName = "Azure.AI.Extensions.OpenAI.AgentClient";
 //    public const string EnableOpenTelemetrySwitch = "Azure.Experimental.EnableActivitySource";
 //    public const string TraceContentsSwitch = "Azure.Experimental.TraceGenAIMessageContent";
 //    public const string TraceContentsEnvironmentVariable = "OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT";

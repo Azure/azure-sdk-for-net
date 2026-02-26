@@ -8,7 +8,7 @@ using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;
 
-namespace Azure.AI.Projects.OpenAI.Tests.Samples;
+namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
 public class Sample_CustomBingSearch : ProjectsOpenAITestBase
 {

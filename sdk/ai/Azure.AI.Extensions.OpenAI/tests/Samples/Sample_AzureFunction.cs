@@ -10,7 +10,7 @@ using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;
 
-namespace Azure.AI.Projects.OpenAI.Tests.Samples;
+namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
 # region Snippet:Sample_AzureFunctionTool_AzureFunction
 public class Sample_AzureFunction : ProjectsOpenAITestBase

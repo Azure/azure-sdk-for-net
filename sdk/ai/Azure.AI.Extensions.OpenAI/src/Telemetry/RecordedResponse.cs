@@ -3,7 +3,7 @@
 
 //using System.Collections.Generic;
 
-//namespace Azure.AI.Projects.OpenAI.Telemetry;
+//namespace Azure.AI.Extensions.OpenAI.Telemetry;
 
 #nullable enable
 //internal class RecordedResponse

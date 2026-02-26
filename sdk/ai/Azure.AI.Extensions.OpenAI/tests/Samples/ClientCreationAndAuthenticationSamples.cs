@@ -8,7 +8,7 @@ using NUnit.Framework;
 using OpenAI.Files;
 using OpenAI.VectorStores;
 
-namespace Azure.AI.Projects.OpenAI.Tests.Samples;
+namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
 [Ignore("Samples represented as tests only for validation of compilation.")]
 public class ClientCreationAndAuthenticationSamples : ProjectsOpenAITestBase

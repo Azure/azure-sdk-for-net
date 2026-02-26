@@ -14,7 +14,7 @@ using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;
 
-namespace Azure.AI.Projects.OpenAI.Tests.Samples;
+namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
 #region Snippet:Sample_LoggingPolicy_AgentsLogging
 public class LoggingPolicy : PipelinePolicy

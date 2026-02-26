@@ -14,6 +14,16 @@ namespace Azure.AI.Extensions.OpenAI
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AgentReference"/>. </summary>
+        /// <param name="name"> The name of the agent. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public AgentReference(string name)
+        {
+            Argument.AssertNotNull(name, nameof(name));
+
+            Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AgentReference"/>. </summary>
         /// <param name="type"></param>
         /// <param name="name"> The name of the agent. </param>
         /// <param name="version"> The version identifier of the agent. </param>
@@ -31,5 +41,8 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> The name of the agent. </summary>
         public string Name { get; set; }
+
+        /// <summary> The version identifier of the agent. </summary>
+        public string Version { get; set; }
     }
 }

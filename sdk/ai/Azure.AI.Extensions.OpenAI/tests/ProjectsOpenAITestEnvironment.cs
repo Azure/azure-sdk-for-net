@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 
-namespace Azure.AI.Projects.OpenAI.Tests
+namespace Azure.AI.Extensions.OpenAI.Tests
 {
     public class ProjectsOpenAITestEnvironment : TestEnvironment
     {

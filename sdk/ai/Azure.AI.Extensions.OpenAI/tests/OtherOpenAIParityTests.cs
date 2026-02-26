@@ -9,7 +9,7 @@ using OpenAI.Files;
 using OpenAI.Responses;
 using OpenAI.VectorStores;
 
-namespace Azure.AI.Projects.OpenAI.Tests;
+namespace Azure.AI.Extensions.OpenAI.Tests;
 
 public class OtherOpenAIParityTests : ProjectsOpenAITestBase
 {

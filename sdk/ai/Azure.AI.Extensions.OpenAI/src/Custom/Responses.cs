@@ -6,9 +6,9 @@
 //using System.Collections.Generic;
 //using System.Threading;
 //using System.Threading.Tasks;
-//using Azure.AI.Projects.OpenAI.Models;
+//using Azure.AI.Extensions.OpenAI.Models;
 
-//namespace Azure.AI.Projects.OpenAI;
+//namespace Azure.AI.Extensions.OpenAI;
 
 //public partial class Responses
 //{

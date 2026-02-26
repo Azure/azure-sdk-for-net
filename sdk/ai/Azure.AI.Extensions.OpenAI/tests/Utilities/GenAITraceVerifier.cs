@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text.Json;
 
-namespace Azure.AI.Projects.OpenAI.Tests.Utilities
+namespace Azure.AI.Extensions.OpenAI.Tests.Utilities
 {
     public class GenAiTraceVerifier
     {

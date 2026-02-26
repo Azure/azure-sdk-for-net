@@ -13,7 +13,7 @@ using NUnit.Framework;
 using OpenAI;
 using OpenAI.Responses;
 
-namespace Azure.AI.Projects.OpenAI.Tests.Samples;
+namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
 # region Snippet:Sample_CustomHeader_ImageGeneration
 internal class HeaderPolicy(string image_deployment) : PipelinePolicy

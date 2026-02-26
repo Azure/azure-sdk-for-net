@@ -11,9 +11,9 @@
 //using System.Threading;
 //using System.Threading.Tasks;
 //using Azure.Core;
-//using static Azure.AI.Projects.OpenAI.Telemetry.OpenTelemetryConstants;
+//using static Azure.AI.Extensions.OpenAI.Telemetry.OpenTelemetryConstants;
 
-//namespace Azure.AI.Projects.OpenAI.Telemetry;
+//namespace Azure.AI.Extensions.OpenAI.Telemetry;
 
 //internal class OpenTelemetryScope : IDisposable
 //{

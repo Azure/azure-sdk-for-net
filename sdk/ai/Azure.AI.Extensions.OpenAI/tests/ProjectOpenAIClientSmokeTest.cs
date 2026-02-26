@@ -9,7 +9,7 @@ using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;
 
-namespace Azure.AI.Projects.OpenAI.Tests;
+namespace Azure.AI.Extensions.OpenAI.Tests;
 
 [Category("Smoke")]
 public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase

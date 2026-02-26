@@ -11,7 +11,7 @@ using OpenAI.Files;
 using OpenAI.Responses;
 using OpenAI.VectorStores;
 
-namespace Azure.AI.Projects.OpenAI.Tests.Samples;
+namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
 public class Sample_FileSearch_Streaming : ProjectsOpenAITestBase
 {

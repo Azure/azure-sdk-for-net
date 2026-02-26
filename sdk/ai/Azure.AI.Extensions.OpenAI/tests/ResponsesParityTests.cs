@@ -10,14 +10,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
-using Azure.AI.Projects.OpenAI;
+using Azure.AI.Extensions.OpenAI;
 using OpenAI.Files;
 using OpenAI.Responses;
 using OpenAI.VectorStores;
 // We need this alias to avoid conflict with internal enum MessageRole.
 using RealOpenAI = OpenAI;
 
-namespace Azure.AI.Projects.OpenAI.Tests;
+namespace Azure.AI.Extensions.OpenAI.Tests;
 
 /// <summary>
 /// Many of these tests are adapted from https://github.com/openai/openai-dotnet/tree/main/tests/Responses.
