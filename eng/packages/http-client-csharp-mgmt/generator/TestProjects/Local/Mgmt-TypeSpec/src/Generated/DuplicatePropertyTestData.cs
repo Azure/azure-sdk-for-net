@@ -73,7 +73,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// Similar to accessKeysAuthentication in the original RedisEnterprise issue.
         /// </summary>
         [WirePath("properties.overridableProperty")]
-        public string OverridableProperty
+        public virtual string OverridableProperty
         {
             get
             {
