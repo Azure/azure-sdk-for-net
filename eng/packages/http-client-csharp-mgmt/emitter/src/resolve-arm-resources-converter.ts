@@ -557,15 +557,8 @@ function getExplicitResourceNameFromOperations(
         }
       }
       // For builtInResourceOperation: args are (ParentResource, BuiltInResource, kind, ResourceName) — index 3
-      if (name === builtInResourceOperationName) {
-        if (
-          decorator.args.length > 3 &&
-          decorator.args[3].jsValue &&
-          typeof decorator.args[3].jsValue === "string" &&
-          (decorator.args[3].jsValue as string).length > 0
-        ) {
-          return decorator.args[3].jsValue as string;
-        }
+      if (name === builtInResourceOperationName && decorator.args.length > 3) {
+        return decorator.args[3].jsValue as string;
       }
     }
   }
