@@ -10,25 +10,30 @@ namespace Azure.AI.Extensions.OpenAI
     internal partial class InternalOutputItemCompactionBody : AgentResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="InternalOutputItemCompactionBody"/>. </summary>
+        /// <param name="id"> The unique ID of the compaction item. </param>
         /// <param name="encryptedContent"> The encrypted content that was produced by compaction. </param>
-        internal InternalOutputItemCompactionBody(string encryptedContent) : base(AgentResponseItemKind.Compaction)
+        internal InternalOutputItemCompactionBody(string id, string encryptedContent) : base("compaction")
         {
+            _id = id;
             EncryptedContent = encryptedContent;
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalOutputItemCompactionBody"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="id"></param>
         /// <param name="agentReference"> The agent that created the item. </param>
         /// <param name="responseId"> The response on which the item is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="id"> The unique ID of the compaction item. </param>
         /// <param name="encryptedContent"> The encrypted content that was produced by compaction. </param>
         /// <param name="createdBy"> The identifier of the actor that created the item. </param>
-        internal InternalOutputItemCompactionBody(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string encryptedContent, string createdBy) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal InternalOutputItemCompactionBody(AgentResponseItemKind @type, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string encryptedContent, string createdBy) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             EncryptedContent = encryptedContent;
             CreatedBy = createdBy;
         }
+
+        /// <summary> The unique ID of the compaction item. </summary>
+        public new string Id => _id ?? default;
 
         /// <summary> The encrypted content that was produced by compaction. </summary>
         public string EncryptedContent { get; }

@@ -7,11 +7,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    /// <summary>
-    /// A single memory item stored in the memory store, containing content and metadata.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ChatSummaryMemoryItem"/>.
-    /// </summary>
-    public abstract partial class MemoryItem
+    /// <summary> A single memory item stored in the memory store, containing content and metadata. </summary>
+    public partial class MemoryItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -22,7 +19,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
         /// <param name="content"> The content of the memory. </param>
         /// <param name="kind"> The kind of the memory item. </param>
-        private protected MemoryItem(string memoryId, DateTimeOffset updatedAt, string scope, string content, MemoryItemKind kind)
+        internal MemoryItem(string memoryId, DateTimeOffset updatedAt, string scope, string content, MemoryItemKind kind)
         {
             MemoryId = memoryId;
             UpdatedAt = updatedAt;

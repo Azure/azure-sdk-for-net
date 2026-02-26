@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Shell tool call output. </summary>
-    internal partial class InputItemFunctionShellCallOutputItemParam : InputItem, IJsonModel<InputItemFunctionShellCallOutputItemParam>
+    public partial class InputItemFunctionShellCallOutputItemParam : InputItem, IJsonModel<InputItemFunctionShellCallOutputItemParam>
     {
         /// <summary> Initializes a new instance of <see cref="InputItemFunctionShellCallOutputItemParam"/> for deserialization. </summary>
         internal InputItemFunctionShellCallOutputItemParam()
@@ -90,6 +90,11 @@ namespace Azure.AI.Extensions.OpenAI
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToSerialString());
+            }
             if (Optional.IsDefined(MaxOutputLength))
             {
                 writer.WritePropertyName("max_output_length"u8);
@@ -127,6 +132,7 @@ namespace Azure.AI.Extensions.OpenAI
             string id = default;
             string callId = default;
             IList<FunctionShellCallOutputContentParam> output = default;
+            FunctionShellCallItemStatus? status = default;
             long? maxOutputLength = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -160,6 +166,16 @@ namespace Azure.AI.Extensions.OpenAI
                     output = array;
                     continue;
                 }
+                if (prop.NameEquals("status"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        status = null;
+                        continue;
+                    }
+                    status = prop.Value.GetString().ToFunctionShellCallItemStatus();
+                    continue;
+                }
                 if (prop.NameEquals("max_output_length"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -181,6 +197,7 @@ namespace Azure.AI.Extensions.OpenAI
                 id,
                 callId,
                 output,
+                status,
                 maxOutputLength);
         }
     }

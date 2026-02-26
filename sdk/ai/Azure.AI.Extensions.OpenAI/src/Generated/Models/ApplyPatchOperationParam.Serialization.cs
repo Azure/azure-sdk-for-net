@@ -13,7 +13,7 @@ namespace Azure.AI.Extensions.OpenAI
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ApplyPatchDeleteFileOperationParam"/> and <see cref="ApplyPatchUpdateFileOperationParam"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownApplyPatchOperationParam))]
-    internal abstract partial class ApplyPatchOperationParam : IJsonModel<ApplyPatchOperationParam>
+    public abstract partial class ApplyPatchOperationParam : IJsonModel<ApplyPatchOperationParam>
     {
         /// <summary> Initializes a new instance of <see cref="ApplyPatchOperationParam"/> for deserialization. </summary>
         internal ApplyPatchOperationParam()

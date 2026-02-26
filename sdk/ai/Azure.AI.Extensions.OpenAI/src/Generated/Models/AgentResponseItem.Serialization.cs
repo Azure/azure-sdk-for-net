@@ -4,16 +4,13 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    /// <summary>
-    /// The AgentResponseItem.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentStructuredOutputsResponseItem"/>, <see cref="AgentWorkflowPreviewActionResponseItem"/>, <see cref="OAuthConsentRequestResponseItem"/>, <see cref="MemorySearchToolCallResponseItem"/>, <see cref="BingGroundingToolCall"/>, <see cref="BingGroundingToolCallOutput"/>, <see cref="SharepointGroundingToolCall"/>, <see cref="SharepointGroundingToolCallOutput"/>, <see cref="AzureAISearchToolCall"/>, <see cref="AzureAISearchToolCallOutput"/>, <see cref="BingCustomSearchToolCall"/>, <see cref="BingCustomSearchToolCallOutput"/>, <see cref="OpenApiToolCall"/>, <see cref="OpenApiToolCallOutput"/>, <see cref="BrowserAutomationToolCall"/>, <see cref="BrowserAutomationToolCallOutput"/>, <see cref="FabricDataAgentToolCall"/>, <see cref="FabricDataAgentToolCallOutput"/>, <see cref="AzureFunctionToolCall"/>, <see cref="AzureFunctionToolCallOutput"/>, <see cref="A2AToolCall"/>, and <see cref="A2AToolCallOutput"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownAgentResponseItem))]
-    public abstract partial class AgentResponseItem : IJsonModel<AgentResponseItem>
+    /// <summary> The AgentResponseItem. </summary>
+    public partial class AgentResponseItem : IJsonModel<AgentResponseItem>
     {
         /// <summary> Initializes a new instance of <see cref="AgentResponseItem"/> for deserialization. </summary>
         internal AgentResponseItem()
@@ -137,93 +134,43 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 return null;
             }
-            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
+            AgentResponseItemKind @type = default;
+            string id = default;
+            AgentReference agentReference = default;
+            string responseId = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (prop.NameEquals("type"u8))
                 {
-                    case "structured_outputs":
-                        return AgentStructuredOutputsResponseItem.DeserializeAgentStructuredOutputsResponseItem(element, options);
-                    case "workflow_action":
-                        return AgentWorkflowPreviewActionResponseItem.DeserializeAgentWorkflowPreviewActionResponseItem(element, options);
-                    case "oauth_consent_request":
-                        return OAuthConsentRequestResponseItem.DeserializeOAuthConsentRequestResponseItem(element, options);
-                    case "memory_search_call":
-                        return MemorySearchToolCallResponseItem.DeserializeMemorySearchToolCallResponseItem(element, options);
-                    case "bing_grounding_call":
-                        return BingGroundingToolCall.DeserializeBingGroundingToolCall(element, options);
-                    case "bing_grounding_call_output":
-                        return BingGroundingToolCallOutput.DeserializeBingGroundingToolCallOutput(element, options);
-                    case "sharepoint_grounding_preview_call":
-                        return SharepointGroundingToolCall.DeserializeSharepointGroundingToolCall(element, options);
-                    case "sharepoint_grounding_preview_call_output":
-                        return SharepointGroundingToolCallOutput.DeserializeSharepointGroundingToolCallOutput(element, options);
-                    case "azure_ai_search_call":
-                        return AzureAISearchToolCall.DeserializeAzureAISearchToolCall(element, options);
-                    case "azure_ai_search_call_output":
-                        return AzureAISearchToolCallOutput.DeserializeAzureAISearchToolCallOutput(element, options);
-                    case "bing_custom_search_preview_call":
-                        return BingCustomSearchToolCall.DeserializeBingCustomSearchToolCall(element, options);
-                    case "bing_custom_search_preview_call_output":
-                        return BingCustomSearchToolCallOutput.DeserializeBingCustomSearchToolCallOutput(element, options);
-                    case "openapi_call":
-                        return OpenApiToolCall.DeserializeOpenApiToolCall(element, options);
-                    case "openapi_call_output":
-                        return OpenApiToolCallOutput.DeserializeOpenApiToolCallOutput(element, options);
-                    case "browser_automation_preview_call":
-                        return BrowserAutomationToolCall.DeserializeBrowserAutomationToolCall(element, options);
-                    case "browser_automation_preview_call_output":
-                        return BrowserAutomationToolCallOutput.DeserializeBrowserAutomationToolCallOutput(element, options);
-                    case "fabric_dataagent_preview_call":
-                        return FabricDataAgentToolCall.DeserializeFabricDataAgentToolCall(element, options);
-                    case "fabric_dataagent_preview_call_output":
-                        return FabricDataAgentToolCallOutput.DeserializeFabricDataAgentToolCallOutput(element, options);
-                    case "azure_function_call":
-                        return AzureFunctionToolCall.DeserializeAzureFunctionToolCall(element, options);
-                    case "azure_function_call_output":
-                        return AzureFunctionToolCallOutput.DeserializeAzureFunctionToolCallOutput(element, options);
-                    case "a2a_preview_call":
-                        return A2AToolCall.DeserializeA2AToolCall(element, options);
-                    case "a2a_preview_call_output":
-                        return A2AToolCallOutput.DeserializeA2AToolCallOutput(element, options);
-                    case "output_message":
-                        return InternalOutputItemOutputMessage.DeserializeInternalOutputItemOutputMessage(element, options);
-                    case "file_search_call":
-                        return InternalOutputItemFileSearchToolCall.DeserializeInternalOutputItemFileSearchToolCall(element, options);
-                    case "function_call":
-                        return InternalOutputItemFunctionToolCall.DeserializeInternalOutputItemFunctionToolCall(element, options);
-                    case "web_search_call":
-                        return InternalOutputItemWebSearchToolCall.DeserializeInternalOutputItemWebSearchToolCall(element, options);
-                    case "computer_call":
-                        return InternalOutputItemComputerToolCall.DeserializeInternalOutputItemComputerToolCall(element, options);
-                    case "reasoning":
-                        return InternalOutputItemReasoningItem.DeserializeInternalOutputItemReasoningItem(element, options);
-                    case "compaction":
-                        return InternalOutputItemCompactionBody.DeserializeInternalOutputItemCompactionBody(element, options);
-                    case "image_generation_call":
-                        return InternalOutputItemImageGenToolCall.DeserializeInternalOutputItemImageGenToolCall(element, options);
-                    case "code_interpreter_call":
-                        return InternalOutputItemCodeInterpreterToolCall.DeserializeInternalOutputItemCodeInterpreterToolCall(element, options);
-                    case "local_shell_call":
-                        return InternalOutputItemLocalShellToolCall.DeserializeInternalOutputItemLocalShellToolCall(element, options);
-                    case "shell_call":
-                        return InternalOutputItemFunctionShellCall.DeserializeInternalOutputItemFunctionShellCall(element, options);
-                    case "shell_call_output":
-                        return InternalOutputItemFunctionShellCallOutput.DeserializeInternalOutputItemFunctionShellCallOutput(element, options);
-                    case "apply_patch_call":
-                        return InternalOutputItemApplyPatchToolCall.DeserializeInternalOutputItemApplyPatchToolCall(element, options);
-                    case "apply_patch_call_output":
-                        return InternalOutputItemApplyPatchToolCallOutput.DeserializeInternalOutputItemApplyPatchToolCallOutput(element, options);
-                    case "mcp_call":
-                        return InternalOutputItemMcpToolCall.DeserializeInternalOutputItemMcpToolCall(element, options);
-                    case "mcp_list_tools":
-                        return InternalOutputItemMcpListTools.DeserializeInternalOutputItemMcpListTools(element, options);
-                    case "mcp_approval_request":
-                        return InternalOutputItemMcpApprovalRequest.DeserializeInternalOutputItemMcpApprovalRequest(element, options);
-                    case "custom_tool_call":
-                        return InternalOutputItemCustomToolCall.DeserializeInternalOutputItemCustomToolCall(element, options);
+                    @type = new AgentResponseItemKind(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("id"u8))
+                {
+                    id = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("agent_reference"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    agentReference = AgentReference.DeserializeAgentReference(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("response_id"u8))
+                {
+                    responseId = prop.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return UnknownAgentResponseItem.DeserializeUnknownAgentResponseItem(element, options);
+            return new AgentResponseItem(@type, id, agentReference, responseId, additionalBinaryDataProperties);
         }
     }
 }

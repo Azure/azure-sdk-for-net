@@ -4,12 +4,11 @@
 
 using System;
 using System.Collections.Generic;
-using OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> DoubleClick. </summary>
-    internal partial class DoubleClickAction : InternalComputerAction
+    public partial class DoubleClickAction : ComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="DoubleClickAction"/>. </summary>
         /// <param name="x"> The x-coordinate where the double click occurred. </param>

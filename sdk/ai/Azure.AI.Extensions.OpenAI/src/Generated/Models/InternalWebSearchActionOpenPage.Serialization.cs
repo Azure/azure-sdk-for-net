@@ -11,11 +11,6 @@ namespace Azure.AI.Extensions.OpenAI
 {
     internal partial class InternalWebSearchActionOpenPage : IJsonModel<InternalWebSearchActionOpenPage>
     {
-        /// <summary> Initializes a new instance of <see cref="InternalWebSearchActionOpenPage"/> for deserialization. </summary>
-        internal InternalWebSearchActionOpenPage()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual InternalWebSearchActionOpenPage PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -76,8 +71,11 @@ namespace Azure.AI.Extensions.OpenAI
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            writer.WritePropertyName("url"u8);
-            writer.WriteStringValue(Url.AbsoluteUri);
+            if (Optional.IsDefined(Url))
+            {
+                writer.WritePropertyName("url"u8);
+                writer.WriteStringValue(Url.AbsoluteUri);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -132,6 +130,11 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("url"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        url = null;
+                        continue;
+                    }
                     url = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }

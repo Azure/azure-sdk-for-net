@@ -4,12 +4,11 @@
 
 using System;
 using System.Collections.Generic;
-using OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> File citation. </summary>
-    internal partial class FileCitationBody : InternalAnnotation
+    internal partial class FileCitationBody : Annotation
     {
         /// <summary> Initializes a new instance of <see cref="FileCitationBody"/>. </summary>
         /// <param name="fileId"> The ID of the file. </param>

@@ -6,12 +6,11 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Computer tool call. </summary>
-    internal partial class InputItemComputerToolCall : InputItem, IJsonModel<InputItemComputerToolCall>
+    public partial class InputItemComputerToolCall : InputItem, IJsonModel<InputItemComputerToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="InputItemComputerToolCall"/> for deserialization. </summary>
         internal InputItemComputerToolCall()
@@ -123,7 +122,7 @@ namespace Azure.AI.Extensions.OpenAI
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             string callId = default;
-            InternalComputerAction action = default;
+            ComputerAction action = default;
             IList<ComputerCallSafetyCheckParam> pendingSafetyChecks = default;
             OutputItemComputerToolCallStatus status = default;
             foreach (var prop in element.EnumerateObject())
@@ -145,7 +144,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("action"u8))
                 {
-                    action = InternalComputerAction.DeserializeInternalComputerAction(prop.Value, options);
+                    action = ComputerAction.DeserializeComputerAction(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("pending_safety_checks"u8))

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Input image. </summary>
-    internal partial class InputContentInputImageContent : InputContent
+    public partial class InputContentInputImageContent : InputContent
     {
         /// <summary> Initializes a new instance of <see cref="InputContentInputImageContent"/>. </summary>
         /// <param name="detail"> The detail level of the image to be sent to the model. One of `high`, `low`, or `auto`. Defaults to `auto`. </param>

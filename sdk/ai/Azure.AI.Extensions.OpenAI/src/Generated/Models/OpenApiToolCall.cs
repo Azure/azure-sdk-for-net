@@ -15,7 +15,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="name"> The name of the OpenAPI operation being called. </param>
         /// <param name="arguments"> A JSON string of the arguments to pass to the tool. </param>
         /// <param name="status"> The status of the tool call. </param>
-        internal OpenApiToolCall(string callId, string name, string arguments, ToolCallStatus status) : base(AgentResponseItemKind.OpenapiCall)
+        internal OpenApiToolCall(string callId, string name, string arguments, ToolCallStatus status) : base("openapi_call")
         {
             CallId = callId;
             Name = name;

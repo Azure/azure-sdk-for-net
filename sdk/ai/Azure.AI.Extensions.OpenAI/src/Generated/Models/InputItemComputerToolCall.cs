@@ -5,12 +5,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Computer tool call. </summary>
-    internal partial class InputItemComputerToolCall : InputItem
+    public partial class InputItemComputerToolCall : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemComputerToolCall"/>. </summary>
         /// <param name="id"> The unique ID of the computer call. </param>
@@ -22,7 +21,7 @@ namespace Azure.AI.Extensions.OpenAI
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="callId"/>, <paramref name="action"/> or <paramref name="pendingSafetyChecks"/> is null. </exception>
-        public InputItemComputerToolCall(string id, string callId, InternalComputerAction action, IEnumerable<ComputerCallSafetyCheckParam> pendingSafetyChecks, OutputItemComputerToolCallStatus status) : base(InputItemType.ComputerCall)
+        public InputItemComputerToolCall(string id, string callId, ComputerAction action, IEnumerable<ComputerCallSafetyCheckParam> pendingSafetyChecks, OutputItemComputerToolCallStatus status) : base(InputItemType.ComputerCall)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(callId, nameof(callId));
@@ -47,7 +46,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        internal InputItemComputerToolCall(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, InternalComputerAction action, IList<ComputerCallSafetyCheckParam> pendingSafetyChecks, OutputItemComputerToolCallStatus status) : base(@type, additionalBinaryDataProperties)
+        internal InputItemComputerToolCall(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, ComputerAction action, IList<ComputerCallSafetyCheckParam> pendingSafetyChecks, OutputItemComputerToolCallStatus status) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             CallId = callId;
@@ -63,7 +62,7 @@ namespace Azure.AI.Extensions.OpenAI
         public string CallId { get; }
 
         /// <summary> Gets the Action. </summary>
-        public InternalComputerAction Action { get; }
+        public ComputerAction Action { get; }
 
         /// <summary> The pending safety checks for the computer call. </summary>
         public IList<ComputerCallSafetyCheckParam> PendingSafetyChecks { get; }

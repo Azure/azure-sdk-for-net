@@ -9,14 +9,14 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Web search tool call. </summary>
-    internal partial class InputItemWebSearchToolCall : InputItem
+    public partial class InputItemWebSearchToolCall : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemWebSearchToolCall"/>. </summary>
         /// <param name="id"> The unique ID of the web search tool call. </param>
         /// <param name="status"> The status of the web search tool call. </param>
         /// <param name="action">
         /// An object describing the specific action taken in this web search call.
-        ///   Includes details on how the model used the web (search, open_page, find).
+        ///   Includes details on how the model used the web (search, open_page, find_in_page).
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="action"/> is null. </exception>
         public InputItemWebSearchToolCall(string id, OutputItemWebSearchToolCallStatus status, BinaryData action) : base(InputItemType.WebSearchCall)
@@ -36,7 +36,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="status"> The status of the web search tool call. </param>
         /// <param name="action">
         /// An object describing the specific action taken in this web search call.
-        ///   Includes details on how the model used the web (search, open_page, find).
+        ///   Includes details on how the model used the web (search, open_page, find_in_page).
         /// </param>
         internal InputItemWebSearchToolCall(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, OutputItemWebSearchToolCallStatus status, BinaryData action) : base(@type, additionalBinaryDataProperties)
         {
@@ -53,7 +53,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary>
         /// An object describing the specific action taken in this web search call.
-        ///   Includes details on how the model used the web (search, open_page, find).
+        ///   Includes details on how the model used the web (search, open_page, find_in_page).
         /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>

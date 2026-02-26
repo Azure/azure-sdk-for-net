@@ -11,13 +11,15 @@ namespace Azure.AI.Extensions.OpenAI
     internal partial class InternalOutputItemFileSearchToolCall : AgentResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="InternalOutputItemFileSearchToolCall"/>. </summary>
+        /// <param name="id"> The unique ID of the file search tool call. </param>
         /// <param name="status">
         /// The status of the file search tool call. One of `in_progress`,
         ///   `searching`, `incomplete` or `failed`,
         /// </param>
         /// <param name="queries"> The queries used to search for files. </param>
-        internal InternalOutputItemFileSearchToolCall(OutputItemFileSearchToolCallStatus status, IEnumerable<string> queries) : base(AgentResponseItemKind.FileSearchCall)
+        internal InternalOutputItemFileSearchToolCall(string id, OutputItemFileSearchToolCallStatus status, IEnumerable<string> queries) : base("file_search_call")
         {
+            _id = id;
             Status = status;
             Queries = queries.ToList();
             Results = new ChangeTrackingList<FileSearchToolCallResults>();
@@ -25,22 +27,25 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="InternalOutputItemFileSearchToolCall"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="id"></param>
         /// <param name="agentReference"> The agent that created the item. </param>
         /// <param name="responseId"> The response on which the item is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="id"> The unique ID of the file search tool call. </param>
         /// <param name="status">
         /// The status of the file search tool call. One of `in_progress`,
         ///   `searching`, `incomplete` or `failed`,
         /// </param>
         /// <param name="queries"> The queries used to search for files. </param>
         /// <param name="results"></param>
-        internal InternalOutputItemFileSearchToolCall(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, OutputItemFileSearchToolCallStatus status, IList<string> queries, IList<FileSearchToolCallResults> results) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal InternalOutputItemFileSearchToolCall(AgentResponseItemKind @type, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, OutputItemFileSearchToolCallStatus status, IList<string> queries, IList<FileSearchToolCallResults> results) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             Status = status;
             Queries = queries;
             Results = results;
         }
+
+        /// <summary> The unique ID of the file search tool call. </summary>
+        public new string Id => _id ?? default;
 
         /// <summary>
         /// The status of the file search tool call. One of `in_progress`,

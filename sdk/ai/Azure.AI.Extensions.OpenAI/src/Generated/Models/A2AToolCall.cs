@@ -15,7 +15,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="name"> The name of the A2A agent card being called. </param>
         /// <param name="arguments"> A JSON string of the arguments to pass to the tool. </param>
         /// <param name="status"> The status of the tool call. </param>
-        internal A2AToolCall(string callId, string name, string arguments, ToolCallStatus status) : base(AgentResponseItemKind.A2aPreviewCall)
+        internal A2AToolCall(string callId, string name, string arguments, ToolCallStatus status) : base("a2a_preview_call")
         {
             CallId = callId;
             Name = name;

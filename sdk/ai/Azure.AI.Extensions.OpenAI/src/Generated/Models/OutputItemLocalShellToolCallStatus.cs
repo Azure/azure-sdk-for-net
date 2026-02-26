@@ -5,7 +5,7 @@
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
-    internal enum OutputItemLocalShellToolCallStatus
+    public enum OutputItemLocalShellToolCallStatus
     {
         /// <summary> InProgress. </summary>
         InProgress,

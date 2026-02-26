@@ -90,7 +90,7 @@ namespace Azure.AI.Extensions.OpenAI
             writer.WriteStringValue(Object);
             writer.WritePropertyName("output"u8);
             writer.WriteStartArray();
-            foreach (AgentResponseItem item in Output)
+            foreach (ItemField item in Output)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -143,7 +143,7 @@ namespace Azure.AI.Extensions.OpenAI
             }
             string id = default;
             string @object = default;
-            IList<AgentResponseItem> output = default;
+            IList<ItemField> output = default;
             DateTimeOffset createdAt = default;
             ResponseUsage usage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -161,10 +161,10 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("output"u8))
                 {
-                    List<AgentResponseItem> array = new List<AgentResponseItem>();
+                    List<ItemField> array = new List<ItemField>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AgentResponseItem.DeserializeAgentResponseItem(item, options));
+                        array.Add(ItemField.DeserializeItemField(item, options));
                     }
                     output = array;
                     continue;

@@ -4,18 +4,18 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.Extensions.OpenAI;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Extensions.OpenAI
 {
-    internal partial class UserProfileMemoryItem : MemoryItem
+    /// <summary> A memory item specifically containing user profile information extracted from conversations, such as preferences, interests, and personal details. </summary>
+    public partial class UserProfileMemoryItem : MemoryItem
     {
         /// <summary> Initializes a new instance of <see cref="UserProfileMemoryItem"/>. </summary>
         /// <param name="memoryId"> The unique ID of the memory item. </param>
         /// <param name="updatedAt"> The last update time of the memory item. </param>
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
         /// <param name="content"> The content of the memory. </param>
-        internal UserProfileMemoryItem(string memoryId, DateTimeOffset updatedAt, string scope, string content) : base(memoryId, updatedAt, scope, content, MemoryItemKind.UserProfile)
+        internal UserProfileMemoryItem(string memoryId, DateTimeOffset updatedAt, string scope, string content) : base(memoryId, updatedAt, scope, content, "user_profile")
         {
         }
 

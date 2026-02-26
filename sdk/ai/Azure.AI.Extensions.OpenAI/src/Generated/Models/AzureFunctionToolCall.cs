@@ -15,7 +15,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="name"> The name of the Azure Function being called. </param>
         /// <param name="arguments"> A JSON string of the arguments to pass to the tool. </param>
         /// <param name="status"> The status of the tool call. </param>
-        internal AzureFunctionToolCall(string callId, string name, string arguments, ToolCallStatus status) : base(AgentResponseItemKind.AzureFunctionCall)
+        internal AzureFunctionToolCall(string callId, string name, string arguments, ToolCallStatus status) : base("azure_function_call")
         {
             CallId = callId;
             Name = name;

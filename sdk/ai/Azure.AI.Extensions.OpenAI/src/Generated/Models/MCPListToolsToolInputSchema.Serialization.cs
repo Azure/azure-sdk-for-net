@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The MCPListToolsToolInputSchema. </summary>
-    internal partial class MCPListToolsToolInputSchema : IJsonModel<MCPListToolsToolInputSchema>
+    public partial class MCPListToolsToolInputSchema : IJsonModel<MCPListToolsToolInputSchema>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

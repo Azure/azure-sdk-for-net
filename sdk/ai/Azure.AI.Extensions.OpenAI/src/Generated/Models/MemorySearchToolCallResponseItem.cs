@@ -15,7 +15,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// The status of the memory search tool call. One of `in_progress`,
         /// `searching`, `completed`, `incomplete` or `failed`,
         /// </param>
-        internal MemorySearchToolCallResponseItem(MemorySearchToolCallStatus status) : base(AgentResponseItemKind.MemorySearchCall)
+        internal MemorySearchToolCallResponseItem(MemorySearchToolCallItemResourceStatus status) : base("memory_search_call")
         {
             Status = status;
             Results = new ChangeTrackingList<MemorySearchItem>();
@@ -32,7 +32,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// `searching`, `completed`, `incomplete` or `failed`,
         /// </param>
         /// <param name="results"> The results returned from the memory search. </param>
-        internal MemorySearchToolCallResponseItem(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, MemorySearchToolCallStatus status, IList<MemorySearchItem> results) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal MemorySearchToolCallResponseItem(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, MemorySearchToolCallItemResourceStatus status, IList<MemorySearchItem> results) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             Status = status;
             Results = results;
@@ -42,7 +42,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// The status of the memory search tool call. One of `in_progress`,
         /// `searching`, `completed`, `incomplete` or `failed`,
         /// </summary>
-        public MemorySearchToolCallStatus Status { get; }
+        public MemorySearchToolCallItemResourceStatus Status { get; }
 
         /// <summary> The results returned from the memory search. </summary>
         public IList<MemorySearchItem> Results { get; }

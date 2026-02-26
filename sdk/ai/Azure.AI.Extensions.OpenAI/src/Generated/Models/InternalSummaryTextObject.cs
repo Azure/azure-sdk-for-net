@@ -7,31 +7,23 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    internal partial class InternalSummaryTextObject
+    internal partial class InternalSummaryTextObject : InternalMessageContent
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="InternalSummaryTextObject"/>. </summary>
         /// <param name="text"> A summary of the reasoning output from the model so far. </param>
-        public InternalSummaryTextObject(string text)
+        public InternalSummaryTextObject(string text) : base(MessageContentType.SummaryText)
         {
             Text = text;
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalSummaryTextObject"/>. </summary>
-        /// <param name="type"> The type of the object. Always `summary_text`. </param>
-        /// <param name="text"> A summary of the reasoning output from the model so far. </param>
+        /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalSummaryTextObject(string @type, string text, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="text"> A summary of the reasoning output from the model so far. </param>
+        internal InternalSummaryTextObject(MessageContentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string text) : base(@type, additionalBinaryDataProperties)
         {
-            Type = @type;
             Text = text;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The type of the object. Always `summary_text`. </summary>
-        public string Type { get; } = "summary_text";
 
         /// <summary> A summary of the reasoning output from the model so far. </summary>
         public string Text { get; set; }

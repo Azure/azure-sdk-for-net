@@ -37,10 +37,10 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Gets the Type. </summary>
-        public string Type { get; } = "agent_reference";
+        internal string Type { get; } = "agent_reference";
 
         /// <summary> The name of the agent. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> The version identifier of the agent. </summary>
         public string Version { get; set; }

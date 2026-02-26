@@ -4,17 +4,13 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    /// <summary>
-    /// A single memory item stored in the memory store, containing content and metadata.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ChatSummaryMemoryItem"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownMemoryItem))]
-    public abstract partial class MemoryItem : IJsonModel<MemoryItem>
+    /// <summary> A single memory item stored in the memory store, containing content and metadata. </summary>
+    public partial class MemoryItem : IJsonModel<MemoryItem>
     {
         /// <summary> Initializes a new instance of <see cref="MemoryItem"/> for deserialization. </summary>
         internal MemoryItem()
@@ -131,17 +127,51 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 return null;
             }
-            if (element.TryGetProperty("kind"u8, out JsonElement discriminator))
+            string memoryId = default;
+            DateTimeOffset updatedAt = default;
+            string scope = default;
+            string content = default;
+            MemoryItemKind kind = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (prop.NameEquals("memory_id"u8))
                 {
-                    case "user_profile":
-                        return UserProfileMemoryItem.DeserializeUserProfileMemoryItem(element, options);
-                    case "chat_summary":
-                        return ChatSummaryMemoryItem.DeserializeChatSummaryMemoryItem(element, options);
+                    memoryId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("updated_at"u8))
+                {
+                    updatedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    continue;
+                }
+                if (prop.NameEquals("scope"u8))
+                {
+                    scope = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("content"u8))
+                {
+                    content = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("kind"u8))
+                {
+                    kind = new MemoryItemKind(prop.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return UnknownMemoryItem.DeserializeUnknownMemoryItem(element, options);
+            return new MemoryItem(
+                memoryId,
+                updatedAt,
+                scope,
+                content,
+                kind,
+                additionalBinaryDataProperties);
         }
     }
 }

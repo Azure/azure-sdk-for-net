@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    internal partial class InternalSummaryTextObject : IJsonModel<InternalSummaryTextObject>
+    internal partial class InternalSummaryTextObject : InternalMessageContent, IJsonModel<InternalSummaryTextObject>
     {
         /// <summary> Initializes a new instance of <see cref="InternalSummaryTextObject"/> for deserialization. </summary>
         internal InternalSummaryTextObject()
@@ -18,7 +18,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual InternalSummaryTextObject PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override InternalMessageContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalSummaryTextObject>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -34,7 +34,7 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalSummaryTextObject>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -51,7 +51,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalSummaryTextObject IPersistableModel<InternalSummaryTextObject>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        InternalSummaryTextObject IPersistableModel<InternalSummaryTextObject>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalSummaryTextObject)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<InternalSummaryTextObject>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -67,41 +67,25 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalSummaryTextObject>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InternalSummaryTextObject)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalSummaryTextObject IJsonModel<InternalSummaryTextObject>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        InternalSummaryTextObject IJsonModel<InternalSummaryTextObject>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (InternalSummaryTextObject)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual InternalSummaryTextObject JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override InternalMessageContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalSummaryTextObject>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -120,14 +104,14 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 return null;
             }
-            string @type = default;
-            string text = default;
+            MessageContentType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string text = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    @type = new MessageContentType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("text"u8))
@@ -140,7 +124,7 @@ namespace Azure.AI.Extensions.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalSummaryTextObject(@type, text, additionalBinaryDataProperties);
+            return new InternalSummaryTextObject(@type, additionalBinaryDataProperties, text);
         }
     }
 }

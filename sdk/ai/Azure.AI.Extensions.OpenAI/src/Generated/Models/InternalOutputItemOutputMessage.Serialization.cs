@@ -75,6 +75,8 @@ namespace Azure.AI.Extensions.OpenAI
                 throw new FormatException($"The model {nameof(InternalOutputItemOutputMessage)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("role"u8);
             writer.WriteStringValue(Role);
             writer.WritePropertyName("content"u8);
@@ -114,10 +116,10 @@ namespace Azure.AI.Extensions.OpenAI
                 return null;
             }
             AgentResponseItemKind @type = default;
-            string id = default;
             AgentReference agentReference = default;
             string responseId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string id = default;
             string role = default;
             IList<InternalOutputMessageContent> content = default;
             OutputItemOutputMessageStatus status = default;
@@ -126,11 +128,6 @@ namespace Azure.AI.Extensions.OpenAI
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new AgentResponseItemKind(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("id"u8))
-                {
-                    id = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("agent_reference"u8))
@@ -145,6 +142,11 @@ namespace Azure.AI.Extensions.OpenAI
                 if (prop.NameEquals("response_id"u8))
                 {
                     responseId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("id"u8))
+                {
+                    id = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("role"u8))
@@ -174,10 +176,10 @@ namespace Azure.AI.Extensions.OpenAI
             }
             return new InternalOutputItemOutputMessage(
                 @type,
-                id,
                 agentReference,
                 responseId,
                 additionalBinaryDataProperties,
+                id,
                 role,
                 content,
                 status);

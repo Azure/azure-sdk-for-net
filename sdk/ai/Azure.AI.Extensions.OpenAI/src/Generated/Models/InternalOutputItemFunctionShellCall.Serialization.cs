@@ -75,12 +75,23 @@ namespace Azure.AI.Extensions.OpenAI
                 throw new FormatException($"The model {nameof(InternalOutputItemFunctionShellCall)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("call_id"u8);
             writer.WriteStringValue(CallId);
             writer.WritePropertyName("action"u8);
             writer.WriteObjectValue(Action, options);
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToSerialString());
+            if (Optional.IsDefined(Environment))
+            {
+                writer.WritePropertyName("environment"u8);
+                writer.WriteObjectValue(Environment, options);
+            }
+            else
+            {
+                writer.WriteNull("environment"u8);
+            }
             if (Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("created_by"u8);
@@ -114,24 +125,20 @@ namespace Azure.AI.Extensions.OpenAI
                 return null;
             }
             AgentResponseItemKind @type = default;
-            string id = default;
             AgentReference agentReference = default;
             string responseId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string id = default;
             string callId = default;
             FunctionShellAction action = default;
             LocalShellCallStatus status = default;
+            FunctionShellCallEnvironment environment = default;
             string createdBy = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new AgentResponseItemKind(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("id"u8))
-                {
-                    id = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("agent_reference"u8))
@@ -146,6 +153,11 @@ namespace Azure.AI.Extensions.OpenAI
                 if (prop.NameEquals("response_id"u8))
                 {
                     responseId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("id"u8))
+                {
+                    id = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("call_id"u8))
@@ -163,6 +175,16 @@ namespace Azure.AI.Extensions.OpenAI
                     status = prop.Value.GetString().ToLocalShellCallStatus();
                     continue;
                 }
+                if (prop.NameEquals("environment"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        environment = null;
+                        continue;
+                    }
+                    environment = FunctionShellCallEnvironment.DeserializeFunctionShellCallEnvironment(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("created_by"u8))
                 {
                     createdBy = prop.Value.GetString();
@@ -175,13 +197,14 @@ namespace Azure.AI.Extensions.OpenAI
             }
             return new InternalOutputItemFunctionShellCall(
                 @type,
-                id,
                 agentReference,
                 responseId,
                 additionalBinaryDataProperties,
+                id,
                 callId,
                 action,
                 status,
+                environment,
                 createdBy);
         }
     }

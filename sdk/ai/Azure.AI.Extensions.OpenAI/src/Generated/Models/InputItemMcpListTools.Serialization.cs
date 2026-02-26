@@ -6,12 +6,11 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> MCP list tools. </summary>
-    internal partial class InputItemMcpListTools : InputItem, IJsonModel<InputItemMcpListTools>
+    public partial class InputItemMcpListTools : InputItem, IJsonModel<InputItemMcpListTools>
     {
         /// <summary> Initializes a new instance of <see cref="InputItemMcpListTools"/> for deserialization. </summary>
         internal InputItemMcpListTools()
@@ -83,7 +82,7 @@ namespace Azure.AI.Extensions.OpenAI
             writer.WriteStringValue(ServerLabel);
             writer.WritePropertyName("tools"u8);
             writer.WriteStartArray();
-            foreach (InternalMCPListToolsTool item in Tools)
+            foreach (MCPListToolsTool item in Tools)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -124,7 +123,7 @@ namespace Azure.AI.Extensions.OpenAI
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             string serverLabel = default;
-            IList<InternalMCPListToolsTool> tools = default;
+            IList<MCPListToolsTool> tools = default;
             string error = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -145,10 +144,10 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("tools"u8))
                 {
-                    List<InternalMCPListToolsTool> array = new List<InternalMCPListToolsTool>();
+                    List<MCPListToolsTool> array = new List<MCPListToolsTool>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(InternalMCPListToolsTool.DeserializeInternalMCPListToolsTool(item, options));
+                        array.Add(MCPListToolsTool.DeserializeMCPListToolsTool(item, options));
                     }
                     tools = array;
                     continue;

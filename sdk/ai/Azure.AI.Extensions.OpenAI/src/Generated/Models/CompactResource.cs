@@ -16,10 +16,10 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="CompactResource"/>. </summary>
         /// <param name="id"> The unique identifier for the compacted response. </param>
-        /// <param name="output"> The compacted list of output items. This is a list of all user messages, followed by a single compaction item. </param>
+        /// <param name="output"> The compacted list of output items. </param>
         /// <param name="createdAt"> Unix timestamp (in seconds) when the compacted conversation was created. </param>
         /// <param name="usage"> Token accounting for the compaction pass, including cached, reasoning, and total tokens. </param>
-        internal CompactResource(string id, IEnumerable<AgentResponseItem> output, DateTimeOffset createdAt, ResponseUsage usage)
+        internal CompactResource(string id, IEnumerable<ItemField> output, DateTimeOffset createdAt, ResponseUsage usage)
         {
             Id = id;
             Output = output.ToList();
@@ -30,11 +30,11 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Initializes a new instance of <see cref="CompactResource"/>. </summary>
         /// <param name="id"> The unique identifier for the compacted response. </param>
         /// <param name="object"> The object type. Always `response.compaction`. </param>
-        /// <param name="output"> The compacted list of output items. This is a list of all user messages, followed by a single compaction item. </param>
+        /// <param name="output"> The compacted list of output items. </param>
         /// <param name="createdAt"> Unix timestamp (in seconds) when the compacted conversation was created. </param>
         /// <param name="usage"> Token accounting for the compaction pass, including cached, reasoning, and total tokens. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CompactResource(string id, string @object, IList<AgentResponseItem> output, DateTimeOffset createdAt, ResponseUsage usage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CompactResource(string id, string @object, IList<ItemField> output, DateTimeOffset createdAt, ResponseUsage usage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Object = @object;
@@ -50,8 +50,8 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> The object type. Always `response.compaction`. </summary>
         public string Object { get; } = "response.compaction";
 
-        /// <summary> The compacted list of output items. This is a list of all user messages, followed by a single compaction item. </summary>
-        public IList<AgentResponseItem> Output { get; }
+        /// <summary> The compacted list of output items. </summary>
+        public IList<ItemField> Output { get; }
 
         /// <summary> Unix timestamp (in seconds) when the compacted conversation was created. </summary>
         public DateTimeOffset CreatedAt { get; }

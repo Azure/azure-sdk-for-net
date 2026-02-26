@@ -5,42 +5,46 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     internal partial class InternalOutputItemMcpListTools : AgentResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="InternalOutputItemMcpListTools"/>. </summary>
+        /// <param name="id"> The unique ID of the list. </param>
         /// <param name="serverLabel"> The label of the MCP server. </param>
         /// <param name="tools"> The tools available on the server. </param>
-        internal InternalOutputItemMcpListTools(string serverLabel, IEnumerable<InternalMCPListToolsTool> tools) : base(AgentResponseItemKind.McpListTools)
+        internal InternalOutputItemMcpListTools(string id, string serverLabel, IEnumerable<MCPListToolsTool> tools) : base("mcp_list_tools")
         {
+            _id = id;
             ServerLabel = serverLabel;
             Tools = tools.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalOutputItemMcpListTools"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="id"></param>
         /// <param name="agentReference"> The agent that created the item. </param>
         /// <param name="responseId"> The response on which the item is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="id"> The unique ID of the list. </param>
         /// <param name="serverLabel"> The label of the MCP server. </param>
         /// <param name="tools"> The tools available on the server. </param>
         /// <param name="error"></param>
-        internal InternalOutputItemMcpListTools(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, IList<InternalMCPListToolsTool> tools, string error) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal InternalOutputItemMcpListTools(AgentResponseItemKind @type, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string serverLabel, IList<MCPListToolsTool> tools, string error) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
             Tools = tools;
             Error = error;
         }
 
+        /// <summary> The unique ID of the list. </summary>
+        public new string Id => _id ?? default;
+
         /// <summary> The label of the MCP server. </summary>
         public string ServerLabel { get; }
 
         /// <summary> The tools available on the server. </summary>
-        public IList<InternalMCPListToolsTool> Tools { get; }
+        public IList<MCPListToolsTool> Tools { get; }
 
         /// <summary> Gets the Error. </summary>
         public string Error { get; }

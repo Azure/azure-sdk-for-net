@@ -6,12 +6,11 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> DoubleClick. </summary>
-    internal partial class DoubleClickAction : InternalComputerAction, IJsonModel<DoubleClickAction>
+    public partial class DoubleClickAction : ComputerAction, IJsonModel<DoubleClickAction>
     {
         /// <summary> Initializes a new instance of <see cref="DoubleClickAction"/> for deserialization. </summary>
         internal DoubleClickAction()
@@ -20,7 +19,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InternalComputerAction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ComputerAction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DoubleClickAction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -89,7 +88,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InternalComputerAction JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ComputerAction JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DoubleClickAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

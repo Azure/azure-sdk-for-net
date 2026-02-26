@@ -5,12 +5,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> KeyPress. </summary>
-    internal partial class KeyPressAction : InternalComputerAction
+    public partial class KeyPressAction : ComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="KeyPressAction"/>. </summary>
         /// <param name="keys"> The combination of keys the model is requesting to be pressed. This is an array of strings, each representing a key. </param>

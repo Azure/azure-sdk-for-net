@@ -11,19 +11,21 @@ namespace Azure.AI.Extensions.OpenAI
     internal partial class InternalOutputItemReasoningItem : AgentResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="InternalOutputItemReasoningItem"/>. </summary>
+        /// <param name="id"> The unique identifier of the reasoning content. </param>
         /// <param name="summary"> Reasoning summary content. </param>
-        internal InternalOutputItemReasoningItem(IEnumerable<InternalSummaryTextObject> summary) : base(AgentResponseItemKind.Reasoning)
+        internal InternalOutputItemReasoningItem(string id, IEnumerable<InternalSummaryTextObject> summary) : base("reasoning")
         {
+            _id = id;
             Summary = summary.ToList();
             Content = new ChangeTrackingList<ReasoningTextContent>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalOutputItemReasoningItem"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="id"></param>
         /// <param name="agentReference"> The agent that created the item. </param>
         /// <param name="responseId"> The response on which the item is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="id"> The unique identifier of the reasoning content. </param>
         /// <param name="encryptedContent"></param>
         /// <param name="summary"> Reasoning summary content. </param>
         /// <param name="content"> Reasoning text content. </param>
@@ -31,13 +33,16 @@ namespace Azure.AI.Extensions.OpenAI
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        internal InternalOutputItemReasoningItem(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string encryptedContent, IList<InternalSummaryTextObject> summary, IList<ReasoningTextContent> content, OutputItemReasoningItemStatus? status) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal InternalOutputItemReasoningItem(AgentResponseItemKind @type, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string encryptedContent, IList<InternalSummaryTextObject> summary, IList<ReasoningTextContent> content, OutputItemReasoningItemStatus? status) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             EncryptedContent = encryptedContent;
             Summary = summary;
             Content = content;
             Status = status;
         }
+
+        /// <summary> The unique identifier of the reasoning content. </summary>
+        public new string Id => _id ?? default;
 
         /// <summary> Gets the EncryptedContent. </summary>
         public string EncryptedContent { get; }

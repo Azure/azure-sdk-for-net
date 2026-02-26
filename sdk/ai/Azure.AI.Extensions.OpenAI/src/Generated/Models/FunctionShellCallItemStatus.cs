@@ -5,7 +5,7 @@
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Status values reported for shell tool calls. </summary>
-    internal enum FunctionShellCallItemStatus
+    public enum FunctionShellCallItemStatus
     {
         /// <summary> InProgress. </summary>
         InProgress,

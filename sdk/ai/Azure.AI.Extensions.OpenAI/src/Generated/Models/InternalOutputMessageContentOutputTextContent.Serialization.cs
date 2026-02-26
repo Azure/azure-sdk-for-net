@@ -6,7 +6,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI
 {
@@ -80,21 +79,18 @@ namespace Azure.AI.Extensions.OpenAI
             writer.WriteStringValue(Text);
             writer.WritePropertyName("annotations"u8);
             writer.WriteStartArray();
-            foreach (InternalAnnotation item in Annotations)
+            foreach (Annotation item in Annotations)
             {
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Logprobs))
+            writer.WritePropertyName("logprobs"u8);
+            writer.WriteStartArray();
+            foreach (LogProb item in Logprobs)
             {
-                writer.WritePropertyName("logprobs"u8);
-                writer.WriteStartArray();
-                foreach (InternalLogProb item in Logprobs)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item, options);
             }
+            writer.WriteEndArray();
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -125,8 +121,8 @@ namespace Azure.AI.Extensions.OpenAI
             OutputMessageContentType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string text = default;
-            IList<InternalAnnotation> annotations = default;
-            IList<InternalLogProb> logprobs = default;
+            IList<Annotation> annotations = default;
+            IList<LogProb> logprobs = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -141,24 +137,20 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("annotations"u8))
                 {
-                    List<InternalAnnotation> array = new List<InternalAnnotation>();
+                    List<Annotation> array = new List<Annotation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(InternalAnnotation.DeserializeInternalAnnotation(item, options));
+                        array.Add(Annotation.DeserializeAnnotation(item, options));
                     }
                     annotations = array;
                     continue;
                 }
                 if (prop.NameEquals("logprobs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<InternalLogProb> array = new List<InternalLogProb>();
+                    List<LogProb> array = new List<LogProb>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(InternalLogProb.DeserializeInternalLogProb(item, options));
+                        array.Add(LogProb.DeserializeLogProb(item, options));
                     }
                     logprobs = array;
                     continue;
@@ -168,7 +160,7 @@ namespace Azure.AI.Extensions.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalOutputMessageContentOutputTextContent(@type, additionalBinaryDataProperties, text, annotations, logprobs ?? new ChangeTrackingList<InternalLogProb>());
+            return new InternalOutputMessageContentOutputTextContent(@type, additionalBinaryDataProperties, text, annotations, logprobs);
         }
     }
 }

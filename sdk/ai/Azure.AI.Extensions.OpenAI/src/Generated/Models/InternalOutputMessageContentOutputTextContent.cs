@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI
 {
@@ -14,11 +13,12 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Initializes a new instance of <see cref="InternalOutputMessageContentOutputTextContent"/>. </summary>
         /// <param name="text"> The text output from the model. </param>
         /// <param name="annotations"> The annotations of the text output. </param>
-        public InternalOutputMessageContentOutputTextContent(string text, IEnumerable<InternalAnnotation> annotations) : base(OutputMessageContentType.OutputText)
+        /// <param name="logprobs"></param>
+        public InternalOutputMessageContentOutputTextContent(string text, IEnumerable<Annotation> annotations, IEnumerable<LogProb> logprobs) : base(OutputMessageContentType.OutputText)
         {
             Text = text;
             Annotations = annotations.ToList();
-            Logprobs = new ChangeTrackingList<InternalLogProb>();
+            Logprobs = logprobs.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalOutputMessageContentOutputTextContent"/>. </summary>
@@ -27,7 +27,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="text"> The text output from the model. </param>
         /// <param name="annotations"> The annotations of the text output. </param>
         /// <param name="logprobs"></param>
-        internal InternalOutputMessageContentOutputTextContent(OutputMessageContentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string text, IList<InternalAnnotation> annotations, IList<InternalLogProb> logprobs) : base(@type, additionalBinaryDataProperties)
+        internal InternalOutputMessageContentOutputTextContent(OutputMessageContentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string text, IList<Annotation> annotations, IList<LogProb> logprobs) : base(@type, additionalBinaryDataProperties)
         {
             Text = text;
             Annotations = annotations;
@@ -35,12 +35,12 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The text output from the model. </summary>
-        public string Text { get; set; }
+        public string Text { get; }
 
         /// <summary> The annotations of the text output. </summary>
-        public IList<InternalAnnotation> Annotations { get; }
+        public IList<Annotation> Annotations { get; }
 
         /// <summary> Gets the Logprobs. </summary>
-        public IList<InternalLogProb> Logprobs { get; }
+        public IList<LogProb> Logprobs { get; }
     }
 }

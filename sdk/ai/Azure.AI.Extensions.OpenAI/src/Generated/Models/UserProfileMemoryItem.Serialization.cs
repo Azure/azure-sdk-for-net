@@ -6,11 +6,11 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Extensions.OpenAI;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Extensions.OpenAI
 {
-    internal partial class UserProfileMemoryItem : MemoryItem, IJsonModel<UserProfileMemoryItem>
+    /// <summary> A memory item specifically containing user profile information extracted from conversations, such as preferences, interests, and personal details. </summary>
+    public partial class UserProfileMemoryItem : MemoryItem, IJsonModel<UserProfileMemoryItem>
     {
         /// <summary> Initializes a new instance of <see cref="UserProfileMemoryItem"/> for deserialization. </summary>
         internal UserProfileMemoryItem()

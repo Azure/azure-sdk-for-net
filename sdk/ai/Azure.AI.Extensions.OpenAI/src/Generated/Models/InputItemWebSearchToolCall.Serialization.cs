@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Web search tool call. </summary>
-    internal partial class InputItemWebSearchToolCall : InputItem, IJsonModel<InputItemWebSearchToolCall>
+    public partial class InputItemWebSearchToolCall : InputItem, IJsonModel<InputItemWebSearchToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="InputItemWebSearchToolCall"/> for deserialization. </summary>
         internal InputItemWebSearchToolCall()
