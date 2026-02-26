@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Attestation
                     yield break;
                 }
                 AttestationPrivateEndpointConnectionListResult result = AttestationPrivateEndpointConnectionListResult.FromResponse(response);
-                yield return Page<AttestationPrivateEndpointConnectionData>.FromValues((IReadOnlyList<AttestationPrivateEndpointConnectionData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<AttestationPrivateEndpointConnectionData>.FromValues((IReadOnlyList<AttestationPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

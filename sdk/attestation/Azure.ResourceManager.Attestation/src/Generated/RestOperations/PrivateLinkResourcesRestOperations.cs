@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.Attestation
             uri.AppendPath("/providers/Microsoft.Attestation/attestationProviders/", false);
             uri.AppendPath(providerName, true);
             uri.AppendPath("/privateLinkResources", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

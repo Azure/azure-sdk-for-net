@@ -42,6 +42,29 @@ namespace Azure.ResourceManager.Attestation
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AttestationProviderData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAttestationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AttestationProviderData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AttestationProviderData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AttestationProviderData IPersistableModel<AttestationProviderData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AttestationProviderData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AttestationProviderData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AttestationProviderData"/> from. </param>
         internal static AttestationProviderData FromResponse(Response response)
         {
@@ -192,28 +215,5 @@ namespace Azure.ResourceManager.Attestation
                 location,
                 properties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AttestationProviderData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AttestationProviderData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAttestationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AttestationProviderData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AttestationProviderData IPersistableModel<AttestationProviderData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AttestationProviderData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AttestationProviderData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
