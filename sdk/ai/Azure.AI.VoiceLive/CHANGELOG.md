@@ -2,13 +2,9 @@
 
 ## 1.1.0-beta.3 (2026-02-26)
 
-### Features Added
-
-### Breaking Changes
-
 ### Bugs Fixed
 
-### Other Changes
+- Added public `InterimResponseConfigBase InterimResponse`
 
 ## 1.1.0-beta.2 (2026-02-19)
 
