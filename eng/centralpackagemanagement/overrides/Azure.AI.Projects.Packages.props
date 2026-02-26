@@ -1,0 +1,6 @@
+<Project>
+  <ItemGroup Condition="'$(IsTestProject)' == 'true'">
+    <PackageVersion Update="NUnit" Version="4.4.0" />
+    <PackageVersion Update="NUnit3TestAdapter" Version="5.1.0" />
+  </ItemGroup>
+</Project>

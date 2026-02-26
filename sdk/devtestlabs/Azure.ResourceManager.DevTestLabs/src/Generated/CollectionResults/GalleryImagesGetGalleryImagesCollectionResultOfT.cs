@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     yield break;
                 }
                 GalleryImageList result = GalleryImageList.FromResponse(response);
-                yield return Page<DevTestLabGalleryImage>.FromValues((IReadOnlyList<DevTestLabGalleryImage>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DevTestLabGalleryImage>.FromValues((IReadOnlyList<DevTestLabGalleryImage>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

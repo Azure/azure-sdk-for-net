@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     yield break;
                 }
                 SecretList result = SecretList.FromResponse(response);
-                yield return Page<DevTestLabSecretData>.FromValues((IReadOnlyList<DevTestLabSecretData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DevTestLabSecretData>.FromValues((IReadOnlyList<DevTestLabSecretData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

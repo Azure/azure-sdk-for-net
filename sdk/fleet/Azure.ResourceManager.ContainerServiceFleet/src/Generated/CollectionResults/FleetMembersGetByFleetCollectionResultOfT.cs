@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                     yield break;
                 }
                 FleetMemberListResult result = FleetMemberListResult.FromResponse(response);
-                yield return Page<ContainerServiceFleetMemberData>.FromValues((IReadOnlyList<ContainerServiceFleetMemberData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ContainerServiceFleetMemberData>.FromValues((IReadOnlyList<ContainerServiceFleetMemberData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

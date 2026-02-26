@@ -94,7 +94,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         {
             get
             {
-                return Properties is null ? default : Properties.Labels;
+                if (Properties is null)
+                {
+                    Properties = new FleetMemberProperties();
+                }
+                return Properties.Labels;
             }
         }
 
