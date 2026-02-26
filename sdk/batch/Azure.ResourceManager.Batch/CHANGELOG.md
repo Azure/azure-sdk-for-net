@@ -1,30 +1,30 @@
 # Release History
 
-## 1.6.0 (2026-03-02)
+## 1.6.0 (2026-02-26)
 
 ### Features Added
 
 CMK support on Pools
-- Added `DiskCustomerManagedKey` for customer-managed key (CMK) support on pools.
-- Added `CustomerManagedKey` to `DiskEncryptionConfiguration`
+- Added `BatchDiskCustomerManagedKey` for customer-managed key (CMK) support on pools.
+- Added `CustomerManagedKey` to `BatchDiskEncryptionConfiguration`
 - Added `DiskEncryptionSet` to `ManagedDisk`
-- Added `DiskEncryptionSet` to `VmDiskSecurityProfile`
+- Added `DiskEncryptionSet` to `BatchVmDiskSecurityProfile`
 - Added `ManagedDisk` to `BatchVmDataDisk`
 
 IPv6 support on Pools
-- Added `IPFamily`
-- Added `IPFamilies` and `IPTags` to `BatchPublicIPAddressConfiguration`
+- Added `BatchIPFamily`
+- Added `IPFamilies` and `BatchIPTags` to `BatchPublicIPAddressConfiguration`
 
 Job level FIFO
-- Added `JobDefaultOrder` model
-- Added `JobDefaultOrder` to `TaskSchedulingPolicy` to support job-level FIFO scheduling.
-- Added `TaskSchedulingPolicy` to `BatchAccountPoolData`
+- Added `BatchJobDefaultOrder` model
+- Added `BatchJobDefaultOrder` to `BatchTaskSchedulingPolicy` to support job-level FIFO scheduling.
+- Added `BatchTaskSchedulingPolicy` to `BatchAccountPoolData`
 
 Metadata Security Protocol Support on Pools
-- Added `HostEndpointSettings`
-- Added `HostEndpointSettingsModeType`
-- Added `ProxyAgentSettings`
-- Added `ProxyAgentSettings` to `BatchSecurityProfile` for metadata security protocol support.
+- Added `BatchHostEndpointSettings`
+- Added `BatchHostEndpointSettingsModeType`
+- Added `BatchProxyAgentSettings`
+- Added `BatchProxyAgentSettings` to `BatchSecurityProfile` for metadata security protocol support.
 
 
 ### Breaking Changes
