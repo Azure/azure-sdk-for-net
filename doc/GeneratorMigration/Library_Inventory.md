@@ -13,10 +13,10 @@
 
 ## Summary
 
-- Total libraries: 402
-- Management Plane (MPG): 227
-  - Autorest/Swagger: 140
-  - New Emitter (TypeSpec): 87
+- Total libraries: 404
+- Management Plane (MPG): 229
+  - Autorest/Swagger: 137
+  - New Emitter (TypeSpec): 92
   - Old TypeSpec: 0
 - Data Plane (DPG): 144
   - Autorest/Swagger: 55
@@ -144,7 +144,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 55
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 87 / 87 (100%)
+**Migration Status**: 92 / 92 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -154,10 +154,12 @@ Libraries that provide resource management APIs for Azure services and have been
 | arizeaiobservabilityeval | Azure.ResourceManager.ArizeAIObservabilityEval | ✅ |
 | artifactsigning | Azure.ResourceManager.ArtifactSigning | ✅ |
 | astronomer | Azure.ResourceManager.Astro | ✅ |
+| attestation | Azure.ResourceManager.Attestation | ✅ |
 | avs | Azure.ResourceManager.Avs | ✅ |
 | azurelargeinstance | Azure.ResourceManager.LargeInstance | ✅ |
 | azurestackhci | Azure.ResourceManager.Hci.Vm | ✅ |
 | carbon | Azure.ResourceManager.CarbonOptimization | ✅ |
+| certificateregistration | Azure.ResourceManager.CertificateRegistration | ✅ |
 | chaos | Azure.ResourceManager.Chaos | ✅ |
 | cloudhealth | Azure.ResourceManager.CloudHealth | ✅ |
 | computefleet | Azure.ResourceManager.ComputeFleet | ✅ |
@@ -173,6 +175,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | deviceprovisioningservices | Azure.ResourceManager.DeviceProvisioningServices | ✅ |
 | deviceregistry | Azure.ResourceManager.DeviceRegistry | ✅ |
 | devopsinfrastructure | Azure.ResourceManager.DevOpsInfrastructure | ✅ |
+| devtestlabs | Azure.ResourceManager.DevTestLabs | ✅ |
 | disconnectedoperations | Azure.ResourceManager.DisconnectedOperations | ✅ |
 | durabletask | Azure.ResourceManager.DurableTask | ✅ |
 | dynatrace | Azure.ResourceManager.Dynatrace | ✅ |
@@ -183,6 +186,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | elasticsan | Azure.ResourceManager.ElasticSan | ✅ |
 | fabric | Azure.ResourceManager.Fabric | ✅ |
 | fileshares | Azure.ResourceManager.FileShares | ✅ |
+| fleet | Azure.ResourceManager.ContainerServiceFleet | ✅ |
 | grafana | Azure.ResourceManager.Grafana | ✅ |
 | hardwaresecuritymodules | Azure.ResourceManager.HardwareSecurityModules | ✅ |
 | healthbot | Azure.ResourceManager.HealthBot | ✅ |
@@ -203,6 +207,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | onlineexperimentation | Azure.ResourceManager.OnlineExperimentation | ✅ |
 | oracle | Azure.ResourceManager.OracleDatabase | ✅ |
 | paloaltonetworks.ngfw | Azure.ResourceManager.PaloAltoNetworks.Ngfw | ✅ |
+| peering | Azure.ResourceManager.Peering | ✅ |
 | pineconevectordb | Azure.ResourceManager.PineconeVectorDB | ✅ |
 | planetarycomputer | Azure.ResourceManager.PlanetaryComputer | ✅ |
 | playwright | Azure.ResourceManager.Playwright | ✅ |
@@ -239,7 +244,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 140
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 137
 
 | Service | Library |
 | ------- | ------- |
@@ -252,7 +257,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 14
 | applicationinsights | Azure.ResourceManager.ApplicationInsights |
 | appplatform | Azure.ResourceManager.AppPlatform |
 | arc-scvmm | Azure.ResourceManager.ScVmm |
-| attestation | Azure.ResourceManager.Attestation |
 | authorization | Azure.ResourceManager.Authorization |
 | automanage | Azure.ResourceManager.Automanage |
 | automation | Azure.ResourceManager.Automation |
@@ -274,6 +278,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 14
 | containerapps | Azure.ResourceManager.AppContainers |
 | containerinstance | Azure.ResourceManager.ContainerInstance |
 | containerregistry | Azure.ResourceManager.ContainerRegistry |
+| containerregistry-tasks | Azure.ResourceManager.ContainerRegistry.Tasks |
 | containerservice | Azure.ResourceManager.ContainerService |
 | cosmosdb | Azure.ResourceManager.CosmosDB |
 | cosmosdbforpostgresql | Azure.ResourceManager.CosmosDBForPostgreSql |
@@ -292,14 +297,12 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 14
 | devcenter | Azure.ResourceManager.DevCenter |
 | deviceupdate | Azure.ResourceManager.DeviceUpdate |
 | devspaces | Azure.ResourceManager.DevSpaces |
-| devtestlabs | Azure.ResourceManager.DevTestLabs |
 | digitaltwins | Azure.ResourceManager.DigitalTwins |
 | dns | Azure.ResourceManager.Dns |
 | dnsresolver | Azure.ResourceManager.DnsResolver |
 | eventgrid | Azure.ResourceManager.EventGrid |
 | eventhub | Azure.ResourceManager.EventHubs |
 | extendedlocation | Azure.ResourceManager.ExtendedLocations |
-| fleet | Azure.ResourceManager.ContainerServiceFleet |
 | fluidrelay | Azure.ResourceManager.FluidRelay |
 | frontdoor | Azure.ResourceManager.FrontDoor |
 | graphservices | Azure.ResourceManager.GraphServices |
@@ -341,7 +344,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 14
 | openenergyplatform | Azure.ResourceManager.EnergyServices |
 | operationalinsights | Azure.ResourceManager.OperationalInsights |
 | orbital | Azure.ResourceManager.Orbital |
-| peering | Azure.ResourceManager.Peering |
 | policyinsights | Azure.ResourceManager.PolicyInsights |
 | postgresql | Azure.ResourceManager.PostgreSql |
 | privatedns | Azure.ResourceManager.PrivateDns |
