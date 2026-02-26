@@ -541,6 +541,9 @@ namespace Azure.Storage.Files.Shares
         /// Get the Uri with SAS appended if the <see cref="ShareFileClient"/> has an <see cref="AzureSasCredential"/>,
         /// for use as the source URI when performing service to service copy
         /// where the client was initialized with an <see cref="AzureSasCredential"/>.
+        ///
+        /// To retrieve, please utilize the <see cref="ShareUriBuilder"/>.
+        /// To inspect the SAS token (after parsed) utilize the <see cref="SasQueryParameters"/> or <see cref="ShareSasQueryParameters"/>.
         /// </summary>
         /// <param name="client">
         /// The storage client from which to retrieve the URI and SAS credential.
