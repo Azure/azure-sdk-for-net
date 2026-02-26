@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// TODO: This custom code class should be removed after https://github.com/Azure/azure-sdk-for-net/issues/56502 is resolved.
+
 #nullable disable
 
 using System;
