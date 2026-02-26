@@ -100,6 +100,12 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             return;
         }
 
+        // Collect names of properties being removed to strip orphaned virtual from base
+        var removedPropertyNames = new HashSet<string>(
+            model.Properties
+                .Where(prop => prop.Modifiers.HasFlag(MethodSignatureModifiers.New))
+                .Select(prop => prop.Name));
+
         // If the model property modifiers contain 'new', we should drop it because the base type already has it.
         model.Update(properties: model.Properties.Where(prop => !prop.Modifiers.HasFlag(MethodSignatureModifiers.New)).ToArray());
 
@@ -109,9 +115,16 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         UpdateFullConstructor(model, rawDataField);
 
         var baseSystemPropertyNames = EnumerateBaseModelProperties(baseSystemType);
+        foreach (var prop in model.Properties.Where(prop => baseSystemPropertyNames.Contains(prop.Name)))
+        {
+            removedPropertyNames.Add(prop.Name);
+        }
         var properties = model.Properties.Where(prop => !baseSystemPropertyNames.Contains(prop.Name));
 
         model.Update(properties: properties, fields: [.. model.Fields, rawDataField]);
+
+        // Strip orphaned virtual modifiers from base properties that no longer have overrides
+        StripOrphanedVirtualModifiers(baseSystemType, removedPropertyNames);
 
         _updated.Add(model);
     }
@@ -124,14 +137,27 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             return;
         }
 
+        // Collect names of properties being removed to strip orphaned virtual from base
+        var removedPropertyNames = new HashSet<string>(
+            model.Properties
+                .Where(prop => prop.Modifiers.HasFlag(MethodSignatureModifiers.New))
+                .Select(prop => prop.Name));
+
         // If the model property modifiers contain 'new', we should drop it because the base type already has it.
         model.Update(properties: model.Properties.Where(prop => !prop.Modifiers.HasFlag(MethodSignatureModifiers.New)).ToArray());
 
         // Remove properties that have the same name as properties in the base model
         var basePropertyNames = EnumerateRegularBaseModelProperties(model.BaseModelProvider!);
+        foreach (var prop in model.Properties.Where(prop => basePropertyNames.Contains(prop.Name)))
+        {
+            removedPropertyNames.Add(prop.Name);
+        }
         var properties = model.Properties.Where(prop => !basePropertyNames.Contains(prop.Name)).ToArray();
 
         model.Update(properties: properties);
+
+        // Strip orphaned virtual modifiers from base properties that no longer have overrides
+        StripOrphanedVirtualModifiers(model.BaseModelProvider!, removedPropertyNames);
 
         _regularUpdated.Add(model);
     }
@@ -223,5 +249,31 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             currentModel = currentModel.BaseModelProvider;
         }
         return basePropertyNames;
+    }
+
+    /// <summary>
+    /// Strips the virtual modifier from base model properties whose names match removed derived properties.
+    /// When derived properties with new/override modifiers are removed, the corresponding base virtual
+    /// modifier becomes orphaned and should be removed.
+    /// </summary>
+    private static void StripOrphanedVirtualModifiers(ModelProvider baseModel, HashSet<string> removedPropertyNames)
+    {
+        if (removedPropertyNames.Count == 0)
+        {
+            return;
+        }
+
+        ModelProvider? current = baseModel;
+        while (current != null)
+        {
+            foreach (var property in current.Properties)
+            {
+                if (removedPropertyNames.Contains(property.Name) && property.Modifiers.HasFlag(MethodSignatureModifiers.Virtual))
+                {
+                    property.Update(modifiers: property.Modifiers & ~MethodSignatureModifiers.Virtual);
+                }
+            }
+            current = current.BaseModelProvider;
+        }
     }
 }
