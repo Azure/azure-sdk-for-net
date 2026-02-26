@@ -36,7 +36,7 @@ builder.AddClient<MyClient, MyClientSettings>("MyClient")
 ```
 
 For detailed examples including configuration patterns, keyed services, and credential options, see:
-- [Azure.Core Configuration and Dependency Injection](https://github.com/Azure/azure-sdk-for-net/blob/release/Azure.Identity_1.18.0/sdk/core/Azure.Core/src/docs/ConfigurationAndDependencyInjection.md)
+- [Azure.Core Configuration and Dependency Injection](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/src/docs/ConfigurationAndDependencyInjection.md)
 
 ### Suppression
 
@@ -56,7 +56,7 @@ Or in your project file:
 
 ### Related Documentation
 
-- [Azure.Core Configuration and Dependency Injection](https://github.com/Azure/azure-sdk-for-net/blob/release/Azure.Identity_1.18.0/sdk/core/Azure.Core/src/docs/ConfigurationAndDependencyInjection.md) — Usage examples with Azure SDK clients
+- [Azure.Core Configuration and Dependency Injection](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/src/docs/ConfigurationAndDependencyInjection.md) — Usage examples with Azure SDK clients
 - [System.ClientModel Configuration and Dependency Injection](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ConfigurationAndDependencyInjection.md) — Base configuration patterns
 - [System.ClientModel Experimental Features](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ExperimentalFeatures.md) — SCME0002 diagnostic details
 - [Azure.Core Experimental Features](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/src/docs/ExperimentalFeatures.md) — Azure.Core experimental APIs
