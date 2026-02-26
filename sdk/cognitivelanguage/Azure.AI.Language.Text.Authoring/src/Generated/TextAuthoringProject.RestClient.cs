@@ -32,7 +32,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/import/jobs/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -50,7 +53,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/export/jobs/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -66,7 +72,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath("/language", false);
             uri.AppendPath("/authoring/analyze-text/projects/", false);
             uri.AppendPath(projectName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -82,7 +91,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath("/language", false);
             uri.AppendPath("/authoring/analyze-text/projects/", false);
             uri.AppendPath(projectName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
             Request request = message.Request;
             request.Uri = uri;
@@ -100,7 +112,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath("/language", false);
             uri.AppendPath("/authoring/analyze-text/projects/", false);
             uri.AppendPath(projectName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
@@ -116,7 +131,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath("/authoring/analyze-text/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/:authorize-copy", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -135,7 +153,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath("/authoring/analyze-text/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/:copy", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
@@ -153,7 +174,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath("/authoring/analyze-text/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/:export", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             uri.AppendQuery("stringIndexType", stringIndexType, true);
             if (assetKind != null)
             {
@@ -178,7 +202,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath("/authoring/analyze-text/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/:import", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
@@ -200,7 +227,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath("/authoring/analyze-text/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/:train", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
@@ -219,7 +249,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/copy/jobs/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -237,7 +270,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/train/jobs/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -256,7 +292,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath("/train/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendPath("/:cancel", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
@@ -271,7 +310,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath("/language", false);
             uri.AppendPath("/authoring/analyze-text/projects/global/deletion-jobs/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -288,7 +330,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath("/authoring/analyze-text/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/resources/:unassign", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
@@ -307,7 +352,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/resources/unassign/jobs/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -324,7 +372,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath("/authoring/analyze-text/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/resources/:assign", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
@@ -343,7 +394,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/resources/assign/jobs/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -360,7 +414,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath("/authoring/analyze-text/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/deployments/:swap", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
@@ -379,7 +436,10 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/deployments/swap/jobs/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;

@@ -22,6 +22,58 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RuntimeUpdateApplicationUpgradeContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RuntimeUpdateApplicationUpgradeContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRuntimeUpdateApplicationUpgradeContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RuntimeUpdateApplicationUpgradeContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RuntimeUpdateApplicationUpgradeContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RuntimeUpdateApplicationUpgradeContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RuntimeUpdateApplicationUpgradeContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RuntimeUpdateApplicationUpgradeContent IPersistableModel<RuntimeUpdateApplicationUpgradeContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RuntimeUpdateApplicationUpgradeContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="runtimeUpdateApplicationUpgradeContent"> The <see cref="RuntimeUpdateApplicationUpgradeContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(RuntimeUpdateApplicationUpgradeContent runtimeUpdateApplicationUpgradeContent)
+        {
+            if (runtimeUpdateApplicationUpgradeContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(runtimeUpdateApplicationUpgradeContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RuntimeUpdateApplicationUpgradeContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -137,58 +189,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             return new RuntimeUpdateApplicationUpgradeContent(name, upgradeKind, applicationHealthPolicy, updateDescription, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RuntimeUpdateApplicationUpgradeContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RuntimeUpdateApplicationUpgradeContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(RuntimeUpdateApplicationUpgradeContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        RuntimeUpdateApplicationUpgradeContent IPersistableModel<RuntimeUpdateApplicationUpgradeContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RuntimeUpdateApplicationUpgradeContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RuntimeUpdateApplicationUpgradeContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeRuntimeUpdateApplicationUpgradeContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RuntimeUpdateApplicationUpgradeContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RuntimeUpdateApplicationUpgradeContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="runtimeUpdateApplicationUpgradeContent"> The <see cref="RuntimeUpdateApplicationUpgradeContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(RuntimeUpdateApplicationUpgradeContent runtimeUpdateApplicationUpgradeContent)
-        {
-            if (runtimeUpdateApplicationUpgradeContent == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(runtimeUpdateApplicationUpgradeContent, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

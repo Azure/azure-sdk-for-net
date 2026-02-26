@@ -48,6 +48,16 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<Drag>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        Drag IPersistableModel<Drag>.Create(BinaryData data, ModelReaderWriterOptions options) => (Drag)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<Drag>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<Drag>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -128,15 +138,5 @@ namespace Azure.AI.Projects
             }
             return new Drag(@type, additionalBinaryDataProperties, path);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<Drag>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        Drag IPersistableModel<Drag>.Create(BinaryData data, ModelReaderWriterOptions options) => (Drag)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<Drag>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Hci.Vm
                     yield break;
                 }
                 PublicIPAddressListResult result = PublicIPAddressListResult.FromResponse(response);
-                yield return Page<HciVmPublicIPAddressData>.FromValues((IReadOnlyList<HciVmPublicIPAddressData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<HciVmPublicIPAddressData>.FromValues((IReadOnlyList<HciVmPublicIPAddressData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

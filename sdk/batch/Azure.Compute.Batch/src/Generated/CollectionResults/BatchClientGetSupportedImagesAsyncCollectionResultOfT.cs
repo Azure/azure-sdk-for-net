@@ -65,7 +65,7 @@ namespace Azure.Compute.Batch
                     yield break;
                 }
                 BatchAccountListSupportedImagesResult result = (BatchAccountListSupportedImagesResult)response;
-                yield return Page<BatchSupportedImage>.FromValues((IReadOnlyList<BatchSupportedImage>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<BatchSupportedImage>.FromValues((IReadOnlyList<BatchSupportedImage>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.OdataNextLink;
                 if (nextPage == null)
                 {

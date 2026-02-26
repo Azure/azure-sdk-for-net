@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.MongoCluster
                     yield break;
                 }
                 UserListResult result = UserListResult.FromResponse(response);
-                yield return Page<MongoClusterUserData>.FromValues((IReadOnlyList<MongoClusterUserData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<MongoClusterUserData>.FromValues((IReadOnlyList<MongoClusterUserData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

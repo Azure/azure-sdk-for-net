@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -14,27 +14,32 @@ namespace Azure.AI.Projects.OpenAI.Tests.Samples;
 public class Sample_StructuredOutput : ProjectsOpenAITestBase
 {
     #region Snippet:Sample_Schema_StructuredOutput
-    private static readonly BinaryData s_calendatSchema = BinaryData.FromObjectAsJson(
-        new {
+    private static readonly BinaryData s_calendarSchema = BinaryData.FromObjectAsJson(
+        new
+        {
             additionalProperties = false,
-            properties = new {
-                name = new {
+            properties = new
+            {
+                name = new
+                {
                     title = "Name",
                     type = "string"
                 },
-                date = new {
+                date = new
+                {
                     description = "Date in YYYY-MM-DD format",
                     title = "Date",
                     type = "string"
                 },
-                participants = new {
+                participants = new
+                {
                     items = new { type = "string" },
                     title = "Participants",
                     type = "array"
                 }
             },
             required = new List<string> { "name", "date", "participants" },
-            title ="CalendarEvent",
+            title = "CalendarEvent",
             type = "object",
         }
     );
@@ -42,7 +47,7 @@ public class Sample_StructuredOutput : ProjectsOpenAITestBase
 
     [Test]
     [AsyncOnly]
-    public async Task ConversationStructulatlOutputAsync()
+    public async Task ConversationStructuralOutputAsync()
     {
         IgnoreSampleMayBe();
         #region Snippet:Sample_CreateClient_StructuredOutput
@@ -62,7 +67,7 @@ public class Sample_StructuredOutput : ProjectsOpenAITestBase
         {
             TextFormat = ResponseTextFormat.CreateJsonSchemaFormat(
                 jsonSchemaFormatName: "Calendar",
-                jsonSchema: s_calendatSchema
+                jsonSchema: s_calendarSchema
             )
         };
         PromptAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
@@ -94,7 +99,7 @@ public class Sample_StructuredOutput : ProjectsOpenAITestBase
 
     [Test]
     [SyncOnly]
-    public void ConversationStructulatlOutput()
+    public void ConversationStructuralOutput()
     {
         IgnoreSampleMayBe();
 #if SNIPPET
@@ -112,7 +117,7 @@ public class Sample_StructuredOutput : ProjectsOpenAITestBase
         {
             TextFormat = ResponseTextFormat.CreateJsonSchemaFormat(
                 jsonSchemaFormatName: "Calendar",
-                jsonSchema: s_calendatSchema
+                jsonSchema: s_calendarSchema
             )
         };
         PromptAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)

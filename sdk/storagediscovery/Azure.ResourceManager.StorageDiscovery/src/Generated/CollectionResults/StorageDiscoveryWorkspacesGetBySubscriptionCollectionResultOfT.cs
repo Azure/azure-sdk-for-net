@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.StorageDiscovery
                     yield break;
                 }
                 StorageDiscoveryWorkspaceListResult result = StorageDiscoveryWorkspaceListResult.FromResponse(response);
-                yield return Page<StorageDiscoveryWorkspaceData>.FromValues((IReadOnlyList<StorageDiscoveryWorkspaceData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<StorageDiscoveryWorkspaceData>.FromValues((IReadOnlyList<StorageDiscoveryWorkspaceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

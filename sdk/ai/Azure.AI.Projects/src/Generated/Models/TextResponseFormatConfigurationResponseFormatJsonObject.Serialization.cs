@@ -42,6 +42,16 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TextResponseFormatConfigurationResponseFormatJsonObject>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TextResponseFormatConfigurationResponseFormatJsonObject IPersistableModel<TextResponseFormatConfigurationResponseFormatJsonObject>.Create(BinaryData data, ModelReaderWriterOptions options) => (TextResponseFormatConfigurationResponseFormatJsonObject)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TextResponseFormatConfigurationResponseFormatJsonObject>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TextResponseFormatConfigurationResponseFormatJsonObject>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -104,15 +114,5 @@ namespace Azure.AI.Projects
             }
             return new TextResponseFormatConfigurationResponseFormatJsonObject(@type, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TextResponseFormatConfigurationResponseFormatJsonObject>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        TextResponseFormatConfigurationResponseFormatJsonObject IPersistableModel<TextResponseFormatConfigurationResponseFormatJsonObject>.Create(BinaryData data, ModelReaderWriterOptions options) => (TextResponseFormatConfigurationResponseFormatJsonObject)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TextResponseFormatConfigurationResponseFormatJsonObject>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

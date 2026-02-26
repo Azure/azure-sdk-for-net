@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.StorageMover
                     yield break;
                 }
                 ProjectList result = ProjectList.FromResponse(response);
-                yield return Page<StorageMoverProjectData>.FromValues(result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<StorageMoverProjectData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

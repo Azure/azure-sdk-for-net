@@ -10,25 +10,33 @@ The Microsoft.Extensions.Configuration and Microsoft.Extensions.DependencyInject
 
 ### Affected APIs
 
-- `Azure.Identity.ConfigurationExtensions` - Extension methods for IConfiguration and IHostApplicationBuilder
-  - `GetAzureClientSettings<T>` - Creates client settings from configuration
-  - `AddAzureClient<TClient, TSettings>` - Registers an Azure client in the DI container
-  - `AddKeyedAzureClient<TClient, TSettings>` - Registers a keyed Azure client in the DI container
-  - `WithAzureCredential` - Configures settings to use Azure credential
+- `Azure.Identity.ConfigurationExtensions` - Extension methods for `IConfiguration` and `IHostApplicationBuilder`
+  - `GetAzureClientSettings<T>` - Creates client settings from configuration with Azure credential resolution
+  - `AddAzureClient<TClient, TSettings>` - Registers an Azure client in the DI container (automatically calls `WithAzureCredential`)
+  - `AddKeyedAzureClient<TClient, TSettings>` - Registers a keyed Azure client in the DI container (automatically calls `WithAzureCredential`)
+  - `WithAzureCredential` (on `ClientSettings`) - Configures settings to resolve Azure credentials from configuration
+  - `WithAzureCredential` (on `IClientBuilder`) - Configures the client builder to resolve Azure credentials from configuration
 
-### Example Usage
+### How AddAzureClient and WithAzureCredential Work Together
+
+The `AddAzureClient` extension methods are convenience wrappers that call the base `AddClient` method from `System.ClientModel` and then automatically call `WithAzureCredential`. This means you don't need to manually configure Azure credential resolution — it's handled for you.
+
+If you use the base `AddClient` method directly, you can call `WithAzureCredential` explicitly to get the same behavior:
 
 ```csharp
 #pragma warning disable SCME0002
 
-// Get client settings from configuration
-var settings = configuration.GetAzureClientSettings<MyClientSettings>("MyClient");
-
-// Or use dependency injection
+// These two are equivalent:
 builder.AddAzureClient<MyClient, MyClientSettings>("MyClient");
+
+builder.AddClient<MyClient, MyClientSettings>("MyClient")
+    .WithAzureCredential();
 
 #pragma warning restore SCME0002
 ```
+
+For detailed examples including configuration patterns, keyed services, and credential options, see:
+- [Azure.Core Configuration and Dependency Injection](https://github.com/Azure/azure-sdk-for-net/blob/release/Azure.Identity_1.18.0/sdk/core/Azure.Core/src/docs/ConfigurationAndDependencyInjection.md)
 
 ### Suppression
 
@@ -48,6 +56,7 @@ Or in your project file:
 
 ### Related Documentation
 
-For more information about the configuration and dependency injection integration in System.ClientModel, see:
-- [System.ClientModel ExperimentalFeatures.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ExperimentalFeatures.md)
-- [ConfigurationAndDependencyInjection.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ConfigurationAndDependencyInjection.md)
+- [Azure.Core Configuration and Dependency Injection](https://github.com/Azure/azure-sdk-for-net/blob/release/Azure.Identity_1.18.0/sdk/core/Azure.Core/src/docs/ConfigurationAndDependencyInjection.md) — Usage examples with Azure SDK clients
+- [System.ClientModel Configuration and Dependency Injection](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ConfigurationAndDependencyInjection.md) — Base configuration patterns
+- [System.ClientModel Experimental Features](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ExperimentalFeatures.md) — SCME0002 diagnostic details
+- [Azure.Core Experimental Features](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/src/docs/ExperimentalFeatures.md) — Azure.Core experimental APIs

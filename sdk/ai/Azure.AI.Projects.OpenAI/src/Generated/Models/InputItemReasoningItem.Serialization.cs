@@ -47,6 +47,16 @@ namespace Azure.AI.Projects.OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InputItemReasoningItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InputItemReasoningItem IPersistableModel<InputItemReasoningItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (InputItemReasoningItem)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InputItemReasoningItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InputItemReasoningItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -75,7 +85,7 @@ namespace Azure.AI.Projects.OpenAI
             }
             writer.WritePropertyName("summary"u8);
             writer.WriteStartArray();
-            foreach (Summary item in Summary)
+            foreach (InternalSummaryTextObject item in Summary)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -126,9 +136,9 @@ namespace Azure.AI.Projects.OpenAI
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             string encryptedContent = default;
-            IList<Summary> summary = default;
+            IList<InternalSummaryTextObject> summary = default;
             IList<ReasoningTextContent> content = default;
-            ItemReasoningItemStatus? status = default;
+            OutputItemReasoningItemStatus? status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -153,10 +163,10 @@ namespace Azure.AI.Projects.OpenAI
                 }
                 if (prop.NameEquals("summary"u8))
                 {
-                    List<Summary> array = new List<Summary>();
+                    List<InternalSummaryTextObject> array = new List<InternalSummaryTextObject>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OpenAI.Summary.DeserializeSummary(item, options));
+                        array.Add(InternalSummaryTextObject.DeserializeInternalSummaryTextObject(item, options));
                     }
                     summary = array;
                     continue;
@@ -181,7 +191,7 @@ namespace Azure.AI.Projects.OpenAI
                     {
                         continue;
                     }
-                    status = prop.Value.GetString().ToItemReasoningItemStatus();
+                    status = prop.Value.GetString().ToOutputItemReasoningItemStatus();
                     continue;
                 }
                 if (options.Format != "W")
@@ -198,15 +208,5 @@ namespace Azure.AI.Projects.OpenAI
                 content ?? new ChangeTrackingList<ReasoningTextContent>(),
                 status);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InputItemReasoningItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InputItemReasoningItem IPersistableModel<InputItemReasoningItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (InputItemReasoningItem)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InputItemReasoningItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

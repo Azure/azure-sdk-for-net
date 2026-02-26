@@ -20,19 +20,20 @@ public partial class AIProjectAgentsOperations
     /// </list>
     /// </summary>
     /// <param name="content"> The content to send as the body of the request. </param>
+    /// <param name="foundryFeatures">Optional experimental features to be used.</param>
     /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public virtual ClientResult CreateAgent(BinaryContent content, RequestOptions options = null)
+    public virtual ClientResult CreateAgent(BinaryContent content, string foundryFeatures=default, RequestOptions options = null)
     {
         using var otelScope = OpenTelemetryScope.StartCreateAgent(_endpoint, content, options);
         Argument.AssertNotNull(content, nameof(content));
 
         try
         {
-            using PipelineMessage message = CreateCreateAgentRequest(content, options);
+            using PipelineMessage message = CreateCreateAgentRequest(content, foundryFeatures, options);
             var result = ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
             otelScope?.RecordCreateAgentResponse(result);
             return result;
@@ -53,19 +54,20 @@ public partial class AIProjectAgentsOperations
     /// </list>
     /// </summary>
     /// <param name="content"> The content to send as the body of the request. </param>
+    /// <param name="foundryFeatures">Optional experimental features to be used.</param>
     /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public virtual async Task<ClientResult> CreateAgentAsync(BinaryContent content, RequestOptions options = null)
+    public virtual async Task<ClientResult> CreateAgentAsync(BinaryContent content, string foundryFeatures=default, RequestOptions options = null)
     {
         using var otelScope = OpenTelemetryScope.StartCreateAgent(_endpoint, content, options);
         Argument.AssertNotNull(content, nameof(content));
 
         try
         {
-            using PipelineMessage message = CreateCreateAgentRequest(content, options);
+            using PipelineMessage message = CreateCreateAgentRequest(content, foundryFeatures, options);
             var result = ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
             otelScope?.RecordCreateAgentResponse(result);
             return result;
@@ -87,13 +89,14 @@ public partial class AIProjectAgentsOperations
     /// </summary>
     /// <param name="agentName"> The name of the agent to create/modify. </param>
     /// <param name="content"> The content to send as the body of the request. </param>
+    /// <param name="foundryFeatures">Optional experimental features to be used.</param>
     /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="content"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public virtual ClientResult CreateAgentVersion(string agentName, BinaryContent content, RequestOptions options = null)
+    public virtual ClientResult CreateAgentVersion(string agentName, BinaryContent content, string foundryFeatures=default, RequestOptions options = null)
     {
         using var otelScope = OpenTelemetryScope.StartCreateAgentVersion(_endpoint, agentName, content, options);
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
@@ -101,7 +104,7 @@ public partial class AIProjectAgentsOperations
 
         try
         {
-            using PipelineMessage message = CreateCreateAgentVersionRequest(agentName, content, options);
+            using PipelineMessage message = CreateCreateAgentVersionRequest(agentName, content, foundryFeatures, options);
             var result = ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
             otelScope?.RecordCreateAgentVersionResponse(result);
             return result;
@@ -123,13 +126,14 @@ public partial class AIProjectAgentsOperations
     /// </summary>
     /// <param name="agentName"> The name of the agent to create/modify. </param>
     /// <param name="content"> The content to send as the body of the request. </param>
+    /// <param name="foundryFeatures">Optional experimental features to be used.</param>
     /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="content"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public virtual async Task<ClientResult> CreateAgentVersionAsync(string agentName, BinaryContent content, RequestOptions options = null)
+    public virtual async Task<ClientResult> CreateAgentVersionAsync(string agentName, BinaryContent content, string foundryFeatures=default, RequestOptions options = null)
     {
         using var otelScope = OpenTelemetryScope.StartCreateAgentVersion(_endpoint, agentName, content, options);
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
@@ -137,7 +141,7 @@ public partial class AIProjectAgentsOperations
 
         try
         {
-            using PipelineMessage message = CreateCreateAgentVersionRequest(agentName, content, options);
+            using PipelineMessage message = CreateCreateAgentVersionRequest(agentName, content, foundryFeatures, options);
             var result = ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
             otelScope?.RecordCreateAgentVersionResponse(result);
             return result;
@@ -334,13 +338,14 @@ public partial class AIProjectAgentsOperations
     /// </summary>
     /// <param name="agentName"> The name of the agent to retrieve. </param>
     /// <param name="content"> The content to send as the body of the request. </param>
+    /// <param name="foundryFeatures">Optional experimental features to be used.</param>
     /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="content"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public virtual ClientResult UpdateAgent(string agentName, BinaryContent content, RequestOptions options = null)
+    public virtual ClientResult UpdateAgent(string agentName, BinaryContent content, string foundryFeatures=default, RequestOptions options = null)
     {
         using var otelScope = OpenTelemetryScope.StartUpdateAgent(_endpoint, agentName, content, options);
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
@@ -348,7 +353,7 @@ public partial class AIProjectAgentsOperations
 
         try
         {
-            using PipelineMessage message = CreateUpdateAgentRequest(agentName, content, options);
+            using PipelineMessage message = CreateUpdateAgentRequest(agentName, content, foundryFeatures, options);
             var result = ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
             otelScope?.RecordUpdateAgentResponse(result);
             return result;
@@ -371,13 +376,14 @@ public partial class AIProjectAgentsOperations
     /// </summary>
     /// <param name="agentName"> The name of the agent to retrieve. </param>
     /// <param name="content"> The content to send as the body of the request. </param>
+    /// <param name="foundryFeatures">Optional experimental features to be used.</param>
     /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="content"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public virtual async Task<ClientResult> UpdateAgentAsync(string agentName, BinaryContent content, RequestOptions options = null)
+    public virtual async Task<ClientResult> UpdateAgentAsync(string agentName, BinaryContent content, string foundryFeatures=default, RequestOptions options = null)
     {
         using var otelScope = OpenTelemetryScope.StartUpdateAgent(_endpoint, agentName, content, options);
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
@@ -385,7 +391,7 @@ public partial class AIProjectAgentsOperations
 
         try
         {
-            using PipelineMessage message = CreateUpdateAgentRequest(agentName, content, options);
+            using PipelineMessage message = CreateUpdateAgentRequest(agentName, content, foundryFeatures, options);
             var result = ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
             otelScope?.RecordUpdateAgentResponse(result);
             return result;

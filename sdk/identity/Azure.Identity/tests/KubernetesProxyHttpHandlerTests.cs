@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
@@ -436,6 +437,81 @@ namespace Azure.Identity.Tests
             return File.ReadAllText(certPath);
         }
 
+#if !NET462
+        /// <summary>
+        /// Generates a fresh CA certificate and leaf certificate signed by that CA.
+        /// Used for testing certificate validation with non-expired certificates.
+        /// </summary>
+        private static (X509Certificate2 Ca, X509Certificate2 Leaf) GenerateTestCertificates()
+        {
+            // Capture dates once to avoid timing race conditions between CA and leaf cert creation
+            var notBefore = DateTimeOffset.UtcNow.AddDays(-1);
+            var notAfter = DateTimeOffset.UtcNow.AddDays(365);
+
+            // Generate CA certificate
+            using var caKey = RSA.Create(2048);
+            var caRequest = new CertificateRequest(
+                new X500DistinguishedName("CN=Test CA"),
+                caKey,
+                HashAlgorithmName.SHA256,
+                RSASignaturePadding.Pkcs1);
+
+            caRequest.CertificateExtensions.Add(
+                new X509BasicConstraintsExtension(true, false, 0, true));
+            caRequest.CertificateExtensions.Add(
+                new X509KeyUsageExtension(X509KeyUsageFlags.KeyCertSign | X509KeyUsageFlags.CrlSign, true));
+
+            var caCert = caRequest.CreateSelfSigned(notBefore, notAfter);
+
+            // Generate leaf certificate signed by CA
+            using var leafKey = RSA.Create(2048);
+            var leafRequest = new CertificateRequest(
+                new X500DistinguishedName("CN=Test Server"),
+                leafKey,
+                HashAlgorithmName.SHA256,
+                RSASignaturePadding.Pkcs1);
+
+            leafRequest.CertificateExtensions.Add(
+                new X509BasicConstraintsExtension(false, false, 0, false));
+            leafRequest.CertificateExtensions.Add(
+                new X509KeyUsageExtension(X509KeyUsageFlags.DigitalSignature | X509KeyUsageFlags.KeyEncipherment, true));
+
+            var leafCertPublic = leafRequest.Create(
+                caCert,
+                notBefore,
+                notAfter,
+                Guid.NewGuid().ToByteArray());
+
+            // Combine with private key for leaf use
+            var leafCertWithKey = leafCertPublic.CopyWithPrivateKey(leafKey);
+
+            // Export and re-import to get usable certificates
+            var caCertBytes = caCert.Export(X509ContentType.Pfx);
+            var leafCertBytes = leafCertWithKey.Export(X509ContentType.Pfx);
+
+#pragma warning disable SYSLIB0057 // X509Certificate2 constructors are obsolete
+            return (
+                new X509Certificate2(caCertBytes),
+                new X509Certificate2(leafCertBytes)
+            );
+#pragma warning restore SYSLIB0057
+        }
+#endif
+
+#if !NET462
+        /// <summary>
+        /// Exports a certificate to PEM format.
+        /// </summary>
+        private static string ExportCertificateToPem(X509Certificate2 cert)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine("-----BEGIN CERTIFICATE-----");
+            sb.AppendLine(Convert.ToBase64String(cert.RawData, Base64FormattingOptions.InsertLineBreaks));
+            sb.AppendLine("-----END CERTIFICATE-----");
+            return sb.ToString();
+        }
+#endif
+
         [Test]
         public async Task ConfigureCustomCertificates_ValidatesCorrectly()
         {
@@ -487,70 +563,127 @@ namespace Azure.Identity.Tests
         [Test]
         public void CertificateValidationCallback_ConfiguresCorrectly()
         {
+#if NET462
+            // CertificateRequest is not available in net462
+            // Use the static test certificate instead.
+
             var validCaPem = GetTestCertificatePem();
+            var testCert = PemReader.LoadCertificate(validCaPem.AsSpan(), allowCertificateOnly: true);
 
             // Test with CA data - should configure callback
-            var proxyConfig = new KubernetesProxyConfig()
-            {
-                ProxyUrl = new Uri(DefaultProxyUrl),
-                SniName = DefaultSniName,
-                CaData = validCaPem,
-                Transport = null
-            };
-            var handlerWithCa = new KubernetesProxyHttpHandler(proxyConfig);
+            var handlerWithCa = new KubernetesProxyHttpHandler(CreateTestConfig(caData: validCaPem));
             var innerHandlerWithCa = handlerWithCa.InnerHandler as HttpClientHandler;
             Assert.IsNotNull(innerHandlerWithCa?.ServerCertificateCustomValidationCallback,
                 "Should configure callback when CA data provided");
 
             // Test without CA data - should not configure callback
-            var proxyConfigNoCa = new KubernetesProxyConfig()
-            {
-                ProxyUrl = new Uri(DefaultProxyUrl),
-                SniName = DefaultSniName,
-                CaData = null,
-                Transport = null
-            };
-            var handlerNoCa = new KubernetesProxyHttpHandler(proxyConfigNoCa);
+            var handlerNoCa = new KubernetesProxyHttpHandler(CreateTestConfig(caData: null));
             var innerHandlerNoCa = handlerNoCa.InnerHandler as HttpClientHandler;
             Assert.IsNull(innerHandlerNoCa?.ServerCertificateCustomValidationCallback,
                 "Should NOT configure callback when no CA data provided");
 
-            // Test callback behavior - verify it configures chain policy and handles edge cases
-            if (innerHandlerWithCa?.ServerCertificateCustomValidationCallback != null)
+            // Test callback behavior - verify edge cases are handled correctly
+            var callback = innerHandlerWithCa.ServerCertificateCustomValidationCallback;
+
+            // Test null certificate case
+            using (var chain = new X509Chain())
             {
-                var testCert = PemReader.LoadCertificate(validCaPem.AsSpan(), allowCertificateOnly: true);
-                var callback = innerHandlerWithCa.ServerCertificateCustomValidationCallback;
+                var result = callback(null, null, chain, System.Net.Security.SslPolicyErrors.RemoteCertificateChainErrors);
+                Assert.IsFalse(result, "Should return false for null certificate");
+            }
 
-                // Test normal case - no SSL errors
-                using (var chain = new X509Chain())
-                {
-                    Assert.DoesNotThrow(() => callback(null, testCert, chain, System.Net.Security.SslPolicyErrors.None));
-                    Assert.IsTrue(chain.ChainPolicy.ExtraStore.Count > 0, "CA should be added to ExtraStore");
-                    Assert.AreEqual(X509RevocationMode.NoCheck, chain.ChainPolicy.RevocationMode);
-                    Assert.AreEqual(X509VerificationFlags.AllowUnknownCertificateAuthority, chain.ChainPolicy.VerificationFlags);
-                }
+            // Test that non-chain SSL errors are rejected immediately (before chain validation)
+            // These errors cannot be fixed by custom CA validation
+            using (var chain = new X509Chain())
+            {
+                var result = callback(null, testCert, chain, System.Net.Security.SslPolicyErrors.RemoteCertificateNameMismatch);
+                Assert.IsFalse(result, "Should reject RemoteCertificateNameMismatch");
+            }
 
-                // Test null certificate case
-                using (var chain = new X509Chain())
-                {
-                    var result = callback(null, null, chain, System.Net.Security.SslPolicyErrors.RemoteCertificateChainErrors);
-                    Assert.IsFalse(result, "Should return false for null certificate");
-                }
+            using (var chain = new X509Chain())
+            {
+                var result = callback(null, testCert, chain, System.Net.Security.SslPolicyErrors.RemoteCertificateNotAvailable);
+                Assert.IsFalse(result, "Should reject RemoteCertificateNotAvailable");
+            }
+#else
+            // Generate fresh CA and leaf certificates for testing
+            // (Using runtime-generated certs instead of expired cert.pem file)
+            var (caCert, leafCert) = GenerateTestCertificates();
+            try
+            {
+                var caPem = ExportCertificateToPem(caCert);
 
-                // Test that non-chain SSL errors are rejected immediately (before chain validation)
-                // These errors cannot be fixed by custom CA validation
-                using (var chain = new X509Chain())
+                // Test with CA data - should configure callback
+                var proxyConfig = new KubernetesProxyConfig()
                 {
-                    var result = callback(null, testCert, chain, System.Net.Security.SslPolicyErrors.RemoteCertificateNameMismatch);
-                    Assert.IsFalse(result, "Should reject RemoteCertificateNameMismatch");
-                }
+                    ProxyUrl = new Uri(DefaultProxyUrl),
+                    SniName = DefaultSniName,
+                    CaData = caPem,
+                    Transport = null
+                };
+                var handlerWithCa = new KubernetesProxyHttpHandler(proxyConfig);
+                var innerHandlerWithCa = handlerWithCa.InnerHandler as HttpClientHandler;
+                Assert.IsNotNull(innerHandlerWithCa?.ServerCertificateCustomValidationCallback,
+                    "Should configure callback when CA data provided");
 
-                using (var chain = new X509Chain())
+                // Test without CA data - should not configure callback
+                var proxyConfigNoCa = new KubernetesProxyConfig()
                 {
-                    var result = callback(null, testCert, chain, System.Net.Security.SslPolicyErrors.RemoteCertificateNotAvailable);
-                    Assert.IsFalse(result, "Should reject RemoteCertificateNotAvailable");
+                    ProxyUrl = new Uri(DefaultProxyUrl),
+                    SniName = DefaultSniName,
+                    CaData = null,
+                    Transport = null
+                };
+                var handlerNoCa = new KubernetesProxyHttpHandler(proxyConfigNoCa);
+                var innerHandlerNoCa = handlerNoCa.InnerHandler as HttpClientHandler;
+                Assert.IsNull(innerHandlerNoCa?.ServerCertificateCustomValidationCallback,
+                    "Should NOT configure callback when no CA data provided");
+
+                // Test callback behavior - verify it configures chain policy and handles edge cases
+                if (innerHandlerWithCa?.ServerCertificateCustomValidationCallback != null)
+                {
+                    var callback = innerHandlerWithCa.ServerCertificateCustomValidationCallback;
+
+                    // Test normal case - no SSL errors
+                    // Use the leaf certificate (signed by CA) to test the callback, not the CA itself
+                    // The callback creates its own X509Chain internally to avoid Linux/OpenSSL issues,
+                    // so the passed-in chain should NOT be modified
+                    using (var chain = new X509Chain())
+                    {
+                        var result = callback(null, leafCert, chain, System.Net.Security.SslPolicyErrors.None);
+                        Assert.IsTrue(result, "Should return true for valid certificate signed by custom CA");
+                        // The passed-in chain should NOT be modified - the callback uses its own internal chain
+                        Assert.AreEqual(0, chain.ChainPolicy.ExtraStore.Count, "Passed-in chain should not be modified");
+                    }
+
+                    // Test null certificate case
+                    using (var chain = new X509Chain())
+                    {
+                        var result = callback(null, null, chain, System.Net.Security.SslPolicyErrors.RemoteCertificateChainErrors);
+                        Assert.IsFalse(result, "Should return false for null certificate");
+                    }
+
+                    // Test that non-chain SSL errors are rejected immediately (before chain validation)
+                    // These errors cannot be fixed by custom CA validation
+                    using (var chain = new X509Chain())
+                    {
+                        var result = callback(null, leafCert, chain, System.Net.Security.SslPolicyErrors.RemoteCertificateNameMismatch);
+                        Assert.IsFalse(result, "Should reject RemoteCertificateNameMismatch");
+                    }
+
+                    using (var chain = new X509Chain())
+                    {
+                        var result = callback(null, leafCert, chain, System.Net.Security.SslPolicyErrors.RemoteCertificateNotAvailable);
+                        Assert.IsFalse(result, "Should reject RemoteCertificateNotAvailable");
+                    }
                 }
             }
+            finally
+            {
+                caCert?.Dispose();
+                leafCert?.Dispose();
+            }
+#endif
         }
 
         [Test]

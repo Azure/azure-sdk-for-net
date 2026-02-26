@@ -47,6 +47,16 @@ namespace Azure.AI.Projects.OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<OpenAPIManagedAuthenticationDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OpenAPIManagedAuthenticationDetails IPersistableModel<OpenAPIManagedAuthenticationDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (OpenAPIManagedAuthenticationDetails)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<OpenAPIManagedAuthenticationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OpenAPIManagedAuthenticationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -97,7 +107,7 @@ namespace Azure.AI.Projects.OpenAI
             }
             OpenApiAuthType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            OpenApiManagedSecurityScheme securityScheme = default;
+            OpenAPIManagedSecurityScheme securityScheme = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -107,7 +117,7 @@ namespace Azure.AI.Projects.OpenAI
                 }
                 if (prop.NameEquals("security_scheme"u8))
                 {
-                    securityScheme = OpenApiManagedSecurityScheme.DeserializeOpenApiManagedSecurityScheme(prop.Value, options);
+                    securityScheme = OpenAPIManagedSecurityScheme.DeserializeOpenAPIManagedSecurityScheme(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -117,15 +127,5 @@ namespace Azure.AI.Projects.OpenAI
             }
             return new OpenAPIManagedAuthenticationDetails(@type, additionalBinaryDataProperties, securityScheme);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OpenAPIManagedAuthenticationDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        OpenAPIManagedAuthenticationDetails IPersistableModel<OpenAPIManagedAuthenticationDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (OpenAPIManagedAuthenticationDetails)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OpenAPIManagedAuthenticationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

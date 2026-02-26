@@ -86,10 +86,11 @@ namespace Azure.Identity.Tests
         /// <summary>
         /// Returns the expected exception type for error scenarios.
         /// Base: AuthenticationFailedException when not chained, CredentialUnavailableException when chained.
-        /// ConfigurableCredential always wraps in DefaultAzureCredential (chained), so always CredentialUnavailableException.
         /// </summary>
-        protected virtual Type GetExpectedExceptionType(bool isChained)
+        protected Type GetExpectedExceptionType(bool isChained)
             => isChained ? typeof(CredentialUnavailableException) : typeof(AuthenticationFailedException);
+
+        protected virtual bool IsChainedCredentialSupported => true;
         #endregion
 
         [Test]
@@ -223,6 +224,10 @@ namespace Azure.Identity.Tests
         [TestCaseSource(nameof(AzureCliExceptionScenarios_IsChained))]
         public void AuthenticateWithCliCredential_ExceptionScenarios_IsChained(Action<object> exceptionOnStartHandler, string errorMessage, string expectedMessage, bool isChained)
         {
+            if (!IsChainedCredentialSupported)
+            {
+                Assert.Ignore("ConfigurableCredential with CredentialSource does not support chained credential scenarios.");
+            }
             var testProcess = new TestProcess { Error = errorMessage, ExceptionOnStartHandler = exceptionOnStartHandler };
             var credential = CreateCredentialWithChainedOption(new TestProcessService(testProcess), isChained: true);
             var ex = Assert.ThrowsAsync(GetExpectedExceptionType(isChained),
@@ -244,6 +249,10 @@ namespace Azure.Identity.Tests
         [Test]
         public void ConfigureCliProcessTimeout_ProcessTimeout([Values(true, false)] bool isChainedCredential)
         {
+            if (!IsChainedCredentialSupported && isChainedCredential)
+            {
+                Assert.Ignore("ConfigurableCredential with CredentialSource does not support chained credential scenarios.");
+            }
             var testProcess = new TestProcess { Timeout = 10000 };
             var credential = CreateCredentialWithTimeout(new TestProcessService(testProcess), TimeSpan.Zero, isChainedCredential);
             var ex = Assert.ThrowsAsync(GetExpectedExceptionType(isChainedCredential),

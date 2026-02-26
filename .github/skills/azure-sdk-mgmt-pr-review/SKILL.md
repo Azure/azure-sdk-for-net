@@ -79,6 +79,11 @@ For **TypeSpec**, UUID-valued properties should use the `uuid` scalar and map to
 - Parameter/Response model: `[Resource/RP name]NameAvailabilityXXX`
 - Unavailable reason enum: `[Resource/RP name]NameUnavailableReason`
 
+### Versioning
+- **Management SDK packages follow a unified versioning strategy.** No individual package is allowed to bump its major version unless a major version bump decision has been explicitly made by the .NET architects for all mgmt packages.
+- If a PR bumps the major version (e.g., from `1.x` to `2.0.0`) due to breaking changes, flag this as a **Must Fix**: "You must not bump the major version without the .NET architects' explicit requirement. Even with breaking changes, mgmt packages must stay on the current major version unless a coordinated major bump is in progress."
+- When the new API version introduces breaking changes (e.g., removed properties, renamed types), the SDK must **mitigate them at the API surface level** so there are no breaking changes to customers. Use customization code via partial classes and generator features (e.g., `rename-mapping`, custom properties, shim methods) to preserve backward compatibility. The goal is to avoid breaking changes entirely so a major version bump is not needed.
+
 ### Other API Rules
 - PUT/PATCH optional body parameters should be changed to required
 - Discriminator models should make base model `abstract`

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.EdgeActions
                     yield break;
                 }
                 EdgeActionVersionListResult result = EdgeActionVersionListResult.FromResponse(response);
-                yield return Page<EdgeActionVersionData>.FromValues((IReadOnlyList<EdgeActionVersionData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<EdgeActionVersionData>.FromValues((IReadOnlyList<EdgeActionVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

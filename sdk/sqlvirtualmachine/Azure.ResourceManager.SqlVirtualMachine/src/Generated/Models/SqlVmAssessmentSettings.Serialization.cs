@@ -16,6 +16,46 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     /// <summary> Configure SQL best practices Assessment for databases in your SQL virtual machine. </summary>
     public partial class SqlVmAssessmentSettings : IJsonModel<SqlVmAssessmentSettings>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SqlVmAssessmentSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SqlVmAssessmentSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSqlVmAssessmentSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SqlVmAssessmentSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SqlVmAssessmentSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlVirtualMachineContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SqlVmAssessmentSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SqlVmAssessmentSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlVmAssessmentSettings IPersistableModel<SqlVmAssessmentSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SqlVmAssessmentSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlVmAssessmentSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -131,45 +171,5 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
             return new SqlVmAssessmentSettings(isEnabled, runImmediately, schedule, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SqlVmAssessmentSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SqlVmAssessmentSettings>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlVirtualMachineContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SqlVmAssessmentSettings)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SqlVmAssessmentSettings IPersistableModel<SqlVmAssessmentSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SqlVmAssessmentSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SqlVmAssessmentSettings>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSqlVmAssessmentSettings(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SqlVmAssessmentSettings)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SqlVmAssessmentSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

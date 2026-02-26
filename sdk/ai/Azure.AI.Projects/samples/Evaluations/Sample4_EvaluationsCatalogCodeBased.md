@@ -1,10 +1,16 @@
 # Sample of using custom code-based evaluator with data sets in Azure.AI.Projects.
 
+**Note:** Storing evaluators in catalog is an experimental feature, to use it, please disable the `AAIP001` warning.
+
+```C#
+#pragma warning disable AAIP001
+```
+
 In this example we will demonstrate how to evaluate the data set using a custom code-based evaluator.
 
 1. First, we need to create project client and read the environment variables which will be used in the next steps. We will also create an `EvaluationClient` for creating and running evaluations.
 
-```C# Snippet:Sampple_CreateClients_EvaluationsCatalogCodeBased
+```C# Snippet:Sample_CreateClients_EvaluationsCatalogCodeBased
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
@@ -13,7 +19,7 @@ EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
 
 2. Define the `EvaluatorVersion` object, which contains evaluation prompt.
 
-```C# Snippet:Sampple_CodeEvaluator_EvaluationsCatalogCodeBased
+```C# Snippet:Sample_CodeEvaluator_EvaluationsCatalogCodeBased
 private EvaluatorVersion GetCodeEvaluatorVersion()
 {
     EvaluatorMetric resultMetric = new()
@@ -24,47 +30,47 @@ private EvaluatorVersion GetCodeEvaluatorVersion()
         MaxValue = 1.0f
     };
     EvaluatorVersion evaluatorVersion = new(
-        categories: [EvaluatorCategory.Quality],
-        definition: new CodeBasedEvaluatorDefinition(
-            codeText: "def grade(sample, item) -> float:\n    \"\"\"\n    Evaluate response quality based on multiple criteria.\n    Note: All data is in the \\'item\\' parameter, \\'sample\\' is empty.\n    \"\"\"\n    # Extract data from item (not sample!)\n    response = item.get(\"response\", \"\").lower() if isinstance(item, dict) else \"\"\n    ground_truth = item.get(\"ground_truth\", \"\").lower() if isinstance(item, dict) else \"\"\n    query = item.get(\"query\", \"\").lower() if isinstance(item, dict) else \"\"\n    \n    # Check if response is empty\n    if not response:\n        return 0.0\n    \n    # Check for harmful content\n    harmful_keywords = [\"harmful\", \"dangerous\", \"unsafe\", \"illegal\", \"unethical\"]\n    if any(keyword in response for keyword in harmful_keywords):\n        return 0.0\n    \n    # Length check\n    if len(response) < 10:\n        return 0.1\n    elif len(response) < 50:\n        return 0.2\n    \n    # Technical content check\n    technical_keywords = [\"api\", \"experiment\", \"run\", \"azure\", \"machine learning\", \"gradient\", \"neural\", \"algorithm\"]\n    technical_score = sum(1 for k in technical_keywords if k in response) / len(technical_keywords)\n    \n    # Query relevance\n    query_words = query.split()[:3] if query else []\n    relevance_score = 0.7 if any(word in response for word in query_words) else 0.3\n    \n    # Ground truth similarity\n    if ground_truth:\n        truth_words = set(ground_truth.split())\n        response_words = set(response.split())\n        overlap = len(truth_words & response_words) / len(truth_words) if truth_words else 0\n        similarity_score = min(1.0, overlap)\n    else:\n        similarity_score = 0.5\n    \n    return min(1.0, (technical_score * 0.3) + (relevance_score * 0.3) + (similarity_score * 0.4))",
-            initParameters: BinaryData.FromObjectAsJson(
-                new
+    categories: [EvaluatorCategory.Quality],
+    definition: new CodeBasedEvaluatorDefinition(
+        codeText: "def grade(sample, item) -> float:\n    \"\"\"\n    Evaluate response quality based on multiple criteria.\n    Note: All data is in the \\'item\\' parameter, \\'sample\\' is empty.\n    \"\"\"\n    # Extract data from item (not sample!)\n    response = item.get(\"response\", \"\").lower() if isinstance(item, dict) else \"\"\n    ground_truth = item.get(\"ground_truth\", \"\").lower() if isinstance(item, dict) else \"\"\n    query = item.get(\"query\", \"\").lower() if isinstance(item, dict) else \"\"\n    \n    # Check if response is empty\n    if not response:\n        return 0.0\n    \n    # Check for harmful content\n    harmful_keywords = [\"harmful\", \"dangerous\", \"unsafe\", \"illegal\", \"unethical\"]\n    if any(keyword in response for keyword in harmful_keywords):\n        return 0.0\n    \n    # Length check\n    if len(response) < 10:\n        return 0.1\n    elif len(response) < 50:\n        return 0.2\n    \n    # Technical content check\n    technical_keywords = [\"api\", \"experiment\", \"run\", \"azure\", \"machine learning\", \"gradient\", \"neural\", \"algorithm\"]\n    technical_score = sum(1 for k in technical_keywords if k in response) / len(technical_keywords)\n    \n    # Query relevance\n    query_words = query.split()[:3] if query else []\n    relevance_score = 0.7 if any(word in response for word in query_words) else 0.3\n    \n    # Ground truth similarity\n    if ground_truth:\n        truth_words = set(ground_truth.split())\n        response_words = set(response.split())\n        overlap = len(truth_words & response_words) / len(truth_words) if truth_words else 0\n        similarity_score = min(1.0, overlap)\n    else:\n        similarity_score = 0.5\n    \n    return min(1.0, (technical_score * 0.3) + (relevance_score * 0.3) + (similarity_score * 0.4))",
+        initParameters: BinaryData.FromObjectAsJson(
+            new
+            {
+                required = new[] { "deployment_name", "pass_threshold" },
+                type = "object",
+                properties = new
                 {
-                    required = new[] { "deployment_name", "pass_threshold" },
-                    type = "object",
-                    properties = new
-                    {
-                        deployment_name = new { type = "string" },
-                        pass_threshold = new { type = "string" }
-                    }
+                    deployment_name = new { type = "string" },
+                    pass_threshold = new { type = "string" }
                 }
-            ),
-            dataSchema: BinaryData.FromObjectAsJson(
-                new
+            }
+        ),
+        dataSchema: BinaryData.FromObjectAsJson(
+            new
+            {
+                required = new[] { "item" },
+                type = "object",
+                properties = new
                 {
-                    required = new[] { "item" },
-                    type = "object",
-                    properties = new
+                    item = new
                     {
-                        item = new
+                        type = "object",
+                        properties = new
                         {
-                            type = "object",
-                            properties = new
-                            {
-                                query = new { type = "string" },
-                                response = new { type = "string" },
-                                ground_truth = new { type = "string" },
-                            }
+                            query = new { type = "string" },
+                            response = new { type = "string" },
+                            ground_truth = new { type = "string" },
                         }
                     }
                 }
-            ),
-            metrics: new Dictionary<string, EvaluatorMetric> {
-                { "result", resultMetric }
             }
         ),
-        evaluatorType: EvaluatorType.Custom
-    )
+        metrics: new Dictionary<string, EvaluatorMetric> {
+            { "result", resultMetric }
+        }
+    ),
+    evaluatorType: EvaluatorType.Custom
+)
     {
         DisplayName = "Custom code evaluator example",
         Description = "Custom evaluator to detect violent content",
@@ -137,7 +143,7 @@ BinaryData evaluationData = BinaryData.FromObjectAsJson(
 
 5. The `EvaluationClient` uses protocol methods i.e. they take in JSON in the form of `BinaryData` and return `ClientResult`, containing binary encoded JSON response, which can be retrieved using `GetRawResponse()` method. To simplify parsing JSON we will create helper methods. One of the methods is named `ParseClientResult`. It gets string values of the top-level JSON properties. In the next section we will use it to get evaluation name and ID.
 
-```C# Snippet:Sampple_GetStringValues_EvaluationsCatalogCodeBased
+```C# Snippet:Sample_GetStringValues_EvaluationsCatalogCodeBased
 private static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
 {
     Dictionary<string, string> results = [];
@@ -273,7 +279,7 @@ Console.WriteLine($"Evaluation run created (id: {runId})");
 
 9. Define the method to get the error message and code from the response if any.
 
-```C# Snippet:Sampple_GetError_EvaluationsCatalogCodeBased
+```C# Snippet:Sample_GetError_EvaluationsCatalogCodeBased
 private static string GetErrorMessageOrEmpty(ClientResult result)
 {
     string error = "";
@@ -343,7 +349,7 @@ if (runStatus == "failed")
 
 11. Like the `ParseClientResult` we will define the method, getting the result counts `GetResultsCounts`, which formats the `result_counts` property of the output JSON.
 
-```C# Snippet:Sampple_GetResultCounts_EvaluationsCatalogCodeBased
+```C# Snippet:Sample_GetResultCounts_EvaluationsCatalogCodeBased
 private static string GetResultsCounts(ClientResult result)
 {
     Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
@@ -374,7 +380,7 @@ private static string GetResultsCounts(ClientResult result)
 12. To get the results JSON we will define two methods `GetResultsList` and `GetResultsListAsync`, which are iterating over the pages containing results.
 
 Synchronous sample:
-```C# Snippet:Sampple_GetResultsList_EvaluationsCatalogCodeBased_Sync
+```C# Snippet:Sample_GetResultsList_EvaluationsCatalogCodeBased_Sync
 private static List<string> GetResultsList(EvaluationClient client, string evaluationId, string evaluationRunId)
 {
     List<string> resultJsons = [];
@@ -409,7 +415,7 @@ private static List<string> GetResultsList(EvaluationClient client, string evalu
 ```
 
 Asynchronous sample:
-```C# Snippet:Sampple_GetResultsList_EvaluationsCatalogCodeBased_Async
+```C# Snippet:Sample_GetResultsList_EvaluationsCatalogCodeBased_Async
 private static async Task<List<string>> GetResultsListAsync(EvaluationClient client, string evaluationId, string evaluationRunId)
 {
     List<string> resultJsons = [];

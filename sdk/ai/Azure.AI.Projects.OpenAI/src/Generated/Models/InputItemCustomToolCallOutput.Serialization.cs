@@ -47,6 +47,16 @@ namespace Azure.AI.Projects.OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InputItemCustomToolCallOutput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InputItemCustomToolCallOutput IPersistableModel<InputItemCustomToolCallOutput>.Create(BinaryData data, ModelReaderWriterOptions options) => (InputItemCustomToolCallOutput)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InputItemCustomToolCallOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InputItemCustomToolCallOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -143,15 +153,5 @@ namespace Azure.AI.Projects.OpenAI
             }
             return new InputItemCustomToolCallOutput(@type, additionalBinaryDataProperties, id, callId, output);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InputItemCustomToolCallOutput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InputItemCustomToolCallOutput IPersistableModel<InputItemCustomToolCallOutput>.Create(BinaryData data, ModelReaderWriterOptions options) => (InputItemCustomToolCallOutput)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InputItemCustomToolCallOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

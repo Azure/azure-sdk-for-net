@@ -47,6 +47,16 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SharepointPreviewTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SharepointPreviewTool IPersistableModel<SharepointPreviewTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (SharepointPreviewTool)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SharepointPreviewTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SharepointPreviewTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -117,15 +127,5 @@ namespace Azure.AI.Projects
             }
             return new SharepointPreviewTool(@type, additionalBinaryDataProperties, sharepointGroundingPreview);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SharepointPreviewTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SharepointPreviewTool IPersistableModel<SharepointPreviewTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (SharepointPreviewTool)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SharepointPreviewTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

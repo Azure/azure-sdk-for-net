@@ -19,13 +19,13 @@ namespace Azure.AI.Projects.Tests
 
         [Test]
         // The call UploadFileAsync will Get the BlobClient and
-        // use it to upload the data. This call will not beintercepted and hence
+        // use it to upload the data. This call will not be intercepted and hence
         // cannot be recorded.
         [LiveOnly]
         public async Task DatasetsFileTest()
         {
             var connectionName = TestEnvironment.STORAGECONNECTIONNAME;
-            // Use the nect code to crete the recording.
+            // Use the next code to create the recording.
             // var datasetName = string.Concat(TestEnvironment.DATASETNAME, "-", Guid.NewGuid().ToString("N").Substring(0, 8));
             // And record the created data set name into the next line.
             var datasetName = string.Concat(TestEnvironment.DATASETNAME, "-623621a9");

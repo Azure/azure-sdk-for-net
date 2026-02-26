@@ -1,5 +1,7 @@
 # Project Overview
 
+> **Note**: For general AI agent guidelines and repository overview, see [AGENTS.md](https://github.com/Azure/azure-sdk-for-net/blob/main/AGENTS.md) at the repository root.
+
 This repo contains Azure SDKs for various Azure services and tools that generate them.
 
 ## Prerequisites

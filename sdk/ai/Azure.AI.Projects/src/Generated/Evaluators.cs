@@ -375,7 +375,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Create a new EvaluatorVersion with auto incremented version id. </summary>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="evaluatorVersion"> Evaluator resource. </param>
+        /// <param name="evaluatorVersion"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="evaluatorVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -391,7 +391,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Create a new EvaluatorVersion with auto incremented version id. </summary>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="evaluatorVersion"> Evaluator resource. </param>
+        /// <param name="evaluatorVersion"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="evaluatorVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>

@@ -77,6 +77,12 @@ namespace Azure.Generator.Primitives
             "VoidValue.cs"
         ];
 
+        private static readonly IReadOnlyList<string> _xmlSerializationSharedFiles =
+        [
+            "IXmlSerializable.cs",
+            "XmlWriterContent.cs",
+        ];
+
         private static void TraverseInput(InputClient rootClient, ref bool hasOperation, ref bool hasLongRunningOperation)
         {
             if (hasOperation && hasLongRunningOperation)
@@ -177,6 +183,15 @@ namespace Azure.Generator.Primitives
             if (!hasLongRunningOperation && AzureClientGenerator.Instance.InputLibrary.HasMultipartFormDataOperation)
             {
                 compileIncludes.Add(new CSharpProjectCompileInclude(GetCompileInclude("TaskExtensions.cs"), SharedSourceLinkBase));
+            }
+
+            // Add IXmlSerializable if any model supports XML serialization
+            if (AzureClientGenerator.Instance.InputLibrary.HasXmlModelSerialization)
+            {
+                foreach (var file in _xmlSerializationSharedFiles)
+                {
+                    compileIncludes.Add(new CSharpProjectCompileInclude(GetCompileInclude(file), SharedSourceLinkBase));
+                }
             }
 
             return compileIncludes;

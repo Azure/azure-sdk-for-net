@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                     yield break;
                 }
                 DiagnosticListResult result = DiagnosticListResult.FromResponse(response);
-                yield return Page<EdgeDiagnosticData>.FromValues((IReadOnlyList<EdgeDiagnosticData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<EdgeDiagnosticData>.FromValues((IReadOnlyList<EdgeDiagnosticData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

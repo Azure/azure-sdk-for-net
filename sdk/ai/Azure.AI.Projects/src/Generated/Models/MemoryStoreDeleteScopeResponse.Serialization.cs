@@ -7,6 +7,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Projects
 {
@@ -48,6 +49,16 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MemoryStoreDeleteScopeResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MemoryStoreDeleteScopeResponse IPersistableModel<MemoryStoreDeleteScopeResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MemoryStoreDeleteScopeResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="MemoryStoreDeleteScopeResponse"/> from. </param>
         public static explicit operator MemoryStoreDeleteScopeResponse(ClientResult result)
         {
@@ -75,7 +86,7 @@ namespace Azure.AI.Projects
                 throw new FormatException($"The model {nameof(MemoryStoreDeleteScopeResponse)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("object"u8);
-            writer.WriteStringValue(Object);
+            writer.WriteStringValue(Object.ToString());
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("scope"u8);
@@ -124,7 +135,7 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            string @object = default;
+            MemoryStoreObjectType @object = default;
             string name = default;
             string scope = default;
             bool deleted = default;
@@ -133,7 +144,7 @@ namespace Azure.AI.Projects
             {
                 if (prop.NameEquals("object"u8))
                 {
-                    @object = prop.Value.GetString();
+                    @object = new MemoryStoreObjectType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -158,15 +169,5 @@ namespace Azure.AI.Projects
             }
             return new MemoryStoreDeleteScopeResponse(@object, name, scope, deleted, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MemoryStoreDeleteScopeResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MemoryStoreDeleteScopeResponse IPersistableModel<MemoryStoreDeleteScopeResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MemoryStoreDeleteScopeResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

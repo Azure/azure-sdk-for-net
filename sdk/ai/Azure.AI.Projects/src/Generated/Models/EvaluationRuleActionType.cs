@@ -13,8 +13,8 @@ namespace Azure.AI.Projects
         private readonly string _value;
         /// <summary> Continuous evaluation. </summary>
         private const string ContinuousEvaluationValue = "continuousEvaluation";
-        /// <summary> Human evaluation. </summary>
-        private const string HumanEvaluationValue = "humanEvaluation";
+        /// <summary> Human evaluation preview. </summary>
+        private const string HumanEvaluationPreviewValue = "humanEvaluationPreview";
 
         /// <summary> Initializes a new instance of <see cref="EvaluationRuleActionType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -29,8 +29,8 @@ namespace Azure.AI.Projects
         /// <summary> Continuous evaluation. </summary>
         public static EvaluationRuleActionType ContinuousEvaluation { get; } = new EvaluationRuleActionType(ContinuousEvaluationValue);
 
-        /// <summary> Human evaluation. </summary>
-        public static EvaluationRuleActionType HumanEvaluation { get; } = new EvaluationRuleActionType(HumanEvaluationValue);
+        /// <summary> Human evaluation preview. </summary>
+        public static EvaluationRuleActionType HumanEvaluationPreview { get; } = new EvaluationRuleActionType(HumanEvaluationPreviewValue);
 
         /// <summary> Determines if two <see cref="EvaluationRuleActionType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

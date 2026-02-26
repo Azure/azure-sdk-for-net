@@ -21,6 +21,6 @@ public partial class ProjectOpenAIClientOptions : OpenAIClientOptions
 
     public ProjectOpenAIClientOptions() : base()
     {
-        _apiVersion = "2025-11-15-preview";
+        _apiVersion = "v1";
     }
 }

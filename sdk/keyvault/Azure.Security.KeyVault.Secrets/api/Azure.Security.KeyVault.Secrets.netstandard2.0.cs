@@ -60,6 +60,7 @@ namespace Azure.Security.KeyVault.Secrets
     public partial class SecretClient
     {
         protected SecretClient() { }
+        public SecretClient(Azure.Security.KeyVault.Secrets.SecretClientSettings settings) { }
         public SecretClient(System.Uri vaultUri, Azure.Core.TokenCredential credential) { }
         public SecretClient(System.Uri vaultUri, Azure.Core.TokenCredential credential, Azure.Security.KeyVault.Secrets.SecretClientOptions options) { }
         public virtual System.Uri VaultUri { get { throw null; } }
@@ -108,6 +109,13 @@ namespace Azure.Security.KeyVault.Secrets
             V7_6 = 6,
             V2025_07_01 = 7,
         }
+    }
+    public partial class SecretClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public SecretClientSettings() { }
+        public Azure.Security.KeyVault.Secrets.SecretClientOptions? Options { get { throw null; } set { } }
+        public System.Uri? VaultUri { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SecretContentType : System.IEquatable<Azure.Security.KeyVault.Secrets.SecretContentType>

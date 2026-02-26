@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -32,6 +33,20 @@ namespace Azure.Generator.Providers
             => [
                 Declare("content", New.Instance<Utf8JsonBinaryContentDefinition>(), out ScopedApi<Utf8JsonBinaryContentDefinition> content),
                 content.Property("JsonWriter").Invoke("WriteObjectValue", [argument, Static<ModelSerializationExtensionsDefinition>().Property("WireOptions").As<ModelReaderWriterOptions>()]).Terminate(),
+                Return(content)
+            ];
+
+        internal static MethodBodyStatement[] Create(ValueExpression argument, ValueExpression options)
+            => [
+                Declare("jsonContent", New.Instance<Utf8JsonBinaryContentDefinition>(), out ScopedApi<Utf8JsonBinaryContentDefinition> content),
+                content.Property("JsonWriter").Invoke("WriteObjectValue", [argument, options]).Terminate(),
+                Return(content)
+            ];
+
+        internal static MethodBodyStatement[] CreateXml(ValueExpression argument, ValueExpression options, string xmlElementName)
+            => [
+                Declare("content", typeof(XmlWriterContent), New.Instance(typeof(XmlWriterContent)), out var content),
+                content.As<XmlWriterContent>().XmlWriter().Invoke("WriteObjectValue", [argument, options, Literal(xmlElementName)]).Terminate(),
                 Return(content)
             ];
     }

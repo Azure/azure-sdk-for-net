@@ -50,7 +50,10 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
             uri.AppendPath(locationparameter.ToString(), true);
             uri.AppendPath("/virtualMachinesSubmitDeallocate", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -70,7 +73,10 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
             uri.AppendPath(locationparameter.ToString(), true);
             uri.AppendPath("/virtualMachinesSubmitHibernate", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -90,7 +96,10 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
             uri.AppendPath(locationparameter.ToString(), true);
             uri.AppendPath("/virtualMachinesSubmitStart", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -110,7 +119,10 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
             uri.AppendPath(locationparameter.ToString(), true);
             uri.AppendPath("/virtualMachinesExecuteDeallocate", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -130,7 +142,10 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
             uri.AppendPath(locationparameter.ToString(), true);
             uri.AppendPath("/virtualMachinesExecuteHibernate", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -150,7 +165,10 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
             uri.AppendPath(locationparameter.ToString(), true);
             uri.AppendPath("/virtualMachinesExecuteStart", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -170,7 +188,10 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
             uri.AppendPath(locationparameter.ToString(), true);
             uri.AppendPath("/virtualMachinesExecuteCreate", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -190,7 +211,10 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
             uri.AppendPath(locationparameter.ToString(), true);
             uri.AppendPath("/virtualMachinesExecuteDelete", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -210,7 +234,10 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
             uri.AppendPath(locationparameter.ToString(), true);
             uri.AppendPath("/virtualMachinesGetOperationStatus", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -230,7 +257,10 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
             uri.AppendPath(locationparameter.ToString(), true);
             uri.AppendPath("/virtualMachinesCancelOperations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -250,7 +280,10 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
             uri.AppendPath(locationparameter.ToString(), true);
             uri.AppendPath("/virtualMachinesGetOperationErrors", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -271,7 +304,10 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
             uri.AppendPath(scheduledActionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -290,7 +326,10 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
             uri.AppendPath(scheduledActionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -311,7 +350,10 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
             uri.AppendPath(scheduledActionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -332,7 +374,10 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
             uri.AppendPath(scheduledActionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -349,7 +394,10 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -361,8 +409,18 @@ namespace Azure.ResourceManager.ComputeSchedule
         internal HttpMessage CreateNextGetByResourceGroupRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -378,7 +436,10 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -390,8 +451,18 @@ namespace Azure.ResourceManager.ComputeSchedule
         internal HttpMessage CreateNextGetBySubscriptionRequest(Uri nextPage, Guid subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -411,7 +482,10 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
             uri.AppendPath(scheduledActionName, true);
             uri.AppendPath("/resources", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -423,8 +497,18 @@ namespace Azure.ResourceManager.ComputeSchedule
         internal HttpMessage CreateNextGetAttachedResourcesRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string scheduledActionName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -444,7 +528,10 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
             uri.AppendPath(scheduledActionName, true);
             uri.AppendPath("/attachResources", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -466,7 +553,10 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
             uri.AppendPath(scheduledActionName, true);
             uri.AppendPath("/detachResources", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -488,7 +578,10 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
             uri.AppendPath(scheduledActionName, true);
             uri.AppendPath("/patchResources", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -510,7 +603,10 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
             uri.AppendPath(scheduledActionName, true);
             uri.AppendPath("/disable", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -529,7 +625,10 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
             uri.AppendPath(scheduledActionName, true);
             uri.AppendPath("/enable", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -548,7 +647,10 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
             uri.AppendPath(scheduledActionName, true);
             uri.AppendPath("/cancelNextOccurrence", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -570,7 +672,10 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
             uri.AppendPath(scheduledActionName, true);
             uri.AppendPath("/triggerManualOccurrence", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

@@ -47,6 +47,16 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InternalPromptAgentDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InternalPromptAgentDefinition IPersistableModel<InternalPromptAgentDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalPromptAgentDefinition)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InternalPromptAgentDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InternalPromptAgentDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -163,7 +173,7 @@ namespace Azure.AI.Projects
             InternalReasoning reasoning = default;
             IList<InternalTool> tools = default;
             BinaryData toolChoice = default;
-            PromptAgentDefinitionText text = default;
+            PromptAgentDefinitionTextOptions text = default;
             IDictionary<string, StructuredInputDefinition> structuredInputs = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -255,7 +265,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    text = PromptAgentDefinitionText.DeserializePromptAgentDefinitionText(prop.Value, options);
+                    text = PromptAgentDefinitionTextOptions.DeserializePromptAgentDefinitionTextOptions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("structured_inputs"u8))
@@ -291,15 +301,5 @@ namespace Azure.AI.Projects
                 text,
                 structuredInputs ?? new ChangeTrackingDictionary<string, StructuredInputDefinition>());
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalPromptAgentDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InternalPromptAgentDefinition IPersistableModel<InternalPromptAgentDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalPromptAgentDefinition)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalPromptAgentDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

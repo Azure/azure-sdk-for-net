@@ -55,13 +55,13 @@ namespace Azure.Analytics.Defender.Easm
                     yield break;
                 }
                 DiscoveryRunPageResult result = (DiscoveryRunPageResult)response;
-                yield return Page<DiscoveryRunResult>.FromValues((IReadOnlyList<DiscoveryRunResult>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DiscoveryRunResult>.FromValues((IReadOnlyList<DiscoveryRunResult>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
                     yield break;
                 }
-                nextPage = new Uri(nextPageString);
+                nextPage = new Uri(nextPageString, UriKind.RelativeOrAbsolute);
             }
         }
 

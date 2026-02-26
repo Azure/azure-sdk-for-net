@@ -37,6 +37,41 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceGroupSiteData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ServiceGroupSiteData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ServiceGroupSiteData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServiceGroupSiteData IPersistableModel<ServiceGroupSiteData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ServiceGroupSiteData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ServiceGroupSiteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="serviceGroupSiteData"> The <see cref="ServiceGroupSiteData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ServiceGroupSiteData serviceGroupSiteData)
+        {
+            if (serviceGroupSiteData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(serviceGroupSiteData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ServiceGroupSiteData"/> from. </param>
         internal static ServiceGroupSiteData FromResponse(Response response)
         {
@@ -156,41 +191,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 systemData,
                 additionalBinaryDataProperties,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ServiceGroupSiteData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ServiceGroupSiteData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ServiceGroupSiteData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ServiceGroupSiteData IPersistableModel<ServiceGroupSiteData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ServiceGroupSiteData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ServiceGroupSiteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="serviceGroupSiteData"> The <see cref="ServiceGroupSiteData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ServiceGroupSiteData serviceGroupSiteData)
-        {
-            if (serviceGroupSiteData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(serviceGroupSiteData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

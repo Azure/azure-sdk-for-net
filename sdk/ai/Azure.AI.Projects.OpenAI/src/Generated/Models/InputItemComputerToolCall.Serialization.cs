@@ -48,6 +48,16 @@ namespace Azure.AI.Projects.OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InputItemComputerToolCall>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InputItemComputerToolCall IPersistableModel<InputItemComputerToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => (InputItemComputerToolCall)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InputItemComputerToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InputItemComputerToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -115,7 +125,7 @@ namespace Azure.AI.Projects.OpenAI
             string callId = default;
             InternalComputerAction action = default;
             IList<ComputerCallSafetyCheckParam> pendingSafetyChecks = default;
-            ItemResourceComputerToolCallStatus status = default;
+            OutputItemComputerToolCallStatus status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -150,7 +160,7 @@ namespace Azure.AI.Projects.OpenAI
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToItemResourceComputerToolCallStatus();
+                    status = prop.Value.GetString().ToOutputItemComputerToolCallStatus();
                     continue;
                 }
                 if (options.Format != "W")
@@ -167,15 +177,5 @@ namespace Azure.AI.Projects.OpenAI
                 pendingSafetyChecks,
                 status);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InputItemComputerToolCall>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InputItemComputerToolCall IPersistableModel<InputItemComputerToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => (InputItemComputerToolCall)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InputItemComputerToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

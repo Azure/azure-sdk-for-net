@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
                     yield break;
                 }
                 EnclaveConnectionResourceListResult result = EnclaveConnectionResourceListResult.FromResponse(response);
-                yield return Page<VirtualEnclaveConnectionData>.FromValues((IReadOnlyList<VirtualEnclaveConnectionData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<VirtualEnclaveConnectionData>.FromValues((IReadOnlyList<VirtualEnclaveConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

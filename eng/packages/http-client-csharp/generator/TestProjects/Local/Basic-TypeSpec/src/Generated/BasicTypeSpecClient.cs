@@ -2483,6 +2483,94 @@ namespace BasicTypeSpec
             return Response.FromValue((XmlAdvancedModel)result, result);
         }
 
+        /// <summary>
+        /// [Protocol Method] Update an advanced XML model with various property types
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response UpdateXmlAdvancedModel(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.UpdateXmlAdvancedModel");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateUpdateXmlAdvancedModelRequest(content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Update an advanced XML model with various property types
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> UpdateXmlAdvancedModelAsync(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.UpdateXmlAdvancedModel");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateUpdateXmlAdvancedModelRequest(content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Update an advanced XML model with various property types. </summary>
+        /// <param name="body"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<XmlAdvancedModel> UpdateXmlAdvancedModel(XmlAdvancedModel body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            Response result = UpdateXmlAdvancedModel(body, cancellationToken.ToRequestContext());
+            return Response.FromValue((XmlAdvancedModel)result, result);
+        }
+
+        /// <summary> Update an advanced XML model with various property types. </summary>
+        /// <param name="body"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<XmlAdvancedModel>> UpdateXmlAdvancedModelAsync(XmlAdvancedModel body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            Response result = await UpdateXmlAdvancedModelAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((XmlAdvancedModel)result, result);
+        }
+
         /// <summary> Initializes a new instance of PlantOperations. </summary>
         public virtual PlantOperations GetPlantOperationsClient()
         {

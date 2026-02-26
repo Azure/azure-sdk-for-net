@@ -47,6 +47,16 @@ namespace Azure.AI.Projects.OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InputItemFileSearchToolCall>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InputItemFileSearchToolCall IPersistableModel<InputItemFileSearchToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => (InputItemFileSearchToolCall)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InputItemFileSearchToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InputItemFileSearchToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -122,7 +132,7 @@ namespace Azure.AI.Projects.OpenAI
             InputItemType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
-            ItemResourceFileSearchToolCallStatus status = default;
+            OutputItemFileSearchToolCallStatus status = default;
             IList<string> queries = default;
             IList<FileSearchToolCallResults> results = default;
             foreach (var prop in element.EnumerateObject())
@@ -139,7 +149,7 @@ namespace Azure.AI.Projects.OpenAI
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToItemResourceFileSearchToolCallStatus();
+                    status = prop.Value.GetString().ToOutputItemFileSearchToolCallStatus();
                     continue;
                 }
                 if (prop.NameEquals("queries"u8))
@@ -186,15 +196,5 @@ namespace Azure.AI.Projects.OpenAI
                 queries,
                 results ?? new ChangeTrackingList<FileSearchToolCallResults>());
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InputItemFileSearchToolCall>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InputItemFileSearchToolCall IPersistableModel<InputItemFileSearchToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => (InputItemFileSearchToolCall)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InputItemFileSearchToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

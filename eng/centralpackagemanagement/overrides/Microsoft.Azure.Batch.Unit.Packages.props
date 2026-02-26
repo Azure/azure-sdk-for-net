@@ -1,0 +1,5 @@
+<Project>
+  <!-- The unit test project follows a non-standard naming convention.
+       Import the main Batch overrides to get the required test packages. -->
+  <Import Project="$(MSBuildThisFileDirectory)Microsoft.Azure.Batch.Packages.props" />
+</Project>

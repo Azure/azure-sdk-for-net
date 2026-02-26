@@ -1,0 +1,31 @@
+<Project>
+  <!-- ============================================================== -->
+  <!--              EXTENSION LIBRARY DEPENDENCIES                    -->
+  <!--                                                                -->
+  <!-- Extension libraries (IsExtensionClientLibrary=true) bridge     -->
+  <!-- Azure SDK clients into the Microsoft.Extensions ecosystem:     -->
+  <!-- dependency injection, configuration, hosting, and ASP.NET      -->
+  <!-- Core. Examples: Azure.Extensions.AspNetCore.*, Microsoft.      -->
+  <!-- Extensions.Azure.                                              -->
+  <!-- ============================================================== -->
+  <ItemGroup Condition="'$(IsExtensionClientLibrary)' == 'true'
+      and '$(IsTestProject)' != 'true'
+      and '$(IsTestSupportProject)' != 'true'
+      and '$(IsPerfProject)' != 'true'
+      and '$(IsStressProject)' != 'true'
+      and '$(IsSamplesProject)' != 'true'">
+    <PackageVersion Include="Microsoft.AspNetCore.Http" Version="$(MicrosoftAspNetCoreHttpVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Azure" Version="$(MicrosoftExtensionsAzureVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration" Version="$(MicrosoftExtensionsConfigurationVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Binder" Version="$(MicrosoftExtensionsConfigurationBinderVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="$(MicrosoftExtensionsHostingVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="$(MicrosoftExtensionsLoggingVersion)" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IsExtensionClientLibrary)' == 'true'">
+    <PackageVersion Include="Microsoft.AspNetCore.DataProtection" Version="10.0.1" />
+    <PackageVersion Include="Microsoft.AspNetCore.Http.Connections" Version="1.2.0" />
+    <PackageVersion Include="Microsoft.Azure.Functions.Worker.Extensions.Abstractions" Version="1.3.0" />
+    <PackageVersion Update="Microsoft.Extensions.Configuration.Abstractions" Version="$(MicrosoftExtensionsConfigurationAbstractionsVersion)" />
+  </ItemGroup>
+</Project>

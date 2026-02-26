@@ -17,6 +17,58 @@ namespace Azure.ResourceManager.Quantum.Models
     /// <summary> The type used for updating tags in QuantumWorkspace resources. </summary>
     public partial class QuantumWorkspacePatch : IJsonModel<QuantumWorkspacePatch>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual QuantumWorkspacePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<QuantumWorkspacePatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeQuantumWorkspacePatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(QuantumWorkspacePatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<QuantumWorkspacePatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerQuantumContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(QuantumWorkspacePatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<QuantumWorkspacePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        QuantumWorkspacePatch IPersistableModel<QuantumWorkspacePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<QuantumWorkspacePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="quantumWorkspacePatch"> The <see cref="QuantumWorkspacePatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(QuantumWorkspacePatch quantumWorkspacePatch)
+        {
+            if (quantumWorkspacePatch == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(quantumWorkspacePatch, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<QuantumWorkspacePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -124,58 +176,6 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
             }
             return new QuantumWorkspacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<QuantumWorkspacePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<QuantumWorkspacePatch>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerQuantumContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(QuantumWorkspacePatch)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        QuantumWorkspacePatch IPersistableModel<QuantumWorkspacePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual QuantumWorkspacePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<QuantumWorkspacePatch>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeQuantumWorkspacePatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(QuantumWorkspacePatch)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<QuantumWorkspacePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="quantumWorkspacePatch"> The <see cref="QuantumWorkspacePatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(QuantumWorkspacePatch quantumWorkspacePatch)
-        {
-            if (quantumWorkspacePatch == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(quantumWorkspacePatch, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

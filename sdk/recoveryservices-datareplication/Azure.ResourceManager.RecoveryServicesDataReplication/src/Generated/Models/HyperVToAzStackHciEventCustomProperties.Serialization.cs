@@ -16,6 +16,46 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> HyperV to  AzStackHCI event model custom properties. This class provides provider specific details for events of type DataContract.HealthEvents.HealthEventType.ProtectedItemHealth and DataContract.HealthEvents.HealthEventType.AgentHealth. </summary>
     public partial class HyperVToAzStackHciEventCustomProperties : DataReplicationEventCustomProperties, IJsonModel<HyperVToAzStackHciEventCustomProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataReplicationEventCustomProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciEventCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHyperVToAzStackHciEventCustomProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HyperVToAzStackHciEventCustomProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciEventCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HyperVToAzStackHciEventCustomProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HyperVToAzStackHciEventCustomProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HyperVToAzStackHciEventCustomProperties IPersistableModel<HyperVToAzStackHciEventCustomProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (HyperVToAzStackHciEventCustomProperties)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HyperVToAzStackHciEventCustomProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HyperVToAzStackHciEventCustomProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -140,45 +180,5 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 targetApplianceName,
                 serverType);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HyperVToAzStackHciEventCustomProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciEventCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HyperVToAzStackHciEventCustomProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HyperVToAzStackHciEventCustomProperties IPersistableModel<HyperVToAzStackHciEventCustomProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (HyperVToAzStackHciEventCustomProperties)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DataReplicationEventCustomProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciEventCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeHyperVToAzStackHciEventCustomProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HyperVToAzStackHciEventCustomProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HyperVToAzStackHciEventCustomProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -34,6 +34,29 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RedisExportRdbCompletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RedisExportRdbCompletedEventData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RedisExportRdbCompletedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RedisExportRdbCompletedEventData IPersistableModel<RedisExportRdbCompletedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RedisExportRdbCompletedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RedisExportRdbCompletedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -141,29 +164,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             return new RedisExportRdbCompletedEventData(timestamp, name, status, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RedisExportRdbCompletedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RedisExportRdbCompletedEventData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(RedisExportRdbCompletedEventData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        RedisExportRdbCompletedEventData IPersistableModel<RedisExportRdbCompletedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RedisExportRdbCompletedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class RedisExportRdbCompletedEventDataConverter : JsonConverter<RedisExportRdbCompletedEventData>
         {

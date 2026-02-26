@@ -167,8 +167,8 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceSubscriptionStatus left, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceSubscriptionStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceSubscriptionStatus(string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceSubscriptionStatus?(string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceSubscriptionStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceSubscriptionStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceSubscriptionStatus left, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceSubscriptionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -219,8 +219,8 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesProvisioningState left, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesProvisioningState(string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesProvisioningState?(string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesProvisioningState left, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -240,8 +240,8 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesRegion left, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesRegion right) { throw null; }
-        public static implicit operator Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesRegion(string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesRegion?(string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesRegion (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesRegion? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesRegion left, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesRegion right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -276,8 +276,8 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnState left, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnState(string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnState?(string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnState left, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -293,8 +293,8 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnType left, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnType(string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnType?(string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnType left, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnType right) { throw null; }
         public override string ToString() { throw null; }
     }

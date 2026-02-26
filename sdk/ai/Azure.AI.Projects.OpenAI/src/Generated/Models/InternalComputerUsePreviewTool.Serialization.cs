@@ -6,9 +6,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     internal partial class InternalComputerUsePreviewTool : AgentTool, IJsonModel<InternalComputerUsePreviewTool>
     {
@@ -46,6 +45,16 @@ namespace OpenAI
                     throw new FormatException($"The model {nameof(InternalComputerUsePreviewTool)} does not support writing '{options.Format}' format.");
             }
         }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InternalComputerUsePreviewTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InternalComputerUsePreviewTool IPersistableModel<InternalComputerUsePreviewTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalComputerUsePreviewTool)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InternalComputerUsePreviewTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -133,15 +142,5 @@ namespace OpenAI
             }
             return new InternalComputerUsePreviewTool(@type, additionalBinaryDataProperties, environment, displayWidth, displayHeight);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalComputerUsePreviewTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InternalComputerUsePreviewTool IPersistableModel<InternalComputerUsePreviewTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalComputerUsePreviewTool)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalComputerUsePreviewTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

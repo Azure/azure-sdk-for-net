@@ -47,6 +47,16 @@ namespace Azure.AI.Projects.OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InputItemCodeInterpreterToolCall>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InputItemCodeInterpreterToolCall IPersistableModel<InputItemCodeInterpreterToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => (InputItemCodeInterpreterToolCall)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InputItemCodeInterpreterToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InputItemCodeInterpreterToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -137,7 +147,7 @@ namespace Azure.AI.Projects.OpenAI
             InputItemType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
-            ItemResourceCodeInterpreterToolCallStatus status = default;
+            OutputItemCodeInterpreterToolCallStatus status = default;
             string containerId = default;
             string code = default;
             IList<BinaryData> outputs = default;
@@ -155,7 +165,7 @@ namespace Azure.AI.Projects.OpenAI
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToItemResourceCodeInterpreterToolCallStatus();
+                    status = prop.Value.GetString().ToOutputItemCodeInterpreterToolCallStatus();
                     continue;
                 }
                 if (prop.NameEquals("container_id"u8))
@@ -209,15 +219,5 @@ namespace Azure.AI.Projects.OpenAI
                 code,
                 outputs);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InputItemCodeInterpreterToolCall>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InputItemCodeInterpreterToolCall IPersistableModel<InputItemCodeInterpreterToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => (InputItemCodeInterpreterToolCall)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InputItemCodeInterpreterToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

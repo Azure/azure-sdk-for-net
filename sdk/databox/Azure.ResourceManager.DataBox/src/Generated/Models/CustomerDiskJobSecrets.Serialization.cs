@@ -18,6 +18,46 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> The secrets related to customer disk job. </summary>
     public partial class CustomerDiskJobSecrets : JobSecrets, IJsonModel<CustomerDiskJobSecrets>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override JobSecrets PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CustomerDiskJobSecrets>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCustomerDiskJobSecrets(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CustomerDiskJobSecrets)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CustomerDiskJobSecrets>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CustomerDiskJobSecrets)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CustomerDiskJobSecrets>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CustomerDiskJobSecrets IPersistableModel<CustomerDiskJobSecrets>.Create(BinaryData data, ModelReaderWriterOptions options) => (CustomerDiskJobSecrets)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CustomerDiskJobSecrets>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CustomerDiskJobSecrets>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -142,45 +182,5 @@ namespace Azure.ResourceManager.DataBox.Models
                 diskSecrets ?? new ChangeTrackingList<DataBoxDiskSecret>(),
                 carrierAccountNumber);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CustomerDiskJobSecrets>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomerDiskJobSecrets>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(CustomerDiskJobSecrets)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CustomerDiskJobSecrets IPersistableModel<CustomerDiskJobSecrets>.Create(BinaryData data, ModelReaderWriterOptions options) => (CustomerDiskJobSecrets)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override JobSecrets PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomerDiskJobSecrets>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeCustomerDiskJobSecrets(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CustomerDiskJobSecrets)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CustomerDiskJobSecrets>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
