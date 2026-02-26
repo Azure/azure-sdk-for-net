@@ -3,21 +3,19 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ContainerService.Models;
 using Azure.ResourceManager.Models;
 
 // NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.ContainerService
 {
-    public partial class MeshUpgradeProfileData : ResourceData
+    public partial class ContainerServiceMachineData : ResourceData
     {
-        /// <summary> Initializes a new instance of <see cref="MeshUpgradeProfileData"/>. </summary>
-        public MeshUpgradeProfileData()
-        {
-        }
-
-        /// <summary> Mesh upgrade profile properties for a major.minor release. </summary>
+        /// <summary> The properties of the machine. </summary>
         [WirePath("properties")]
-        public MeshUpgradeProfileProperties Properties { get; set; }
+        public ContainerServiceMachineProperties Properties { get; set; }
     }
 }

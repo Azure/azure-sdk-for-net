@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static async Task<Response<KubernetesVersionListResult>> GetKubernetesVersionsManagedClusterAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
             => await GetKubernetesVersionsAsync(subscriptionResource, location, cancellationToken).ConfigureAwait(false);
 
@@ -87,6 +88,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static Response<KubernetesVersionListResult> GetKubernetesVersionsManagedCluster(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
             => GetKubernetesVersions(subscriptionResource, location, cancellationToken);
     }

@@ -15,7 +15,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> A list of private link resources. </summary>
-    public partial class ContainerServicePrivateLinkResourcesListResult : IJsonModel<ContainerServicePrivateLinkResourcesListResult>
+    internal partial class ContainerServicePrivateLinkResourcesListResult : IJsonModel<ContainerServicePrivateLinkResourcesListResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

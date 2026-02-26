@@ -12,7 +12,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> A list of private link resources. </summary>
-    public partial class ContainerServicePrivateLinkResourcesListResult
+    internal partial class ContainerServicePrivateLinkResourcesListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

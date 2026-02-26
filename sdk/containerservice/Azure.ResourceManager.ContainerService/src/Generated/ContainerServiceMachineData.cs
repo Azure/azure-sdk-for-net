@@ -40,10 +40,6 @@ namespace Azure.ResourceManager.ContainerService
             Zones = zones;
         }
 
-        /// <summary> The properties of the machine. </summary>
-        [WirePath("properties")]
-        public ContainerServiceMachineProperties Properties { get; set; }
-
         /// <summary> The Availability zone in which machine is located. </summary>
         [WirePath("zones")]
         public IReadOnlyList<string> Zones { get; }

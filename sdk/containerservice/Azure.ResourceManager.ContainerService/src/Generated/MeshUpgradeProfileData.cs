@@ -31,9 +31,5 @@ namespace Azure.ResourceManager.ContainerService
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
-
-        /// <summary> Mesh upgrade profile properties for a major.minor release. </summary>
-        [WirePath("properties")]
-        public MeshUpgradeProfileProperties Properties { get; }
     }
 }
