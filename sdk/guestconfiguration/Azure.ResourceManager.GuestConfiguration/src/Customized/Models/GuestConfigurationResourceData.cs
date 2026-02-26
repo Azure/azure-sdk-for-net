@@ -2,16 +2,19 @@
 // Licensed under the MIT License.
 
 using System.ComponentModel;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    /// <summary> ARM proxy resource. </summary>
-    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class GuestConfigurationResourceData
     {
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationResourceData"/>. </summary>
         public GuestConfigurationResourceData()
         {
         }
+
+        /// <summary> Azure Resource Manager metadata containing createdBy and modifiedBy information. </summary>
+        [WirePath("systemData")]
+        public SystemData SystemData { get; }
     }
 }

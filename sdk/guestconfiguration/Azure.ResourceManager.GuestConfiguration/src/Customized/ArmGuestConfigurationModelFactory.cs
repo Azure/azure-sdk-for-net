@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static GuestConfigurationAssignmentData GuestConfigurationAssignmentData(ResourceIdentifier id, string name, AzureLocation? location, ResourceType? resourceType, SystemData systemData, GuestConfigurationAssignmentProperties properties)
         {
-            return new GuestConfigurationAssignmentData(id, name, location, resourceType, systemData, additionalBinaryDataProperties: null, properties);
+            return new GuestConfigurationAssignmentData(id, name, location, resourceType, additionalBinaryDataProperties: null, properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GuestConfigurationResourceData"/>. </summary>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static GuestConfigurationResourceData GuestConfigurationResourceData(ResourceIdentifier id = default, string name = default, AzureLocation? location = default, ResourceType? resourceType = default, SystemData systemData = default)
         {
-            return new GuestConfigurationResourceData(id, name, location, resourceType, systemData, additionalBinaryDataProperties: null);
+            return new GuestConfigurationResourceData(id, name, location, resourceType, additionalBinaryDataProperties: null);
         }
     }
 }

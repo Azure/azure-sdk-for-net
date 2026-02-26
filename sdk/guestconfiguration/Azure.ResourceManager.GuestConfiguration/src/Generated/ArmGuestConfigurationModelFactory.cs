@@ -18,6 +18,24 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     public static partial class ArmGuestConfigurationModelFactory
     {
 
+        /// <summary> Guest configuration assignment is an association between a machine and guest configuration. </summary>
+        /// <param name="id"> ARM resource id of the guest configuration assignment. </param>
+        /// <param name="name"> The guest configuration assignment name. </param>
+        /// <param name="location"> Region where the VM is located. </param>
+        /// <param name="resourceType"> The type of the resource. </param>
+        /// <param name="properties"> Properties of the Guest configuration assignment. </param>
+        /// <returns> A new <see cref="GuestConfiguration.GuestConfigurationAssignmentData"/> instance for mocking. </returns>
+        public static GuestConfigurationAssignmentData GuestConfigurationAssignmentData(ResourceIdentifier id = default, string name = default, AzureLocation? location = default, ResourceType? resourceType = default, GuestConfigurationAssignmentProperties properties = default)
+        {
+            return new GuestConfigurationAssignmentData(
+                id,
+                name,
+                location,
+                resourceType,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
         /// <summary> Guest configuration assignment properties. </summary>
         /// <param name="targetResourceId"> VM resource Id. </param>
         /// <param name="guestConfiguration"> The guest configuration to assign. </param>
@@ -200,6 +218,17 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 latestReportId,
                 lastComplianceCheckedOn,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> ARM proxy resource. </summary>
+        /// <param name="id"> ARM resource id of the guest configuration assignment. </param>
+        /// <param name="name"> The guest configuration assignment name. </param>
+        /// <param name="location"> Region where the VM is located. </param>
+        /// <param name="resourceType"> The type of the resource. </param>
+        /// <returns> A new <see cref="Models.GuestConfigurationResourceData"/> instance for mocking. </returns>
+        public static GuestConfigurationResourceData GuestConfigurationResourceData(ResourceIdentifier id = default, string name = default, AzureLocation? location = default, ResourceType? resourceType = default)
+        {
+            return new GuestConfigurationResourceData(id, name, location, resourceType, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Report for the guest configuration assignment. Report contains information such as compliance status, reason, and more. </summary>

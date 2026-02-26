@@ -8,11 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.GuestConfiguration;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
@@ -94,11 +92,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                ((IJsonModel<SystemData>)SystemData).Write(writer, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -145,7 +138,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             string name = default;
             AzureLocation? location = default;
             ResourceType? resourceType = default;
-            SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -181,27 +173,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("systemData"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerGuestConfigurationContext.Default);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GuestConfigurationResourceData(
-                id,
-                name,
-                location,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties);
+            return new GuestConfigurationResourceData(id, name, location, resourceType, additionalBinaryDataProperties);
         }
     }
 }

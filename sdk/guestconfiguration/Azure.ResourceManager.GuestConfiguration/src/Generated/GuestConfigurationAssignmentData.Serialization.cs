@@ -8,12 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.GuestConfiguration.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.GuestConfiguration
 {
@@ -134,7 +132,6 @@ namespace Azure.ResourceManager.GuestConfiguration
             string name = default;
             AzureLocation? location = default;
             ResourceType? resourceType = default;
-            SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             GuestConfigurationAssignmentProperties properties = default;
             foreach (var prop in element.EnumerateObject())
@@ -171,15 +168,6 @@ namespace Azure.ResourceManager.GuestConfiguration
                     resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("systemData"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerGuestConfigurationContext.Default);
-                    continue;
-                }
                 if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -199,7 +187,6 @@ namespace Azure.ResourceManager.GuestConfiguration
                 name,
                 location,
                 resourceType,
-                systemData,
                 additionalBinaryDataProperties,
                 properties);
         }

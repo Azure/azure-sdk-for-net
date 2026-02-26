@@ -8,7 +8,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    [CodeGenSuppress("VmssVmList")]
     public partial class GuestConfigurationAssignmentProperties
     {
         /// <summary> The list of VM Compliance data for VMSS. </summary>
