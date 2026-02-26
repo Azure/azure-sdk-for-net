@@ -69,6 +69,19 @@ namespace Azure.Identity.Broker.Tests
             Assert.AreEqual(true, GetIsLegacyMsaPassthroughEnabled(target));
         }
 
+        [Test]
+        public void CopyMsalSettableProperties_CopiesFromDevelopmentBrokerOptions()
+        {
+            Assert.IsTrue(DefaultAzureCredentialFactory.TryCreateDevelopmentBrokerOptions(out var source));
+            Assert.IsTrue(DefaultAzureCredentialFactory.TryCreateDevelopmentBrokerOptions(out var target));
+
+            source.GetType().GetProperty("IsLegacyMsaPassthroughEnabled").SetValue(source, true);
+
+            target.CopyMsalSettableProperties(source);
+
+            Assert.AreEqual(true, GetIsLegacyMsaPassthroughEnabled(target));
+        }
+
         private static bool? GetIsLegacyMsaPassthroughEnabled(InteractiveBrowserCredentialOptions options)
         {
             return (bool?)options.GetType().GetProperty("IsLegacyMsaPassthroughEnabled")?.GetValue(options);
