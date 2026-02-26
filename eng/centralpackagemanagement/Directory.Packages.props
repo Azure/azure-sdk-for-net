@@ -111,7 +111,7 @@
     <PackageVersion Include="Azure.Core.Expressions.DataFactory" Version="1.0.0" />
     <PackageVersion Include="Azure.Data.AppConfiguration" Version="1.8.0"/>
     <PackageVersion Include="Azure.Data.Tables" Version="12.11.0" />
-    <PackageVersion Include="Azure.Identity" Version="1.17.1" />
+    <PackageVersion Include="Azure.Identity" Version="1.18.0" />
     <PackageVersion Include="Azure.Messaging.EventGrid" Version="4.21.0" />
     <PackageVersion Include="Azure.Messaging.EventGrid.SystemEvents" Version="1.0.0" />
     <PackageVersion Include="Azure.Messaging.EventHubs" Version="5.12.2" />
