@@ -749,7 +749,7 @@ function parseResourceOperation(
         }
         return {};
       case builtInResourceOperationName: {
-        // Determine operation kind from the decorator's operation type argument
+        // @builtInResourceOperation parameters: (ParentResource, BuiltInResource, kind, ResourceName?)
         let builtInKind: ResourceOperationKind | undefined;
         switch (decorator.args[2].jsValue) {
           case "read":
@@ -775,20 +775,18 @@ function parseResourceOperation(
           return {};
         }
 
-        // Check if the operation has been overridden with action semantics
+        // Check if a Read operation has been overridden with action semantics
         // (e.g., a Read template reused with @action/@post decorators for reconcile operations)
-        if (builtInKind !== ResourceOperationKind.Action) {
-          if (hasActionDecorator(decorators)) {
-            builtInKind = ResourceOperationKind.Action;
-          }
+        if (
+          builtInKind === ResourceOperationKind.Read &&
+          hasActionDecorator(decorators)
+        ) {
+          builtInKind = ResourceOperationKind.Action;
         }
 
         // Extract explicit resource name from optional 4th argument
         const builtInExplicitResourceName =
-          decorator.args.length > 3 &&
-          decorator.args[3].jsValue &&
-          typeof decorator.args[3].jsValue === "string" &&
-          (decorator.args[3].jsValue as string).length > 0
+          decorator.args.length > 3
             ? (decorator.args[3].jsValue as string)
             : undefined;
 

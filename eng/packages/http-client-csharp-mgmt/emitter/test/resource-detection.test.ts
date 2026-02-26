@@ -2127,18 +2127,38 @@ interface NetworkSecurityPerimeterConfigurations {
     ok(nspResource, "NspConfiguration resource should be detected");
 
     // Validate resource has the correct operations
-    const methodKinds = nspResource.metadata.methods.map((m: any) => m.kind);
-    ok(methodKinds.includes("Read"), "Should have Read operation");
-    ok(methodKinds.includes("List"), "Should have List operation");
+    const methods = nspResource.metadata.methods;
+
+    // Should have exactly 3 operations: Read, List, and Action
+    strictEqual(
+      methods.length,
+      3,
+      "NspConfiguration resource should have exactly 3 operations (Read, List, Action)"
+    );
+
+    const readMethods = methods.filter((m: any) => m.kind === "Read");
+    strictEqual(
+      readMethods.length,
+      1,
+      "NspConfiguration resource should have exactly 1 Read operation"
+    );
+
+    const listMethods = methods.filter((m: any) => m.kind === "List");
+    strictEqual(
+      listMethods.length,
+      1,
+      "NspConfiguration resource should have exactly 1 List operation"
+    );
 
     // The reconcile operation (decorated with @post @action but using Read template)
     // should be treated as an Action, not a Read
     const actionMethods = nspResource.metadata.methods.filter(
       (m: any) => m.kind === "Action"
     );
-    ok(
-      actionMethods.length >= 1,
-      "reconcileConfiguration should be an Action operation"
+    strictEqual(
+      actionMethods.length,
+      1,
+      "reconcileConfiguration should be classified as an Action operation, not a Read"
     );
 
     // Validate using resolveArmResources API
@@ -2155,5 +2175,22 @@ interface NetworkSecurityPerimeterConfigurations {
       resolvedNspResource,
       "resolveArmResources should also detect NspConfiguration resource"
     );
+
+    // Validate operation kinds in the resolveArmResources path
+    const resolvedMethods = resolvedNspResource.metadata.methods;
+    const resolvedMethodKinds = resolvedMethods.map((m: any) => m.kind);
+    ok(
+      resolvedMethodKinds.includes("Read"),
+      "Should have Read operation in resolveArmResources"
+    );
+    ok(
+      resolvedMethodKinds.includes("List"),
+      "Should have List operation in resolveArmResources"
+    );
+
+    // Note: The upstream resolveArmResources API from @azure-tools/typespec-azure-resource-manager
+    // does not currently handle @action decorator overrides on @builtInResourceOperation templates.
+    // The reconcile operation may be classified as Read instead of Action in this path.
+    // The legacy path (buildArmProviderSchema) correctly handles this override.
   });
 });
