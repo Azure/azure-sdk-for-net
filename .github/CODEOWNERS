@@ -543,7 +543,7 @@
 # ServiceOwners:                                                   @giakas
 
 # PRLabel: %Voice Live
-/sdk/ai/Azure.AI.VoiceLive/                                        @amber-yujueWang @emilyjiji @pankopon @rhurey @xitzhang
+/sdk/voicelive/Azure.AI.VoiceLive/                                 @amber-yujueWang @emilyjiji @pankopon @rhurey @xitzhang
 
 # ServiceLabel: %Voice Live
 # ServiceOwners:                                                   @rhurey @xitzhang @yulin-li
