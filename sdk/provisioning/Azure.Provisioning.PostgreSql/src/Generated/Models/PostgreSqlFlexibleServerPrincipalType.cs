@@ -6,28 +6,29 @@
 namespace Azure.Provisioning.PostgreSql;
 
 /// <summary>
-/// The principal type used to represent the type of Active Directory
-/// Administrator.
+/// Type of Microsoft Entra principal to which the server administrator is
+/// associated.
 /// </summary>
 public enum PostgreSqlFlexibleServerPrincipalType
 {
     /// <summary>
-    /// Unknown.
+    /// The principal type is not known or not specified.
     /// </summary>
     Unknown,
 
     /// <summary>
-    /// User.
+    /// A Microsoft Entra user.
     /// </summary>
     User,
 
     /// <summary>
-    /// Group.
+    /// A Microsoft Entra group.
     /// </summary>
     Group,
 
     /// <summary>
-    /// ServicePrincipal.
+    /// A Microsoft Entra service principal, typically representing an
+    /// application or service identity.
     /// </summary>
     ServicePrincipal,
 }

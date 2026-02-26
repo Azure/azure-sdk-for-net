@@ -144,7 +144,7 @@
     <PackageVersion Include="Azure.ResourceManager.ManagedServiceIdentities" Version="1.4.0" />
     <PackageVersion Include="Azure.ResourceManager.Network" Version="1.14.0" />
     <PackageVersion Include="Azure.ResourceManager.OperationalInsights" Version="1.3.1" />
-    <PackageVersion Include="Azure.ResourceManager.PostgreSql" Version="1.3.1" />
+    <PackageVersion Include="Azure.ResourceManager.PostgreSql" Version="1.4.1" />
     <PackageVersion Include="Azure.ResourceManager.Redis" Version="1.5.1" />
     <PackageVersion Include="Azure.ResourceManager.RedisEnterprise" Version="1.3.0" />
     <PackageVersion Include="Azure.ResourceManager.Resources" Version="1.11.2" />

@@ -16,7 +16,7 @@ namespace Azure.Provisioning.PostgreSql;
 public partial class PostgreSqlFlexibleServerMaintenanceWindow : ProvisionableConstruct
 {
     /// <summary>
-    /// indicates whether custom window is enabled or disabled.
+    /// Indicates whether custom window is enabled or disabled.
     /// </summary>
     public BicepValue<string> CustomWindow 
     {
@@ -26,7 +26,7 @@ public partial class PostgreSqlFlexibleServerMaintenanceWindow : ProvisionableCo
     private BicepValue<string>? _customWindow;
 
     /// <summary>
-    /// start hour for maintenance window.
+    /// Start hour to be used for maintenance window.
     /// </summary>
     public BicepValue<int> StartHour 
     {
@@ -36,7 +36,7 @@ public partial class PostgreSqlFlexibleServerMaintenanceWindow : ProvisionableCo
     private BicepValue<int>? _startHour;
 
     /// <summary>
-    /// start minute for maintenance window.
+    /// Start minute to be used for maintenance window.
     /// </summary>
     public BicepValue<int> StartMinute 
     {
@@ -46,7 +46,7 @@ public partial class PostgreSqlFlexibleServerMaintenanceWindow : ProvisionableCo
     private BicepValue<int>? _startMinute;
 
     /// <summary>
-    /// day of week for maintenance window.
+    /// Day of the week to be used for maintenance window.
     /// </summary>
     public BicepValue<int> DayOfWeek 
     {
