@@ -138,10 +138,6 @@ export function buildArmProviderSchema(
       sdkContext
     );
 
-    if (method.crossLanguageDefinitionId === "Microsoft.DesktopVirtualization.UserSessions.sendMessage") {
-      console.log("sendMessage debug:", { kind, modelId, explicitResourceName });
-    }
-
     if (modelId && kind && resourceModelIds.has(modelId)) {
       // Determine the resource path from the CRUD operation
       let resourcePath = "";
