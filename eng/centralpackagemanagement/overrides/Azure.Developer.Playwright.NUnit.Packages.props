@@ -1,0 +1,10 @@
+<Project>
+  <!--
+    Azure.Developer.Playwright.NUnit is a client library (not a test project)
+    that wraps NUnit for Playwright integration. NUnit must be available as a
+    non-test dependency.
+  -->
+  <ItemGroup Condition="'$(IsTestProject)' != 'true'">
+    <PackageVersion Include="NUnit" Version="$(NUnitVersion)" />
+  </ItemGroup>
+</Project>

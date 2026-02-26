@@ -10,4 +10,4 @@ namespace Azure.AI.Projects.OpenAI;
 
 [CodeGenSuppress("CreateConversation", typeof(InternalMetadataContainer), typeof(IEnumerable<InputItem>), typeof(CancellationToken))]
 [CodeGenSuppress("CreateConversationAsync", typeof(InternalMetadataContainer), typeof(IEnumerable<InputItem>), typeof(CancellationToken))]
-internal partial class Conversations {}
+internal partial class Conversations { }

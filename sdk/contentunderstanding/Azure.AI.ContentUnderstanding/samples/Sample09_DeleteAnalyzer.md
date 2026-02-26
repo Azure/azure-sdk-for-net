@@ -47,7 +47,7 @@ var analyzer = new ContentAnalyzer
     Description = "Simple analyzer for deletion example",
     Config = new ContentAnalyzerConfig
     {
-        ReturnDetails = true
+        ShouldReturnDetails = true
     }
 };
 analyzer.Models["completion"] = "gpt-4.1";

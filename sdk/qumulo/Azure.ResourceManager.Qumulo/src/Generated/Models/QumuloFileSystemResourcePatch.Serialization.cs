@@ -36,6 +36,41 @@ namespace Azure.ResourceManager.Qumulo.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<QumuloFileSystemResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerQumuloContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(QumuloFileSystemResourcePatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<QumuloFileSystemResourcePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        QumuloFileSystemResourcePatch IPersistableModel<QumuloFileSystemResourcePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<QumuloFileSystemResourcePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="qumuloFileSystemResourcePatch"> The <see cref="QumuloFileSystemResourcePatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(QumuloFileSystemResourcePatch qumuloFileSystemResourcePatch)
+        {
+            if (qumuloFileSystemResourcePatch == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(qumuloFileSystemResourcePatch, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<QumuloFileSystemResourcePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -173,41 +208,6 @@ namespace Azure.ResourceManager.Qumulo.Models
                 }
             }
             return new QumuloFileSystemResourcePatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), properties, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<QumuloFileSystemResourcePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<QumuloFileSystemResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerQumuloContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(QumuloFileSystemResourcePatch)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        QumuloFileSystemResourcePatch IPersistableModel<QumuloFileSystemResourcePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<QumuloFileSystemResourcePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="qumuloFileSystemResourcePatch"> The <see cref="QumuloFileSystemResourcePatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(QumuloFileSystemResourcePatch qumuloFileSystemResourcePatch)
-        {
-            if (qumuloFileSystemResourcePatch == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(qumuloFileSystemResourcePatch, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

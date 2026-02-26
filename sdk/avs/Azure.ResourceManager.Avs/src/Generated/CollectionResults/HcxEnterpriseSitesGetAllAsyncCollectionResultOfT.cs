@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Avs
                     yield break;
                 }
                 HcxEnterpriseSiteList result = HcxEnterpriseSiteList.FromResponse(response);
-                yield return Page<HcxEnterpriseSiteData>.FromValues((IReadOnlyList<HcxEnterpriseSiteData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<HcxEnterpriseSiteData>.FromValues((IReadOnlyList<HcxEnterpriseSiteData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

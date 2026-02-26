@@ -92,6 +92,28 @@ steps:
     env:
       EnableSourceLink: false
 
+  - pwsh: |
+      $failed = $false
+      if ('$(ProjectNames)' -and '$(ProjectNames)' -notlike '$(*') {
+        $serviceDirectories = "$(ChangedServices)" -split ","
+        foreach ($ServiceDirectory in $serviceDirectories) {
+          ./eng/scripts/Validate-CpmCompliance.ps1 `
+            -ServiceDirectory $ServiceDirectory
+
+          if ($LASTEXITCODE -ne 0) {
+            $failed = $true
+          }
+        }
+
+        if ($failed) {
+          exit 1
+        }
+      }
+      else {
+        Write-Host "No services were directly changed. Skipping CPM compliance checks."
+      }
+    displayName: Validate CPM Compliance
+
   - template: /eng/pipelines/templates/steps/dotnet-diagnostics.yml
     parameters:
       LogFilePath: $(Build.ArtifactStagingDirectory)/rebuild.binlog

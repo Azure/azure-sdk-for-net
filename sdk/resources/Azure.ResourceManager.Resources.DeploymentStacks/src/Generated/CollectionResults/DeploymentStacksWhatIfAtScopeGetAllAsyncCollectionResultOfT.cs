@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
                     yield break;
                 }
                 DeploymentStacksWhatIfResultListResult result = DeploymentStacksWhatIfResultListResult.FromResponse(response);
-                yield return Page<DeploymentStackWhatIfResultData>.FromValues((IReadOnlyList<DeploymentStackWhatIfResultData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DeploymentStackWhatIfResultData>.FromValues((IReadOnlyList<DeploymentStackWhatIfResultData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

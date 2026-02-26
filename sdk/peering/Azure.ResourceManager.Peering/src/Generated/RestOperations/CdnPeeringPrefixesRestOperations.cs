@@ -48,7 +48,10 @@ namespace Azure.ResourceManager.Peering
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Peering/cdnPeeringPrefixes", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             uri.AppendQuery("peeringLocation", peeringLocation, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -61,8 +64,18 @@ namespace Azure.ResourceManager.Peering
         internal HttpMessage CreateNextGetCdnPeeringPrefixesRequest(Uri nextPage, string subscriptionId, string peeringLocation, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

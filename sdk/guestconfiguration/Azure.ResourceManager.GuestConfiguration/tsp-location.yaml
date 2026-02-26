@@ -1,0 +1,4 @@
+directory: specification/guestconfiguration/resource-manager/Microsoft.GuestConfiguration/Assignments
+commit: caf7d1a8ce944b27f82f1d762528af0c3f5098a2
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

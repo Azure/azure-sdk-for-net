@@ -42,6 +42,41 @@ namespace Azure.ResourceManager.ArtifactSigning
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ArtifactSigningAccountData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerArtifactSigningContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ArtifactSigningAccountData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ArtifactSigningAccountData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ArtifactSigningAccountData IPersistableModel<ArtifactSigningAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ArtifactSigningAccountData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ArtifactSigningAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="artifactSigningAccountData"> The <see cref="ArtifactSigningAccountData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ArtifactSigningAccountData artifactSigningAccountData)
+        {
+            if (artifactSigningAccountData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(artifactSigningAccountData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ArtifactSigningAccountData"/> from. </param>
         internal static ArtifactSigningAccountData FromResponse(Response response)
         {
@@ -191,41 +226,6 @@ namespace Azure.ResourceManager.ArtifactSigning
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ArtifactSigningAccountData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ArtifactSigningAccountData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerArtifactSigningContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ArtifactSigningAccountData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ArtifactSigningAccountData IPersistableModel<ArtifactSigningAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ArtifactSigningAccountData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ArtifactSigningAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="artifactSigningAccountData"> The <see cref="ArtifactSigningAccountData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ArtifactSigningAccountData artifactSigningAccountData)
-        {
-            if (artifactSigningAccountData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(artifactSigningAccountData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

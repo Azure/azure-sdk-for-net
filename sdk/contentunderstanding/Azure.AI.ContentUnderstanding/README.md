@@ -11,7 +11,7 @@ Use the client library for Azure AI Content Understanding to:
 * **Create custom analyzers** - Build domain-specific analyzers for specialized content extraction needs across all four modalities (documents, video, audio, and images)
 * **Classify documents and video** - Automatically categorize and extract information from documents and video by type
 
-[Source code][source_code] | [Package (NuGet)] | [API reference documentation] | [Product documentation][product_docs]
+[Source code][source_code] | [Package (NuGet)][nuget_package] | [API reference documentation][api_reference] | [Product documentation][product_docs]
 
 ## Getting started
 
@@ -20,7 +20,7 @@ Use the client library for Azure AI Content Understanding to:
 Install the client library for .NET with [NuGet][nuget]:
 
 ```bash
-dotnet add package Azure.AI.ContentUnderstanding --prerelease
+dotnet add package Azure.AI.ContentUnderstanding
 ```
 
 ### Prerequisites
@@ -156,12 +156,12 @@ Content Understanding operations are asynchronous long-running operations. The w
 2. **Poll for Results** - Poll the operation location until the analysis completes
 3. **Process Results** - Extract and display the structured results
 
-The SDK provides `Operation<T>` types that handle polling automatically when using `WaitUntil.Completed`. For analysis operations, the SDK returns `Operation<AnalyzeResult>` and provides access to the operation ID via the `Id` property. This operation ID can be used with `GetResultFile*` and `DeleteResult*` methods.
+The SDK provides `Operation<T>` types that handle polling automatically when using `WaitUntil.Completed`. For analysis operations, the SDK returns `Operation<AnalysisResult>` and provides access to the operation ID via the `Id` property. This operation ID can be used with `GetResultFile*` and `DeleteResult*` methods.
 
 ### Main classes
 
 * **`ContentUnderstandingClient`** - The main client for analyzing content, as well as creating, managing, and configuring analyzers
-* **`AnalyzeResult`** - Contains the structured results of an analysis operation, including content elements, markdown, and metadata
+* **`AnalysisResult`** - Contains the structured results of an analysis operation, including content elements, markdown, and metadata
 
 ### Thread safety
 
@@ -245,7 +245,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 <!-- LINKS -->
 [source_code]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding
-
+[nuget_package]: https://www.nuget.org/packages/Azure.AI.ContentUnderstanding
+[api_reference]: https://learn.microsoft.com/dotnet/api/azure.ai.contentunderstanding
 [product_docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/
 [nuget]: https://www.nuget.org/
 [azure_subscription]: https://azure.microsoft.com/free/dotnet/

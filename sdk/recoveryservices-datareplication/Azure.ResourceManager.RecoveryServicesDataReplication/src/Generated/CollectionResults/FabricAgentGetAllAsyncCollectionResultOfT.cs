@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                     yield break;
                 }
                 FabricAgentModelListResult result = FabricAgentModelListResult.FromResponse(response);
-                yield return Page<DataReplicationFabricAgentData>.FromValues((IReadOnlyList<DataReplicationFabricAgentData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DataReplicationFabricAgentData>.FromValues((IReadOnlyList<DataReplicationFabricAgentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

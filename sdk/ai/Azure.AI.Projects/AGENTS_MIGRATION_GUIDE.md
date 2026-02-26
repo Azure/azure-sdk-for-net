@@ -55,7 +55,7 @@ Messages Operations
 |-|-|
 | `agentClient.CreateMessage` | `agentClient.Messages.CreateMessage` |
 | `agentClient.GetMessages` | `agentClient.Messages.GetMessages` |
-| `agentClient.GetMessage` | `pagentClient.Messages.GetMessage` |
+| `agentClient.GetMessage` | `agentClient.Messages.GetMessage` |
 | `agentClient.UpdateMessage` | `agentClient.Messages.UpdateMessage` |
 
 Runs Operations
@@ -143,7 +143,7 @@ Files Operations
     PersistentAgentsClient agentClient = projectClient.GetPersistentAgentsClient();
     ```
 
-    We can create the agentClient using consructor and provide the additional options.
+    We can create the agentClient using constructor and provide the additional options.
     ```C#
     PersistentAgentsClient agentClient = new(
         endpoint: projectEndpoint,
@@ -503,7 +503,7 @@ Files Operations
     bool isDeleted = agentClient.Files.DeleteFile(fileId: oneFile.Id);
     Console.WriteLine(isDeleted)
     ```
-15. Create, list vector store files list and delete vector stores. In `Azure.AI.Agents.Persistent`, the operation of file in the vector store or vector store deletion retuens boolean value instead of `VectorStoreFileDeletionStatus` and `VectorStoreDeletionStatus` respectively. In `Azure.AI.Agents.Persistent` the vector stores are managed by `VectorStores` client.
+15. Create, list vector store files list and delete vector stores. In `Azure.AI.Agents.Persistent`, the operation of file in the vector store or vector store deletion returns boolean value instead of `VectorStoreFileDeletionStatus` and `VectorStoreDeletionStatus` respectively. In `Azure.AI.Agents.Persistent` the vector stores are managed by `VectorStores` client.
 
     **Hub-based**
     ```python

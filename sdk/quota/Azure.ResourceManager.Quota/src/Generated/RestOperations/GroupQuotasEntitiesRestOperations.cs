@@ -49,7 +49,10 @@ namespace Azure.ResourceManager.Quota
             uri.AppendPath(managementGroupId, true);
             uri.AppendPath("/providers/Microsoft.Quota/groupQuotas/", false);
             uri.AppendPath(groupQuotaName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -66,7 +69,10 @@ namespace Azure.ResourceManager.Quota
             uri.AppendPath(managementGroupId, true);
             uri.AppendPath("/providers/Microsoft.Quota/groupQuotas/", false);
             uri.AppendPath(groupQuotaName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -88,7 +94,10 @@ namespace Azure.ResourceManager.Quota
             uri.AppendPath(managementGroupId, true);
             uri.AppendPath("/providers/Microsoft.Quota/groupQuotas/", false);
             uri.AppendPath(groupQuotaName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -110,7 +119,10 @@ namespace Azure.ResourceManager.Quota
             uri.AppendPath(managementGroupId, true);
             uri.AppendPath("/providers/Microsoft.Quota/groupQuotas/", false);
             uri.AppendPath(groupQuotaName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -125,7 +137,10 @@ namespace Azure.ResourceManager.Quota
             uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
             uri.AppendPath(managementGroupId, true);
             uri.AppendPath("/providers/Microsoft.Quota/groupQuotas", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -137,8 +152,18 @@ namespace Azure.ResourceManager.Quota
         internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string managementGroupId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -158,7 +183,10 @@ namespace Azure.ResourceManager.Quota
             uri.AppendPath("/resourceProviders/", false);
             uri.AppendPath(resourceProviderName, true);
             uri.AppendPath("/groupQuotaRequests", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             uri.AppendQuery("$filter", filter, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -171,8 +199,18 @@ namespace Azure.ResourceManager.Quota
         internal HttpMessage CreateNextGetGroupQuotaLimitsRequestsRequest(Uri nextPage, string managementGroupId, string groupQuotaName, string resourceProviderName, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -193,7 +231,10 @@ namespace Azure.ResourceManager.Quota
             uri.AppendPath(resourceProviderName, true);
             uri.AppendPath("/locationUsages/", false);
             uri.AppendPath(location.ToString(), true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -205,8 +246,18 @@ namespace Azure.ResourceManager.Quota
         internal HttpMessage CreateNextGetGroupQuotaUsagesRequest(Uri nextPage, string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

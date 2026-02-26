@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                     yield break;
                 }
                 AvsStorageContainerVolumeListResult result = AvsStorageContainerVolumeListResult.FromResponse(response);
-                yield return Page<PureStorageAvsStorageContainerVolumeData>.FromValues((IReadOnlyList<PureStorageAvsStorageContainerVolumeData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<PureStorageAvsStorageContainerVolumeData>.FromValues((IReadOnlyList<PureStorageAvsStorageContainerVolumeData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

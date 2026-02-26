@@ -2053,4 +2053,149 @@ interface TrafficEndpoints {
       "resolveArmResources does not detect custom Azure resources"
     );
   });
+
+  it("builtInResourceOperation - NspConfiguration pattern", async () => {
+    const program = await typeSpecCompile(
+      `
+/** An Employee parent resource */
+model Employee is TrackedResource<EmployeeProperties> {
+  ...ResourceNameParameter<Employee>;
+}
+
+/** Employee properties */
+model EmployeeProperties {
+  /** Age of employee */
+  age?: int32;
+}
+
+/** NSP configuration model */
+@parentResource(Employee)
+model NspConfiguration
+  is Azure.ResourceManager.CommonTypes.NspConfigurationResource<"networkSecurityPerimeterConfigurationName"> {
+}
+
+// NspConfigurationOperations templates implicitly apply @builtInResourceOperation decorator
+alias NspConfigurationOps = Azure.ResourceManager.CommonTypes.NspConfigurationOperations<NspConfiguration>;
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Employees {
+  get is ArmResourceRead<Employee>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Employee>;
+}
+
+@armResourceOperations
+@tag("NetworkSecurityPerimeter")
+interface NetworkSecurityPerimeterConfigurations {
+  // Implicitly gets @builtInResourceOperation(Employee, NspConfiguration, "read")
+  getConfiguration is NspConfigurationOps.Read<
+    ParentResource = Employee,
+    Resource = NspConfiguration
+  >;
+
+  // Implicitly gets @builtInResourceOperation(Employee, NspConfiguration, "list")
+  @list
+  listConfigurations is NspConfigurationOps.ListByParent<
+    ParentResource = Employee,
+    Resource = NspConfiguration
+  >;
+
+  // Reuses Read template so implicitly gets @builtInResourceOperation(..., "read"),
+  // but @post @action("reconcile") overrides it — should be classified as Action, not Read
+  @post
+  @action("reconcile")
+  reconcileConfiguration is NspConfigurationOps.Read<
+    ParentResource = Employee,
+    Resource = NspConfiguration,
+    Response = ArmAcceptedLroResponse
+  >;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+
+    // Build ARM provider schema and verify its structure
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    ok(armProviderSchema.resources);
+
+    // Should have Employee and NspConfiguration as resources
+    const nspResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/employees/networkSecurityPerimeterConfigurations"
+    );
+    ok(nspResource, "NspConfiguration resource should be detected");
+
+    // Validate resource has the correct operations
+    const methods = nspResource.metadata.methods;
+
+    // Should have exactly 3 operations: Read, List, and Action
+    strictEqual(
+      methods.length,
+      3,
+      "NspConfiguration resource should have exactly 3 operations (Read, List, Action)"
+    );
+
+    const readMethods = methods.filter((m: any) => m.kind === "Read");
+    strictEqual(
+      readMethods.length,
+      1,
+      "NspConfiguration resource should have exactly 1 Read operation"
+    );
+
+    const listMethods = methods.filter((m: any) => m.kind === "List");
+    strictEqual(
+      listMethods.length,
+      1,
+      "NspConfiguration resource should have exactly 1 List operation"
+    );
+
+    // The reconcile operation (decorated with @post @action but using Read template)
+    // should be treated as an Action, not a Read
+    const actionMethods = nspResource.metadata.methods.filter(
+      (m: any) => m.kind === "Action"
+    );
+    strictEqual(
+      actionMethods.length,
+      1,
+      "reconcileConfiguration should be classified as an Action operation, not a Read"
+    );
+
+    // Validate using resolveArmResources API
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    // Both schemas should detect the NSP resource
+    const resolvedNspResource = resolvedSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/employees/networkSecurityPerimeterConfigurations"
+    );
+    ok(
+      resolvedNspResource,
+      "resolveArmResources should also detect NspConfiguration resource"
+    );
+
+    // Validate operation kinds in the resolveArmResources path
+    const resolvedMethods = resolvedNspResource.metadata.methods;
+    const resolvedMethodKinds = resolvedMethods.map((m: any) => m.kind);
+    ok(
+      resolvedMethodKinds.includes("Read"),
+      "Should have Read operation in resolveArmResources"
+    );
+    ok(
+      resolvedMethodKinds.includes("List"),
+      "Should have List operation in resolveArmResources"
+    );
+
+    // Note: The upstream resolveArmResources API from @azure-tools/typespec-azure-resource-manager
+    // does not currently handle @action decorator overrides on @builtInResourceOperation templates.
+    // The reconcile operation may be classified as Read instead of Action in this path.
+    // The legacy path (buildArmProviderSchema) correctly handles this override.
+  });
 });

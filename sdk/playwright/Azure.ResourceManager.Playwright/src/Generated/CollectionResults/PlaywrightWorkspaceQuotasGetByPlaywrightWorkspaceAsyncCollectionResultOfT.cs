@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Playwright
                     yield break;
                 }
                 PlaywrightWorkspaceQuotaListResult result = PlaywrightWorkspaceQuotaListResult.FromResponse(response);
-                yield return Page<PlaywrightWorkspaceQuotaData>.FromValues((IReadOnlyList<PlaywrightWorkspaceQuotaData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<PlaywrightWorkspaceQuotaData>.FromValues((IReadOnlyList<PlaywrightWorkspaceQuotaData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

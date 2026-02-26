@@ -108,7 +108,7 @@ var fieldSchema = new ContentFieldSchema(
 // Create analyzer configuration
 var config = new ContentAnalyzerConfig
 {
-    ReturnDetails = true
+    ShouldReturnDetails = true
 };
 
 // Create the custom analyzer

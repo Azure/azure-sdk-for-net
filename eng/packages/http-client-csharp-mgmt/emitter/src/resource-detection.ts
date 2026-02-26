@@ -748,70 +748,58 @@ function parseResourceOperation(
             };
         }
         return {};
-      case builtInResourceOperationName:
+      case builtInResourceOperationName: {
+        // @builtInResourceOperation parameters: (ParentResource, BuiltInResource, kind, ResourceName?)
+        let builtInKind: ResourceOperationKind | undefined;
         switch (decorator.args[2].jsValue) {
           case "read":
-            return {
-              kind: ResourceOperationKind.Read,
-              modelId: getResourceModelIdCore(
-                sdkContext,
-                decorator.args[1].value as Model,
-                decorator.definition?.name
-              ),
-              explicitResourceName: undefined
-            };
+            builtInKind = ResourceOperationKind.Read;
+            break;
           case "createOrUpdate":
-            return {
-              kind: ResourceOperationKind.Create,
-              modelId: getResourceModelIdCore(
-                sdkContext,
-                decorator.args[1].value as Model,
-                decorator.definition?.name
-              ),
-              explicitResourceName: undefined
-            };
+            builtInKind = ResourceOperationKind.Create;
+            break;
           case "update":
-            return {
-              kind: ResourceOperationKind.Update,
-              modelId: getResourceModelIdCore(
-                sdkContext,
-                decorator.args[1].value as Model,
-                decorator.definition?.name
-              ),
-              explicitResourceName: undefined
-            };
+            builtInKind = ResourceOperationKind.Update;
+            break;
           case "delete":
-            return {
-              kind: ResourceOperationKind.Delete,
-              modelId: getResourceModelIdCore(
-                sdkContext,
-                decorator.args[1].value as Model,
-                decorator.definition?.name
-              ),
-              explicitResourceName: undefined
-            };
+            builtInKind = ResourceOperationKind.Delete;
+            break;
           case "list":
-            return {
-              kind: ResourceOperationKind.List,
-              modelId: getResourceModelIdCore(
-                sdkContext,
-                decorator.args[1].value as Model,
-                decorator.definition?.name
-              ),
-              explicitResourceName: undefined
-            };
+            builtInKind = ResourceOperationKind.List;
+            break;
           case "action":
-            return {
-              kind: ResourceOperationKind.Action,
-              modelId: getResourceModelIdCore(
-                sdkContext,
-                decorator.args[1].value as Model,
-                decorator.definition?.name
-              ),
-              explicitResourceName: undefined
-            };
+            builtInKind = ResourceOperationKind.Action;
+            break;
         }
-        return {};
+        if (!builtInKind) {
+          return {};
+        }
+
+        // Check if a Read operation has been overridden with action semantics
+        // (e.g., a Read template reused with @action/@post decorators for reconcile operations)
+        if (
+          builtInKind === ResourceOperationKind.Read &&
+          hasActionDecorator(decorators)
+        ) {
+          builtInKind = ResourceOperationKind.Action;
+        }
+
+        // Extract explicit resource name from optional 4th argument
+        const builtInExplicitResourceName =
+          decorator.args.length > 3
+            ? (decorator.args[3].jsValue as string)
+            : undefined;
+
+        return {
+          kind: builtInKind,
+          modelId: getResourceModelIdCore(
+            sdkContext,
+            decorator.args[1].value as Model,
+            decorator.definition?.name
+          ),
+          explicitResourceName: builtInExplicitResourceName
+        };
+      }
     }
   }
   return {};
@@ -826,6 +814,17 @@ function getParentResourceModelId(
     (d) => d.definition?.name == parentResourceName
   );
   return getResourceModelId(sdkContext, parentResourceDecorator);
+}
+
+/**
+ * Checks if an operation's decorators include @action from @typespec/rest,
+ * which indicates the operation has been overridden with action semantics
+ * (e.g., a Read template reused with @post @action("reconcile")).
+ */
+function hasActionDecorator(
+  decorators: readonly DecoratorApplication[] | undefined
+): boolean {
+  return decorators?.some((d) => d.definition?.name === "@action") ?? false;
 }
 
 function getResourceModelId(

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs
                     yield break;
                 }
                 WorkloadNetworkDnsServicesList result = WorkloadNetworkDnsServicesList.FromResponse(response);
-                yield return Page<WorkloadNetworkDnsServiceData>.FromValues((IReadOnlyList<WorkloadNetworkDnsServiceData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<WorkloadNetworkDnsServiceData>.FromValues((IReadOnlyList<WorkloadNetworkDnsServiceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -46,6 +46,29 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServicePlacementPreferPrimaryDomainPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ServicePlacementPreferPrimaryDomainPolicy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ServicePlacementPreferPrimaryDomainPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServicePlacementPreferPrimaryDomainPolicy IPersistableModel<ServicePlacementPreferPrimaryDomainPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => (ServicePlacementPreferPrimaryDomainPolicy)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ServicePlacementPreferPrimaryDomainPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServicePlacementPreferPrimaryDomainPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -116,28 +139,5 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
             return new ServicePlacementPreferPrimaryDomainPolicy(@type, additionalBinaryDataProperties, domainName);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ServicePlacementPreferPrimaryDomainPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ServicePlacementPreferPrimaryDomainPolicy>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ServicePlacementPreferPrimaryDomainPolicy)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ServicePlacementPreferPrimaryDomainPolicy IPersistableModel<ServicePlacementPreferPrimaryDomainPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => (ServicePlacementPreferPrimaryDomainPolicy)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ServicePlacementPreferPrimaryDomainPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -42,6 +42,41 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LocalRulestackPrefixData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(LocalRulestackPrefixData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<LocalRulestackPrefixData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LocalRulestackPrefixData IPersistableModel<LocalRulestackPrefixData>.Create(BinaryData data, ModelReaderWriterOptions options) => (LocalRulestackPrefixData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<LocalRulestackPrefixData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="localRulestackPrefixData"> The <see cref="LocalRulestackPrefixData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(LocalRulestackPrefixData localRulestackPrefixData)
+        {
+            if (localRulestackPrefixData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(localRulestackPrefixData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="LocalRulestackPrefixData"/> from. </param>
         internal static LocalRulestackPrefixData FromResponse(Response response)
         {
@@ -154,41 +189,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 systemData,
                 additionalBinaryDataProperties,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LocalRulestackPrefixData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LocalRulestackPrefixData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(LocalRulestackPrefixData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        LocalRulestackPrefixData IPersistableModel<LocalRulestackPrefixData>.Create(BinaryData data, ModelReaderWriterOptions options) => (LocalRulestackPrefixData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LocalRulestackPrefixData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="localRulestackPrefixData"> The <see cref="LocalRulestackPrefixData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(LocalRulestackPrefixData localRulestackPrefixData)
-        {
-            if (localRulestackPrefixData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(localRulestackPrefixData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

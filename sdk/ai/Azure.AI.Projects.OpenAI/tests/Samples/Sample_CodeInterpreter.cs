@@ -5,10 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.Projects.OpenAI;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
-using Azure.AI.Projects.OpenAI;
 using OpenAI;
 using OpenAI.Responses;
 

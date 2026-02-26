@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.LargeInstance
                     yield break;
                 }
                 AzureLargeStorageInstanceListResult result = AzureLargeStorageInstanceListResult.FromResponse(response);
-                yield return Page<LargeStorageInstanceData>.FromValues((IReadOnlyList<LargeStorageInstanceData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<LargeStorageInstanceData>.FromValues((IReadOnlyList<LargeStorageInstanceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

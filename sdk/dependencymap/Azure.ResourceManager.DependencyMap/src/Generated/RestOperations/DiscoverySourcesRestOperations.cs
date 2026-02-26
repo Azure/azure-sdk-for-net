@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.DependencyMap
             uri.AppendPath(mapName, true);
             uri.AppendPath("/discoverySources/", false);
             uri.AppendPath(sourceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +77,10 @@ namespace Azure.ResourceManager.DependencyMap
             uri.AppendPath(mapName, true);
             uri.AppendPath("/discoverySources/", false);
             uri.AppendPath(sourceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -97,7 +103,10 @@ namespace Azure.ResourceManager.DependencyMap
             uri.AppendPath(mapName, true);
             uri.AppendPath("/discoverySources/", false);
             uri.AppendPath(sourceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -120,7 +129,10 @@ namespace Azure.ResourceManager.DependencyMap
             uri.AppendPath(mapName, true);
             uri.AppendPath("/discoverySources/", false);
             uri.AppendPath(sourceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -139,7 +151,10 @@ namespace Azure.ResourceManager.DependencyMap
             uri.AppendPath("/providers/Microsoft.DependencyMap/maps/", false);
             uri.AppendPath(mapName, true);
             uri.AppendPath("/discoverySources", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -151,8 +166,18 @@ namespace Azure.ResourceManager.DependencyMap
         internal HttpMessage CreateNextGetByMapsResourceRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string mapName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

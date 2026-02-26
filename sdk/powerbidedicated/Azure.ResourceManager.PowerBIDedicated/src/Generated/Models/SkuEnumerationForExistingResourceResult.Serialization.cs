@@ -34,6 +34,29 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SkuEnumerationForExistingResourceResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPowerBIDedicatedContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SkuEnumerationForExistingResourceResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SkuEnumerationForExistingResourceResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SkuEnumerationForExistingResourceResult IPersistableModel<SkuEnumerationForExistingResourceResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SkuEnumerationForExistingResourceResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SkuEnumerationForExistingResourceResult"/> from. </param>
         internal static SkuEnumerationForExistingResourceResult FromResponse(Response response)
         {
@@ -136,28 +159,5 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             }
             return new SkuEnumerationForExistingResourceResult(value ?? new ChangeTrackingList<SkuDetails>(), additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SkuEnumerationForExistingResourceResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SkuEnumerationForExistingResourceResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPowerBIDedicatedContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SkuEnumerationForExistingResourceResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SkuEnumerationForExistingResourceResult IPersistableModel<SkuEnumerationForExistingResourceResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SkuEnumerationForExistingResourceResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

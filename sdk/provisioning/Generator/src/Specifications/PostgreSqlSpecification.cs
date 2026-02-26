@@ -9,6 +9,7 @@ using Azure.ResourceManager.PostgreSql.Models;
 
 namespace Azure.Provisioning.Generator.Specifications;
 
+#pragma warning disable CS0618 // Type or member is obsolete
 public class PostgreSqlSpecification() :
     Specification("PostgreSql", typeof(PostgreSqlExtensions))
 {
@@ -26,6 +27,14 @@ public class PostgreSqlSpecification() :
         CustomizeSimpleModel<PostgreSqlServerPropertiesForGeoRestore>(m => { m.DiscriminatorName = "createMode"; m.DiscriminatorValue = "GeoRestore"; });
         CustomizeSimpleModel<PostgreSqlServerPropertiesForReplica>(m => { m.DiscriminatorName = "createMode"; m.DiscriminatorValue = "Replica"; });
         CustomizeSimpleModel<PostgreSqlServerPropertiesForRestore>(m => { m.DiscriminatorName = "createMode"; m.DiscriminatorValue = "PointInTimeRestore"; });
+
+        // Backward compatibility
+        CustomizeProperty<PostgreSqlFlexibleServerResource>("PrivateEndpointConnections", p => { p.Name = "PrivateEndpointConnectionResources"; });
+        CustomizeResource<PostgreSqlFlexibleServerResource>(r =>
+        {
+            r.GeneratePartialPropertyDefinition = true;
+        });
+        OrderEnum<PostgreSqlFlexibleServerVersion>("Ver15", "Ver14", "Ver13", "Ver12", "Ver11", "Sixteen", "Eighteen", "Seventeen");
 
         // Naming requirements
         AddNameRequirements<PostgreSqlServerResource>(min: 3, max: 63, lower: true, digits: true, hyphen: true);

@@ -42,6 +42,41 @@ namespace Azure.ResourceManager.StorageDiscovery
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StorageDiscoveryWorkspaceData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageDiscoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(StorageDiscoveryWorkspaceData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<StorageDiscoveryWorkspaceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageDiscoveryWorkspaceData IPersistableModel<StorageDiscoveryWorkspaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (StorageDiscoveryWorkspaceData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StorageDiscoveryWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="storageDiscoveryWorkspaceData"> The <see cref="StorageDiscoveryWorkspaceData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(StorageDiscoveryWorkspaceData storageDiscoveryWorkspaceData)
+        {
+            if (storageDiscoveryWorkspaceData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(storageDiscoveryWorkspaceData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StorageDiscoveryWorkspaceData"/> from. </param>
         internal static StorageDiscoveryWorkspaceData FromResponse(Response response)
         {
@@ -191,41 +226,6 @@ namespace Azure.ResourceManager.StorageDiscovery
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StorageDiscoveryWorkspaceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageDiscoveryWorkspaceData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageDiscoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(StorageDiscoveryWorkspaceData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        StorageDiscoveryWorkspaceData IPersistableModel<StorageDiscoveryWorkspaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (StorageDiscoveryWorkspaceData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StorageDiscoveryWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="storageDiscoveryWorkspaceData"> The <see cref="StorageDiscoveryWorkspaceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(StorageDiscoveryWorkspaceData storageDiscoveryWorkspaceData)
-        {
-            if (storageDiscoveryWorkspaceData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(storageDiscoveryWorkspaceData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

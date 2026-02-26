@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Dynatrace
                     yield break;
                 }
                 VmHostsListResult result = VmHostsListResult.FromResponse(response);
-                yield return Page<DynatraceMonitorVmInfo>.FromValues((IReadOnlyList<DynatraceMonitorVmInfo>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DynatraceMonitorVmInfo>.FromValues((IReadOnlyList<DynatraceMonitorVmInfo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

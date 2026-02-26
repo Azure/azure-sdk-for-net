@@ -6,8 +6,8 @@
 namespace Azure.Provisioning.PostgreSql;
 
 /// <summary>
-/// Specifies the state of the Threat Protection, whether it is enabled or
-/// disabled or a state has not been applied yet on the specific server.
+/// Specifies the state of the advanced threat protection, whether it is
+/// enabled, disabled, or a state has not been applied yet on the server.
 /// </summary>
 public enum ThreatProtectionState
 {

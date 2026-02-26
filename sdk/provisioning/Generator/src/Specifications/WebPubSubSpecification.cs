@@ -16,7 +16,7 @@ public class WebPubSubSpecification() :
         // Remove misfires
         RemoveProperty<WebPubSubPrivateEndpointConnectionData>("ResourceType");
         RemoveProperty<WebPubSubSharedPrivateLinkData>("ResourceType");
-        
+
         // Patch models
         CustomizeResource<WebPubSubResource>(r => r.Name = "WebPubSubService");
         CustomizeProperty<LiveTraceConfiguration>("IsEnabled", p => { p.Path = ["enabled"]; p.PropertyType = TypeRegistry.Get<string>(); });

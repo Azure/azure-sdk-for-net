@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    /// <summary> The data plane proxy private link delegation. This property manages if a request from delegated Azure Resource Manager (ARM) private link is allowed when the data plane resource requires private link. </summary>
+    /// <summary> The data plane proxy private link delegation. This property manages if a request from delegated ARM private link is allowed when the data plane resource requires private link. </summary>
     public readonly partial struct DataPlaneProxyPrivateLinkDelegation : IEquatable<DataPlaneProxyPrivateLinkDelegation>
     {
         private readonly string _value;
+        /// <summary> ARM private endpoint is required if the resource requires private link. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Request is denied if the resource requires private link. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="DataPlaneProxyPrivateLinkDelegation"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataPlaneProxyPrivateLinkDelegation(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
-
-        /// <summary> Azure Resource Manager (ARM) private endpoint is required if the resource requires private link. </summary>
+        /// <summary> ARM private endpoint is required if the resource requires private link. </summary>
         public static DataPlaneProxyPrivateLinkDelegation Enabled { get; } = new DataPlaneProxyPrivateLinkDelegation(EnabledValue);
+
         /// <summary> Request is denied if the resource requires private link. </summary>
         public static DataPlaneProxyPrivateLinkDelegation Disabled { get; } = new DataPlaneProxyPrivateLinkDelegation(DisabledValue);
+
         /// <summary> Determines if two <see cref="DataPlaneProxyPrivateLinkDelegation"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataPlaneProxyPrivateLinkDelegation left, DataPlaneProxyPrivateLinkDelegation right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataPlaneProxyPrivateLinkDelegation"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataPlaneProxyPrivateLinkDelegation left, DataPlaneProxyPrivateLinkDelegation right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataPlaneProxyPrivateLinkDelegation"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataPlaneProxyPrivateLinkDelegation"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataPlaneProxyPrivateLinkDelegation(string value) => new DataPlaneProxyPrivateLinkDelegation(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataPlaneProxyPrivateLinkDelegation"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataPlaneProxyPrivateLinkDelegation?(string value) => value == null ? null : new DataPlaneProxyPrivateLinkDelegation(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataPlaneProxyPrivateLinkDelegation other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataPlaneProxyPrivateLinkDelegation other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -105,6 +105,7 @@ public partial class PostgreSqlPrivateEndpointConnection : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _connectionState = DefineModelProperty<PostgreSqlPrivateLinkServiceConnectionStateProperty>("ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
         _privateEndpointId = DefineProperty<ResourceIdentifier>("PrivateEndpointId", ["properties", "privateEndpoint", "id"]);

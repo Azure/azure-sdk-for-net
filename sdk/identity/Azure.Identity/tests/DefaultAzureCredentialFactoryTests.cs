@@ -601,6 +601,24 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        public void ManagedIdentityAsFederatedIdentityCredentialViaEnvVar_ThrowsHelpfulError()
+        {
+            using (new TestEnvVar(new Dictionary<string, string>
+            {
+                { "AZURE_CLIENT_ID", null },
+                { "AZURE_USERNAME", null },
+                { "AZURE_TENANT_ID", null },
+                { "AZURE_TOKEN_CREDENTIALS", "managedidentityasfederatedidentitycredential" }
+            }))
+            {
+                var factory = new DefaultAzureCredentialFactory(null);
+                var ex = Assert.Throws<InvalidOperationException>(() => factory.CreateCredentialChain());
+                Assert.That(ex.Message, Does.Contain("ManagedIdentityAsFederatedIdentityCredential is not supported via the AZURE_TOKEN_CREDENTIALS environment variable"));
+                Assert.That(ex.Message, Does.Contain("IConfiguration"));
+            }
+        }
+
+        [Test]
         [TestCaseSource(nameof(ExcludeCredOptions))]
         public void ValidateExcludeOptionsHonoredWithAZURE_TOKEN_CREDENTIALS_DevMode(
             bool excludeEnvironmentCredential,

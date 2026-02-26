@@ -18,7 +18,24 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.AzurePipelines
     /// </summary>
     internal class AzurePipelinesCredentialCreationTests : CredentialCreationTestBase<AzurePipelinesCredential>
     {
-        protected override string CredentialSource => "AzurePipelines";
+        protected override string CredentialSource => nameof(AzurePipelinesCredential);
+
+        protected override Dictionary<string, string> GetRequiredConfigValues() => new()
+        {
+            { "TenantId", "test-tenant" },
+            { "ClientId", "test-client" },
+            { "AzurePipelinesServiceConnectionId", "test-connection" },
+            { "AzurePipelinesSystemAccessToken", "test-token" },
+        };
+
+        protected override Dictionary<string, string> GetRequiredEnvVars() => new()
+        {
+            { "AZURE_TENANT_ID", null },
+            { "AZURE_CLIENT_ID", null },
+            { "AZURE_ADDITIONALLY_ALLOWED_TENANTS", null },
+            { "AZURE_AUTHORITY_HOST", null },
+            { "SYSTEM_OIDCREQUESTURI", "https://dev.azure.com/myorg/_apis" },
+        };
 
         private static object GetMsalClient(AzurePipelinesCredential cred)
             => ReadProperty<object>(cred, "Client");

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Kubernetes
                     yield break;
                 }
                 ConnectedClusterList result = ConnectedClusterList.FromResponse(response);
-                yield return Page<ConnectedClusterData>.FromValues((IReadOnlyList<ConnectedClusterData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ConnectedClusterData>.FromValues((IReadOnlyList<ConnectedClusterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

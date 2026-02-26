@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MongoCluster
                     yield break;
                 }
                 MongoClusterListResult result = MongoClusterListResult.FromResponse(response);
-                yield return Page<MongoClusterData>.FromValues((IReadOnlyList<MongoClusterData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<MongoClusterData>.FromValues((IReadOnlyList<MongoClusterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

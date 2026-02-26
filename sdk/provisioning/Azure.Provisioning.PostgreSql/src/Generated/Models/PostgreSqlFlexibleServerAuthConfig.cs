@@ -16,7 +16,7 @@ namespace Azure.Provisioning.PostgreSql;
 public partial class PostgreSqlFlexibleServerAuthConfig : ProvisionableConstruct
 {
     /// <summary>
-    /// If Enabled, Azure Active Directory authentication is enabled.
+    /// Indicates if the server supports Microsoft Entra authentication.
     /// </summary>
     public BicepValue<PostgreSqlFlexibleServerActiveDirectoryAuthEnum> ActiveDirectoryAuth 
     {
@@ -26,7 +26,7 @@ public partial class PostgreSqlFlexibleServerAuthConfig : ProvisionableConstruct
     private BicepValue<PostgreSqlFlexibleServerActiveDirectoryAuthEnum>? _activeDirectoryAuth;
 
     /// <summary>
-    /// If Enabled, Password authentication is enabled.
+    /// Indicates if the server supports password based authentication.
     /// </summary>
     public BicepValue<PostgreSqlFlexibleServerPasswordAuthEnum> PasswordAuth 
     {
@@ -36,7 +36,7 @@ public partial class PostgreSqlFlexibleServerAuthConfig : ProvisionableConstruct
     private BicepValue<PostgreSqlFlexibleServerPasswordAuthEnum>? _passwordAuth;
 
     /// <summary>
-    /// Tenant id of the server.
+    /// Identifier of the tenant of the delegated resource.
     /// </summary>
     public BicepValue<Guid> TenantId 
     {

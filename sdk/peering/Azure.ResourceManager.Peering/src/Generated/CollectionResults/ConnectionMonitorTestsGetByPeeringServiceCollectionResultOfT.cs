@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Peering
                     yield break;
                 }
                 ConnectionMonitorTestListResult result = ConnectionMonitorTestListResult.FromResponse(response);
-                yield return Page<ConnectionMonitorTestData>.FromValues((IReadOnlyList<ConnectionMonitorTestData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ConnectionMonitorTestData>.FromValues((IReadOnlyList<ConnectionMonitorTestData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

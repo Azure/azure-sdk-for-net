@@ -235,7 +235,7 @@ namespace Azure.Identity
         /// <returns>Array containing the specific TokenCredential instance.</returns>
         private TokenCredential[] CreateSpecificCredentialChain(string credentialSelection, string environmentVariableName)
         {
-            string validCredentials = $"'{Constants.DevCredentials}', '{Constants.ProdCredentials}', '{Constants.VisualStudioCredential}', '{Constants.VisualStudioCodeCredential}', '{Constants.AzureCliCredential}', '{Constants.AzurePowerShellCredential}', '{Constants.AzureDeveloperCliCredential}', '{Constants.EnvironmentCredential}', '{Constants.WorkloadIdentityCredential}', '{Constants.ManagedIdentityCredential}', '{Constants.InteractiveBrowserCredential}', '{Constants.BrokerCredential}', '{Constants.AzurePipelinesCredential}'";
+            string validCredentials = $"'{Constants.DevCredentials}', '{Constants.ProdCredentials}', '{Constants.VisualStudioCredential}', '{Constants.VisualStudioCodeCredential}', '{Constants.AzureCliCredential}', '{Constants.AzurePowerShellCredential}', '{Constants.AzureDeveloperCliCredential}', '{Constants.EnvironmentCredential}', '{Constants.WorkloadIdentityCredential}', '{Constants.ManagedIdentityCredential}', '{Constants.InteractiveBrowserCredential}', '{Constants.BrokerCredential}', '{Constants.AzurePipelinesCredential}', '{Constants.ManagedIdentityAsFederatedIdentityCredential}'";
 
             return credentialSelection switch
             {
@@ -250,6 +250,7 @@ namespace Azure.Identity
                 Constants.InteractiveBrowserCredential => [CreateInteractiveBrowserCredential()],
                 Constants.BrokerCredential => [CreateBrokerCredential()],
                 Constants.AzurePipelinesCredential => [CreateAzurePipelinesCredential()],
+                Constants.ManagedIdentityAsFederatedIdentityCredential => [CreateManagedIdentityAsFederatedIdentityCredential()],
                 _ => throw new InvalidOperationException($"Invalid value for environment variable {environmentVariableName}: {credentialSelection}. Valid values are {validCredentials}.{_troubleshootingMessage}")
             };
         }
@@ -462,6 +463,65 @@ namespace Azure.Identity
 
             return new AzurePipelinesCredential(tenantId, clientId, serviceConnectionId, systemAccessToken, options);
         }
+
+        public virtual TokenCredential CreateManagedIdentityAsFederatedIdentityCredential()
+        {
+            if (Options.CredentialSource == null)
+            {
+                throw new InvalidOperationException(
+                    "ManagedIdentityAsFederatedIdentityCredential is not supported via the AZURE_TOKEN_CREDENTIALS environment variable. " +
+                    "Use IConfiguration-based credential selection with DefaultAzureCredentialOptions to configure ManagedIdentityAsFederatedIdentityCredential, " +
+                    "as it requires additional properties (ClientId, AzureCloud, ManagedIdentityIdKind, ManagedIdentityId) " +
+                    "that cannot be specified through environment variables.");
+            }
+
+            ManagedIdentityId managedIdentityId;
+            if (!string.IsNullOrEmpty(Options.ManagedIdentityIdKind))
+            {
+                managedIdentityId = Options.ManagedIdentityIdKind switch
+                {
+                    "ClientId" => ManagedIdentityId.FromUserAssignedClientId(Options.ManagedIdentityId),
+                    "ResourceId" => ManagedIdentityId.FromUserAssignedResourceId(new ResourceIdentifier(Options.ManagedIdentityId)),
+                    "ObjectId" => ManagedIdentityId.FromUserAssignedObjectId(Options.ManagedIdentityId),
+                    _ => throw new ArgumentException($"Invalid {nameof(Options.ManagedIdentityIdKind)} value: '{Options.ManagedIdentityIdKind}'. For ManagedIdentityAsFederatedIdentityCredential, valid values are 'ClientId', 'ResourceId', 'ObjectId'. SystemAssigned is not supported."),
+                };
+            }
+            else
+            {
+                throw new ArgumentException(
+                    "A user-assigned managed identity must be specified for ManagedIdentityAsFederatedIdentityCredential. " +
+                    "Set ManagedIdentityIdKind and ManagedIdentityId in the configuration.");
+            }
+
+            string tokenScope = TranslateCloudToTokenScope(Options.AzureCloud);
+            var managedIdentityCredential = new ManagedIdentityCredential(managedIdentityId);
+            var tokenContext = new TokenRequestContext(new[] { tokenScope });
+
+            var assertionOptions = Options.Clone<ClientAssertionCredentialOptions>();
+
+            if (Options.AdditionallyAllowedTenants?.Count > 0)
+            {
+                foreach (var tenant in Options.AdditionallyAllowedTenants)
+                {
+                    assertionOptions.AdditionallyAllowedTenants.Add(tenant);
+                }
+            }
+
+            return new ClientAssertionCredential(
+                Options.TenantId,
+                Options.ClientId,
+                async _ => (await managedIdentityCredential.GetTokenAsync(tokenContext).ConfigureAwait(false)).Token,
+                assertionOptions);
+        }
+
+        private static string TranslateCloudToTokenScope(string azureCloud) =>
+            azureCloud?.ToLowerInvariant() switch
+            {
+                "public" => "api://AzureADTokenExchange/.default",
+                "usgov" => "api://AzureADTokenExchangeUSGov/.default",
+                "china" => "api://AzureADTokenExchangeChina/.default",
+                _ => throw new ArgumentException($"Unknown Azure cloud: '{azureCloud}'. Valid values are 'public', 'usgov', 'china'.", nameof(azureCloud)),
+            };
 
         /// <summary>
         /// Creates a DevelopmentBrokerOptions instance if the Azure.Identity.Broker assembly is loaded.

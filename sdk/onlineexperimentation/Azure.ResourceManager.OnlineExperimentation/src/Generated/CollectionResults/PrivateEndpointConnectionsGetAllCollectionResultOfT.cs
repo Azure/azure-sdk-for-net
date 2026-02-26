@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
                     yield break;
                 }
                 OnlineExperimentationPrivateEndpointConnectionListResult result = OnlineExperimentationPrivateEndpointConnectionListResult.FromResponse(response);
-                yield return Page<OnlineExperimentationPrivateEndpointConnectionData>.FromValues((IReadOnlyList<OnlineExperimentationPrivateEndpointConnectionData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<OnlineExperimentationPrivateEndpointConnectionData>.FromValues((IReadOnlyList<OnlineExperimentationPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

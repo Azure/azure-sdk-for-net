@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             ContainerServiceFleetMemberResource containerServiceFleetMember = client.GetContainerServiceFleetMemberResource(containerServiceFleetMemberResourceId);
 
             // invoke the operation
-            await containerServiceFleetMember.DeleteAsync(WaitUntil.Completed);
+            await containerServiceFleetMember.DeleteAsync(WaitUntil.Completed, ifMatch: (ETag?)null);
 
             Console.WriteLine("Succeeded");
         }
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             ContainerServiceFleetMemberResource containerServiceFleetMember = client.GetContainerServiceFleetMemberResource(containerServiceFleetMemberResourceId);
 
             // invoke the operation
-            string ifMatch = "klroqfozx";
+            ETag ifMatch = new ETag("klroqfozx");
             await containerServiceFleetMember.DeleteAsync(WaitUntil.Completed, ifMatch: ifMatch);
 
             Console.WriteLine("Succeeded");
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             {
                 Group = "staging",
             };
-            ArmOperation<ContainerServiceFleetMemberResource> lro = await containerServiceFleetMember.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<ContainerServiceFleetMemberResource> lro = await containerServiceFleetMember.UpdateAsync(WaitUntil.Completed, patch, ifMatch: (ETag?)null);
             ContainerServiceFleetMemberResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             {
                 Group = "staging",
             };
-            string ifMatch = "bjyjzzxvbs";
+            ETag ifMatch = new ETag("bjyjzzxvbs");
             ArmOperation<ContainerServiceFleetMemberResource> lro = await containerServiceFleetMember.UpdateAsync(WaitUntil.Completed, patch, ifMatch: ifMatch);
             ContainerServiceFleetMemberResource result = lro.Value;
 
