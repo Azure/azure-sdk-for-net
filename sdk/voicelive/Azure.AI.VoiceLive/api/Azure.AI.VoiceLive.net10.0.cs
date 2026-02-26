@@ -911,6 +911,7 @@ namespace Azure.AI.VoiceLive
     }
     public partial class RequestAudioContentPart : Azure.AI.VoiceLive.VoiceLiveContentPart, System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.RequestAudioContentPart>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.RequestAudioContentPart>
     {
+        public RequestAudioContentPart() { }
         public RequestAudioContentPart(string audio) { }
         public string Audio { get { throw null; } set { } }
         public string Transcript { get { throw null; } set { } }

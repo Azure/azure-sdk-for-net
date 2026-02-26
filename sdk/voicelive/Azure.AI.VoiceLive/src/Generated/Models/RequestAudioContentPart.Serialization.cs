@@ -15,11 +15,6 @@ namespace Azure.AI.VoiceLive
     /// <summary> An audio content part for a request. This is supported only by realtime models (e.g., gpt-realtime). For text-based models, use `input_text` instead. </summary>
     public partial class RequestAudioContentPart : VoiceLiveContentPart, IJsonModel<RequestAudioContentPart>
     {
-        /// <summary> Initializes a new instance of <see cref="RequestAudioContentPart"/> for deserialization. </summary>
-        internal RequestAudioContentPart()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override VoiceLiveContentPart PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
