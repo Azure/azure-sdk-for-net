@@ -2054,6 +2054,13 @@ interface TrafficEndpoints {
     );
   });
 
+  // The @builtInResourceOperation decorator is applied implicitly by the NspConfigurationOperations
+  // templates (Read, ListByParent, Action) from @azure-tools/typespec-azure-resource-manager.
+  // When an operation uses e.g. NspConfigurationOps.Read<...>, the template stamps
+  // @builtInResourceOperation(ParentResource, Resource, "read") on the operation.
+  // The reconcileConfiguration operation reuses the Read template but overrides it with
+  // @post @action("reconcile"), so it gets both @builtInResourceOperation(..., "read") and @action.
+  // The fix ensures this is classified as Action, not Read.
   it("builtInResourceOperation - NspConfiguration pattern", async () => {
     const program = await typeSpecCompile(
       `
