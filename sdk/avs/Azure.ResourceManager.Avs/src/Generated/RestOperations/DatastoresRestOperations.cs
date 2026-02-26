@@ -54,7 +54,10 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath("/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/datastores", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -66,7 +69,18 @@ namespace Azure.ResourceManager.Avs
         internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -89,7 +103,10 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/datastores/", false);
             uri.AppendPath(datastoreName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -112,7 +129,10 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/datastores/", false);
             uri.AppendPath(datastoreName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -137,7 +157,10 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/datastores/", false);
             uri.AppendPath(datastoreName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

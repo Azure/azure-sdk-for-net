@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary>
         /// Boot Diagnostics is a debugging feature which allows you to view Console Output
-        /// and Screenshot to diagnose VM status. **NOTE**: If storageUri is being
+        /// and Screenshot to diagnose VM status. <b>NOTE</b>: If storageUri is being
         /// specified then ensure that the storage account is in the same region and
         /// subscription as the VM. You can easily view the output of your console log.
         /// Azure also enables you to see a screenshot of the VM from the hypervisor.

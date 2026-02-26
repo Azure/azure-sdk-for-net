@@ -17,7 +17,8 @@ namespace Azure.Provisioning.PostgreSql;
 public partial class PostgreSqlFlexibleServerDataEncryption : ProvisionableConstruct
 {
     /// <summary>
-    /// URI for the key in keyvault for data encryption of the primary server.
+    /// URI of the key in Azure Key Vault used for data encryption of the
+    /// primary storage associated to a server.
     /// </summary>
     public BicepValue<Uri> PrimaryKeyUri 
     {
@@ -27,8 +28,9 @@ public partial class PostgreSqlFlexibleServerDataEncryption : ProvisionableConst
     private BicepValue<Uri>? _primaryKeyUri;
 
     /// <summary>
-    /// Resource Id for the User assigned identity to be used for data
-    /// encryption of the primary server.
+    /// Identifier of the user assigned managed identity used to access the key
+    /// in Azure Key Vault for data encryption of the primary storage
+    /// associated to a server.
     /// </summary>
     public BicepValue<ResourceIdentifier> PrimaryUserAssignedIdentityId 
     {
@@ -38,8 +40,10 @@ public partial class PostgreSqlFlexibleServerDataEncryption : ProvisionableConst
     private BicepValue<ResourceIdentifier>? _primaryUserAssignedIdentityId;
 
     /// <summary>
-    /// URI for the key in keyvault for data encryption for geo-backup of
-    /// server.
+    /// Identifier of the user assigned managed identity used to access the key
+    /// in Azure Key Vault for data encryption of the geographically redundant
+    /// storage associated to a server that is configured to support
+    /// geographically redundant backups.
     /// </summary>
     public BicepValue<Uri> GeoBackupKeyUri 
     {
@@ -49,8 +53,10 @@ public partial class PostgreSqlFlexibleServerDataEncryption : ProvisionableConst
     private BicepValue<Uri>? _geoBackupKeyUri;
 
     /// <summary>
-    /// Resource Id for the User assigned identity to be used for data
-    /// encryption for geo-backup of server.
+    /// Identifier of the user assigned managed identity used to access the key
+    /// in Azure Key Vault for data encryption of the geographically redundant
+    /// storage associated to a server that is configured to support
+    /// geographically redundant backups.
     /// </summary>
     public BicepValue<string> GeoBackupUserAssignedIdentityId 
     {
@@ -60,8 +66,7 @@ public partial class PostgreSqlFlexibleServerDataEncryption : ProvisionableConst
     private BicepValue<string>? _geoBackupUserAssignedIdentityId;
 
     /// <summary>
-    /// Data encryption type to depict if it is System Managed vs Azure Key
-    /// vault.
+    /// Data encryption type used by a server.
     /// </summary>
     public BicepValue<PostgreSqlFlexibleServerKeyType> KeyType 
     {
@@ -71,7 +76,9 @@ public partial class PostgreSqlFlexibleServerDataEncryption : ProvisionableConst
     private BicepValue<PostgreSqlFlexibleServerKeyType>? _keyType;
 
     /// <summary>
-    /// Primary encryption key status for Data encryption enabled server.
+    /// Status of key used by a server configured with data encryption based on
+    /// customer managed key, to encrypt the primary storage associated to the
+    /// server.
     /// </summary>
     public BicepValue<PostgreSqlKeyStatus> PrimaryEncryptionKeyStatus 
     {
@@ -81,7 +88,10 @@ public partial class PostgreSqlFlexibleServerDataEncryption : ProvisionableConst
     private BicepValue<PostgreSqlKeyStatus>? _primaryEncryptionKeyStatus;
 
     /// <summary>
-    /// Geo-backup encryption key status for Data encryption enabled server.
+    /// Status of key used by a server configured with data encryption based on
+    /// customer managed key, to encrypt the geographically redundant storage
+    /// associated to the server when it is configured to support
+    /// geographically redundant backups.
     /// </summary>
     public BicepValue<PostgreSqlKeyStatus> GeoBackupEncryptionKeyStatus 
     {

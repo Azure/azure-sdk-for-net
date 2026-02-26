@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> The status of a UpdateStage. </summary>
     public partial class ContainerServiceFleetUpdateStageStatus
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateStageStatus"/>. </summary>
         internal ContainerServiceFleetUpdateStageStatus()
@@ -60,8 +32,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="beforeGates"> The list of Gates that will run before this UpdateStage. </param>
         /// <param name="afterGates"> The list of Gates that will run after this UpdateStage. </param>
         /// <param name="afterStageWaitStatus"> The status of the wait period configured on the UpdateStage. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetUpdateStageStatus(ContainerServiceFleetUpdateStatus status, string name, IReadOnlyList<ContainerServiceFleetUpdateGroupStatus> groups, IReadOnlyList<UpdateRunGateStatus> beforeGates, IReadOnlyList<UpdateRunGateStatus> afterGates, ContainerServiceFleetWaitStatus afterStageWaitStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceFleetUpdateStageStatus(ContainerServiceFleetUpdateStatus status, string name, IReadOnlyList<ContainerServiceFleetUpdateGroupStatus> groups, IReadOnlyList<UpdateRunGateStatus> beforeGates, IReadOnlyList<UpdateRunGateStatus> afterGates, ContainerServiceFleetWaitStatus afterStageWaitStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             Name = name;
@@ -69,19 +41,24 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             BeforeGates = beforeGates;
             AfterGates = afterGates;
             AfterStageWaitStatus = afterStageWaitStatus;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The status of the UpdateStage. </summary>
         public ContainerServiceFleetUpdateStatus Status { get; }
+
         /// <summary> The name of the UpdateStage. </summary>
         public string Name { get; }
+
         /// <summary> The list of groups to be updated as part of this UpdateStage. </summary>
         public IReadOnlyList<ContainerServiceFleetUpdateGroupStatus> Groups { get; }
+
         /// <summary> The list of Gates that will run before this UpdateStage. </summary>
         public IReadOnlyList<UpdateRunGateStatus> BeforeGates { get; }
+
         /// <summary> The list of Gates that will run after this UpdateStage. </summary>
         public IReadOnlyList<UpdateRunGateStatus> AfterGates { get; }
+
         /// <summary> The status of the wait period configured on the UpdateStage. </summary>
         public ContainerServiceFleetWaitStatus AfterStageWaitStatus { get; }
     }

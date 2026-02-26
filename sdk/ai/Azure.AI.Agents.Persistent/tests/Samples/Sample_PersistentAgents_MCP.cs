@@ -245,7 +245,7 @@ public partial class Sample_PersistentAgents_MCP : SamplesBase<AIAgentsTestEnvir
         #endregion
 
         #region Snippet:AgentsMCP_PrintRunSteps
-        IReadOnlyList<RunStep> runSteps = [..agentClient.Runs.GetRunSteps(run: run)];
+        IReadOnlyList<RunStep> runSteps = [.. agentClient.Runs.GetRunSteps(run: run)];
         PrintActivitySteps(runSteps);
         #endregion
         #region Snippet:AgentsMCP_Print

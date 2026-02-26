@@ -28,7 +28,8 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             #region Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_CreateKnowledgeBase
             Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models.Operation createOp = await client.Knowledgebase.CreateAsync(new CreateKbDTO
             {
-                Name = "{KnowledgeBaseName}", QnaList = new List<QnADTO>
+                Name = "{KnowledgeBaseName}",
+                QnaList = new List<QnADTO>
                 {
                     new QnADTO
                     {
@@ -85,15 +86,16 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_CreateProject
             string newProjectName = "{ProjectName}";
             RequestContent creationRequestContent = RequestContent.Create(
-                new {
-                        description = "This is the description for a test project",
-                        language = "en",
-                        multilingualResource = false,
-                        settings = new
-                        {
-                            defaultAnswer = "No answer found for your question."
-                        }
+                new
+                {
+                    description = "This is the description for a test project",
+                    language = "en",
+                    multilingualResource = false,
+                    settings = new
+                    {
+                        defaultAnswer = "No answer found for your question."
                     }
+                }
                 );
 
             Response creationResponse = await client.CreateProjectAsync(newProjectName, creationRequestContent);

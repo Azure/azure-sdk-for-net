@@ -71,7 +71,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
                 {
                     writer.WritePropertyName(property.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
+                    writer.WriteRawValue(property.Value);
 #else
                     JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
 #endif

@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure.Analytics.Synapse.Artifacts;
 using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Analytics.Synapse.Tests;
@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             private readonly SparkJobDefinitionClient _client;
             public SparkJobDefinitionResource Resource;
 
-            private DisposableSparkJobDefinition (SparkJobDefinitionClient client, SparkJobDefinitionResource resource)
+            private DisposableSparkJobDefinition(SparkJobDefinitionClient client, SparkJobDefinitionResource resource)
             {
                 _client = client;
                 Resource = resource;
@@ -35,24 +35,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
 
             public string Name => Resource.Name;
 
-            public static async ValueTask<DisposableSparkJobDefinition> Create (SparkJobDefinitionClient client, TestRecording recording, string storageFileSystemName, string storageAccountName) =>
-                new DisposableSparkJobDefinition (client, await CreateResource(client, recording, storageFileSystemName, storageAccountName));
+            public static async ValueTask<DisposableSparkJobDefinition> Create(SparkJobDefinitionClient client, TestRecording recording, string storageFileSystemName, string storageAccountName) =>
+                new DisposableSparkJobDefinition(client, await CreateResource(client, recording, storageFileSystemName, storageAccountName));
 
-            public static async ValueTask<SparkJobDefinitionResource> CreateResource (SparkJobDefinitionClient client, TestRecording recording, string storageFileSystemName, string storageAccountName)
+            public static async ValueTask<SparkJobDefinitionResource> CreateResource(SparkJobDefinitionClient client, TestRecording recording, string storageFileSystemName, string storageAccountName)
             {
                 string jobName = recording.GenerateId("SparkJobDefinition", 16);
 
                 string file = string.Format("abfss://{0}@{1}.dfs.core.windows.net/samples/net/wordcount/wordcount.zip", storageFileSystemName, storageAccountName);
-                SparkJobProperties jobProperties = new SparkJobProperties (file, "28g", 4, "28g", 4, 2);
-                SparkJobDefinition jobDefinition = new SparkJobDefinition (new BigDataPoolReference (BigDataPoolReferenceType.BigDataPoolReference, "sparkchhamosyna"), jobProperties);
-                SparkJobDefinitionResource resource = new SparkJobDefinitionResource (jobDefinition);
+                SparkJobProperties jobProperties = new SparkJobProperties(file, "28g", 4, "28g", 4, 2);
+                SparkJobDefinition jobDefinition = new SparkJobDefinition(new BigDataPoolReference(BigDataPoolReferenceType.BigDataPoolReference, "sparkchhamosyna"), jobProperties);
+                SparkJobDefinitionResource resource = new SparkJobDefinitionResource(jobDefinition);
                 SparkJobDefinitionCreateOrUpdateSparkJobDefinitionOperation createOperation = await client.StartCreateOrUpdateSparkJobDefinitionAsync(jobName, resource);
                 return await createOperation.WaitForCompletionAsync();
             }
 
             public async ValueTask DisposeAsync()
             {
-                SparkJobDefinitionDeleteSparkJobDefinitionOperation deleteOperation = await _client.StartDeleteSparkJobDefinitionAsync (Name);
+                SparkJobDefinitionDeleteSparkJobDefinitionOperation deleteOperation = await _client.StartDeleteSparkJobDefinitionAsync(Name);
                 await deleteOperation.WaitForCompletionResponseAsync();
             }
         }
@@ -73,8 +73,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         [RecordedTest]
         public async Task TestGetSparkJob()
         {
-            SparkJobDefinitionClient client = CreateClient ();
-            await using DisposableSparkJobDefinition sparkJobDefinition = await DisposableSparkJobDefinition.Create (client, Recording, TestEnvironment.StorageFileSystemName, TestEnvironment.StorageAccountName);
+            SparkJobDefinitionClient client = CreateClient();
+            await using DisposableSparkJobDefinition sparkJobDefinition = await DisposableSparkJobDefinition.Create(client, Recording, TestEnvironment.StorageFileSystemName, TestEnvironment.StorageAccountName);
 
             IList<SparkJobDefinitionResource> jobs = await client.GetSparkJobDefinitionsByWorkspaceAsync().ToListAsync();
             Assert.GreaterOrEqual(jobs.Count, 1);
@@ -92,9 +92,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         {
             SparkJobDefinitionClient client = CreateClient();
 
-            SparkJobDefinitionResource resource = await DisposableSparkJobDefinition.CreateResource (client, Recording, TestEnvironment.StorageFileSystemName, TestEnvironment.StorageAccountName);
+            SparkJobDefinitionResource resource = await DisposableSparkJobDefinition.CreateResource(client, Recording, TestEnvironment.StorageFileSystemName, TestEnvironment.StorageAccountName);
 
-            SparkJobDefinitionDeleteSparkJobDefinitionOperation deleteOperation = await client.StartDeleteSparkJobDefinitionAsync  (resource.Name);
+            SparkJobDefinitionDeleteSparkJobDefinitionOperation deleteOperation = await client.StartDeleteSparkJobDefinitionAsync(resource.Name);
             await deleteOperation.WaitAndAssertSuccessfulCompletion();
         }
 
@@ -103,37 +103,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         {
             SparkJobDefinitionClient client = CreateClient();
 
-            SparkJobDefinitionResource resource = await DisposableSparkJobDefinition.CreateResource (client, this.Recording, TestEnvironment.StorageFileSystemName, TestEnvironment.StorageAccountName);
+            SparkJobDefinitionResource resource = await DisposableSparkJobDefinition.CreateResource(client, this.Recording, TestEnvironment.StorageFileSystemName, TestEnvironment.StorageAccountName);
 
             string newSparkJobName = Recording.GenerateId("Pipeline2", 16);
 
-            SparkJobDefinitionRenameSparkJobDefinitionOperation renameOperation = await client.StartRenameSparkJobDefinitionAsync (resource.Name, new ArtifactRenameRequest () { NewName = newSparkJobName } );
+            SparkJobDefinitionRenameSparkJobDefinitionOperation renameOperation = await client.StartRenameSparkJobDefinitionAsync(resource.Name, new ArtifactRenameRequest() { NewName = newSparkJobName });
             await renameOperation.WaitForCompletionResponseAsync();
 
-            SparkJobDefinitionResource sparkJob = await client.GetSparkJobDefinitionAsync (newSparkJobName);
-            Assert.AreEqual (newSparkJobName, sparkJob.Name);
+            SparkJobDefinitionResource sparkJob = await client.GetSparkJobDefinitionAsync(newSparkJobName);
+            Assert.AreEqual(newSparkJobName, sparkJob.Name);
 
-            SparkJobDefinitionDeleteSparkJobDefinitionOperation deleteOperation = await client.StartDeleteSparkJobDefinitionAsync (newSparkJobName);
+            SparkJobDefinitionDeleteSparkJobDefinitionOperation deleteOperation = await client.StartDeleteSparkJobDefinitionAsync(newSparkJobName);
             await deleteOperation.WaitForCompletionResponseAsync();
         }
 
-        [Ignore ("https://github.com/Azure/azure-sdk-for-net/issues/18079 - SYNAPSE_API_ISSUE - Parameter name: ClassName")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18079 - SYNAPSE_API_ISSUE - Parameter name: ClassName")]
         [RecordedTest]
         public async Task TestExecute()
         {
             SparkJobDefinitionClient client = CreateClient();
-            await using DisposableSparkJobDefinition sparkJobDefinition = await DisposableSparkJobDefinition.Create (client, Recording, TestEnvironment.StorageFileSystemName, TestEnvironment.StorageAccountName);
+            await using DisposableSparkJobDefinition sparkJobDefinition = await DisposableSparkJobDefinition.Create(client, Recording, TestEnvironment.StorageFileSystemName, TestEnvironment.StorageAccountName);
 
             SparkJobDefinitionExecuteSparkJobDefinitionOperation executeOperation = await client.StartExecuteSparkJobDefinitionAsync(sparkJobDefinition.Name);
             SparkBatchJob job = await executeOperation.WaitForCompletionAsync();
         }
 
-        [Ignore ("https://github.com/Azure/azure-sdk-for-net/issues/18079 - SYNAPSE_API_ISSUE - Causes internal error")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18079 - SYNAPSE_API_ISSUE - Causes internal error")]
         [RecordedTest]
         public async Task TestDebug()
         {
             SparkJobDefinitionClient client = CreateClient();
-            await using DisposableSparkJobDefinition sparkJobDefinition = await DisposableSparkJobDefinition.Create (client, Recording, TestEnvironment.StorageFileSystemName, TestEnvironment.StorageAccountName);
+            await using DisposableSparkJobDefinition sparkJobDefinition = await DisposableSparkJobDefinition.Create(client, Recording, TestEnvironment.StorageFileSystemName, TestEnvironment.StorageAccountName);
 
             SparkJobDefinitionDebugSparkJobDefinitionOperation debugOperation = await client.StartDebugSparkJobDefinitionAsync(sparkJobDefinition.Resource);
             SparkBatchJob job = await debugOperation.WaitForCompletionAsync();

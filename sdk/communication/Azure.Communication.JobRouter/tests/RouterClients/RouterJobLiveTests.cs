@@ -76,7 +76,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             await routerClient.CancelJobAsync(new CancelJobOptions(jobId1)); // other wise queue deletion will throw error
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetJobsTest()
         {
             JobRouterClient routerClient = CreateRouterClientWithConnectionString();

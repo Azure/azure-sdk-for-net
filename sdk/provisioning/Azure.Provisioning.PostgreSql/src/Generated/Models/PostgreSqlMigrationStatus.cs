@@ -12,7 +12,7 @@ using System;
 namespace Azure.Provisioning.PostgreSql;
 
 /// <summary>
-/// Migration status.
+/// State of migration.
 /// </summary>
 public partial class PostgreSqlMigrationStatus : ProvisionableConstruct
 {
@@ -35,7 +35,7 @@ public partial class PostgreSqlMigrationStatus : ProvisionableConstruct
     private BicepValue<string>? _error;
 
     /// <summary>
-    /// Current Migration sub state details.
+    /// Current migration sub state details.
     /// </summary>
     public PostgreSqlMigrationSubStateDetails CurrentSubStateDetails 
     {

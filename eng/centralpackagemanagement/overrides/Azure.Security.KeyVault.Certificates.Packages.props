@@ -1,0 +1,8 @@
+<Project>
+  <!--
+    BouncyCastle is approved only for legacy use.
+  -->
+  <ItemGroup Condition="'$(IsTestProject)' == 'true'">
+    <PackageVersion Include="Portable.BouncyCastle" Version="$(PortableBouncyCastleVersion)" />
+  </ItemGroup>
+</Project>

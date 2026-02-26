@@ -35,7 +35,7 @@
     ".vscode/cspell.json",
     "cspell.yaml",
     "assets.json",
-    "eng/Packages.Data.props",
+    "eng/centralpackagemanagement/**",
     "sdk/confidentialledger/Azure.Security.CodeTransparency/tests/TestFiles/*",
     // These services are opted out of public API surface spell checking.
     // Spelling issues must be addressed before adding these back in.
@@ -64,12 +64,14 @@
     "aadds",
     "aadkerb",
     "adls",
+    "agentic",
     "aoai",
     "apos",
     "azsdk",
     "blazor",
     "byok",
     "centralus",
+    "clippy",
     "colls",
     "contoso",
     "cpus",
@@ -212,17 +214,6 @@
       ]
     },
     {
-      "filename": "**/sdk/ai/**/*.cs",
-      "words": [
-        "ansii",
-        "atbash",
-        "azureai",
-        "bleu",
-        "gleu",
-        "ubinary"
-      ]
-    },
-    {
       "filename": "**/sdk/analysisservices/**/*.cs",
       "words": [
         "dmts"
@@ -340,6 +331,12 @@
         "alexa",
         "cmek",
         "omnichannel"
+      ]
+    },
+    {
+      "filename": "**/sdk/certificateregistration/**/*.cs",
+      "words": [
+        "guage"
       ]
     },
     {
@@ -993,18 +990,6 @@
         "actuals",
         "bangla",
         "hecto"
-      ]
-    },
-    {
-      "filename": "**/sdk/mediaservices/**/*.cs",
-      "words": [
-        "cabac",
-        "cavlc",
-        "cbcs",
-        "cenc",
-        "deinterlace",
-        "rtmp",
-        "scms"
       ]
     },
     {

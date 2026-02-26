@@ -107,7 +107,7 @@ public partial class PostgreSqlFlexibleServerActiveDirectoryAdministrator : Prov
     /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlFlexibleServerActiveDirectoryAdministrator.</param>
     public PostgreSqlFlexibleServerActiveDirectoryAdministrator(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/flexibleServers/administrators", resourceVersion ?? "2024-08-01")
+        : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/flexibleServers/administrators", resourceVersion ?? "2025-08-01")
     {
     }
 
@@ -117,6 +117,7 @@ public partial class PostgreSqlFlexibleServerActiveDirectoryAdministrator : Prov
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _objectId = DefineProperty<string>("ObjectId", ["properties", "objectId"], isOutput: true);
         _principalName = DefineProperty<string>("PrincipalName", ["properties", "principalName"]);
@@ -133,6 +134,11 @@ public partial class PostgreSqlFlexibleServerActiveDirectoryAdministrator : Prov
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-08-01.
+        /// </summary>
+        public static readonly string V2025_08_01 = "2025-08-01";
+
         /// <summary>
         /// 2024-08-01.
         /// </summary>

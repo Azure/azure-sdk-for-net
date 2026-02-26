@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                     yield break;
                 }
                 BillingContainerListResult result = BillingContainerListResult.FromResponse(response);
-                yield return Page<DeviceRegistryBillingContainerData>.FromValues((IReadOnlyList<DeviceRegistryBillingContainerData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DeviceRegistryBillingContainerData>.FromValues((IReadOnlyList<DeviceRegistryBillingContainerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

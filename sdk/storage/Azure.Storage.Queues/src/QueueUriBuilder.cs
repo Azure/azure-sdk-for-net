@@ -282,7 +282,8 @@ namespace Azure.Storage.Queues
             var sas = Sas?.ToString();
             if (!string.IsNullOrWhiteSpace(sas))
             {
-                if (query.Length > 0) { query.Append('&'); }
+                if (query.Length > 0)
+                { query.Append('&'); }
                 query.Append(sas);
             }
 

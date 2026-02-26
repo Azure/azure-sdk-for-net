@@ -47,7 +47,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     yield break;
                 }
                 BestPracticeListResult result = BestPracticeListResult.FromResponse(response);
-                yield return Page<BestPracticeData>.FromValues((IReadOnlyList<BestPracticeData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<BestPracticeData>.FromValues((IReadOnlyList<BestPracticeData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

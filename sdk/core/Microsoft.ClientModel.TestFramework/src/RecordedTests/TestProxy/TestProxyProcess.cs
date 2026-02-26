@@ -28,7 +28,6 @@ public class TestProxyProcess
     private static readonly object _lock = new();
     private static TestProxyProcess? _shared;
     private readonly StringBuilder _output = new();
-    private static readonly bool s_enableDebugProxyLogging;
     private static readonly int s_toolRestoreTimeoutMs = 6000;
 
     internal virtual TestProxyAdminClient AdminClient { get; }
@@ -57,7 +56,6 @@ public class TestProxyProcess
     static TestProxyProcess()
     {
         s_dotNetExe = TryGetDotnetExePath();
-        s_enableDebugProxyLogging = TestEnvironment.EnableTestProxyDebugLogs;
     }
 
     // For mocking
@@ -74,6 +72,14 @@ public class TestProxyProcess
     /// <param name="debugMode">If true, uses predefined ports 5000 and 5001 for debugging.</param>
     private TestProxyProcess(string? proxyPath, bool debugMode = false)
     {
+        // DevCertPath is optional - if null, the test proxy will run without HTTPS support
+        var devCertPath = TestEnvironment.DevCertPath;
+
+        if (devCertPath != null && !File.Exists(devCertPath))
+        {
+            Console.WriteLine($"Warning: Dev certificate not found at {devCertPath}. HTTPS tests may not work.");
+        }
+
         bool.TryParse(Environment.GetEnvironmentVariable("PROXY_DEBUG_MODE"), out bool environmentDebugMode);
 
         debugMode |= environmentDebugMode;
@@ -102,11 +108,11 @@ public class TestProxyProcess
 
         // Set environment variables
         testProxyProcessInfo.EnvironmentVariables["ASPNETCORE_URLS"] = $"http://{IpAddress}:0;https://{IpAddress}:0";
-        testProxyProcessInfo.EnvironmentVariables["Logging__LogLevel__Azure.Sdk.Tools.TestProxy"] = s_enableDebugProxyLogging ? "Debug" : "Error";
+        testProxyProcessInfo.EnvironmentVariables["Logging__LogLevel__Azure.Sdk.Tools.TestProxy"] = TestEnvironment.EnableTestProxyDebugLogs ? "Debug" : "Error";
         testProxyProcessInfo.EnvironmentVariables["Logging__LogLevel__Default"] = "Error";
-        testProxyProcessInfo.EnvironmentVariables["Logging__LogLevel__Microsoft.AspNetCore"] = s_enableDebugProxyLogging ? "Information" : "Error";
+        testProxyProcessInfo.EnvironmentVariables["Logging__LogLevel__Microsoft.AspNetCore"] = TestEnvironment.EnableTestProxyDebugLogs ? "Information" : "Error";
         testProxyProcessInfo.EnvironmentVariables["Logging__LogLevel__Microsoft.Hosting.Lifetime"] = "Information";
-        testProxyProcessInfo.EnvironmentVariables["ASPNETCORE_Kestrel__Certificates__Default__Path"] = TestEnvironment.DevCertPath;
+        testProxyProcessInfo.EnvironmentVariables["ASPNETCORE_Kestrel__Certificates__Default__Path"] = devCertPath;
         testProxyProcessInfo.EnvironmentVariables["ASPNETCORE_Kestrel__Certificates__Default__Password"] = TestEnvironment.DevCertPassword;
 
         _testProxyProcess = Process.Start(testProxyProcessInfo);
@@ -225,7 +231,7 @@ public class TestProxyProcess
     /// <returns>A task representing the asynchronous operation.</returns>
     public virtual async Task CheckProxyOutputAsync()
     {
-        if (s_enableDebugProxyLogging)
+        if (TestEnvironment.EnableTestProxyDebugLogs)
         {
             // add a small delay to allow the log output for the just finished test to be collected into the _output StringBuilder
             await Task.Delay(20).ConfigureAwait(false);

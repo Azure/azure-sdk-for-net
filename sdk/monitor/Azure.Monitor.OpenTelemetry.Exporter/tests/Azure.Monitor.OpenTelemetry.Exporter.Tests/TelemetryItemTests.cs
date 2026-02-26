@@ -480,6 +480,80 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
+        public void MicrosoftOperationNameOverridesOperationNameForRequest()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Server,
+                null,
+                startTime: DateTime.UtcNow);
+
+            Assert.NotNull(activity);
+            activity.DisplayName = "displayname";
+
+            activity.SetTag(SemanticConventions.AttributeHttpRequestMethod, "GET");
+            activity.SetTag(SemanticConventions.AttributeHttpRoute, "/api/users");
+            activity.SetTag(SemanticConventions.AttributeMicrosoftOperationName, "CustomOperationName");
+
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+            var (telemetryItems, telemetryCounter) = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), null, "instrumentationKey", 1.0f);
+            var telemetryItem = telemetryItems.FirstOrDefault();
+
+            Assert.NotNull(telemetryItem);
+            Assert.Equal("CustomOperationName", telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()]);
+        }
+
+        [Fact]
+        public void MicrosoftOperationNameSetsOperationNameForDependency()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Client,
+                null,
+                startTime: DateTime.UtcNow);
+
+            Assert.NotNull(activity);
+            activity.DisplayName = "displayname";
+
+            activity.SetTag(SemanticConventions.AttributeHttpRequestMethod, "GET");
+            activity.SetTag(SemanticConventions.AttributeMicrosoftOperationName, "CustomDependencyOperationName");
+
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+            var (telemetryItems, telemetryCounter) = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), null, "instrumentationKey", 1.0f);
+            var telemetryItem = telemetryItems.FirstOrDefault();
+
+            Assert.NotNull(telemetryItem);
+            Assert.Equal("RemoteDependency", telemetryItem.Name);
+            Assert.Equal("CustomDependencyOperationName", telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()]);
+        }
+
+        [Fact]
+        public void DependencyDoesNotHaveOperationNameWithoutOverride()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Client,
+                null,
+                startTime: DateTime.UtcNow);
+
+            Assert.NotNull(activity);
+            activity.DisplayName = "displayname";
+
+            activity.SetTag(SemanticConventions.AttributeHttpRequestMethod, "GET");
+
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+            var (telemetryItems, telemetryCounter) = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), null, "instrumentationKey", 1.0f);
+            var telemetryItem = telemetryItems.FirstOrDefault();
+
+            Assert.NotNull(telemetryItem);
+            Assert.Equal("RemoteDependency", telemetryItem.Name);
+            Assert.False(telemetryItem.Tags.ContainsKey(ContextTagKeys.AiOperationName.ToString()));
+        }
+
+        [Fact]
         public void OTelResourceMetricTelemetryHasAllResourceAttributes()
         {
             var instrumentationKey = "00000000-0000-0000-0000-000000000000";
@@ -580,6 +654,41 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var telemetryItem2 = telemetryItems2.First(x => x.Name == "Metric"); // Collect the "_OTELRESOURCE_" metric.
 
             Assert.NotEqual(telemetryItem1?.Time, telemetryItem2?.Time);
+        }
+
+        [Fact]
+        public void CloudRoleNameOverriddenByEnvironmentVariable()
+        {
+            var priorRoleName = Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CLOUD_ROLE_NAME");
+            var priorRoleInstance = Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CLOUD_ROLE_INSTANCE");
+            TelemetryItem.ResetEnvironmentVariableOverrides();
+            try
+            {
+                Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_CLOUD_ROLE_NAME", "EnvOverrideRole");
+                Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_CLOUD_ROLE_INSTANCE", "EnvOverrideInstance");
+
+                using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+                using var activity = activitySource.StartActivity(
+                    ActivityName,
+                    ActivityKind.Client,
+                    parentContext: default,
+                    startTime: DateTime.UtcNow)
+                    ?? throw new Exception("Failed to create Activity");
+
+                var resource = CreateTestResource(serviceName: "original-service", serviceInstance: "original-instance");
+                var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+                var traceResource = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
+                var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, traceResource, "00000000-0000-0000-0000-000000000000", 1.0f);
+
+                Assert.Equal("EnvOverrideRole", telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()]);
+                Assert.Equal("EnvOverrideInstance", telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_CLOUD_ROLE_NAME", priorRoleName);
+                Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_CLOUD_ROLE_INSTANCE", priorRoleInstance);
+                TelemetryItem.ResetEnvironmentVariableOverrides();
+            }
         }
 
         /// <summary>

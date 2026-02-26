@@ -7,11 +7,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Linq;
-using System.Text;
 using System.Security.Cryptography.X509Certificates;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
@@ -96,7 +96,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         }
 #endif
 
-            [RecordedTest]
+        [RecordedTest]
         [LiveOnly]
         public async Task GetLedgerIdentity()
         {

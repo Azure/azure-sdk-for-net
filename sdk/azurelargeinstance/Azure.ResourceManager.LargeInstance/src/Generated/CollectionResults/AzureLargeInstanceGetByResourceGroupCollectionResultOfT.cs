@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.LargeInstance
                     yield break;
                 }
                 AzureLargeInstanceListResult result = AzureLargeInstanceListResult.FromResponse(response);
-                yield return Page<LargeInstanceData>.FromValues((IReadOnlyList<LargeInstanceData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<LargeInstanceData>.FromValues((IReadOnlyList<LargeInstanceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -113,6 +113,18 @@ namespace Azure.Generator.Management.Utilities
             }
             else if (includeGetterNullCheck == false)
             {
+                // For collection types with a settable internal property, initialize the internal property
+                // to avoid returning null, which would cause NullReferenceException during serialization.
+                if (innerProperty.Type.IsCollection && internalProperty.Body.HasSetter)
+                {
+                    return new List<MethodBodyStatement> {
+                        new IfStatement(checkNullExpression)
+                        {
+                            internalProperty.Assign(New.Instance(innerModel.Type)).Terminate()
+                        },
+                        Return(new MemberExpression(internalProperty, innerProperty.Name))
+                    };
+                }
                 return Return(new TernaryConditionalExpression(checkNullExpression, Default, new MemberExpression(internalProperty, innerProperty.Name)));
             }
             else

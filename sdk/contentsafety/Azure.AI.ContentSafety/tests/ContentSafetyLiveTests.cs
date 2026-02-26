@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.ContentSafety.Tests
 {
-    public class ContentSafetyLiveTests: RecordedTestBase<ContentSafetyClientTestEnvironment>
+    public class ContentSafetyLiveTests : RecordedTestBase<ContentSafetyClientTestEnvironment>
     {
         public ContentSafetyLiveTests(bool isAsync) : base(isAsync)
         {

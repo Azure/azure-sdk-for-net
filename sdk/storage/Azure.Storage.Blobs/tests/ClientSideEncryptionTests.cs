@@ -637,7 +637,8 @@ namespace Azure.Storage.Blobs.Test
                     if (IsAsync)
                     {
                         await blobStream.CopyToAsync(stream, bufferSize, s_cancellationToken);
-                    } else
+                    }
+                    else
                     {
                         blobStream.CopyTo(stream, bufferSize);
                     }
@@ -987,8 +988,8 @@ namespace Azure.Storage.Blobs.Test
         }
 
 #pragma warning disable CS0618 // obsolete
-        [TestCase(ClientSideEncryptionVersion.V1_0, Constants.MB, 64*Constants.KB)]
-        [TestCase(ClientSideEncryptionVersion.V2_0,  Constants.MB, 64 * Constants.KB)]
+        [TestCase(ClientSideEncryptionVersion.V1_0, Constants.MB, 64 * Constants.KB)]
+        [TestCase(ClientSideEncryptionVersion.V2_0, Constants.MB, 64 * Constants.KB)]
         [LiveOnly] // need access to keyvault service && cannot seed content encryption key
 #pragma warning restore CS0618 // obsolete
         public async Task RoundtripWithKeyvaultProviderOpenRead(ClientSideEncryptionVersion version, long dataSize, int bufferSize)
@@ -1007,7 +1008,7 @@ namespace Azure.Storage.Blobs.Test
                 await blob.UploadAsync(new MemoryStream(data), cancellationToken: s_cancellationToken);
 
                 var downloadStream = new MemoryStream();
-                using var blobStream = await blob.OpenReadAsync(new BlobOpenReadOptions(false) { BufferSize = bufferSize});
+                using var blobStream = await blob.OpenReadAsync(new BlobOpenReadOptions(false) { BufferSize = bufferSize });
                 await blobStream.CopyToAsync(downloadStream);
 
                 Assert.AreEqual(data, downloadStream.ToArray());

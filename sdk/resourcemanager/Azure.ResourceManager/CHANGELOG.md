@@ -1,18 +1,14 @@
 # Release History
 
-## 1.14.0-beta.2 (Unreleased)
+## 1.14.0 (2026-02-26)
 
 ### Features Added
 
 - Bumped api-version of `ManagementGroup` to `2023-04-01`.
 
-### Breaking Changes
-
 ### Bugs Fixed
 
 - Fixed `ArgumentNullException` when deserializing `ManagedServiceIdentity` with null or empty `type` property value.
-
-### Other Changes
 
 ## 1.13.2 (2025-07-18)
 

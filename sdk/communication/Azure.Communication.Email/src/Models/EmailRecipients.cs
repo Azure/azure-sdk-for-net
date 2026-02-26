@@ -24,7 +24,7 @@ namespace Azure.Communication.Email
             IEnumerable<EmailAddress> to = null,
             IEnumerable<EmailAddress> cc = null,
             IEnumerable<EmailAddress> bcc = null)
-            :this(to ?? Enumerable.Empty<EmailAddress>())
+            : this(to ?? Enumerable.Empty<EmailAddress>())
         {
             if (cc != null)
             {

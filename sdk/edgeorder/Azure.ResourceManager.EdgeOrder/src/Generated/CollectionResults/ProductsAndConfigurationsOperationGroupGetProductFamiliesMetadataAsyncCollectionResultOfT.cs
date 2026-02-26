@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.EdgeOrder
                     yield break;
                 }
                 ProductFamiliesMetadataListResult result = ProductFamiliesMetadataListResult.FromResponse(response);
-                yield return Page<ProductFamiliesMetadata>.FromValues(result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ProductFamiliesMetadata>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

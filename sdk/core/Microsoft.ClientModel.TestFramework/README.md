@@ -122,7 +122,7 @@ public class ConfigurationTests : RecordedTestBase<SimpleTestEnvironment>
 ```
 
 By default tests are run in playback mode. You can change the mode in several ways, including:
-- Setting the `SYSTEM_CLIENTMODEL_TEST_MODE` environment variable to `Live`, `Playback`, or `Record`
+- Setting the `CLIENTMODEL_TEST_MODE` environment variable to `Live`, `Playback`, or `Record`
 - Passing the mode directly in the test class constructor: `base(isAsync, RecordedTestMode.Record)`
 
 #### Sanitizing

@@ -14,7 +14,7 @@ public partial class DataSourceFieldMappings
     /// The name of the index field to use as a title.
     /// </summary>
     [CodeGenMember("TitleField")]
-    public string TitleFieldName { get; set;}
+    public string TitleFieldName { get; set; }
 
     /// <summary>
     /// The name of the index field to use as a URL.
@@ -27,7 +27,7 @@ public partial class DataSourceFieldMappings
     /// </para>
     /// </remarks>
     [CodeGenMember("UrlField")]
-    public string UrlFieldName { get; set;}
+    public string UrlFieldName { get; set; }
 
     /// <summary> The name of the index field to use as a filepath. </summary>
     /// <remarks>
@@ -60,7 +60,7 @@ public partial class DataSourceFieldMappings
     /// </para>
     /// </remarks>
     [CodeGenMember("ContentFieldsSeparator")]
-    public string ContentFieldSeparator { get; set;}
+    public string ContentFieldSeparator { get; set; }
 
     /// <summary> The names of fields that represent vector data. </summary>
     /// <remarks>

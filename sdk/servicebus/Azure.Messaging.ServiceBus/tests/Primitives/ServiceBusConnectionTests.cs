@@ -221,7 +221,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         public void ConstructorWithConnectionStringUsingSharedAccessSignatureCreatesTheCorrectTransportCredential()
         {
             var sasToken = new SharedAccessSignature("hub", "root", "abc1234").Value;
-            var connection = new ObservableTransportClientMock($"Endpoint=sb://not-real.servicebus.windows.net/;EntityPath=fake;SharedAccessSignature={ sasToken }", new ServiceBusClientOptions());
+            var connection = new ObservableTransportClientMock($"Endpoint=sb://not-real.servicebus.windows.net/;EntityPath=fake;SharedAccessSignature={sasToken}", new ServiceBusClientOptions());
 
             Assert.That(connection.TransportClientCredential, Is.Not.Null, "The transport client should have been given a credential.");
             Assert.That(connection.TransportClientCredential.GetToken(default, default).Token, Is.EqualTo(sasToken), "The transport client credential should use the provided SAS token.");
@@ -236,7 +236,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         public void ConstructorWithConnectionStringAndDevelopmentEmulatorDoesNotUseTls()
         {
             var endpoint = new Uri("sb://localhost:1234", UriKind.Absolute);
-            var fakeConnection = $"Endpoint={ endpoint };SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=ehName;UseDevelopmentEmulator=true";
+            var fakeConnection = $"Endpoint={endpoint};SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=ehName;UseDevelopmentEmulator=true";
             var connection = new ReadableTransportOptionsMock(fakeConnection);
 
             Assert.That(connection.UseTls.HasValue, Is.True, "The connection should have initialized the TLS flag.");
@@ -252,7 +252,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         public void ConstructorWithConnectionStringAnNoDevelopmentEmulatorUsesTls()
         {
             var endpoint = new Uri("sb://localhost:1234", UriKind.Absolute);
-            var fakeConnection = $"Endpoint={ endpoint };SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=ehName";
+            var fakeConnection = $"Endpoint={endpoint};SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=ehName";
             var connection = new ReadableTransportOptionsMock(fakeConnection);
 
             Assert.That(connection.UseTls.HasValue, Is.True, "The connection should have initialized the TLS flag.");
@@ -270,7 +270,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             var fullyQualifiedNamespace = "my.ServiceBus.com";
             var keyName = "aWonderfulKey";
             var key = "ABC4223";
-            var resource = $"amqps://{ fullyQualifiedNamespace }";
+            var resource = $"amqps://{fullyQualifiedNamespace}";
             var options = new ServiceBusClientOptions { TransportType = ServiceBusTransportType.AmqpTcp };
             var signature = new SharedAccessSignature(resource, keyName, key);
             var connection = new ServiceBusConnection(fullyQualifiedNamespace, new SharedAccessCredential(signature), options);
@@ -308,7 +308,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             var keyName = "aWonderfulKey";
             var key = "ABC4223";
             var options = new ServiceBusClientOptions { TransportType = ServiceBusTransportType.AmqpTcp };
-            var signature = new SharedAccessSignature($"amqps://{ fullyQualifiedNamespace }", keyName, key);
+            var signature = new SharedAccessSignature($"amqps://{fullyQualifiedNamespace}", keyName, key);
             var credential = new AzureSasCredential(signature.Value);
             var connection = new ServiceBusConnection(fullyQualifiedNamespace, credential, options);
 
@@ -327,7 +327,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             var fullyQualifiedNamespace = "my.ServiceBus.com";
             var keyName = "aWonderfulKey";
             var key = "ABC4223";
-            var resource = $"amqps://{ fullyQualifiedNamespace }";
+            var resource = $"amqps://{fullyQualifiedNamespace}";
             var options = new ServiceBusClientOptions { TransportType = connectionType };
             var signature = new SharedAccessSignature(resource, keyName, key);
             var credential = new SharedAccessCredential(signature);
@@ -348,7 +348,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             var fullyQualifiedNamespace = "my.servicebus.com";
             var keyName = "aWonderfulKey";
             var key = "ABC4223";
-            var resource = $"amqps://{ fullyQualifiedNamespace }";
+            var resource = $"amqps://{fullyQualifiedNamespace}";
             var connectionType = (ServiceBusTransportType)int.MinValue;
             var options = new ServiceBusClientOptions { TransportType = connectionType };
             var signature = new SharedAccessSignature(resource, keyName, key);
@@ -422,7 +422,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         {
             var fullyQualifiedNamespace = "my.servicebus.com";
             var path = "someHub";
-            var expectedPath = $"/{ path.ToLowerInvariant() }";
+            var expectedPath = $"/{path.ToLowerInvariant()}";
             var resource = ServiceBusConnection.BuildConnectionResource(ServiceBusTransportType.AmqpTcp, fullyQualifiedNamespace, path);
 
             Assert.That(resource, Is.Not.Null.Or.Empty, "The resource should have been populated.");

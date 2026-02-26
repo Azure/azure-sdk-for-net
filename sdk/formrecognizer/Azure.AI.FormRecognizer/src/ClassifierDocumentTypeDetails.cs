@@ -38,7 +38,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         {
             AzureBlobSource = azureBlobSource;
             AzureBlobFileListSource = azureBlobFileListSource;
-            TrainingDataSource = (DocumentContentSource) azureBlobSource ?? azureBlobFileListSource;
+            TrainingDataSource = (DocumentContentSource)azureBlobSource ?? azureBlobFileListSource;
         }
 
         private ClassifierDocumentTypeDetails()

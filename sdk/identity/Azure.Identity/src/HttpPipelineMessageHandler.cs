@@ -3,22 +3,22 @@
 
 #nullable disable // TODO: remove and fix errors
 
-using Azure.Core.Pipeline;
-using Azure;
 using System;
+using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Net;
+using Azure;
 using Azure.Core;
-using System.Collections.Generic;
+using Azure.Core.Pipeline;
 
 namespace Azure.Core
 {
     /// <summary>
     /// An HttpMessageHandler which delegates SendAsync to a specified HttpPipeline.
     /// </summary>
-    internal class HttpPipelineMessageHandler: HttpMessageHandler
+    internal class HttpPipelineMessageHandler : HttpMessageHandler
     {
         private readonly HttpPipeline _pipeline;
 

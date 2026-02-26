@@ -5,14 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.NetApp.Models;
 using Azure.ResourceManager.NetApp.Tests.Helpers;
 using FluentAssertions;
 using NUnit.Framework;
-using Polly.Contrib.WaitAndRetry;
 using Polly;
-using Azure.Core;
+using Polly.Contrib.WaitAndRetry;
 
 namespace Azure.ResourceManager.NetApp.Tests
 {
@@ -174,11 +174,11 @@ namespace Azure.ResourceManager.NetApp.Tests
             _volumeCollection = _capacityPool.GetNetAppVolumes();
             //Create volume
             var volumeName = Recording.GenerateAssetName("volumeName-");
-            NetAppVolumeBackupConfiguration backupPolicyProperties = new() { BackupPolicyId = backupPolicyResource1.Id, IsPolicyEnforced = false,  BackupVaultId = _backupVaultResource.Id };
-            NetAppVolumeDataProtection dataProtectionProperties = new() { Backup = backupPolicyProperties};
+            NetAppVolumeBackupConfiguration backupPolicyProperties = new() { BackupPolicyId = backupPolicyResource1.Id, IsPolicyEnforced = false, BackupVaultId = _backupVaultResource.Id };
+            NetAppVolumeDataProtection dataProtectionProperties = new() { Backup = backupPolicyProperties };
             //create vnet for volume
             await CreateVirtualNetwork(location: DefaultLocation);
-            NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName, subnetId:DefaultSubnetId, dataProtection: dataProtectionProperties);
+            NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName, subnetId: DefaultSubnetId, dataProtection: dataProtectionProperties);
 
             //Validate if created properly
             NetAppVolumeResource backupVolumeResource = await _volumeCollection.GetAsync(volumeResource1.Data.Name.Split('/').Last());
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(backupPolicyProperties.BackupPolicyId, backupVolumeResource.Data.DataProtection.Backup.BackupPolicyId);
 
             //Disable backupPolicy to avoid server side issue
-            backupPolicyProperties = new() { BackupPolicyId = null, IsPolicyEnforced = false};
+            backupPolicyProperties = new() { BackupPolicyId = null, IsPolicyEnforced = false };
             NetAppVolumePatch parameters = new(DefaultLocation);
             NetAppVolumePatchDataProtection patchDataProtection = new() { Backup = backupPolicyProperties };
             parameters.DataProtection = patchDataProtection;

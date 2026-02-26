@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -69,6 +70,17 @@ namespace Azure.Security.KeyVault.Secrets
                     new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification));
 
             _pipeline = new KeyVaultPipeline(vaultUri, apiVersion, pipeline, new ClientDiagnostics(options));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SecretClient"/> class for the specified vault using the provided settings.
+        /// </summary>
+        /// <param name="settings">The <see cref="SecretClientSettings"/> used to configure the client.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="settings"/> is null, or the endpoint or credential in the settings is null.</exception>
+        [Experimental("SCME0002")]
+        public SecretClient(SecretClientSettings settings)
+            : this(settings?.VaultUri, settings?.CredentialProvider as TokenCredential, settings?.Options)
+        {
         }
 
         /// <summary>
