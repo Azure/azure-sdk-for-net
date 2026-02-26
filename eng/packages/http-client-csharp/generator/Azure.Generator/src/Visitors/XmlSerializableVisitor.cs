@@ -96,7 +96,10 @@ namespace Azure.Generator.Visitors
             else if (type is ModelSerializationExtensionsDefinition modelSerializationExtensions)
             {
                 UpdateWriteObjectValueMethod(modelSerializationExtensions);
-                AddFromEnumerableMethod(modelSerializationExtensions);
+            }
+            else if (type.Name == "BinaryContentHelper")
+            {
+                UpdateFromEnumerableMethod(type);
             }
 
             return type;
@@ -147,16 +150,24 @@ namespace Azure.Generator.Visitors
                 return;
             }
 
-            // Add nameHint parameter to the method signature
-            var nameHintParam = new ParameterProvider(
-                "nameHint",
-                $"An optional name hint.",
-                new CSharpType(typeof(string),
-                isNullable: true),
-                DefaultOf(new CSharpType(typeof(string),
-                isNullable: true)));
-            var updatedParams = new List<ParameterProvider>(writeObjectValueMethod.Signature.Parameters) { nameHintParam };
-            writeObjectValueMethod.Signature.Update(parameters: updatedParams);
+            // Only add nameHint parameter if it doesn't already exist
+            ParameterProvider nameHintParam;
+            if (!writeObjectValueMethod.Signature.Parameters.Any(p => p.Name == "nameHint"))
+            {
+                nameHintParam = new ParameterProvider(
+                    "nameHint",
+                    $"An optional name hint.",
+                    new CSharpType(typeof(string),
+                    isNullable: true),
+                    DefaultOf(new CSharpType(typeof(string),
+                    isNullable: true)));
+                var updatedParams = new List<ParameterProvider>(writeObjectValueMethod.Signature.Parameters) { nameHintParam };
+                writeObjectValueMethod.Signature.Update(parameters: updatedParams);
+            }
+            else
+            {
+                nameHintParam = writeObjectValueMethod.Signature.Parameters.First(p => p.Name == "nameHint");
+            }
 
             var writerParam = writeObjectValueMethod.Signature.Parameters[0];
             var caseMatch = new DeclarationExpression(IXmlSerializableType, "xmlSerializable", out var xmlSerializableVar);
@@ -202,29 +213,33 @@ namespace Azure.Generator.Visitors
             }
         }
 
-        private static void AddFromEnumerableMethod(ModelSerializationExtensionsDefinition type)
+        private static void UpdateFromEnumerableMethod(TypeProvider type)
         {
-            var genericArg = typeof(IEnumerable<>).GetGenericArguments()[0];
+            const string FromEnumerableMethodName = "FromEnumerable";
 
-            var enumerableParameter = new ParameterProvider("enumerable", $"The enumerable.", new CSharpType(typeof(IEnumerable<>), genericArg));
-            var rootNameHintParameter = new ParameterProvider("rootNameHint", $"The root element name.", typeof(string));
-            var childNameHintParameter = new ParameterProvider("childNameHint", $"The child element name.", typeof(string));
+            // Find the existing FromEnumerable<T> method with 3 parameters (enumerable, rootNameHint, childNameHint)
+            var fromEnumerableMethod = type.Methods
+                .FirstOrDefault(m => m.Signature.Name == FromEnumerableMethodName &&
+                                    m.Signature.GenericArguments?.Count == 1 &&
+                                    m.Signature.Parameters.Count == 3 &&
+                                    m.Signature.Parameters[0].Name == "enumerable" &&
+                                    m.Signature.Parameters[1].Name == "rootNameHint" &&
+                                    m.Signature.Parameters[2].Name == "childNameHint");
 
-            var signature = new MethodSignature(
-                Name: "FromEnumerable",
-                Description: null,
-                Modifiers: MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
-                ReturnType: RequestContentType,
-                ReturnDescription: null,
-                Parameters: [enumerableParameter, rootNameHintParameter, childNameHintParameter],
-                GenericArguments: [genericArg],
-                GenericParameterConstraints: [Where.NotNull(genericArg)]);
+            if (fromEnumerableMethod is null)
+            {
+                return;
+            }
+
+            var enumerableParameter = fromEnumerableMethod.Signature.Parameters[0];
+            var rootNameHintParameter = fromEnumerableMethod.Signature.Parameters[1];
+            var childNameHintParameter = fromEnumerableMethod.Signature.Parameters[2];
 
             var body = new MethodBodyStatements(
             [
                 Declare("content", typeof(XmlWriterContent), New.Instance(typeof(XmlWriterContent)), out var content),
                 content.As<XmlWriterContent>().XmlWriter().Invoke("WriteStartElement", [rootNameHintParameter]).Terminate(),
-                new ForEachStatement(genericArg, "item", enumerableParameter, false, out var itemVariable)
+                new ForEachStatement("item", enumerableParameter.As(enumerableParameter.Type), out var itemVariable)
                 {
                     content.As<XmlWriterContent>().XmlWriter().Invoke(WriteObjectValueMethodName, [itemVariable, Static<ModelSerializationExtensionsDefinition>().Property("WireOptions"), childNameHintParameter]).Terminate()
                 },
@@ -232,8 +247,7 @@ namespace Azure.Generator.Visitors
                 Return(content)
             ]);
 
-            var method = new MethodProvider(signature, body, type);
-            type.Update(methods: [.. type.Methods, method]);
+            fromEnumerableMethod.Update(bodyStatements: body);
         }
 
         private static void UpdateImplicitRequestContentOperatorForXmlOnly(TypeProvider serializationProvider, string xmlElementName)

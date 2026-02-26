@@ -443,7 +443,7 @@ namespace Azure.Generator.Tests.Visitors
         }
 
         [Test]
-        public void AddsFromEnumerableMethodToModelSerializationExtensions()
+        public void UpdatesFromEnumerableMethodInBinaryContentHelper()
         {
             var visitor = new TestXmlSerializableVisitor();
             var inputModel = InputFactory.Model(
@@ -451,26 +451,39 @@ namespace Azure.Generator.Tests.Visitors
                 usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Xml);
             MockHelpers.LoadMockGenerator(inputModels: () => [inputModel]);
 
-            var modelSerializationExtensions = new ModelSerializationExtensionsDefinition();
+            // Create BinaryContentHelperDefinition via reflection since it's internal
+            var bchType = typeof(ModelSerializationExtensionsDefinition).Assembly
+                .GetType("Microsoft.TypeSpec.Generator.ClientModel.Providers.BinaryContentHelperDefinition");
+            Assert.IsNotNull(bchType, "BinaryContentHelperDefinition type should exist");
+            var bch = Activator.CreateInstance(bchType!) as TypeProvider;
+            Assert.IsNotNull(bch, "BinaryContentHelperDefinition instance should be created");
 
-            visitor.InvokeVisitType(modelSerializationExtensions);
-
-            var fromEnumerableMethod = modelSerializationExtensions.Methods
+            var fromEnumerableMethod = bch!.Methods
                 .FirstOrDefault(m => m.Signature.Name == "FromEnumerable" &&
-                                     m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public) &&
-                                     m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Static) &&
-                                     m.Signature.ReturnType?.Equals(typeof(RequestContent)) == true);
-            Assert.IsNotNull(fromEnumerableMethod, "FromEnumerable method should be added");
-            Assert.AreEqual(3, fromEnumerableMethod!.Signature.Parameters.Count, "FromEnumerable should have 3 parameters");
-            Assert.AreEqual("enumerable", fromEnumerableMethod.Signature.Parameters[0].Name);
-            Assert.AreEqual("rootNameHint", fromEnumerableMethod.Signature.Parameters[1].Name);
-            Assert.AreEqual("childNameHint", fromEnumerableMethod.Signature.Parameters[2].Name);
-            Assert.AreEqual(1, fromEnumerableMethod.Signature.GenericArguments?.Count, "Should have 1 generic argument");
-            Assert.AreEqual(1, fromEnumerableMethod.Signature.GenericParameterConstraints?.Count, "Should have 1 generic constraint");
+                                     m.Signature.GenericArguments?.Count == 1 &&
+                                     m.Signature.Parameters.Count == 3 &&
+                                     m.Signature.Parameters[0].Name == "enumerable" &&
+                                     m.Signature.Parameters[1].Name == "rootNameHint" &&
+                                     m.Signature.Parameters[2].Name == "childNameHint");
 
-            var bodyString = fromEnumerableMethod.BodyStatements?.ToDisplayString();
-            Assert.IsNotNull(bodyString);
-            Assert.AreEqual(Helpers.GetExpectedFromFile(), bodyString);
+            // If the upstream BinaryContentHelperDefinition doesn't yet have the 3-param FromEnumerable,
+            // the visitor should simply return without modifying anything
+            if (fromEnumerableMethod is null)
+            {
+                var originalMethodCount = bch.Methods.Count;
+                visitor.InvokeVisitType(bch);
+                Assert.AreEqual(originalMethodCount, bch.Methods.Count, "No methods should be added when 3-param FromEnumerable doesn't exist");
+                return;
+            }
+
+            var bodyBefore = fromEnumerableMethod.BodyStatements?.ToDisplayString();
+            Assert.IsNotNull(bodyBefore);
+
+            visitor.InvokeVisitType(bch);
+
+            var bodyAfter = fromEnumerableMethod.BodyStatements?.ToDisplayString();
+            Assert.IsNotNull(bodyAfter);
+            Assert.AreEqual(Helpers.GetExpectedFromFile(), bodyAfter);
         }
 
         private static bool ContainsIXmlSerializableCase(MethodBodyStatement body)
