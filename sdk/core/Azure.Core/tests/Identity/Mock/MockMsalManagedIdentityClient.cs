@@ -25,11 +25,11 @@ namespace Azure.Core.Tests.Identity.Mock
         public MockMsalManagedIdentityClient(ManagedIdentityClientOptions options)
             : base(options) { }
 
-        protected override ValueTask<IManagedIdentityApplication> CreateClientCoreAsync(bool async, bool enableCae, CancellationToken cancellationToken)
+        protected override ValueTask<IManagedIdentityApplication> CreateClientCoreAsync(bool async, bool enableCae, bool isTokenBindingAvailable, CancellationToken cancellationToken)
         {
             if (ClientAppFactory == null)
             {
-                return base.CreateClientCoreAsync(async, enableCae, cancellationToken);
+                return base.CreateClientCoreAsync(async, enableCae, isTokenBindingAvailable, cancellationToken);
             }
 
             return new ValueTask<IManagedIdentityApplication>(ClientAppFactory(cancellationToken));

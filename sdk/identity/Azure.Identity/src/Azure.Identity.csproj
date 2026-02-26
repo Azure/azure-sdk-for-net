@@ -12,15 +12,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- TODO: Revert after Azure.Core ships
-      <PackageReference Include="Azure.Core" /> -->
-    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
+    <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Memory" />
     <PackageReference Include="Microsoft.Identity.Client" />
     <PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
-    <PackageReference Include="Microsoft.Identity.Client.MtlsPop" />
+    <PackageReference Include="Microsoft.Identity.Client.KeyAttestation">
+      <CopyLocal>true</CopyLocal>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared" />

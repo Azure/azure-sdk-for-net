@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Diagnostics;
 
 namespace Azure.Core.Pipeline
 {
@@ -63,6 +64,7 @@ namespace Azure.Core.Pipeline
                 // If the policy implements ISupportsTransportCertificateUpdate, we need to subscribe to its TransportUpdated event
                 if (policies[i] is ISupportsTransportUpdate transportUpdated)
                 {
+                    AzureCoreEventSource.Singleton.TokenBinding("HttpPipeline wired up to listen for transport option updates from policy: " + policies[i].GetType().FullName);
                     transportUpdated.TransportOptionsChanged += options => _transport.Update(options);
                     break;
                 }

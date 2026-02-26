@@ -68,16 +68,15 @@ namespace Azure.Identity
         {
             AuthenticationResult result;
 #pragma warning disable AZC0106 // Non-public asynchronous method needs 'async' parameter.
-            MSAL.ManagedIdentitySource availableSource = async ?
+            MSAL.ManagedIdentitySourceResult availableSource = async ?
                 await _msalManagedIdentityClient.GetManagedIdentitySourceAsync(cancellationToken).ConfigureAwait(false) :
                 _msalManagedIdentityClient.GetManagedIdentitySourceAsync(cancellationToken).EnsureCompleted();
 #pragma warning restore AZC0106 // Non-public asynchronous method needs 'async' parameter.
 
-            AzureIdentityEventSource.Singleton.ManagedIdentityCredentialSelected(availableSource.ToString(), _options.ManagedIdentityId.ToString());
+            AzureIdentityEventSource.Singleton.ManagedIdentityCredentialSelected(availableSource.Source.ToString(), _options.ManagedIdentityId.ToString());
 
             // If the source is DefaultToImds and the credential is chained, we should probe the IMDS endpoint first.
-#pragma warning disable CS0618 // Type or member is obsolete
-            if (availableSource == MSAL.ManagedIdentitySource.DefaultToImds && _isChainedCredential && !_probeRequestSent)
+            if (availableSource.Source == MSAL.ManagedIdentitySource.Imds && _isChainedCredential && !_probeRequestSent)
             {
                 var probedFlowTokenResult = await AuthenticateCoreAsync(async, context, cancellationToken).ConfigureAwait(false);
                 _probeRequestSent = true;
@@ -86,7 +85,7 @@ namespace Azure.Identity
 #pragma warning restore CS0618 // Type or member is obsolete
 
             // ServiceFabric does not support specifying user-assigned managed identity by client ID or resource ID. The managed identity selected is based on the resource configuration.
-            if (availableSource == MSAL.ManagedIdentitySource.ServiceFabric && (ManagedIdentityId?._idType != ManagedIdentityIdType.SystemAssigned))
+            if (availableSource.Source == MSAL.ManagedIdentitySource.ServiceFabric && (ManagedIdentityId?._idType != ManagedIdentityIdType.SystemAssigned))
             {
                 throw new AuthenticationFailedException(Constants.MiSeviceFabricNoUserAssignedIdentityMessage);
             }
@@ -102,8 +101,8 @@ namespace Azure.Identity
             {
                 // The default case is to use the MSAL implementation, which does no probing of the IMDS endpoint.
                 result = async ?
-                    await _msalManagedIdentityClient.AcquireTokenForManagedIdentityAsync(context, availableSource == MSAL.ManagedIdentitySource.ImdsV2, cancellationToken).ConfigureAwait(false) :
-                    _msalManagedIdentityClient.AcquireTokenForManagedIdentity(context, availableSource == MSAL.ManagedIdentitySource.ImdsV2, cancellationToken);
+                    await _msalManagedIdentityClient.AcquireTokenForManagedIdentityAsync(context, availableSource.Source == MSAL.ManagedIdentitySource.ImdsV2, cancellationToken).ConfigureAwait(false) :
+                    _msalManagedIdentityClient.AcquireTokenForManagedIdentity(context, availableSource.Source == MSAL.ManagedIdentitySource.ImdsV2, cancellationToken);
             }
             // If the IMDS endpoint is not available, we will throw a CredentialUnavailableException.
             catch (MsalServiceException ex) when (HasInnerExceptionMatching(ex, e => e is RequestFailedException && e.Message.Contains("timed out")))
