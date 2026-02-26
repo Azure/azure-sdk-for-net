@@ -2054,13 +2054,6 @@ interface TrafficEndpoints {
     );
   });
 
-  // The @builtInResourceOperation decorator is applied implicitly by the NspConfigurationOperations
-  // templates (Read, ListByParent, Action) from @azure-tools/typespec-azure-resource-manager.
-  // When an operation uses e.g. NspConfigurationOps.Read<...>, the template stamps
-  // @builtInResourceOperation(ParentResource, Resource, "read") on the operation.
-  // The reconcileConfiguration operation reuses the Read template but overrides it with
-  // @post @action("reconcile"), so it gets both @builtInResourceOperation(..., "read") and @action.
-  // The fix ensures this is classified as Action, not Read.
   it("builtInResourceOperation - NspConfiguration pattern", async () => {
     const program = await typeSpecCompile(
       `
@@ -2081,6 +2074,7 @@ model NspConfiguration
   is Azure.ResourceManager.CommonTypes.NspConfigurationResource<"networkSecurityPerimeterConfigurationName"> {
 }
 
+// NspConfigurationOperations templates implicitly apply @builtInResourceOperation decorator
 alias NspConfigurationOps = Azure.ResourceManager.CommonTypes.NspConfigurationOperations<NspConfiguration>;
 
 interface Operations extends Azure.ResourceManager.Operations {}
@@ -2094,17 +2088,21 @@ interface Employees {
 @armResourceOperations
 @tag("NetworkSecurityPerimeter")
 interface NetworkSecurityPerimeterConfigurations {
+  // Implicitly gets @builtInResourceOperation(Employee, NspConfiguration, "read")
   getConfiguration is NspConfigurationOps.Read<
     ParentResource = Employee,
     Resource = NspConfiguration
   >;
 
+  // Implicitly gets @builtInResourceOperation(Employee, NspConfiguration, "list")
   @list
   listConfigurations is NspConfigurationOps.ListByParent<
     ParentResource = Employee,
     Resource = NspConfiguration
   >;
 
+  // Reuses Read template so implicitly gets @builtInResourceOperation(..., "read"),
+  // but @post @action("reconcile") overrides it — should be classified as Action, not Read
   @post
   @action("reconcile")
   reconcileConfiguration is NspConfigurationOps.Read<
