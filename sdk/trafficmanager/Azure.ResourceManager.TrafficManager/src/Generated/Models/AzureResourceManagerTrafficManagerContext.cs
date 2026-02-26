@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.TrafficManager.Models;
 
 namespace Azure.ResourceManager.TrafficManager
@@ -16,32 +15,36 @@ namespace Azure.ResourceManager.TrafficManager
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(DeleteOperationResult))]
-    [ModelReaderWriterBuildable(typeof(DnsConfig))]
-    [ModelReaderWriterBuildable(typeof(Endpoint))]
     [ModelReaderWriterBuildable(typeof(EndpointProperties))]
     [ModelReaderWriterBuildable(typeof(ExpectedStatusCodeRangeInfo))]
     [ModelReaderWriterBuildable(typeof(GeographicHierarchyProperties))]
-    [ModelReaderWriterBuildable(typeof(HeatMapEndpoint))]
     [ModelReaderWriterBuildable(typeof(HeatMapProperties))]
-    [ModelReaderWriterBuildable(typeof(MonitorConfig))]
-    [ModelReaderWriterBuildable(typeof(Profile))]
     [ModelReaderWriterBuildable(typeof(ProfileListResult))]
     [ModelReaderWriterBuildable(typeof(ProfileProperties))]
-    [ModelReaderWriterBuildable(typeof(Region))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(TrafficManagerDnsConfig))]
     [ModelReaderWriterBuildable(typeof(TrafficManagerEndpointCustomHeaderInfo))]
+    [ModelReaderWriterBuildable(typeof(TrafficManagerEndpointData))]
+    [ModelReaderWriterBuildable(typeof(TrafficManagerEndpointResource))]
     [ModelReaderWriterBuildable(typeof(TrafficManagerEndpointSubnetInfo))]
-    [ModelReaderWriterBuildable(typeof(TrafficManagerGeographicHierarchy))]
-    [ModelReaderWriterBuildable(typeof(TrafficManagerHeatMap))]
+    [ModelReaderWriterBuildable(typeof(TrafficManagerGeographicHierarchyData))]
+    [ModelReaderWriterBuildable(typeof(TrafficManagerGeographicHierarchyResource))]
+    [ModelReaderWriterBuildable(typeof(TrafficManagerHeatMapData))]
+    [ModelReaderWriterBuildable(typeof(TrafficManagerHeatMapEndpoint))]
     [ModelReaderWriterBuildable(typeof(TrafficManagerHeatMapQueryExperience))]
+    [ModelReaderWriterBuildable(typeof(TrafficManagerHeatMapResource))]
     [ModelReaderWriterBuildable(typeof(TrafficManagerHeatMapTrafficFlow))]
+    [ModelReaderWriterBuildable(typeof(TrafficManagerMonitorConfig))]
     [ModelReaderWriterBuildable(typeof(TrafficManagerMonitorConfigCustomHeaderInfo))]
     [ModelReaderWriterBuildable(typeof(TrafficManagerNameAvailabilityResult))]
+    [ModelReaderWriterBuildable(typeof(TrafficManagerProfileData))]
+    [ModelReaderWriterBuildable(typeof(TrafficManagerProfileResource))]
     [ModelReaderWriterBuildable(typeof(TrafficManagerProxyResourceData))]
+    [ModelReaderWriterBuildable(typeof(TrafficManagerRegion))]
     [ModelReaderWriterBuildable(typeof(TrafficManagerRelativeDnsNameAvailabilityContent))]
     [ModelReaderWriterBuildable(typeof(TrafficManagerResourceData))]
     [ModelReaderWriterBuildable(typeof(TrafficManagerTrackedResourceData))]
-    [ModelReaderWriterBuildable(typeof(TrafficManagerUserMetrics))]
+    [ModelReaderWriterBuildable(typeof(TrafficManagerUserMetricData))]
+    [ModelReaderWriterBuildable(typeof(TrafficManagerUserMetricResource))]
     [ModelReaderWriterBuildable(typeof(UserMetricsProperties))]
     public partial class AzureResourceManagerTrafficManagerContext : ModelReaderWriterContext
     {

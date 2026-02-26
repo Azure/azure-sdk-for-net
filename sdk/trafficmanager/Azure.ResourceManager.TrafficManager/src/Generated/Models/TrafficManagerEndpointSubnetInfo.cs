@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         /// <param name="last"> Last address in the subnet. </param>
         /// <param name="scope"> Block size (number of leading bits in the subnet mask). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TrafficManagerEndpointSubnetInfo(string first, string last, int? scope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TrafficManagerEndpointSubnetInfo(IPAddress first, IPAddress last, int? scope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             First = first;
             Last = last;
@@ -35,10 +36,10 @@ namespace Azure.ResourceManager.TrafficManager.Models
         }
 
         /// <summary> First address in the subnet. </summary>
-        public string First { get; set; }
+        public IPAddress First { get; set; }
 
         /// <summary> Last address in the subnet. </summary>
-        public string Last { get; set; }
+        public IPAddress Last { get; set; }
 
         /// <summary> Block size (number of leading bits in the subnet mask). </summary>
         public int? Scope { get; set; }

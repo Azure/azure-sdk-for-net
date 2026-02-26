@@ -16,6 +16,46 @@ namespace Azure.ResourceManager.TrafficManager.Models
     /// <summary> Class representing a Traffic Manager HeatMap traffic flow properties. </summary>
     public partial class TrafficManagerHeatMapTrafficFlow : IJsonModel<TrafficManagerHeatMapTrafficFlow>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TrafficManagerHeatMapTrafficFlow PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerHeatMapTrafficFlow>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTrafficManagerHeatMapTrafficFlow(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TrafficManagerHeatMapTrafficFlow)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerHeatMapTrafficFlow>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerTrafficManagerContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TrafficManagerHeatMapTrafficFlow)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TrafficManagerHeatMapTrafficFlow>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TrafficManagerHeatMapTrafficFlow IPersistableModel<TrafficManagerHeatMapTrafficFlow>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TrafficManagerHeatMapTrafficFlow>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TrafficManagerHeatMapTrafficFlow>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -152,45 +192,5 @@ namespace Azure.ResourceManager.TrafficManager.Models
             }
             return new TrafficManagerHeatMapTrafficFlow(sourceIp, latitude, longitude, queryExperiences ?? new ChangeTrackingList<TrafficManagerHeatMapQueryExperience>(), additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TrafficManagerHeatMapTrafficFlow>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerHeatMapTrafficFlow>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerTrafficManagerContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(TrafficManagerHeatMapTrafficFlow)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        TrafficManagerHeatMapTrafficFlow IPersistableModel<TrafficManagerHeatMapTrafficFlow>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TrafficManagerHeatMapTrafficFlow PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerHeatMapTrafficFlow>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeTrafficManagerHeatMapTrafficFlow(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TrafficManagerHeatMapTrafficFlow)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TrafficManagerHeatMapTrafficFlow>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

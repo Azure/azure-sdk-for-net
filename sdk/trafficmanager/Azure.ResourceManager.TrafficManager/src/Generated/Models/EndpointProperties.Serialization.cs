@@ -17,6 +17,46 @@ namespace Azure.ResourceManager.TrafficManager.Models
     /// <summary> Class representing a Traffic Manager endpoint properties. </summary>
     internal partial class EndpointProperties : IJsonModel<EndpointProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EndpointProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeEndpointProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EndpointProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerTrafficManagerContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(EndpointProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<EndpointProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EndpointProperties IPersistableModel<EndpointProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EndpointProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EndpointProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -169,11 +209,11 @@ namespace Azure.ResourceManager.TrafficManager.Models
             }
             ResourceIdentifier targetResourceId = default;
             string target = default;
-            EndpointStatus? endpointStatus = default;
+            TrafficManagerEndpointStatus? endpointStatus = default;
             long? weight = default;
             long? priority = default;
             string endpointLocation = default;
-            EndpointMonitorStatus? endpointMonitorStatus = default;
+            TrafficManagerEndpointMonitorStatus? endpointMonitorStatus = default;
             long? minChildEndpoints = default;
             long? minChildEndpointsIPv4 = default;
             long? minChildEndpointsIPv6 = default;
@@ -204,7 +244,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     {
                         continue;
                     }
-                    endpointStatus = new EndpointStatus(prop.Value.GetString());
+                    endpointStatus = new TrafficManagerEndpointStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("weight"u8))
@@ -236,7 +276,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     {
                         continue;
                     }
-                    endpointMonitorStatus = new EndpointMonitorStatus(prop.Value.GetString());
+                    endpointMonitorStatus = new TrafficManagerEndpointMonitorStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("minChildEndpoints"u8))
@@ -346,45 +386,5 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 alwaysServe,
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EndpointProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerTrafficManagerContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(EndpointProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        EndpointProperties IPersistableModel<EndpointProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EndpointProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeEndpointProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EndpointProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EndpointProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

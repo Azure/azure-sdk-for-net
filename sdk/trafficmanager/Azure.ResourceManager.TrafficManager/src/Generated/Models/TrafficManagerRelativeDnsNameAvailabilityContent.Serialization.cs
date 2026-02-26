@@ -17,6 +17,58 @@ namespace Azure.ResourceManager.TrafficManager.Models
     /// <summary> Parameters supplied to check Traffic Manager name operation. </summary>
     public partial class TrafficManagerRelativeDnsNameAvailabilityContent : IJsonModel<TrafficManagerRelativeDnsNameAvailabilityContent>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TrafficManagerRelativeDnsNameAvailabilityContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerRelativeDnsNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTrafficManagerRelativeDnsNameAvailabilityContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TrafficManagerRelativeDnsNameAvailabilityContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerRelativeDnsNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerTrafficManagerContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TrafficManagerRelativeDnsNameAvailabilityContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TrafficManagerRelativeDnsNameAvailabilityContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TrafficManagerRelativeDnsNameAvailabilityContent IPersistableModel<TrafficManagerRelativeDnsNameAvailabilityContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TrafficManagerRelativeDnsNameAvailabilityContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="trafficManagerRelativeDnsNameAvailabilityContent"> The <see cref="TrafficManagerRelativeDnsNameAvailabilityContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(TrafficManagerRelativeDnsNameAvailabilityContent trafficManagerRelativeDnsNameAvailabilityContent)
+        {
+            if (trafficManagerRelativeDnsNameAvailabilityContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(trafficManagerRelativeDnsNameAvailabilityContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TrafficManagerRelativeDnsNameAvailabilityContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -40,10 +92,10 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value);
+                writer.WriteStringValue(ResourceType.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -88,7 +140,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 return null;
             }
             string name = default;
-            ResourceType? @type = default;
+            ResourceType? resourceType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -103,7 +155,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     {
                         continue;
                     }
-                    @type = new ResourceType(prop.Value.GetString());
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -111,59 +163,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TrafficManagerRelativeDnsNameAvailabilityContent(name, @type, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TrafficManagerRelativeDnsNameAvailabilityContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerRelativeDnsNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerTrafficManagerContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(TrafficManagerRelativeDnsNameAvailabilityContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        TrafficManagerRelativeDnsNameAvailabilityContent IPersistableModel<TrafficManagerRelativeDnsNameAvailabilityContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TrafficManagerRelativeDnsNameAvailabilityContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerRelativeDnsNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeTrafficManagerRelativeDnsNameAvailabilityContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TrafficManagerRelativeDnsNameAvailabilityContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TrafficManagerRelativeDnsNameAvailabilityContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="trafficManagerRelativeDnsNameAvailabilityContent"> The <see cref="TrafficManagerRelativeDnsNameAvailabilityContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(TrafficManagerRelativeDnsNameAvailabilityContent trafficManagerRelativeDnsNameAvailabilityContent)
-        {
-            if (trafficManagerRelativeDnsNameAvailabilityContent == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(trafficManagerRelativeDnsNameAvailabilityContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return new TrafficManagerRelativeDnsNameAvailabilityContent(name, resourceType, additionalBinaryDataProperties);
         }
     }
 }

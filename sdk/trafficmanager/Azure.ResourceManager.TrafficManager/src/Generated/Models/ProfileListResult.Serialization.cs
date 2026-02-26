@@ -22,6 +22,53 @@ namespace Azure.ResourceManager.TrafficManager.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ProfileListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ProfileListResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeProfileListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ProfileListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ProfileListResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerTrafficManagerContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ProfileListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ProfileListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ProfileListResult IPersistableModel<ProfileListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ProfileListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ProfileListResult"/> from. </param>
+        internal static ProfileListResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeProfileListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ProfileListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -42,7 +89,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (Profile item in Value)
+            foreach (TrafficManagerProfileData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -94,17 +141,17 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 return null;
             }
-            IList<Profile> value = default;
+            IList<TrafficManagerProfileData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<Profile> array = new List<Profile>();
+                    List<TrafficManagerProfileData> array = new List<TrafficManagerProfileData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Profile.DeserializeProfile(item, options));
+                        array.Add(TrafficManagerProfileData.DeserializeTrafficManagerProfileData(item, options));
                     }
                     value = array;
                     continue;
@@ -115,7 +162,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     {
                         continue;
                     }
-                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")
@@ -124,53 +171,6 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 }
             }
             return new ProfileListResult(value, nextLink, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ProfileListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ProfileListResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerTrafficManagerContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ProfileListResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ProfileListResult IPersistableModel<ProfileListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProfileListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ProfileListResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeProfileListResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ProfileListResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ProfileListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ProfileListResult"/> from. </param>
-        internal static ProfileListResult FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeProfileListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

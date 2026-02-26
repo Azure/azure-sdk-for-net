@@ -21,8 +21,6 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
     /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableTrafficManagerSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _trafficManagerUserMetricsKeysClientDiagnostics;
-        private TrafficManagerUserMetricsKeys _trafficManagerUserMetricsKeysRestClient;
         private ClientDiagnostics _profilesClientDiagnostics;
         private Profiles _profilesRestClient;
 
@@ -38,56 +36,15 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         {
         }
 
-        private ClientDiagnostics TrafficManagerUserMetricsKeysClientDiagnostics => _trafficManagerUserMetricsKeysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.TrafficManager.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private TrafficManagerUserMetricsKeys TrafficManagerUserMetricsKeysRestClient => _trafficManagerUserMetricsKeysRestClient ??= new TrafficManagerUserMetricsKeys(TrafficManagerUserMetricsKeysClientDiagnostics, Pipeline, Endpoint, "2022-04-01");
-
         private ClientDiagnostics ProfilesClientDiagnostics => _profilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.TrafficManager.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private Profiles ProfilesRestClient => _profilesRestClient ??= new Profiles(ProfilesClientDiagnostics, Pipeline, Endpoint, "2022-04-01");
 
-        /// <summary>
-        /// Get the subscription-level key used for Real User Metrics collection.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/trafficManagerUserMetricsKeys/default. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> UserMetricsModels_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TrafficManagerUserMetrics>> GetAsync(CancellationToken cancellationToken = default)
+        /// <summary> Gets a collection of TrafficManagerUserMetrics in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of TrafficManagerUserMetrics and their operations over a TrafficManagerUserMetricResource. </returns>
+        public virtual TrafficManagerUserMetricCollection GetTrafficManagerUserMetrics()
         {
-            using DiagnosticScope scope = TrafficManagerUserMetricsKeysClientDiagnostics.CreateScope("MockableTrafficManagerSubscriptionResource.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = TrafficManagerUserMetricsKeysRestClient.CreateGetRequest(Id.SubscriptionId, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<TrafficManagerUserMetrics> response = Response.FromValue(TrafficManagerUserMetrics.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return GetCachedClient(client => new TrafficManagerUserMetricCollection(client, Id));
         }
 
         /// <summary>
@@ -108,34 +65,14 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TrafficManagerUserMetrics> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public virtual async Task<Response<TrafficManagerUserMetricResource>> GetTrafficManagerUserMetricAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = TrafficManagerUserMetricsKeysClientDiagnostics.CreateScope("MockableTrafficManagerSubscriptionResource.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = TrafficManagerUserMetricsKeysRestClient.CreateGetRequest(Id.SubscriptionId, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<TrafficManagerUserMetrics> response = Response.FromValue(TrafficManagerUserMetrics.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return await GetTrafficManagerUserMetrics().GetAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Create or update a subscription-level key used for Real User Metrics collection.
+        /// Get the subscription-level key used for Real User Metrics collection.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -143,7 +80,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> UserMetricsModels_CreateOrUpdate. </description>
+        /// <description> UserMetricsModels_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -152,162 +89,10 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TrafficManagerUserMetrics>> CreateOrUpdateAsync(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public virtual Response<TrafficManagerUserMetricResource> GetTrafficManagerUserMetric(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = TrafficManagerUserMetricsKeysClientDiagnostics.CreateScope("MockableTrafficManagerSubscriptionResource.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = TrafficManagerUserMetricsKeysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<TrafficManagerUserMetrics> response = Response.FromValue(TrafficManagerUserMetrics.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Create or update a subscription-level key used for Real User Metrics collection.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/trafficManagerUserMetricsKeys/default. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> UserMetricsModels_CreateOrUpdate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TrafficManagerUserMetrics> CreateOrUpdate(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = TrafficManagerUserMetricsKeysClientDiagnostics.CreateScope("MockableTrafficManagerSubscriptionResource.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = TrafficManagerUserMetricsKeysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<TrafficManagerUserMetrics> response = Response.FromValue(TrafficManagerUserMetrics.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a subscription-level key used for Real User Metrics collection.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/trafficManagerUserMetricsKeys/default. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> UserMetricsModels_Delete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DeleteOperationResult>> DeleteAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = TrafficManagerUserMetricsKeysClientDiagnostics.CreateScope("MockableTrafficManagerSubscriptionResource.Delete");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = TrafficManagerUserMetricsKeysRestClient.CreateDeleteRequest(Id.SubscriptionId, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DeleteOperationResult> response = Response.FromValue(DeleteOperationResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a subscription-level key used for Real User Metrics collection.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/trafficManagerUserMetricsKeys/default. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> UserMetricsModels_Delete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DeleteOperationResult> Delete(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = TrafficManagerUserMetricsKeysClientDiagnostics.CreateScope("MockableTrafficManagerSubscriptionResource.Delete");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = TrafficManagerUserMetricsKeysRestClient.CreateDeleteRequest(Id.SubscriptionId, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<DeleteOperationResult> response = Response.FromValue(DeleteOperationResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return GetTrafficManagerUserMetrics().Get(cancellationToken);
         }
 
         /// <summary>
@@ -328,14 +113,14 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Profile"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Profile> GetBySubscriptionAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="TrafficManagerProfileResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<TrafficManagerProfileResource> GetTrafficManagerProfilesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ProfilesGetBySubscriptionAsyncCollectionResultOfT(ProfilesRestClient, Id.SubscriptionId, context);
+            return new AsyncPageableWrapper<TrafficManagerProfileData, TrafficManagerProfileResource>(new ProfilesGetBySubscriptionAsyncCollectionResultOfT(ProfilesRestClient, Id.SubscriptionId, context), data => new TrafficManagerProfileResource(Client, data));
         }
 
         /// <summary>
@@ -356,14 +141,14 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Profile"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Profile> GetBySubscription(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="TrafficManagerProfileResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<TrafficManagerProfileResource> GetTrafficManagerProfiles(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ProfilesGetBySubscriptionCollectionResultOfT(ProfilesRestClient, Id.SubscriptionId, context);
+            return new PageableWrapper<TrafficManagerProfileData, TrafficManagerProfileResource>(new ProfilesGetBySubscriptionCollectionResultOfT(ProfilesRestClient, Id.SubscriptionId, context), data => new TrafficManagerProfileResource(Client, data));
         }
 
         /// <summary>
@@ -383,12 +168,12 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="trafficManagerRelativeDnsNameAvailabilityContent"> The request body. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="trafficManagerRelativeDnsNameAvailabilityContent"/> is null. </exception>
-        public virtual async Task<Response<TrafficManagerNameAvailabilityResult>> CheckTrafficManagerNameAvailabilityV2Async(TrafficManagerRelativeDnsNameAvailabilityContent trafficManagerRelativeDnsNameAvailabilityContent, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<TrafficManagerNameAvailabilityResult>> CheckTrafficManagerNameAvailabilityV2Async(TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(trafficManagerRelativeDnsNameAvailabilityContent, nameof(trafficManagerRelativeDnsNameAvailabilityContent));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = ProfilesClientDiagnostics.CreateScope("MockableTrafficManagerSubscriptionResource.CheckTrafficManagerNameAvailabilityV2");
             scope.Start();
@@ -398,7 +183,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProfilesRestClient.CreateCheckTrafficManagerNameAvailabilityV2Request(Id.SubscriptionId, TrafficManagerRelativeDnsNameAvailabilityContent.ToRequestContent(trafficManagerRelativeDnsNameAvailabilityContent), context);
+                HttpMessage message = ProfilesRestClient.CreateCheckTrafficManagerNameAvailabilityV2Request(Id.SubscriptionId, TrafficManagerRelativeDnsNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TrafficManagerNameAvailabilityResult> response = Response.FromValue(TrafficManagerNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -431,12 +216,12 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="trafficManagerRelativeDnsNameAvailabilityContent"> The request body. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="trafficManagerRelativeDnsNameAvailabilityContent"/> is null. </exception>
-        public virtual Response<TrafficManagerNameAvailabilityResult> CheckTrafficManagerNameAvailabilityV2(TrafficManagerRelativeDnsNameAvailabilityContent trafficManagerRelativeDnsNameAvailabilityContent, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<TrafficManagerNameAvailabilityResult> CheckTrafficManagerNameAvailabilityV2(TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(trafficManagerRelativeDnsNameAvailabilityContent, nameof(trafficManagerRelativeDnsNameAvailabilityContent));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = ProfilesClientDiagnostics.CreateScope("MockableTrafficManagerSubscriptionResource.CheckTrafficManagerNameAvailabilityV2");
             scope.Start();
@@ -446,7 +231,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProfilesRestClient.CreateCheckTrafficManagerNameAvailabilityV2Request(Id.SubscriptionId, TrafficManagerRelativeDnsNameAvailabilityContent.ToRequestContent(trafficManagerRelativeDnsNameAvailabilityContent), context);
+                HttpMessage message = ProfilesRestClient.CreateCheckTrafficManagerNameAvailabilityV2Request(Id.SubscriptionId, TrafficManagerRelativeDnsNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TrafficManagerNameAvailabilityResult> response = Response.FromValue(TrafficManagerNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

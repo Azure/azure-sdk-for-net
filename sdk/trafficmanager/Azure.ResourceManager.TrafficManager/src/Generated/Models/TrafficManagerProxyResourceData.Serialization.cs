@@ -8,10 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.TrafficManager;
 
 namespace Azure.ResourceManager.TrafficManager.Models
@@ -19,6 +17,46 @@ namespace Azure.ResourceManager.TrafficManager.Models
     /// <summary> The resource model definition for a ARM proxy resource. It will have everything other than required location and tags. </summary>
     public partial class TrafficManagerProxyResourceData : TrafficManagerResourceData, IJsonModel<TrafficManagerProxyResourceData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override TrafficManagerResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerProxyResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTrafficManagerProxyResourceData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TrafficManagerProxyResourceData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerProxyResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerTrafficManagerContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TrafficManagerProxyResourceData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TrafficManagerProxyResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TrafficManagerProxyResourceData IPersistableModel<TrafficManagerProxyResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (TrafficManagerProxyResourceData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TrafficManagerProxyResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TrafficManagerProxyResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -67,8 +105,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType? @type = default;
-            SystemData systemData = default;
+            ResourceType? resourceType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -92,16 +129,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     {
                         continue;
                     }
-                    @type = new ResourceType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("systemData"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerTrafficManagerContext.Default);
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -109,47 +137,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TrafficManagerProxyResourceData(id, name, @type, systemData, additionalBinaryDataProperties);
+            return new TrafficManagerProxyResourceData(id, name, resourceType, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TrafficManagerProxyResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerProxyResourceData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerTrafficManagerContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(TrafficManagerProxyResourceData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        TrafficManagerProxyResourceData IPersistableModel<TrafficManagerProxyResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (TrafficManagerProxyResourceData)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override TrafficManagerResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerProxyResourceData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeTrafficManagerProxyResourceData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TrafficManagerProxyResourceData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TrafficManagerProxyResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

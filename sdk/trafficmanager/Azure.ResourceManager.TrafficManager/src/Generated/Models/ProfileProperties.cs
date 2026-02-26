@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         /// <summary> Initializes a new instance of <see cref="ProfileProperties"/>. </summary>
         public ProfileProperties()
         {
-            Endpoints = new ChangeTrackingList<Endpoint>();
+            Endpoints = new ChangeTrackingList<TrafficManagerEndpointData>();
             AllowedEndpointRecordTypes = new ChangeTrackingList<AllowedEndpointRecordType>();
         }
 
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         /// <param name="allowedEndpointRecordTypes"> The list of allowed endpoint record types. </param>
         /// <param name="maxReturn"> Maximum number of endpoints to be returned for MultiValue routing type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProfileProperties(ProfileStatus? profileStatus, TrafficRoutingMethod? trafficRoutingMethod, DnsConfig dnsConfig, MonitorConfig monitorConfig, IList<Endpoint> endpoints, TrafficViewEnrollmentStatus? trafficViewEnrollmentStatus, IList<AllowedEndpointRecordType> allowedEndpointRecordTypes, long? maxReturn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProfileProperties(TrafficManagerProfileStatus? profileStatus, TrafficRoutingMethod? trafficRoutingMethod, TrafficManagerDnsConfig dnsConfig, TrafficManagerMonitorConfig monitorConfig, IList<TrafficManagerEndpointData> endpoints, TrafficViewEnrollmentStatus? trafficViewEnrollmentStatus, IList<AllowedEndpointRecordType> allowedEndpointRecordTypes, long? maxReturn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProfileStatus = profileStatus;
             TrafficRoutingMethod = trafficRoutingMethod;
@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.TrafficManager.Models
         }
 
         /// <summary> The status of the Traffic Manager profile. </summary>
-        public ProfileStatus? ProfileStatus { get; set; }
+        public TrafficManagerProfileStatus? ProfileStatus { get; set; }
 
         /// <summary> The traffic routing method of the Traffic Manager profile. </summary>
         public TrafficRoutingMethod? TrafficRoutingMethod { get; set; }
 
         /// <summary> The DNS settings of the Traffic Manager profile. </summary>
-        public DnsConfig DnsConfig { get; set; }
+        public TrafficManagerDnsConfig DnsConfig { get; set; }
 
         /// <summary> The endpoint monitoring settings of the Traffic Manager profile. </summary>
-        public MonitorConfig MonitorConfig { get; set; }
+        public TrafficManagerMonitorConfig MonitorConfig { get; set; }
 
         /// <summary> The list of endpoints in the Traffic Manager profile. </summary>
-        public IList<Endpoint> Endpoints { get; } = new ChangeTrackingList<Endpoint>();
+        public IList<TrafficManagerEndpointData> Endpoints { get; } = new ChangeTrackingList<TrafficManagerEndpointData>();
 
         /// <summary> Indicates whether Traffic View is 'Enabled' or 'Disabled' for the Traffic Manager profile. Null, indicates 'Disabled'. Enabling this feature will increase the cost of the Traffic Manage profile. </summary>
         public TrafficViewEnrollmentStatus? TrafficViewEnrollmentStatus { get; set; }

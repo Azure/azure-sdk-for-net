@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         /// <param name="customHeaders"> List of custom headers. </param>
         /// <param name="alwaysServe"> If Always Serve is enabled, probing for endpoint health will be disabled and endpoints will be included in the traffic routing method. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EndpointProperties(ResourceIdentifier targetResourceId, string target, EndpointStatus? endpointStatus, long? weight, long? priority, string endpointLocation, EndpointMonitorStatus? endpointMonitorStatus, long? minChildEndpoints, long? minChildEndpointsIPv4, long? minChildEndpointsIPv6, IList<string> geoMapping, IList<TrafficManagerEndpointSubnetInfo> subnets, IList<TrafficManagerEndpointCustomHeaderInfo> customHeaders, TrafficManagerEndpointAlwaysServeStatus? alwaysServe, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EndpointProperties(ResourceIdentifier targetResourceId, string target, TrafficManagerEndpointStatus? endpointStatus, long? weight, long? priority, string endpointLocation, TrafficManagerEndpointMonitorStatus? endpointMonitorStatus, long? minChildEndpoints, long? minChildEndpointsIPv4, long? minChildEndpointsIPv6, IList<string> geoMapping, IList<TrafficManagerEndpointSubnetInfo> subnets, IList<TrafficManagerEndpointCustomHeaderInfo> customHeaders, TrafficManagerEndpointAlwaysServeStatus? alwaysServe, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetResourceId = targetResourceId;
             Target = target;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public string Target { get; set; }
 
         /// <summary> The status of the endpoint. If the endpoint is Enabled, it is probed for endpoint health and is included in the traffic routing method. </summary>
-        public EndpointStatus? EndpointStatus { get; set; }
+        public TrafficManagerEndpointStatus? EndpointStatus { get; set; }
 
         /// <summary> The weight of this endpoint when using the 'Weighted' traffic routing method. Possible values are from 1 to 1000. </summary>
         public long? Weight { get; set; }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public string EndpointLocation { get; set; }
 
         /// <summary> The monitoring status of the endpoint. </summary>
-        public EndpointMonitorStatus? EndpointMonitorStatus { get; set; }
+        public TrafficManagerEndpointMonitorStatus? EndpointMonitorStatus { get; set; }
 
         /// <summary> The minimum number of endpoints that must be available in the child profile in order for the parent profile to be considered available. Only applicable to endpoint of type 'NestedEndpoints'. </summary>
         public long? MinChildEndpoints { get; set; }

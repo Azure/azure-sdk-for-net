@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.TrafficManager
             uri.AppendPath(endpointType, true);
             uri.AppendPath("/", false);
             uri.AppendPath(endpointName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -78,7 +81,10 @@ namespace Azure.ResourceManager.TrafficManager
             uri.AppendPath(endpointType, true);
             uri.AppendPath("/", false);
             uri.AppendPath(endpointName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -103,7 +109,10 @@ namespace Azure.ResourceManager.TrafficManager
             uri.AppendPath(endpointType, true);
             uri.AppendPath("/", false);
             uri.AppendPath(endpointName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -128,7 +137,10 @@ namespace Azure.ResourceManager.TrafficManager
             uri.AppendPath(endpointType, true);
             uri.AppendPath("/", false);
             uri.AppendPath(endpointName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

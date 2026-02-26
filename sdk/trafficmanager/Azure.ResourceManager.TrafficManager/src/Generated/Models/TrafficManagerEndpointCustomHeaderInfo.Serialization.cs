@@ -16,6 +16,46 @@ namespace Azure.ResourceManager.TrafficManager.Models
     /// <summary> Custom header name and value. </summary>
     public partial class TrafficManagerEndpointCustomHeaderInfo : IJsonModel<TrafficManagerEndpointCustomHeaderInfo>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TrafficManagerEndpointCustomHeaderInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerEndpointCustomHeaderInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTrafficManagerEndpointCustomHeaderInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TrafficManagerEndpointCustomHeaderInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerEndpointCustomHeaderInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerTrafficManagerContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TrafficManagerEndpointCustomHeaderInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TrafficManagerEndpointCustomHeaderInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TrafficManagerEndpointCustomHeaderInfo IPersistableModel<TrafficManagerEndpointCustomHeaderInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TrafficManagerEndpointCustomHeaderInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TrafficManagerEndpointCustomHeaderInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -108,45 +148,5 @@ namespace Azure.ResourceManager.TrafficManager.Models
             }
             return new TrafficManagerEndpointCustomHeaderInfo(name, value, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TrafficManagerEndpointCustomHeaderInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerEndpointCustomHeaderInfo>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerTrafficManagerContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(TrafficManagerEndpointCustomHeaderInfo)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        TrafficManagerEndpointCustomHeaderInfo IPersistableModel<TrafficManagerEndpointCustomHeaderInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TrafficManagerEndpointCustomHeaderInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerEndpointCustomHeaderInfo>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeTrafficManagerEndpointCustomHeaderInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TrafficManagerEndpointCustomHeaderInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TrafficManagerEndpointCustomHeaderInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

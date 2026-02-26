@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         /// <summary> Initializes a new instance of <see cref="HeatMapProperties"/>. </summary>
         internal HeatMapProperties()
         {
-            Endpoints = new ChangeTrackingList<HeatMapEndpoint>();
+            Endpoints = new ChangeTrackingList<TrafficManagerHeatMapEndpoint>();
             TrafficFlows = new ChangeTrackingList<TrafficManagerHeatMapTrafficFlow>();
         }
 
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         /// <param name="endpoints"> The endpoints used in this HeatMap calculation. </param>
         /// <param name="trafficFlows"> The traffic flows produced in this HeatMap calculation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HeatMapProperties(DateTimeOffset? startOn, DateTimeOffset? endOn, IList<HeatMapEndpoint> endpoints, IList<TrafficManagerHeatMapTrafficFlow> trafficFlows, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HeatMapProperties(DateTimeOffset? startOn, DateTimeOffset? endOn, IList<TrafficManagerHeatMapEndpoint> endpoints, IList<TrafficManagerHeatMapTrafficFlow> trafficFlows, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public DateTimeOffset? EndOn { get; }
 
         /// <summary> The endpoints used in this HeatMap calculation. </summary>
-        public IList<HeatMapEndpoint> Endpoints { get; } = new ChangeTrackingList<HeatMapEndpoint>();
+        public IList<TrafficManagerHeatMapEndpoint> Endpoints { get; } = new ChangeTrackingList<TrafficManagerHeatMapEndpoint>();
 
         /// <summary> The traffic flows produced in this HeatMap calculation. </summary>
         public IList<TrafficManagerHeatMapTrafficFlow> TrafficFlows { get; } = new ChangeTrackingList<TrafficManagerHeatMapTrafficFlow>();

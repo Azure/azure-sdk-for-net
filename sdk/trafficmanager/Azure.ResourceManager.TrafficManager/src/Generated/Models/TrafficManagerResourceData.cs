@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
@@ -26,15 +25,13 @@ namespace Azure.ResourceManager.TrafficManager.Models
         /// <summary> Initializes a new instance of <see cref="TrafficManagerResourceData"/>. </summary>
         /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. Ex- Microsoft.Network/trafficManagerProfiles. </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="resourceType"> The type of the resource. Ex- Microsoft.Network/trafficManagerProfiles. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TrafficManagerResourceData(ResourceIdentifier id, string name, ResourceType? @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TrafficManagerResourceData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
-            Type = @type;
-            SystemData = systemData;
+            ResourceType = resourceType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -45,9 +42,6 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public string Name { get; set; }
 
         /// <summary> The type of the resource. Ex- Microsoft.Network/trafficManagerProfiles. </summary>
-        public ResourceType? Type { get; set; }
-
-        /// <summary> Azure Resource Manager metadata containing createdBy and modifiedBy information. </summary>
-        public SystemData SystemData { get; }
+        public ResourceType? ResourceType { get; set; }
     }
 }

@@ -6,10 +6,11 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TrafficManager.Mocking;
 using Azure.ResourceManager.TrafficManager.Models;
@@ -19,6 +20,12 @@ namespace Azure.ResourceManager.TrafficManager
     /// <summary> A class to add extension methods to Azure.ResourceManager.TrafficManager. </summary>
     public static partial class TrafficManagerExtensions
     {
+        /// <param name="client"></param>
+        private static MockableTrafficManagerArmClient GetMockableTrafficManagerArmClient(ArmClient client)
+        {
+            return client.GetCachedClient(client0 => new MockableTrafficManagerArmClient(client0, ResourceIdentifier.Root));
+        }
+
         /// <param name="resourceGroupResource"></param>
         private static MockableTrafficManagerResourceGroupResource GetMockableTrafficManagerResourceGroupResource(ResourceGroupResource resourceGroupResource)
         {
@@ -38,531 +45,237 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary>
-        /// Gets a Traffic Manager endpoint.
+        /// Gets an object representing a <see cref="TrafficManagerEndpointResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerResourceGroupResource.GetAsync(string, EndpointType, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerArmClient.GetTrafficManagerEndpointResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="profileName"> The name of the Traffic Manager profile. </param>
-        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
-        /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<Endpoint>> GetAsync(this ResourceGroupResource resourceGroupResource, string profileName, EndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="TrafficManagerEndpointResource"/> object. </returns>
+        public static TrafficManagerEndpointResource GetTrafficManagerEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableTrafficManagerResourceGroupResource(resourceGroupResource).GetAsync(profileName, endpointType, endpointName, cancellationToken).ConfigureAwait(false);
+            return GetMockableTrafficManagerArmClient(client).GetTrafficManagerEndpointResource(id);
         }
 
         /// <summary>
-        /// Gets a Traffic Manager endpoint.
+        /// Gets an object representing a <see cref="TrafficManagerProfileResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerResourceGroupResource.Get(string, EndpointType, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerArmClient.GetTrafficManagerProfileResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="profileName"> The name of the Traffic Manager profile. </param>
-        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
-        /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<Endpoint> Get(this ResourceGroupResource resourceGroupResource, string profileName, EndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="TrafficManagerProfileResource"/> object. </returns>
+        public static TrafficManagerProfileResource GetTrafficManagerProfileResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableTrafficManagerResourceGroupResource(resourceGroupResource).Get(profileName, endpointType, endpointName, cancellationToken);
+            return GetMockableTrafficManagerArmClient(client).GetTrafficManagerProfileResource(id);
         }
 
         /// <summary>
-        /// Create or update a Traffic Manager endpoint.
+        /// Gets an object representing a <see cref="TrafficManagerGeographicHierarchyResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerResourceGroupResource.CreateOrUpdateAsync(string, EndpointType, string, Endpoint, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerArmClient.GetTrafficManagerGeographicHierarchyResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="profileName"> The name of the Traffic Manager profile. </param>
-        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
-        /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
-        /// <param name="endpoint"> The Traffic Manager endpoint parameters supplied to the CreateOrUpdate operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<Endpoint>> CreateOrUpdateAsync(this ResourceGroupResource resourceGroupResource, string profileName, EndpointType endpointType, string endpointName, Endpoint endpoint, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="TrafficManagerGeographicHierarchyResource"/> object. </returns>
+        public static TrafficManagerGeographicHierarchyResource GetTrafficManagerGeographicHierarchyResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableTrafficManagerResourceGroupResource(resourceGroupResource).CreateOrUpdateAsync(profileName, endpointType, endpointName, endpoint, cancellationToken).ConfigureAwait(false);
+            return GetMockableTrafficManagerArmClient(client).GetTrafficManagerGeographicHierarchyResource(id);
         }
 
         /// <summary>
-        /// Create or update a Traffic Manager endpoint.
+        /// Gets an object representing a <see cref="TrafficManagerHeatMapResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerResourceGroupResource.CreateOrUpdate(string, EndpointType, string, Endpoint, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerArmClient.GetTrafficManagerHeatMapResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="profileName"> The name of the Traffic Manager profile. </param>
-        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
-        /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
-        /// <param name="endpoint"> The Traffic Manager endpoint parameters supplied to the CreateOrUpdate operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<Endpoint> CreateOrUpdate(this ResourceGroupResource resourceGroupResource, string profileName, EndpointType endpointType, string endpointName, Endpoint endpoint, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="TrafficManagerHeatMapResource"/> object. </returns>
+        public static TrafficManagerHeatMapResource GetTrafficManagerHeatMapResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableTrafficManagerResourceGroupResource(resourceGroupResource).CreateOrUpdate(profileName, endpointType, endpointName, endpoint, cancellationToken);
+            return GetMockableTrafficManagerArmClient(client).GetTrafficManagerHeatMapResource(id);
         }
 
         /// <summary>
-        /// Update a Traffic Manager endpoint.
+        /// Gets an object representing a <see cref="TrafficManagerUserMetricResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerResourceGroupResource.UpdateAsync(string, EndpointType, string, Endpoint, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerArmClient.GetTrafficManagerUserMetricResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="profileName"> The name of the Traffic Manager profile. </param>
-        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
-        /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
-        /// <param name="endpoint"> The Traffic Manager endpoint parameters supplied to the Update operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<Endpoint>> UpdateAsync(this ResourceGroupResource resourceGroupResource, string profileName, EndpointType endpointType, string endpointName, Endpoint endpoint, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="TrafficManagerUserMetricResource"/> object. </returns>
+        public static TrafficManagerUserMetricResource GetTrafficManagerUserMetricResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableTrafficManagerResourceGroupResource(resourceGroupResource).UpdateAsync(profileName, endpointType, endpointName, endpoint, cancellationToken).ConfigureAwait(false);
+            return GetMockableTrafficManagerArmClient(client).GetTrafficManagerUserMetricResource(id);
         }
 
         /// <summary>
-        /// Update a Traffic Manager endpoint.
+        /// Gets a collection of TrafficManagerProfiles in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerResourceGroupResource.Update(string, EndpointType, string, Endpoint, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerResourceGroupResource.GetTrafficManagerProfiles()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="profileName"> The name of the Traffic Manager profile. </param>
-        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
-        /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
-        /// <param name="endpoint"> The Traffic Manager endpoint parameters supplied to the Update operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<Endpoint> Update(this ResourceGroupResource resourceGroupResource, string profileName, EndpointType endpointType, string endpointName, Endpoint endpoint, CancellationToken cancellationToken = default)
+        /// <returns> An object representing collection of TrafficManagerProfiles and their operations over a TrafficManagerProfileResource. </returns>
+        public static TrafficManagerProfileCollection GetTrafficManagerProfiles(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableTrafficManagerResourceGroupResource(resourceGroupResource).Update(profileName, endpointType, endpointName, endpoint, cancellationToken);
-        }
-
-        /// <summary>
-        /// Deletes a Traffic Manager endpoint.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerResourceGroupResource.DeleteAsync(string, EndpointType, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="profileName"> The name of the Traffic Manager profile. </param>
-        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
-        /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<DeleteOperationResult>> DeleteAsync(this ResourceGroupResource resourceGroupResource, string profileName, EndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableTrafficManagerResourceGroupResource(resourceGroupResource).DeleteAsync(profileName, endpointType, endpointName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Deletes a Traffic Manager endpoint.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerResourceGroupResource.Delete(string, EndpointType, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="profileName"> The name of the Traffic Manager profile. </param>
-        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
-        /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<DeleteOperationResult> Delete(this ResourceGroupResource resourceGroupResource, string profileName, EndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableTrafficManagerResourceGroupResource(resourceGroupResource).Delete(profileName, endpointType, endpointName, cancellationToken);
+            return GetMockableTrafficManagerResourceGroupResource(resourceGroupResource).GetTrafficManagerProfiles();
         }
 
         /// <summary>
         /// Gets a Traffic Manager profile.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerResourceGroupResource.GetAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerResourceGroupResource.GetTrafficManagerProfileAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<Profile>> GetAsync(this ResourceGroupResource resourceGroupResource, string profileName, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public static async Task<Response<TrafficManagerProfileResource>> GetTrafficManagerProfileAsync(this ResourceGroupResource resourceGroupResource, string profileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableTrafficManagerResourceGroupResource(resourceGroupResource).GetAsync(profileName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableTrafficManagerResourceGroupResource(resourceGroupResource).GetTrafficManagerProfileAsync(profileName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets a Traffic Manager profile.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerResourceGroupResource.Get(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerResourceGroupResource.GetTrafficManagerProfile(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<Profile> Get(this ResourceGroupResource resourceGroupResource, string profileName, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public static Response<TrafficManagerProfileResource> GetTrafficManagerProfile(this ResourceGroupResource resourceGroupResource, string profileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableTrafficManagerResourceGroupResource(resourceGroupResource).Get(profileName, cancellationToken);
+            return GetMockableTrafficManagerResourceGroupResource(resourceGroupResource).GetTrafficManagerProfile(profileName, cancellationToken);
         }
 
         /// <summary>
-        /// Create or update a Traffic Manager profile.
+        /// Gets a collection of TrafficManagerUserMetrics in the <see cref="SubscriptionResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerResourceGroupResource.CreateOrUpdateAsync(string, Profile, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerSubscriptionResource.GetTrafficManagerUserMetrics()"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="profileName"> The name of the Traffic Manager profile. </param>
-        /// <param name="profile"> The Traffic Manager profile parameters supplied to the CreateOrUpdate operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<Profile>> CreateOrUpdateAsync(this ResourceGroupResource resourceGroupResource, string profileName, Profile profile, CancellationToken cancellationToken = default)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of TrafficManagerUserMetrics and their operations over a TrafficManagerUserMetricResource. </returns>
+        public static TrafficManagerUserMetricCollection GetTrafficManagerUserMetrics(this SubscriptionResource subscriptionResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableTrafficManagerResourceGroupResource(resourceGroupResource).CreateOrUpdateAsync(profileName, profile, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Create or update a Traffic Manager profile.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerResourceGroupResource.CreateOrUpdate(string, Profile, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="profileName"> The name of the Traffic Manager profile. </param>
-        /// <param name="profile"> The Traffic Manager profile parameters supplied to the CreateOrUpdate operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<Profile> CreateOrUpdate(this ResourceGroupResource resourceGroupResource, string profileName, Profile profile, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableTrafficManagerResourceGroupResource(resourceGroupResource).CreateOrUpdate(profileName, profile, cancellationToken);
-        }
-
-        /// <summary>
-        /// Update a Traffic Manager profile.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerResourceGroupResource.UpdateAsync(string, Profile, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="profileName"> The name of the Traffic Manager profile. </param>
-        /// <param name="profile"> The Traffic Manager profile parameters supplied to the Update operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<Profile>> UpdateAsync(this ResourceGroupResource resourceGroupResource, string profileName, Profile profile, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableTrafficManagerResourceGroupResource(resourceGroupResource).UpdateAsync(profileName, profile, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Update a Traffic Manager profile.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerResourceGroupResource.Update(string, Profile, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="profileName"> The name of the Traffic Manager profile. </param>
-        /// <param name="profile"> The Traffic Manager profile parameters supplied to the Update operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<Profile> Update(this ResourceGroupResource resourceGroupResource, string profileName, Profile profile, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableTrafficManagerResourceGroupResource(resourceGroupResource).Update(profileName, profile, cancellationToken);
-        }
-
-        /// <summary>
-        /// Deletes a Traffic Manager profile.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerResourceGroupResource.DeleteAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="profileName"> The name of the Traffic Manager profile. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<DeleteOperationResult>> DeleteAsync(this ResourceGroupResource resourceGroupResource, string profileName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableTrafficManagerResourceGroupResource(resourceGroupResource).DeleteAsync(profileName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Deletes a Traffic Manager profile.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerResourceGroupResource.Delete(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="profileName"> The name of the Traffic Manager profile. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<DeleteOperationResult> Delete(this ResourceGroupResource resourceGroupResource, string profileName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableTrafficManagerResourceGroupResource(resourceGroupResource).Delete(profileName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets latest heatmap for Traffic Manager profile.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerResourceGroupResource.GetAsync(string, HeatMapType, IEnumerable, IEnumerable, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="profileName"> The name of the Traffic Manager profile. </param>
-        /// <param name="heatMapType"> The type of the heatmap. </param>
-        /// <param name="topLeft"> The top left latitude,longitude pair of the rectangular viewport to query for. </param>
-        /// <param name="botRight"> The bottom right latitude,longitude pair of the rectangular viewport to query for. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<TrafficManagerHeatMap>> GetAsync(this ResourceGroupResource resourceGroupResource, string profileName, HeatMapType heatMapType, IEnumerable<double> topLeft = default, IEnumerable<double> botRight = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableTrafficManagerResourceGroupResource(resourceGroupResource).GetAsync(profileName, heatMapType, topLeft, botRight, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets latest heatmap for Traffic Manager profile.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerResourceGroupResource.Get(string, HeatMapType, IEnumerable, IEnumerable, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="profileName"> The name of the Traffic Manager profile. </param>
-        /// <param name="heatMapType"> The type of the heatmap. </param>
-        /// <param name="topLeft"> The top left latitude,longitude pair of the rectangular viewport to query for. </param>
-        /// <param name="botRight"> The bottom right latitude,longitude pair of the rectangular viewport to query for. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<TrafficManagerHeatMap> Get(this ResourceGroupResource resourceGroupResource, string profileName, HeatMapType heatMapType, IEnumerable<double> topLeft = default, IEnumerable<double> botRight = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableTrafficManagerResourceGroupResource(resourceGroupResource).Get(profileName, heatMapType, topLeft, botRight, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all Traffic Manager profiles within a resource group.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerResourceGroupResource.GetByResourceGroupAsync(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="Profile"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Profile> GetByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableTrafficManagerResourceGroupResource(resourceGroupResource).GetByResourceGroupAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all Traffic Manager profiles within a resource group.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerResourceGroupResource.GetByResourceGroup(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="Profile"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Profile> GetByResourceGroup(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableTrafficManagerResourceGroupResource(resourceGroupResource).GetByResourceGroup(cancellationToken);
+            return GetMockableTrafficManagerSubscriptionResource(subscriptionResource).GetTrafficManagerUserMetrics();
         }
 
         /// <summary>
         /// Get the subscription-level key used for Real User Metrics collection.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerSubscriptionResource.GetAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerSubscriptionResource.GetTrafficManagerUserMetricAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<TrafficManagerUserMetrics>> GetAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public static async Task<Response<TrafficManagerUserMetricResource>> GetTrafficManagerUserMetricAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableTrafficManagerSubscriptionResource(subscriptionResource).GetAsync(cancellationToken).ConfigureAwait(false);
+            return await GetMockableTrafficManagerSubscriptionResource(subscriptionResource).GetTrafficManagerUserMetricAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get the subscription-level key used for Real User Metrics collection.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerSubscriptionResource.Get(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerSubscriptionResource.GetTrafficManagerUserMetric(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<TrafficManagerUserMetrics> Get(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public static Response<TrafficManagerUserMetricResource> GetTrafficManagerUserMetric(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableTrafficManagerSubscriptionResource(subscriptionResource).Get(cancellationToken);
-        }
-
-        /// <summary>
-        /// Create or update a subscription-level key used for Real User Metrics collection.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerSubscriptionResource.CreateOrUpdateAsync(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<TrafficManagerUserMetrics>> CreateOrUpdateAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableTrafficManagerSubscriptionResource(subscriptionResource).CreateOrUpdateAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Create or update a subscription-level key used for Real User Metrics collection.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerSubscriptionResource.CreateOrUpdate(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<TrafficManagerUserMetrics> CreateOrUpdate(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableTrafficManagerSubscriptionResource(subscriptionResource).CreateOrUpdate(cancellationToken);
-        }
-
-        /// <summary>
-        /// Delete a subscription-level key used for Real User Metrics collection.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerSubscriptionResource.DeleteAsync(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<DeleteOperationResult>> DeleteAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableTrafficManagerSubscriptionResource(subscriptionResource).DeleteAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Delete a subscription-level key used for Real User Metrics collection.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerSubscriptionResource.Delete(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<DeleteOperationResult> Delete(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableTrafficManagerSubscriptionResource(subscriptionResource).Delete(cancellationToken);
+            return GetMockableTrafficManagerSubscriptionResource(subscriptionResource).GetTrafficManagerUserMetric(cancellationToken);
         }
 
         /// <summary>
         /// Lists all Traffic Manager profiles within a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerSubscriptionResource.GetBySubscriptionAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerSubscriptionResource.GetTrafficManagerProfilesAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="Profile"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Profile> GetBySubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="TrafficManagerProfileResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<TrafficManagerProfileResource> GetTrafficManagerProfilesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableTrafficManagerSubscriptionResource(subscriptionResource).GetBySubscriptionAsync(cancellationToken);
+            return GetMockableTrafficManagerSubscriptionResource(subscriptionResource).GetTrafficManagerProfilesAsync(cancellationToken);
         }
 
         /// <summary>
         /// Lists all Traffic Manager profiles within a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerSubscriptionResource.GetBySubscription(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerSubscriptionResource.GetTrafficManagerProfiles(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="Profile"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Profile> GetBySubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="TrafficManagerProfileResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<TrafficManagerProfileResource> GetTrafficManagerProfiles(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableTrafficManagerSubscriptionResource(subscriptionResource).GetBySubscription(cancellationToken);
+            return GetMockableTrafficManagerSubscriptionResource(subscriptionResource).GetTrafficManagerProfiles(cancellationToken);
         }
 
         /// <summary>
@@ -573,14 +286,14 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="trafficManagerRelativeDnsNameAvailabilityContent"> The request body. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<TrafficManagerNameAvailabilityResult>> CheckTrafficManagerNameAvailabilityV2Async(this SubscriptionResource subscriptionResource, TrafficManagerRelativeDnsNameAvailabilityContent trafficManagerRelativeDnsNameAvailabilityContent, CancellationToken cancellationToken = default)
+        public static async Task<Response<TrafficManagerNameAvailabilityResult>> CheckTrafficManagerNameAvailabilityV2Async(this SubscriptionResource subscriptionResource, TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableTrafficManagerSubscriptionResource(subscriptionResource).CheckTrafficManagerNameAvailabilityV2Async(trafficManagerRelativeDnsNameAvailabilityContent, cancellationToken).ConfigureAwait(false);
+            return await GetMockableTrafficManagerSubscriptionResource(subscriptionResource).CheckTrafficManagerNameAvailabilityV2Async(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -591,48 +304,67 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="trafficManagerRelativeDnsNameAvailabilityContent"> The request body. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<TrafficManagerNameAvailabilityResult> CheckTrafficManagerNameAvailabilityV2(this SubscriptionResource subscriptionResource, TrafficManagerRelativeDnsNameAvailabilityContent trafficManagerRelativeDnsNameAvailabilityContent, CancellationToken cancellationToken = default)
+        public static Response<TrafficManagerNameAvailabilityResult> CheckTrafficManagerNameAvailabilityV2(this SubscriptionResource subscriptionResource, TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableTrafficManagerSubscriptionResource(subscriptionResource).CheckTrafficManagerNameAvailabilityV2(trafficManagerRelativeDnsNameAvailabilityContent, cancellationToken);
+            return GetMockableTrafficManagerSubscriptionResource(subscriptionResource).CheckTrafficManagerNameAvailabilityV2(content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of TrafficManagerGeographicHierarchies in the <see cref="TenantResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerTenantResource.GetTrafficManagerGeographicHierarchies()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> An object representing collection of TrafficManagerGeographicHierarchies and their operations over a TrafficManagerGeographicHierarchyResource. </returns>
+        public static TrafficManagerGeographicHierarchyCollection GetTrafficManagerGeographicHierarchies(this TenantResource tenantResource)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableTrafficManagerTenantResource(tenantResource).GetTrafficManagerGeographicHierarchies();
         }
 
         /// <summary>
         /// Gets the default Geographic Hierarchy used by the Geographic traffic routing method.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerTenantResource.GetDefaultAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerTenantResource.GetTrafficManagerGeographicHierarchyAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static async Task<Response<TrafficManagerGeographicHierarchy>> GetDefaultAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public static async Task<Response<TrafficManagerGeographicHierarchyResource>> GetTrafficManagerGeographicHierarchyAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetMockableTrafficManagerTenantResource(tenantResource).GetDefaultAsync(cancellationToken).ConfigureAwait(false);
+            return await GetMockableTrafficManagerTenantResource(tenantResource).GetTrafficManagerGeographicHierarchyAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the default Geographic Hierarchy used by the Geographic traffic routing method.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerTenantResource.GetDefault(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerTenantResource.GetTrafficManagerGeographicHierarchy(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static Response<TrafficManagerGeographicHierarchy> GetDefault(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public static Response<TrafficManagerGeographicHierarchyResource> GetTrafficManagerGeographicHierarchy(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableTrafficManagerTenantResource(tenantResource).GetDefault(cancellationToken);
+            return GetMockableTrafficManagerTenantResource(tenantResource).GetTrafficManagerGeographicHierarchy(cancellationToken);
         }
 
         /// <summary>
@@ -643,14 +375,14 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="trafficManagerRelativeDnsNameAvailabilityContent"> The request body. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static async Task<Response<TrafficManagerNameAvailabilityResult>> CheckTrafficManagerRelativeDnsNameAvailabilityAsync(this TenantResource tenantResource, TrafficManagerRelativeDnsNameAvailabilityContent trafficManagerRelativeDnsNameAvailabilityContent, CancellationToken cancellationToken = default)
+        public static async Task<Response<TrafficManagerNameAvailabilityResult>> CheckTrafficManagerRelativeDnsNameAvailabilityAsync(this TenantResource tenantResource, TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetMockableTrafficManagerTenantResource(tenantResource).CheckTrafficManagerRelativeDnsNameAvailabilityAsync(trafficManagerRelativeDnsNameAvailabilityContent, cancellationToken).ConfigureAwait(false);
+            return await GetMockableTrafficManagerTenantResource(tenantResource).CheckTrafficManagerRelativeDnsNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -661,14 +393,14 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="trafficManagerRelativeDnsNameAvailabilityContent"> The request body. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static Response<TrafficManagerNameAvailabilityResult> CheckTrafficManagerRelativeDnsNameAvailability(this TenantResource tenantResource, TrafficManagerRelativeDnsNameAvailabilityContent trafficManagerRelativeDnsNameAvailabilityContent, CancellationToken cancellationToken = default)
+        public static Response<TrafficManagerNameAvailabilityResult> CheckTrafficManagerRelativeDnsNameAvailability(this TenantResource tenantResource, TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableTrafficManagerTenantResource(tenantResource).CheckTrafficManagerRelativeDnsNameAvailability(trafficManagerRelativeDnsNameAvailabilityContent, cancellationToken);
+            return GetMockableTrafficManagerTenantResource(tenantResource).CheckTrafficManagerRelativeDnsNameAvailability(content, cancellationToken);
         }
     }
 }

@@ -16,6 +16,46 @@ namespace Azure.ResourceManager.TrafficManager.Models
     /// <summary> Class representing the properties of the Geographic hierarchy used with the Geographic traffic routing method. </summary>
     internal partial class GeographicHierarchyProperties : IJsonModel<GeographicHierarchyProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GeographicHierarchyProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GeographicHierarchyProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeGeographicHierarchyProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GeographicHierarchyProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GeographicHierarchyProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerTrafficManagerContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(GeographicHierarchyProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<GeographicHierarchyProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GeographicHierarchyProperties IPersistableModel<GeographicHierarchyProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GeographicHierarchyProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GeographicHierarchyProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -81,7 +121,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 return null;
             }
-            Region geographicHierarchy = default;
+            TrafficManagerRegion geographicHierarchy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -91,7 +131,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     {
                         continue;
                     }
-                    geographicHierarchy = Region.DeserializeRegion(prop.Value, options);
+                    geographicHierarchy = TrafficManagerRegion.DeserializeTrafficManagerRegion(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -101,45 +141,5 @@ namespace Azure.ResourceManager.TrafficManager.Models
             }
             return new GeographicHierarchyProperties(geographicHierarchy, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GeographicHierarchyProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<GeographicHierarchyProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerTrafficManagerContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(GeographicHierarchyProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        GeographicHierarchyProperties IPersistableModel<GeographicHierarchyProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GeographicHierarchyProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<GeographicHierarchyProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeGeographicHierarchyProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(GeographicHierarchyProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GeographicHierarchyProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

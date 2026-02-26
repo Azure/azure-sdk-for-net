@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.ResourceManager.TrafficManager;
 
@@ -16,6 +17,46 @@ namespace Azure.ResourceManager.TrafficManager.Models
     /// <summary> Subnet first address, scope, and/or last address. </summary>
     public partial class TrafficManagerEndpointSubnetInfo : IJsonModel<TrafficManagerEndpointSubnetInfo>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TrafficManagerEndpointSubnetInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerEndpointSubnetInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTrafficManagerEndpointSubnetInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TrafficManagerEndpointSubnetInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerEndpointSubnetInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerTrafficManagerContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TrafficManagerEndpointSubnetInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TrafficManagerEndpointSubnetInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TrafficManagerEndpointSubnetInfo IPersistableModel<TrafficManagerEndpointSubnetInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TrafficManagerEndpointSubnetInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TrafficManagerEndpointSubnetInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -37,12 +78,12 @@ namespace Azure.ResourceManager.TrafficManager.Models
             if (Optional.IsDefined(First))
             {
                 writer.WritePropertyName("first"u8);
-                writer.WriteStringValue(First);
+                writer.WriteStringValue(First.ToString());
             }
             if (Optional.IsDefined(Last))
             {
                 writer.WritePropertyName("last"u8);
-                writer.WriteStringValue(Last);
+                writer.WriteStringValue(Last.ToString());
             }
             if (Optional.IsDefined(Scope))
             {
@@ -91,20 +132,28 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 return null;
             }
-            string first = default;
-            string last = default;
+            IPAddress first = default;
+            IPAddress last = default;
             int? scope = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("first"u8))
                 {
-                    first = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    first = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("last"u8))
                 {
-                    last = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    last = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("scope"u8))
@@ -123,45 +172,5 @@ namespace Azure.ResourceManager.TrafficManager.Models
             }
             return new TrafficManagerEndpointSubnetInfo(first, last, scope, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TrafficManagerEndpointSubnetInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerEndpointSubnetInfo>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerTrafficManagerContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(TrafficManagerEndpointSubnetInfo)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        TrafficManagerEndpointSubnetInfo IPersistableModel<TrafficManagerEndpointSubnetInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TrafficManagerEndpointSubnetInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerEndpointSubnetInfo>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeTrafficManagerEndpointSubnetInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TrafficManagerEndpointSubnetInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TrafficManagerEndpointSubnetInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

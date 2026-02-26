@@ -54,7 +54,10 @@ namespace Azure.ResourceManager.TrafficManager
             uri.AppendPath(profileName, true);
             uri.AppendPath("/heatMaps/", false);
             uri.AppendPath(heatMapType, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (topLeft != null && !(topLeft is ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("topLeft", topLeft, ",", escape: true);

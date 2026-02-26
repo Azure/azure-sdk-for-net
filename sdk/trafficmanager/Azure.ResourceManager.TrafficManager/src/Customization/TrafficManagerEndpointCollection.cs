@@ -12,8 +12,8 @@ using Azure.Core;
 namespace Azure.ResourceManager.TrafficManager
 {
     /// <summary>
-    /// The class to overcome issue with the TrafficManagerEndpoint Collection REST API where there is no REST API counterpart that GETs all
-    /// profile data resource. The all profile data resources are retrieved from the collection of endpoints attached to <see cref="TrafficManagerProfileData"/>.
+    /// The class to overcome issue with the TrafficManagerEndpointData Collection REST API where there is no REST API counterpart that GETs all
+    /// endpoint data resources. The all endpoint data resources are retrieved from the collection of endpoints attached to <see cref="TrafficManagerProfileData"/>.
     /// </summary>
     public partial class TrafficManagerEndpointCollection : ArmCollection, IEnumerable<TrafficManagerEndpointData>, IAsyncEnumerable<TrafficManagerEndpointData>
     {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         /// /// <param name="profileData">The parent profile data. </param>
-        internal TrafficManagerEndpointCollection(ArmClient client, ResourceIdentifier id, TrafficManagerProfileData profileData) : this(client, id)
+        internal TrafficManagerEndpointCollection(ArmClient client, ResourceIdentifier id, TrafficManagerProfileData profileData) : base(client, id)
         {
             Argument.AssertNotNull(profileData, nameof(profileData));
 

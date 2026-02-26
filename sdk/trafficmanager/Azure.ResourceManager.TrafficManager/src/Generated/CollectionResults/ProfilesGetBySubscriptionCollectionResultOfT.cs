@@ -14,7 +14,7 @@ using Azure.ResourceManager.TrafficManager.Models;
 
 namespace Azure.ResourceManager.TrafficManager
 {
-    internal partial class ProfilesGetBySubscriptionCollectionResultOfT : Pageable<Profile>
+    internal partial class ProfilesGetBySubscriptionCollectionResultOfT : Pageable<TrafficManagerProfileData>
     {
         private readonly Profiles _client;
         private readonly string _subscriptionId;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ProfilesGetBySubscriptionCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<Profile>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<TrafficManagerProfileData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.TrafficManager
                     yield break;
                 }
                 ProfileListResult result = ProfileListResult.FromResponse(response);
-                yield return Page<Profile>.FromValues((IReadOnlyList<Profile>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<TrafficManagerProfileData>.FromValues((IReadOnlyList<TrafficManagerProfileData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.TrafficManager
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableTrafficManagerSubscriptionResource.GetBySubscription");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableTrafficManagerSubscriptionResource.GetTrafficManagerProfiles");
             scope.Start();
             try
             {

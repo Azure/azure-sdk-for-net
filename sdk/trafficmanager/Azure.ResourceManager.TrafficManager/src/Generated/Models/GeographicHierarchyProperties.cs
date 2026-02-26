@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.TrafficManager.Models
         /// <summary> Initializes a new instance of <see cref="GeographicHierarchyProperties"/>. </summary>
         /// <param name="geographicHierarchy"> The region at the root of the hierarchy from all the regions in the hierarchy can be retrieved. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GeographicHierarchyProperties(Region geographicHierarchy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GeographicHierarchyProperties(TrafficManagerRegion geographicHierarchy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GeographicHierarchy = geographicHierarchy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The region at the root of the hierarchy from all the regions in the hierarchy can be retrieved. </summary>
-        public Region GeographicHierarchy { get; }
+        public TrafficManagerRegion GeographicHierarchy { get; }
     }
 }

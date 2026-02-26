@@ -16,6 +16,46 @@ namespace Azure.ResourceManager.TrafficManager.Models
     /// <summary> Class representing a Traffic Manager HeatMap properties. </summary>
     internal partial class HeatMapProperties : IJsonModel<HeatMapProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HeatMapProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HeatMapProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHeatMapProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HeatMapProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HeatMapProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerTrafficManagerContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HeatMapProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HeatMapProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HeatMapProperties IPersistableModel<HeatMapProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HeatMapProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HeatMapProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -48,7 +88,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
-                foreach (HeatMapEndpoint item in Endpoints)
+                foreach (TrafficManagerHeatMapEndpoint item in Endpoints)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -108,7 +148,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             }
             DateTimeOffset? startOn = default;
             DateTimeOffset? endOn = default;
-            IList<HeatMapEndpoint> endpoints = default;
+            IList<TrafficManagerHeatMapEndpoint> endpoints = default;
             IList<TrafficManagerHeatMapTrafficFlow> trafficFlows = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,10 +177,10 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     {
                         continue;
                     }
-                    List<HeatMapEndpoint> array = new List<HeatMapEndpoint>();
+                    List<TrafficManagerHeatMapEndpoint> array = new List<TrafficManagerHeatMapEndpoint>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(HeatMapEndpoint.DeserializeHeatMapEndpoint(item, options));
+                        array.Add(TrafficManagerHeatMapEndpoint.DeserializeTrafficManagerHeatMapEndpoint(item, options));
                     }
                     endpoints = array;
                     continue;
@@ -164,47 +204,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HeatMapProperties(startOn, endOn, endpoints ?? new ChangeTrackingList<HeatMapEndpoint>(), trafficFlows ?? new ChangeTrackingList<TrafficManagerHeatMapTrafficFlow>(), additionalBinaryDataProperties);
+            return new HeatMapProperties(startOn, endOn, endpoints ?? new ChangeTrackingList<TrafficManagerHeatMapEndpoint>(), trafficFlows ?? new ChangeTrackingList<TrafficManagerHeatMapTrafficFlow>(), additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HeatMapProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HeatMapProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerTrafficManagerContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HeatMapProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HeatMapProperties IPersistableModel<HeatMapProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HeatMapProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HeatMapProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeHeatMapProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HeatMapProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HeatMapProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -16,6 +16,46 @@ namespace Azure.ResourceManager.TrafficManager.Models
     /// <summary> Class representing the Traffic Manager profile properties. </summary>
     internal partial class ProfileProperties : IJsonModel<ProfileProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ProfileProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeProfileProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ProfileProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerTrafficManagerContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ProfileProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ProfileProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ProfileProperties IPersistableModel<ProfileProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ProfileProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ProfileProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -58,7 +98,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
-                foreach (Endpoint item in Endpoints)
+                foreach (TrafficManagerEndpointData item in Endpoints)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,11 +166,11 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 return null;
             }
-            ProfileStatus? profileStatus = default;
+            TrafficManagerProfileStatus? profileStatus = default;
             TrafficRoutingMethod? trafficRoutingMethod = default;
-            DnsConfig dnsConfig = default;
-            MonitorConfig monitorConfig = default;
-            IList<Endpoint> endpoints = default;
+            TrafficManagerDnsConfig dnsConfig = default;
+            TrafficManagerMonitorConfig monitorConfig = default;
+            IList<TrafficManagerEndpointData> endpoints = default;
             TrafficViewEnrollmentStatus? trafficViewEnrollmentStatus = default;
             IList<AllowedEndpointRecordType> allowedEndpointRecordTypes = default;
             long? maxReturn = default;
@@ -143,7 +183,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     {
                         continue;
                     }
-                    profileStatus = new ProfileStatus(prop.Value.GetString());
+                    profileStatus = new TrafficManagerProfileStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("trafficRoutingMethod"u8))
@@ -161,7 +201,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     {
                         continue;
                     }
-                    dnsConfig = DnsConfig.DeserializeDnsConfig(prop.Value, options);
+                    dnsConfig = TrafficManagerDnsConfig.DeserializeTrafficManagerDnsConfig(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("monitorConfig"u8))
@@ -170,7 +210,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     {
                         continue;
                     }
-                    monitorConfig = MonitorConfig.DeserializeMonitorConfig(prop.Value, options);
+                    monitorConfig = TrafficManagerMonitorConfig.DeserializeTrafficManagerMonitorConfig(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("endpoints"u8))
@@ -179,10 +219,10 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     {
                         continue;
                     }
-                    List<Endpoint> array = new List<Endpoint>();
+                    List<TrafficManagerEndpointData> array = new List<TrafficManagerEndpointData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Endpoint.DeserializeEndpoint(item, options));
+                        array.Add(TrafficManagerEndpointData.DeserializeTrafficManagerEndpointData(item, options));
                     }
                     endpoints = array;
                     continue;
@@ -229,51 +269,11 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 trafficRoutingMethod,
                 dnsConfig,
                 monitorConfig,
-                endpoints ?? new ChangeTrackingList<Endpoint>(),
+                endpoints ?? new ChangeTrackingList<TrafficManagerEndpointData>(),
                 trafficViewEnrollmentStatus,
                 allowedEndpointRecordTypes ?? new ChangeTrackingList<AllowedEndpointRecordType>(),
                 maxReturn,
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ProfileProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerTrafficManagerContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ProfileProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ProfileProperties IPersistableModel<ProfileProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProfileProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeProfileProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ProfileProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ProfileProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
