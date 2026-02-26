@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Storage;
 using Azure.Storage.Common;
 using Azure.Storage.DataMovement.JobPlan;
 using Azure.Storage.Shared;
@@ -180,55 +181,18 @@ namespace Azure.Storage.DataMovement
             int length,
             CancellationToken cancellationToken = default)
         {
-            int bufferSize = length > 0 ? length : DataMovementConstants.DefaultStreamCopyBufferSize;
-            Stream copiedStream = new PooledMemoryStream(ArrayPool<byte>.Shared, bufferSize);
-
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             if (!TryGetJobPlanFile(transferId, out JobPlanFile jobPlanFile))
             {
                 throw Errors.MissingTransferIdCheckpointer(transferId);
             }
 
-            await jobPlanFile.WriteLock.WaitAsync(cancellationToken).ConfigureAwait(false);
-            try
-            {
-                using (FileStream fileStream = new FileStream(
-                    jobPlanFile.FilePath,
-                    FileMode.Open,
-                    FileAccess.Read,
-                    FileShare.Read))
-                {
-                    if (offset > 0)
-                    {
-                        fileStream.Seek(offset, SeekOrigin.Begin);
-                    }
-
-                    if (length > 0)
-                    {
-                        byte[] buffer = ArrayPool<byte>.Shared.Rent(length);
-                        try
-                        {
-                            int bytesRead = await fileStream.ReadAsync(buffer, 0, length, cancellationToken).ConfigureAwait(false);
-                            await copiedStream.WriteAsync(buffer, 0, bytesRead, cancellationToken).ConfigureAwait(false);
-                        }
-                        finally
-                        {
-                            ArrayPool<byte>.Shared.Return(buffer);
-                        }
-                    }
-                    else
-                    {
-                        await fileStream.CopyToAsync(copiedStream, bufferSize, cancellationToken).ConfigureAwait(false);
-                    }
-                }
-
-                copiedStream.Position = 0;
-                return copiedStream;
-            }
-            finally
-            {
-                jobPlanFile.WriteLock.Release();
-            }
+            return await ReadFromPlanFileAsync(
+                jobPlanFile.FilePath,
+                jobPlanFile.WriteLock,
+                offset,
+                length,
+                cancellationToken).ConfigureAwait(false);
         }
 
         public override async Task<Stream> ReadJobPartPlanFileAsync(
@@ -248,14 +212,29 @@ namespace Azure.Storage.DataMovement
                 throw Errors.MissingPartNumberCheckpointer(transferId, partNumber);
             }
 
+            return await ReadFromPlanFileAsync(
+                jobPartPlanFile.FilePath,
+                jobPartPlanFile.WriteLock,
+                offset,
+                length,
+                cancellationToken).ConfigureAwait(false);
+        }
+
+        private static async Task<Stream> ReadFromPlanFileAsync(
+            string filePath,
+            SemaphoreSlim writeLock,
+            int offset,
+            int length,
+            CancellationToken cancellationToken)
+        {
             int bufferSize = length > 0 ? length : DataMovementConstants.DefaultStreamCopyBufferSize;
             Stream copiedStream = new PooledMemoryStream(ArrayPool<byte>.Shared, bufferSize);
 
-            await jobPartPlanFile.WriteLock.WaitAsync(cancellationToken).ConfigureAwait(false);
+            await writeLock.WaitAsync(cancellationToken).ConfigureAwait(false);
             try
             {
                 using (FileStream fileStream = new FileStream(
-                    jobPartPlanFile.FilePath,
+                    filePath,
                     FileMode.Open,
                     FileAccess.Read,
                     FileShare.Read))
@@ -267,16 +246,7 @@ namespace Azure.Storage.DataMovement
 
                     if (length > 0)
                     {
-                        byte[] buffer = ArrayPool<byte>.Shared.Rent(length);
-                        try
-                        {
-                            int bytesRead = await fileStream.ReadAsync(buffer, 0, length, cancellationToken).ConfigureAwait(false);
-                            await copiedStream.WriteAsync(buffer, 0, bytesRead, cancellationToken).ConfigureAwait(false);
-                        }
-                        finally
-                        {
-                            ArrayPool<byte>.Shared.Return(buffer);
-                        }
+                        await fileStream.CopyToExactInternal(copiedStream, length, async: true, cancellationToken).ConfigureAwait(false);
                     }
                     else
                     {
@@ -289,7 +259,7 @@ namespace Azure.Storage.DataMovement
             }
             finally
             {
-                jobPartPlanFile.WriteLock.Release();
+                writeLock.Release();
             }
         }
 
@@ -389,8 +359,6 @@ namespace Azure.Storage.DataMovement
             TransferStatus status,
             CancellationToken cancellationToken = default)
         {
-            int offset = DataMovementConstants.JobPlanFile.JobStatusIndex;
-
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
             if (!TryGetJobPlanFile(transferId, out JobPlanFile jobPlanFile))
@@ -405,26 +373,12 @@ namespace Azure.Storage.DataMovement
                 return;
             }
 
-            await jobPlanFile.WriteLock.WaitAsync(cancellationToken).ConfigureAwait(false);
-            try
-            {
-                using (FileStream fileStream = new FileStream(
-                    jobPlanFile.FilePath,
-                    FileMode.Open,
-                    FileAccess.Write,
-                    FileShare.Read))
-                {
-                    fileStream.Seek(offset, SeekOrigin.Begin);
-                    int statusValue = (int)status.ToJobPlanStatus();
-                    byte[] statusBytes = BitConverter.GetBytes(statusValue);
-                    await fileStream.WriteAsync(statusBytes, 0, statusBytes.Length, cancellationToken).ConfigureAwait(false);
-                    await fileStream.FlushAsync(cancellationToken).ConfigureAwait(false);
-                }
-            }
-            finally
-            {
-                jobPlanFile.WriteLock.Release();
-            }
+            await WriteStatusToPlanFileAsync(
+                jobPlanFile.FilePath,
+                jobPlanFile.WriteLock,
+                DataMovementConstants.JobPlanFile.JobStatusIndex,
+                status,
+                cancellationToken).ConfigureAwait(false);
 
             // if paused or other completion state, remove the memory cache but still write state to the plan file for later resume
             if (status.State == TransferState.Completed || status.State == TransferState.Paused)
@@ -443,8 +397,6 @@ namespace Azure.Storage.DataMovement
             TransferStatus status,
             CancellationToken cancellationToken = default)
         {
-            int offset = DataMovementConstants.JobPartPlanFile.JobPartStatusIndex;
-
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
             if (!TryGetJobPlanFile(transferId, out JobPlanFile jobPlanFile))
@@ -455,25 +407,42 @@ namespace Azure.Storage.DataMovement
             {
                 throw Errors.MissingPartNumberCheckpointer(transferId, partNumber);
             }
-            await file.WriteLock.WaitAsync(cancellationToken).ConfigureAwait(false);
+
+            await WriteStatusToPlanFileAsync(
+                file.FilePath,
+                file.WriteLock,
+                DataMovementConstants.JobPartPlanFile.JobPartStatusIndex,
+                status,
+                cancellationToken).ConfigureAwait(false);
+        }
+
+        private static async Task WriteStatusToPlanFileAsync(
+            string filePath,
+            SemaphoreSlim writeLock,
+            int offset,
+            TransferStatus status,
+            CancellationToken cancellationToken)
+        {
+            await writeLock.WaitAsync(cancellationToken).ConfigureAwait(false);
             try
             {
                 using (FileStream fileStream = new FileStream(
-                    file.FilePath,
+                    filePath,
                     FileMode.Open,
                     FileAccess.Write,
                     FileShare.Read))
                 {
                     fileStream.Seek(offset, SeekOrigin.Begin);
-                    int statusValue = (int)status.ToJobPlanStatus();
-                    byte[] statusBytes = BitConverter.GetBytes(statusValue);
-                    await fileStream.WriteAsync(statusBytes, 0, statusBytes.Length, cancellationToken).ConfigureAwait(false);
+                    using (BinaryWriter writer = new BinaryWriter(fileStream, System.Text.Encoding.UTF8, leaveOpen: true))
+                    {
+                        writer.Write((int)status.ToJobPlanStatus());
+                    }
                     await fileStream.FlushAsync(cancellationToken).ConfigureAwait(false);
                 }
             }
             finally
             {
-                file.WriteLock.Release();
+                writeLock.Release();
             }
         }
 
