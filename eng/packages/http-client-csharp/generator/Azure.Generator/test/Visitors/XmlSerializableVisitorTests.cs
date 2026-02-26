@@ -453,8 +453,6 @@ namespace Azure.Generator.Tests.Visitors
 
             var modelSerializationExtensions = new ModelSerializationExtensionsDefinition();
 
-            var methodCountBefore = modelSerializationExtensions.Methods.Count;
-
             visitor.InvokeVisitType(modelSerializationExtensions);
 
             var fromEnumerableMethod = modelSerializationExtensions.Methods
