@@ -1,14 +1,16 @@
 # Release History
 
-## 1.1.0-beta.3 (Unreleased)
+## 1.1.0-beta.3 (2026-02-26)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
+- Updated TypeSpec definitions and regenerated client code
 
 ### Other Changes
+- Moved VoiceLive service to the dedicated `sdk/voicelive` directory for improved organization and ownership.
 
 ## 1.1.0-beta.2 (2026-02-19)
 
