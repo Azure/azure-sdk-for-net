@@ -1,6 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// Backward compatibility: The new generated Delete method added a required `force` parameter.
+// These overloads preserve the old Delete(WaitUntil, CancellationToken) signature by delegating
+// to the new method with force: null, so existing callers are not broken.
+
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;

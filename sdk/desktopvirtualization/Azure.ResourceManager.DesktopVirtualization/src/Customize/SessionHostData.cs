@@ -1,6 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// Backward compatibility: Properties like AgentVersion, LastHeartBeatOn, OSVersion, Sessions,
+// Status, SxsStackVersion, UpdateErrorMessage, and UpdateState were previously flattened as
+// top-level properties on SessionHostData. The new generated code nests them under a Properties
+// sub-object. These shim properties preserve the old flat accessors by delegating to
+// Properties.*, so existing callers are not broken.
+
 #nullable disable
 
 using System;

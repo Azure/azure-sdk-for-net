@@ -1,6 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// Backward compatibility: The method GetPrivateLinkResources was renamed to GetByWorkspace
+// in the new generated code. These overloads preserve the old GetPrivateLinkResources name
+// by delegating to the new method, so existing callers are not broken.
+
 #nullable disable
 
 using System.ComponentModel;

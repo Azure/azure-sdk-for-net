@@ -1,6 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// Backward compatibility: The PackageDependencies property was previously a flattened top-level
+// settable IList<>. The new generated code nests it under a Properties sub-object and makes it
+// read-only. This shim property preserves the old flat settable accessor by delegating to
+// Properties.PackageDependencies, so existing callers are not broken.
+
 #nullable disable
 
 using System.Collections.Generic;

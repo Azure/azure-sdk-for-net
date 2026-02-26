@@ -1,6 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// Backward compatibility: The Update method's parameter type changed from
+// DesktopVirtualizationPrivateEndpointConnection to DesktopVirtualizationPrivateEndpointConnectionDataData.
+// These overloads preserve the old signature by converting the old type to the new type,
+// so existing callers are not broken.
+
 #nullable disable
 
 using System.ComponentModel;

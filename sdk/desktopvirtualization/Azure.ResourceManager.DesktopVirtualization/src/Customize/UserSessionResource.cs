@@ -1,6 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// Backward compatibility: The SendMessage method's parameter type changed from
+// UserSessionMessage to SendMessageParameterBody. These overloads preserve the old
+// SendMessage(UserSessionMessage, CancellationToken) signature by wrapping the old type
+// into the new body type, so existing callers are not broken.
+
 #nullable disable
 
 using System.ComponentModel;

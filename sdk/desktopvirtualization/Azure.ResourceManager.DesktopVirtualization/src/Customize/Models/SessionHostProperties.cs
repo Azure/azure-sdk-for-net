@@ -1,6 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// Internal helper class used by the SessionHostData customization. It holds the flattened
+// properties (AgentVersion, LastHeartBeatOn, OSVersion, etc.) that SessionHostData's backward-
+// compatible shim properties delegate to.
+
 #nullable disable
 
 using System;

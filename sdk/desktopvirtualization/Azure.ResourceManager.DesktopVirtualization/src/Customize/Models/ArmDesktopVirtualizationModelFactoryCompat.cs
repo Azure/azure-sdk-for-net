@@ -1,6 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// Backward compatibility: The model factory methods gained new parameters (e.g. groupIds).
+// These overloads preserve the old signatures with fewer parameters by delegating to the new
+// methods with default values, so existing callers using the model factory are not broken.
+
 #nullable disable
 
 using System;
