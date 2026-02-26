@@ -15,6 +15,16 @@ namespace _Type.Model.Inheritance.NotDiscriminated
     {
         internal Cat() => throw null;
 
+        protected override Pet PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        BinaryData IPersistableModel<Cat>.Write(ModelReaderWriterOptions options) => throw null;
+
+        Cat IPersistableModel<Cat>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        string IPersistableModel<Cat>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
         void IJsonModel<Cat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -22,15 +32,5 @@ namespace _Type.Model.Inheritance.NotDiscriminated
         Cat IJsonModel<Cat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected override Pet JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<Cat>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
-        Cat IPersistableModel<Cat>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected override Pet PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        string IPersistableModel<Cat>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
     }
 }

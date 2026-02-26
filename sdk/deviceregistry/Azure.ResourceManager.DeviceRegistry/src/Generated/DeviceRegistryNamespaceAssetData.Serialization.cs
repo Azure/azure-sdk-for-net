@@ -25,6 +25,65 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryNamespaceAssetData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDeviceRegistryNamespaceAssetData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DeviceRegistryNamespaceAssetData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryNamespaceAssetData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDeviceRegistryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DeviceRegistryNamespaceAssetData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DeviceRegistryNamespaceAssetData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeviceRegistryNamespaceAssetData IPersistableModel<DeviceRegistryNamespaceAssetData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DeviceRegistryNamespaceAssetData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DeviceRegistryNamespaceAssetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="deviceRegistryNamespaceAssetData"> The <see cref="DeviceRegistryNamespaceAssetData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DeviceRegistryNamespaceAssetData deviceRegistryNamespaceAssetData)
+        {
+            if (deviceRegistryNamespaceAssetData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(deviceRegistryNamespaceAssetData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DeviceRegistryNamespaceAssetData"/> from. </param>
+        internal static DeviceRegistryNamespaceAssetData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDeviceRegistryNamespaceAssetData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeviceRegistryNamespaceAssetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -176,65 +235,6 @@ namespace Azure.ResourceManager.DeviceRegistry
                 location,
                 properties,
                 extendedLocation);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DeviceRegistryNamespaceAssetData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryNamespaceAssetData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDeviceRegistryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DeviceRegistryNamespaceAssetData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DeviceRegistryNamespaceAssetData IPersistableModel<DeviceRegistryNamespaceAssetData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DeviceRegistryNamespaceAssetData)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryNamespaceAssetData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDeviceRegistryNamespaceAssetData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DeviceRegistryNamespaceAssetData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DeviceRegistryNamespaceAssetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="deviceRegistryNamespaceAssetData"> The <see cref="DeviceRegistryNamespaceAssetData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DeviceRegistryNamespaceAssetData deviceRegistryNamespaceAssetData)
-        {
-            if (deviceRegistryNamespaceAssetData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(deviceRegistryNamespaceAssetData, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DeviceRegistryNamespaceAssetData"/> from. </param>
-        internal static DeviceRegistryNamespaceAssetData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDeviceRegistryNamespaceAssetData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

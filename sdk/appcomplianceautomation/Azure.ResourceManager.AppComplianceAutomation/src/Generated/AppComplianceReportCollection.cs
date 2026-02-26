@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </list>
         /// </summary>
         /// <param name="skipToken"> Skip over when retrieving results. </param>
-        /// <param name="top"> Number of elements to return when retrieving results. </param>
+        /// <param name="maxCount"> Number of elements to return when retrieving results. </param>
         /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. ?$select=reportName,id. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="orderby"> OData order by query option. </param>
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppComplianceReportResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AppComplianceReportResource> GetAllAsync(string skipToken = default, int? top = default, string @select = default, string filter = default, string @orderby = default, string offerGuid = default, string reportCreatorTenantId = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AppComplianceReportResource> GetAllAsync(string skipToken = default, int? maxCount = default, string @select = default, string filter = default, string @orderby = default, string offerGuid = default, string reportCreatorTenantId = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             return new AsyncPageableWrapper<AppComplianceReportData, AppComplianceReportResource>(new ReportGetAllAsyncCollectionResultOfT(
                 _reportRestClient,
                 skipToken,
-                top,
+                maxCount,
                 @select,
                 filter,
                 @orderby,
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </list>
         /// </summary>
         /// <param name="skipToken"> Skip over when retrieving results. </param>
-        /// <param name="top"> Number of elements to return when retrieving results. </param>
+        /// <param name="maxCount"> Number of elements to return when retrieving results. </param>
         /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. ?$select=reportName,id. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="orderby"> OData order by query option. </param>
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppComplianceReportResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AppComplianceReportResource> GetAll(string skipToken = default, int? top = default, string @select = default, string filter = default, string @orderby = default, string offerGuid = default, string reportCreatorTenantId = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<AppComplianceReportResource> GetAll(string skipToken = default, int? maxCount = default, string @select = default, string filter = default, string @orderby = default, string offerGuid = default, string reportCreatorTenantId = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             return new PageableWrapper<AppComplianceReportData, AppComplianceReportResource>(new ReportGetAllCollectionResultOfT(
                 _reportRestClient,
                 skipToken,
-                top,
+                maxCount,
                 @select,
                 filter,
                 @orderby,

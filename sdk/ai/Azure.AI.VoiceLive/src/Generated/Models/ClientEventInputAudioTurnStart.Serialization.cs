@@ -19,6 +19,46 @@ namespace Azure.AI.VoiceLive
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ClientEvent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ClientEventInputAudioTurnStart>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeClientEventInputAudioTurnStart(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ClientEventInputAudioTurnStart)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ClientEventInputAudioTurnStart>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ClientEventInputAudioTurnStart)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ClientEventInputAudioTurnStart>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ClientEventInputAudioTurnStart IPersistableModel<ClientEventInputAudioTurnStart>.Create(BinaryData data, ModelReaderWriterOptions options) => (ClientEventInputAudioTurnStart)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ClientEventInputAudioTurnStart>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ClientEventInputAudioTurnStart>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -95,45 +135,5 @@ namespace Azure.AI.VoiceLive
             }
             return new ClientEventInputAudioTurnStart(@type, eventId, additionalBinaryDataProperties, turnId);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ClientEventInputAudioTurnStart>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ClientEventInputAudioTurnStart>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ClientEventInputAudioTurnStart)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ClientEventInputAudioTurnStart IPersistableModel<ClientEventInputAudioTurnStart>.Create(BinaryData data, ModelReaderWriterOptions options) => (ClientEventInputAudioTurnStart)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ClientEvent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ClientEventInputAudioTurnStart>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeClientEventInputAudioTurnStart(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ClientEventInputAudioTurnStart)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ClientEventInputAudioTurnStart>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

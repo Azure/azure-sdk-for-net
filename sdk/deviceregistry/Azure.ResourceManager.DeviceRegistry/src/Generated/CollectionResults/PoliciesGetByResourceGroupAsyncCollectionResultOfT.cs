@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                     yield break;
                 }
                 PolicyListResult result = PolicyListResult.FromResponse(response);
-                yield return Page<PolicyData>.FromValues((IReadOnlyList<PolicyData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<PolicyData>.FromValues((IReadOnlyList<PolicyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -4,8 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Azure.ResourceManager.DataLakeAnalytics.Models;
 using System.Threading;
+using Azure.ResourceManager.DataLakeAnalytics.Models;
 
 namespace Azure.ResourceManager.DataLakeAnalytics
 {

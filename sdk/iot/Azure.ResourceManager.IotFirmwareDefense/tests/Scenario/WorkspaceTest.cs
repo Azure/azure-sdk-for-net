@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
             var retrievedWorkspace = await rg.GetFirmwareAnalysisWorkspaceAsync(resourceName);
             await retrievedWorkspace.Value.DeleteAsync(WaitUntil.Completed);
             var action = async () => await rg.GetFirmwareAnalysisWorkspaceAsync(resourceName);
-            await action.Should ().ThrowAsync<Exception> ();
+            await action.Should().ThrowAsync<Exception>();
         }
     }
 }

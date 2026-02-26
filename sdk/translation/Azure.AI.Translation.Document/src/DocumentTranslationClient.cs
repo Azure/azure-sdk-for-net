@@ -211,7 +211,7 @@ namespace Azure.AI.Translation.Document
 
             try
             {
-                var operation = await GetDocumentTranslationClient().StartTranslationAsync(WaitUntil.Started,startTranslationDetails, cancellationToken).ConfigureAwait(false);
+                var operation = await GetDocumentTranslationClient().StartTranslationAsync(WaitUntil.Started, startTranslationDetails, cancellationToken).ConfigureAwait(false);
                 operation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string operationLocation);
                 return new DocumentTranslationOperation(this, ClientDiagnostics, operationLocation);
             }

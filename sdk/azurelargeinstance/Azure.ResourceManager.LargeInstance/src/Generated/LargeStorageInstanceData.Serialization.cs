@@ -28,6 +28,65 @@ namespace Azure.ResourceManager.LargeInstance
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LargeStorageInstanceData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeLargeStorageInstanceData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LargeStorageInstanceData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LargeStorageInstanceData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerLargeInstanceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(LargeStorageInstanceData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<LargeStorageInstanceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LargeStorageInstanceData IPersistableModel<LargeStorageInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (LargeStorageInstanceData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<LargeStorageInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="largeStorageInstanceData"> The <see cref="LargeStorageInstanceData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(LargeStorageInstanceData largeStorageInstanceData)
+        {
+            if (largeStorageInstanceData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(largeStorageInstanceData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="LargeStorageInstanceData"/> from. </param>
+        internal static LargeStorageInstanceData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeLargeStorageInstanceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LargeStorageInstanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -186,65 +245,6 @@ namespace Azure.ResourceManager.LargeInstance
                 location,
                 properties,
                 identity);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LargeStorageInstanceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LargeStorageInstanceData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerLargeInstanceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(LargeStorageInstanceData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        LargeStorageInstanceData IPersistableModel<LargeStorageInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (LargeStorageInstanceData)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LargeStorageInstanceData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeLargeStorageInstanceData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(LargeStorageInstanceData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LargeStorageInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="largeStorageInstanceData"> The <see cref="LargeStorageInstanceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(LargeStorageInstanceData largeStorageInstanceData)
-        {
-            if (largeStorageInstanceData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(largeStorageInstanceData, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="LargeStorageInstanceData"/> from. </param>
-        internal static LargeStorageInstanceData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeLargeStorageInstanceData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

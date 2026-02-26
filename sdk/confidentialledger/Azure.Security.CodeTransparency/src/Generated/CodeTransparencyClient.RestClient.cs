@@ -16,10 +16,10 @@ namespace Azure.Security.CodeTransparency
         private static ResponseClassifier _pipelineMessageClassifier200202;
         private static ResponseClassifier _pipelineMessageClassifier201202;
 
-        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
-        private static ResponseClassifier PipelineMessageClassifier200202 => _pipelineMessageClassifier200202 = new StatusCodeClassifier(stackalloc ushort[] { 200, 202 });
+        private static ResponseClassifier PipelineMessageClassifier200202 => _pipelineMessageClassifier200202 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 202 });
 
-        private static ResponseClassifier PipelineMessageClassifier201202 => _pipelineMessageClassifier201202 = new StatusCodeClassifier(stackalloc ushort[] { 201, 202 });
+        private static ResponseClassifier PipelineMessageClassifier201202 => _pipelineMessageClassifier201202 ??= new StatusCodeClassifier(stackalloc ushort[] { 201, 202 });
     }
 }

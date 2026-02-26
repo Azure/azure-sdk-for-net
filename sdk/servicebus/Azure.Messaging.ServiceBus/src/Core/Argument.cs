@@ -110,7 +110,7 @@ namespace Azure.Core
         ///
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="argumentValue"/> is less than <paramref name="minimumValue"/>.</exception>
         ///
-        public static void AssertAtLeast<T>(T argumentValue, T minimumValue, string argumentName)where T : notnull, IComparable<T>
+        public static void AssertAtLeast<T>(T argumentValue, T minimumValue, string argumentName) where T : notnull, IComparable<T>
         {
             if (minimumValue.CompareTo(argumentValue) > 0)
             {

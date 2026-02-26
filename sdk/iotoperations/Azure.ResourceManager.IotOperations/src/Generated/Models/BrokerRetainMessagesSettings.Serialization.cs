@@ -16,6 +16,46 @@ namespace Azure.ResourceManager.IotOperations.Models
     /// <summary> Broker Retain Messages properties. </summary>
     public partial class BrokerRetainMessagesSettings : IJsonModel<BrokerRetainMessagesSettings>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BrokerRetainMessagesSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BrokerRetainMessagesSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBrokerRetainMessagesSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BrokerRetainMessagesSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BrokerRetainMessagesSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BrokerRetainMessagesSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BrokerRetainMessagesSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BrokerRetainMessagesSettings IPersistableModel<BrokerRetainMessagesSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BrokerRetainMessagesSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BrokerRetainMessagesSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -138,45 +178,5 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
             return new BrokerRetainMessagesSettings(topics ?? new ChangeTrackingList<string>(), dynamic, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BrokerRetainMessagesSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BrokerRetainMessagesSettings>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BrokerRetainMessagesSettings)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BrokerRetainMessagesSettings IPersistableModel<BrokerRetainMessagesSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BrokerRetainMessagesSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BrokerRetainMessagesSettings>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBrokerRetainMessagesSettings(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BrokerRetainMessagesSettings)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BrokerRetainMessagesSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

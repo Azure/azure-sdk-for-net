@@ -16,6 +16,58 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> Document analysis parameters. </summary>
     public partial class AnalyzeDocumentOptions : IJsonModel<AnalyzeDocumentOptions>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AnalyzeDocumentOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeDocumentOptions>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAnalyzeDocumentOptions(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AnalyzeDocumentOptions)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeDocumentOptions>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIDocumentIntelligenceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AnalyzeDocumentOptions)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AnalyzeDocumentOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AnalyzeDocumentOptions IPersistableModel<AnalyzeDocumentOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AnalyzeDocumentOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="analyzeDocumentOptions"> The <see cref="AnalyzeDocumentOptions"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(AnalyzeDocumentOptions analyzeDocumentOptions)
+        {
+            if (analyzeDocumentOptions == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(analyzeDocumentOptions, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AnalyzeDocumentOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -97,7 +149,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    uriSource = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    uriSource = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("base64Source"u8))
@@ -115,58 +167,6 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             return new AnalyzeDocumentOptions(uriSource, bytesSource, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AnalyzeDocumentOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeDocumentOptions>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIDocumentIntelligenceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AnalyzeDocumentOptions)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AnalyzeDocumentOptions IPersistableModel<AnalyzeDocumentOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AnalyzeDocumentOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeDocumentOptions>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAnalyzeDocumentOptions(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AnalyzeDocumentOptions)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AnalyzeDocumentOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="analyzeDocumentOptions"> The <see cref="AnalyzeDocumentOptions"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(AnalyzeDocumentOptions analyzeDocumentOptions)
-        {
-            if (analyzeDocumentOptions == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(analyzeDocumentOptions, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

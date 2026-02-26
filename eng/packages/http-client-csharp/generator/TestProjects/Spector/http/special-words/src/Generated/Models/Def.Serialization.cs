@@ -16,6 +16,19 @@ namespace SpecialWords._Models
     {
         internal Def() => throw null;
 
+        protected virtual Def PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        BinaryData IPersistableModel<Def>.Write(ModelReaderWriterOptions options) => throw null;
+
+        Def IPersistableModel<Def>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        string IPersistableModel<Def>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
+        /// <param name="def"> The <see cref="Def"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(Def def) => throw null;
+
         void IJsonModel<Def>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -23,18 +36,5 @@ namespace SpecialWords._Models
         Def IJsonModel<Def>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual Def JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<Def>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
-        Def IPersistableModel<Def>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual Def PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        string IPersistableModel<Def>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        /// <param name="def"> The <see cref="Def"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(Def def) => throw null;
     }
 }

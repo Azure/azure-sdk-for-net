@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             string appPrefix = "pref";
             string skip = "a6a321";
             int? top = 20;
-            await foreach (string item in localRulestack.GetAppIdsAsync(appIdVersion: appIdVersion, appPrefix: appPrefix, skip: skip, top: top))
+            await foreach (string item in localRulestack.GetAppIdsAsync(appIdVersion: appIdVersion, appPrefix: appPrefix, skip: skip, maxCount: top))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // invoke the operation and iterate over the result
             string skip = "a6a321";
             int? top = 20;
-            await foreach (RulestackCountry item in localRulestack.GetCountriesAsync(skip: skip, top: top))
+            await foreach (RulestackCountry item in localRulestack.GetCountriesAsync(skip: skip, maxCount: top))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // invoke the operation and iterate over the result
             string skip = "a6a321";
             int? top = 20;
-            await foreach (PredefinedUrlCategory item in localRulestack.GetPredefinedUrlCategoriesAsync(skip: skip, top: top))
+            await foreach (PredefinedUrlCategory item in localRulestack.GetPredefinedUrlCategoriesAsync(skip: skip, maxCount: top))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

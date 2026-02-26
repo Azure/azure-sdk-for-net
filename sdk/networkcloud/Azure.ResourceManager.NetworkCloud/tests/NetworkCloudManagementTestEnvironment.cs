@@ -87,7 +87,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests
 
                 // Fall back to using base implementation if USE_DEFAULT_CRED environment variable isn't "true"
                 // so CI works using previous behavior of using a service principal for tests.
-                if (GetOptionalVariable("USE_DEFAULT_CRED") != "true") {
+                if (GetOptionalVariable("USE_DEFAULT_CRED") != "true")
+                {
                     _credential = base.Credential;
                 }
                 else if (Mode == RecordedTestMode.Playback)

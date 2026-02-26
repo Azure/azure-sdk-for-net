@@ -17,6 +17,58 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Pre Restore request object. </summary>
     public partial class PreRestoreContent : IJsonModel<PreRestoreContent>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PreRestoreContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PreRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePreRestoreContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PreRestoreContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PreRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageSyncContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PreRestoreContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PreRestoreContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PreRestoreContent IPersistableModel<PreRestoreContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PreRestoreContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="preRestoreContent"> The <see cref="PreRestoreContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(PreRestoreContent preRestoreContent)
+        {
+            if (preRestoreContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(preRestoreContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PreRestoreContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -160,7 +212,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    azureFileShareUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    azureFileShareUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -174,7 +226,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    sourceAzureFileShareUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    sourceAzureFileShareUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("backupMetadataPropertyBag"u8))
@@ -221,58 +273,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                 restoreFileSpec ?? new ChangeTrackingList<RestoreFileSpec>(),
                 pauseWaitForSyncDrainTimePeriodInSeconds,
                 additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PreRestoreContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PreRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageSyncContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PreRestoreContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PreRestoreContent IPersistableModel<PreRestoreContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PreRestoreContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PreRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePreRestoreContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PreRestoreContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PreRestoreContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="preRestoreContent"> The <see cref="PreRestoreContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(PreRestoreContent preRestoreContent)
-        {
-            if (preRestoreContent == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(preRestoreContent, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

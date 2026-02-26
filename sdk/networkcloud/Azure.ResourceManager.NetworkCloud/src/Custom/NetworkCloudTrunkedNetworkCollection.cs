@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudTrunkedNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<NetworkCloudTrunkedNetworkResource> GetAllAsync(CancellationToken cancellationToken)
-			=> GetAllAsync(null, null, cancellationToken);
+            => GetAllAsync(null, null, cancellationToken);
 
         /// <summary>
         /// Get a list of trunked networks in the provided resource group.
@@ -125,6 +125,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudTrunkedNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<NetworkCloudTrunkedNetworkResource> GetAll(CancellationToken cancellationToken)
-			=> GetAll(null, null, cancellationToken);
+            => GetAll(null, null, cancellationToken);
     }
 }

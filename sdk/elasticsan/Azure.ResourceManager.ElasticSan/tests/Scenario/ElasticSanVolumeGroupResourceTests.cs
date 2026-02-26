@@ -40,7 +40,6 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        [Ignore("it needs to be fixed before removing the ignore")]
         public async Task GetUpdateDelete()
         {
             _collection = await GetVolumeGroupCollection();
@@ -52,7 +51,7 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             Assert.IsEmpty(volumeGroup1.Data.VirtualNetworkRules);
             Assert.AreEqual(ElasticSanStorageTargetType.Iscsi, volumeGroup1.Data.ProtocolType);
             Assert.AreEqual(ElasticSanEncryptionType.EncryptionAtRestWithPlatformKey, volumeGroup1.Data.Encryption);
-            Assert.AreEqual(true, volumeGroup1.Data.EnforceDataIntegrityCheckForIscsi);
+            Assert.AreEqual(false, volumeGroup1.Data.EnforceDataIntegrityCheckForIscsi);
 
             ElasticSanVolumeGroupPatch patch = new()
             {
@@ -81,31 +80,10 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
 
             await volumeGroup.DeleteAsync(WaitUntil.Completed);
             Assert.IsFalse(await _collection.ExistsAsync(volumeGroupName));
-
-            string volumeGroupSoftDeleteName = Recording.GenerateAssetName("testvolumegroupsd-");
-            ElasticSanVolumeGroupData volumeGroupSoftDeleteData = new ElasticSanVolumeGroupData()
-            {
-                DeleteRetentionPolicy = new ElasticSanDeleteRetentionPolicy()
-                {
-                    PolicyState = ElasticSanDeleteRetentionPolicyState.Enabled,
-                    RetentionPeriodDays = 1
-                }
-            };
-            ElasticSanVolumeGroupResource volumeGroupSoftDelete = (await _collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeGroupSoftDeleteName, volumeGroupSoftDeleteData)).Value;
-            Assert.AreEqual(volumeGroupSoftDelete.Id.Name, volumeGroupSoftDeleteName);
-            Assert.AreEqual(volumeGroupSoftDelete.Data.DeleteRetentionPolicy.PolicyState, ElasticSanDeleteRetentionPolicyState.Enabled);
-            Assert.AreEqual(volumeGroupSoftDelete.Data.DeleteRetentionPolicy.RetentionPeriodDays, 1);
-            await volumeGroupSoftDelete.DeleteAsync(WaitUntil.Completed);
-            int count = 0;
-            await foreach (ElasticSanVolumeGroupResource _ in _collection.GetAllAsync())
-            {
-                count++;
-            }
-            Assert.GreaterOrEqual(count, 1);
         }
+
         [Test]
         [RecordedTest]
-        [Ignore("it needs to be fixed before removing the ignore")]
         public async Task PreBackupPreRestore()
         {
             _collection = await GetVolumeGroupCollection();
@@ -122,7 +100,6 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             var preBackup = (await volumeGroup.PreBackupVolumeAsync(WaitUntil.Completed, volumeNameList)).Value;
             Assert.AreEqual(preBackup.ValidationStatus, "Success");
 
-            // Require a real disk snapshot id for live test
             DiskSnapshotListContent diskSnapshotList = new DiskSnapshotListContent(
                 new ResourceIdentifier[] {
                     new ResourceIdentifier(

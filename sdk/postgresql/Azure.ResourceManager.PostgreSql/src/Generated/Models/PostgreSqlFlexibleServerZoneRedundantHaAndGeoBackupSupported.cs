@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Indicates if high availability with zone redundancy is supported in conjunction with geographically redundant backups in this location. 'Enabled' means high availability with zone redundancy is supported in conjunction with geographically redundant backups is supported. 'Disabled' stands for high availability with zone redundancy is supported in conjunction with geographically redundant backups is not supported. Will be deprecated in the future. Look to Supported Features for 'ZoneRedundantHaAndGeoBackup'.
-    /// Serialized Name: ZoneRedundantHighAvailabilityAndGeographicallyRedundantBackupSupport
-    /// </summary>
+    /// <summary> Indicates if high availability with zone redundancy is supported in conjunction with geographically redundant backups in this location. 'Enabled' means high availability with zone redundancy is supported in conjunction with geographically redundant backups is supported. 'Disabled' stands for high availability with zone redundancy is supported in conjunction with geographically redundant backups is not supported. Will be deprecated in the future. Look to Supported Features for 'ZoneRedundantHaAndGeoBackup'. </summary>
     public readonly partial struct PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported : IEquatable<PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: ZoneRedundantHighAvailabilityAndGeographicallyRedundantBackupSupport.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported Enabled { get; } = new PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported(EnabledValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: ZoneRedundantHighAvailabilityAndGeographicallyRedundantBackupSupport.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported Disabled { get; } = new PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported(DisabledValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported left, PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported right) => left.Equals(right);

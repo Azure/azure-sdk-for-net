@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.Advisor
             uri.AppendPath(recommendationId, true);
             uri.AppendPath("/suppressions/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -70,7 +73,10 @@ namespace Azure.ResourceManager.Advisor
             uri.AppendPath(recommendationId, true);
             uri.AppendPath("/suppressions/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -91,7 +97,10 @@ namespace Azure.ResourceManager.Advisor
             uri.AppendPath(recommendationId, true);
             uri.AppendPath("/suppressions/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

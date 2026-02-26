@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs
                     yield break;
                 }
                 WorkloadNetworkGatewayList result = WorkloadNetworkGatewayList.FromResponse(response);
-                yield return Page<WorkloadNetworkGatewayData>.FromValues((IReadOnlyList<WorkloadNetworkGatewayData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<WorkloadNetworkGatewayData>.FromValues((IReadOnlyList<WorkloadNetworkGatewayData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -50,7 +50,10 @@ namespace Azure.ResourceManager.RecoveryServices
             uri.AppendPath("/providers/Microsoft.RecoveryServices/locations/", false);
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/deletedVaults", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -62,7 +65,18 @@ namespace Azure.ResourceManager.RecoveryServices
         internal HttpMessage CreateNextGetBySubscriptionIdRequest(Uri nextPage, string subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -81,7 +95,10 @@ namespace Azure.ResourceManager.RecoveryServices
             uri.AppendPath(location, true);
             uri.AppendPath("/deletedVaults/", false);
             uri.AppendPath(deletedVaultName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -101,7 +118,10 @@ namespace Azure.ResourceManager.RecoveryServices
             uri.AppendPath("/deletedVaults/", false);
             uri.AppendPath(deletedVaultName, true);
             uri.AppendPath("/undelete", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

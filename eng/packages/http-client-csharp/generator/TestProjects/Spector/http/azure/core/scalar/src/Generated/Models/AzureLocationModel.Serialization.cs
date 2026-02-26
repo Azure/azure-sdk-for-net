@@ -17,21 +17,13 @@ namespace Specs.Azure.Core.Scalar
     {
         internal AzureLocationModel() => throw null;
 
-        void IJsonModel<AzureLocationModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        AzureLocationModel IJsonModel<AzureLocationModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual AzureLocationModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<AzureLocationModel>.Write(ModelReaderWriterOptions options) => throw null;
+        protected virtual AzureLocationModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        AzureLocationModel IPersistableModel<AzureLocationModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<AzureLocationModel>.Write(ModelReaderWriterOptions options) => throw null;
 
-        protected virtual AzureLocationModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        AzureLocationModel IPersistableModel<AzureLocationModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<AzureLocationModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
@@ -39,5 +31,13 @@ namespace Specs.Azure.Core.Scalar
         public static implicit operator RequestContent(AzureLocationModel azureLocationModel) => throw null;
 
         public static explicit operator AzureLocationModel(Response response) => throw null;
+
+        void IJsonModel<AzureLocationModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        AzureLocationModel IJsonModel<AzureLocationModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual AzureLocationModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }
 }

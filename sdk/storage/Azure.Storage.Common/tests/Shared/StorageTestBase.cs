@@ -11,13 +11,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.Identity;
 using Azure.Storage.Sas;
 using Azure.Storage.Tests.Shared;
 using Microsoft.Identity.Client;
-using NUnit.Framework;
-using Azure.Core.TestFramework.Models;
 using Newtonsoft.Json.Linq;
+using NUnit.Framework;
 
 #pragma warning disable SA1402 // File may only contain a single type
 

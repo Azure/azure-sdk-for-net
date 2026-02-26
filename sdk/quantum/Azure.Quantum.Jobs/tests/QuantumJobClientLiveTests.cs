@@ -8,15 +8,15 @@ using System.IO.Compression;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.Quantum.Jobs.Models;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using NUnit.Framework;
-using Azure.Core.TestFramework.Models;
 
 namespace Azure.Quantum.Jobs.Tests
 {
-    public class QuantumJobClientLiveTests: RecordedTestBase<QuantumJobClientTestEnvironment>
+    public class QuantumJobClientLiveTests : RecordedTestBase<QuantumJobClientTestEnvironment>
     {
         public const string ZERO_UID = "00000000-0000-0000-0000-000000000000";
         public const string TENANT_ID = "72f988bf-86f1-41af-91ab-2d7cd011db47";
@@ -213,7 +213,7 @@ namespace Azure.Quantum.Jobs.Tests
                 Assert.IsNotNull(quota.Utilization);
                 Assert.IsNotNull(quota.Holds);
                 Assert.IsNotNull(quota.Period);
-               ++index;
+                ++index;
             }
 
             // Should have at least a couple in the list.

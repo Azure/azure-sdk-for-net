@@ -15,6 +15,46 @@ namespace Azure.AI.VoiceLive
     /// <summary> Returned when a conversation item is retrieved with `conversation.item.retrieve`. </summary>
     public partial class SessionUpdateConversationItemRetrieved : SessionUpdate, IJsonModel<SessionUpdateConversationItemRetrieved>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SessionUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateConversationItemRetrieved>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSessionUpdateConversationItemRetrieved(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SessionUpdateConversationItemRetrieved)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateConversationItemRetrieved>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SessionUpdateConversationItemRetrieved)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SessionUpdateConversationItemRetrieved>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SessionUpdateConversationItemRetrieved IPersistableModel<SessionUpdateConversationItemRetrieved>.Create(BinaryData data, ModelReaderWriterOptions options) => (SessionUpdateConversationItemRetrieved)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SessionUpdateConversationItemRetrieved>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SessionUpdateConversationItemRetrieved>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -103,45 +143,5 @@ namespace Azure.AI.VoiceLive
             }
             return new SessionUpdateConversationItemRetrieved(@type, additionalBinaryDataProperties, item, eventId);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SessionUpdateConversationItemRetrieved>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateConversationItemRetrieved>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SessionUpdateConversationItemRetrieved)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SessionUpdateConversationItemRetrieved IPersistableModel<SessionUpdateConversationItemRetrieved>.Create(BinaryData data, ModelReaderWriterOptions options) => (SessionUpdateConversationItemRetrieved)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SessionUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateConversationItemRetrieved>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSessionUpdateConversationItemRetrieved(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SessionUpdateConversationItemRetrieved)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SessionUpdateConversationItemRetrieved>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

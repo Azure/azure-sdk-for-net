@@ -10,5 +10,5 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary> Configuration for the agent. </summary>
     internal partial class RespondingAgentOptions
-    {}
+    { }
 }

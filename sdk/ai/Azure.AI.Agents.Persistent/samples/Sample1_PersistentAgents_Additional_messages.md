@@ -126,7 +126,7 @@ foreach (PersistentThreadMessage threadMessage in messages)
 
 Asynchronous sample:
 ```C# Snippet:Sample_PersistentAgent_Multiple_Messages_PrintAsync
-AsyncPageable<PersistentThreadMessage> messages = agentClient.Messages.GetMessagesAsync(thread.Id, order:ListSortOrder.Ascending);
+AsyncPageable<PersistentThreadMessage> messages = agentClient.Messages.GetMessagesAsync(thread.Id, order: ListSortOrder.Ascending);
 
 await foreach (PersistentThreadMessage threadMessage in messages)
 {

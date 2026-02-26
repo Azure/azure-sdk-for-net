@@ -20,6 +20,65 @@ namespace Azure.ResourceManager.InformaticaDataManagement
     /// <summary> A Serverless Runtime environment  resource by Informatica. </summary>
     public partial class InformaticaServerlessRuntimeData : ResourceData, IJsonModel<InformaticaServerlessRuntimeData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InformaticaServerlessRuntimeData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeInformaticaServerlessRuntimeData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InformaticaServerlessRuntimeData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InformaticaServerlessRuntimeData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerInformaticaDataManagementContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(InformaticaServerlessRuntimeData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InformaticaServerlessRuntimeData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InformaticaServerlessRuntimeData IPersistableModel<InformaticaServerlessRuntimeData>.Create(BinaryData data, ModelReaderWriterOptions options) => (InformaticaServerlessRuntimeData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InformaticaServerlessRuntimeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="informaticaServerlessRuntimeData"> The <see cref="InformaticaServerlessRuntimeData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(InformaticaServerlessRuntimeData informaticaServerlessRuntimeData)
+        {
+            if (informaticaServerlessRuntimeData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(informaticaServerlessRuntimeData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="InformaticaServerlessRuntimeData"/> from. </param>
+        internal static InformaticaServerlessRuntimeData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeInformaticaServerlessRuntimeData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InformaticaServerlessRuntimeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -132,65 +191,6 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 systemData,
                 additionalBinaryDataProperties,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InformaticaServerlessRuntimeData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<InformaticaServerlessRuntimeData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerInformaticaDataManagementContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(InformaticaServerlessRuntimeData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InformaticaServerlessRuntimeData IPersistableModel<InformaticaServerlessRuntimeData>.Create(BinaryData data, ModelReaderWriterOptions options) => (InformaticaServerlessRuntimeData)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<InformaticaServerlessRuntimeData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeInformaticaServerlessRuntimeData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(InformaticaServerlessRuntimeData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InformaticaServerlessRuntimeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="informaticaServerlessRuntimeData"> The <see cref="InformaticaServerlessRuntimeData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(InformaticaServerlessRuntimeData informaticaServerlessRuntimeData)
-        {
-            if (informaticaServerlessRuntimeData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(informaticaServerlessRuntimeData, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="InformaticaServerlessRuntimeData"/> from. </param>
-        internal static InformaticaServerlessRuntimeData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeInformaticaServerlessRuntimeData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

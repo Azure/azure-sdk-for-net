@@ -25,6 +25,65 @@ namespace Azure.ResourceManager.ConnectedCache
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EnterpriseMccCacheNodeData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeEnterpriseMccCacheNodeData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EnterpriseMccCacheNodeData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EnterpriseMccCacheNodeData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConnectedCacheContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(EnterpriseMccCacheNodeData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<EnterpriseMccCacheNodeData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EnterpriseMccCacheNodeData IPersistableModel<EnterpriseMccCacheNodeData>.Create(BinaryData data, ModelReaderWriterOptions options) => (EnterpriseMccCacheNodeData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EnterpriseMccCacheNodeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="enterpriseMccCacheNodeData"> The <see cref="EnterpriseMccCacheNodeData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(EnterpriseMccCacheNodeData enterpriseMccCacheNodeData)
+        {
+            if (enterpriseMccCacheNodeData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(enterpriseMccCacheNodeData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EnterpriseMccCacheNodeData"/> from. </param>
+        internal static EnterpriseMccCacheNodeData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeEnterpriseMccCacheNodeData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EnterpriseMccCacheNodeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -167,65 +226,6 @@ namespace Azure.ResourceManager.ConnectedCache
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EnterpriseMccCacheNodeData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EnterpriseMccCacheNodeData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConnectedCacheContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(EnterpriseMccCacheNodeData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        EnterpriseMccCacheNodeData IPersistableModel<EnterpriseMccCacheNodeData>.Create(BinaryData data, ModelReaderWriterOptions options) => (EnterpriseMccCacheNodeData)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EnterpriseMccCacheNodeData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeEnterpriseMccCacheNodeData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EnterpriseMccCacheNodeData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EnterpriseMccCacheNodeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="enterpriseMccCacheNodeData"> The <see cref="EnterpriseMccCacheNodeData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(EnterpriseMccCacheNodeData enterpriseMccCacheNodeData)
-        {
-            if (enterpriseMccCacheNodeData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(enterpriseMccCacheNodeData, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EnterpriseMccCacheNodeData"/> from. </param>
-        internal static EnterpriseMccCacheNodeData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeEnterpriseMccCacheNodeData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

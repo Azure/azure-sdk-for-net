@@ -22,6 +22,53 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AzureKeyVaultSecretProviderClassListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureKeyVaultSecretProviderClassListResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAzureKeyVaultSecretProviderClassListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureKeyVaultSecretProviderClassListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureKeyVaultSecretProviderClassListResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecretsStoreExtensionContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AzureKeyVaultSecretProviderClassListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AzureKeyVaultSecretProviderClassListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureKeyVaultSecretProviderClassListResult IPersistableModel<AzureKeyVaultSecretProviderClassListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AzureKeyVaultSecretProviderClassListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AzureKeyVaultSecretProviderClassListResult"/> from. </param>
+        internal static AzureKeyVaultSecretProviderClassListResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAzureKeyVaultSecretProviderClassListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AzureKeyVaultSecretProviderClassListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -115,7 +162,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
                     {
                         continue;
                     }
-                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")
@@ -124,53 +171,6 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
                 }
             }
             return new AzureKeyVaultSecretProviderClassListResult(value, nextLink, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AzureKeyVaultSecretProviderClassListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureKeyVaultSecretProviderClassListResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecretsStoreExtensionContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AzureKeyVaultSecretProviderClassListResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AzureKeyVaultSecretProviderClassListResult IPersistableModel<AzureKeyVaultSecretProviderClassListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AzureKeyVaultSecretProviderClassListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureKeyVaultSecretProviderClassListResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAzureKeyVaultSecretProviderClassListResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AzureKeyVaultSecretProviderClassListResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AzureKeyVaultSecretProviderClassListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AzureKeyVaultSecretProviderClassListResult"/> from. </param>
-        internal static AzureKeyVaultSecretProviderClassListResult FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAzureKeyVaultSecretProviderClassListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

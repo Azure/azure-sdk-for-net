@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<BackupProtectionPolicyResource> Update(WaitUntil waitUntil, BackupProtectionPolicyData data, CancellationToken cancellationToken)
         {
-            return Update(waitUntil, data,xMsAuthorizationAuxiliary: null, cancellationToken: cancellationToken);
+            return Update(waitUntil, data, xMsAuthorizationAuxiliary: null, cancellationToken: cancellationToken);
         }
 
         /// <summary>

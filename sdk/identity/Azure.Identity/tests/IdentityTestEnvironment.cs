@@ -42,9 +42,9 @@ namespace Azure.Identity.Tests
         public string ServicePrincipalCertificatePfxPath => GetOptionalVariable("IDENTITY_SP_CERT_PFX") ?? Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
         public string ServicePrincipalCertificatePemPath => GetOptionalVariable("IDENTITY_SP_CERT_PEM") ?? Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
         public string ServicePrincipalSniCertificatePath => GetOptionalVariable("IDENTITY_SP_CERT_SNI") ?? Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
-        public string IdentityTestWebName =>  GetRecordedVariable("IDENTITY_WEBAPP_NAME");
-        public string VMUserAssignedManagedIdentityClientId =>  GetOptionalVariable("IDENTITY_VM_USER_ASSIGNED_MI_CLIENT_ID");
-        public string VMUserAssignedManagedIdentityObjectId =>  GetOptionalVariable("IDENTITY_VM_USER_ASSIGNED_MI_OBJECT_ID");
-        public string IdentityTestAzFuncName =>  GetRecordedVariable("IDENTITY_FUNCTION_NAME");
+        public string IdentityTestWebName => GetRecordedVariable("IDENTITY_WEBAPP_NAME");
+        public string VMUserAssignedManagedIdentityClientId => GetOptionalVariable("IDENTITY_VM_USER_ASSIGNED_MI_CLIENT_ID");
+        public string VMUserAssignedManagedIdentityObjectId => GetOptionalVariable("IDENTITY_VM_USER_ASSIGNED_MI_OBJECT_ID");
+        public string IdentityTestAzFuncName => GetRecordedVariable("IDENTITY_FUNCTION_NAME");
     }
 }

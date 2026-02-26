@@ -14,8 +14,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 {
     public class VolumesTests : NetworkCloudManagementTestBase
     {
-        public VolumesTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) {}
-        public VolumesTests(bool isAsync) : base(isAsync) {}
+        public VolumesTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) { }
+        public VolumesTests(bool isAsync) : base(isAsync) { }
 
         [Test]
         [RecordedTest]

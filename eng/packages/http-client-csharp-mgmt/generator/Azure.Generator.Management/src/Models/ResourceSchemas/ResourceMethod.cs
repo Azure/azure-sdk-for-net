@@ -7,7 +7,13 @@ using System.Text.Json;
 
 namespace Azure.Generator.Management.Models;
 
-internal record ResourceMethod(ResourceOperationKind Kind, InputServiceMethod InputMethod, string OperationPath, ResourceScope OperationScope, string? ResourceScope, InputClient InputClient)
+internal record ResourceMethod(
+    ResourceOperationKind Kind,
+    InputServiceMethod InputMethod,
+    string OperationPath,
+    ResourceScope OperationScope,
+    string? ResourceScope,
+    InputClient InputClient)
 {
     internal static ResourceMethod DeserializeResourceMethod(JsonElement element)
     {

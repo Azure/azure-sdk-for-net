@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
@@ -334,6 +335,111 @@ namespace Azure.Core.Tests
             Assert.That(xmlContent, Contains.Substring("<name>mixed</name>"));
             Assert.That(xmlContent, Contains.Substring("<value>456</value>"));
             Assert.That(xmlContent, Contains.Substring("</TestMixedFormatModel>"));
+        }
+
+        [Test]
+        public void StringContentIdempotentDispose()
+        {
+            const string testString = "sample content for disposal test";
+            var content = RequestContent.Create(testString);
+
+            // Dispose multiple times - should not throw or cause issues
+            content.Dispose();
+            content.Dispose();
+            content.Dispose();
+
+            // Should not throw
+            Assert.Pass();
+        }
+
+        [Test]
+        public void StreamContentIdempotentDispose()
+        {
+            var stream = new MemoryStream(new byte[100]);
+            var content = RequestContent.Create(stream);
+
+            // Dispose multiple times - should not throw
+            content.Dispose();
+            content.Dispose();
+
+            // Should not throw
+            Assert.Pass();
+        }
+
+        [Test]
+        public void DynamicDataContentIdempotentDispose()
+        {
+            ReadOnlySpan<byte> utf8Json = """
+                {
+                    "test" : "value"
+                }
+                """u8;
+            ReadOnlyMemory<byte> json = new ReadOnlyMemory<byte>(utf8Json.ToArray());
+
+            dynamic source = new BinaryData(json).ToDynamicFromJson();
+            RequestContent content = RequestContent.Create(source);
+
+            // Dispose multiple times - should not throw
+            content.Dispose();
+            content.Dispose();
+
+            // Should not throw
+            Assert.Pass();
+        }
+
+        [Test]
+        public void PersistableModelContentIdempotentDispose()
+        {
+            var model = new TestPersistableModel { Name = "test", Value = 42 };
+            var content = RequestContent.Create(model);
+
+            // Dispose multiple times - should not throw
+            content.Dispose();
+            content.Dispose();
+
+            // Should not throw
+            Assert.Pass();
+        }
+
+        [Test]
+        public void StringContentDisposeDoesNotReturnBufferTwice()
+        {
+            const string testString = "test content for array pool";
+            var content = RequestContent.Create(testString);
+
+            // Dispose twice
+            content.Dispose();
+            content.Dispose();
+
+            // Now rent multiple arrays and ensure we don't get duplicates
+            var pool = ArrayPool<byte>.Shared;
+            var rentedArrays = new List<byte[]>(100);
+            try
+            {
+                for (int i = 0; i < 100; i++)
+                {
+                    byte[] rented = pool.Rent(1024);
+
+                    // Check for duplicates using reference equality
+                    foreach (var existing in rentedArrays)
+                    {
+                        if (ReferenceEquals(existing, rented))
+                        {
+                            Assert.Fail("Array pool returned the same array instance twice.");
+                        }
+                    }
+
+                    rentedArrays.Add(rented);
+                }
+            }
+            finally
+            {
+                // Clean up
+                foreach (var array in rentedArrays)
+                {
+                    pool.Return(array);
+                }
+            }
         }
     }
 }

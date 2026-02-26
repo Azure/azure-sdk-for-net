@@ -329,7 +329,26 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Type.Enum.Extensible.String.getKnownValue.accept"
+                    "crossLanguageDefinitionId": "Type.Enum.Extensible.String.getKnownValue.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "34",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "10"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Type.Enum.Extensible.String.getKnownValue.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -367,21 +386,7 @@
               },
               "parameters": [
                 {
-                  "$id": "34",
-                  "kind": "method",
-                  "name": "accept",
-                  "serializedName": "Accept",
-                  "type": {
-                    "$ref": "10"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Type.Enum.Extensible.String.getKnownValue.accept",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "34"
                 }
               ],
               "response": {
@@ -420,7 +425,26 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Type.Enum.Extensible.String.getUnknownValue.accept"
+                    "crossLanguageDefinitionId": "Type.Enum.Extensible.String.getUnknownValue.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "38",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "14"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Type.Enum.Extensible.String.getUnknownValue.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -458,21 +482,7 @@
               },
               "parameters": [
                 {
-                  "$id": "38",
-                  "kind": "method",
-                  "name": "accept",
-                  "serializedName": "Accept",
-                  "type": {
-                    "$ref": "14"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Type.Enum.Extensible.String.getUnknownValue.accept",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "38"
                 }
               ],
               "response": {
@@ -511,10 +521,29 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Type.Enum.Extensible.String.putKnownValue.contentType"
+                    "crossLanguageDefinitionId": "Type.Enum.Extensible.String.putKnownValue.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "42",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "type": {
+                          "$ref": "18"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Type.Enum.Extensible.String.putKnownValue.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "42",
+                    "$id": "43",
                     "kind": "body",
                     "name": "body",
                     "serializedName": "body",
@@ -530,7 +559,26 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Type.Enum.Extensible.String.putKnownValue.body"
+                    "crossLanguageDefinitionId": "Type.Enum.Extensible.String.putKnownValue.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "44",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "1"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Type.Enum.Extensible.String.putKnownValue.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -557,38 +605,10 @@
               },
               "parameters": [
                 {
-                  "$id": "43",
-                  "kind": "method",
-                  "name": "contentType",
-                  "serializedName": "Content-Type",
-                  "type": {
-                    "$ref": "20"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Type.Enum.Extensible.String.putKnownValue.contentType",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "42"
                 },
                 {
-                  "$id": "44",
-                  "kind": "method",
-                  "name": "body",
-                  "serializedName": "body",
-                  "type": {
-                    "$ref": "1"
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Type.Enum.Extensible.String.putKnownValue.body",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "44"
                 }
               ],
               "response": {},
@@ -623,10 +643,29 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Type.Enum.Extensible.String.putUnknownValue.contentType"
+                    "crossLanguageDefinitionId": "Type.Enum.Extensible.String.putUnknownValue.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "48",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "type": {
+                          "$ref": "22"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Type.Enum.Extensible.String.putUnknownValue.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "48",
+                    "$id": "49",
                     "kind": "body",
                     "name": "body",
                     "serializedName": "body",
@@ -642,7 +681,26 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Type.Enum.Extensible.String.putUnknownValue.body"
+                    "crossLanguageDefinitionId": "Type.Enum.Extensible.String.putUnknownValue.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "50",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "1"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Type.Enum.Extensible.String.putUnknownValue.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -669,38 +727,10 @@
               },
               "parameters": [
                 {
-                  "$id": "49",
-                  "kind": "method",
-                  "name": "contentType",
-                  "serializedName": "Content-Type",
-                  "type": {
-                    "$ref": "24"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Type.Enum.Extensible.String.putUnknownValue.contentType",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "48"
                 },
                 {
-                  "$id": "50",
-                  "kind": "method",
-                  "name": "body",
-                  "serializedName": "body",
-                  "type": {
-                    "$ref": "1"
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Type.Enum.Extensible.String.putUnknownValue.body",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "50"
                 }
               ],
               "response": {},

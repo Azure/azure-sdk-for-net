@@ -16,6 +16,46 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     /// <summary> Connect information from the dedicated hsm service to a single endpoint. </summary>
     public partial class DedicatedHsmEndpointDetail : IJsonModel<DedicatedHsmEndpointDetail>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DedicatedHsmEndpointDetail PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DedicatedHsmEndpointDetail>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDedicatedHsmEndpointDetail(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DedicatedHsmEndpointDetail)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DedicatedHsmEndpointDetail>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DedicatedHsmEndpointDetail)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DedicatedHsmEndpointDetail>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DedicatedHsmEndpointDetail IPersistableModel<DedicatedHsmEndpointDetail>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DedicatedHsmEndpointDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DedicatedHsmEndpointDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -134,45 +174,5 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             }
             return new DedicatedHsmEndpointDetail(ipAddress, port, protocol, description, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DedicatedHsmEndpointDetail>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DedicatedHsmEndpointDetail>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DedicatedHsmEndpointDetail)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DedicatedHsmEndpointDetail IPersistableModel<DedicatedHsmEndpointDetail>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DedicatedHsmEndpointDetail PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DedicatedHsmEndpointDetail>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDedicatedHsmEndpointDetail(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DedicatedHsmEndpointDetail)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DedicatedHsmEndpointDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

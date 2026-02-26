@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.Nginx
             uri.AppendPath(deploymentName, true);
             uri.AppendPath("/wafPolicies/", false);
             uri.AppendPath(wafPolicyName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +77,10 @@ namespace Azure.ResourceManager.Nginx
             uri.AppendPath(deploymentName, true);
             uri.AppendPath("/wafPolicies/", false);
             uri.AppendPath(wafPolicyName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -100,7 +106,10 @@ namespace Azure.ResourceManager.Nginx
             uri.AppendPath(deploymentName, true);
             uri.AppendPath("/wafPolicies/", false);
             uri.AppendPath(wafPolicyName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

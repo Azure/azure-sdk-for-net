@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Playwright.Tests.Scenario
                 Assert.IsNotNull(resource.Data.Name);
                 Assert.AreEqual(PlaywrightProvisioningState.Succeeded, resource.Data.Properties.ProvisioningState);
                 Assert.IsNotNull(resource.Data.Properties.LocalAuth);
-                
+
                 if (resource.Data.Name == ResourceHelper.WORKSPACE_NAME)
                 {
                     foundWorkspace = true;
