@@ -904,14 +904,14 @@ namespace Azure.ResourceManager.NetApp.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeQuotaReportListResult"/>. </summary>
-        /// <param name="value"> List of quota reports. </param>
-        /// <returns> A new <see cref="Models.NetAppVolumeQuotaReportListResult"/> instance for mocking. </returns>
-        public static NetAppVolumeQuotaReportListResult NetAppVolumeQuotaReportListResult(IEnumerable<NetAppVolumeQuotaReport> value = null)
+        /// <summary> Initializes a new instance of <see cref="Models.ListQuotaReportResult"/>. </summary>
+        /// <param name="quotaReportRecords"> Represents the properties of the ListQuotaReport. </param>
+        /// <returns> A new <see cref="Models.ListQuotaReportResult"/> instance for mocking. </returns>
+        public static ListQuotaReportResult ListQuotaReportResult(IEnumerable<NetAppVolumeQuotaReport> quotaReportRecords = null)
         {
-            value ??= new List<NetAppVolumeQuotaReport>();
+            quotaReportRecords ??= new List<NetAppVolumeQuotaReport>();
 
-            return new NetAppVolumeQuotaReportListResult(value?.ToList(), serializedAdditionalRawData: null);
+            return new ListQuotaReportResult(quotaReportRecords != null ? new NetAppVolumeQuotaReportListResult(quotaReportRecords?.ToList(), serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeQuotaReport"/>. </summary>

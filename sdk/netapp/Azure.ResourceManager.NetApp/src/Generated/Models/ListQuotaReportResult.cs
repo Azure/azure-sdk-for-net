@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Quota Report for volume. </summary>
-    internal partial class NetAppVolumeQuotaReportListResult
+    /// <summary> * Result of ListQuotaReportResponse. </summary>
+    public partial class ListQuotaReportResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +45,26 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NetAppVolumeQuotaReportListResult"/>. </summary>
-        internal NetAppVolumeQuotaReportListResult()
+        /// <summary> Initializes a new instance of <see cref="ListQuotaReportResult"/>. </summary>
+        internal ListQuotaReportResult()
         {
-            QuotaReportRecords = new ChangeTrackingList<NetAppVolumeQuotaReport>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetAppVolumeQuotaReportListResult"/>. </summary>
-        /// <param name="quotaReportRecords"> List of quota reports. </param>
+        /// <summary> Initializes a new instance of <see cref="ListQuotaReportResult"/>. </summary>
+        /// <param name="properties"> Represents the properties of the ListQuotaReport. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppVolumeQuotaReportListResult(IReadOnlyList<NetAppVolumeQuotaReport> quotaReportRecords, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ListQuotaReportResult(NetAppVolumeQuotaReportListResult properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            QuotaReportRecords = quotaReportRecords;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Represents the properties of the ListQuotaReport. </summary>
+        internal NetAppVolumeQuotaReportListResult Properties { get; }
         /// <summary> List of quota reports. </summary>
-        public IReadOnlyList<NetAppVolumeQuotaReport> QuotaReportRecords { get; }
+        public IReadOnlyList<NetAppVolumeQuotaReport> QuotaReportRecords
+        {
+            get => Properties?.QuotaReportRecords;
+        }
     }
 }

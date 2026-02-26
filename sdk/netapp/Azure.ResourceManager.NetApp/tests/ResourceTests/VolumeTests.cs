@@ -642,17 +642,17 @@ namespace Azure.ResourceManager.NetApp.Tests
             string volumeName = Recording.GenerateAssetName("volumeName-");
             NetAppVolumeResource volumeResource = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName: volumeName);
 
-            ArmOperation<NetAppVolumeQuotaReportListResult> operation = await volumeResource.GetQuotaReportAsync(WaitUntil.Completed);
-            NetAppVolumeQuotaReportListResult result = operation.Value;
+            ArmOperation<ListQuotaReportResult> operation = await volumeResource.GetQuotaReportAsync(WaitUntil.Completed);
+            ListQuotaReportResult result = operation.Value;
 
             result.Should().NotBeNull();
-            result.Value.Should().NotBeNull();
-            if (result.Value.Count > 0)
+            result.QuotaReportRecords.Should().NotBeNull();
+            if (result.QuotaReportRecords.Count > 0)
             {
-                result.Value[0].QuotaType.Should().NotBeNull();
-                result.Value[0].QuotaTarget.Should().NotBeNullOrWhiteSpace();
-                result.Value[0].QuotaLimitUsedInKiBs.Should().NotBeNull();
-                result.Value[0].QuotaLimitTotalInKiBs.Should().NotBeNull();
+                result.QuotaReportRecords[0].QuotaType.Should().NotBeNull();
+                result.QuotaReportRecords[0].QuotaTarget.Should().NotBeNullOrWhiteSpace();
+                result.QuotaReportRecords[0].QuotaLimitUsedInKiBs.Should().NotBeNull();
+                result.QuotaReportRecords[0].QuotaLimitTotalInKiBs.Should().NotBeNull();
             }
         }
 

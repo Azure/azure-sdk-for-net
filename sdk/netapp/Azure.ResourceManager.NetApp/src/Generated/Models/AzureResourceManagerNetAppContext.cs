@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.NetApp
     [ModelReaderWriterBuildable(typeof(ClusterPeerCommandResult))]
     [ModelReaderWriterBuildable(typeof(GetGroupIdListForLdapUserContent))]
     [ModelReaderWriterBuildable(typeof(GetGroupIdListForLdapUserResult))]
+    [ModelReaderWriterBuildable(typeof(ListQuotaReportResult))]
     [ModelReaderWriterBuildable(typeof(ListReplications))]
     [ModelReaderWriterBuildable(typeof(ListReplicationsContent))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]

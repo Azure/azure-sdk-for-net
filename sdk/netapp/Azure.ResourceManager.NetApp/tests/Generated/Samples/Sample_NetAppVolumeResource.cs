@@ -430,8 +430,8 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
 
             // invoke the operation
-            ArmOperation<NetAppVolumeQuotaReportListResult> lro = await netAppVolume.GetQuotaReportAsync(WaitUntil.Completed);
-            NetAppVolumeQuotaReportListResult result = lro.Value;
+            ArmOperation<ListQuotaReportResult> lro = await netAppVolume.GetQuotaReportAsync(WaitUntil.Completed);
+            ListQuotaReportResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
