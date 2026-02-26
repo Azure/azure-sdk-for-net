@@ -52,6 +52,7 @@ namespace Azure.Generator.Visitors
         private const string WriteMethodName = "WriteXml";
         private const string WriteObjectValueMethodName = "WriteObjectValue";
         private const string ToRequestContentMethodName = "ToRequestContent";
+        private const string BinaryContentHelperTypeName = "BinaryContentHelper";
         private static readonly CSharpType IXmlSerializableType = typeof(IXmlSerializable);
         private static readonly CSharpType RequestContentType = typeof(RequestContent);
         private static readonly CSharpType ModelReaderWriterOptionsType = typeof(ModelReaderWriterOptions);
@@ -97,7 +98,7 @@ namespace Azure.Generator.Visitors
             {
                 UpdateWriteObjectValueMethod(modelSerializationExtensions);
             }
-            else if (type.Name == "BinaryContentHelper")
+            else if (type.Name == BinaryContentHelperTypeName)
             {
                 UpdateFromEnumerableMethod(type);
             }
@@ -238,12 +239,12 @@ namespace Azure.Generator.Visitors
             var body = new MethodBodyStatements(
             [
                 Declare("content", typeof(XmlWriterContent), New.Instance(typeof(XmlWriterContent)), out var content),
-                content.As<XmlWriterContent>().XmlWriter().Invoke("WriteStartElement", [rootNameHintParameter]).Terminate(),
+                content.As<XmlWriterContent>().XmlWriter().Invoke(nameof(XmlWriter.WriteStartElement), [rootNameHintParameter]).Terminate(),
                 new ForEachStatement("item", enumerableParameter.As(enumerableParameter.Type), out var itemVariable)
                 {
                     content.As<XmlWriterContent>().XmlWriter().Invoke(WriteObjectValueMethodName, [itemVariable, Static<ModelSerializationExtensionsDefinition>().Property("WireOptions"), childNameHintParameter]).Terminate()
                 },
-                content.As<XmlWriterContent>().XmlWriter().Invoke("WriteEndElement", []).Terminate(),
+                content.As<XmlWriterContent>().XmlWriter().Invoke(nameof(XmlWriter.WriteEndElement), []).Terminate(),
                 Return(content)
             ]);
 
