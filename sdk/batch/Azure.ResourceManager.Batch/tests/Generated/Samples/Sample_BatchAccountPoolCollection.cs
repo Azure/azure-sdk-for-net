@@ -114,7 +114,7 @@ StorageAccountType = BatchStorageAccountType.PremiumLrs,
 },
 }},
                     LicenseType = "Windows_Server",
-                    DiskEncryptionConfiguration = new DiskEncryptionConfiguration
+                    DiskEncryptionConfiguration = new BatchDiskEncryptionConfiguration
                     {
                         Targets = { BatchDiskEncryptionTarget.OSDisk, BatchDiskEncryptionTarget.TemporaryDisk },
                     },
@@ -900,7 +900,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-
                         TargetDedicatedNodes = 1,
                     },
                 },
-                TaskSchedulingPolicy = new TaskSchedulingPolicy(BatchNodeFillType.Pack),
+                TaskSchedulingPolicy = new BatchTaskSchedulingPolicy(BatchNodeFillType.Pack),
             };
             ArmOperation<BatchAccountPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
             BatchAccountPoolResource result = lro.Value;
@@ -955,7 +955,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-
                     Version = "latest",
                 }, "batch.node.windows amd64")
                 {
-                    DiskEncryptionConfiguration = new DiskEncryptionConfiguration
+                    DiskEncryptionConfiguration = new BatchDiskEncryptionConfiguration
                     {
                         Targets = { BatchDiskEncryptionTarget.OSDisk },
                         CustomerManagedKey = new BatchDiskCustomerManagedKey
@@ -1041,7 +1041,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-
                         TargetDedicatedNodes = 1,
                     },
                 },
-                TaskSchedulingPolicy = new TaskSchedulingPolicy(BatchNodeFillType.Pack),
+                TaskSchedulingPolicy = new BatchTaskSchedulingPolicy(BatchNodeFillType.Pack),
             };
             ArmOperation<BatchAccountPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
             BatchAccountPoolResource result = lro.Value;

@@ -218,6 +218,9 @@ rename-mapping:
   IPTag: BatchIPTag
   JobDefaultOrder: BatchJobDefaultOrder
   ProxyAgentSettings: BatchProxyAgentSettings
+  DiskEncryptionConfiguration: BatchDiskEncryptionConfiguration
+  TaskSchedulingPolicy: BatchTaskSchedulingPolicy
+  VmDiskSecurityProfile: BatchVmDiskSecurityProfile
   
 directive:
 # TODO -- remove this and use rename-mapping when it is supported

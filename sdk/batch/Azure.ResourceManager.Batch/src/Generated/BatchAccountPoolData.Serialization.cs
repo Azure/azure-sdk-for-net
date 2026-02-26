@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Batch
             InterNodeCommunicationState? interNodeCommunication = default;
             BatchNetworkConfiguration networkConfiguration = default;
             int? taskSlotsPerNode = default;
-            TaskSchedulingPolicy taskSchedulingPolicy = default;
+            BatchTaskSchedulingPolicy taskSchedulingPolicy = default;
             IList<BatchUserAccount> userAccounts = default;
             IList<BatchAccountPoolMetadataItem> metadata = default;
             BatchAccountPoolStartTask startTask = default;
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            taskSchedulingPolicy = TaskSchedulingPolicy.DeserializeTaskSchedulingPolicy(property0.Value, options);
+                            taskSchedulingPolicy = BatchTaskSchedulingPolicy.DeserializeBatchTaskSchedulingPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("userAccounts"u8))

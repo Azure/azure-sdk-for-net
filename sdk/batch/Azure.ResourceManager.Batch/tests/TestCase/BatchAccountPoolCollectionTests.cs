@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
                 }
                 );
 
-            input.TaskSchedulingPolicy = new TaskSchedulingPolicy(BatchNodeFillType.Pack)
+            input.TaskSchedulingPolicy = new BatchTaskSchedulingPolicy(BatchNodeFillType.Pack)
             {
                 JobDefaultOrder = BatchJobDefaultOrder.CreationTime,
             };
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
                 },
             };
 
-            input.DeploymentConfiguration.VmConfiguration.DiskEncryptionConfiguration = new DiskEncryptionConfiguration
+            input.DeploymentConfiguration.VmConfiguration.DiskEncryptionConfiguration = new BatchDiskEncryptionConfiguration
             {
                 Targets = { BatchDiskEncryptionTarget.OSDisk },
                 CustomerManagedKey = new BatchDiskCustomerManagedKey

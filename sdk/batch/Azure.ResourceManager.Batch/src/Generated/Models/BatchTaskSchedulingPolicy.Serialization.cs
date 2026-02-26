@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class TaskSchedulingPolicy : IUtf8JsonSerializable, IJsonModel<TaskSchedulingPolicy>
+    public partial class BatchTaskSchedulingPolicy : IUtf8JsonSerializable, IJsonModel<BatchTaskSchedulingPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TaskSchedulingPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchTaskSchedulingPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<TaskSchedulingPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BatchTaskSchedulingPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TaskSchedulingPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchTaskSchedulingPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TaskSchedulingPolicy)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchTaskSchedulingPolicy)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(JobDefaultOrder))
@@ -58,19 +58,19 @@ namespace Azure.ResourceManager.Batch.Models
             }
         }
 
-        TaskSchedulingPolicy IJsonModel<TaskSchedulingPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BatchTaskSchedulingPolicy IJsonModel<BatchTaskSchedulingPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TaskSchedulingPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchTaskSchedulingPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TaskSchedulingPolicy)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchTaskSchedulingPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTaskSchedulingPolicy(document.RootElement, options);
+            return DeserializeBatchTaskSchedulingPolicy(document.RootElement, options);
         }
 
-        internal static TaskSchedulingPolicy DeserializeTaskSchedulingPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static BatchTaskSchedulingPolicy DeserializeBatchTaskSchedulingPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -104,38 +104,38 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TaskSchedulingPolicy(jobDefaultOrder, nodeFillType, serializedAdditionalRawData);
+            return new BatchTaskSchedulingPolicy(jobDefaultOrder, nodeFillType, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<TaskSchedulingPolicy>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<BatchTaskSchedulingPolicy>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TaskSchedulingPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchTaskSchedulingPolicy>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerBatchContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TaskSchedulingPolicy)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchTaskSchedulingPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
-        TaskSchedulingPolicy IPersistableModel<TaskSchedulingPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        BatchTaskSchedulingPolicy IPersistableModel<BatchTaskSchedulingPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TaskSchedulingPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchTaskSchedulingPolicy>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeTaskSchedulingPolicy(document.RootElement, options);
+                        return DeserializeBatchTaskSchedulingPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TaskSchedulingPolicy)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchTaskSchedulingPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<TaskSchedulingPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BatchTaskSchedulingPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

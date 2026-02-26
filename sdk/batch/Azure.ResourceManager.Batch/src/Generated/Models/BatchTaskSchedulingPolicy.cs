@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Specifies how tasks should be distributed across compute nodes. </summary>
-    public partial class TaskSchedulingPolicy
+    public partial class BatchTaskSchedulingPolicy
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +45,26 @@ namespace Azure.ResourceManager.Batch.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="TaskSchedulingPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchTaskSchedulingPolicy"/>. </summary>
         /// <param name="nodeFillType"> How tasks should be distributed across compute nodes. </param>
-        public TaskSchedulingPolicy(BatchNodeFillType nodeFillType)
+        public BatchTaskSchedulingPolicy(BatchNodeFillType nodeFillType)
         {
             NodeFillType = nodeFillType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TaskSchedulingPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchTaskSchedulingPolicy"/>. </summary>
         /// <param name="jobDefaultOrder"> The order for scheduling tasks from different jobs with the same priority. </param>
         /// <param name="nodeFillType"> How tasks should be distributed across compute nodes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TaskSchedulingPolicy(BatchJobDefaultOrder? jobDefaultOrder, BatchNodeFillType nodeFillType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchTaskSchedulingPolicy(BatchJobDefaultOrder? jobDefaultOrder, BatchNodeFillType nodeFillType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             JobDefaultOrder = jobDefaultOrder;
             NodeFillType = nodeFillType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TaskSchedulingPolicy"/> for deserialization. </summary>
-        internal TaskSchedulingPolicy()
+        /// <summary> Initializes a new instance of <see cref="BatchTaskSchedulingPolicy"/> for deserialization. </summary>
+        internal BatchTaskSchedulingPolicy()
         {
         }
 

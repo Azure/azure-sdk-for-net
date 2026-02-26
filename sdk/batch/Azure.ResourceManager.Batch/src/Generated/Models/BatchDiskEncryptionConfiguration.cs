@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> The disk encryption configuration applied on compute nodes in the pool. Disk encryption configuration is not supported on Linux pool created with Virtual Machine Image or Azure Compute Gallery Image. </summary>
-    public partial class DiskEncryptionConfiguration
+    public partial class BatchDiskEncryptionConfiguration
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.Batch.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DiskEncryptionConfiguration"/>. </summary>
-        public DiskEncryptionConfiguration()
+        /// <summary> Initializes a new instance of <see cref="BatchDiskEncryptionConfiguration"/>. </summary>
+        public BatchDiskEncryptionConfiguration()
         {
             Targets = new ChangeTrackingList<BatchDiskEncryptionTarget>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DiskEncryptionConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchDiskEncryptionConfiguration"/>. </summary>
         /// <param name="targets"> On Linux pool, only "TemporaryDisk" is supported; on Windows pool, "OsDisk" and "TemporaryDisk" must be specified. </param>
         /// <param name="customerManagedKey"> Customer Managed Key will encrypt OS Disk by EncryptionAtRest, and by default we will encrypt the data disk as well. It can be used only when the pool is configured with an identity and OsDisk is set as one of the targets of DiskEncryption. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiskEncryptionConfiguration(IList<BatchDiskEncryptionTarget> targets, BatchDiskCustomerManagedKey customerManagedKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchDiskEncryptionConfiguration(IList<BatchDiskEncryptionTarget> targets, BatchDiskCustomerManagedKey customerManagedKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Targets = targets;
             CustomerManagedKey = customerManagedKey;
