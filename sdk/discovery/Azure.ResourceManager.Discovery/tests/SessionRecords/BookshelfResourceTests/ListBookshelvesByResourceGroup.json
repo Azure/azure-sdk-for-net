@@ -1,0 +1,169 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://eastus2euap.management.azure.com/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec?api-version=2022-12-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-688ba2c11adbc80dd22740375cee0235-6f49393538cbf6b1-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.13.2 (.NET 8.0.24; Microsoft Windows 10.0.26200)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "479",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 13 Feb 2026 17:50:52 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "2bffc7ad-a59f-49ea-8ff9-a2d9c29ef6ab",
+        "x-ms-ratelimit-remaining-subscription-reads": "1099",
+        "x-ms-request-id": "2bffc7ad-a59f-49ea-8ff9-a2d9c29ef6ab",
+        "x-ms-routing-request-id": "EASTUS2EUAP:20260213T175052Z:2bffc7ad-a59f-49ea-8ff9-a2d9c29ef6ab",
+        "x-ms-throttling-version": "v2",
+        "X-MSEdge-Ref": "Ref A: 4A775A91B18B4E2DADDBE2588BC6CB1A Ref B: SN4AA2022301039 Ref C: 2026-02-13T17:50:52Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "Az.Sec.AnonymousBlobEnforcement::OptIn": "all_regions"
+        },
+        "subscriptionId": "31b0b6a5-2647-47eb-8a38-7d12047ee8ec",
+        "tenantId": "00000000-0000-0000-0000-000000000000",
+        "displayName": "Discovery-copilot-devslice1-uksouth",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://eastus2euap.management.azure.com/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec/resourcegroups/rp114-rg?api-version=2022-09-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-95417c3fad84fd103cbed8f3751a38d4-92be88751114fb95-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.13.2 (.NET 8.0.24; Microsoft Windows 10.0.26200)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "317",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 13 Feb 2026 17:50:52 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "8b4cba66-6784-4d02-acc6-51c04fce0f17",
+        "x-ms-ratelimit-remaining-subscription-reads": "1098",
+        "x-ms-request-id": "8b4cba66-6784-4d02-acc6-51c04fce0f17",
+        "x-ms-routing-request-id": "EASTUS2EUAP:20260213T175052Z:8b4cba66-6784-4d02-acc6-51c04fce0f17",
+        "x-ms-throttling-version": "v2",
+        "X-MSEdge-Ref": "Ref A: A0E6D475F66B4B329DA264FAEE9F0BB5 Ref B: SN4AA2022301039 Ref C: 2026-02-13T17:50:52Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec/resourceGroups/rp114-rg",
+        "name": "rp114-rg",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "uksouth",
+        "tags": {
+          "Created": "2026-01-15T00:18:18.3142262Z",
+          "SkipAutoDeleteTill": "2026-12-31",
+          "RGOwner": "patelr"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://eastus2euap.management.azure.com/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec/resourceGroups/rp114-rg/providers/Microsoft.Discovery/bookshelves?api-version=2026-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-d7a749ca00b6b0bfd100d10647703746-a21a88a22980704f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.13.2 (.NET 8.0.24; Microsoft Windows 10.0.26200)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "860",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 13 Feb 2026 17:50:53 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "685addec-51b3-4ec7-89ad-0e8ec1fc5d01",
+        "x-ms-original-request-ids": [
+          "64154b73-cfda-4f6b-bf9f-f0e048e9e9b4",
+          "40a3a1af-036d-49c4-8407-61ff0295af42"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": "1097",
+        "x-ms-request-id": "685addec-51b3-4ec7-89ad-0e8ec1fc5d01",
+        "x-ms-routing-request-id": "EASTUS2EUAP:20260213T175053Z:685addec-51b3-4ec7-89ad-0e8ec1fc5d01",
+        "x-ms-throttling-version": "v2",
+        "X-MSEdge-Ref": "Ref A: 41821B943EBA4AEF873EF67F03F36AB3 Ref B: SN4AA2022301039 Ref C: 2026-02-13T17:50:52Z"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec/resourceGroups/rp114-rg/providers/Microsoft.Discovery/bookshelves/itbshlfrp114",
+            "name": "itbshlfrp114",
+            "type": "microsoft.discovery/bookshelves",
+            "location": "uksouth",
+            "tags": {},
+            "systemData": {
+              "createdBy": "Sanitized",
+              "createdByType": "Application",
+              "createdAt": "2026-01-15T00:20:20.0965772Z",
+              "lastModifiedBy": "Sanitized",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2026-01-15T00:20:20.0965772Z"
+            },
+            "properties": {
+              "managedResourceGroup": "mrg-dbksf-itbshlfrp114-v9zm2i",
+              "managedOnBehalfOfConfiguration": {
+                "moboBrokerResources": [
+                  {
+                    "id": "/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec/resourceGroups/rp114-rg/providers/Microsoft.Resources/moboBrokers/mobr-dbksf-itbshlfrp114-v9zm2i"
+                  }
+                ]
+              },
+              "provisioningState": "Succeeded",
+              "bookshelfUri": "https://itbshlfrp114.bookshelf-dev.discovery.azure.com"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_RESOURCE_GROUP_NAME": "rp114-rg",
+    "RandomSeed": "888327061",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "31b0b6a5-2647-47eb-8a38-7d12047ee8ec"
+  }
+}

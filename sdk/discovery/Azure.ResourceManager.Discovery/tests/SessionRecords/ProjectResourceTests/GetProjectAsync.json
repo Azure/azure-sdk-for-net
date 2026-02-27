@@ -1,0 +1,229 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://eastus2euap.management.azure.com/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec?api-version=2022-12-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-be84f99ad08a951b54d01b5f3f1b69f0-719a1f9d33a87112-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.13.2 (.NET 8.0.24; Microsoft Windows 10.0.26200)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "479",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 13 Feb 2026 17:55:52 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "9399d230-4281-422b-8ba9-141590564760",
+        "x-ms-ratelimit-remaining-subscription-reads": "1098",
+        "x-ms-request-id": "9399d230-4281-422b-8ba9-141590564760",
+        "x-ms-routing-request-id": "EASTUS2EUAP:20260213T175553Z:9399d230-4281-422b-8ba9-141590564760",
+        "x-ms-throttling-version": "v2",
+        "X-MSEdge-Ref": "Ref A: C1A127C44E434AED8BCAFED39C6296CA Ref B: SN4AA2022301039 Ref C: 2026-02-13T17:55:52Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "Az.Sec.AnonymousBlobEnforcement::OptIn": "all_regions"
+        },
+        "subscriptionId": "31b0b6a5-2647-47eb-8a38-7d12047ee8ec",
+        "tenantId": "00000000-0000-0000-0000-000000000000",
+        "displayName": "Discovery-copilot-devslice1-uksouth",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://eastus2euap.management.azure.com/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec/resourcegroups/rp114-rg?api-version=2022-09-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-74c20a7bb75a5fcba992cc0982174dea-e2c16c5f46cb5f56-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.13.2 (.NET 8.0.24; Microsoft Windows 10.0.26200)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "317",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 13 Feb 2026 17:55:52 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "9cb30aa0-5b06-4568-8f4c-e999fac206bd",
+        "x-ms-ratelimit-remaining-subscription-reads": "1097",
+        "x-ms-request-id": "9cb30aa0-5b06-4568-8f4c-e999fac206bd",
+        "x-ms-routing-request-id": "EASTUS2EUAP:20260213T175553Z:9cb30aa0-5b06-4568-8f4c-e999fac206bd",
+        "x-ms-throttling-version": "v2",
+        "X-MSEdge-Ref": "Ref A: 5737ADD52E6444589CB49CE6406E1276 Ref B: SN4AA2022301039 Ref C: 2026-02-13T17:55:53Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec/resourceGroups/rp114-rg",
+        "name": "rp114-rg",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "uksouth",
+        "tags": {
+          "Created": "2026-01-15T00:18:18.3142262Z",
+          "SkipAutoDeleteTill": "2026-12-31",
+          "RGOwner": "patelr"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://eastus2euap.management.azure.com/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec/resourceGroups/rp114-rg/providers/Microsoft.Discovery/workspaces/itworkrp114?api-version=2026-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-b9bb1714c30279e33cde6c780a8ea782-c939f6a37e97089d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.13.2 (.NET 8.0.24; Microsoft Windows 10.0.26200)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1467",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 13 Feb 2026 17:55:53 GMT",
+        "ETag": "\"0000ad74-0000-1100-0000-69683de10000\"",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-correlation-request-id": "e00ba58f-5761-41a5-ad65-93bdf308d383",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "1096",
+        "x-ms-request-id": "6098b6eb-2b9b-4455-85e1-bd88cf4446ef",
+        "x-ms-routing-request-id": "EASTUS2EUAP:20260213T175553Z:e00ba58f-5761-41a5-ad65-93bdf308d383",
+        "x-ms-throttling-version": "v2",
+        "X-MSEdge-Ref": "Ref A: F3101B1BEBA6473F95A625BBF595782C Ref B: SN4AA2022301039 Ref C: 2026-02-13T17:55:53Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec/resourceGroups/rp114-rg/providers/Microsoft.Discovery/workspaces/itworkrp114",
+        "name": "itworkrp114",
+        "type": "microsoft.discovery/workspaces",
+        "location": "uksouth",
+        "tags": {
+          "WorkspaceSubnetId": "/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec/resourceGroups/fixedrg-dev-uksouth1/providers/Microsoft.Network/virtualNetworks/vnet-dev-uksouth1/subnets/copilot-subnet"
+        },
+        "systemData": {
+          "createdBy": "Sanitized",
+          "createdByType": "Application",
+          "createdAt": "2026-01-15T00:34:10.0773703Z",
+          "lastModifiedBy": "Sanitized",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2026-01-15T00:34:10.0773703Z"
+        },
+        "properties": {
+          "managedResourceGroup": "mrg-dwsp-itworkrp114-4bncru",
+          "supercomputerIds": [
+            "/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec/resourceGroups/rp114-rg/providers/Microsoft.Discovery/supercomputers/itsuperp114"
+          ],
+          "workspaceApiUri": "https://itworkrp114.workspace-dev.discovery.azure.com",
+          "workspaceUiUri": "https://studio.discovery.microsoft.com/workspaces/itworkrp114",
+          "workspaceIdentity": {
+            "id": "/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec/resourcegroups/fixedrg-dev-uksouth1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/dev-uksouth1-uami"
+          },
+          "managedOnBehalfOfConfiguration": {
+            "moboBrokerResources": [
+              {
+                "id": "/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec/resourceGroups/rp114-rg/providers/Microsoft.Resources/moboBrokers/mobr-dwsp-itworkrp114-4bncru"
+              }
+            ]
+          },
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://eastus2euap.management.azure.com/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec/resourceGroups/rp114-rg/providers/Microsoft.Discovery/workspaces/itworkrp114/projects/itprojrp114?api-version=2026-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-624ca4627586eb5406348fae4b8fdd54-ad2a226cc04cd7cd-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.13.2 (.NET 8.0.24; Microsoft Windows 10.0.26200)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "587",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 13 Feb 2026 17:55:53 GMT",
+        "ETag": "\"3c007966-0000-1100-0000-698e3cfe0000\"",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-correlation-request-id": "e63e60b7-8c19-4dd8-a04b-5cf1e4beb263",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "1098",
+        "x-ms-request-id": "22e1b422-fdd5-4b7e-b885-b77adcda6f2e",
+        "x-ms-routing-request-id": "EASTUS2EUAP:20260213T175553Z:e63e60b7-8c19-4dd8-a04b-5cf1e4beb263",
+        "x-ms-throttling-version": "v2",
+        "X-MSEdge-Ref": "Ref A: C8961EDFE7504F8AB837CC08FB326E62 Ref B: SN4AA2022301039 Ref C: 2026-02-13T17:55:53Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec/resourceGroups/rp114-rg/providers/Microsoft.Discovery/workspaces/itworkrp114/projects/itprojrp114",
+        "name": "itprojrp114",
+        "type": "microsoft.discovery/workspaces/projects",
+        "location": "uksouth",
+        "tags": {
+          "preference": "New project preference - 2026-02-12T20:49:17.636Z"
+        },
+        "systemData": {
+          "createdBy": "Sanitized",
+          "createdByType": "Application",
+          "createdAt": "2026-01-15T01:11:57.3095382Z",
+          "lastModifiedBy": "Sanitized",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2026-02-12T20:49:19.0434194Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_DISCOVERY_PROJECT_NAME": "itprojrp114",
+    "AZURE_DISCOVERY_WORKSPACE_NAME": "itworkrp114",
+    "AZURE_RESOURCE_GROUP_NAME": "rp114-rg",
+    "RandomSeed": "1743702397",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "31b0b6a5-2647-47eb-8a38-7d12047ee8ec"
+  }
+}

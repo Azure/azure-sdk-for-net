@@ -1,0 +1,9 @@
+directory: specification/discovery/Discovery.Management
+commit: bfaeac0331e0b465c98c9d9839952cd60da37746
+repo: Azure/azure-rest-api-specs
+additionalDirectories:
+  - specification/discovery/Discovery.Management.Shared
+  - specification/discovery/Discovery.Bookshelf.Management
+  - specification/discovery/Discovery.Supercomputer.Management
+  - specification/discovery/Discovery.Workspace.Management
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

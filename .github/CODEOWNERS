@@ -987,6 +987,12 @@
 # ServiceLabel: %Device Registry %Mgmt
 # ServiceOwners:                                                   @atastrophic @rohankhandelwal
 
+# PRLabel: %Discovery %Mgmt
+/sdk/discovery/                                                    @olawal @alchocro @anmaga
+
+# ServiceLabel: %Discovery %Mgmt
+# ServiceOwners:                                                   @olawal @alchocro @anmaga
+
 # PRLabel: %Durable Task Scheduler %Mgmt
 /sdk/durabletask/Azure.ResourceManager.*/                          @berndverst @kaibocai @torosent @philliphoff @cgillum
 

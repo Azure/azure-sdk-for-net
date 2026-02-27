@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <!--We don't care about XML doc comments on test types and members-->
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Exclude ManualTest folder from compilation -->
+    <Compile Remove="ManualTest\**" />
+    <None Remove="ManualTest\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
+    <ProjectReference Include="$(AzureResourceManagerTestFramework)" />
+    <ProjectReference Include="..\src\Azure.ResourceManager.Discovery.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Identity" />
+  </ItemGroup>
+</Project>

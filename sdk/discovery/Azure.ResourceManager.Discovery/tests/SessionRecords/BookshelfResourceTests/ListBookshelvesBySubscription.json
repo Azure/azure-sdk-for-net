@@ -1,0 +1,201 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://eastus2euap.management.azure.com/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec?api-version=2022-12-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-de597b88193fc82a739c17203788a4d9-a51298ece56632b6-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.13.2 (.NET 8.0.24; Microsoft Windows 10.0.26200)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "479",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 13 Feb 2026 17:50:58 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "4bbd12d8-a562-4fb5-8646-7711705bd3b4",
+        "x-ms-ratelimit-remaining-subscription-reads": "1099",
+        "x-ms-request-id": "4bbd12d8-a562-4fb5-8646-7711705bd3b4",
+        "x-ms-routing-request-id": "EASTUS2EUAP:20260213T175058Z:4bbd12d8-a562-4fb5-8646-7711705bd3b4",
+        "x-ms-throttling-version": "v2",
+        "X-MSEdge-Ref": "Ref A: C521B6DFB5584B60986BF63AF18EF3F6 Ref B: SN4AA2022301039 Ref C: 2026-02-13T17:50:58Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "Az.Sec.AnonymousBlobEnforcement::OptIn": "all_regions"
+        },
+        "subscriptionId": "31b0b6a5-2647-47eb-8a38-7d12047ee8ec",
+        "tenantId": "00000000-0000-0000-0000-000000000000",
+        "displayName": "Discovery-copilot-devslice1-uksouth",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://eastus2euap.management.azure.com/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec/providers/Microsoft.Discovery/bookshelves?api-version=2026-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-2858e83a451aabf95377033907f66d5e-4ce1e679243881db-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.13.2 (.NET 8.0.24; Microsoft Windows 10.0.26200)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "3280",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 13 Feb 2026 17:50:58 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "b73c1302-9783-41aa-ac33-6f86d892d181",
+        "x-ms-original-request-ids": [
+          "67a994ff-9301-4065-95f9-599c12ba0a40",
+          "3b9bafed-373d-4f58-8739-91bebb733452"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": "1098",
+        "x-ms-request-id": "b73c1302-9783-41aa-ac33-6f86d892d181",
+        "x-ms-routing-request-id": "EASTUS2EUAP:20260213T175058Z:b73c1302-9783-41aa-ac33-6f86d892d181",
+        "x-ms-throttling-version": "v2",
+        "X-MSEdge-Ref": "Ref A: 2D4849BFE886444C9B6AEC2787E74450 Ref B: SN4AA2022301039 Ref C: 2026-02-13T17:50:58Z"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec/resourceGroups/rg-devslice-uksouth/providers/Microsoft.Discovery/bookshelves/itbshlftmsq",
+            "name": "itbshlftmsq",
+            "type": "microsoft.discovery/bookshelves",
+            "location": "uksouth",
+            "systemData": {
+              "createdBy": "Sanitized",
+              "createdByType": "Application",
+              "createdAt": "2025-10-26T06:16:37.1182676Z",
+              "lastModifiedBy": "Sanitized",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2025-10-26T06:16:37.1182676Z"
+            },
+            "properties": {
+              "provisioningState": "Failed",
+              "bookshelfUri": "https://itbshlftmsq.bookshelf-dev.discovery.azure.com",
+              "managedOnBehalfOfConfiguration": {
+                "moboBrokerResources": [
+                  {
+                    "id": "/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec/resourceGroups/rg-devslice-uksouth/providers/Microsoft.Resources/moboBrokers/itbshlftmsq-mobobroker-bqv9h1"
+                  }
+                ]
+              },
+              "managedResourceGroup": "itbshlftmsq-mrg-bqv9h1"
+            }
+          },
+          {
+            "id": "/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec/resourceGroups/st-rg/providers/Microsoft.Discovery/bookshelves/itbshlfpsu11",
+            "name": "itbshlfpsu11",
+            "type": "microsoft.discovery/bookshelves",
+            "location": "uksouth",
+            "systemData": {
+              "createdBy": "Sanitized",
+              "createdByType": "Application",
+              "createdAt": "2025-11-04T14:16:04.2743996Z",
+              "lastModifiedBy": "Sanitized",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2025-11-04T14:16:04.2743996Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "bookshelfUri": "https://itbshlfpsu11.bookshelf-dev.discovery.azure.com",
+              "managedOnBehalfOfConfiguration": {
+                "moboBrokerResources": [
+                  {
+                    "id": "/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec/resourceGroups/st-rg/providers/Microsoft.Resources/moboBrokers/itbshlfpsu11-mobobroker-pf3i44"
+                  }
+                ]
+              },
+              "managedResourceGroup": "itbshlfpsu11-mrg-pf3i44"
+            }
+          },
+          {
+            "id": "/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec/resourceGroups/rp114-rg/providers/Microsoft.Discovery/bookshelves/itbshlfrp114",
+            "name": "itbshlfrp114",
+            "type": "microsoft.discovery/bookshelves",
+            "location": "uksouth",
+            "tags": {},
+            "systemData": {
+              "createdBy": "Sanitized",
+              "createdByType": "Application",
+              "createdAt": "2026-01-15T00:20:20.0965772Z",
+              "lastModifiedBy": "Sanitized",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2026-01-15T00:20:20.0965772Z"
+            },
+            "properties": {
+              "managedResourceGroup": "mrg-dbksf-itbshlfrp114-v9zm2i",
+              "managedOnBehalfOfConfiguration": {
+                "moboBrokerResources": [
+                  {
+                    "id": "/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec/resourceGroups/rp114-rg/providers/Microsoft.Resources/moboBrokers/mobr-dbksf-itbshlfrp114-v9zm2i"
+                  }
+                ]
+              },
+              "provisioningState": "Succeeded",
+              "bookshelfUri": "https://itbshlfrp114.bookshelf-dev.discovery.azure.com"
+            }
+          },
+          {
+            "id": "/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec/resourceGroups/olawal/providers/Microsoft.Discovery/bookshelves/newbooks",
+            "name": "newbooks",
+            "type": "microsoft.discovery/bookshelves",
+            "location": "centraluseuap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "Sanitized",
+              "createdByType": "User",
+              "createdAt": "2026-02-03T19:19:48.5868481Z",
+              "lastModifiedBy": "Sanitized",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2026-02-03T19:19:48.5868481Z"
+            },
+            "properties": {
+              "managedResourceGroup": "mrg-dbksf-newbooks-ktgz9i",
+              "managedOnBehalfOfConfiguration": {
+                "moboBrokerResources": [
+                  {
+                    "id": "/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec/resourceGroups/olawal/providers/Microsoft.Resources/moboBrokers/mobr-dbksf-newbooks-ktgz9i"
+                  }
+                ]
+              },
+              "provisioningState": "Failed"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "2006626824",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "31b0b6a5-2647-47eb-8a38-7d12047ee8ec"
+  }
+}

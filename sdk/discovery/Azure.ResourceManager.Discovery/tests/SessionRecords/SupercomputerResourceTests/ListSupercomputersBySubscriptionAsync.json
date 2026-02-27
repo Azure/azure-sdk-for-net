@@ -1,0 +1,188 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://eastus2euap.management.azure.com/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec?api-version=2022-12-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-355a288124a3a3f11c7689e9b329568c-dcfd0fb4306e0f8f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.13.2 (.NET 8.0.24; Microsoft Windows 10.0.26200)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "479",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 13 Feb 2026 17:57:28 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "199471af-90fa-42ab-81b3-48f2e3ea15ed",
+        "x-ms-ratelimit-remaining-subscription-reads": "1099",
+        "x-ms-request-id": "199471af-90fa-42ab-81b3-48f2e3ea15ed",
+        "x-ms-routing-request-id": "EASTUS2EUAP:20260213T175729Z:199471af-90fa-42ab-81b3-48f2e3ea15ed",
+        "x-ms-throttling-version": "v2",
+        "X-MSEdge-Ref": "Ref A: BB3B6611BC0E4FC29DAB493337EE0150 Ref B: SN4AA2022301039 Ref C: 2026-02-13T17:57:29Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "Az.Sec.AnonymousBlobEnforcement::OptIn": "all_regions"
+        },
+        "subscriptionId": "31b0b6a5-2647-47eb-8a38-7d12047ee8ec",
+        "tenantId": "00000000-0000-0000-0000-000000000000",
+        "displayName": "Discovery-copilot-devslice1-uksouth",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://eastus2euap.management.azure.com/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec/providers/Microsoft.Discovery/supercomputers?api-version=2026-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-5c807cfe51619c7df12a8cc5047e5783-c0a017d088f10c08-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.13.2 (.NET 8.0.24; Microsoft Windows 10.0.26200)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "3689",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 13 Feb 2026 17:57:29 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "069dfbd0-47e2-45ca-81c1-3b4585397534",
+        "x-ms-original-request-ids": [
+          "c3c093d0-8b79-4f4a-bf31-5f57a3e44bd3",
+          "1587ffa2-fb10-4886-ae21-c44ab4d4b2b9"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": "1099",
+        "x-ms-request-id": "069dfbd0-47e2-45ca-81c1-3b4585397534",
+        "x-ms-routing-request-id": "EASTUS2EUAP:20260213T175729Z:069dfbd0-47e2-45ca-81c1-3b4585397534",
+        "x-ms-throttling-version": "v2",
+        "X-MSEdge-Ref": "Ref A: F289495696774130A21A68B8C8C73BBC Ref B: SN4AA2022301039 Ref C: 2026-02-13T17:57:29Z"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec/resourceGroups/spec1-test/providers/Microsoft.Discovery/supercomputers/itsupespec1",
+            "name": "itsupespec1",
+            "type": "microsoft.discovery/supercomputers",
+            "location": "uksouth",
+            "tags": {
+              "createdBy": "Sanitized"
+            },
+            "systemData": {
+              "createdBy": "Sanitized",
+              "createdByType": "Application",
+              "createdAt": "2025-11-18T14:01:46.9205594Z",
+              "lastModifiedBy": "Sanitized",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2026-01-19T14:20:22.1736376Z"
+            },
+            "properties": {
+              "subnetId": "/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec/resourceGroups/fixedrg-dev-uksouth1/providers/Microsoft.Network/virtualNetworks/vnet-dev-uksouth1/subnets/supercomputer-aks",
+              "identities": {
+                "clusterIdentity": {
+                  "id": "/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec/resourcegroups/fixedrg-dev-uksouth1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/dev-uksouth1-uami",
+                  "principalId": "00000000-0000-0000-0000-000000000000",
+                  "clientId": "00000000-0000-0000-0000-000000000000"
+                },
+                "kubeletIdentity": {
+                  "id": "/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec/resourcegroups/fixedrg-dev-uksouth1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/dev-uksouth1-uami",
+                  "principalId": "00000000-0000-0000-0000-000000000000",
+                  "clientId": "00000000-0000-0000-0000-000000000000"
+                },
+                "workloadIdentities": {
+                  "/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec/resourcegroups/fixedrg-dev-uksouth1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/dev-uksouth1-uami": {
+                    "principalId": "00000000-0000-0000-0000-000000000000",
+                    "clientId": "00000000-0000-0000-0000-000000000000"
+                  }
+                }
+              },
+              "managedOnBehalfOfConfiguration": {
+                "moboBrokerResources": [
+                  {
+                    "id": "/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec/resourceGroups/spec1-test/providers/Microsoft.Resources/moboBrokers/mobr-dscmp-itsupespec1-bq2h57"
+                  }
+                ]
+              },
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec/resourceGroups/rp114-rg/providers/Microsoft.Discovery/supercomputers/itsuperp114",
+            "name": "itsuperp114",
+            "type": "microsoft.discovery/supercomputers",
+            "location": "uksouth",
+            "tags": {
+              "createdBy": "Sanitized"
+            },
+            "systemData": {
+              "createdBy": "Sanitized",
+              "createdByType": "Application",
+              "createdAt": "2026-01-15T00:18:20.4616551Z",
+              "lastModifiedBy": "Sanitized",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2026-01-15T00:34:40.7398302Z"
+            },
+            "properties": {
+              "subnetId": "/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec/resourceGroups/fixedrg-dev-uksouth1/providers/Microsoft.Network/virtualNetworks/vnet-dev-uksouth1/subnets/supercomputer-aks",
+              "identities": {
+                "clusterIdentity": {
+                  "id": "/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec/resourcegroups/fixedrg-dev-uksouth1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/dev-uksouth1-uami",
+                  "principalId": "00000000-0000-0000-0000-000000000000",
+                  "clientId": "00000000-0000-0000-0000-000000000000"
+                },
+                "kubeletIdentity": {
+                  "id": "/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec/resourcegroups/fixedrg-dev-uksouth1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/dev-uksouth1-uami",
+                  "principalId": "00000000-0000-0000-0000-000000000000",
+                  "clientId": "00000000-0000-0000-0000-000000000000"
+                },
+                "workloadIdentities": {
+                  "/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec/resourcegroups/fixedrg-dev-uksouth1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/dev-uksouth1-uami": {
+                    "principalId": "00000000-0000-0000-0000-000000000000",
+                    "clientId": "00000000-0000-0000-0000-000000000000"
+                  }
+                }
+              },
+              "managedOnBehalfOfConfiguration": {
+                "moboBrokerResources": [
+                  {
+                    "id": "/subscriptions/31b0b6a5-2647-47eb-8a38-7d12047ee8ec/resourceGroups/rp114-rg/providers/Microsoft.Resources/moboBrokers/mobr-dscmp-itsuperp114-0v0k8q"
+                  }
+                ]
+              },
+              "provisioningState": "Succeeded"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "344253587",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "31b0b6a5-2647-47eb-8a38-7d12047ee8ec"
+  }
+}
