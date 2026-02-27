@@ -13,6 +13,7 @@
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <NoWarn>$(NoWarn);AZC0007;AZC0030;AZC0034</NoWarn>
     <IncludeAutorestDependency>true</IncludeAutorestDependency>
+    <HasReleaseVersion>false</HasReleaseVersion>
   </PropertyGroup>
 
   <ItemGroup>

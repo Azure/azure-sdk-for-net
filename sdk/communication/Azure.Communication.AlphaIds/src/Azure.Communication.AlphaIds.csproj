@@ -7,6 +7,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <IncludeAutorestDependency>true</IncludeAutorestDependency>
+    <HasReleaseVersion>false</HasReleaseVersion>
   </PropertyGroup>
 
   <!-- Shared source from Azure.Core -->
