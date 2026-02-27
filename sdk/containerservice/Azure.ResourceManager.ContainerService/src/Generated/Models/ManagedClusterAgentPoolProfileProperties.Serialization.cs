@@ -166,10 +166,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("scaleDownMode"u8);
                 writer.WriteStringValue(ScaleDownMode.Value.ToString());
             }
-            if (Optional.IsDefined(TypePropertiesType))
+            if (Optional.IsDefined(AgentPoolType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(TypePropertiesType.Value.ToString());
+                writer.WriteStringValue(AgentPoolType.Value.ToString());
             }
             if (Optional.IsDefined(Mode))
             {
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             int? minCount = default;
             bool? enableAutoScaling = default;
             ScaleDownMode? scaleDownMode = default;
-            AgentPoolType? typePropertiesType = default;
+            AgentPoolType? agentPoolType = default;
             AgentPoolMode? mode = default;
             string orchestratorVersion = default;
             string currentOrchestratorVersion = default;
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    typePropertiesType = new AgentPoolType(prop.Value.GetString());
+                    agentPoolType = new AgentPoolType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("mode"u8))
@@ -1128,7 +1128,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 minCount,
                 enableAutoScaling,
                 scaleDownMode,
-                typePropertiesType,
+                agentPoolType,
                 mode,
                 orchestratorVersion,
                 currentOrchestratorVersion,

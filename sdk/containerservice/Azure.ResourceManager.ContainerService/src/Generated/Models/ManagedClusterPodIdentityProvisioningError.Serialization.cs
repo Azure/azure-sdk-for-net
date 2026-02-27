@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            ManagedClusterPodIdentityProvisioningErrorBody errorDetail = default;
+            ManagedClusterPodIdentityProvisioningErrorDetail errorDetail = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    errorDetail = ManagedClusterPodIdentityProvisioningErrorBody.DeserializeManagedClusterPodIdentityProvisioningErrorBody(prop.Value, options);
+                    errorDetail = ManagedClusterPodIdentityProvisioningErrorDetail.DeserializeManagedClusterPodIdentityProvisioningErrorDetail(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -15,63 +15,63 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> The names of the load balancers to rebalance. If set to empty, all load balancers will be rebalanced. </summary>
-    public partial class RebalanceLoadBalancersRequestBody : IJsonModel<RebalanceLoadBalancersRequestBody>
+    public partial class RebalanceLoadBalancersRequestContent : IJsonModel<RebalanceLoadBalancersRequestContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RebalanceLoadBalancersRequestBody PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual RebalanceLoadBalancersRequestContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RebalanceLoadBalancersRequestBody>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RebalanceLoadBalancersRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRebalanceLoadBalancersRequestBody(document.RootElement, options);
+                        return DeserializeRebalanceLoadBalancersRequestContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RebalanceLoadBalancersRequestBody)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RebalanceLoadBalancersRequestContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RebalanceLoadBalancersRequestBody>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RebalanceLoadBalancersRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RebalanceLoadBalancersRequestBody)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RebalanceLoadBalancersRequestContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RebalanceLoadBalancersRequestBody>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RebalanceLoadBalancersRequestContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RebalanceLoadBalancersRequestBody IPersistableModel<RebalanceLoadBalancersRequestBody>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RebalanceLoadBalancersRequestContent IPersistableModel<RebalanceLoadBalancersRequestContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RebalanceLoadBalancersRequestBody>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RebalanceLoadBalancersRequestContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="rebalanceLoadBalancersRequestBody"> The <see cref="RebalanceLoadBalancersRequestBody"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(RebalanceLoadBalancersRequestBody rebalanceLoadBalancersRequestBody)
+        /// <param name="rebalanceLoadBalancersRequestContent"> The <see cref="RebalanceLoadBalancersRequestContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(RebalanceLoadBalancersRequestContent rebalanceLoadBalancersRequestContent)
         {
-            if (rebalanceLoadBalancersRequestBody == null)
+            if (rebalanceLoadBalancersRequestContent == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(rebalanceLoadBalancersRequestBody, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(rebalanceLoadBalancersRequestContent, ModelSerializationExtensions.WireOptions);
             return content;
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RebalanceLoadBalancersRequestBody>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RebalanceLoadBalancersRequestContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RebalanceLoadBalancersRequestBody>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RebalanceLoadBalancersRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RebalanceLoadBalancersRequestBody)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RebalanceLoadBalancersRequestContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(LoadBalancerNames))
             {
@@ -121,24 +121,24 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RebalanceLoadBalancersRequestBody IJsonModel<RebalanceLoadBalancersRequestBody>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RebalanceLoadBalancersRequestContent IJsonModel<RebalanceLoadBalancersRequestContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RebalanceLoadBalancersRequestBody JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual RebalanceLoadBalancersRequestContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RebalanceLoadBalancersRequestBody>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RebalanceLoadBalancersRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RebalanceLoadBalancersRequestBody)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RebalanceLoadBalancersRequestContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRebalanceLoadBalancersRequestBody(document.RootElement, options);
+            return DeserializeRebalanceLoadBalancersRequestContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RebalanceLoadBalancersRequestBody DeserializeRebalanceLoadBalancersRequestBody(JsonElement element, ModelReaderWriterOptions options)
+        internal static RebalanceLoadBalancersRequestContent DeserializeRebalanceLoadBalancersRequestContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RebalanceLoadBalancersRequestBody(loadBalancerNames ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new RebalanceLoadBalancersRequestContent(loadBalancerNames ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

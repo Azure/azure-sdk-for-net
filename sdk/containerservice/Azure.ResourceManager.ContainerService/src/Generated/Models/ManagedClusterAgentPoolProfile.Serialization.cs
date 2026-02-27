@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             int? minCount = default;
             bool? enableAutoScaling = default;
             ScaleDownMode? scaleDownMode = default;
-            AgentPoolType? typePropertiesType = default;
+            AgentPoolType? agentPoolType = default;
             AgentPoolMode? mode = default;
             string orchestratorVersion = default;
             string currentOrchestratorVersion = default;
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    typePropertiesType = new AgentPoolType(prop.Value.GetString());
+                    agentPoolType = new AgentPoolType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("mode"u8))
@@ -775,7 +775,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 minCount,
                 enableAutoScaling,
                 scaleDownMode,
-                typePropertiesType,
+                agentPoolType,
                 mode,
                 orchestratorVersion,
                 currentOrchestratorVersion,

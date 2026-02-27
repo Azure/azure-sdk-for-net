@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.ContainerService;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of <see cref="ManagedClusterNatGatewayProfile"/>. </summary>
         public ManagedClusterNatGatewayProfile()
         {
-            EffectiveOutboundIPs = new ChangeTrackingList<ResourceReference>();
+            EffectiveOutboundIPs = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterNatGatewayProfile"/>. </summary>
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="effectiveOutboundIPs"> The effective outbound IP resources of the cluster NAT gateway. </param>
         /// <param name="idleTimeoutInMinutes"> Desired outbound flow idle timeout in minutes. Allowed values are in the range of 4 to 120 (inclusive). The default value is 4 minutes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterNatGatewayProfile(ManagedClusterManagedOutboundIPProfile managedOutboundIPProfile, IReadOnlyList<ResourceReference> effectiveOutboundIPs, int? idleTimeoutInMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterNatGatewayProfile(ManagedClusterManagedOutboundIPProfile managedOutboundIPProfile, IList<WritableSubResource> effectiveOutboundIPs, int? idleTimeoutInMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ManagedOutboundIPProfile = managedOutboundIPProfile;
             EffectiveOutboundIPs = effectiveOutboundIPs;
@@ -39,10 +40,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Profile of the managed outbound IP resources of the cluster NAT gateway. </summary>
         [WirePath("managedOutboundIPProfile")]
         internal ManagedClusterManagedOutboundIPProfile ManagedOutboundIPProfile { get; set; }
-
-        /// <summary> The effective outbound IP resources of the cluster NAT gateway. </summary>
-        [WirePath("effectiveOutboundIPs")]
-        public IReadOnlyList<ResourceReference> EffectiveOutboundIPs { get; }
 
         /// <summary> Desired outbound flow idle timeout in minutes. Allowed values are in the range of 4 to 120 (inclusive). The default value is 4 minutes. </summary>
         [WirePath("idleTimeoutInMinutes")]

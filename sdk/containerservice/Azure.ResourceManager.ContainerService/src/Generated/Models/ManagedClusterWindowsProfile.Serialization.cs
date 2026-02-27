@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
-            if (Optional.IsDefined(EnableCSIProxy))
+            if (Optional.IsDefined(IsCsiProxyEnabled))
             {
                 writer.WritePropertyName("enableCSIProxy"u8);
-                writer.WriteBooleanValue(EnableCSIProxy.Value);
+                writer.WriteBooleanValue(IsCsiProxyEnabled.Value);
             }
             if (Optional.IsDefined(GmsaProfile))
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             string adminUsername = default;
             string adminPassword = default;
             WindowsVmLicenseType? licenseType = default;
-            bool? enableCSIProxy = default;
+            bool? isCsiProxyEnabled = default;
             WindowsGmsaProfile gmsaProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    enableCSIProxy = prop.Value.GetBoolean();
+                    isCsiProxyEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("gmsaProfile"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 adminUsername,
                 adminPassword,
                 licenseType,
-                enableCSIProxy,
+                isCsiProxyEnabled,
                 gmsaProfile,
                 additionalBinaryDataProperties);
         }

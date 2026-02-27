@@ -7,11 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Profile for enabling a user to access a managed cluster. </summary>
     internal partial class AccessProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -20,35 +18,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of <see cref="AccessProfile"/>. </summary>
         internal AccessProfile()
         {
-            KubeConfig = new ChangeTrackingList<BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AccessProfile"/>. </summary>
         /// <param name="kubeConfig"> Base64-encoded Kubernetes configuration file. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccessProfile(IList<BinaryData> kubeConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AccessProfile(byte[] kubeConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KubeConfig = kubeConfig;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary>
-        /// Base64-encoded Kubernetes configuration file.
-        /// <para>
-        /// To assign a byte[] to the element of this property use <see cref="BinaryData.FromBytes(byte[])"/>.
-        /// The byte[] will be serialized to a Base64 encoded string.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
-        /// <description> Creates a payload of "AQID". </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        [WirePath("kubeConfig")]
-        public IList<BinaryData> KubeConfig { get; } = new ChangeTrackingList<BinaryData>();
     }
 }

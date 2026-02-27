@@ -12,7 +12,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Virtual machine state. Indicates the current state of the underlying virtual machine. </summary>
-    public readonly partial struct VmState : IEquatable<VmState>
+    public readonly partial struct ContainerServiceMachineVmState : IEquatable<ContainerServiceMachineVmState>
     {
         private readonly string _value;
         /// <summary> The virtual machine is currently running. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> The virtual machine has been deleted by the user or due to spot eviction. </summary>
         private const string DeletedValue = "Deleted";
 
-        /// <summary> Initializes a new instance of <see cref="VmState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMachineVmState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public VmState(string value)
+        public ContainerServiceMachineVmState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> The virtual machine is currently running. </summary>
-        public static VmState Running { get; } = new VmState(RunningValue);
+        public static ContainerServiceMachineVmState Running { get; } = new ContainerServiceMachineVmState(RunningValue);
 
         /// <summary> The virtual machine has been deleted by the user or due to spot eviction. </summary>
-        public static VmState Deleted { get; } = new VmState(DeletedValue);
+        public static ContainerServiceMachineVmState Deleted { get; } = new ContainerServiceMachineVmState(DeletedValue);
 
-        /// <summary> Determines if two <see cref="VmState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ContainerServiceMachineVmState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(VmState left, VmState right) => left.Equals(right);
+        public static bool operator ==(ContainerServiceMachineVmState left, ContainerServiceMachineVmState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="VmState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ContainerServiceMachineVmState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(VmState left, VmState right) => !left.Equals(right);
+        public static bool operator !=(ContainerServiceMachineVmState left, ContainerServiceMachineVmState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="VmState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ContainerServiceMachineVmState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VmState(string value) => new VmState(value);
+        public static implicit operator ContainerServiceMachineVmState(string value) => new ContainerServiceMachineVmState(value);
 
-        /// <summary> Converts a string to a <see cref="VmState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ContainerServiceMachineVmState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VmState?(string value) => value == null ? null : new VmState(value);
+        public static implicit operator ContainerServiceMachineVmState?(string value) => value == null ? null : new ContainerServiceMachineVmState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is VmState other && Equals(other);
+        public override bool Equals(object obj) => obj is ContainerServiceMachineVmState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(VmState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ContainerServiceMachineVmState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

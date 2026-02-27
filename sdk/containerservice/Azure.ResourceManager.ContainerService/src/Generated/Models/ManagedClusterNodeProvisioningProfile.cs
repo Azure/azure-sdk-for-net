@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="mode"> The node provisioning mode. If not specified, the default is Manual. </param>
         /// <param name="defaultNodePools"> The set of default Karpenter NodePools (CRDs) configured for node provisioning. This field has no effect unless mode is 'Auto'. Warning: Changing this from Auto to None on an existing cluster will cause the default Karpenter NodePools to be deleted, which will drain and delete the nodes associated with those pools. It is strongly recommended to not do this unless there are idle nodes ready to take the pods evicted by that action. If not specified, the default is Auto. For more information see aka.ms/aks/nap#node-pools. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterNodeProvisioningProfile(NodeProvisioningMode? mode, NodeProvisioningDefaultNodePools? defaultNodePools, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterNodeProvisioningProfile(NodeProvisioningMode? mode, NodeProvisioningDefaultNodePool? defaultNodePools, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Mode = mode;
             DefaultNodePools = defaultNodePools;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The set of default Karpenter NodePools (CRDs) configured for node provisioning. This field has no effect unless mode is 'Auto'. Warning: Changing this from Auto to None on an existing cluster will cause the default Karpenter NodePools to be deleted, which will drain and delete the nodes associated with those pools. It is strongly recommended to not do this unless there are idle nodes ready to take the pods evicted by that action. If not specified, the default is Auto. For more information see aka.ms/aks/nap#node-pools. </summary>
         [WirePath("defaultNodePools")]
-        public NodeProvisioningDefaultNodePools? DefaultNodePools { get; set; }
+        public NodeProvisioningDefaultNodePool? DefaultNodePools { get; set; }
     }
 }

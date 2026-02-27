@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             DateTimeOffset? creationTimestamp = default;
             ContainerServiceMachineDriftAction? driftAction = default;
             string driftReason = default;
-            VmState? vmState = default;
+            ContainerServiceMachineVmState? vmState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    vmState = new VmState(prop.Value.GetString());
+                    vmState = new ContainerServiceMachineVmState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

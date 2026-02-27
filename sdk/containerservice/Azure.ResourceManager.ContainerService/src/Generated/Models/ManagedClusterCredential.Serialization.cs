@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (options.Format != "W" && Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
-                writer.WriteBase64StringValue(Value.ToArray(), "D");
+                SerializeValue(writer, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             string name = default;
-            BinaryData value = default;
+            byte[] value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -138,11 +138,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (prop.NameEquals("value"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    value = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
+                    DeserializeValue(prop, ref value);
                     continue;
                 }
                 if (options.Format != "W")

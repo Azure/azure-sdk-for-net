@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.ContainerService;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -78,9 +80,14 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 writer.WritePropertyName("publicIPPrefixes"u8);
                 writer.WriteStartArray();
-                foreach (ResourceReference item in PublicIPPrefixes)
+                foreach (WritableSubResource item in PublicIPPrefixes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -126,7 +133,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            IList<ResourceReference> publicIPPrefixes = default;
+            IList<WritableSubResource> publicIPPrefixes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +143,17 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    List<ResourceReference> array = new List<ResourceReference>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResourceReference.DeserializeResourceReference(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerContainerServiceContext.Default));
+                        }
                     }
                     publicIPPrefixes = array;
                     continue;
@@ -149,7 +163,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterLoadBalancerProfileOutboundIPPrefixes(publicIPPrefixes ?? new ChangeTrackingList<ResourceReference>(), additionalBinaryDataProperties);
+            return new ManagedClusterLoadBalancerProfileOutboundIPPrefixes(publicIPPrefixes ?? new ChangeTrackingList<WritableSubResource>(), additionalBinaryDataProperties);
         }
     }
 }

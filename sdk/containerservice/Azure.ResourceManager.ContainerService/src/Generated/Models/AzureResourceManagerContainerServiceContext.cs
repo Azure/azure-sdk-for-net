@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ContainerService
     [ModelReaderWriterBuildable(typeof(ManagedClusterPodIdentityException))]
     [ModelReaderWriterBuildable(typeof(ManagedClusterPodIdentityProfile))]
     [ModelReaderWriterBuildable(typeof(ManagedClusterPodIdentityProvisioningError))]
-    [ModelReaderWriterBuildable(typeof(ManagedClusterPodIdentityProvisioningErrorBody))]
+    [ModelReaderWriterBuildable(typeof(ManagedClusterPodIdentityProvisioningErrorDetail))]
     [ModelReaderWriterBuildable(typeof(ManagedClusterPodIdentityProvisioningInfo))]
     [ModelReaderWriterBuildable(typeof(ManagedClusterPoolUpgradeProfile))]
     [ModelReaderWriterBuildable(typeof(ManagedClusterPoolUpgradeProfileUpgradesItem))]
@@ -256,13 +256,9 @@ namespace Azure.ResourceManager.ContainerService
     [ModelReaderWriterBuildable(typeof(NodeCustomizationProfile))]
     [ModelReaderWriterBuildable(typeof(NodeImageVersion))]
     [ModelReaderWriterBuildable(typeof(NodeImageVersionsListResult))]
-    [ModelReaderWriterBuildable(typeof(OperationListResult))]
-    [ModelReaderWriterBuildable(typeof(OperationValue))]
-    [ModelReaderWriterBuildable(typeof(OperationValueDisplay))]
     [ModelReaderWriterBuildable(typeof(OutboundEnvironmentEndpointListResult))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
-    [ModelReaderWriterBuildable(typeof(RebalanceLoadBalancersRequestBody))]
-    [ModelReaderWriterBuildable(typeof(ResourceReference))]
+    [ModelReaderWriterBuildable(typeof(RebalanceLoadBalancersRequestContent))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SafeguardsAvailableVersionData))]
     [ModelReaderWriterBuildable(typeof(SafeguardsAvailableVersionResource))]
@@ -283,6 +279,7 @@ namespace Azure.ResourceManager.ContainerService
     [ModelReaderWriterBuildable(typeof(UpgradeOverrideSettings))]
     [ModelReaderWriterBuildable(typeof(VirtualMachinesProfile))]
     [ModelReaderWriterBuildable(typeof(WindowsGmsaProfile))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerContainerServiceContext : ModelReaderWriterContext
     {
     }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.ContainerService;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of <see cref="ManagedClusterLoadBalancerProfile"/>. </summary>
         public ManagedClusterLoadBalancerProfile()
         {
-            EffectiveOutboundIPs = new ChangeTrackingList<ResourceReference>();
+            EffectiveOutboundIPs = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterLoadBalancerProfile"/>. </summary>
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="backendPoolType"> The type of the managed inbound Load Balancer BackendPool. </param>
         /// <param name="clusterServiceLoadBalancerHealthProbeMode"> The health probing behavior for External Traffic Policy Cluster services. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterLoadBalancerProfile(ManagedClusterLoadBalancerProfileManagedOutboundIPs managedOutboundIPs, ManagedClusterLoadBalancerProfileOutboundIPPrefixes outboundIPPrefixes, ManagedClusterLoadBalancerProfileOutboundIPs outboundIPs, IReadOnlyList<ResourceReference> effectiveOutboundIPs, int? allocatedOutboundPorts, int? idleTimeoutInMinutes, bool? enableMultipleStandardLoadBalancers, ManagedClusterLoadBalancerBackendPoolType? backendPoolType, ClusterServiceLoadBalancerHealthProbeMode? clusterServiceLoadBalancerHealthProbeMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterLoadBalancerProfile(ManagedClusterLoadBalancerProfileManagedOutboundIPs managedOutboundIPs, ManagedClusterLoadBalancerProfileOutboundIPPrefixes outboundIPPrefixes, ManagedClusterLoadBalancerProfileOutboundIPs outboundIPs, IReadOnlyList<WritableSubResource> effectiveOutboundIPs, int? allocatedOutboundPorts, int? idleTimeoutInMinutes, bool? enableMultipleStandardLoadBalancers, ManagedClusterLoadBalancerBackendPoolType? backendPoolType, ClusterServiceLoadBalancerHealthProbeMode? clusterServiceLoadBalancerHealthProbeMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ManagedOutboundIPs = managedOutboundIPs;
             OutboundIPPrefixes = outboundIPPrefixes;
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The effective outbound IP resources of the cluster load balancer. </summary>
         [WirePath("effectiveOutboundIPs")]
-        public IReadOnlyList<ResourceReference> EffectiveOutboundIPs { get; }
+        public IReadOnlyList<WritableSubResource> EffectiveOutboundIPs { get; }
 
         /// <summary> The desired number of allocated SNAT ports per VM. Allowed values are in the range of 0 to 64000 (inclusive). The default value is 0 which results in Azure dynamically allocating ports. </summary>
         [WirePath("allocatedOutboundPorts")]
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> A list of public IP prefix resources. </summary>
         [WirePath("outboundIPPrefixes.publicIPPrefixes")]
-        public IList<ResourceReference> OutboundPublicIPPrefixes
+        public IList<WritableSubResource> OutboundPublicIPPrefixes
         {
             get
             {
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> A list of public IP resources. </summary>
         [WirePath("outboundIPs.publicIPs")]
-        public IList<ResourceReference> OutboundPublicIPs
+        public IList<WritableSubResource> OutboundPublicIPs
         {
             get
             {

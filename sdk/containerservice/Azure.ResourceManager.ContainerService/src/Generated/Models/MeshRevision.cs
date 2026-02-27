@@ -18,13 +18,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MeshRevision"/>. </summary>
-        internal MeshRevision()
-        {
-            Upgrades = new ChangeTrackingList<string>();
-            CompatibleWith = new ChangeTrackingList<CompatibleVersions>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MeshRevision"/>. </summary>
         /// <param name="revision"> The revision of the mesh release. </param>
         /// <param name="upgrades"> List of revisions available for upgrade of a specific mesh revision. </param>
         /// <param name="compatibleWith"> List of items this revision of service mesh is compatible with, and their associated versions. </param>
@@ -36,10 +29,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             CompatibleWith = compatibleWith;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The revision of the mesh release. </summary>
-        [WirePath("revision")]
-        public string Revision { get; }
 
         /// <summary> List of revisions available for upgrade of a specific mesh revision. </summary>
         [WirePath("upgrades")]

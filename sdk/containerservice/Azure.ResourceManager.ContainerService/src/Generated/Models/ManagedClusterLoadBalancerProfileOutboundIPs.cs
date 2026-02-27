@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.ContainerService;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -20,13 +21,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of <see cref="ManagedClusterLoadBalancerProfileOutboundIPs"/>. </summary>
         public ManagedClusterLoadBalancerProfileOutboundIPs()
         {
-            PublicIPs = new ChangeTrackingList<ResourceReference>();
+            PublicIPs = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterLoadBalancerProfileOutboundIPs"/>. </summary>
         /// <param name="publicIPs"> A list of public IP resources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterLoadBalancerProfileOutboundIPs(IList<ResourceReference> publicIPs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterLoadBalancerProfileOutboundIPs(IList<WritableSubResource> publicIPs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PublicIPs = publicIPs;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -34,6 +35,6 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> A list of public IP resources. </summary>
         [WirePath("publicIPs")]
-        public IList<ResourceReference> PublicIPs { get; }
+        public IList<WritableSubResource> PublicIPs { get; }
     }
 }

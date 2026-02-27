@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of <see cref="ManagedClusterPodIdentityProvisioningError"/>. </summary>
         /// <param name="errorDetail"> Details about the error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterPodIdentityProvisioningError(ManagedClusterPodIdentityProvisioningErrorBody errorDetail, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterPodIdentityProvisioningError(ManagedClusterPodIdentityProvisioningErrorDetail errorDetail, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ErrorDetail = errorDetail;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Details about the error. </summary>
         [WirePath("error")]
-        public ManagedClusterPodIdentityProvisioningErrorBody ErrorDetail { get; }
+        public ManagedClusterPodIdentityProvisioningErrorDetail ErrorDetail { get; }
     }
 }

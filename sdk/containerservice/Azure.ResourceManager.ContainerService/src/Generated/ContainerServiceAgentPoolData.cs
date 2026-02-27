@@ -360,11 +360,11 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary> The type of Agent Pool. </summary>
         [WirePath("properties.type")]
-        public AgentPoolType? TypePropertiesType
+        public AgentPoolType? AgentPoolType
         {
             get
             {
-                return Properties is null ? default : Properties.TypePropertiesType;
+                return Properties is null ? default : Properties.AgentPoolType;
             }
             set
             {
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.TypePropertiesType = value.Value;
+                Properties.AgentPoolType = value.Value;
             }
         }
 

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ContainerService.Models
     {
         private readonly string _value;
         /// <summary> Nodes will use Kubelet to run standard OCI container workloads. </summary>
-        private const string OCIContainerValue = "OCIContainer";
+        private const string OciContainerValue = "OCIContainer";
         /// <summary> Nodes will use Krustlet to run WASM workloads using the WASI provider (Preview). </summary>
         private const string WasmWasiValue = "WasmWasi";
         /// <summary> Nodes can use (Kata + Cloud Hypervisor + Hyper-V) to enable Nested VM-based pods (Preview). Due to the use Hyper-V, AKS node OS itself is a nested VM (the root OS) of Hyper-V. Thus it can only be used with VM series that support Nested Virtualization such as Dv3 series. This naming convention will be deprecated in future releases in favor of KataVmIsolation. </summary>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Nodes will use Kubelet to run standard OCI container workloads. </summary>
-        public static WorkloadRuntime OCIContainer { get; } = new WorkloadRuntime(OCIContainerValue);
+        public static WorkloadRuntime OciContainer { get; } = new WorkloadRuntime(OciContainerValue);
 
         /// <summary> Nodes will use Krustlet to run WASM workloads using the WASI provider (Preview). </summary>
         public static WorkloadRuntime WasmWasi { get; } = new WorkloadRuntime(WasmWasiValue);

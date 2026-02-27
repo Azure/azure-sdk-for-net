@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Details about the error. </summary>
         [WirePath("provisioningInfo.error.error")]
-        public ManagedClusterPodIdentityProvisioningErrorBody ProvisioningInfoErrorDetail
+        public ManagedClusterPodIdentityProvisioningErrorDetail ProvisioningInfoErrorDetail
         {
             get
             {

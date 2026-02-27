@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             bool? enabled = default;
-            Mode? mode = default;
+            ContainerServiceNetworkKubeProxyMode? mode = default;
             ContainerServiceNetworkProfileKubeProxyConfigIpvsConfig ipvsConfig = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    mode = new Mode(prop.Value.GetString());
+                    mode = new ContainerServiceNetworkKubeProxyMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("ipvsConfig"u8))

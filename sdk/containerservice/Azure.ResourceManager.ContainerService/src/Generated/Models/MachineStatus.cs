@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="driftReason"> Reason for machine drift. Provides detailed information on why the machine has drifted. This field is omitted if the machine is up to date. </param>
         /// <param name="vmState"> Virtual machine state. Indicates the current state of the underlying virtual machine. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineStatus(ResponseError provisioningError, DateTimeOffset? creationTimestamp, ContainerServiceMachineDriftAction? driftAction, string driftReason, VmState? vmState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MachineStatus(ResponseError provisioningError, DateTimeOffset? creationTimestamp, ContainerServiceMachineDriftAction? driftAction, string driftReason, ContainerServiceMachineVmState? vmState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningError = provisioningError;
             CreationTimestamp = creationTimestamp;
@@ -58,6 +58,6 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Virtual machine state. Indicates the current state of the underlying virtual machine. </summary>
         [WirePath("vmState")]
-        public VmState? VmState { get; }
+        public ContainerServiceMachineVmState? VmState { get; }
     }
 }

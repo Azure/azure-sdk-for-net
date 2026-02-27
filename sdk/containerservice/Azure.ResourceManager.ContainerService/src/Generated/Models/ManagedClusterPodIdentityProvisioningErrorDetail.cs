@@ -12,24 +12,24 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> An error response from the pod identity provisioning. </summary>
-    public partial class ManagedClusterPodIdentityProvisioningErrorBody
+    public partial class ManagedClusterPodIdentityProvisioningErrorDetail
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedClusterPodIdentityProvisioningErrorBody"/>. </summary>
-        internal ManagedClusterPodIdentityProvisioningErrorBody()
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterPodIdentityProvisioningErrorDetail"/>. </summary>
+        internal ManagedClusterPodIdentityProvisioningErrorDetail()
         {
-            Details = new ChangeTrackingList<ManagedClusterPodIdentityProvisioningErrorBody>();
+            Details = new ChangeTrackingList<ManagedClusterPodIdentityProvisioningErrorDetail>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedClusterPodIdentityProvisioningErrorBody"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterPodIdentityProvisioningErrorDetail"/>. </summary>
         /// <param name="code"> An identifier for the error. Codes are invariant and are intended to be consumed programmatically. </param>
         /// <param name="message"> A message describing the error, intended to be suitable for display in a user interface. </param>
         /// <param name="target"> The target of the particular error. For example, the name of the property in error. </param>
         /// <param name="details"> A list of additional details about the error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterPodIdentityProvisioningErrorBody(string code, string message, string target, IList<ManagedClusterPodIdentityProvisioningErrorBody> details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterPodIdentityProvisioningErrorDetail(string code, string message, string target, IList<ManagedClusterPodIdentityProvisioningErrorDetail> details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;
@@ -52,6 +52,6 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> A list of additional details about the error. </summary>
         [WirePath("details")]
-        public IList<ManagedClusterPodIdentityProvisioningErrorBody> Details { get; }
+        public IList<ManagedClusterPodIdentityProvisioningErrorDetail> Details { get; }
     }
 }

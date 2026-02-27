@@ -17,11 +17,6 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Delegated resource properties - internal use only. </summary>
     public partial class ManagedClusterDelegatedIdentity : IJsonModel<ManagedClusterDelegatedIdentity>
     {
-        /// <summary> Initializes a new instance of <see cref="ManagedClusterDelegatedIdentity"/> for deserialization. </summary>
-        internal ManagedClusterDelegatedIdentity()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ManagedClusterDelegatedIdentity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TrustedCa))
+            if (Optional.IsDefined(TrustedCA))
             {
                 writer.WritePropertyName("trustedCa"u8);
-                writer.WriteStringValue(TrustedCa);
+                writer.WriteStringValue(TrustedCA);
             }
             if (Optional.IsDefined(Enabled))
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             string httpsProxy = default;
             IList<string> noProxy = default;
             IReadOnlyList<string> effectiveNoProxy = default;
-            string trustedCa = default;
+            string trustedCA = default;
             bool? enabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (prop.NameEquals("trustedCa"u8))
                 {
-                    trustedCa = prop.Value.GetString();
+                    trustedCA = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("enabled"u8))
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 httpsProxy,
                 noProxy ?? new ChangeTrackingList<string>(),
                 effectiveNoProxy ?? new ChangeTrackingList<string>(),
-                trustedCa,
+                trustedCA,
                 enabled,
                 additionalBinaryDataProperties);
         }

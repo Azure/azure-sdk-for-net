@@ -1367,12 +1367,12 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="rebalanceLoadBalancersRequestBody"> The names of the load balancers to be rebalanced. If set to empty, all load balancers will be rebalanced. </param>
+        /// <param name="content"> The names of the load balancers to be rebalanced. If set to empty, all load balancers will be rebalanced. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="rebalanceLoadBalancersRequestBody"/> is null. </exception>
-        public virtual async Task<ArmOperation> RebalanceLoadBalancersAsync(WaitUntil waitUntil, RebalanceLoadBalancersRequestBody rebalanceLoadBalancersRequestBody, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> RebalanceLoadBalancersAsync(WaitUntil waitUntil, RebalanceLoadBalancersRequestContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(rebalanceLoadBalancersRequestBody, nameof(rebalanceLoadBalancersRequestBody));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _managedClustersClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.RebalanceLoadBalancers");
             scope.Start();
@@ -1382,7 +1382,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateRebalanceLoadBalancersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RebalanceLoadBalancersRequestBody.ToRequestContent(rebalanceLoadBalancersRequestBody), context);
+                HttpMessage message = _managedClustersRestClient.CreateRebalanceLoadBalancersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RebalanceLoadBalancersRequestContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceArmOperation operation = new ContainerServiceArmOperation(_managedClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -1420,12 +1420,12 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="rebalanceLoadBalancersRequestBody"> The names of the load balancers to be rebalanced. If set to empty, all load balancers will be rebalanced. </param>
+        /// <param name="content"> The names of the load balancers to be rebalanced. If set to empty, all load balancers will be rebalanced. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="rebalanceLoadBalancersRequestBody"/> is null. </exception>
-        public virtual ArmOperation RebalanceLoadBalancers(WaitUntil waitUntil, RebalanceLoadBalancersRequestBody rebalanceLoadBalancersRequestBody, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation RebalanceLoadBalancers(WaitUntil waitUntil, RebalanceLoadBalancersRequestContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(rebalanceLoadBalancersRequestBody, nameof(rebalanceLoadBalancersRequestBody));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _managedClustersClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.RebalanceLoadBalancers");
             scope.Start();
@@ -1435,7 +1435,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateRebalanceLoadBalancersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RebalanceLoadBalancersRequestBody.ToRequestContent(rebalanceLoadBalancersRequestBody), context);
+                HttpMessage message = _managedClustersRestClient.CreateRebalanceLoadBalancersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RebalanceLoadBalancersRequestContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceArmOperation operation = new ContainerServiceArmOperation(_managedClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)

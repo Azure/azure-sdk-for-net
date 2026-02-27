@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Details about the error. </summary>
         [WirePath("error.error")]
-        public ManagedClusterPodIdentityProvisioningErrorBody ErrorDetail
+        public ManagedClusterPodIdentityProvisioningErrorDetail ErrorDetail
         {
             get
             {

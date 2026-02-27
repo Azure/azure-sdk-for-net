@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             NodeProvisioningMode? mode = default;
-            NodeProvisioningDefaultNodePools? defaultNodePools = default;
+            NodeProvisioningDefaultNodePool? defaultNodePools = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    defaultNodePools = new NodeProvisioningDefaultNodePools(prop.Value.GetString());
+                    defaultNodePools = new NodeProvisioningDefaultNodePool(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

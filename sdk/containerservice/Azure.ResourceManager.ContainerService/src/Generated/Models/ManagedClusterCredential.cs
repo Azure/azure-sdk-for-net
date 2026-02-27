@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="name"> The name of the credential. </param>
         /// <param name="value"> Base64-encoded Kubernetes configuration file. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterCredential(string name, BinaryData value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterCredential(string name, byte[] value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Value = value;
@@ -36,24 +36,5 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> The name of the credential. </summary>
         [WirePath("name")]
         public string Name { get; }
-
-        /// <summary>
-        /// Base64-encoded Kubernetes configuration file.
-        /// <para>
-        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
-        /// The byte[] will be serialized to a Base64 encoded string.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
-        /// <description> Creates a payload of "AQID". </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        [WirePath("value")]
-        public BinaryData Value { get; }
     }
 }

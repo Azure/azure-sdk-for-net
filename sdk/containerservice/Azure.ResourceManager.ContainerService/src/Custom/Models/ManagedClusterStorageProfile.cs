@@ -5,6 +5,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 #nullable disable
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Storage profile for the container service cluster. </summary>

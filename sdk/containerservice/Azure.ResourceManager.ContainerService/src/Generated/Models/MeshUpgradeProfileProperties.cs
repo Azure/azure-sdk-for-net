@@ -14,11 +14,6 @@ namespace Azure.ResourceManager.ContainerService.Models
     public partial class MeshUpgradeProfileProperties : MeshRevision
     {
         /// <summary> Initializes a new instance of <see cref="MeshUpgradeProfileProperties"/>. </summary>
-        internal MeshUpgradeProfileProperties()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MeshUpgradeProfileProperties"/>. </summary>
         /// <param name="revision"> The revision of the mesh release. </param>
         /// <param name="upgrades"> List of revisions available for upgrade of a specific mesh revision. </param>
         /// <param name="compatibleWith"> List of items this revision of service mesh is compatible with, and their associated versions. </param>

@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.ContainerService;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -93,9 +95,14 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 writer.WritePropertyName("effectiveOutboundIPs"u8);
                 writer.WriteStartArray();
-                foreach (ResourceReference item in EffectiveOutboundIPs)
+                foreach (WritableSubResource item in EffectiveOutboundIPs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -169,7 +176,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ManagedClusterLoadBalancerProfileManagedOutboundIPs managedOutboundIPs = default;
             ManagedClusterLoadBalancerProfileOutboundIPPrefixes outboundIPPrefixes = default;
             ManagedClusterLoadBalancerProfileOutboundIPs outboundIPs = default;
-            IReadOnlyList<ResourceReference> effectiveOutboundIPs = default;
+            IReadOnlyList<WritableSubResource> effectiveOutboundIPs = default;
             int? allocatedOutboundPorts = default;
             int? idleTimeoutInMinutes = default;
             bool? enableMultipleStandardLoadBalancers = default;
@@ -211,10 +218,17 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    List<ResourceReference> array = new List<ResourceReference>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResourceReference.DeserializeResourceReference(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerContainerServiceContext.Default));
+                        }
                     }
                     effectiveOutboundIPs = array;
                     continue;
@@ -273,7 +287,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 managedOutboundIPs,
                 outboundIPPrefixes,
                 outboundIPs,
-                effectiveOutboundIPs ?? new ChangeTrackingList<ResourceReference>(),
+                effectiveOutboundIPs ?? new ChangeTrackingList<WritableSubResource>(),
                 allocatedOutboundPorts,
                 idleTimeoutInMinutes,
                 enableMultipleStandardLoadBalancers,

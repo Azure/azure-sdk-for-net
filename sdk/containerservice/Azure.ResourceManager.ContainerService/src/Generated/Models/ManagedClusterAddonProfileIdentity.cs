@@ -15,11 +15,6 @@ namespace Azure.ResourceManager.ContainerService.Models
     public partial class ManagedClusterAddonProfileIdentity : ContainerServiceUserAssignedIdentity
     {
         /// <summary> Initializes a new instance of <see cref="ManagedClusterAddonProfileIdentity"/>. </summary>
-        internal ManagedClusterAddonProfileIdentity()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ManagedClusterAddonProfileIdentity"/>. </summary>
         /// <param name="resourceId"> The resource ID of the user assigned identity. </param>
         /// <param name="clientId"> The client ID of the user assigned identity. </param>
         /// <param name="objectId"> The object ID of the user assigned identity. </param>

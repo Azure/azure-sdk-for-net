@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Istio will inject an init container into each pod to redirect traffic (requires NET_ADMIN and NET_RAW). </summary>
         private const string InitContainersValue = "InitContainers";
         /// <summary> Istio will install a chained CNI plugin to redirect traffic (recommended). </summary>
-        private const string CNIChainingValue = "CNIChaining";
+        private const string CniChainingValue = "CNIChaining";
 
         /// <summary> Initializes a new instance of <see cref="ProxyRedirectionMechanism"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static ProxyRedirectionMechanism InitContainers { get; } = new ProxyRedirectionMechanism(InitContainersValue);
 
         /// <summary> Istio will install a chained CNI plugin to redirect traffic (recommended). </summary>
-        public static ProxyRedirectionMechanism CNIChaining { get; } = new ProxyRedirectionMechanism(CNIChainingValue);
+        public static ProxyRedirectionMechanism CniChaining { get; } = new ProxyRedirectionMechanism(CniChainingValue);
 
         /// <summary> Determines if two <see cref="ProxyRedirectionMechanism"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

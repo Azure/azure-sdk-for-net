@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ContainerService.Models
     {
         private readonly string _value;
         /// <summary> Pods with hostNetwork=false can access Azure Instance Metadata Service (IMDS) without restriction. </summary>
-        private const string IMDSValue = "IMDS";
+        private const string ImdsValue = "IMDS";
         /// <summary> Pods with hostNetwork=false cannot access Azure Instance Metadata Service (IMDS). </summary>
         private const string NoneValue = "None";
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Pods with hostNetwork=false can access Azure Instance Metadata Service (IMDS) without restriction. </summary>
-        public static PodLinkLocalAccess IMDS { get; } = new PodLinkLocalAccess(IMDSValue);
+        public static PodLinkLocalAccess Imds { get; } = new PodLinkLocalAccess(ImdsValue);
 
         /// <summary> Pods with hostNetwork=false cannot access Azure Instance Metadata Service (IMDS). </summary>
         public static PodLinkLocalAccess None { get; } = new PodLinkLocalAccess(NoneValue);

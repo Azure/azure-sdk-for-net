@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.ContainerService;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -83,9 +84,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 writer.WritePropertyName("effectiveOutboundIPs"u8);
                 writer.WriteStartArray();
-                foreach (ResourceReference item in EffectiveOutboundIPs)
+                foreach (WritableSubResource item in EffectiveOutboundIPs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             ManagedClusterManagedOutboundIPProfile managedOutboundIPProfile = default;
-            IReadOnlyList<ResourceReference> effectiveOutboundIPs = default;
+            IList<WritableSubResource> effectiveOutboundIPs = default;
             int? idleTimeoutInMinutes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -153,16 +154,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (prop.NameEquals("effectiveOutboundIPs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ResourceReference> array = new List<ResourceReference>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(ResourceReference.DeserializeResourceReference(item, options));
-                    }
-                    effectiveOutboundIPs = array;
+                    DeserializeEffectiveOutboundIPs(prop, ref effectiveOutboundIPs);
                     continue;
                 }
                 if (prop.NameEquals("idleTimeoutInMinutes"u8))
@@ -179,7 +171,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterNatGatewayProfile(managedOutboundIPProfile, effectiveOutboundIPs ?? new ChangeTrackingList<ResourceReference>(), idleTimeoutInMinutes, additionalBinaryDataProperties);
+            return new ManagedClusterNatGatewayProfile(managedOutboundIPProfile, effectiveOutboundIPs ?? new ChangeTrackingList<WritableSubResource>(), idleTimeoutInMinutes, additionalBinaryDataProperties);
         }
     }
 }
