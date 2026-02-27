@@ -6,7 +6,7 @@ The `Microsoft.Extensions.Configuration.KeyVault` package allows storing configu
 
 ### Install the package
 
-Install the package with [NuGet][nuget]:
+Install the package with NuGet:
 
 ```dotnetcli
 dotnet add package Microsoft.Extensions.Configuration.KeyVault
@@ -104,8 +104,6 @@ additional questions or comments.
 
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/keyvault/Microsoft.Extensions.Configuration.KeyVault/src
-[package]: https://www.nuget.org/packages/Microsoft.Extensions.Configuration.KeyVault/
-[nuget]: https://www.nuget.org/packages/Microsoft.Extensions.Configuration.KeyVault
 [keyvault_create_cli]: https://learn.microsoft.com/azure/key-vault/quick-create-cli#create-a-key-vault
 [keyvault_create_portal]: https://learn.microsoft.com/azure/key-vault/quick-create-portal#create-a-vault
 [keyvault_create_ps]: https://learn.microsoft.com/azure/key-vault/quick-create-powershell#create-a-key-vault
