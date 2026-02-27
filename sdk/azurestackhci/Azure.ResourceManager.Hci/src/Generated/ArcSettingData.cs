@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary> App id of arc AAD identity. </summary>
         [WirePath("properties.arcApplicationClientId")]
-        public string ArcApplicationClientId
+        public Guid? ArcApplicationClientId
         {
             get
             {
@@ -83,13 +83,13 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new ArcSettingProperties();
                 }
-                Properties.ArcApplicationClientId = value;
+                Properties.ArcApplicationClientId = value.Value;
             }
         }
 
         /// <summary> Tenant id of arc AAD identity. </summary>
         [WirePath("properties.arcApplicationTenantId")]
-        public string ArcApplicationTenantId
+        public Guid? ArcApplicationTenantId
         {
             get
             {
@@ -101,13 +101,13 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new ArcSettingProperties();
                 }
-                Properties.ArcApplicationTenantId = value;
+                Properties.ArcApplicationTenantId = value.Value;
             }
         }
 
         /// <summary> Object id of arc AAD service principal. </summary>
         [WirePath("properties.arcServicePrincipalObjectId")]
-        public string ArcServicePrincipalObjectId
+        public Guid? ArcServicePrincipalObjectId
         {
             get
             {
@@ -119,13 +119,13 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new ArcSettingProperties();
                 }
-                Properties.ArcServicePrincipalObjectId = value;
+                Properties.ArcServicePrincipalObjectId = value.Value;
             }
         }
 
         /// <summary> Object id of arc AAD identity. </summary>
         [WirePath("properties.arcApplicationObjectId")]
-        public string ArcApplicationObjectId
+        public Guid? ArcApplicationObjectId
         {
             get
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new ArcSettingProperties();
                 }
-                Properties.ArcApplicationObjectId = value;
+                Properties.ArcApplicationObjectId = value.Value;
             }
         }
 

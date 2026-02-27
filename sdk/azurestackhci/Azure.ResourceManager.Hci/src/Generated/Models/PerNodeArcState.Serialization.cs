@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (options.Format != "W" && Optional.IsDefined(ArcNodeServicePrincipalObjectId))
             {
                 writer.WritePropertyName("arcNodeServicePrincipalObjectId"u8);
-                writer.WriteStringValue(ArcNodeServicePrincipalObjectId);
+                writer.WriteStringValue(ArcNodeServicePrincipalObjectId.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(State))
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
             string name = default;
             string arcInstance = default;
-            string arcNodeServicePrincipalObjectId = default;
+            Guid? arcNodeServicePrincipalObjectId = default;
             NodeArcState? state = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -155,7 +155,11 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (prop.NameEquals("arcNodeServicePrincipalObjectId"u8))
                 {
-                    arcNodeServicePrincipalObjectId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    arcNodeServicePrincipalObjectId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("state"u8))

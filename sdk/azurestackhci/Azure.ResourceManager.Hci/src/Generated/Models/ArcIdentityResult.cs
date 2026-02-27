@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Gets the ArcApplicationClientId. </summary>
         [WirePath("properties.arcApplicationClientId")]
-        public string ArcApplicationClientId
+        public Guid? ArcApplicationClientId
         {
             get
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Gets the ArcApplicationTenantId. </summary>
         [WirePath("properties.arcApplicationTenantId")]
-        public string ArcApplicationTenantId
+        public Guid? ArcApplicationTenantId
         {
             get
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Gets the ArcServicePrincipalObjectId. </summary>
         [WirePath("properties.arcServicePrincipalObjectId")]
-        public string ArcServicePrincipalObjectId
+        public Guid? ArcServicePrincipalObjectId
         {
             get
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Gets the ArcApplicationObjectId. </summary>
         [WirePath("properties.arcApplicationObjectId")]
-        public string ArcApplicationObjectId
+        public Guid? ArcApplicationObjectId
         {
             get
             {

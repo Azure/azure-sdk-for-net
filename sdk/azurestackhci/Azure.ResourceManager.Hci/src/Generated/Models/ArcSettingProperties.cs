@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="connectivityProperties"> contains connectivity related configuration for ARC resources. </param>
         /// <param name="defaultExtensions"> Properties for each of the default extensions category. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArcSettingProperties(HciProvisioningState? provisioningState, string arcInstanceResourceGroup, string arcApplicationClientId, string arcApplicationTenantId, string arcServicePrincipalObjectId, string arcApplicationObjectId, ArcSettingAggregateState? aggregateState, IReadOnlyList<PerNodeArcState> perNodeDetails, ArcConnectivityProperties connectivityProperties, IReadOnlyList<ArcDefaultExtensionDetails> defaultExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArcSettingProperties(HciProvisioningState? provisioningState, string arcInstanceResourceGroup, Guid? arcApplicationClientId, Guid? arcApplicationTenantId, Guid? arcServicePrincipalObjectId, Guid? arcApplicationObjectId, ArcSettingAggregateState? aggregateState, IReadOnlyList<PerNodeArcState> perNodeDetails, ArcConnectivityProperties connectivityProperties, IReadOnlyList<ArcDefaultExtensionDetails> defaultExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ArcInstanceResourceGroup = arcInstanceResourceGroup;
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> App id of arc AAD identity. </summary>
         [WirePath("arcApplicationClientId")]
-        public string ArcApplicationClientId { get; set; }
+        public Guid? ArcApplicationClientId { get; set; }
 
         /// <summary> Tenant id of arc AAD identity. </summary>
         [WirePath("arcApplicationTenantId")]
-        public string ArcApplicationTenantId { get; set; }
+        public Guid? ArcApplicationTenantId { get; set; }
 
         /// <summary> Object id of arc AAD service principal. </summary>
         [WirePath("arcServicePrincipalObjectId")]
-        public string ArcServicePrincipalObjectId { get; set; }
+        public Guid? ArcServicePrincipalObjectId { get; set; }
 
         /// <summary> Object id of arc AAD identity. </summary>
         [WirePath("arcApplicationObjectId")]
-        public string ArcApplicationObjectId { get; set; }
+        public Guid? ArcApplicationObjectId { get; set; }
 
         /// <summary> Aggregate state of Arc agent across the nodes in this HCI cluster. </summary>
         [WirePath("aggregateState")]

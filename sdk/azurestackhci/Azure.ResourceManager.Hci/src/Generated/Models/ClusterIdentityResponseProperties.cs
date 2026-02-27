@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="aadServicePrincipalObjectId"></param>
         /// <param name="aadApplicationObjectId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterIdentityResponseProperties(string aadClientId, string aadTenantId, string aadServicePrincipalObjectId, string aadApplicationObjectId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterIdentityResponseProperties(Guid? aadClientId, Guid? aadTenantId, Guid? aadServicePrincipalObjectId, Guid? aadApplicationObjectId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AadClientId = aadClientId;
             AadTenantId = aadTenantId;
@@ -39,18 +39,18 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Gets the AadClientId. </summary>
         [WirePath("aadClientId")]
-        public string AadClientId { get; }
+        public Guid? AadClientId { get; }
 
         /// <summary> Gets the AadTenantId. </summary>
         [WirePath("aadTenantId")]
-        public string AadTenantId { get; }
+        public Guid? AadTenantId { get; }
 
         /// <summary> Gets the AadServicePrincipalObjectId. </summary>
         [WirePath("aadServicePrincipalObjectId")]
-        public string AadServicePrincipalObjectId { get; }
+        public Guid? AadServicePrincipalObjectId { get; }
 
         /// <summary> Gets the AadApplicationObjectId. </summary>
         [WirePath("aadApplicationObjectId")]
-        public string AadApplicationObjectId { get; }
+        public Guid? AadApplicationObjectId { get; }
     }
 }

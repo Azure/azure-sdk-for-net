@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Gets the AadClientId. </summary>
         [WirePath("properties.aadClientId")]
-        public string AadClientId
+        public Guid? AadClientId
         {
             get
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Gets the AadTenantId. </summary>
         [WirePath("properties.aadTenantId")]
-        public string AadTenantId
+        public Guid? AadTenantId
         {
             get
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Gets the AadServicePrincipalObjectId. </summary>
         [WirePath("properties.aadServicePrincipalObjectId")]
-        public string AadServicePrincipalObjectId
+        public Guid? AadServicePrincipalObjectId
         {
             get
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Gets the AadApplicationObjectId. </summary>
         [WirePath("properties.aadApplicationObjectId")]
-        public string AadApplicationObjectId
+        public Guid? AadApplicationObjectId
         {
             get
             {

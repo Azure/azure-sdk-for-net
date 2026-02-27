@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="arcServicePrincipalObjectId"></param>
         /// <param name="arcApplicationObjectId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArcIdentityResponseProperties(string arcApplicationClientId, string arcApplicationTenantId, string arcServicePrincipalObjectId, string arcApplicationObjectId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArcIdentityResponseProperties(Guid? arcApplicationClientId, Guid? arcApplicationTenantId, Guid? arcServicePrincipalObjectId, Guid? arcApplicationObjectId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ArcApplicationClientId = arcApplicationClientId;
             ArcApplicationTenantId = arcApplicationTenantId;
@@ -39,18 +39,18 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Gets the ArcApplicationClientId. </summary>
         [WirePath("arcApplicationClientId")]
-        public string ArcApplicationClientId { get; }
+        public Guid? ArcApplicationClientId { get; }
 
         /// <summary> Gets the ArcApplicationTenantId. </summary>
         [WirePath("arcApplicationTenantId")]
-        public string ArcApplicationTenantId { get; }
+        public Guid? ArcApplicationTenantId { get; }
 
         /// <summary> Gets the ArcServicePrincipalObjectId. </summary>
         [WirePath("arcServicePrincipalObjectId")]
-        public string ArcServicePrincipalObjectId { get; }
+        public Guid? ArcServicePrincipalObjectId { get; }
 
         /// <summary> Gets the ArcApplicationObjectId. </summary>
         [WirePath("arcApplicationObjectId")]
-        public string ArcApplicationObjectId { get; }
+        public Guid? ArcApplicationObjectId { get; }
     }
 }

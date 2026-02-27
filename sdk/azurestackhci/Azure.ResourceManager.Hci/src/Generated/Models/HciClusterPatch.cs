@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> App id of cluster AAD identity. </summary>
         [WirePath("properties.aadClientId")]
-        public string AadClientId
+        public Guid? AadClientId
         {
             get
             {
@@ -81,13 +81,13 @@ namespace Azure.ResourceManager.Hci.Models
                 {
                     Properties = new ClusterPatchProperties();
                 }
-                Properties.AadClientId = value;
+                Properties.AadClientId = value.Value;
             }
         }
 
         /// <summary> Tenant id of cluster AAD identity. </summary>
         [WirePath("properties.aadTenantId")]
-        public string AadTenantId
+        public Guid? AadTenantId
         {
             get
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Hci.Models
                 {
                     Properties = new ClusterPatchProperties();
                 }
-                Properties.AadTenantId = value;
+                Properties.AadTenantId = value.Value;
             }
         }
 

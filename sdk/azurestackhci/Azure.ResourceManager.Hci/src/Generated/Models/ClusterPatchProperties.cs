@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="aadTenantId"> Tenant id of cluster AAD identity. </param>
         /// <param name="desiredProperties"> Desired properties of the cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterPatchProperties(string cloudManagementEndpoint, string aadClientId, string aadTenantId, HciClusterDesiredProperties desiredProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterPatchProperties(string cloudManagementEndpoint, Guid? aadClientId, Guid? aadTenantId, HciClusterDesiredProperties desiredProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CloudManagementEndpoint = cloudManagementEndpoint;
             AadClientId = aadClientId;
@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> App id of cluster AAD identity. </summary>
         [WirePath("aadClientId")]
-        public string AadClientId { get; set; }
+        public Guid? AadClientId { get; set; }
 
         /// <summary> Tenant id of cluster AAD identity. </summary>
         [WirePath("aadTenantId")]
-        public string AadTenantId { get; set; }
+        public Guid? AadTenantId { get; set; }
 
         /// <summary> Desired properties of the cluster. </summary>
         [WirePath("desiredProperties")]

@@ -159,7 +159,9 @@ namespace Azure.ResourceManager.Hci
     [ModelReaderWriterBuildable(typeof(HciEdgeDeviceValidateResult))]
     [ModelReaderWriterBuildable(typeof(HciEdgeDeviceVirtualSwitchConfigurationOverrides))]
     [ModelReaderWriterBuildable(typeof(HciEdgeSwitchExtension))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.Hci.Models.HciExtensionInstanceView is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(HciExtensionInstanceView))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.Hci.Models.HciExtensionInstanceView is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(HciHardwareProfile))]
     [ModelReaderWriterBuildable(typeof(HciNetworkProfile))]
     [ModelReaderWriterBuildable(typeof(HciNicDetail))]

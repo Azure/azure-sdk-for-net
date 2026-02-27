@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="localAvailabilityZones"> Local Availability Zone information for HCI cluster. </param>
         /// <param name="identityProvider"> Identity Provider for the cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterProperties(HciProvisioningState? provisioningState, HciClusterStatus? status, HciClusterConnectivityStatus? connectivityStatus, Guid? cloudId, string ring, string cloudManagementEndpoint, string aadClientId, string aadTenantId, string aadApplicationObjectId, string aadServicePrincipalObjectId, SoftwareAssuranceProperties softwareAssuranceProperties, bool? isManagementCluster, LogCollectionProperties logCollectionProperties, RemoteSupportProperties remoteSupportProperties, HciClusterDesiredProperties desiredProperties, HciClusterReportedProperties reportedProperties, IsolatedVmAttestationConfiguration isolatedVmAttestationConfiguration, float? trialDaysRemaining, string billingModel, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string serviceEndpoint, string resourceProviderObjectId, IList<SecretsLocationDetails> secretsLocations, ClusterPattern? clusterPattern, ConfidentialVmProperties confidentialVmProperties, ClusterSdnProperties sdnProperties, IList<LocalAvailabilityZones> localAvailabilityZones, IdentityProvider? identityProvider, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterProperties(HciProvisioningState? provisioningState, HciClusterStatus? status, HciClusterConnectivityStatus? connectivityStatus, Guid? cloudId, string ring, string cloudManagementEndpoint, Guid? aadClientId, Guid? aadTenantId, Guid? aadApplicationObjectId, Guid? aadServicePrincipalObjectId, SoftwareAssuranceProperties softwareAssuranceProperties, bool? isManagementCluster, LogCollectionProperties logCollectionProperties, RemoteSupportProperties remoteSupportProperties, HciClusterDesiredProperties desiredProperties, HciClusterReportedProperties reportedProperties, IsolatedVmAttestationConfiguration isolatedVmAttestationConfiguration, float? trialDaysRemaining, string billingModel, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string serviceEndpoint, string resourceProviderObjectId, IList<SecretsLocationDetails> secretsLocations, ClusterPattern? clusterPattern, ConfidentialVmProperties confidentialVmProperties, ClusterSdnProperties sdnProperties, IList<LocalAvailabilityZones> localAvailabilityZones, IdentityProvider? identityProvider, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Status = status;
@@ -117,19 +117,19 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> App id of cluster AAD identity. </summary>
         [WirePath("aadClientId")]
-        public string AadClientId { get; set; }
+        public Guid? AadClientId { get; set; }
 
         /// <summary> Tenant id of cluster AAD identity. </summary>
         [WirePath("aadTenantId")]
-        public string AadTenantId { get; set; }
+        public Guid? AadTenantId { get; set; }
 
         /// <summary> Object id of cluster AAD identity. </summary>
         [WirePath("aadApplicationObjectId")]
-        public string AadApplicationObjectId { get; set; }
+        public Guid? AadApplicationObjectId { get; set; }
 
         /// <summary> Id of cluster identity service principal. </summary>
         [WirePath("aadServicePrincipalObjectId")]
-        public string AadServicePrincipalObjectId { get; set; }
+        public Guid? AadServicePrincipalObjectId { get; set; }
 
         /// <summary> Software Assurance properties of the cluster. </summary>
         [WirePath("softwareAssuranceProperties")]

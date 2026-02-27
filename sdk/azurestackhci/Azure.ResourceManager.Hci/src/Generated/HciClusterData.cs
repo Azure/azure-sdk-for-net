@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary> App id of cluster AAD identity. </summary>
         [WirePath("properties.aadClientId")]
-        public string AadClientId
+        public Guid? AadClientId
         {
             get
             {
@@ -138,13 +138,13 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new ClusterProperties();
                 }
-                Properties.AadClientId = value;
+                Properties.AadClientId = value.Value;
             }
         }
 
         /// <summary> Tenant id of cluster AAD identity. </summary>
         [WirePath("properties.aadTenantId")]
-        public string AadTenantId
+        public Guid? AadTenantId
         {
             get
             {
@@ -156,13 +156,13 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new ClusterProperties();
                 }
-                Properties.AadTenantId = value;
+                Properties.AadTenantId = value.Value;
             }
         }
 
         /// <summary> Object id of cluster AAD identity. </summary>
         [WirePath("properties.aadApplicationObjectId")]
-        public string AadApplicationObjectId
+        public Guid? AadApplicationObjectId
         {
             get
             {
@@ -174,13 +174,13 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new ClusterProperties();
                 }
-                Properties.AadApplicationObjectId = value;
+                Properties.AadApplicationObjectId = value.Value;
             }
         }
 
         /// <summary> Id of cluster identity service principal. </summary>
         [WirePath("properties.aadServicePrincipalObjectId")]
-        public string AadServicePrincipalObjectId
+        public Guid? AadServicePrincipalObjectId
         {
             get
             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new ClusterProperties();
                 }
-                Properties.AadServicePrincipalObjectId = value;
+                Properties.AadServicePrincipalObjectId = value.Value;
             }
         }
 

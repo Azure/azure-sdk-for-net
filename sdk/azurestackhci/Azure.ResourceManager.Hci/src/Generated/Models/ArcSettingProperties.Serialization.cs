@@ -87,22 +87,22 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(ArcApplicationClientId))
             {
                 writer.WritePropertyName("arcApplicationClientId"u8);
-                writer.WriteStringValue(ArcApplicationClientId);
+                writer.WriteStringValue(ArcApplicationClientId.Value);
             }
             if (Optional.IsDefined(ArcApplicationTenantId))
             {
                 writer.WritePropertyName("arcApplicationTenantId"u8);
-                writer.WriteStringValue(ArcApplicationTenantId);
+                writer.WriteStringValue(ArcApplicationTenantId.Value);
             }
             if (Optional.IsDefined(ArcServicePrincipalObjectId))
             {
                 writer.WritePropertyName("arcServicePrincipalObjectId"u8);
-                writer.WriteStringValue(ArcServicePrincipalObjectId);
+                writer.WriteStringValue(ArcServicePrincipalObjectId.Value);
             }
             if (Optional.IsDefined(ArcApplicationObjectId))
             {
                 writer.WritePropertyName("arcApplicationObjectId"u8);
-                writer.WriteStringValue(ArcApplicationObjectId);
+                writer.WriteStringValue(ArcApplicationObjectId.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(AggregateState))
             {
@@ -178,10 +178,10 @@ namespace Azure.ResourceManager.Hci.Models
             }
             HciProvisioningState? provisioningState = default;
             string arcInstanceResourceGroup = default;
-            string arcApplicationClientId = default;
-            string arcApplicationTenantId = default;
-            string arcServicePrincipalObjectId = default;
-            string arcApplicationObjectId = default;
+            Guid? arcApplicationClientId = default;
+            Guid? arcApplicationTenantId = default;
+            Guid? arcServicePrincipalObjectId = default;
+            Guid? arcApplicationObjectId = default;
             ArcSettingAggregateState? aggregateState = default;
             IReadOnlyList<PerNodeArcState> perNodeDetails = default;
             ArcConnectivityProperties connectivityProperties = default;
@@ -205,22 +205,38 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (prop.NameEquals("arcApplicationClientId"u8))
                 {
-                    arcApplicationClientId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    arcApplicationClientId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("arcApplicationTenantId"u8))
                 {
-                    arcApplicationTenantId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    arcApplicationTenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("arcServicePrincipalObjectId"u8))
                 {
-                    arcServicePrincipalObjectId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    arcServicePrincipalObjectId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("arcApplicationObjectId"u8))
                 {
-                    arcApplicationObjectId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    arcApplicationObjectId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("aggregateState"u8))

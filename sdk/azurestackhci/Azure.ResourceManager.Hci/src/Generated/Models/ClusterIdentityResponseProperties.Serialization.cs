@@ -77,22 +77,22 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(AadClientId))
             {
                 writer.WritePropertyName("aadClientId"u8);
-                writer.WriteStringValue(AadClientId);
+                writer.WriteStringValue(AadClientId.Value);
             }
             if (Optional.IsDefined(AadTenantId))
             {
                 writer.WritePropertyName("aadTenantId"u8);
-                writer.WriteStringValue(AadTenantId);
+                writer.WriteStringValue(AadTenantId.Value);
             }
             if (Optional.IsDefined(AadServicePrincipalObjectId))
             {
                 writer.WritePropertyName("aadServicePrincipalObjectId"u8);
-                writer.WriteStringValue(AadServicePrincipalObjectId);
+                writer.WriteStringValue(AadServicePrincipalObjectId.Value);
             }
             if (Optional.IsDefined(AadApplicationObjectId))
             {
                 writer.WritePropertyName("aadApplicationObjectId"u8);
-                writer.WriteStringValue(AadApplicationObjectId);
+                writer.WriteStringValue(AadApplicationObjectId.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -136,31 +136,47 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            string aadClientId = default;
-            string aadTenantId = default;
-            string aadServicePrincipalObjectId = default;
-            string aadApplicationObjectId = default;
+            Guid? aadClientId = default;
+            Guid? aadTenantId = default;
+            Guid? aadServicePrincipalObjectId = default;
+            Guid? aadApplicationObjectId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("aadClientId"u8))
                 {
-                    aadClientId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    aadClientId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("aadTenantId"u8))
                 {
-                    aadTenantId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    aadTenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("aadServicePrincipalObjectId"u8))
                 {
-                    aadServicePrincipalObjectId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    aadServicePrincipalObjectId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("aadApplicationObjectId"u8))
                 {
-                    aadApplicationObjectId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    aadApplicationObjectId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
