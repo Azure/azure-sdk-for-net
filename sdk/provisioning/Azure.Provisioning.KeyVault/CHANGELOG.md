@@ -1,8 +1,10 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (2026-02-27)
 
 ### Features Added
+
+- Regenerated from the latest `Azure.ResourceManager.KeyVault` package.
 
 ### Breaking Changes
 

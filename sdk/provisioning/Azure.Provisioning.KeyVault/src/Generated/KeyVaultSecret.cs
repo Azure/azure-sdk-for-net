@@ -20,9 +20,7 @@ namespace Azure.Provisioning.KeyVault;
 public partial class KeyVaultSecret : ProvisionableResource
 {
     /// <summary>
-    /// Name of the secret. The value you provide may be copied globally for
-    /// the purpose of running the service. The value provided should not
-    /// include personally identifiable or sensitive information.
+    /// The name of the secret.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -99,7 +97,7 @@ public partial class KeyVaultSecret : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the KeyVaultSecret.</param>
     public KeyVaultSecret(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.KeyVault/vaults/secrets", resourceVersion ?? "2024-11-01")
+        : base(bicepIdentifier, "Microsoft.KeyVault/vaults/secrets", resourceVersion ?? "2025-05-01")
     {
     }
 
@@ -108,6 +106,7 @@ public partial class KeyVaultSecret : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _properties = DefineModelProperty<SecretProperties>("Properties", ["properties"], isRequired: true);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
@@ -122,6 +121,11 @@ public partial class KeyVaultSecret : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-05-01.
+        /// </summary>
+        public static readonly string V2025_05_01 = "2025-05-01";
+
         /// <summary>
         /// 2024-11-01.
         /// </summary>
