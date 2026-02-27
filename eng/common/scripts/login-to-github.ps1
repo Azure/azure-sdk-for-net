@@ -104,7 +104,7 @@ function New-GitHubAppJwt {
       --digest $Base64Value | ConvertFrom-Json
 
   if ($LASTEXITCODE -ne 0) {
-    throw "Failed to sign JWT with Azure Key Vault. Error: $SignResult"
+    throw "Failed to sign JWT with Azure Key Vault. Error: $($SignResultJson | ConvertTo-Json -Compress)"
   }
 
   if (!$SignResultJson.signature) {
