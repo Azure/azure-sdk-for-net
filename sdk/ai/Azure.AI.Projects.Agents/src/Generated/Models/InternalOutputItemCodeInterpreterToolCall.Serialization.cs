@@ -6,9 +6,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.Agents;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Agents
 {
     internal partial class InternalOutputItemCodeInterpreterToolCall : AgentResponseItem, IJsonModel<InternalOutputItemCodeInterpreterToolCall>
     {
@@ -147,7 +146,7 @@ namespace OpenAI
             AgentReference agentReference = default;
             string responseId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            OpenAI.OutputItemCodeInterpreterToolCallStatus status = default;
+            Agents.OutputItemCodeInterpreterToolCallStatus status = default;
             string containerId = default;
             string code = default;
             IList<BinaryData> outputs = default;

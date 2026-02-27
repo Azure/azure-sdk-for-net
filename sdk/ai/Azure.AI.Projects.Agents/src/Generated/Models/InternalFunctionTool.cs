@@ -5,9 +5,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.Agents;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Agents
 {
     internal partial class InternalFunctionTool : AgentTool
     {

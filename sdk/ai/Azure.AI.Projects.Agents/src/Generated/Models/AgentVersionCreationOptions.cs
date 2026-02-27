@@ -14,17 +14,6 @@ namespace Azure.AI.Projects.Agents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AgentVersionCreationOptions"/>. </summary>
-        /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="definition"/> is null. </exception>
-        public AgentVersionCreationOptions(AgentDefinition definition)
-        {
-            Argument.AssertNotNull(definition, nameof(definition));
-
-            Metadata = new ChangeTrackingDictionary<string, string>();
-            Definition = definition;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AgentVersionCreationOptions"/>. </summary>
         /// <param name="metadata">
         /// Set of 16 key-value pairs that can be attached to an object. This can be
         /// useful for storing additional information about the object in a structured

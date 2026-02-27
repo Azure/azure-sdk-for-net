@@ -5,8 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Agents
 {
     /// <summary> KeyPress. </summary>
     internal partial class KeyPressAction : InternalComputerAction

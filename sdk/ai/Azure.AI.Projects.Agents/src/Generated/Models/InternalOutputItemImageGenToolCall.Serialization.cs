@@ -6,9 +6,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.Agents;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Agents
 {
     internal partial class InternalOutputItemImageGenToolCall : AgentResponseItem, IJsonModel<InternalOutputItemImageGenToolCall>
     {
@@ -119,7 +118,7 @@ namespace OpenAI
             AgentReference agentReference = default;
             string responseId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            OpenAI.OutputItemImageGenToolCallStatus status = default;
+            Agents.OutputItemImageGenToolCallStatus status = default;
             string result = default;
             foreach (var prop in element.EnumerateObject())
             {

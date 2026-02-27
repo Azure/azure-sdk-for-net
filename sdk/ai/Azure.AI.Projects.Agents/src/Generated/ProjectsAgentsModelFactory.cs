@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -570,7 +569,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="details"></param>
         /// <param name="additionalInfo"></param>
         /// <param name="debugInfo"></param>
-        /// <returns> A new <see cref="OpenAI.Error"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.Error"/> instance for mocking. </returns>
         public static Error Error(string code = default, string message = default, string @param = default, string @type = default, IEnumerable<Error> details = default, IDictionary<string, BinaryData> additionalInfo = default, IDictionary<string, BinaryData> debugInfo = default)
         {
             details ??= new ChangeTrackingList<Error>();
@@ -586,6 +585,26 @@ namespace Azure.AI.Projects.Agents
                 additionalInfo,
                 debugInfo,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The AgentManifestOptions. </summary>
+        /// <param name="metadata">
+        /// Set of 16 key-value pairs that can be attached to an object. This can be
+        /// useful for storing additional information about the object in a structured
+        /// format, and querying for objects via API or the dashboard.
+        /// Keys are strings with a maximum length of 64 characters. Values are strings
+        /// with a maximum length of 512 characters.
+        /// </param>
+        /// <param name="description"> A human-readable description of the agent. </param>
+        /// <param name="manifestId"> The manifest ID to import the agent version from. </param>
+        /// <param name="parameterValues"> The inputs to the manifest that will result in a fully materialized Agent. </param>
+        /// <returns> A new <see cref="Agents.AgentManifestOptions"/> instance for mocking. </returns>
+        public static AgentManifestOptions AgentManifestOptions(IDictionary<string, string> metadata = default, string description = default, string manifestId = default, IDictionary<string, BinaryData> parameterValues = default)
+        {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+            parameterValues ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new AgentManifestOptions(metadata, description, manifestId, parameterValues, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The AgentVersionCreationOptions. </summary>

@@ -5,9 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.Projects.Agents;
+using OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Agents
 {
     internal partial class InternalOutputItemMcpListTools : AgentResponseItem
     {

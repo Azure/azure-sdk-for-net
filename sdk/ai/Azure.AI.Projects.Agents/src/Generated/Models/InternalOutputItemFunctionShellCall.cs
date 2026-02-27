@@ -4,9 +4,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.Projects.Agents;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Agents
 {
     internal partial class InternalOutputItemFunctionShellCall : AgentResponseItem
     {
@@ -15,7 +14,7 @@ namespace OpenAI
         /// <param name="action"> The shell commands and limits that describe how to run the tool call. </param>
         /// <param name="status"> The status of the shell call. One of `in_progress`, `completed`, or `incomplete`. </param>
         /// <param name="environment"></param>
-        internal InternalOutputItemFunctionShellCall(string callId, OpenAI.FunctionShellAction action, OpenAI.LocalShellCallStatus status, OpenAI.FunctionShellCallEnvironment environment) : base("shell_call")
+        internal InternalOutputItemFunctionShellCall(string callId, Agents.FunctionShellAction action, Agents.LocalShellCallStatus status, Agents.FunctionShellCallEnvironment environment) : base("shell_call")
         {
             CallId = callId;
             Action = action;
@@ -34,7 +33,7 @@ namespace OpenAI
         /// <param name="status"> The status of the shell call. One of `in_progress`, `completed`, or `incomplete`. </param>
         /// <param name="environment"></param>
         /// <param name="createdBy"> The ID of the entity that created this tool call. </param>
-        internal InternalOutputItemFunctionShellCall(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string callId, OpenAI.FunctionShellAction action, OpenAI.LocalShellCallStatus status, OpenAI.FunctionShellCallEnvironment environment, string createdBy) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal InternalOutputItemFunctionShellCall(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string callId, Agents.FunctionShellAction action, Agents.LocalShellCallStatus status, Agents.FunctionShellCallEnvironment environment, string createdBy) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             CallId = callId;
             Action = action;
@@ -47,13 +46,13 @@ namespace OpenAI
         public string CallId { get; }
 
         /// <summary> The shell commands and limits that describe how to run the tool call. </summary>
-        public OpenAI.FunctionShellAction Action { get; }
+        public Agents.FunctionShellAction Action { get; }
 
         /// <summary> The status of the shell call. One of `in_progress`, `completed`, or `incomplete`. </summary>
-        public OpenAI.LocalShellCallStatus Status { get; }
+        public Agents.LocalShellCallStatus Status { get; }
 
         /// <summary> Gets the Environment. </summary>
-        public OpenAI.FunctionShellCallEnvironment Environment { get; }
+        public Agents.FunctionShellCallEnvironment Environment { get; }
 
         /// <summary> The ID of the entity that created this tool call. </summary>
         public string CreatedBy { get; }

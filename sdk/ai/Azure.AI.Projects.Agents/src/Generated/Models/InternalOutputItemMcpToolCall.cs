@@ -5,9 +5,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.Agents;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Agents
 {
     internal partial class InternalOutputItemMcpToolCall : AgentResponseItem
     {
@@ -36,7 +35,7 @@ namespace OpenAI
         /// <param name="error"></param>
         /// <param name="status"> The status of the tool call. One of `in_progress`, `completed`, `incomplete`, `calling`, or `failed`. </param>
         /// <param name="approvalRequestId"></param>
-        internal InternalOutputItemMcpToolCall(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, string name, string arguments, string output, IDictionary<string, BinaryData> error, OpenAI.MCPToolCallStatus? status, string approvalRequestId) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal InternalOutputItemMcpToolCall(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, string name, string arguments, string output, IDictionary<string, BinaryData> error, Agents.MCPToolCallStatus? status, string approvalRequestId) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
             Name = name;
@@ -88,7 +87,7 @@ namespace OpenAI
         public IDictionary<string, BinaryData> Error { get; }
 
         /// <summary> The status of the tool call. One of `in_progress`, `completed`, `incomplete`, `calling`, or `failed`. </summary>
-        public OpenAI.MCPToolCallStatus? Status { get; }
+        public Agents.MCPToolCallStatus? Status { get; }
 
         /// <summary> Gets the ApprovalRequestId. </summary>
         public string ApprovalRequestId { get; }

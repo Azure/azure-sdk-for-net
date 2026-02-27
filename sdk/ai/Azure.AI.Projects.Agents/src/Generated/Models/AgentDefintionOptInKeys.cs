@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Feature opt-in keys for agent definition operations supporting container, hosted, and workflow agents. </summary>
-    public readonly partial struct AgentDefintionOptInKeys : IEquatable<AgentDefintionOptInKeys>
+    internal readonly partial struct AgentDefintionOptInKeys : IEquatable<AgentDefintionOptInKeys>
     {
         private readonly string _value;
         private const string HostedAgentsV1PreviewValue = "HostedAgents=V1Preview";

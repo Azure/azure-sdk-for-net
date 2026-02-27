@@ -6,9 +6,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.Agents;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Agents
 {
     internal partial class InternalOutputItemReasoningItem : AgentResponseItem, IJsonModel<InternalOutputItemReasoningItem>
     {
@@ -83,18 +82,18 @@ namespace OpenAI
             }
             writer.WritePropertyName("summary"u8);
             writer.WriteStartArray();
-            foreach (OpenAI.InternalSummaryTextObject item in Summary)
+            foreach (Agents.InternalSummaryTextObject item in Summary)
             {
-                writer.WriteObjectValue<OpenAI.InternalSummaryTextObject>(item, options);
+                writer.WriteObjectValue<Agents.InternalSummaryTextObject>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStartArray();
-                foreach (OpenAI.ReasoningTextContent item in Content)
+                foreach (Agents.ReasoningTextContent item in Content)
                 {
-                    writer.WriteObjectValue<OpenAI.ReasoningTextContent>(item, options);
+                    writer.WriteObjectValue<Agents.ReasoningTextContent>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -136,9 +135,9 @@ namespace OpenAI
             string responseId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string encryptedContent = default;
-            IList<OpenAI.InternalSummaryTextObject> summary = default;
-            IList<OpenAI.ReasoningTextContent> content = default;
-            OpenAI.OutputItemReasoningItemStatus? status = default;
+            IList<Agents.InternalSummaryTextObject> summary = default;
+            IList<Agents.ReasoningTextContent> content = default;
+            Agents.OutputItemReasoningItemStatus? status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -177,10 +176,10 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("summary"u8))
                 {
-                    List<OpenAI.InternalSummaryTextObject> array = new List<OpenAI.InternalSummaryTextObject>();
+                    List<Agents.InternalSummaryTextObject> array = new List<Agents.InternalSummaryTextObject>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OpenAI.InternalSummaryTextObject.DeserializeInternalSummaryTextObject(item, options));
+                        array.Add(Agents.InternalSummaryTextObject.DeserializeInternalSummaryTextObject(item, options));
                     }
                     summary = array;
                     continue;
@@ -191,10 +190,10 @@ namespace OpenAI
                     {
                         continue;
                     }
-                    List<OpenAI.ReasoningTextContent> array = new List<OpenAI.ReasoningTextContent>();
+                    List<Agents.ReasoningTextContent> array = new List<Agents.ReasoningTextContent>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OpenAI.ReasoningTextContent.DeserializeReasoningTextContent(item, options));
+                        array.Add(Agents.ReasoningTextContent.DeserializeReasoningTextContent(item, options));
                     }
                     content = array;
                     continue;
@@ -221,7 +220,7 @@ namespace OpenAI
                 additionalBinaryDataProperties,
                 encryptedContent,
                 summary,
-                content ?? new ChangeTrackingList<OpenAI.ReasoningTextContent>(),
+                content ?? new ChangeTrackingList<Agents.ReasoningTextContent>(),
                 status);
         }
     }

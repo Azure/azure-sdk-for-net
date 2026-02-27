@@ -5,18 +5,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.Projects.Agents;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Agents
 {
     internal partial class InternalOutputItemReasoningItem : AgentResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="InternalOutputItemReasoningItem"/>. </summary>
         /// <param name="summary"> Reasoning summary content. </param>
-        internal InternalOutputItemReasoningItem(IEnumerable<OpenAI.InternalSummaryTextObject> summary) : base("reasoning")
+        internal InternalOutputItemReasoningItem(IEnumerable<Agents.InternalSummaryTextObject> summary) : base("reasoning")
         {
             Summary = summary.ToList();
-            Content = new ChangeTrackingList<OpenAI.ReasoningTextContent>();
+            Content = new ChangeTrackingList<Agents.ReasoningTextContent>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalOutputItemReasoningItem"/>. </summary>
@@ -32,7 +31,7 @@ namespace OpenAI
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        internal InternalOutputItemReasoningItem(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string encryptedContent, IList<OpenAI.InternalSummaryTextObject> summary, IList<OpenAI.ReasoningTextContent> content, OpenAI.OutputItemReasoningItemStatus? status) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal InternalOutputItemReasoningItem(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string encryptedContent, IList<Agents.InternalSummaryTextObject> summary, IList<Agents.ReasoningTextContent> content, Agents.OutputItemReasoningItemStatus? status) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             EncryptedContent = encryptedContent;
             Summary = summary;
@@ -44,15 +43,15 @@ namespace OpenAI
         public string EncryptedContent { get; }
 
         /// <summary> Reasoning summary content. </summary>
-        public IList<OpenAI.InternalSummaryTextObject> Summary { get; }
+        public IList<Agents.InternalSummaryTextObject> Summary { get; }
 
         /// <summary> Reasoning text content. </summary>
-        public IList<OpenAI.ReasoningTextContent> Content { get; }
+        public IList<Agents.ReasoningTextContent> Content { get; }
 
         /// <summary>
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </summary>
-        public OpenAI.OutputItemReasoningItemStatus? Status { get; }
+        public Agents.OutputItemReasoningItemStatus? Status { get; }
     }
 }

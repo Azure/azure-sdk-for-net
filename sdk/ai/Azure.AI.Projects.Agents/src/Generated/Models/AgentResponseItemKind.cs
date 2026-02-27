@@ -4,12 +4,11 @@
 
 using System;
 using System.ComponentModel;
-using Azure.AI.Projects.Agents;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Agents
 {
     /// <summary></summary>
-    internal readonly partial struct AgentResponseItemKind : IEquatable<AgentResponseItemKind>
+    public readonly partial struct AgentResponseItemKind : IEquatable<AgentResponseItemKind>
     {
         private readonly string _value;
         private const string OutputMessageValue = "output_message";

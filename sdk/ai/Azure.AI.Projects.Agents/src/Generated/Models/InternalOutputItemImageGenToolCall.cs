@@ -4,16 +4,15 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.Projects.Agents;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Agents
 {
     internal partial class InternalOutputItemImageGenToolCall : AgentResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="InternalOutputItemImageGenToolCall"/>. </summary>
         /// <param name="status"> The status of the image generation call. </param>
         /// <param name="result"></param>
-        internal InternalOutputItemImageGenToolCall(OpenAI.OutputItemImageGenToolCallStatus status, string result) : base("image_generation_call")
+        internal InternalOutputItemImageGenToolCall(Agents.OutputItemImageGenToolCallStatus status, string result) : base("image_generation_call")
         {
             Status = status;
             Result = result;
@@ -27,14 +26,14 @@ namespace OpenAI
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="status"> The status of the image generation call. </param>
         /// <param name="result"></param>
-        internal InternalOutputItemImageGenToolCall(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, OpenAI.OutputItemImageGenToolCallStatus status, string result) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal InternalOutputItemImageGenToolCall(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, Agents.OutputItemImageGenToolCallStatus status, string result) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             Status = status;
             Result = result;
         }
 
         /// <summary> The status of the image generation call. </summary>
-        public OpenAI.OutputItemImageGenToolCallStatus Status { get; }
+        public Agents.OutputItemImageGenToolCallStatus Status { get; }
 
         /// <summary> Gets the Result. </summary>
         public string Result { get; }

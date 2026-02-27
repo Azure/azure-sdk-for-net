@@ -17,3 +17,4 @@ namespace Azure.AI.Projects.Agents;
 [CodeGenType("WorkflowActionOutputItemStatus")] public readonly partial struct AgentWorkflowPreviewActionStatus { }
 [CodeGenType("OpenApiFunctionDefinitionFunction")] public partial class OpenAPIFunctionEntry { }
 [CodeGenType("WebSearchConfiguration")] public partial class ProjectWebSearchConfiguration { }
+[CodeGenType("CreateAgentVersionFromManifestRequest1")] public partial class AgentManifestOptions { }

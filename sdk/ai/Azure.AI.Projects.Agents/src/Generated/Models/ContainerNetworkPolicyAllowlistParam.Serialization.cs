@@ -6,9 +6,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.Agents;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Agents
 {
     /// <summary> The ContainerNetworkPolicyAllowlistParam. </summary>
     internal partial class ContainerNetworkPolicyAllowlistParam : ContainerNetworkPolicyParam, IJsonModel<ContainerNetworkPolicyAllowlistParam>

@@ -5,9 +5,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.AI.Projects.Agents;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Agents
 {
     [PersistableModelProxy(typeof(UnknownInternalToolChoiceParam))]
     internal abstract partial class InternalToolChoiceParam : IJsonModel<InternalToolChoiceParam>

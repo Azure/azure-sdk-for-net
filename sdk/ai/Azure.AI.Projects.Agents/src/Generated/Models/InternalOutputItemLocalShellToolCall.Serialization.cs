@@ -6,9 +6,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.Agents;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Agents
 {
     internal partial class InternalOutputItemLocalShellToolCall : AgentResponseItem, IJsonModel<InternalOutputItemLocalShellToolCall>
     {
@@ -79,7 +78,7 @@ namespace OpenAI
             writer.WritePropertyName("call_id"u8);
             writer.WriteStringValue(CallId);
             writer.WritePropertyName("action"u8);
-            writer.WriteObjectValue<OpenAI.LocalShellExecAction>(Action, options);
+            writer.WriteObjectValue<Agents.LocalShellExecAction>(Action, options);
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToSerialString());
         }
@@ -115,8 +114,8 @@ namespace OpenAI
             string responseId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string callId = default;
-            OpenAI.LocalShellExecAction action = default;
-            OpenAI.OutputItemLocalShellToolCallStatus status = default;
+            Agents.LocalShellExecAction action = default;
+            Agents.OutputItemLocalShellToolCallStatus status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -150,7 +149,7 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("action"u8))
                 {
-                    action = OpenAI.LocalShellExecAction.DeserializeLocalShellExecAction(prop.Value, options);
+                    action = Agents.LocalShellExecAction.DeserializeLocalShellExecAction(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("status"u8))

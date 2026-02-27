@@ -5,8 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Agents
 {
     /// <summary> Drag. </summary>
     internal partial class DragParam : InternalComputerAction
@@ -21,7 +22,7 @@ namespace OpenAI
         ///   ]
         ///   ```
         /// </param>
-        internal DragParam(IEnumerable<OpenAI.CoordParam> path) : base("drag")
+        internal DragParam(IEnumerable<Agents.CoordParam> path) : base("drag")
         {
             Path = path.ToList();
         }
@@ -38,7 +39,7 @@ namespace OpenAI
         ///   ]
         ///   ```
         /// </param>
-        internal DragParam(ComputerActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<OpenAI.CoordParam> path) : base(@type, additionalBinaryDataProperties)
+        internal DragParam(ComputerActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<Agents.CoordParam> path) : base(@type, additionalBinaryDataProperties)
         {
             Path = path;
         }
@@ -52,6 +53,6 @@ namespace OpenAI
         ///   ]
         ///   ```
         /// </summary>
-        public IList<OpenAI.CoordParam> Path { get; }
+        public IList<Agents.CoordParam> Path { get; }
     }
 }

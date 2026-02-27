@@ -6,9 +6,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.Agents;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Agents
 {
     /// <summary> Specific shell tool choice. </summary>
     internal partial class SpecificFunctionShellParam : InternalToolChoiceParam, IJsonModel<SpecificFunctionShellParam>

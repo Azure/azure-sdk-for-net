@@ -5,9 +5,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.Projects.Agents;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Agents
 {
     /// <summary> The ContainerNetworkPolicyAllowlistParam. </summary>
     internal partial class ContainerNetworkPolicyAllowlistParam : ContainerNetworkPolicyParam

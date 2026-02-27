@@ -4,9 +4,8 @@
 
 using System;
 using System.ComponentModel;
-using Azure.AI.Projects.Agents;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Agents
 {
     /// <summary></summary>
     internal readonly partial struct ImageGenToolModel : IEquatable<ImageGenToolModel>

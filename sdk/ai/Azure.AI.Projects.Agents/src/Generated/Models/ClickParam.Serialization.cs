@@ -6,9 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.Agents;
+using OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Agents
 {
     /// <summary> Click. </summary>
     internal partial class ClickParam : InternalComputerAction, IJsonModel<ClickParam>
@@ -112,7 +112,7 @@ namespace OpenAI
             }
             ComputerActionType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            OpenAI.ClickButtonType button = default;
+            Agents.ClickButtonType button = default;
             long x = default;
             long y = default;
             foreach (var prop in element.EnumerateObject())

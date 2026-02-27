@@ -4,9 +4,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.Projects.Agents;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Agents
 {
     /// <summary> The FunctionShellToolParamEnvironmentContainerReferenceParam. </summary>
     internal partial class FunctionShellToolParamEnvironmentContainerReferenceParam : FunctionShellToolParamEnvironment

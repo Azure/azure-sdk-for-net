@@ -4,8 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Agents
 {
     /// <summary> File path. </summary>
     internal partial class FilePath : InternalAnnotation

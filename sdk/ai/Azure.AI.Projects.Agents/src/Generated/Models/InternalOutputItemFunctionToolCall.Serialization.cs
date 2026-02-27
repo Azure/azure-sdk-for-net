@@ -6,9 +6,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.Agents;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Agents
 {
     internal partial class InternalOutputItemFunctionToolCall : AgentResponseItem, IJsonModel<InternalOutputItemFunctionToolCall>
     {
@@ -122,7 +121,7 @@ namespace OpenAI
             string callId = default;
             string name = default;
             string arguments = default;
-            OpenAI.OutputItemFunctionToolCallStatus? status = default;
+            Agents.OutputItemFunctionToolCallStatus? status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))

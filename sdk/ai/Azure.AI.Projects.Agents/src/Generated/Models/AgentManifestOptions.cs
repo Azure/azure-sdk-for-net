@@ -8,23 +8,23 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> The CreateAgentVersionFromManifestRequest1. </summary>
-    internal partial class CreateAgentVersionFromManifestRequest1
+    /// <summary> The AgentManifestOptions. </summary>
+    public partial class AgentManifestOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CreateAgentVersionFromManifestRequest1"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentManifestOptions"/>. </summary>
         /// <param name="manifestId"> The manifest ID to import the agent version from. </param>
         /// <param name="parameterValues"> The inputs to the manifest that will result in a fully materialized Agent. </param>
-        internal CreateAgentVersionFromManifestRequest1(string manifestId, IDictionary<string, BinaryData> parameterValues)
+        internal AgentManifestOptions(string manifestId, IDictionary<string, BinaryData> parameterValues)
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
             ManifestId = manifestId;
             ParameterValues = parameterValues;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreateAgentVersionFromManifestRequest1"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentManifestOptions"/>. </summary>
         /// <param name="metadata">
         /// Set of 16 key-value pairs that can be attached to an object. This can be
         /// useful for storing additional information about the object in a structured
@@ -36,7 +36,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="manifestId"> The manifest ID to import the agent version from. </param>
         /// <param name="parameterValues"> The inputs to the manifest that will result in a fully materialized Agent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CreateAgentVersionFromManifestRequest1(IDictionary<string, string> metadata, string description, string manifestId, IDictionary<string, BinaryData> parameterValues, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentManifestOptions(IDictionary<string, string> metadata, string description, string manifestId, IDictionary<string, BinaryData> parameterValues, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Metadata = metadata;
             Description = description;

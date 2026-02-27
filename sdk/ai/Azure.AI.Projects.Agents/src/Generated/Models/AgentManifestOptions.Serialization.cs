@@ -10,67 +10,67 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> The CreateAgentVersionRequest. </summary>
-    internal partial class CreateAgentVersionRequest : IJsonModel<CreateAgentVersionRequest>
+    /// <summary> The AgentManifestOptions. </summary>
+    public partial class AgentManifestOptions : IJsonModel<AgentManifestOptions>
     {
-        /// <summary> Initializes a new instance of <see cref="CreateAgentVersionRequest"/> for deserialization. </summary>
-        internal CreateAgentVersionRequest()
+        /// <summary> Initializes a new instance of <see cref="AgentManifestOptions"/> for deserialization. </summary>
+        internal AgentManifestOptions()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CreateAgentVersionRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AgentManifestOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CreateAgentVersionRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentManifestOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCreateAgentVersionRequest(document.RootElement, options);
+                        return DeserializeAgentManifestOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CreateAgentVersionRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentManifestOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CreateAgentVersionRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentManifestOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CreateAgentVersionRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentManifestOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CreateAgentVersionRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AgentManifestOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CreateAgentVersionRequest IPersistableModel<CreateAgentVersionRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AgentManifestOptions IPersistableModel<AgentManifestOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CreateAgentVersionRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AgentManifestOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="createAgentVersionRequest"> The <see cref="CreateAgentVersionRequest"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(CreateAgentVersionRequest createAgentVersionRequest)
+        /// <param name="agentManifestOptions"> The <see cref="AgentManifestOptions"/> to serialize into <see cref="BinaryContent"/>. </param>
+        public static implicit operator BinaryContent(AgentManifestOptions agentManifestOptions)
         {
-            if (createAgentVersionRequest == null)
+            if (agentManifestOptions == null)
             {
                 return null;
             }
-            return BinaryContent.Create(createAgentVersionRequest, ModelSerializationExtensions.WireOptions);
+            return BinaryContent.Create(agentManifestOptions, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CreateAgentVersionRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AgentManifestOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -81,10 +81,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CreateAgentVersionRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentManifestOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CreateAgentVersionRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentManifestOptions)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(Metadata))
             {
@@ -107,8 +107,28 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            writer.WritePropertyName("definition"u8);
-            writer.WriteObjectValue(Definition, options);
+            writer.WritePropertyName("manifest_id"u8);
+            writer.WriteStringValue(ManifestId);
+            writer.WritePropertyName("parameter_values"u8);
+            writer.WriteStartObject();
+            foreach (var item in ParameterValues)
+            {
+                writer.WritePropertyName(item.Key);
+                if (item.Value == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(item.Value);
+#else
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            writer.WriteEndObject();
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -128,24 +148,24 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CreateAgentVersionRequest IJsonModel<CreateAgentVersionRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AgentManifestOptions IJsonModel<AgentManifestOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CreateAgentVersionRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AgentManifestOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CreateAgentVersionRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentManifestOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CreateAgentVersionRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentManifestOptions)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCreateAgentVersionRequest(document.RootElement, options);
+            return DeserializeAgentManifestOptions(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CreateAgentVersionRequest DeserializeCreateAgentVersionRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static AgentManifestOptions DeserializeAgentManifestOptions(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -153,7 +173,8 @@ namespace Azure.AI.Projects.Agents
             }
             IDictionary<string, string> metadata = default;
             string description = default;
-            AgentDefinition definition = default;
+            string manifestId = default;
+            IDictionary<string, BinaryData> parameterValues = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -183,9 +204,26 @@ namespace Azure.AI.Projects.Agents
                     description = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("definition"u8))
+                if (prop.NameEquals("manifest_id"u8))
                 {
-                    definition = AgentDefinition.DeserializeAgentDefinition(prop.Value, options);
+                    manifestId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("parameter_values"u8))
+                {
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                        }
+                    }
+                    parameterValues = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
@@ -193,7 +231,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CreateAgentVersionRequest(metadata ?? new ChangeTrackingDictionary<string, string>(), description, definition, additionalBinaryDataProperties);
+            return new AgentManifestOptions(metadata ?? new ChangeTrackingDictionary<string, string>(), description, manifestId, parameterValues, additionalBinaryDataProperties);
         }
     }
 }

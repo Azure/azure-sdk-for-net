@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace OpenAI
+namespace Azure.AI.Projects.Agents
 {
     /// <summary></summary>
     internal enum GrammarSyntax1

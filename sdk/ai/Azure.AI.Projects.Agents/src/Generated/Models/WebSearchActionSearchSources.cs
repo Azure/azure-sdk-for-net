@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Agents
 {
     /// <summary> The WebSearchActionSearchSources. </summary>
     internal partial class WebSearchActionSearchSources

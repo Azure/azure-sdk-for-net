@@ -2,12 +2,11 @@
 // Licensed under the MIT License.
 
 using System.Text.Json;
-using Azure.AI.Projects.Agents;
 
 namespace Azure.AI.Projects.Agents;
 
 [CodeGenType("CreateAgentVersionRequest1")]
-[CodeGenSuppress(nameof(AgentVersionCreationOptions), typeof(InternalAgentDefinition))]
+[CodeGenSuppress(nameof(AgentVersionCreationOptions), typeof(AgentDefinition))]
 [CodeGenSerialization(nameof(Definition), SerializationName = "definition", DeserializationValueHook = nameof(DeserializeDefinitionValue))]
 public partial class AgentVersionCreationOptions
 {
@@ -16,9 +15,9 @@ public partial class AgentVersionCreationOptions
     public string Description { get; set; }
 
     [CodeGenMember("Definition")]
-    public global::Azure.AI.Projects.Agents.AgentDefinition Definition { get; set; }
+    public AgentDefinition Definition { get; set; }
 
-    private static void DeserializeDefinitionValue(JsonProperty property, ref global::Azure.AI.Projects.Agents.AgentDefinition definition)
+    private static void DeserializeDefinitionValue(JsonProperty property, ref AgentDefinition definition)
     {
         definition = CustomSerializationHelpers.DeserializeProjectOpenAIType<AgentDefinition>(property.Value, ModelSerializationExtensions.WireOptions);
     }

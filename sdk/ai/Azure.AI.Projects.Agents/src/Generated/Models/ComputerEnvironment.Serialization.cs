@@ -4,7 +4,7 @@
 
 using System;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Agents
 {
     internal static partial class ComputerEnvironmentExtensions
     {

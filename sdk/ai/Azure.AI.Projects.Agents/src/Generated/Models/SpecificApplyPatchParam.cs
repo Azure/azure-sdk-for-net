@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Agents
 {
     /// <summary> Specific apply patch tool choice. </summary>
     internal partial class SpecificApplyPatchParam : InternalToolChoiceParam

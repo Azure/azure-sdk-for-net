@@ -5,9 +5,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.Projects.Agents;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Agents
 {
     internal partial class InternalOutputItemOutputMessage : AgentResponseItem
     {
@@ -17,7 +16,7 @@ namespace OpenAI
         /// The status of the message input. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when input items are returned via API.
         /// </param>
-        internal InternalOutputItemOutputMessage(IEnumerable<OpenAI.InternalOutputMessageContent> content, OpenAI.OutputItemOutputMessageStatus status) : base("output_message")
+        internal InternalOutputItemOutputMessage(IEnumerable<Agents.InternalOutputMessageContent> content, Agents.OutputItemOutputMessageStatus status) : base("output_message")
         {
             Content = content.ToList();
             Status = status;
@@ -35,7 +34,7 @@ namespace OpenAI
         /// The status of the message input. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when input items are returned via API.
         /// </param>
-        internal InternalOutputItemOutputMessage(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string role, IList<OpenAI.InternalOutputMessageContent> content, OpenAI.OutputItemOutputMessageStatus status) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal InternalOutputItemOutputMessage(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string role, IList<Agents.InternalOutputMessageContent> content, Agents.OutputItemOutputMessageStatus status) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             Role = role;
             Content = content;
@@ -46,12 +45,12 @@ namespace OpenAI
         internal string Role { get; } = "assistant";
 
         /// <summary> The content of the output message. </summary>
-        public IList<OpenAI.InternalOutputMessageContent> Content { get; }
+        public IList<Agents.InternalOutputMessageContent> Content { get; }
 
         /// <summary>
         /// The status of the message input. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when input items are returned via API.
         /// </summary>
-        public OpenAI.OutputItemOutputMessageStatus Status { get; }
+        public Agents.OutputItemOutputMessageStatus Status { get; }
     }
 }

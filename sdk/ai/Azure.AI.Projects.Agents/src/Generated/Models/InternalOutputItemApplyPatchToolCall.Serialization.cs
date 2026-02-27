@@ -6,9 +6,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.Agents;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Agents
 {
     internal partial class InternalOutputItemApplyPatchToolCall : AgentResponseItem, IJsonModel<InternalOutputItemApplyPatchToolCall>
     {
@@ -81,7 +80,7 @@ namespace OpenAI
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToSerialString());
             writer.WritePropertyName("operation"u8);
-            writer.WriteObjectValue<OpenAI.InternalApplyPatchFileOperation>(Operation, options);
+            writer.WriteObjectValue<Agents.InternalApplyPatchFileOperation>(Operation, options);
             if (Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("created_by"u8);
@@ -120,8 +119,8 @@ namespace OpenAI
             string responseId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string callId = default;
-            OpenAI.ApplyPatchCallStatus status = default;
-            OpenAI.InternalApplyPatchFileOperation operation = default;
+            Agents.ApplyPatchCallStatus status = default;
+            Agents.InternalApplyPatchFileOperation operation = default;
             string createdBy = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,7 +160,7 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("operation"u8))
                 {
-                    operation = OpenAI.InternalApplyPatchFileOperation.DeserializeInternalApplyPatchFileOperation(prop.Value, options);
+                    operation = Agents.InternalApplyPatchFileOperation.DeserializeInternalApplyPatchFileOperation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("created_by"u8))
