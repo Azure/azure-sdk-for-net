@@ -1698,6 +1698,28 @@ namespace Azure.Search.Documents.Indexes.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.ElisionTokenFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.ElisionTokenFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("This type is deprecated. Use EntityRecognitionSkill with SkillVersion.V3 instead.")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct EntityCategory : System.IEquatable<Azure.Search.Documents.Indexes.Models.EntityCategory>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public EntityCategory(string value) { throw null; }
+        public static Azure.Search.Documents.Indexes.Models.EntityCategory Datetime { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.EntityCategory Email { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.EntityCategory Location { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.EntityCategory Organization { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.EntityCategory Person { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.EntityCategory Quantity { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.EntityCategory Url { get { throw null; } }
+        public bool Equals(Azure.Search.Documents.Indexes.Models.EntityCategory other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Search.Documents.Indexes.Models.EntityCategory left, Azure.Search.Documents.Indexes.Models.EntityCategory right) { throw null; }
+        public static implicit operator Azure.Search.Documents.Indexes.Models.EntityCategory (string value) { throw null; }
+        public static bool operator !=(Azure.Search.Documents.Indexes.Models.EntityCategory left, Azure.Search.Documents.Indexes.Models.EntityCategory right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class EntityLinkingSkill : Azure.Search.Documents.Indexes.Models.SearchIndexerSkill, System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.EntityLinkingSkill>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.EntityLinkingSkill>
     {
         public EntityLinkingSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs) : base (default(string), default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry>), default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry>)) { }
@@ -1718,8 +1740,14 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         public EntityRecognitionSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs) : base (default(string), default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry>), default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry>)) { }
         public EntityRecognitionSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs, Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion skillVersion) : base (default(string), default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry>), default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry>)) { }
-        public System.Collections.Generic.IList<string> Categories { get { throw null; } }
-        public string DefaultLanguageCode { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is deprecated. Use EntityCategories instead.", true)]
+        public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.EntityCategory> Categories { get { throw null; } }
+        [System.ObsoleteAttribute("This property is deprecated. Use EntityLanguageCode instead.", true)]
+        public Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage? DefaultLanguageCode { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> EntityCategories { get { throw null; } }
+        [System.ObsoleteAttribute("This property is deprecated. Use EntityRecognitionSkill with SkillVersion.V3 instead.", true)]
+        public bool? IncludeTypelessEntities { get { throw null; } set { } }
+        public string LanguageCode { get { throw null; } set { } }
         public double? MinimumPrecision { get { throw null; } set { } }
         public string ModelVersion { get { throw null; } set { } }
         protected override Azure.Search.Documents.Indexes.Models.SearchIndexerSkill JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1738,6 +1766,8 @@ namespace Azure.Search.Documents.Indexes.Models
             private readonly int _dummyPrimitive;
             public SkillVersion(string value) { throw null; }
             public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion Latest { get { throw null; } }
+            [System.ObsoleteAttribute("This skill version is deprecated. Use V3 instead.", true)]
+            public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion V1 { get { throw null; } }
             public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion V3 { get { throw null; } }
             public bool Equals(Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion other) { throw null; }
             public override bool Equals(object obj) { throw null; }
@@ -1749,6 +1779,44 @@ namespace Azure.Search.Documents.Indexes.Models
             public static bool operator <=(Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion left, Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion right) { throw null; }
             public override string ToString() { throw null; }
         }
+    }
+    [System.ObsoleteAttribute("This type is deprecated. Use EntityRecognitionSkill with SkillVersion.V3 instead.")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct EntityRecognitionSkillLanguage : System.IEquatable<Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public EntityRecognitionSkillLanguage(string value) { throw null; }
+        public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage Ar { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage Cs { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage Da { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage De { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage El { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage En { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage Es { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage Fi { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage Fr { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage Hu { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage It { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage Ja { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage Ko { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage Nl { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage No { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage Pl { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage PtBR { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage PtPT { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage Ru { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage Sv { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage Tr { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage ZhHans { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage ZhHant { get { throw null; } }
+        public bool Equals(Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage left, Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage right) { throw null; }
+        public static implicit operator Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage (string value) { throw null; }
+        public static bool operator !=(Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage left, Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ExhaustiveKnnAlgorithmConfiguration : Azure.Search.Documents.Indexes.Models.VectorSearchAlgorithmConfiguration, System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.ExhaustiveKnnAlgorithmConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.ExhaustiveKnnAlgorithmConfiguration>
     {
@@ -4738,8 +4806,10 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         public SentimentSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs) : base (default(string), default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry>), default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry>)) { }
         public SentimentSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs, Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion skillVersion) : base (default(string), default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry>), default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry>)) { }
-        public string DefaultLanguageCode { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is deprecated. Use SentimentLanguageCode instead.", true)]
+        public Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage? DefaultLanguageCode { get { throw null; } set { } }
         public bool? IncludeOpinionMining { get { throw null; } set { } }
+        public string LanguageCode { get { throw null; } set { } }
         public string ModelVersion { get { throw null; } set { } }
         protected override Azure.Search.Documents.Indexes.Models.SearchIndexerSkill JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -4757,6 +4827,8 @@ namespace Azure.Search.Documents.Indexes.Models
             private readonly int _dummyPrimitive;
             public SkillVersion(string value) { throw null; }
             public static Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion Latest { get { throw null; } }
+            [System.ObsoleteAttribute("This skill version is deprecated. Use V3 instead.")]
+            public static Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion V1 { get { throw null; } }
             public static Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion V3 { get { throw null; } }
             public bool Equals(Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion other) { throw null; }
             public override bool Equals(object obj) { throw null; }
@@ -4768,6 +4840,36 @@ namespace Azure.Search.Documents.Indexes.Models
             public static bool operator <=(Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion left, Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion right) { throw null; }
             public override string ToString() { throw null; }
         }
+    }
+    [System.ObsoleteAttribute("This type is deprecated. Use SentimentSkill with SkillVersion.V3 instead.")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SentimentSkillLanguage : System.IEquatable<Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SentimentSkillLanguage(string value) { throw null; }
+        public static Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage Da { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage De { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage El { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage En { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage Es { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage Fi { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage Fr { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage It { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage Nl { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage No { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage Pl { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage PtPT { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage Ru { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage Sv { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage Tr { get { throw null; } }
+        public bool Equals(Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage left, Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage right) { throw null; }
+        public static implicit operator Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage (string value) { throw null; }
+        public static bool operator !=(Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage left, Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ServiceIndexersRuntime : System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.ServiceIndexersRuntime>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.ServiceIndexersRuntime>
     {
@@ -5568,6 +5670,10 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         protected VectorSearchCompression(string compressionName) { }
         public string CompressionName { get { throw null; } }
+        [System.ObsoleteAttribute("This property is deprecated. Use RescoringOptions instead.")]
+        public double? DefaultOversampling { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is deprecated. Use RescoringOptions instead.")]
+        public bool? RerankWithOriginalVectors { get { throw null; } set { } }
         public Azure.Search.Documents.Indexes.Models.RescoringOptions RescoringOptions { get { throw null; } set { } }
         public int? TruncationDimension { get { throw null; } set { } }
         protected virtual Azure.Search.Documents.Indexes.Models.VectorSearchCompression JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -7228,7 +7334,7 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Indexes.Models.EdgeNGramTokenizer EdgeNGramTokenizer(string name = null, int? minGram = default(int?), int? maxGram = default(int?), System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.TokenCharacterKind> tokenChars = null) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.ElisionTokenFilter ElisionTokenFilter(string name = null, System.Collections.Generic.IEnumerable<string> articles = null) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.EntityLinkingSkill EntityLinkingSkill(string name = null, string description = null, string context = null, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs = null, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs = null, string defaultLanguageCode = null, double? minimumPrecision = default(double?), string modelVersion = null) { throw null; }
-        public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill EntityRecognitionSkill(string name = null, string description = null, string context = null, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs = null, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs = null, System.Collections.Generic.IEnumerable<string> categories = null, string defaultLanguageCode = null, double? minimumPrecision = default(double?), string modelVersion = null) { throw null; }
+        public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill EntityRecognitionSkill(string name = null, string description = null, string context = null, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs = null, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs = null, System.Collections.Generic.IEnumerable<string> entityCategories = null, string languageCode = null, double? minimumPrecision = default(double?), string modelVersion = null) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.ExhaustiveKnnAlgorithmConfiguration ExhaustiveKnnAlgorithmConfiguration(string name = null, Azure.Search.Documents.Indexes.Models.ExhaustiveKnnParameters parameters = null) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.ExhaustiveKnnParameters ExhaustiveKnnParameters(Azure.Search.Documents.Indexes.Models.VectorSearchAlgorithmMetric? metric = default(Azure.Search.Documents.Indexes.Models.VectorSearchAlgorithmMetric?)) { throw null; }
         public static Azure.Search.Documents.Models.FacetResult FacetResult(long? count = default(long?), System.Collections.Generic.IReadOnlyDictionary<string, object> additionalProperties = null) { throw null; }
@@ -7430,7 +7536,7 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Models.SemanticSearchResult SemanticSearchResult(double? rerankerScore, double? rerankerBoostedScore, System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Models.QueryCaptionResult> captions) { throw null; }
         public static Azure.Search.Documents.Models.SemanticSearchResults SemanticSearchResults(System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Models.QueryAnswerResult> answers, Azure.Search.Documents.Models.SemanticErrorReason? errorReason, Azure.Search.Documents.Models.SemanticSearchResultsType? resultsType) { throw null; }
         public static Azure.Search.Documents.Models.SemanticSearchResults SemanticSearchResults(System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Models.QueryAnswerResult> answers, Azure.Search.Documents.Models.SemanticErrorReason? errorReason, Azure.Search.Documents.Models.SemanticSearchResultsType? resultsType, Azure.Search.Documents.Models.SemanticQueryRewritesResultType? semanticQueryRewritesResultType) { throw null; }
-        public static Azure.Search.Documents.Indexes.Models.SentimentSkill SentimentSkill(string name = null, string description = null, string context = null, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs = null, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs = null, string defaultLanguageCode = null, bool? includeOpinionMining = default(bool?), string modelVersion = null) { throw null; }
+        public static Azure.Search.Documents.Indexes.Models.SentimentSkill SentimentSkill(string name = null, string description = null, string context = null, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs = null, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs = null, string languageCode = null, bool? includeOpinionMining = default(bool?), string modelVersion = null) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.ServiceIndexersRuntime ServiceIndexersRuntime(long usedSeconds = (long)0, long? remainingSeconds = default(long?), System.DateTimeOffset beginningTime = default(System.DateTimeOffset), System.DateTimeOffset endingTime = default(System.DateTimeOffset)) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.ShaperSkill ShaperSkill(string name = null, string description = null, string context = null, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs = null, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs = null) { throw null; }
         public static Azure.Search.Documents.KnowledgeBases.Models.SharePointSensitivityLabelInfo SharePointSensitivityLabelInfo(string displayName = null, string sensitivityLabelId = null, string tooltip = null, int? priority = default(int?), string color = null, bool? isEncrypted = default(bool?)) { throw null; }
