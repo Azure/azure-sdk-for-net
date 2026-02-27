@@ -8,88 +8,80 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.WorkloadsSapVirtualInstance;
 using Azure.ResourceManager.WorkloadsSapVirtualInstance.Models;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableWorkloadsSapVirtualInstanceSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _sapVirtualInstanceClientDiagnostics;
-        private SapVirtualInstancesRestOperations _sapVirtualInstanceRestClient;
+        private ClientDiagnostics _sapVirtualInstancesClientDiagnostics;
+        private SapVirtualInstances _sapVirtualInstancesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableWorkloadsSapVirtualInstanceSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableWorkloadsSapVirtualInstanceSubscriptionResource for mocking. </summary>
         protected MockableWorkloadsSapVirtualInstanceSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableWorkloadsSapVirtualInstanceSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableWorkloadsSapVirtualInstanceSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableWorkloadsSapVirtualInstanceSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics SapVirtualInstanceClientDiagnostics => _sapVirtualInstanceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadsSapVirtualInstance", SapVirtualInstanceResource.ResourceType.Namespace, Diagnostics);
-        private SapVirtualInstancesRestOperations SapVirtualInstanceRestClient => _sapVirtualInstanceRestClient ??= new SapVirtualInstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SapVirtualInstanceResource.ResourceType));
+        private ClientDiagnostics SapVirtualInstancesClientDiagnostics => _sapVirtualInstancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private SapVirtualInstances SapVirtualInstancesRestClient => _sapVirtualInstancesRestClient ??= new SapVirtualInstances(SapVirtualInstancesClientDiagnostics, Pipeline, Endpoint, "2024-09-01");
 
         /// <summary>
         /// Gets all Virtual Instances for SAP solutions resources in a Subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/sapVirtualInstances</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/sapVirtualInstances. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SAPVirtualInstance_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> SAPVirtualInstances_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapVirtualInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SapVirtualInstanceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SapVirtualInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SapVirtualInstanceResource> GetSapVirtualInstancesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SapVirtualInstanceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SapVirtualInstanceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SapVirtualInstanceResource(Client, SapVirtualInstanceData.DeserializeSapVirtualInstanceData(e)), SapVirtualInstanceClientDiagnostics, Pipeline, "MockableWorkloadsSapVirtualInstanceSubscriptionResource.GetSapVirtualInstances", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SapVirtualInstanceData, SapVirtualInstanceResource>(new SapVirtualInstancesGetBySubscriptionAsyncCollectionResultOfT(SapVirtualInstancesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new SapVirtualInstanceResource(Client, data));
         }
 
         /// <summary>
         /// Gets all Virtual Instances for SAP solutions resources in a Subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/sapVirtualInstances</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/sapVirtualInstances. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SAPVirtualInstance_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> SAPVirtualInstances_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapVirtualInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,29 +89,27 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
         /// <returns> A collection of <see cref="SapVirtualInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SapVirtualInstanceResource> GetSapVirtualInstances(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SapVirtualInstanceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SapVirtualInstanceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SapVirtualInstanceResource(Client, SapVirtualInstanceData.DeserializeSapVirtualInstanceData(e)), SapVirtualInstanceClientDiagnostics, Pipeline, "MockableWorkloadsSapVirtualInstanceSubscriptionResource.GetSapVirtualInstances", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SapVirtualInstanceData, SapVirtualInstanceResource>(new SapVirtualInstancesGetBySubscriptionCollectionResultOfT(SapVirtualInstancesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new SapVirtualInstanceResource(Client, data));
         }
 
         /// <summary>
         /// Gets the sizing recommendations.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSizingRecommendations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSizingRecommendations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SAPVirtualInstances_GetSizingRecommendations</description>
+        /// <term> Operation Id. </term>
+        /// <description> SAPVirtualInstances_GetSizingRecommendations. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapVirtualInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -131,11 +121,21 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = SapVirtualInstanceClientDiagnostics.CreateScope("MockableWorkloadsSapVirtualInstanceSubscriptionResource.GetSizingRecommendationsSapVirtualInstance");
+            using DiagnosticScope scope = SapVirtualInstancesClientDiagnostics.CreateScope("MockableWorkloadsSapVirtualInstanceSubscriptionResource.GetSizingRecommendationsSapVirtualInstance");
             scope.Start();
             try
             {
-                var response = await SapVirtualInstanceRestClient.GetSizingRecommendationsAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SapVirtualInstancesRestClient.CreateGetSizingRecommendationsSapVirtualInstanceRequest(Guid.Parse(Id.SubscriptionId), location, SapSizingRecommendationContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SapSizingRecommendationResult> response = Response.FromValue(SapSizingRecommendationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -149,20 +149,16 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
         /// Gets the sizing recommendations.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSizingRecommendations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSizingRecommendations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SAPVirtualInstances_GetSizingRecommendations</description>
+        /// <term> Operation Id. </term>
+        /// <description> SAPVirtualInstances_GetSizingRecommendations. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapVirtualInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -174,11 +170,21 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = SapVirtualInstanceClientDiagnostics.CreateScope("MockableWorkloadsSapVirtualInstanceSubscriptionResource.GetSizingRecommendationsSapVirtualInstance");
+            using DiagnosticScope scope = SapVirtualInstancesClientDiagnostics.CreateScope("MockableWorkloadsSapVirtualInstanceSubscriptionResource.GetSizingRecommendationsSapVirtualInstance");
             scope.Start();
             try
             {
-                var response = SapVirtualInstanceRestClient.GetSizingRecommendations(Id.SubscriptionId, location, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SapVirtualInstancesRestClient.CreateGetSizingRecommendationsSapVirtualInstanceRequest(Guid.Parse(Id.SubscriptionId), location, SapSizingRecommendationContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SapSizingRecommendationResult> response = Response.FromValue(SapSizingRecommendationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -192,20 +198,16 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
         /// Get a list of SAP supported SKUs for ASCS, Application and Database tier.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSapSupportedSku</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSapSupportedSku. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SAPVirtualInstances_GetSapSupportedSku</description>
+        /// <term> Operation Id. </term>
+        /// <description> SAPVirtualInstances_GetSapSupportedSku. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapVirtualInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,11 +219,21 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = SapVirtualInstanceClientDiagnostics.CreateScope("MockableWorkloadsSapVirtualInstanceSubscriptionResource.GetSapSupportedSkuSapVirtualInstance");
+            using DiagnosticScope scope = SapVirtualInstancesClientDiagnostics.CreateScope("MockableWorkloadsSapVirtualInstanceSubscriptionResource.GetSapSupportedSkuSapVirtualInstance");
             scope.Start();
             try
             {
-                var response = await SapVirtualInstanceRestClient.GetSapSupportedSkuAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SapVirtualInstancesRestClient.CreateGetSapSupportedSkuSapVirtualInstanceRequest(Guid.Parse(Id.SubscriptionId), location, SapSupportedSkusContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SapSupportedResourceSkusResult> response = Response.FromValue(SapSupportedResourceSkusResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -235,20 +247,16 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
         /// Get a list of SAP supported SKUs for ASCS, Application and Database tier.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSapSupportedSku</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSapSupportedSku. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SAPVirtualInstances_GetSapSupportedSku</description>
+        /// <term> Operation Id. </term>
+        /// <description> SAPVirtualInstances_GetSapSupportedSku. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapVirtualInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -260,11 +268,21 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = SapVirtualInstanceClientDiagnostics.CreateScope("MockableWorkloadsSapVirtualInstanceSubscriptionResource.GetSapSupportedSkuSapVirtualInstance");
+            using DiagnosticScope scope = SapVirtualInstancesClientDiagnostics.CreateScope("MockableWorkloadsSapVirtualInstanceSubscriptionResource.GetSapSupportedSkuSapVirtualInstance");
             scope.Start();
             try
             {
-                var response = SapVirtualInstanceRestClient.GetSapSupportedSku(Id.SubscriptionId, location, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SapVirtualInstancesRestClient.CreateGetSapSupportedSkuSapVirtualInstanceRequest(Guid.Parse(Id.SubscriptionId), location, SapSupportedSkusContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SapSupportedResourceSkusResult> response = Response.FromValue(SapSupportedResourceSkusResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -278,20 +296,16 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
         /// Get the SAP Disk Configuration Layout prod/non-prod SAP System.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getDiskConfigurations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getDiskConfigurations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SAPVirtualInstances_GetDiskConfigurations</description>
+        /// <term> Operation Id. </term>
+        /// <description> SAPVirtualInstances_GetDiskConfigurations. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapVirtualInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -303,11 +317,21 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = SapVirtualInstanceClientDiagnostics.CreateScope("MockableWorkloadsSapVirtualInstanceSubscriptionResource.GetDiskConfigurationsSapVirtualInstance");
+            using DiagnosticScope scope = SapVirtualInstancesClientDiagnostics.CreateScope("MockableWorkloadsSapVirtualInstanceSubscriptionResource.GetDiskConfigurationsSapVirtualInstance");
             scope.Start();
             try
             {
-                var response = await SapVirtualInstanceRestClient.GetDiskConfigurationsAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SapVirtualInstancesRestClient.CreateGetDiskConfigurationsSapVirtualInstanceRequest(Guid.Parse(Id.SubscriptionId), location, SapDiskConfigurationsContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SapDiskConfigurationsResult> response = Response.FromValue(SapDiskConfigurationsResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -321,20 +345,16 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
         /// Get the SAP Disk Configuration Layout prod/non-prod SAP System.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getDiskConfigurations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getDiskConfigurations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SAPVirtualInstances_GetDiskConfigurations</description>
+        /// <term> Operation Id. </term>
+        /// <description> SAPVirtualInstances_GetDiskConfigurations. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapVirtualInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -346,11 +366,21 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = SapVirtualInstanceClientDiagnostics.CreateScope("MockableWorkloadsSapVirtualInstanceSubscriptionResource.GetDiskConfigurationsSapVirtualInstance");
+            using DiagnosticScope scope = SapVirtualInstancesClientDiagnostics.CreateScope("MockableWorkloadsSapVirtualInstanceSubscriptionResource.GetDiskConfigurationsSapVirtualInstance");
             scope.Start();
             try
             {
-                var response = SapVirtualInstanceRestClient.GetDiskConfigurations(Id.SubscriptionId, location, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SapVirtualInstancesRestClient.CreateGetDiskConfigurationsSapVirtualInstanceRequest(Guid.Parse(Id.SubscriptionId), location, SapDiskConfigurationsContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SapDiskConfigurationsResult> response = Response.FromValue(SapDiskConfigurationsResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -364,20 +394,16 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
         /// Get the recommended SAP Availability Zone Pair Details for your region.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getAvailabilityZoneDetails</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getAvailabilityZoneDetails. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SAPVirtualInstances_GetAvailabilityZoneDetails</description>
+        /// <term> Operation Id. </term>
+        /// <description> SAPVirtualInstances_GetAvailabilityZoneDetails. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapVirtualInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -389,11 +415,21 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = SapVirtualInstanceClientDiagnostics.CreateScope("MockableWorkloadsSapVirtualInstanceSubscriptionResource.GetAvailabilityZoneDetailsSapVirtualInstance");
+            using DiagnosticScope scope = SapVirtualInstancesClientDiagnostics.CreateScope("MockableWorkloadsSapVirtualInstanceSubscriptionResource.GetAvailabilityZoneDetailsSapVirtualInstance");
             scope.Start();
             try
             {
-                var response = await SapVirtualInstanceRestClient.GetAvailabilityZoneDetailsAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SapVirtualInstancesRestClient.CreateGetAvailabilityZoneDetailsSapVirtualInstanceRequest(Guid.Parse(Id.SubscriptionId), location, SapAvailabilityZoneDetailsContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SapAvailabilityZoneDetailsResult> response = Response.FromValue(SapAvailabilityZoneDetailsResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -407,20 +443,16 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
         /// Get the recommended SAP Availability Zone Pair Details for your region.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getAvailabilityZoneDetails</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getAvailabilityZoneDetails. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SAPVirtualInstances_GetAvailabilityZoneDetails</description>
+        /// <term> Operation Id. </term>
+        /// <description> SAPVirtualInstances_GetAvailabilityZoneDetails. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapVirtualInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -432,11 +464,21 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = SapVirtualInstanceClientDiagnostics.CreateScope("MockableWorkloadsSapVirtualInstanceSubscriptionResource.GetAvailabilityZoneDetailsSapVirtualInstance");
+            using DiagnosticScope scope = SapVirtualInstancesClientDiagnostics.CreateScope("MockableWorkloadsSapVirtualInstanceSubscriptionResource.GetAvailabilityZoneDetailsSapVirtualInstance");
             scope.Start();
             try
             {
-                var response = SapVirtualInstanceRestClient.GetAvailabilityZoneDetails(Id.SubscriptionId, location, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SapVirtualInstancesRestClient.CreateGetAvailabilityZoneDetailsSapVirtualInstanceRequest(Guid.Parse(Id.SubscriptionId), location, SapAvailabilityZoneDetailsContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SapAvailabilityZoneDetailsResult> response = Response.FromValue(SapAvailabilityZoneDetailsResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)

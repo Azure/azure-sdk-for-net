@@ -6,7 +6,7 @@
 namespace Azure.Provisioning.PostgreSql;
 
 /// <summary>
-/// Indicates whether to setup LogicalReplicationOnSourceDb, if needed.
+/// Indicates whether to setup logical replication on source server, if needed.
 /// </summary>
 public enum PostgreSqlMigrationLogicalReplicationOnSourceDb
 {

@@ -47,7 +47,7 @@ namespace Azure.Messaging.WebPubSub.Clients
             await _sendLock.WaitAsync(cancellationToken).ConfigureAwait(false);
             try
             {
-                await _socket.SendAsync(new ArraySegment<byte>(buffer.ToArray()) , messageType, endOfMessage, cancellationToken).ConfigureAwait(false);
+                await _socket.SendAsync(new ArraySegment<byte>(buffer.ToArray()), messageType, endOfMessage, cancellationToken).ConfigureAwait(false);
             }
             finally
             {

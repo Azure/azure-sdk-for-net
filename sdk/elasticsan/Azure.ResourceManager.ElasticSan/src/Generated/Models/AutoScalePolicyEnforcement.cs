@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ElasticSan;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.ElasticSan.Models
     public readonly partial struct AutoScalePolicyEnforcement : IEquatable<AutoScalePolicyEnforcement>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="AutoScalePolicyEnforcement"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AutoScalePolicyEnforcement(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NoneValue = "None";
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> None. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoScalePolicyEnforcement"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AutoScalePolicyEnforcement(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the None. </summary>
         public static AutoScalePolicyEnforcement None { get; } = new AutoScalePolicyEnforcement(NoneValue);
-        /// <summary> Enabled. </summary>
+
+        /// <summary> Gets the Enabled. </summary>
         public static AutoScalePolicyEnforcement Enabled { get; } = new AutoScalePolicyEnforcement(EnabledValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static AutoScalePolicyEnforcement Disabled { get; } = new AutoScalePolicyEnforcement(DisabledValue);
+
         /// <summary> Determines if two <see cref="AutoScalePolicyEnforcement"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AutoScalePolicyEnforcement left, AutoScalePolicyEnforcement right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AutoScalePolicyEnforcement"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AutoScalePolicyEnforcement left, AutoScalePolicyEnforcement right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AutoScalePolicyEnforcement"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AutoScalePolicyEnforcement"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AutoScalePolicyEnforcement(string value) => new AutoScalePolicyEnforcement(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AutoScalePolicyEnforcement"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AutoScalePolicyEnforcement?(string value) => value == null ? null : new AutoScalePolicyEnforcement(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AutoScalePolicyEnforcement other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AutoScalePolicyEnforcement other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -1,20 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-extern alias DMBlobs;
 extern alias BaseBlobs;
-
+extern alias DMBlobs;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
 using Azure.Storage.Test;
 using BaseBlobs::Azure.Storage.Blobs.Models;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using NUnit.Framework;
-using System.IO;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
-using System.Text;
-using System.Linq;
-using System.Collections.Generic;
-using System;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
 {
@@ -174,13 +173,13 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 int tagsOffset = expected[DataMovementBlobConstants.DestinationCheckpointDetails.TagsOffsetIndex];
                 int tagsLength = expected[DataMovementBlobConstants.DestinationCheckpointDetails.TagsLengthIndex];
                 expected[DataMovementBlobConstants.DestinationCheckpointDetails.TagsOffsetIndex] = 255;
-                expected[DataMovementBlobConstants.DestinationCheckpointDetails.TagsOffsetIndex+1] = 255;
-                expected[DataMovementBlobConstants.DestinationCheckpointDetails.TagsOffsetIndex+2] = 255;
-                expected[DataMovementBlobConstants.DestinationCheckpointDetails.TagsOffsetIndex+3] = 255;
+                expected[DataMovementBlobConstants.DestinationCheckpointDetails.TagsOffsetIndex + 1] = 255;
+                expected[DataMovementBlobConstants.DestinationCheckpointDetails.TagsOffsetIndex + 2] = 255;
+                expected[DataMovementBlobConstants.DestinationCheckpointDetails.TagsOffsetIndex + 3] = 255;
                 expected[DataMovementBlobConstants.DestinationCheckpointDetails.TagsLengthIndex] = 255;
-                expected[DataMovementBlobConstants.DestinationCheckpointDetails.TagsLengthIndex+1] = 255;
-                expected[DataMovementBlobConstants.DestinationCheckpointDetails.TagsLengthIndex+2] = 255;
-                expected[DataMovementBlobConstants.DestinationCheckpointDetails.TagsLengthIndex+3] = 255;
+                expected[DataMovementBlobConstants.DestinationCheckpointDetails.TagsLengthIndex + 1] = 255;
+                expected[DataMovementBlobConstants.DestinationCheckpointDetails.TagsLengthIndex + 2] = 255;
+                expected[DataMovementBlobConstants.DestinationCheckpointDetails.TagsLengthIndex + 3] = 255;
                 // Remove Tags
                 expected.RemoveRange(tagsOffset, tagsLength);
 

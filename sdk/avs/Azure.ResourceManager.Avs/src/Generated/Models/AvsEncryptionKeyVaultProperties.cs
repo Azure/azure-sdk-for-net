@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> An Encryption Key. </summary>
     public partial class AvsEncryptionKeyVaultProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AvsEncryptionKeyVaultProperties"/>. </summary>
         public AvsEncryptionKeyVaultProperties()
@@ -57,8 +28,8 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="keyVaultUri"> The URL of the vault. </param>
         /// <param name="keyState"> The state of key provided. </param>
         /// <param name="versionType"> Property of the key if user provided or auto detected. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvsEncryptionKeyVaultProperties(string keyName, string keyVersion, string autoDetectedKeyVersion, Uri keyVaultUri, AvsEncryptionKeyStatus? keyState, AvsEncryptionVersionType? versionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AvsEncryptionKeyVaultProperties(string keyName, string keyVersion, string autoDetectedKeyVersion, Uri keyVaultUri, AvsEncryptionKeyStatus? keyState, AvsEncryptionVersionType? versionType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyName = keyName;
             KeyVersion = keyVersion;
@@ -66,19 +37,24 @@ namespace Azure.ResourceManager.Avs.Models
             KeyVaultUri = keyVaultUri;
             KeyState = keyState;
             VersionType = versionType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the key. </summary>
         public string KeyName { get; set; }
+
         /// <summary> The version of the key. </summary>
         public string KeyVersion { get; set; }
+
         /// <summary> The auto-detected version of the key if versionType is auto-detected. </summary>
         public string AutoDetectedKeyVersion { get; }
+
         /// <summary> The URL of the vault. </summary>
         public Uri KeyVaultUri { get; set; }
+
         /// <summary> The state of key provided. </summary>
         public AvsEncryptionKeyStatus? KeyState { get; }
+
         /// <summary> Property of the key if user provided or auto detected. </summary>
         public AvsEncryptionVersionType? VersionType { get; }
     }

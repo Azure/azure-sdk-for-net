@@ -44,9 +44,11 @@ namespace Azure.Generator.Management.Primitives
             ["Azure.ResourceManager.Legacy.ManagedServiceIdentityV4"] = typeof(ManagedServiceIdentity),
             ["Azure.ResourceManager.CommonTypes.ManagedServiceIdentityType"] = typeof(ManagedServiceIdentityType),
             ["Azure.ResourceManager.CommonTypes.OperationStatusResult"] = typeof(OperationStatusResult),
+            ["Azure.ResourceManager.CommonTypes.Plan"] = typeof(ArmPlan),
             ["Azure.ResourceManager.CommonTypes.SystemData"] = typeof(SystemData),
             ["Azure.ResourceManager.CommonTypes.UserAssignedIdentity"] = typeof(UserAssignedIdentity),
             ["Azure.ResourceManager.Models.SubResource"] = typeof(SubResource),
+            ["Azure.ResourceManager.Models.WritableSubResource"] = typeof(WritableSubResource),
             ["Azure.ResourceManager.CommonTypes.ErrorDetail"] = typeof(ResponseError),
         };
 
@@ -64,17 +66,27 @@ namespace Azure.Generator.Management.Primitives
             return writer.WriteStringValue(value);
         }
 
+        private static MethodBodyStatement SerializeTypeWithToString(CSharpType valueType, ValueExpression value, ScopedApi<Utf8JsonWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format)
+        {
+            value = value.NullableStructValue(valueType);
+            return writer.WriteStringValue(value.InvokeToString());
+        }
+
         private static ValueExpression DeserializeNewInstanceStringLikeType(CSharpType valueType, ScopedApi<JsonElement> element, SerializationFormat format)
             => New.Instance(valueType, element.GetString());
 
         private static readonly IReadOnlyDictionary<CSharpType, SerializationExpression> _typeToSerializationExpression = new Dictionary<CSharpType, SerializationExpression>
         {
             [typeof(ResourceType)] = SerializeTypeWithImplicitOperatorToString,
+            [typeof(ExtendedLocationType)] = SerializeTypeWithToString,
+            [typeof(ManagedServiceIdentityType)] = SerializeTypeWithToString,
         };
 
         private static readonly IReadOnlyDictionary<CSharpType, DeserializationExpression> _typeToDeserializationExpression = new Dictionary<CSharpType, DeserializationExpression>
         {
             [typeof(ResourceType)] = DeserializeNewInstanceStringLikeType,
+            [typeof(ExtendedLocationType)] = DeserializeNewInstanceStringLikeType,
+            [typeof(ManagedServiceIdentityType)] = DeserializeNewInstanceStringLikeType,
         };
 
         private static readonly HashSet<CSharpType> _knownTypes = _idToInheritableSystemTypeMap.Values.Concat(_idToSystemTypeMap.Values).ToHashSet(new CSharpFullNameComparer());

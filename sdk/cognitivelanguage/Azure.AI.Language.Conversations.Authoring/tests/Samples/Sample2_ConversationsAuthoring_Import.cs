@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Language.Conversations.Authoring;
 using Azure.AI.Language.Conversations.Authoring.Tests;
@@ -10,7 +11,6 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
-using System.Threading.Tasks;
 
 namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 {
@@ -30,6 +30,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
             ConversationAuthoringCreateProjectDetails projectMetadata = new ConversationAuthoringCreateProjectDetails(
                 projectKind: "Conversation",
+                projectName: projectName,
                 language: "en"
             )
             {
@@ -40,10 +41,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
             ConversationExportedProjectAsset projectAssets = new ConversationExportedProjectAsset();
 
-            projectAssets.Intents.Add(new ConversationExportedIntent ( category : "intent1" ));
-            projectAssets.Intents.Add(new ConversationExportedIntent ( category : "intent2" ));
+            projectAssets.Intents.Add(new ConversationExportedIntent(category: "intent1"));
+            projectAssets.Intents.Add(new ConversationExportedIntent(category: "intent2"));
 
-            projectAssets.Entities.Add(new ConversationExportedEntity ( category : "entity1" ));
+            projectAssets.Entities.Add(new ConversationExportedEntity(category: "entity1"));
 
             projectAssets.Utterances.Add(new ConversationExportedUtterance(
                 text: "text1",
@@ -84,7 +85,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 projectFormat: ConversationAuthoringExportedProjectFormat.Conversation
             );
 
-             // Extract the operation-location header
+            // Extract the operation-location header
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
             Console.WriteLine($"Operation Location: {operationLocation}");
 
@@ -181,12 +182,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             // Create metadata
             ConversationAuthoringCreateProjectDetails projectMetadata = new ConversationAuthoringCreateProjectDetails(
                 projectKind: "Conversation",
+                projectName: projectName,
                 language: "en-us")
             {
                 Settings = new ConversationAuthoringProjectSettings(0.7F),
                 Multilingual = true,
                 Description = "Trying out CLU",
-                ProjectName = projectName
             };
 
             // Define intents and entities
@@ -278,6 +279,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
             ConversationAuthoringCreateProjectDetails projectMetadata = new ConversationAuthoringCreateProjectDetails(
                 projectKind: "Conversation",
+                projectName: projectName,
                 language: "en"
             )
             {
@@ -428,12 +430,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             // Define project metadata
             ConversationAuthoringCreateProjectDetails projectMetadata = new ConversationAuthoringCreateProjectDetails(
                 projectKind: "Conversation",
+                projectName: projectName,
                 language: "en-us")
             {
                 Settings = new ConversationAuthoringProjectSettings(0.7F),
                 Multilingual = true,
                 Description = "Trying out CLU",
-                ProjectName = projectName
             };
 
             // Define project assets

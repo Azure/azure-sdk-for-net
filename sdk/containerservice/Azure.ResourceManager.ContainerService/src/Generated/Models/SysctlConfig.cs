@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Sysctl settings for Linux agent nodes. </summary>
+    /// <summary>
+    /// Sysctl settings for Linux agent nodes.
+    /// Serialized Name: SysctlConfig
+    /// </summary>
     public partial class SysctlConfig
     {
         /// <summary>
@@ -51,34 +54,118 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SysctlConfig"/>. </summary>
-        /// <param name="netCoreSomaxconn"> Sysctl setting net.core.somaxconn. </param>
-        /// <param name="netCoreNetdevMaxBacklog"> Sysctl setting net.core.netdev_max_backlog. </param>
-        /// <param name="netCoreRmemDefault"> Sysctl setting net.core.rmem_default. </param>
-        /// <param name="netCoreRmemMax"> Sysctl setting net.core.rmem_max. </param>
-        /// <param name="netCoreWmemDefault"> Sysctl setting net.core.wmem_default. </param>
-        /// <param name="netCoreWmemMax"> Sysctl setting net.core.wmem_max. </param>
-        /// <param name="netCoreOptmemMax"> Sysctl setting net.core.optmem_max. </param>
-        /// <param name="netIPv4TcpMaxSynBacklog"> Sysctl setting net.ipv4.tcp_max_syn_backlog. </param>
-        /// <param name="netIPv4TcpMaxTwBuckets"> Sysctl setting net.ipv4.tcp_max_tw_buckets. </param>
-        /// <param name="netIPv4TcpFinTimeout"> Sysctl setting net.ipv4.tcp_fin_timeout. </param>
-        /// <param name="netIPv4TcpKeepaliveTime"> Sysctl setting net.ipv4.tcp_keepalive_time. </param>
-        /// <param name="netIPv4TcpKeepaliveProbes"> Sysctl setting net.ipv4.tcp_keepalive_probes. </param>
-        /// <param name="netIPv4TcpKeepaliveIntvl"> Sysctl setting net.ipv4.tcp_keepalive_intvl. </param>
-        /// <param name="netIPv4TcpTwReuse"> Sysctl setting net.ipv4.tcp_tw_reuse. </param>
-        /// <param name="netIPv4IPLocalPortRange"> Sysctl setting net.ipv4.ip_local_port_range. </param>
-        /// <param name="netIPv4NeighDefaultGcThresh1"> Sysctl setting net.ipv4.neigh.default.gc_thresh1. </param>
-        /// <param name="netIPv4NeighDefaultGcThresh2"> Sysctl setting net.ipv4.neigh.default.gc_thresh2. </param>
-        /// <param name="netIPv4NeighDefaultGcThresh3"> Sysctl setting net.ipv4.neigh.default.gc_thresh3. </param>
-        /// <param name="netNetfilterNfConntrackMax"> Sysctl setting net.netfilter.nf_conntrack_max. </param>
-        /// <param name="netNetfilterNfConntrackBuckets"> Sysctl setting net.netfilter.nf_conntrack_buckets. </param>
-        /// <param name="fsInotifyMaxUserWatches"> Sysctl setting fs.inotify.max_user_watches. </param>
-        /// <param name="fsFileMax"> Sysctl setting fs.file-max. </param>
-        /// <param name="fsAioMaxNr"> Sysctl setting fs.aio-max-nr. </param>
-        /// <param name="fsNrOpen"> Sysctl setting fs.nr_open. </param>
-        /// <param name="kernelThreadsMax"> Sysctl setting kernel.threads-max. </param>
-        /// <param name="vmMaxMapCount"> Sysctl setting vm.max_map_count. </param>
-        /// <param name="vmSwappiness"> Sysctl setting vm.swappiness. </param>
-        /// <param name="vmVfsCachePressure"> Sysctl setting vm.vfs_cache_pressure. </param>
+        /// <param name="netCoreSomaxconn">
+        /// Sysctl setting net.core.somaxconn.
+        /// Serialized Name: SysctlConfig.netCoreSomaxconn
+        /// </param>
+        /// <param name="netCoreNetdevMaxBacklog">
+        /// Sysctl setting net.core.netdev_max_backlog.
+        /// Serialized Name: SysctlConfig.netCoreNetdevMaxBacklog
+        /// </param>
+        /// <param name="netCoreRmemDefault">
+        /// Sysctl setting net.core.rmem_default.
+        /// Serialized Name: SysctlConfig.netCoreRmemDefault
+        /// </param>
+        /// <param name="netCoreRmemMax">
+        /// Sysctl setting net.core.rmem_max.
+        /// Serialized Name: SysctlConfig.netCoreRmemMax
+        /// </param>
+        /// <param name="netCoreWmemDefault">
+        /// Sysctl setting net.core.wmem_default.
+        /// Serialized Name: SysctlConfig.netCoreWmemDefault
+        /// </param>
+        /// <param name="netCoreWmemMax">
+        /// Sysctl setting net.core.wmem_max.
+        /// Serialized Name: SysctlConfig.netCoreWmemMax
+        /// </param>
+        /// <param name="netCoreOptmemMax">
+        /// Sysctl setting net.core.optmem_max.
+        /// Serialized Name: SysctlConfig.netCoreOptmemMax
+        /// </param>
+        /// <param name="netIPv4TcpMaxSynBacklog">
+        /// Sysctl setting net.ipv4.tcp_max_syn_backlog.
+        /// Serialized Name: SysctlConfig.netIpv4TcpMaxSynBacklog
+        /// </param>
+        /// <param name="netIPv4TcpMaxTwBuckets">
+        /// Sysctl setting net.ipv4.tcp_max_tw_buckets.
+        /// Serialized Name: SysctlConfig.netIpv4TcpMaxTwBuckets
+        /// </param>
+        /// <param name="netIPv4TcpFinTimeout">
+        /// Sysctl setting net.ipv4.tcp_fin_timeout.
+        /// Serialized Name: SysctlConfig.netIpv4TcpFinTimeout
+        /// </param>
+        /// <param name="netIPv4TcpKeepaliveTime">
+        /// Sysctl setting net.ipv4.tcp_keepalive_time.
+        /// Serialized Name: SysctlConfig.netIpv4TcpKeepaliveTime
+        /// </param>
+        /// <param name="netIPv4TcpKeepaliveProbes">
+        /// Sysctl setting net.ipv4.tcp_keepalive_probes.
+        /// Serialized Name: SysctlConfig.netIpv4TcpKeepaliveProbes
+        /// </param>
+        /// <param name="netIPv4TcpKeepaliveIntvl">
+        /// Sysctl setting net.ipv4.tcp_keepalive_intvl.
+        /// Serialized Name: SysctlConfig.netIpv4TcpkeepaliveIntvl
+        /// </param>
+        /// <param name="netIPv4TcpTwReuse">
+        /// Sysctl setting net.ipv4.tcp_tw_reuse.
+        /// Serialized Name: SysctlConfig.netIpv4TcpTwReuse
+        /// </param>
+        /// <param name="netIPv4IPLocalPortRange">
+        /// Sysctl setting net.ipv4.ip_local_port_range.
+        /// Serialized Name: SysctlConfig.netIpv4IpLocalPortRange
+        /// </param>
+        /// <param name="netIPv4NeighDefaultGcThresh1">
+        /// Sysctl setting net.ipv4.neigh.default.gc_thresh1.
+        /// Serialized Name: SysctlConfig.netIpv4NeighDefaultGcThresh1
+        /// </param>
+        /// <param name="netIPv4NeighDefaultGcThresh2">
+        /// Sysctl setting net.ipv4.neigh.default.gc_thresh2.
+        /// Serialized Name: SysctlConfig.netIpv4NeighDefaultGcThresh2
+        /// </param>
+        /// <param name="netIPv4NeighDefaultGcThresh3">
+        /// Sysctl setting net.ipv4.neigh.default.gc_thresh3.
+        /// Serialized Name: SysctlConfig.netIpv4NeighDefaultGcThresh3
+        /// </param>
+        /// <param name="netNetfilterNfConntrackMax">
+        /// Sysctl setting net.netfilter.nf_conntrack_max.
+        /// Serialized Name: SysctlConfig.netNetfilterNfConntrackMax
+        /// </param>
+        /// <param name="netNetfilterNfConntrackBuckets">
+        /// Sysctl setting net.netfilter.nf_conntrack_buckets.
+        /// Serialized Name: SysctlConfig.netNetfilterNfConntrackBuckets
+        /// </param>
+        /// <param name="fsInotifyMaxUserWatches">
+        /// Sysctl setting fs.inotify.max_user_watches.
+        /// Serialized Name: SysctlConfig.fsInotifyMaxUserWatches
+        /// </param>
+        /// <param name="fsFileMax">
+        /// Sysctl setting fs.file-max.
+        /// Serialized Name: SysctlConfig.fsFileMax
+        /// </param>
+        /// <param name="fsAioMaxNr">
+        /// Sysctl setting fs.aio-max-nr.
+        /// Serialized Name: SysctlConfig.fsAioMaxNr
+        /// </param>
+        /// <param name="fsNrOpen">
+        /// Sysctl setting fs.nr_open.
+        /// Serialized Name: SysctlConfig.fsNrOpen
+        /// </param>
+        /// <param name="kernelThreadsMax">
+        /// Sysctl setting kernel.threads-max.
+        /// Serialized Name: SysctlConfig.kernelThreadsMax
+        /// </param>
+        /// <param name="vmMaxMapCount">
+        /// Sysctl setting vm.max_map_count.
+        /// Serialized Name: SysctlConfig.vmMaxMapCount
+        /// </param>
+        /// <param name="vmSwappiness">
+        /// Sysctl setting vm.swappiness.
+        /// Serialized Name: SysctlConfig.vmSwappiness
+        /// </param>
+        /// <param name="vmVfsCachePressure">
+        /// Sysctl setting vm.vfs_cache_pressure.
+        /// Serialized Name: SysctlConfig.vmVfsCachePressure
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SysctlConfig(int? netCoreSomaxconn, int? netCoreNetdevMaxBacklog, int? netCoreRmemDefault, int? netCoreRmemMax, int? netCoreWmemDefault, int? netCoreWmemMax, int? netCoreOptmemMax, int? netIPv4TcpMaxSynBacklog, int? netIPv4TcpMaxTwBuckets, int? netIPv4TcpFinTimeout, int? netIPv4TcpKeepaliveTime, int? netIPv4TcpKeepaliveProbes, int? netIPv4TcpKeepaliveIntvl, bool? netIPv4TcpTwReuse, string netIPv4IPLocalPortRange, int? netIPv4NeighDefaultGcThresh1, int? netIPv4NeighDefaultGcThresh2, int? netIPv4NeighDefaultGcThresh3, int? netNetfilterNfConntrackMax, int? netNetfilterNfConntrackBuckets, int? fsInotifyMaxUserWatches, int? fsFileMax, int? fsAioMaxNr, int? fsNrOpen, int? kernelThreadsMax, int? vmMaxMapCount, int? vmSwappiness, int? vmVfsCachePressure, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -113,88 +200,172 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Sysctl setting net.core.somaxconn. </summary>
+        /// <summary>
+        /// Sysctl setting net.core.somaxconn.
+        /// Serialized Name: SysctlConfig.netCoreSomaxconn
+        /// </summary>
         [WirePath("netCoreSomaxconn")]
         public int? NetCoreSomaxconn { get; set; }
-        /// <summary> Sysctl setting net.core.netdev_max_backlog. </summary>
+        /// <summary>
+        /// Sysctl setting net.core.netdev_max_backlog.
+        /// Serialized Name: SysctlConfig.netCoreNetdevMaxBacklog
+        /// </summary>
         [WirePath("netCoreNetdevMaxBacklog")]
         public int? NetCoreNetdevMaxBacklog { get; set; }
-        /// <summary> Sysctl setting net.core.rmem_default. </summary>
+        /// <summary>
+        /// Sysctl setting net.core.rmem_default.
+        /// Serialized Name: SysctlConfig.netCoreRmemDefault
+        /// </summary>
         [WirePath("netCoreRmemDefault")]
         public int? NetCoreRmemDefault { get; set; }
-        /// <summary> Sysctl setting net.core.rmem_max. </summary>
+        /// <summary>
+        /// Sysctl setting net.core.rmem_max.
+        /// Serialized Name: SysctlConfig.netCoreRmemMax
+        /// </summary>
         [WirePath("netCoreRmemMax")]
         public int? NetCoreRmemMax { get; set; }
-        /// <summary> Sysctl setting net.core.wmem_default. </summary>
+        /// <summary>
+        /// Sysctl setting net.core.wmem_default.
+        /// Serialized Name: SysctlConfig.netCoreWmemDefault
+        /// </summary>
         [WirePath("netCoreWmemDefault")]
         public int? NetCoreWmemDefault { get; set; }
-        /// <summary> Sysctl setting net.core.wmem_max. </summary>
+        /// <summary>
+        /// Sysctl setting net.core.wmem_max.
+        /// Serialized Name: SysctlConfig.netCoreWmemMax
+        /// </summary>
         [WirePath("netCoreWmemMax")]
         public int? NetCoreWmemMax { get; set; }
-        /// <summary> Sysctl setting net.core.optmem_max. </summary>
+        /// <summary>
+        /// Sysctl setting net.core.optmem_max.
+        /// Serialized Name: SysctlConfig.netCoreOptmemMax
+        /// </summary>
         [WirePath("netCoreOptmemMax")]
         public int? NetCoreOptmemMax { get; set; }
-        /// <summary> Sysctl setting net.ipv4.tcp_max_syn_backlog. </summary>
+        /// <summary>
+        /// Sysctl setting net.ipv4.tcp_max_syn_backlog.
+        /// Serialized Name: SysctlConfig.netIpv4TcpMaxSynBacklog
+        /// </summary>
         [WirePath("netIpv4TcpMaxSynBacklog")]
         public int? NetIPv4TcpMaxSynBacklog { get; set; }
-        /// <summary> Sysctl setting net.ipv4.tcp_max_tw_buckets. </summary>
+        /// <summary>
+        /// Sysctl setting net.ipv4.tcp_max_tw_buckets.
+        /// Serialized Name: SysctlConfig.netIpv4TcpMaxTwBuckets
+        /// </summary>
         [WirePath("netIpv4TcpMaxTwBuckets")]
         public int? NetIPv4TcpMaxTwBuckets { get; set; }
-        /// <summary> Sysctl setting net.ipv4.tcp_fin_timeout. </summary>
+        /// <summary>
+        /// Sysctl setting net.ipv4.tcp_fin_timeout.
+        /// Serialized Name: SysctlConfig.netIpv4TcpFinTimeout
+        /// </summary>
         [WirePath("netIpv4TcpFinTimeout")]
         public int? NetIPv4TcpFinTimeout { get; set; }
-        /// <summary> Sysctl setting net.ipv4.tcp_keepalive_time. </summary>
+        /// <summary>
+        /// Sysctl setting net.ipv4.tcp_keepalive_time.
+        /// Serialized Name: SysctlConfig.netIpv4TcpKeepaliveTime
+        /// </summary>
         [WirePath("netIpv4TcpKeepaliveTime")]
         public int? NetIPv4TcpKeepaliveTime { get; set; }
-        /// <summary> Sysctl setting net.ipv4.tcp_keepalive_probes. </summary>
+        /// <summary>
+        /// Sysctl setting net.ipv4.tcp_keepalive_probes.
+        /// Serialized Name: SysctlConfig.netIpv4TcpKeepaliveProbes
+        /// </summary>
         [WirePath("netIpv4TcpKeepaliveProbes")]
         public int? NetIPv4TcpKeepaliveProbes { get; set; }
-        /// <summary> Sysctl setting net.ipv4.tcp_keepalive_intvl. </summary>
+        /// <summary>
+        /// Sysctl setting net.ipv4.tcp_keepalive_intvl.
+        /// Serialized Name: SysctlConfig.netIpv4TcpkeepaliveIntvl
+        /// </summary>
         [WirePath("netIpv4TcpkeepaliveIntvl")]
         public int? NetIPv4TcpKeepaliveIntvl { get; set; }
-        /// <summary> Sysctl setting net.ipv4.tcp_tw_reuse. </summary>
+        /// <summary>
+        /// Sysctl setting net.ipv4.tcp_tw_reuse.
+        /// Serialized Name: SysctlConfig.netIpv4TcpTwReuse
+        /// </summary>
         [WirePath("netIpv4TcpTwReuse")]
         public bool? NetIPv4TcpTwReuse { get; set; }
-        /// <summary> Sysctl setting net.ipv4.ip_local_port_range. </summary>
+        /// <summary>
+        /// Sysctl setting net.ipv4.ip_local_port_range.
+        /// Serialized Name: SysctlConfig.netIpv4IpLocalPortRange
+        /// </summary>
         [WirePath("netIpv4IpLocalPortRange")]
         public string NetIPv4IPLocalPortRange { get; set; }
-        /// <summary> Sysctl setting net.ipv4.neigh.default.gc_thresh1. </summary>
+        /// <summary>
+        /// Sysctl setting net.ipv4.neigh.default.gc_thresh1.
+        /// Serialized Name: SysctlConfig.netIpv4NeighDefaultGcThresh1
+        /// </summary>
         [WirePath("netIpv4NeighDefaultGcThresh1")]
         public int? NetIPv4NeighDefaultGcThresh1 { get; set; }
-        /// <summary> Sysctl setting net.ipv4.neigh.default.gc_thresh2. </summary>
+        /// <summary>
+        /// Sysctl setting net.ipv4.neigh.default.gc_thresh2.
+        /// Serialized Name: SysctlConfig.netIpv4NeighDefaultGcThresh2
+        /// </summary>
         [WirePath("netIpv4NeighDefaultGcThresh2")]
         public int? NetIPv4NeighDefaultGcThresh2 { get; set; }
-        /// <summary> Sysctl setting net.ipv4.neigh.default.gc_thresh3. </summary>
+        /// <summary>
+        /// Sysctl setting net.ipv4.neigh.default.gc_thresh3.
+        /// Serialized Name: SysctlConfig.netIpv4NeighDefaultGcThresh3
+        /// </summary>
         [WirePath("netIpv4NeighDefaultGcThresh3")]
         public int? NetIPv4NeighDefaultGcThresh3 { get; set; }
-        /// <summary> Sysctl setting net.netfilter.nf_conntrack_max. </summary>
+        /// <summary>
+        /// Sysctl setting net.netfilter.nf_conntrack_max.
+        /// Serialized Name: SysctlConfig.netNetfilterNfConntrackMax
+        /// </summary>
         [WirePath("netNetfilterNfConntrackMax")]
         public int? NetNetfilterNfConntrackMax { get; set; }
-        /// <summary> Sysctl setting net.netfilter.nf_conntrack_buckets. </summary>
+        /// <summary>
+        /// Sysctl setting net.netfilter.nf_conntrack_buckets.
+        /// Serialized Name: SysctlConfig.netNetfilterNfConntrackBuckets
+        /// </summary>
         [WirePath("netNetfilterNfConntrackBuckets")]
         public int? NetNetfilterNfConntrackBuckets { get; set; }
-        /// <summary> Sysctl setting fs.inotify.max_user_watches. </summary>
+        /// <summary>
+        /// Sysctl setting fs.inotify.max_user_watches.
+        /// Serialized Name: SysctlConfig.fsInotifyMaxUserWatches
+        /// </summary>
         [WirePath("fsInotifyMaxUserWatches")]
         public int? FsInotifyMaxUserWatches { get; set; }
-        /// <summary> Sysctl setting fs.file-max. </summary>
+        /// <summary>
+        /// Sysctl setting fs.file-max.
+        /// Serialized Name: SysctlConfig.fsFileMax
+        /// </summary>
         [WirePath("fsFileMax")]
         public int? FsFileMax { get; set; }
-        /// <summary> Sysctl setting fs.aio-max-nr. </summary>
+        /// <summary>
+        /// Sysctl setting fs.aio-max-nr.
+        /// Serialized Name: SysctlConfig.fsAioMaxNr
+        /// </summary>
         [WirePath("fsAioMaxNr")]
         public int? FsAioMaxNr { get; set; }
-        /// <summary> Sysctl setting fs.nr_open. </summary>
+        /// <summary>
+        /// Sysctl setting fs.nr_open.
+        /// Serialized Name: SysctlConfig.fsNrOpen
+        /// </summary>
         [WirePath("fsNrOpen")]
         public int? FsNrOpen { get; set; }
-        /// <summary> Sysctl setting kernel.threads-max. </summary>
+        /// <summary>
+        /// Sysctl setting kernel.threads-max.
+        /// Serialized Name: SysctlConfig.kernelThreadsMax
+        /// </summary>
         [WirePath("kernelThreadsMax")]
         public int? KernelThreadsMax { get; set; }
-        /// <summary> Sysctl setting vm.max_map_count. </summary>
+        /// <summary>
+        /// Sysctl setting vm.max_map_count.
+        /// Serialized Name: SysctlConfig.vmMaxMapCount
+        /// </summary>
         [WirePath("vmMaxMapCount")]
         public int? VmMaxMapCount { get; set; }
-        /// <summary> Sysctl setting vm.swappiness. </summary>
+        /// <summary>
+        /// Sysctl setting vm.swappiness.
+        /// Serialized Name: SysctlConfig.vmSwappiness
+        /// </summary>
         [WirePath("vmSwappiness")]
         public int? VmSwappiness { get; set; }
-        /// <summary> Sysctl setting vm.vfs_cache_pressure. </summary>
+        /// <summary>
+        /// Sysctl setting vm.vfs_cache_pressure.
+        /// Serialized Name: SysctlConfig.vmVfsCachePressure
+        /// </summary>
         [WirePath("vmVfsCachePressure")]
         public int? VmVfsCachePressure { get; set; }
     }

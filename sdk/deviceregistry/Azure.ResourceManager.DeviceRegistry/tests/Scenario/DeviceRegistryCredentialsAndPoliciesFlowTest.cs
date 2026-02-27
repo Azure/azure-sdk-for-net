@@ -90,9 +90,9 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
         public async Task TestCredentialAndPolicyFlow()
         {
             var sw = System.Diagnostics.Stopwatch.StartNew();
-            Console.WriteLine($"\n{'='*60}");
+            Console.WriteLine($"\n{'=' * 60}");
             Console.WriteLine($"TEST STARTED at {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
-            Console.WriteLine($"{'='*60}\n");
+            Console.WriteLine($"{'=' * 60}\n");
 
             // Setup: Get resource group
             Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] Step 1: Getting resource group...");
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 var leafCertificateConfig = new LeafCertificateConfiguration(validityPeriodInDays: 90);
                 var certificateConfig = new CertificateConfiguration(
                     certificateAuthorityConfig,
-                    leafCertificateConfig);
+                    leafCertificateConfig.ValidityPeriodInDays);
 
                 // Create policy data with certificate configuration
                 var policyData = new PolicyData(_region)
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             {
                 Certificate = new CertificateConfiguration(
                     policyResource.Data.Properties.Certificate.CertificateAuthorityConfiguration,  // Reuse existing config
-                    new LeafCertificateConfiguration(validityPeriodInDays: 60)
+                    60
                 )
             };
 
@@ -326,10 +326,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.IsFalse(credentialExistsAfterDelete);
             Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ Credential deleted successfully\n");
 
-            Console.WriteLine($"{'='*60}");
+            Console.WriteLine($"{'=' * 60}");
             Console.WriteLine($"TEST COMPLETED at {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
             Console.WriteLine($"Total Duration: {sw.Elapsed:mm\\:ss\\.fff}");
-            Console.WriteLine($"{'='*60}\n");
+            Console.WriteLine($"{'=' * 60}\n");
         }
 
         /// <summary>

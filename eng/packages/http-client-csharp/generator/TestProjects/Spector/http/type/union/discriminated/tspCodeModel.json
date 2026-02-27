@@ -205,6 +205,11 @@
       "crossLanguageDefinitionId": "Type.Union.Discriminated.Cat",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Cat"
+        }
+      },
       "properties": [
         {
           "$id": "26",
@@ -266,6 +271,11 @@
       "crossLanguageDefinitionId": "Type.Union.Discriminated.Dog",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Dog"
+        }
+      },
       "properties": [
         {
           "$id": "31",
@@ -400,7 +410,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Union.Discriminated.endpoint"
+              "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -446,7 +456,7 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Type.Union.Discriminated.endpoint"
+                  "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.endpoint"
                 }
               ],
               "initializedBy": 0,
@@ -493,10 +503,33 @@
                             "scope": "Method",
                             "decorators": [],
                             "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.get.kind",
-                            "readOnly": false
+                            "readOnly": false,
+                            "methodParameterSegments": [
+                              {
+                                "$id": "52",
+                                "kind": "method",
+                                "name": "kind",
+                                "serializedName": "kind",
+                                "type": {
+                                  "$id": "53",
+                                  "kind": "string",
+                                  "name": "string",
+                                  "crossLanguageDefinitionId": "TypeSpec.string",
+                                  "decorators": []
+                                },
+                                "location": "Query",
+                                "isApiVersion": false,
+                                "optional": true,
+                                "scope": "Method",
+                                "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.get.kind",
+                                "readOnly": false,
+                                "access": "public",
+                                "decorators": []
+                              }
+                            ]
                           },
                           {
-                            "$id": "52",
+                            "$id": "54",
                             "kind": "header",
                             "name": "accept",
                             "serializedName": "Accept",
@@ -509,7 +542,26 @@
                             "scope": "Constant",
                             "readOnly": false,
                             "decorators": [],
-                            "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.get.accept"
+                            "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.get.accept",
+                            "methodParameterSegments": [
+                              {
+                                "$id": "55",
+                                "kind": "method",
+                                "name": "accept",
+                                "serializedName": "Accept",
+                                "type": {
+                                  "$ref": "1"
+                                },
+                                "location": "Header",
+                                "isApiVersion": false,
+                                "optional": false,
+                                "scope": "Constant",
+                                "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.get.accept",
+                                "readOnly": false,
+                                "access": "public",
+                                "decorators": []
+                              }
+                            ]
                           }
                         ],
                         "responses": [
@@ -518,7 +570,7 @@
                               200
                             ],
                             "bodyType": {
-                              "$id": "53",
+                              "$id": "56",
                               "kind": "union",
                               "name": "PetWithEnvelope",
                               "variantTypes": [
@@ -546,51 +598,20 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.get",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Type.Union.Discriminated.Envelope.Object"
                       },
                       "parameters": [
                         {
-                          "$id": "54",
-                          "kind": "method",
-                          "name": "kind",
-                          "serializedName": "kind",
-                          "type": {
-                            "$id": "55",
-                            "kind": "string",
-                            "name": "string",
-                            "crossLanguageDefinitionId": "TypeSpec.string",
-                            "decorators": []
-                          },
-                          "location": "Query",
-                          "isApiVersion": false,
-                          "optional": true,
-                          "scope": "Method",
-                          "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.get.kind",
-                          "readOnly": false,
-                          "access": "public",
-                          "decorators": []
+                          "$ref": "52"
                         },
                         {
-                          "$id": "56",
-                          "kind": "method",
-                          "name": "accept",
-                          "serializedName": "Accept",
-                          "type": {
-                            "$ref": "1"
-                          },
-                          "location": "Header",
-                          "isApiVersion": false,
-                          "optional": false,
-                          "scope": "Constant",
-                          "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.get.accept",
-                          "readOnly": false,
-                          "access": "public",
-                          "decorators": []
+                          "$ref": "55"
                         }
                       ],
                       "response": {
                         "type": {
-                          "$ref": "53"
+                          "$ref": "56"
                         }
                       },
                       "isOverride": false,
@@ -625,10 +646,30 @@
                             "scope": "Constant",
                             "readOnly": false,
                             "decorators": [],
-                            "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.put.contentType"
+                            "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.put.contentType",
+                            "methodParameterSegments": [
+                              {
+                                "$id": "60",
+                                "kind": "method",
+                                "name": "contentType",
+                                "serializedName": "Content-Type",
+                                "doc": "Body parameter's content type. Known values are application/json",
+                                "type": {
+                                  "$ref": "3"
+                                },
+                                "location": "Header",
+                                "isApiVersion": false,
+                                "optional": false,
+                                "scope": "Constant",
+                                "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.put.contentType",
+                                "readOnly": false,
+                                "access": "public",
+                                "decorators": []
+                              }
+                            ]
                           },
                           {
-                            "$id": "60",
+                            "$id": "61",
                             "kind": "header",
                             "name": "accept",
                             "serializedName": "Accept",
@@ -641,15 +682,34 @@
                             "scope": "Constant",
                             "readOnly": false,
                             "decorators": [],
-                            "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.put.accept"
+                            "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.put.accept",
+                            "methodParameterSegments": [
+                              {
+                                "$id": "62",
+                                "kind": "method",
+                                "name": "accept",
+                                "serializedName": "Accept",
+                                "type": {
+                                  "$ref": "5"
+                                },
+                                "location": "Header",
+                                "isApiVersion": false,
+                                "optional": false,
+                                "scope": "Constant",
+                                "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.put.accept",
+                                "readOnly": false,
+                                "access": "public",
+                                "decorators": []
+                              }
+                            ]
                           },
                           {
-                            "$id": "61",
+                            "$id": "63",
                             "kind": "body",
                             "name": "input",
                             "serializedName": "input",
                             "type": {
-                              "$ref": "53"
+                              "$ref": "56"
                             },
                             "isApiVersion": false,
                             "contentTypes": [
@@ -660,7 +720,26 @@
                             "scope": "Method",
                             "decorators": [],
                             "readOnly": false,
-                            "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.put.input"
+                            "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.put.input",
+                            "methodParameterSegments": [
+                              {
+                                "$id": "64",
+                                "kind": "method",
+                                "name": "input",
+                                "serializedName": "input",
+                                "type": {
+                                  "$ref": "56"
+                                },
+                                "location": "Body",
+                                "isApiVersion": false,
+                                "optional": false,
+                                "scope": "Method",
+                                "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.put.input",
+                                "readOnly": false,
+                                "access": "public",
+                                "decorators": []
+                              }
+                            ]
                           }
                         ],
                         "responses": [
@@ -669,7 +748,7 @@
                               200
                             ],
                             "bodyType": {
-                              "$ref": "53"
+                              "$ref": "56"
                             },
                             "headers": [],
                             "isErrorResponse": false,
@@ -688,65 +767,23 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.put",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Type.Union.Discriminated.Envelope.Object"
                       },
                       "parameters": [
                         {
-                          "$id": "62",
-                          "kind": "method",
-                          "name": "input",
-                          "serializedName": "input",
-                          "type": {
-                            "$ref": "53"
-                          },
-                          "location": "Body",
-                          "isApiVersion": false,
-                          "optional": false,
-                          "scope": "Method",
-                          "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.put.input",
-                          "readOnly": false,
-                          "access": "public",
-                          "decorators": []
+                          "$ref": "64"
                         },
                         {
-                          "$id": "63",
-                          "kind": "method",
-                          "name": "contentType",
-                          "serializedName": "Content-Type",
-                          "doc": "Body parameter's content type. Known values are application/json",
-                          "type": {
-                            "$ref": "3"
-                          },
-                          "location": "Header",
-                          "isApiVersion": false,
-                          "optional": false,
-                          "scope": "Constant",
-                          "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.put.contentType",
-                          "readOnly": false,
-                          "access": "public",
-                          "decorators": []
+                          "$ref": "60"
                         },
                         {
-                          "$id": "64",
-                          "kind": "method",
-                          "name": "accept",
-                          "serializedName": "Accept",
-                          "type": {
-                            "$ref": "5"
-                          },
-                          "location": "Header",
-                          "isApiVersion": false,
-                          "optional": false,
-                          "scope": "Constant",
-                          "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.put.accept",
-                          "readOnly": false,
-                          "access": "public",
-                          "decorators": []
+                          "$ref": "62"
                         }
                       ],
                       "response": {
                         "type": {
-                          "$ref": "53"
+                          "$ref": "56"
                         }
                       },
                       "isOverride": false,
@@ -784,7 +821,7 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Type.Union.Discriminated.endpoint"
+                      "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.endpoint"
                     }
                   ],
                   "initializedBy": 0,
@@ -793,7 +830,8 @@
                   "apiVersions": [],
                   "parent": {
                     "$ref": "43"
-                  }
+                  },
+                  "isMultiServiceClient": false
                 },
                 {
                   "$id": "68",
@@ -831,10 +869,33 @@
                             "scope": "Method",
                             "decorators": [],
                             "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.get.petType",
-                            "readOnly": false
+                            "readOnly": false,
+                            "methodParameterSegments": [
+                              {
+                                "$id": "73",
+                                "kind": "method",
+                                "name": "petType",
+                                "serializedName": "petType",
+                                "type": {
+                                  "$id": "74",
+                                  "kind": "string",
+                                  "name": "string",
+                                  "crossLanguageDefinitionId": "TypeSpec.string",
+                                  "decorators": []
+                                },
+                                "location": "Query",
+                                "isApiVersion": false,
+                                "optional": true,
+                                "scope": "Method",
+                                "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.get.petType",
+                                "readOnly": false,
+                                "access": "public",
+                                "decorators": []
+                              }
+                            ]
                           },
                           {
-                            "$id": "73",
+                            "$id": "75",
                             "kind": "header",
                             "name": "accept",
                             "serializedName": "Accept",
@@ -847,7 +908,26 @@
                             "scope": "Constant",
                             "readOnly": false,
                             "decorators": [],
-                            "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.get.accept"
+                            "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.get.accept",
+                            "methodParameterSegments": [
+                              {
+                                "$id": "76",
+                                "kind": "method",
+                                "name": "accept",
+                                "serializedName": "Accept",
+                                "type": {
+                                  "$ref": "7"
+                                },
+                                "location": "Header",
+                                "isApiVersion": false,
+                                "optional": false,
+                                "scope": "Constant",
+                                "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.get.accept",
+                                "readOnly": false,
+                                "access": "public",
+                                "decorators": []
+                              }
+                            ]
                           }
                         ],
                         "responses": [
@@ -856,7 +936,7 @@
                               200
                             ],
                             "bodyType": {
-                              "$id": "74",
+                              "$id": "77",
                               "kind": "union",
                               "name": "PetWithCustomNames",
                               "variantTypes": [
@@ -884,51 +964,20 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.get",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Type.Union.Discriminated.Envelope.Object"
                       },
                       "parameters": [
                         {
-                          "$id": "75",
-                          "kind": "method",
-                          "name": "petType",
-                          "serializedName": "petType",
-                          "type": {
-                            "$id": "76",
-                            "kind": "string",
-                            "name": "string",
-                            "crossLanguageDefinitionId": "TypeSpec.string",
-                            "decorators": []
-                          },
-                          "location": "Query",
-                          "isApiVersion": false,
-                          "optional": true,
-                          "scope": "Method",
-                          "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.get.petType",
-                          "readOnly": false,
-                          "access": "public",
-                          "decorators": []
+                          "$ref": "73"
                         },
                         {
-                          "$id": "77",
-                          "kind": "method",
-                          "name": "accept",
-                          "serializedName": "Accept",
-                          "type": {
-                            "$ref": "7"
-                          },
-                          "location": "Header",
-                          "isApiVersion": false,
-                          "optional": false,
-                          "scope": "Constant",
-                          "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.get.accept",
-                          "readOnly": false,
-                          "access": "public",
-                          "decorators": []
+                          "$ref": "76"
                         }
                       ],
                       "response": {
                         "type": {
-                          "$ref": "74"
+                          "$ref": "77"
                         }
                       },
                       "isOverride": false,
@@ -963,10 +1012,30 @@
                             "scope": "Constant",
                             "readOnly": false,
                             "decorators": [],
-                            "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.put.contentType"
+                            "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.put.contentType",
+                            "methodParameterSegments": [
+                              {
+                                "$id": "81",
+                                "kind": "method",
+                                "name": "contentType",
+                                "serializedName": "Content-Type",
+                                "doc": "Body parameter's content type. Known values are application/json",
+                                "type": {
+                                  "$ref": "9"
+                                },
+                                "location": "Header",
+                                "isApiVersion": false,
+                                "optional": false,
+                                "scope": "Constant",
+                                "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.put.contentType",
+                                "readOnly": false,
+                                "access": "public",
+                                "decorators": []
+                              }
+                            ]
                           },
                           {
-                            "$id": "81",
+                            "$id": "82",
                             "kind": "header",
                             "name": "accept",
                             "serializedName": "Accept",
@@ -979,15 +1048,34 @@
                             "scope": "Constant",
                             "readOnly": false,
                             "decorators": [],
-                            "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.put.accept"
+                            "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.put.accept",
+                            "methodParameterSegments": [
+                              {
+                                "$id": "83",
+                                "kind": "method",
+                                "name": "accept",
+                                "serializedName": "Accept",
+                                "type": {
+                                  "$ref": "11"
+                                },
+                                "location": "Header",
+                                "isApiVersion": false,
+                                "optional": false,
+                                "scope": "Constant",
+                                "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.put.accept",
+                                "readOnly": false,
+                                "access": "public",
+                                "decorators": []
+                              }
+                            ]
                           },
                           {
-                            "$id": "82",
+                            "$id": "84",
                             "kind": "body",
                             "name": "input",
                             "serializedName": "input",
                             "type": {
-                              "$ref": "74"
+                              "$ref": "77"
                             },
                             "isApiVersion": false,
                             "contentTypes": [
@@ -998,7 +1086,26 @@
                             "scope": "Method",
                             "decorators": [],
                             "readOnly": false,
-                            "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.put.input"
+                            "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.put.input",
+                            "methodParameterSegments": [
+                              {
+                                "$id": "85",
+                                "kind": "method",
+                                "name": "input",
+                                "serializedName": "input",
+                                "type": {
+                                  "$ref": "77"
+                                },
+                                "location": "Body",
+                                "isApiVersion": false,
+                                "optional": false,
+                                "scope": "Method",
+                                "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.put.input",
+                                "readOnly": false,
+                                "access": "public",
+                                "decorators": []
+                              }
+                            ]
                           }
                         ],
                         "responses": [
@@ -1007,7 +1114,7 @@
                               200
                             ],
                             "bodyType": {
-                              "$ref": "74"
+                              "$ref": "77"
                             },
                             "headers": [],
                             "isErrorResponse": false,
@@ -1026,65 +1133,23 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.put",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Type.Union.Discriminated.Envelope.Object"
                       },
                       "parameters": [
                         {
-                          "$id": "83",
-                          "kind": "method",
-                          "name": "input",
-                          "serializedName": "input",
-                          "type": {
-                            "$ref": "74"
-                          },
-                          "location": "Body",
-                          "isApiVersion": false,
-                          "optional": false,
-                          "scope": "Method",
-                          "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.put.input",
-                          "readOnly": false,
-                          "access": "public",
-                          "decorators": []
+                          "$ref": "85"
                         },
                         {
-                          "$id": "84",
-                          "kind": "method",
-                          "name": "contentType",
-                          "serializedName": "Content-Type",
-                          "doc": "Body parameter's content type. Known values are application/json",
-                          "type": {
-                            "$ref": "9"
-                          },
-                          "location": "Header",
-                          "isApiVersion": false,
-                          "optional": false,
-                          "scope": "Constant",
-                          "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.put.contentType",
-                          "readOnly": false,
-                          "access": "public",
-                          "decorators": []
+                          "$ref": "81"
                         },
                         {
-                          "$id": "85",
-                          "kind": "method",
-                          "name": "accept",
-                          "serializedName": "Accept",
-                          "type": {
-                            "$ref": "11"
-                          },
-                          "location": "Header",
-                          "isApiVersion": false,
-                          "optional": false,
-                          "scope": "Constant",
-                          "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.put.accept",
-                          "readOnly": false,
-                          "access": "public",
-                          "decorators": []
+                          "$ref": "83"
                         }
                       ],
                       "response": {
                         "type": {
-                          "$ref": "74"
+                          "$ref": "77"
                         }
                       },
                       "isOverride": false,
@@ -1122,7 +1187,7 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Type.Union.Discriminated.endpoint"
+                      "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.endpoint"
                     }
                   ],
                   "initializedBy": 0,
@@ -1131,11 +1196,14 @@
                   "apiVersions": [],
                   "parent": {
                     "$ref": "43"
-                  }
+                  },
+                  "isMultiServiceClient": false
                 }
-              ]
+              ],
+              "isMultiServiceClient": false
             }
-          ]
+          ],
+          "isMultiServiceClient": false
         },
         {
           "$id": "89",
@@ -1172,7 +1240,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Union.Discriminated.endpoint"
+              "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -1219,10 +1287,33 @@
                         "scope": "Method",
                         "decorators": [],
                         "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.get.kind",
-                        "readOnly": false
+                        "readOnly": false,
+                        "methodParameterSegments": [
+                          {
+                            "$id": "98",
+                            "kind": "method",
+                            "name": "kind",
+                            "serializedName": "kind",
+                            "type": {
+                              "$id": "99",
+                              "kind": "string",
+                              "name": "string",
+                              "crossLanguageDefinitionId": "TypeSpec.string",
+                              "decorators": []
+                            },
+                            "location": "Query",
+                            "isApiVersion": false,
+                            "optional": true,
+                            "scope": "Method",
+                            "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.get.kind",
+                            "readOnly": false,
+                            "access": "public",
+                            "decorators": []
+                          }
+                        ]
                       },
                       {
-                        "$id": "98",
+                        "$id": "100",
                         "kind": "header",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -1235,7 +1326,26 @@
                         "scope": "Constant",
                         "readOnly": false,
                         "decorators": [],
-                        "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.get.accept"
+                        "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.get.accept",
+                        "methodParameterSegments": [
+                          {
+                            "$id": "101",
+                            "kind": "method",
+                            "name": "accept",
+                            "serializedName": "Accept",
+                            "type": {
+                              "$ref": "13"
+                            },
+                            "location": "Header",
+                            "isApiVersion": false,
+                            "optional": false,
+                            "scope": "Constant",
+                            "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.get.accept",
+                            "readOnly": false,
+                            "access": "public",
+                            "decorators": []
+                          }
+                        ]
                       }
                     ],
                     "responses": [
@@ -1244,7 +1354,7 @@
                           200
                         ],
                         "bodyType": {
-                          "$id": "99",
+                          "$id": "102",
                           "kind": "union",
                           "name": "PetInline",
                           "variantTypes": [
@@ -1272,51 +1382,20 @@
                     "generateProtocolMethod": true,
                     "generateConvenienceMethod": true,
                     "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.get",
-                    "decorators": []
+                    "decorators": [],
+                    "namespace": "Type.Union.Discriminated.NoEnvelope"
                   },
                   "parameters": [
                     {
-                      "$id": "100",
-                      "kind": "method",
-                      "name": "kind",
-                      "serializedName": "kind",
-                      "type": {
-                        "$id": "101",
-                        "kind": "string",
-                        "name": "string",
-                        "crossLanguageDefinitionId": "TypeSpec.string",
-                        "decorators": []
-                      },
-                      "location": "Query",
-                      "isApiVersion": false,
-                      "optional": true,
-                      "scope": "Method",
-                      "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.get.kind",
-                      "readOnly": false,
-                      "access": "public",
-                      "decorators": []
+                      "$ref": "98"
                     },
                     {
-                      "$id": "102",
-                      "kind": "method",
-                      "name": "accept",
-                      "serializedName": "Accept",
-                      "type": {
-                        "$ref": "13"
-                      },
-                      "location": "Header",
-                      "isApiVersion": false,
-                      "optional": false,
-                      "scope": "Constant",
-                      "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.get.accept",
-                      "readOnly": false,
-                      "access": "public",
-                      "decorators": []
+                      "$ref": "101"
                     }
                   ],
                   "response": {
                     "type": {
-                      "$ref": "99"
+                      "$ref": "102"
                     }
                   },
                   "isOverride": false,
@@ -1351,10 +1430,30 @@
                         "scope": "Constant",
                         "readOnly": false,
                         "decorators": [],
-                        "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.put.contentType"
+                        "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.put.contentType",
+                        "methodParameterSegments": [
+                          {
+                            "$id": "106",
+                            "kind": "method",
+                            "name": "contentType",
+                            "serializedName": "Content-Type",
+                            "doc": "Body parameter's content type. Known values are application/json",
+                            "type": {
+                              "$ref": "15"
+                            },
+                            "location": "Header",
+                            "isApiVersion": false,
+                            "optional": false,
+                            "scope": "Constant",
+                            "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.put.contentType",
+                            "readOnly": false,
+                            "access": "public",
+                            "decorators": []
+                          }
+                        ]
                       },
                       {
-                        "$id": "106",
+                        "$id": "107",
                         "kind": "header",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -1367,15 +1466,34 @@
                         "scope": "Constant",
                         "readOnly": false,
                         "decorators": [],
-                        "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.put.accept"
+                        "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.put.accept",
+                        "methodParameterSegments": [
+                          {
+                            "$id": "108",
+                            "kind": "method",
+                            "name": "accept",
+                            "serializedName": "Accept",
+                            "type": {
+                              "$ref": "17"
+                            },
+                            "location": "Header",
+                            "isApiVersion": false,
+                            "optional": false,
+                            "scope": "Constant",
+                            "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.put.accept",
+                            "readOnly": false,
+                            "access": "public",
+                            "decorators": []
+                          }
+                        ]
                       },
                       {
-                        "$id": "107",
+                        "$id": "109",
                         "kind": "body",
                         "name": "input",
                         "serializedName": "input",
                         "type": {
-                          "$ref": "99"
+                          "$ref": "102"
                         },
                         "isApiVersion": false,
                         "contentTypes": [
@@ -1386,7 +1504,26 @@
                         "scope": "Method",
                         "decorators": [],
                         "readOnly": false,
-                        "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.put.input"
+                        "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.put.input",
+                        "methodParameterSegments": [
+                          {
+                            "$id": "110",
+                            "kind": "method",
+                            "name": "input",
+                            "serializedName": "input",
+                            "type": {
+                              "$ref": "102"
+                            },
+                            "location": "Body",
+                            "isApiVersion": false,
+                            "optional": false,
+                            "scope": "Method",
+                            "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.put.input",
+                            "readOnly": false,
+                            "access": "public",
+                            "decorators": []
+                          }
+                        ]
                       }
                     ],
                     "responses": [
@@ -1395,7 +1532,7 @@
                           200
                         ],
                         "bodyType": {
-                          "$ref": "99"
+                          "$ref": "102"
                         },
                         "headers": [],
                         "isErrorResponse": false,
@@ -1414,65 +1551,23 @@
                     "generateProtocolMethod": true,
                     "generateConvenienceMethod": true,
                     "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.put",
-                    "decorators": []
+                    "decorators": [],
+                    "namespace": "Type.Union.Discriminated.NoEnvelope"
                   },
                   "parameters": [
                     {
-                      "$id": "108",
-                      "kind": "method",
-                      "name": "input",
-                      "serializedName": "input",
-                      "type": {
-                        "$ref": "99"
-                      },
-                      "location": "Body",
-                      "isApiVersion": false,
-                      "optional": false,
-                      "scope": "Method",
-                      "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.put.input",
-                      "readOnly": false,
-                      "access": "public",
-                      "decorators": []
+                      "$ref": "110"
                     },
                     {
-                      "$id": "109",
-                      "kind": "method",
-                      "name": "contentType",
-                      "serializedName": "Content-Type",
-                      "doc": "Body parameter's content type. Known values are application/json",
-                      "type": {
-                        "$ref": "15"
-                      },
-                      "location": "Header",
-                      "isApiVersion": false,
-                      "optional": false,
-                      "scope": "Constant",
-                      "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.put.contentType",
-                      "readOnly": false,
-                      "access": "public",
-                      "decorators": []
+                      "$ref": "106"
                     },
                     {
-                      "$id": "110",
-                      "kind": "method",
-                      "name": "accept",
-                      "serializedName": "Accept",
-                      "type": {
-                        "$ref": "17"
-                      },
-                      "location": "Header",
-                      "isApiVersion": false,
-                      "optional": false,
-                      "scope": "Constant",
-                      "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.put.accept",
-                      "readOnly": false,
-                      "access": "public",
-                      "decorators": []
+                      "$ref": "108"
                     }
                   ],
                   "response": {
                     "type": {
-                      "$ref": "99"
+                      "$ref": "102"
                     }
                   },
                   "isOverride": false,
@@ -1510,7 +1605,7 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Type.Union.Discriminated.endpoint"
+                  "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.endpoint"
                 }
               ],
               "initializedBy": 0,
@@ -1519,7 +1614,8 @@
               "apiVersions": [],
               "parent": {
                 "$ref": "89"
-              }
+              },
+              "isMultiServiceClient": false
             },
             {
               "$id": "114",
@@ -1557,10 +1653,33 @@
                         "scope": "Method",
                         "decorators": [],
                         "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.get.type",
-                        "readOnly": false
+                        "readOnly": false,
+                        "methodParameterSegments": [
+                          {
+                            "$id": "119",
+                            "kind": "method",
+                            "name": "type",
+                            "serializedName": "type",
+                            "type": {
+                              "$id": "120",
+                              "kind": "string",
+                              "name": "string",
+                              "crossLanguageDefinitionId": "TypeSpec.string",
+                              "decorators": []
+                            },
+                            "location": "Query",
+                            "isApiVersion": false,
+                            "optional": true,
+                            "scope": "Method",
+                            "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.get.type",
+                            "readOnly": false,
+                            "access": "public",
+                            "decorators": []
+                          }
+                        ]
                       },
                       {
-                        "$id": "119",
+                        "$id": "121",
                         "kind": "header",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -1573,7 +1692,26 @@
                         "scope": "Constant",
                         "readOnly": false,
                         "decorators": [],
-                        "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.get.accept"
+                        "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.get.accept",
+                        "methodParameterSegments": [
+                          {
+                            "$id": "122",
+                            "kind": "method",
+                            "name": "accept",
+                            "serializedName": "Accept",
+                            "type": {
+                              "$ref": "19"
+                            },
+                            "location": "Header",
+                            "isApiVersion": false,
+                            "optional": false,
+                            "scope": "Constant",
+                            "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.get.accept",
+                            "readOnly": false,
+                            "access": "public",
+                            "decorators": []
+                          }
+                        ]
                       }
                     ],
                     "responses": [
@@ -1582,7 +1720,7 @@
                           200
                         ],
                         "bodyType": {
-                          "$id": "120",
+                          "$id": "123",
                           "kind": "union",
                           "name": "PetInlineWithCustomDiscriminator",
                           "variantTypes": [
@@ -1610,51 +1748,20 @@
                     "generateProtocolMethod": true,
                     "generateConvenienceMethod": true,
                     "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.get",
-                    "decorators": []
+                    "decorators": [],
+                    "namespace": "Type.Union.Discriminated.NoEnvelope"
                   },
                   "parameters": [
                     {
-                      "$id": "121",
-                      "kind": "method",
-                      "name": "type",
-                      "serializedName": "type",
-                      "type": {
-                        "$id": "122",
-                        "kind": "string",
-                        "name": "string",
-                        "crossLanguageDefinitionId": "TypeSpec.string",
-                        "decorators": []
-                      },
-                      "location": "Query",
-                      "isApiVersion": false,
-                      "optional": true,
-                      "scope": "Method",
-                      "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.get.type",
-                      "readOnly": false,
-                      "access": "public",
-                      "decorators": []
+                      "$ref": "119"
                     },
                     {
-                      "$id": "123",
-                      "kind": "method",
-                      "name": "accept",
-                      "serializedName": "Accept",
-                      "type": {
-                        "$ref": "19"
-                      },
-                      "location": "Header",
-                      "isApiVersion": false,
-                      "optional": false,
-                      "scope": "Constant",
-                      "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.get.accept",
-                      "readOnly": false,
-                      "access": "public",
-                      "decorators": []
+                      "$ref": "122"
                     }
                   ],
                   "response": {
                     "type": {
-                      "$ref": "120"
+                      "$ref": "123"
                     }
                   },
                   "isOverride": false,
@@ -1689,10 +1796,30 @@
                         "scope": "Constant",
                         "readOnly": false,
                         "decorators": [],
-                        "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.put.contentType"
+                        "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.put.contentType",
+                        "methodParameterSegments": [
+                          {
+                            "$id": "127",
+                            "kind": "method",
+                            "name": "contentType",
+                            "serializedName": "Content-Type",
+                            "doc": "Body parameter's content type. Known values are application/json",
+                            "type": {
+                              "$ref": "21"
+                            },
+                            "location": "Header",
+                            "isApiVersion": false,
+                            "optional": false,
+                            "scope": "Constant",
+                            "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.put.contentType",
+                            "readOnly": false,
+                            "access": "public",
+                            "decorators": []
+                          }
+                        ]
                       },
                       {
-                        "$id": "127",
+                        "$id": "128",
                         "kind": "header",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -1705,15 +1832,34 @@
                         "scope": "Constant",
                         "readOnly": false,
                         "decorators": [],
-                        "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.put.accept"
+                        "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.put.accept",
+                        "methodParameterSegments": [
+                          {
+                            "$id": "129",
+                            "kind": "method",
+                            "name": "accept",
+                            "serializedName": "Accept",
+                            "type": {
+                              "$ref": "23"
+                            },
+                            "location": "Header",
+                            "isApiVersion": false,
+                            "optional": false,
+                            "scope": "Constant",
+                            "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.put.accept",
+                            "readOnly": false,
+                            "access": "public",
+                            "decorators": []
+                          }
+                        ]
                       },
                       {
-                        "$id": "128",
+                        "$id": "130",
                         "kind": "body",
                         "name": "input",
                         "serializedName": "input",
                         "type": {
-                          "$ref": "120"
+                          "$ref": "123"
                         },
                         "isApiVersion": false,
                         "contentTypes": [
@@ -1724,7 +1870,26 @@
                         "scope": "Method",
                         "decorators": [],
                         "readOnly": false,
-                        "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.put.input"
+                        "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.put.input",
+                        "methodParameterSegments": [
+                          {
+                            "$id": "131",
+                            "kind": "method",
+                            "name": "input",
+                            "serializedName": "input",
+                            "type": {
+                              "$ref": "123"
+                            },
+                            "location": "Body",
+                            "isApiVersion": false,
+                            "optional": false,
+                            "scope": "Method",
+                            "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.put.input",
+                            "readOnly": false,
+                            "access": "public",
+                            "decorators": []
+                          }
+                        ]
                       }
                     ],
                     "responses": [
@@ -1733,7 +1898,7 @@
                           200
                         ],
                         "bodyType": {
-                          "$ref": "120"
+                          "$ref": "123"
                         },
                         "headers": [],
                         "isErrorResponse": false,
@@ -1752,65 +1917,23 @@
                     "generateProtocolMethod": true,
                     "generateConvenienceMethod": true,
                     "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.put",
-                    "decorators": []
+                    "decorators": [],
+                    "namespace": "Type.Union.Discriminated.NoEnvelope"
                   },
                   "parameters": [
                     {
-                      "$id": "129",
-                      "kind": "method",
-                      "name": "input",
-                      "serializedName": "input",
-                      "type": {
-                        "$ref": "120"
-                      },
-                      "location": "Body",
-                      "isApiVersion": false,
-                      "optional": false,
-                      "scope": "Method",
-                      "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.put.input",
-                      "readOnly": false,
-                      "access": "public",
-                      "decorators": []
+                      "$ref": "131"
                     },
                     {
-                      "$id": "130",
-                      "kind": "method",
-                      "name": "contentType",
-                      "serializedName": "Content-Type",
-                      "doc": "Body parameter's content type. Known values are application/json",
-                      "type": {
-                        "$ref": "21"
-                      },
-                      "location": "Header",
-                      "isApiVersion": false,
-                      "optional": false,
-                      "scope": "Constant",
-                      "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.put.contentType",
-                      "readOnly": false,
-                      "access": "public",
-                      "decorators": []
+                      "$ref": "127"
                     },
                     {
-                      "$id": "131",
-                      "kind": "method",
-                      "name": "accept",
-                      "serializedName": "Accept",
-                      "type": {
-                        "$ref": "23"
-                      },
-                      "location": "Header",
-                      "isApiVersion": false,
-                      "optional": false,
-                      "scope": "Constant",
-                      "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.put.accept",
-                      "readOnly": false,
-                      "access": "public",
-                      "decorators": []
+                      "$ref": "129"
                     }
                   ],
                   "response": {
                     "type": {
-                      "$ref": "120"
+                      "$ref": "123"
                     }
                   },
                   "isOverride": false,
@@ -1848,7 +1971,7 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Type.Union.Discriminated.endpoint"
+                  "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.endpoint"
                 }
               ],
               "initializedBy": 0,
@@ -1857,11 +1980,14 @@
               "apiVersions": [],
               "parent": {
                 "$ref": "89"
-              }
+              },
+              "isMultiServiceClient": false
             }
-          ]
+          ],
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

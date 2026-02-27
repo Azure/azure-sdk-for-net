@@ -11,19 +11,6 @@ trigger:
     exclude:
     - sdk/communication/Azure.ResourceManager.Communication/
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/communication/
-    exclude:
-    - sdk/communication/Azure.ResourceManager.Communication/
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

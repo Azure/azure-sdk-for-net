@@ -29,7 +29,7 @@
 
   <ItemGroup>
     <Compile Remove="**\TestData\**\*.cs" />
-		<Compile Remove="Common\**" />
+    <Compile Remove="Common\**" />
   </ItemGroup>
 
   <ItemGroup>

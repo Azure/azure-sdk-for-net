@@ -1,0 +1,4 @@
+directory: specification/certificateregistration/resource-manager/Microsoft.CertificateRegistration/CertificateRegistration
+commit: 3a8cc999dcbcbb4239b11c470614fb343e0157a8
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

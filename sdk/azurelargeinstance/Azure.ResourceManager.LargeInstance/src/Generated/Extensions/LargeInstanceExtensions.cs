@@ -8,7 +8,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.LargeInstance.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -17,30 +19,32 @@ namespace Azure.ResourceManager.LargeInstance
     /// <summary> A class to add extension methods to Azure.ResourceManager.LargeInstance. </summary>
     public static partial class LargeInstanceExtensions
     {
+        /// <param name="client"></param>
         private static MockableLargeInstanceArmClient GetMockableLargeInstanceArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MockableLargeInstanceArmClient(client0));
+            return client.GetCachedClient(client0 => new MockableLargeInstanceArmClient(client0, ResourceIdentifier.Root));
         }
 
-        private static MockableLargeInstanceResourceGroupResource GetMockableLargeInstanceResourceGroupResource(ArmResource resource)
+        /// <param name="resourceGroupResource"></param>
+        private static MockableLargeInstanceResourceGroupResource GetMockableLargeInstanceResourceGroupResource(ResourceGroupResource resourceGroupResource)
         {
-            return resource.GetCachedClient(client => new MockableLargeInstanceResourceGroupResource(client, resource.Id));
+            return resourceGroupResource.GetCachedClient(client => new MockableLargeInstanceResourceGroupResource(client, resourceGroupResource.Id));
         }
 
-        private static MockableLargeInstanceSubscriptionResource GetMockableLargeInstanceSubscriptionResource(ArmResource resource)
+        /// <param name="subscriptionResource"></param>
+        private static MockableLargeInstanceSubscriptionResource GetMockableLargeInstanceSubscriptionResource(SubscriptionResource subscriptionResource)
         {
-            return resource.GetCachedClient(client => new MockableLargeInstanceSubscriptionResource(client, resource.Id));
+            return subscriptionResource.GetCachedClient(client => new MockableLargeInstanceSubscriptionResource(client, subscriptionResource.Id));
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LargeInstanceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LargeInstanceResource.CreateResourceIdentifier" /> to create a <see cref="LargeInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LargeInstanceResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableLargeInstanceArmClient.GetLargeInstanceResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableLargeInstanceArmClient.GetLargeInstanceResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="LargeInstanceResource"/> object. </returns>
@@ -52,14 +56,13 @@ namespace Azure.ResourceManager.LargeInstance
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LargeStorageInstanceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LargeStorageInstanceResource.CreateResourceIdentifier" /> to create a <see cref="LargeStorageInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LargeStorageInstanceResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableLargeInstanceArmClient.GetLargeStorageInstanceResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableLargeInstanceArmClient.GetLargeStorageInstanceResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="LargeStorageInstanceResource"/> object. </returns>
@@ -71,15 +74,15 @@ namespace Azure.ResourceManager.LargeInstance
         }
 
         /// <summary>
-        /// Gets a collection of LargeInstanceResources in the ResourceGroupResource.
+        /// Gets a collection of LargeInstances in the <see cref="ResourceGroupResource"/>
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableLargeInstanceResourceGroupResource.GetLargeInstances()"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableLargeInstanceResourceGroupResource.GetLargeInstances()"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of LargeInstanceResources and their operations over a LargeInstanceResource. </returns>
+        /// <returns> An object representing collection of LargeInstances and their operations over a LargeInstanceResource. </returns>
         public static LargeInstanceCollection GetLargeInstances(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -90,34 +93,15 @@ namespace Azure.ResourceManager.LargeInstance
         /// <summary>
         /// Gets an Azure Large Instance for the specified subscription, resource group,
         /// and instance name.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureLargeInstance_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-20-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LargeInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableLargeInstanceResourceGroupResource.GetLargeInstanceAsync(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableLargeInstanceResourceGroupResource.GetLargeInstanceAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="azureLargeInstanceName"> Name of the AzureLargeInstance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="azureLargeInstanceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="azureLargeInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<LargeInstanceResource>> GetLargeInstanceAsync(this ResourceGroupResource resourceGroupResource, string azureLargeInstanceName, CancellationToken cancellationToken = default)
         {
@@ -129,34 +113,15 @@ namespace Azure.ResourceManager.LargeInstance
         /// <summary>
         /// Gets an Azure Large Instance for the specified subscription, resource group,
         /// and instance name.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureLargeInstance_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-20-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LargeInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableLargeInstanceResourceGroupResource.GetLargeInstance(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableLargeInstanceResourceGroupResource.GetLargeInstance(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="azureLargeInstanceName"> Name of the AzureLargeInstance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="azureLargeInstanceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="azureLargeInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<LargeInstanceResource> GetLargeInstance(this ResourceGroupResource resourceGroupResource, string azureLargeInstanceName, CancellationToken cancellationToken = default)
         {
@@ -166,15 +131,15 @@ namespace Azure.ResourceManager.LargeInstance
         }
 
         /// <summary>
-        /// Gets a collection of LargeStorageInstanceResources in the ResourceGroupResource.
+        /// Gets a collection of LargeStorageInstances in the <see cref="ResourceGroupResource"/>
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableLargeInstanceResourceGroupResource.GetLargeStorageInstances()"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableLargeInstanceResourceGroupResource.GetLargeStorageInstances()"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of LargeStorageInstanceResources and their operations over a LargeStorageInstanceResource. </returns>
+        /// <returns> An object representing collection of LargeStorageInstances and their operations over a LargeStorageInstanceResource. </returns>
         public static LargeStorageInstanceCollection GetLargeStorageInstances(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -185,34 +150,15 @@ namespace Azure.ResourceManager.LargeInstance
         /// <summary>
         /// Gets an Azure Large Storage instance for the specified subscription, resource
         /// group, and instance name.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeStorageInstances/{azureLargeStorageInstanceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureLargeStorageInstance_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-20-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LargeStorageInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableLargeInstanceResourceGroupResource.GetLargeStorageInstanceAsync(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableLargeInstanceResourceGroupResource.GetLargeStorageInstanceAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="azureLargeStorageInstanceName"> Name of the AzureLargeStorageInstance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="azureLargeStorageInstanceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="azureLargeStorageInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<LargeStorageInstanceResource>> GetLargeStorageInstanceAsync(this ResourceGroupResource resourceGroupResource, string azureLargeStorageInstanceName, CancellationToken cancellationToken = default)
         {
@@ -224,34 +170,15 @@ namespace Azure.ResourceManager.LargeInstance
         /// <summary>
         /// Gets an Azure Large Storage instance for the specified subscription, resource
         /// group, and instance name.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeStorageInstances/{azureLargeStorageInstanceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureLargeStorageInstance_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-20-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LargeStorageInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableLargeInstanceResourceGroupResource.GetLargeStorageInstance(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableLargeInstanceResourceGroupResource.GetLargeStorageInstance(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="azureLargeStorageInstanceName"> Name of the AzureLargeStorageInstance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="azureLargeStorageInstanceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="azureLargeStorageInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<LargeStorageInstanceResource> GetLargeStorageInstance(this ResourceGroupResource resourceGroupResource, string azureLargeStorageInstanceName, CancellationToken cancellationToken = default)
         {
@@ -263,33 +190,15 @@ namespace Azure.ResourceManager.LargeInstance
         /// <summary>
         /// Gets a list of Azure Large Instances in the specified subscription. The
         /// operations returns various properties of each Azure Large Instance.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureLargeInstance/azureLargeInstances</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureLargeInstance_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-20-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LargeInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableLargeInstanceSubscriptionResource.GetLargeInstances(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableLargeInstanceSubscriptionResource.GetLargeInstancesAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="LargeInstanceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LargeInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LargeInstanceResource> GetLargeInstancesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -300,30 +209,12 @@ namespace Azure.ResourceManager.LargeInstance
         /// <summary>
         /// Gets a list of Azure Large Instances in the specified subscription. The
         /// operations returns various properties of each Azure Large Instance.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureLargeInstance/azureLargeInstances</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureLargeInstance_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-20-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LargeInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableLargeInstanceSubscriptionResource.GetLargeInstances(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableLargeInstanceSubscriptionResource.GetLargeInstances(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="LargeInstanceResource"/> that may take multiple service requests to iterate over. </returns>
@@ -337,33 +228,15 @@ namespace Azure.ResourceManager.LargeInstance
         /// <summary>
         /// Gets a list of AzureLargeStorageInstances in the specified subscription. The
         /// operations returns various properties of each Azure LargeStorage instance.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureLargeInstance/azureLargeStorageInstances</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureLargeStorageInstance_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-20-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LargeStorageInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableLargeInstanceSubscriptionResource.GetLargeStorageInstances(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableLargeInstanceSubscriptionResource.GetLargeStorageInstancesAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="LargeStorageInstanceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LargeStorageInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LargeStorageInstanceResource> GetLargeStorageInstancesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -374,30 +247,12 @@ namespace Azure.ResourceManager.LargeInstance
         /// <summary>
         /// Gets a list of AzureLargeStorageInstances in the specified subscription. The
         /// operations returns various properties of each Azure LargeStorage instance.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureLargeInstance/azureLargeStorageInstances</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureLargeStorageInstance_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-20-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LargeStorageInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableLargeInstanceSubscriptionResource.GetLargeStorageInstances(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableLargeInstanceSubscriptionResource.GetLargeStorageInstances(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="LargeStorageInstanceResource"/> that may take multiple service requests to iterate over. </returns>

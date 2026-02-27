@@ -34,7 +34,6 @@ namespace Azure.ResourceManager.Quota
         /// <param name="filter">
         /// | Field | Supported operators
         /// |---------------------|------------------------
-        /// 
         /// location eq {location}
         /// Example: $filter=location eq eastus
         /// </param>
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.Quota
                     yield break;
                 }
                 QuotaAllocationRequestStatusList result = QuotaAllocationRequestStatusList.FromResponse(response);
-                yield return Page<QuotaAllocationRequestStatusData>.FromValues((IReadOnlyList<QuotaAllocationRequestStatusData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<QuotaAllocationRequestStatusData>.FromValues((IReadOnlyList<QuotaAllocationRequestStatusData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

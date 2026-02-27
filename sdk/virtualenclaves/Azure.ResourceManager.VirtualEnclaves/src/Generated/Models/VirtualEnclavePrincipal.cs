@@ -7,74 +7,42 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.VirtualEnclaves;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
     /// <summary> Principal for maintenance mode or role assignments. </summary>
     public partial class VirtualEnclavePrincipal
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclavePrincipal"/>. </summary>
         /// <param name="id"> The object id associated with the principal. </param>
         /// <param name="type"> The type of the object id. We currently allow users, groups, and service principals. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public VirtualEnclavePrincipal(string id, VirtualEnclavePrincipalType type)
+        public VirtualEnclavePrincipal(string id, VirtualEnclavePrincipalType @type)
         {
             Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
-            Type = type;
+            Type = @type;
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclavePrincipal"/>. </summary>
         /// <param name="id"> The object id associated with the principal. </param>
         /// <param name="type"> The type of the object id. We currently allow users, groups, and service principals. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclavePrincipal(string id, VirtualEnclavePrincipalType type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualEnclavePrincipal(string id, VirtualEnclavePrincipalType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            Type = type;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VirtualEnclavePrincipal"/> for deserialization. </summary>
-        internal VirtualEnclavePrincipal()
-        {
+            Type = @type;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The object id associated with the principal. </summary>
         public string Id { get; set; }
+
         /// <summary> The type of the object id. We currently allow users, groups, and service principals. </summary>
         public VirtualEnclavePrincipalType Type { get; set; }
     }

@@ -17,7 +17,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         /// <summary>
         /// The configuration section name that resolves to an identity-based connection or a connection string of the service.
         /// </summary>
-        public string Connection { get; set; } = Constants.WebPubSubConnectionStringName;
+        public string Connection { get; set; }
 
         /// <summary>
         /// Target hub name.

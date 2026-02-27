@@ -4,6 +4,7 @@
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Utilities;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -34,6 +35,9 @@ namespace Azure.Generator.Management
 
         private WirePathAttributeDefinition? _wirePathAttributeProvider;
         internal TypeProvider WirePathAttributeDefinition => _wirePathAttributeProvider ??= new WirePathAttributeDefinition();
+
+        private CSharpType? _modelReaderWriterContextType;
+        internal CSharpType ModelReaderWriterContextType => _modelReaderWriterContextType ??= new ModelReaderWriterContextDefinition().Type;
 
         // TODO -- this is really a bad practice that this map is not built in one place, but we are building it while generating stuff and in the meantime we might read it.
         // but currently this is the best we could do right now.
@@ -138,7 +142,13 @@ namespace Azure.Generator.Management
                 resourceDict,
                 resourceMethodCategories,
                 ManagementClientGenerator.Instance.InputLibrary.NonResourceMethods);
-            var mockableArmClientResource = MockableArmClientProvider.TryCreate(_resources);
+
+            // Extract extension non-resource methods for MockableArmClientProvider
+            var extensionNonResourceMethods = resourcesAndMethodsPerScope.TryGetValue(ResourceScope.Extension, out var extensionScope)
+                ? extensionScope.NonResourceMethods
+                : [];
+
+            var mockableArmClientResource = MockableArmClientProvider.TryCreate(_resources, extensionNonResourceMethods);
             var mockableResources = new Dictionary<ResourceScope, MockableResourceProvider>(resourcesAndMethodsPerScope.Count);
             foreach (var (scope, (resourcesInScope, resourceMethods, nonResourceMethods)) in resourcesAndMethodsPerScope)
             {
@@ -312,6 +322,9 @@ namespace Azure.Generator.Management
             }
             ManagementClientGenerator.Instance.AddTypeToKeep(ExtensionProvider.Name);
 
+            // Extract array response collection results from all methods
+            var arrayResponseCollectionResults = ExtractArrayResponseCollectionResults();
+
             return [
                 .. base.BuildTypeProviders().Where(t => t is not InheritableSystemObjectModelProvider),
                 WirePathAttributeDefinition,
@@ -325,7 +338,45 @@ namespace Azure.Generator.Management
                 ExtensionProvider,
                 PageableWrapper,
                 AsyncPageableWrapper,
+                .. arrayResponseCollectionResults,
                 .. ResourceProviders.SelectMany(r => r.SerializationProviders)];
+        }
+
+        private List<ArrayResponseCollectionResultDefinition> ExtractArrayResponseCollectionResults()
+        {
+            var collectionResults = new List<ArrayResponseCollectionResultDefinition>();
+
+            // Check all resource providers
+            foreach (var resource in ResourceProviders)
+            {
+                ExtractCollectionResultsFromMethods(resource.Methods, collectionResults);
+            }
+
+            // Check all resource collection providers
+            foreach (var collection in ResourceCollectionProviders)
+            {
+                ExtractCollectionResultsFromMethods(collection.Methods, collectionResults);
+            }
+
+            // Check all mockable resource providers
+            foreach (var mockableResource in MockableResourceProviders)
+            {
+                ExtractCollectionResultsFromMethods(mockableResource.Methods, collectionResults);
+            }
+
+            return collectionResults;
+        }
+
+        private void ExtractCollectionResultsFromMethods(IReadOnlyList<MethodProvider> methods, List<ArrayResponseCollectionResultDefinition> collectionResults)
+        {
+            foreach (var method in methods)
+            {
+                // Check if this is an ScmMethodProvider with an ArrayResponseCollectionResultDefinition
+                if (method is ScmMethodProvider { CollectionDefinition: ArrayResponseCollectionResultDefinition arrayCollectionResult })
+                {
+                    collectionResults.Add(arrayCollectionResult);
+                }
+            }
         }
 
         private Dictionary<CSharpType, OperationSourceProvider> BuildOperationSources()
@@ -363,19 +414,21 @@ namespace Azure.Generator.Management
                         return;
                     }
 
-                    if (!operationSources.ContainsKey(returnCSharpType))
+                    // Find all resource providers that use this data type
+                    var resourceProviders = ResourceProviders.Where(r => r.ResourceData.Type.Equals(returnCSharpType));
+
+                    if (resourceProviders.Any())
                     {
-                        var resourceProvider = ResourceProviders.FirstOrDefault(r => r.ResourceData.Type.Equals(returnCSharpType));
-                        if (resourceProvider is not null)
+                        // For each resource provider, create an OperationSource keyed by the resource type
+                        foreach (var resourceProvider in resourceProviders)
                         {
-                            // This is a resource model - use the resource-based constructor
-                            operationSources.Add(returnCSharpType, new OperationSourceProvider(resourceProvider));
+                            operationSources.TryAdd(resourceProvider.Type, new OperationSourceProvider(resourceProvider));
                         }
-                        else
-                        {
-                            // This is a non-resource model - use the CSharpType-based constructor
-                            operationSources.Add(returnCSharpType, new OperationSourceProvider(returnCSharpType));
-                        }
+                    }
+                    else
+                    {
+                        // This is a non-resource model - use the data type as the key
+                        operationSources.TryAdd(returnCSharpType, new OperationSourceProvider(returnCSharpType));
                     }
                 }
             }
@@ -386,7 +439,20 @@ namespace Azure.Generator.Management
         private IReadOnlyDictionary<CSharpType, ResourceClientProvider>? _resourceDataTypes;
         internal bool TryGetResourceClientProvider(CSharpType resourceDataType, [MaybeNullWhen(false)] out ResourceClientProvider resourceClientProvider)
         {
-            _resourceDataTypes ??= ResourceProviders.ToDictionary(r => r.ResourceData.Type, r => r);
+            if (_resourceDataTypes == null)
+            {
+                // Build dictionary, handling cases where multiple resources share the same data type
+                var dict = new Dictionary<CSharpType, ResourceClientProvider>();
+                foreach (var provider in ResourceProviders)
+                {
+                    // If the key already exists (multiple resources sharing same model), keep the first one
+                    if (!dict.ContainsKey(provider.ResourceData.Type))
+                    {
+                        dict[provider.ResourceData.Type] = provider;
+                    }
+                }
+                _resourceDataTypes = dict;
+            }
             return _resourceDataTypes.TryGetValue(resourceDataType, out resourceClientProvider);
         }
 

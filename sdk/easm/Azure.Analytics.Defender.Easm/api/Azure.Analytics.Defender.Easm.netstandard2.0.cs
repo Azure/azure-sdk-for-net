@@ -125,9 +125,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.AssetChainSource ASSET { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.AssetChainSource DISCOGROUP { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.AssetChainSource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.AssetChainSource left, Azure.Analytics.Defender.Easm.AssetChainSource right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.AssetChainSource (string value) { throw null; }
@@ -167,9 +165,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.AssetKind Page { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.AssetKind SslCert { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.AssetKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.AssetKind left, Azure.Analytics.Defender.Easm.AssetKind right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.AssetKind (string value) { throw null; }
@@ -232,9 +228,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.AssetResponseType Reduced { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.AssetResponseType Standard { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.AssetResponseType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.AssetResponseType left, Azure.Analytics.Defender.Easm.AssetResponseType right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.AssetResponseType (string value) { throw null; }
@@ -317,9 +311,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.AssetState Confirmed { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.AssetState Dismissed { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.AssetState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.AssetState left, Azure.Analytics.Defender.Easm.AssetState right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.AssetState (string value) { throw null; }
@@ -382,9 +374,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.AssetUpdateState Confirmed { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.AssetUpdateState Dismissed { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.AssetUpdateState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.AssetUpdateState left, Azure.Analytics.Defender.Easm.AssetUpdateState right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.AssetUpdateState (string value) { throw null; }
@@ -407,9 +397,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.AssetUpdateTransfers Page { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.AssetUpdateTransfers SslCert { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.AssetUpdateTransfers other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.AssetUpdateTransfers left, Azure.Analytics.Defender.Easm.AssetUpdateTransfers right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.AssetUpdateTransfers (string value) { throw null; }
@@ -470,9 +458,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.AuditTrailItemKind Page { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.AuditTrailItemKind SslCert { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.AuditTrailItemKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.AuditTrailItemKind left, Azure.Analytics.Defender.Easm.AuditTrailItemKind right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.AuditTrailItemKind (string value) { throw null; }
@@ -727,9 +713,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.DataConnectionContent Assets { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.DataConnectionContent AttackSurfaceInsights { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.DataConnectionContent other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.DataConnectionContent left, Azure.Analytics.Defender.Easm.DataConnectionContent right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.DataConnectionContent (string value) { throw null; }
@@ -747,9 +731,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.DataConnectionFrequency Monthly { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.DataConnectionFrequency Weekly { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.DataConnectionFrequency other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.DataConnectionFrequency left, Azure.Analytics.Defender.Easm.DataConnectionFrequency right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.DataConnectionFrequency (string value) { throw null; }
@@ -837,13 +819,13 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.DomainAsset DomainAsset(string domain = null, long? whoisId = default(long?), System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedInteger> registrarIanaIds = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedString> registrantContacts = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedString> registrantOrgs = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedString> adminContacts = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedString> technicalContacts = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.AlexaInfo> alexaInfos = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedString> nameServers = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedString> mailServers = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedString> whoisServers = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedString> domainStatuses = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedLong> registrarCreatedAt = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedLong> registrarUpdatedAt = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedLong> registrarExpiresAt = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.SoaRecord> soaRecords = null, System.DateTimeOffset? detailedFromWhoisAt = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedString> registrarNames = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.SourceDetails> sources = null, System.DateTimeOffset? firstSeen = default(System.DateTimeOffset?), System.DateTimeOffset? lastSeen = default(System.DateTimeOffset?), long? count = default(long?), System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedBoolean> parkedDomain = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedString> registrantNames = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedString> adminNames = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedString> technicalNames = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedString> adminOrgs = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedString> technicalOrgs = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedString> registrantPhones = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedString> adminPhones = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedString> technicalPhones = null) { throw null; }
         public static Azure.Analytics.Defender.Easm.DomainAssetResource DomainAssetResource(string id = null, string name = null, string displayName = null, System.Guid? uuid = default(System.Guid?), System.DateTimeOffset? createdDate = default(System.DateTimeOffset?), System.DateTimeOffset? updatedDate = default(System.DateTimeOffset?), Azure.Analytics.Defender.Easm.AssetState? state = default(Azure.Analytics.Defender.Easm.AssetState?), string externalId = null, System.Collections.Generic.IEnumerable<string> labels = null, bool? wildcard = default(bool?), string discoGroupName = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.AuditTrailItem> auditTrail = null, string reason = null, Azure.Analytics.Defender.Easm.DomainAsset asset = null) { throw null; }
         public static Azure.Analytics.Defender.Easm.EasmPolicy EasmPolicy(string id = null, string name = null, string displayName = null, string description = null, string filterName = null, Azure.Analytics.Defender.Easm.PolicyAction action = default(Azure.Analytics.Defender.Easm.PolicyAction), long? updatedAssetsCount = default(long?), string user = null, System.DateTimeOffset? createdDate = default(System.DateTimeOffset?), System.DateTimeOffset? updatedDate = default(System.DateTimeOffset?), Azure.Analytics.Defender.Easm.ActionParametersContent actionParameters = null) { throw null; }
-        public static Azure.Analytics.Defender.Easm.ErrorDetail ErrorDetail(string code = null, string message = null, string target = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ErrorDetail> details = null, Azure.Analytics.Defender.Easm.InnerError1 innererror = null) { throw null; }
+        public static Azure.Analytics.Defender.Easm.ErrorDetail ErrorDetail(string code = null, string message = null, string target = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ErrorDetail> details = null, Azure.Analytics.Defender.Easm.InnerError innererror = null) { throw null; }
         public static Azure.Analytics.Defender.Easm.ErrorResponse ErrorResponse(Azure.ResponseError error = null, string errorCode = null) { throw null; }
         public static Azure.Analytics.Defender.Easm.GuidPair GuidPair(string pageGuid = null, string crawlStateGuid = null, System.DateTimeOffset? loadDate = default(System.DateTimeOffset?), bool? recent = default(bool?)) { throw null; }
         public static Azure.Analytics.Defender.Easm.HostAsset HostAsset(string host = null, string domain = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedString> ipAddresses = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.WebComponent> webComponents = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedHeader> headers = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.AttributeDetails> attributes = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.CookieDetails> cookies = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.SslCertAsset> sslCerts = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedString> parentHosts = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedString> childHosts = null, Azure.Analytics.Defender.Easm.HostCore hostCore = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.AssetService> services = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedString> cnames = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.SourceDetails> sources = null, System.DateTimeOffset? firstSeen = default(System.DateTimeOffset?), System.DateTimeOffset? lastSeen = default(System.DateTimeOffset?), long? count = default(long?), System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ResourceUri> resourceUrls = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ScanMetadata> scanMetadata = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedLong> asns = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.IpBlock> ipBlocks = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedString> responseBodies = null, Azure.Analytics.Defender.Easm.DomainAsset domainAsset = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedBoolean> nsRecord = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedBoolean> mxRecord = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedBoolean> webserver = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedLocation> location = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedBoolean> nxdomain = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.SslServerConfig> sslServerConfig = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedBoolean> isWildcard = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.BannerDetails> banners = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedBoolean> ipv4 = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedBoolean> ipv6 = null) { throw null; }
         public static Azure.Analytics.Defender.Easm.HostAssetResource HostAssetResource(string id = null, string name = null, string displayName = null, System.Guid? uuid = default(System.Guid?), System.DateTimeOffset? createdDate = default(System.DateTimeOffset?), System.DateTimeOffset? updatedDate = default(System.DateTimeOffset?), Azure.Analytics.Defender.Easm.AssetState? state = default(Azure.Analytics.Defender.Easm.AssetState?), string externalId = null, System.Collections.Generic.IEnumerable<string> labels = null, bool? wildcard = default(bool?), string discoGroupName = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.AuditTrailItem> auditTrail = null, string reason = null, Azure.Analytics.Defender.Easm.HostAsset asset = null) { throw null; }
         public static Azure.Analytics.Defender.Easm.HostCore HostCore(string host = null, string domain = null, System.DateTimeOffset? firstSeen = default(System.DateTimeOffset?), System.DateTimeOffset? lastSeen = default(System.DateTimeOffset?), long? count = default(long?), System.DateTimeOffset? blacklistCauseFirstSeen = default(System.DateTimeOffset?), System.DateTimeOffset? blacklistCauseLastSeen = default(System.DateTimeOffset?), long? blacklistCauseCount = default(long?), System.DateTimeOffset? blacklistResourceFirstSeen = default(System.DateTimeOffset?), System.DateTimeOffset? blacklistResourceLastSeen = default(System.DateTimeOffset?), long? blacklistResourceCount = default(long?), System.DateTimeOffset? blacklistSequenceFirstSeen = default(System.DateTimeOffset?), System.DateTimeOffset? blacklistSequenceLastSeen = default(System.DateTimeOffset?), long? blacklistSequenceCount = default(long?), long? phishCauseCount = default(long?), long? malwareCauseCount = default(long?), long? spamCauseCount = default(long?), long? scamCauseCount = default(long?), long? phishResourceCount = default(long?), long? malwareResourceCount = default(long?), long? spamResourceCount = default(long?), long? scamResourceCount = default(long?), long? phishSequenceCount = default(long?), long? malwareSequenceCount = default(long?), long? spamSequenceCount = default(long?), long? scamSequenceCount = default(long?), int? alexaRank = default(int?), int? hostReputationScore = default(int?), int? hostPhishReputationScore = default(int?), int? hostMalwareReputationScore = default(int?), int? hostSpamReputationScore = default(int?), int? hostScamReputationScore = default(int?), int? domainReputationScore = default(int?), int? domainPhishReputationScore = default(int?), int? domainMalwareReputationScore = default(int?), int? domainSpamReputationScore = default(int?), int? domainScamReputationScore = default(int?), string uuid = null) { throw null; }
-        public static Azure.Analytics.Defender.Easm.InnerError1 InnerError1(string code = null, System.BinaryData value = null) { throw null; }
+        public static Azure.Analytics.Defender.Easm.InnerError InnerError(string code = null, System.BinaryData value = null) { throw null; }
         public static Azure.Analytics.Defender.Easm.InventoryAsset InventoryAsset() { throw null; }
         public static Azure.Analytics.Defender.Easm.IpAddressAsset IpAddressAsset(string ipAddress = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedLong> asns = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ReputationDetails> reputations = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.WebComponent> webComponents = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedString> netRanges = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedHeader> headers = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.AttributeDetails> attributes = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.CookieDetails> cookies = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.SslCertAsset> sslCerts = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.AssetService> services = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.IpBlock> ipBlocks = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.SourceDetails> sources = null, System.DateTimeOffset? firstSeen = default(System.DateTimeOffset?), System.DateTimeOffset? lastSeen = default(System.DateTimeOffset?), long? count = default(long?), System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.BannerDetails> banners = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ScanMetadata> scanMetadata = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedBoolean> nsRecord = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedBoolean> mxRecord = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedLocation> location = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedString> hosts = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedBoolean> nxdomain = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.SslServerConfig> sslServerConfig = null, bool? ipv4 = default(bool?), bool? ipv6 = default(bool?)) { throw null; }
         public static Azure.Analytics.Defender.Easm.IpAddressAssetResource IpAddressAssetResource(string id = null, string name = null, string displayName = null, System.Guid? uuid = default(System.Guid?), System.DateTimeOffset? createdDate = default(System.DateTimeOffset?), System.DateTimeOffset? updatedDate = default(System.DateTimeOffset?), Azure.Analytics.Defender.Easm.AssetState? state = default(Azure.Analytics.Defender.Easm.AssetState?), string externalId = null, System.Collections.Generic.IEnumerable<string> labels = null, bool? wildcard = default(bool?), string discoGroupName = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.AuditTrailItem> auditTrail = null, string reason = null, Azure.Analytics.Defender.Easm.IpAddressAsset asset = null) { throw null; }
@@ -935,9 +917,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.DeltaDetailType Added { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.DeltaDetailType Removed { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.DeltaDetailType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.DeltaDetailType left, Azure.Analytics.Defender.Easm.DeltaDetailType right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.DeltaDetailType (string value) { throw null; }
@@ -1078,9 +1058,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.DiscoRunState Pending { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.DiscoRunState Running { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.DiscoRunState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.DiscoRunState left, Azure.Analytics.Defender.Easm.DiscoRunState right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.DiscoRunState (string value) { throw null; }
@@ -1202,9 +1180,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.DiscoverySourceKind Host { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.DiscoverySourceKind IpBlock { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.DiscoverySourceKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.DiscoverySourceKind left, Azure.Analytics.Defender.Easm.DiscoverySourceKind right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.DiscoverySourceKind (string value) { throw null; }
@@ -1352,10 +1328,10 @@ namespace Azure.Analytics.Defender.Easm
         public virtual Azure.Response<Azure.Analytics.Defender.Easm.AssetResource> GetAssetResource(string assetId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetAssetResourceAsync(string assetId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.AssetResource>> GetAssetResourceAsync(string assetId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Analytics.Defender.Easm.AssetResource> GetAssetResources(string filter = null, string orderby = null, int? skip = default(int?), int? maxpagesize = default(int?), string mark = null, Azure.Analytics.Defender.Easm.AssetResponseType? responseType = default(Azure.Analytics.Defender.Easm.AssetResponseType?), System.Collections.Generic.IEnumerable<string> responseIncludes = null, bool? recentOnly = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetAssetResources(string filter, string orderby, int? skip, int? maxpagesize, string mark, string responseType, System.Collections.Generic.IEnumerable<string> responseIncludes, bool? recentOnly, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Analytics.Defender.Easm.AssetResource> GetAssetResourcesAsync(string filter = null, string orderby = null, int? skip = default(int?), int? maxpagesize = default(int?), string mark = null, Azure.Analytics.Defender.Easm.AssetResponseType? responseType = default(Azure.Analytics.Defender.Easm.AssetResponseType?), System.Collections.Generic.IEnumerable<string> responseIncludes = null, bool? recentOnly = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetAssetResourcesAsync(string filter, string orderby, int? skip, int? maxpagesize, string mark, string responseType, System.Collections.Generic.IEnumerable<string> responseIncludes, bool? recentOnly, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Analytics.Defender.Easm.AssetResource> GetAssetResources(string filter = null, string orderby = null, int? skip = default(int?), int? maxPageSize = default(int?), string mark = null, Azure.Analytics.Defender.Easm.AssetResponseType? responseType = default(Azure.Analytics.Defender.Easm.AssetResponseType?), System.Collections.Generic.IEnumerable<string> responseIncludes = null, bool? recentOnly = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetAssetResources(string filter, string orderby, int? skip, int? maxPageSize, string mark, string responseType, System.Collections.Generic.IEnumerable<string> responseIncludes, bool? recentOnly, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Analytics.Defender.Easm.AssetResource> GetAssetResourcesAsync(string filter = null, string orderby = null, int? skip = default(int?), int? maxPageSize = default(int?), string mark = null, Azure.Analytics.Defender.Easm.AssetResponseType? responseType = default(Azure.Analytics.Defender.Easm.AssetResponseType?), System.Collections.Generic.IEnumerable<string> responseIncludes = null, bool? recentOnly = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetAssetResourcesAsync(string filter, string orderby, int? skip, int? maxPageSize, string mark, string responseType, System.Collections.Generic.IEnumerable<string> responseIncludes, bool? recentOnly, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Analytics.Defender.Easm.TaskResource> GetAssetsExport(Azure.Analytics.Defender.Easm.AssetsExportRequestContent body, string filter = null, string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetAssetsExport(Azure.Core.RequestContent content, string filter = null, string orderby = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.TaskResource>> GetAssetsExportAsync(Azure.Analytics.Defender.Easm.AssetsExportRequestContent body, string filter = null, string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1376,10 +1352,10 @@ namespace Azure.Analytics.Defender.Easm
         public virtual Azure.Response<Azure.Analytics.Defender.Easm.DataConnection> GetDataConnection(string dataConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetDataConnectionAsync(string dataConnectionName, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.DataConnection>> GetDataConnectionAsync(string dataConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetDataConnections(int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.Analytics.Defender.Easm.DataConnection> GetDataConnections(int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetDataConnectionsAsync(int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Analytics.Defender.Easm.DataConnection> GetDataConnectionsAsync(int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetDataConnections(int? skip, int? maxPageSize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Analytics.Defender.Easm.DataConnection> GetDataConnections(int? skip = default(int?), int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetDataConnectionsAsync(int? skip, int? maxPageSize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Analytics.Defender.Easm.DataConnection> GetDataConnectionsAsync(int? skip = default(int?), int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Analytics.Defender.Easm.DeltaResult> GetDeltaDetails(Azure.Analytics.Defender.Easm.DeltaDetailsRequestContent body, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetDeltaDetails(Azure.Core.RequestContent content, int? skip = default(int?), int? maxpagesize = default(int?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Analytics.Defender.Easm.DeltaResult> GetDeltaDetailsAsync(Azure.Analytics.Defender.Easm.DeltaDetailsRequestContent body, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1392,30 +1368,30 @@ namespace Azure.Analytics.Defender.Easm
         public virtual Azure.Response<Azure.Analytics.Defender.Easm.DiscoveryGroup> GetDiscoveryGroup(string groupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetDiscoveryGroupAsync(string groupName, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.DiscoveryGroup>> GetDiscoveryGroupAsync(string groupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetDiscoveryGroupRuns(string groupName, string filter, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.Analytics.Defender.Easm.DiscoveryRunResult> GetDiscoveryGroupRuns(string groupName, string filter = null, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetDiscoveryGroupRunsAsync(string groupName, string filter, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Analytics.Defender.Easm.DiscoveryRunResult> GetDiscoveryGroupRunsAsync(string groupName, string filter = null, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetDiscoveryGroups(string filter, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.Analytics.Defender.Easm.DiscoveryGroup> GetDiscoveryGroups(string filter = null, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetDiscoveryGroupsAsync(string filter, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Analytics.Defender.Easm.DiscoveryGroup> GetDiscoveryGroupsAsync(string filter = null, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetDiscoveryGroupRuns(string groupName, string filter, int? skip, int? maxPageSize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Analytics.Defender.Easm.DiscoveryRunResult> GetDiscoveryGroupRuns(string groupName, string filter = null, int? skip = default(int?), int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetDiscoveryGroupRunsAsync(string groupName, string filter, int? skip, int? maxPageSize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Analytics.Defender.Easm.DiscoveryRunResult> GetDiscoveryGroupRunsAsync(string groupName, string filter = null, int? skip = default(int?), int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetDiscoveryGroups(string filter, int? skip, int? maxPageSize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Analytics.Defender.Easm.DiscoveryGroup> GetDiscoveryGroups(string filter = null, int? skip = default(int?), int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetDiscoveryGroupsAsync(string filter, int? skip, int? maxPageSize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Analytics.Defender.Easm.DiscoveryGroup> GetDiscoveryGroupsAsync(string filter = null, int? skip = default(int?), int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetDiscoveryTemplate(string templateId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Analytics.Defender.Easm.DiscoveryTemplate> GetDiscoveryTemplate(string templateId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetDiscoveryTemplateAsync(string templateId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.DiscoveryTemplate>> GetDiscoveryTemplateAsync(string templateId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetDiscoveryTemplates(string filter, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.Analytics.Defender.Easm.DiscoveryTemplate> GetDiscoveryTemplates(string filter = null, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetDiscoveryTemplatesAsync(string filter, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Analytics.Defender.Easm.DiscoveryTemplate> GetDiscoveryTemplatesAsync(string filter = null, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetDiscoveryTemplates(string filter, int? skip, int? maxPageSize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Analytics.Defender.Easm.DiscoveryTemplate> GetDiscoveryTemplates(string filter = null, int? skip = default(int?), int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetDiscoveryTemplatesAsync(string filter, int? skip, int? maxPageSize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Analytics.Defender.Easm.DiscoveryTemplate> GetDiscoveryTemplatesAsync(string filter = null, int? skip = default(int?), int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetObservations(string assetId, string filter, string orderby, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Analytics.Defender.Easm.ObservationPageResult> GetObservations(string assetId, string filter = null, string orderby = null, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetObservationsAsync(string assetId, string filter, string orderby, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.ObservationPageResult>> GetObservationsAsync(string assetId, string filter = null, string orderby = null, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetPolicies(string filter, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.Analytics.Defender.Easm.EasmPolicy> GetPolicies(string filter = null, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetPoliciesAsync(string filter, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Analytics.Defender.Easm.EasmPolicy> GetPoliciesAsync(string filter = null, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetPolicies(string filter, int? skip, int? maxPageSize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Analytics.Defender.Easm.EasmPolicy> GetPolicies(string filter = null, int? skip = default(int?), int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetPoliciesAsync(string filter, int? skip, int? maxPageSize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Analytics.Defender.Easm.EasmPolicy> GetPoliciesAsync(string filter = null, int? skip = default(int?), int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetPolicy(string policyName, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Analytics.Defender.Easm.EasmPolicy> GetPolicy(string policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetPolicyAsync(string policyName, Azure.RequestContext context) { throw null; }
@@ -1424,10 +1400,10 @@ namespace Azure.Analytics.Defender.Easm
         public virtual Azure.Response<Azure.Analytics.Defender.Easm.SavedFilter> GetSavedFilter(string filterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetSavedFilterAsync(string filterName, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.SavedFilter>> GetSavedFilterAsync(string filterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetSavedFilters(string filter, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.Analytics.Defender.Easm.SavedFilter> GetSavedFilters(string filter = null, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetSavedFiltersAsync(string filter, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Analytics.Defender.Easm.SavedFilter> GetSavedFiltersAsync(string filter = null, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetSavedFilters(string filter, int? skip, int? maxPageSize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Analytics.Defender.Easm.SavedFilter> GetSavedFilters(string filter = null, int? skip = default(int?), int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetSavedFiltersAsync(string filter, int? skip, int? maxPageSize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Analytics.Defender.Easm.SavedFilter> GetSavedFiltersAsync(string filter = null, int? skip = default(int?), int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.Defender.Easm.ReportAssetSnapshotResult> GetSnapshot(Azure.Analytics.Defender.Easm.ReportAssetSnapshotPayload body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetSnapshot(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.ReportAssetSnapshotResult>> GetSnapshotAsync(Azure.Analytics.Defender.Easm.ReportAssetSnapshotPayload body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1444,10 +1420,10 @@ namespace Azure.Analytics.Defender.Easm
         public virtual Azure.Response<Azure.Analytics.Defender.Easm.TaskResource> GetTask(string taskId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetTaskAsync(string taskId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.TaskResource>> GetTaskAsync(string taskId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetTasks(string filter, string orderby, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.Analytics.Defender.Easm.TaskResource> GetTasks(string filter = null, string orderby = null, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetTasksAsync(string filter, string orderby, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Analytics.Defender.Easm.TaskResource> GetTasksAsync(string filter = null, string orderby = null, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetTasks(string filter, string orderby, int? skip, int? maxPageSize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Analytics.Defender.Easm.TaskResource> GetTasks(string filter = null, string orderby = null, int? skip = default(int?), int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetTasksAsync(string filter, string orderby, int? skip, int? maxPageSize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Analytics.Defender.Easm.TaskResource> GetTasksAsync(string filter = null, string orderby = null, int? skip = default(int?), int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response RunDiscoveryGroup(string groupName, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response RunDiscoveryGroup(string groupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RunDiscoveryGroupAsync(string groupName, Azure.RequestContext context) { throw null; }
@@ -1510,7 +1486,7 @@ namespace Azure.Analytics.Defender.Easm
         internal ErrorDetail() { }
         public string Code { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Analytics.Defender.Easm.ErrorDetail> Details { get { throw null; } }
-        public Azure.Analytics.Defender.Easm.InnerError1 Innererror { get { throw null; } }
+        public Azure.Analytics.Defender.Easm.InnerError Innererror { get { throw null; } }
         public string Message { get { throw null; } }
         public string Target { get { throw null; } }
         protected virtual Azure.Analytics.Defender.Easm.ErrorDetail JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1556,9 +1532,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.GlobalAssetType Resource { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.GlobalAssetType SslCert { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.GlobalAssetType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.GlobalAssetType left, Azure.Analytics.Defender.Easm.GlobalAssetType right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.GlobalAssetType (string value) { throw null; }
@@ -1582,9 +1556,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.GlobalInventoryState Confirmed { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.GlobalInventoryState Dismissed { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.GlobalInventoryState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.GlobalInventoryState left, Azure.Analytics.Defender.Easm.GlobalInventoryState right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.GlobalInventoryState (string value) { throw null; }
@@ -1720,20 +1692,20 @@ namespace Azure.Analytics.Defender.Easm
         string System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.HostCore>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.HostCore>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class InnerError1 : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.InnerError1>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.InnerError1>
+    public partial class InnerError : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.InnerError>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.InnerError>
     {
-        internal InnerError1() { }
+        internal InnerError() { }
         public string Code { get { throw null; } }
         public System.BinaryData Value { get { throw null; } }
-        protected virtual Azure.Analytics.Defender.Easm.InnerError1 JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.Analytics.Defender.Easm.InnerError JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.Analytics.Defender.Easm.InnerError1 PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.Analytics.Defender.Easm.InnerError PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.Analytics.Defender.Easm.InnerError1 System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.InnerError1>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.InnerError1>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Analytics.Defender.Easm.InnerError1 System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.InnerError1>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.InnerError1>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.InnerError1>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Analytics.Defender.Easm.InnerError System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.InnerError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.InnerError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Analytics.Defender.Easm.InnerError System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.InnerError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.InnerError>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.InnerError>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class InventoryAsset : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.InventoryAsset>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.InventoryAsset>
     {
@@ -1948,9 +1920,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.ObservationPriority Medium { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.ObservationPriority None { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.ObservationPriority other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.ObservationPriority left, Azure.Analytics.Defender.Easm.ObservationPriority right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.ObservationPriority (string value) { throw null; }
@@ -1983,9 +1953,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.ObservationRemediationSource System { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.ObservationRemediationSource User { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.ObservationRemediationSource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.ObservationRemediationSource left, Azure.Analytics.Defender.Easm.ObservationRemediationSource right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.ObservationRemediationSource (string value) { throw null; }
@@ -2002,9 +1970,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.ObservationRemediationState Active { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.ObservationRemediationState NonApplicable { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.ObservationRemediationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.ObservationRemediationState left, Azure.Analytics.Defender.Easm.ObservationRemediationState right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.ObservationRemediationState (string value) { throw null; }
@@ -2041,9 +2007,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.ObservationType Cve { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.ObservationType Insight { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.ObservationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.ObservationType left, Azure.Analytics.Defender.Easm.ObservationType right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.ObservationType (string value) { throw null; }
@@ -2190,9 +2154,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.ObservedPortStateValue Filtered { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.ObservedPortStateValue Open { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.ObservedPortStateValue other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.ObservedPortStateValue left, Azure.Analytics.Defender.Easm.ObservedPortStateValue right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.ObservedPortStateValue (string value) { throw null; }
@@ -2317,9 +2279,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.PageAssetRedirectType Javascript { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.PageAssetRedirectType MetaRefresh { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.PageAssetRedirectType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.PageAssetRedirectType left, Azure.Analytics.Defender.Easm.PageAssetRedirectType right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.PageAssetRedirectType (string value) { throw null; }
@@ -2373,9 +2333,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.PolicyAction SetExternalID { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.PolicyAction SetState { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.PolicyAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.PolicyAction left, Azure.Analytics.Defender.Easm.PolicyAction right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.PolicyAction (string value) { throw null; }
@@ -2515,9 +2473,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.ReportBillableAssetBreakdownKind Host { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.ReportBillableAssetBreakdownKind IpAddress { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.ReportBillableAssetBreakdownKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.ReportBillableAssetBreakdownKind left, Azure.Analytics.Defender.Easm.ReportBillableAssetBreakdownKind right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.ReportBillableAssetBreakdownKind (string value) { throw null; }
@@ -2756,9 +2712,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.SslCertAssetValidationType ExtendedValidation { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.SslCertAssetValidationType OrganizationValidation { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.SslCertAssetValidationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.SslCertAssetValidationType left, Azure.Analytics.Defender.Easm.SslCertAssetValidationType right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.SslCertAssetValidationType (string value) { throw null; }
@@ -2839,9 +2793,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.TaskResourcePhase Polling { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.TaskResourcePhase Running { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.TaskResourcePhase other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.TaskResourcePhase left, Azure.Analytics.Defender.Easm.TaskResourcePhase right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.TaskResourcePhase (string value) { throw null; }
@@ -2863,9 +2815,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.TaskResourceState Running { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.TaskResourceState Warning { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.TaskResourceState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.TaskResourceState left, Azure.Analytics.Defender.Easm.TaskResourceState right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.TaskResourceState (string value) { throw null; }

@@ -6,7 +6,8 @@
 namespace Azure.Provisioning.PostgreSql;
 
 /// <summary>
-/// A value indicating whether Geo-Redundant backup is enabled on the server.
+/// Indicates if the server is configured to create geographically redundant
+/// backups.
 /// </summary>
 public enum PostgreSqlFlexibleServerGeoRedundantBackupEnum
 {

@@ -42,7 +42,7 @@ public partial class Sample_PersistentAgents_Sharepoint : SamplesBase<AIAgentsTe
            model: modelDeploymentName,
            name: "my-agent",
            instructions: "You are a helpful agent.",
-           tools: [ sharepointTool ]);
+           tools: [sharepointTool]);
         #endregion
         // Create thread for communication
         #region Snippet:AgentsSharepointAsync_CreateThreadMessage

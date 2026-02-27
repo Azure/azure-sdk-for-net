@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
@@ -21,7 +21,6 @@ namespace Azure.Identity.Tests
             yield return null;
         }
 
-        [Test]
         [TestCaseSource(nameof(IdTestValues))]
         public void ValidateAzureTenantIdEnvVarDefaultHonored(string envVarValue)
         {
@@ -39,7 +38,6 @@ namespace Azure.Identity.Tests
             }
         }
 
-        [Test]
         [TestCaseSource(nameof(IdTestValues))]
         public void ValidateAzureUsernameEnvVarDefaultHonored(string envVarValue)
         {
@@ -53,7 +51,6 @@ namespace Azure.Identity.Tests
             }
         }
 
-        [Test]
         [TestCaseSource(nameof(IdTestValues))]
         public void ValidateAzureClientIdEnvVarDefaultHonored(string envVarValue)
         {
@@ -75,7 +72,6 @@ namespace Azure.Identity.Tests
             yield return String.Empty;
             yield return null;
         }
-        [Test]
         [TestCaseSource(nameof(IdListTestValues))]
         public void ValidateAzureAdditionallyAllowedTenantsEnvVarDefaultHonored(string envVarValue)
         {
@@ -197,6 +193,213 @@ namespace Azure.Identity.Tests
                     }
                 }
             }
+        }
+
+        [Test]
+        public void ConstructorWithCredentialSettings_SetsCredentialSource()
+        {
+            var mockSection = new Moq.Mock<IConfigurationSection>();
+            mockSection.Setup(s => s["CredentialSource"]).Returns("AzureCli");
+            mockSection.Setup(s => s["Key"]).Returns((string)null);
+            mockSection.Setup(s => s.GetSection("AdditionalProperties")).Returns(Moq.Mock.Of<IConfigurationSection>());
+
+            var credentialSettings = new CredentialSettings(mockSection.Object);
+            var options = new DefaultAzureCredentialOptions(credentialSettings, mockSection.Object);
+
+            Assert.AreEqual("azureclicredential", options.CredentialSource);
+        }
+
+        [Test]
+        public void ConstructorWithCredentialSettings_SetsApiKey()
+        {
+            var apiKey = "test-api-key-12345";
+            var mockSection = new Moq.Mock<IConfigurationSection>();
+            mockSection.Setup(s => s["CredentialSource"]).Returns("ApiKey");
+            mockSection.Setup(s => s["Key"]).Returns(apiKey);
+            mockSection.Setup(s => s.GetSection("AdditionalProperties")).Returns(Moq.Mock.Of<IConfigurationSection>());
+
+            var credentialSettings = new CredentialSettings(mockSection.Object);
+            var options = new DefaultAzureCredentialOptions(credentialSettings, mockSection.Object);
+
+            Assert.AreEqual(apiKey, options.ApiKey);
+        }
+
+        [Test]
+        public void ConstructorWithCredentialSettings_SetsBothCredentialSourceAndApiKey()
+        {
+            var apiKey = "test-api-key-67890";
+            var mockSection = new Moq.Mock<IConfigurationSection>();
+            mockSection.Setup(s => s["CredentialSource"]).Returns("AzureCli");
+            mockSection.Setup(s => s["Key"]).Returns(apiKey);
+            mockSection.Setup(s => s.GetSection("AdditionalProperties")).Returns(Moq.Mock.Of<IConfigurationSection>());
+
+            var credentialSettings = new CredentialSettings(mockSection.Object);
+            var options = new DefaultAzureCredentialOptions(credentialSettings, mockSection.Object);
+
+            Assert.AreEqual("azureclicredential", options.CredentialSource);
+            Assert.AreEqual(apiKey, options.ApiKey);
+        }
+
+        [Test]
+        public void ConstructorWithCredentialSettings_NullCredentialSourceThrows()
+        {
+            var mockSection = new Moq.Mock<IConfigurationSection>();
+            mockSection.Setup(s => s["CredentialSource"]).Returns((string)null);
+            mockSection.Setup(s => s["Key"]).Returns((string)null);
+            mockSection.Setup(s => s.GetSection("AdditionalProperties")).Returns(Moq.Mock.Of<IConfigurationSection>());
+
+            var credentialSettings = new CredentialSettings(mockSection.Object);
+            var ex = Assert.Throws<InvalidOperationException>(() => new DefaultAzureCredentialOptions(credentialSettings, mockSection.Object));
+            Assert.That(ex.Message, Does.Contain("CredentialSource is required"));
+        }
+
+        [Test]
+        public void ConstructorWithCredentialSettings_UnmappedCredentialSourceThrows()
+        {
+            var credentialSource = "CustomCredential";
+            var mockSection = new Moq.Mock<IConfigurationSection>();
+            mockSection.Setup(s => s["CredentialSource"]).Returns(credentialSource);
+            mockSection.Setup(s => s["Key"]).Returns((string)null);
+            mockSection.Setup(s => s.GetSection("AdditionalProperties")).Returns(Moq.Mock.Of<IConfigurationSection>());
+
+            var credentialSettings = new CredentialSettings(mockSection.Object);
+            var ex = Assert.Throws<InvalidOperationException>(() => new DefaultAzureCredentialOptions(credentialSettings, mockSection.Object));
+            Assert.That(ex.Message, Does.Contain("Unsupported CredentialSource"));
+            Assert.That(ex.Message, Does.Contain(credentialSource));
+        }
+
+        [TestCase("AzureCliCredential", "azureclicredential")]
+        [TestCase("VisualStudioCredential", "visualstudiocredential")]
+        [TestCase("VisualStudioCodeCredential", "visualstudiocodecredential")]
+        [TestCase("AzurePowerShellCredential", "azurepowershellcredential")]
+        [TestCase("AzureDeveloperCliCredential", "azuredeveloperclicredential")]
+        [TestCase("EnvironmentCredential", "environmentcredential")]
+        [TestCase("WorkloadIdentityCredential", "workloadidentitycredential")]
+        [TestCase("ManagedIdentityCredential", "managedidentitycredential")]
+        [TestCase("InteractiveBrowserCredential", "interactivebrowsercredential")]
+        [TestCase("BrokerCredential", "brokercredential")]
+        [TestCase("AzurePipelinesCredential", "azurepipelinescredential")]
+        [TestCase("ManagedIdentityAsFederatedIdentityCredential", "managedidentityasfederatedidentitycredential")]
+        [TestCase("ApiKeyCredential", "apikeycredential")]
+        // Back-compat short names
+        [TestCase("AzureCli", "azureclicredential")]
+        [TestCase("VisualStudio", "visualstudiocredential")]
+        [TestCase("VisualStudioCode", "visualstudiocodecredential")]
+        [TestCase("AzurePowerShell", "azurepowershellcredential")]
+        [TestCase("AzureDeveloperCli", "azuredeveloperclicredential")]
+        [TestCase("Environment", "environmentcredential")]
+        [TestCase("WorkloadIdentity", "workloadidentitycredential")]
+        [TestCase("ManagedIdentity", "managedidentitycredential")]
+        [TestCase("InteractiveBrowser", "interactivebrowsercredential")]
+        [TestCase("Broker", "brokercredential")]
+        [TestCase("AzurePipelines", "azurepipelinescredential")]
+        [TestCase("ManagedIdentityAsFederatedIdentity", "managedidentityasfederatedidentitycredential")]
+        [TestCase("ApiKey", "apikeycredential")]
+        public void CredentialSourceMapping_CorrectlyMapsKnownValues(string input, string expected)
+        {
+            var mockSection = new Moq.Mock<IConfigurationSection>();
+            mockSection.Setup(s => s["CredentialSource"]).Returns(input);
+            mockSection.Setup(s => s["Key"]).Returns((string)null);
+            mockSection.Setup(s => s.GetSection("AdditionalProperties")).Returns(Moq.Mock.Of<IConfigurationSection>());
+
+            var credentialSettings = new CredentialSettings(mockSection.Object);
+            var options = new DefaultAzureCredentialOptions(credentialSettings, mockSection.Object);
+
+            Assert.AreEqual(expected, options.CredentialSource);
+        }
+
+        [Test]
+        public void ConstructorWithCredentialSettings_EmptyStringApiKey()
+        {
+            var mockSection = new Moq.Mock<IConfigurationSection>();
+            mockSection.Setup(s => s["CredentialSource"]).Returns("ApiKey");
+            mockSection.Setup(s => s["Key"]).Returns(string.Empty);
+            mockSection.Setup(s => s.GetSection("AdditionalProperties")).Returns(Moq.Mock.Of<IConfigurationSection>());
+
+            var credentialSettings = new CredentialSettings(mockSection.Object);
+            var options = new DefaultAzureCredentialOptions(credentialSettings, mockSection.Object);
+
+            Assert.AreEqual(string.Empty, options.ApiKey);
+        }
+
+        [Test]
+        public void ConstructorWithCredentialSettings_EmptyStringCredentialSourceThrows()
+        {
+            var mockSection = new Moq.Mock<IConfigurationSection>();
+            mockSection.Setup(s => s["CredentialSource"]).Returns(string.Empty);
+            mockSection.Setup(s => s["Key"]).Returns((string)null);
+            mockSection.Setup(s => s.GetSection("AdditionalProperties")).Returns(Moq.Mock.Of<IConfigurationSection>());
+
+            var credentialSettings = new CredentialSettings(mockSection.Object);
+            var ex = Assert.Throws<InvalidOperationException>(() => new DefaultAzureCredentialOptions(credentialSettings, mockSection.Object));
+            Assert.That(ex.Message, Does.Contain("Unsupported CredentialSource"));
+        }
+
+        [Test]
+        public void ConstructorWithCredentialSettings_DoesNotSetOtherProperties()
+        {
+            var mockSection = new Moq.Mock<IConfigurationSection>();
+            mockSection.Setup(s => s["CredentialSource"]).Returns("AzureCli");
+            mockSection.Setup(s => s["Key"]).Returns("test-key");
+            mockSection.Setup(s => s.GetSection("AdditionalProperties")).Returns(Moq.Mock.Of<IConfigurationSection>());
+
+            var credentialSettings = new CredentialSettings(mockSection.Object);
+            var options = new DefaultAzureCredentialOptions(credentialSettings, mockSection.Object);
+
+            // Verify that other properties are not affected and have their default values
+            Assert.IsFalse(options.ExcludeEnvironmentCredential);
+            Assert.IsFalse(options.ExcludeWorkloadIdentityCredential);
+            Assert.IsFalse(options.ExcludeManagedIdentityCredential);
+            Assert.IsFalse(options.ExcludeAzureDeveloperCliCredential);
+            Assert.IsTrue(options.ExcludeInteractiveBrowserCredential);
+            Assert.IsFalse(options.ExcludeAzureCliCredential);
+            Assert.IsFalse(options.ExcludeVisualStudioCredential);
+            Assert.IsFalse(options.ExcludeVisualStudioCodeCredential);
+            Assert.IsFalse(options.ExcludeAzurePowerShellCredential);
+            Assert.AreEqual(TimeSpan.FromSeconds(30), options.CredentialProcessTimeout);
+        }
+
+        [Test]
+        public void Clone_CopiesCredentialSourceAndApiKey()
+        {
+            var apiKey = "test-api-key-clone";
+            var mockSection = new Moq.Mock<IConfigurationSection>();
+            mockSection.Setup(s => s["CredentialSource"]).Returns("AzureCli");
+            mockSection.Setup(s => s["Key"]).Returns(apiKey);
+            mockSection.Setup(s => s.GetSection("AdditionalProperties")).Returns(Moq.Mock.Of<IConfigurationSection>());
+
+            var credentialSettings = new CredentialSettings(mockSection.Object);
+            var original = new DefaultAzureCredentialOptions(credentialSettings, mockSection.Object);
+            var clone = original.Clone<DefaultAzureCredentialOptions>();
+
+            Assert.AreEqual(original.CredentialSource, clone.CredentialSource);
+            Assert.AreEqual(original.ApiKey, clone.ApiKey);
+            Assert.AreEqual("azureclicredential", clone.CredentialSource);
+            Assert.AreEqual(apiKey, clone.ApiKey);
+        }
+
+        [TestCase(nameof(VisualStudioCredential))]
+        [TestCase(nameof(VisualStudioCodeCredential))]
+        [TestCase(nameof(AzureCliCredential))]
+        [TestCase(nameof(AzurePowerShellCredential))]
+        [TestCase(nameof(AzureDeveloperCliCredential))]
+        [TestCase(nameof(EnvironmentCredential))]
+        [TestCase(nameof(WorkloadIdentityCredential))]
+        [TestCase(nameof(ManagedIdentityCredential))]
+        [TestCase(nameof(InteractiveBrowserCredential))]
+        [TestCase(nameof(BrokerCredential))]
+        [TestCase(nameof(AzurePipelinesCredential))]
+        [TestCase(nameof(Constants.ManagedIdentityAsFederatedIdentityCredential))]
+        [TestCase(nameof(Constants.ApiKeyCredential))]
+        public void CredentialConstant_MatchesNameOfToLowerInvariant(string credentialTypeName)
+        {
+            string expected = credentialTypeName.ToLowerInvariant();
+            string actual = typeof(Constants)
+                .GetField(credentialTypeName, BindingFlags.Public | BindingFlags.Static)
+                ?.GetValue(null) as string;
+
+            Assert.IsNotNull(actual, $"Constants.{credentialTypeName} field not found.");
+            Assert.AreEqual(expected, actual, $"Constants.{credentialTypeName} should equal \"{expected}\" but was \"{actual}\".");
         }
     }
 }

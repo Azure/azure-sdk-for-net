@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableNetworkCloudSubscriptionResource : ArmResource
     {
-		/// <summary>
+        /// <summary>
         /// Get the list of bare metal machine for the subscription
         /// <list type="bullet">
         /// <item>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         public virtual AsyncPageable<NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachinesAsync(CancellationToken cancellationToken)
             => GetNetworkCloudBareMetalMachinesAsync(null, null, cancellationToken);
 
-		/// <summary>
+        /// <summary>
         /// Get the list of bare metal machine for the subscription
         /// <list type="bullet">
         /// <item>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         public virtual Pageable<NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachines(CancellationToken cancellationToken)
             => GetNetworkCloudBareMetalMachines(null, null, cancellationToken);
 
-		/// <summary>
+        /// <summary>
         /// Get the list of bare metal machine for the subscription
         /// <list type="bullet">
         /// <item>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         public virtual AsyncPageable<NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetworksAsync(CancellationToken cancellationToken)
             => GetNetworkCloudCloudServicesNetworksAsync(null, null, cancellationToken);
 
-		/// <summary>
+        /// <summary>
         /// Get the list of bare metal machine for the subscription
         /// <list type="bullet">
         /// <item>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         public virtual Pageable<NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetworks(CancellationToken cancellationToken)
             => GetNetworkCloudCloudServicesNetworks(null, null, cancellationToken);
 
-		/// <summary>
+        /// <summary>
         /// Get the list of bare metal machine for the subscription
         /// <list type="bullet">
         /// <item>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         public virtual AsyncPageable<NetworkCloudClusterManagerResource> GetNetworkCloudClusterManagersAsync(CancellationToken cancellationToken)
             => GetNetworkCloudClusterManagersAsync(null, null, cancellationToken);
 
-		/// <summary>
+        /// <summary>
         /// Get the list of bare metal machine for the subscription
         /// <list type="bullet">
         /// <item>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         public virtual Pageable<NetworkCloudClusterManagerResource> GetNetworkCloudClusterManagers(CancellationToken cancellationToken)
             => GetNetworkCloudClusterManagers(null, null, cancellationToken);
 
-		/// <summary>
+        /// <summary>
         /// Get the list of bare metal machine for the subscription
         /// <list type="bullet">
         /// <item>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         public virtual AsyncPageable<NetworkCloudClusterResource> GetNetworkCloudClustersAsync(CancellationToken cancellationToken)
             => GetNetworkCloudClustersAsync(null, null, cancellationToken);
 
-		/// <summary>
+        /// <summary>
         /// Get the list of bare metal machine for the subscription
         /// <list type="bullet">
         /// <item>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         public virtual Pageable<NetworkCloudClusterResource> GetNetworkCloudClusters(CancellationToken cancellationToken)
             => GetNetworkCloudClusters(null, null, cancellationToken);
 
-		/// <summary>
+        /// <summary>
         /// Get the list of bare metal machine for the subscription
         /// <list type="bullet">
         /// <item>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         public virtual AsyncPageable<NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesClustersAsync(CancellationToken cancellationToken)
             => GetNetworkCloudKubernetesClustersAsync(null, null, cancellationToken);
 
-		/// <summary>
+        /// <summary>
         /// Get the list of bare metal machine for the subscription
         /// <list type="bullet">
         /// <item>
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         public virtual Pageable<NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesClusters(CancellationToken cancellationToken)
             => GetNetworkCloudKubernetesClusters(null, null, cancellationToken);
 
-		/// <summary>
+        /// <summary>
         /// Get the list of bare metal machine for the subscription
         /// <list type="bullet">
         /// <item>
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         public virtual AsyncPageable<NetworkCloudL2NetworkResource> GetNetworkCloudL2NetworksAsync(CancellationToken cancellationToken)
             => GetNetworkCloudL2NetworksAsync(null, null, cancellationToken);
 
-		/// <summary>
+        /// <summary>
         /// Get the list of bare metal machine for the subscription
         /// <list type="bullet">
         /// <item>
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         public virtual Pageable<NetworkCloudL2NetworkResource> GetNetworkCloudL2Networks(CancellationToken cancellationToken)
             => GetNetworkCloudL2Networks(null, null, cancellationToken);
 
-		/// <summary>
+        /// <summary>
         /// Get the list of bare metal machine for the subscription
         /// <list type="bullet">
         /// <item>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         public virtual AsyncPageable<NetworkCloudL3NetworkResource> GetNetworkCloudL3NetworksAsync(CancellationToken cancellationToken)
             => GetNetworkCloudL3NetworksAsync(null, null, cancellationToken);
 
-		/// <summary>
+        /// <summary>
         /// Get the list of bare metal machine for the subscription
         /// <list type="bullet">
         /// <item>
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         public virtual Pageable<NetworkCloudL3NetworkResource> GetNetworkCloudL3Networks(CancellationToken cancellationToken)
             => GetNetworkCloudL3Networks(null, null, cancellationToken);
 
-		/// <summary>
+        /// <summary>
         /// Get the list of bare metal machine for the subscription
         /// <list type="bullet">
         /// <item>
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         public virtual AsyncPageable<NetworkCloudRackResource> GetNetworkCloudRacksAsync(CancellationToken cancellationToken)
             => GetNetworkCloudRacksAsync(null, null, cancellationToken);
 
-		/// <summary>
+        /// <summary>
         /// Get the list of bare metal machine for the subscription
         /// <list type="bullet">
         /// <item>
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         public virtual Pageable<NetworkCloudRackResource> GetNetworkCloudRacks(CancellationToken cancellationToken)
             => GetNetworkCloudRacks(null, null, cancellationToken);
 
-		/// <summary>
+        /// <summary>
         /// Get the list of storage appliance for the subscription
         /// <list type="bullet">
         /// <item>
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         public virtual AsyncPageable<NetworkCloudStorageApplianceResource> GetNetworkCloudStorageAppliancesAsync(CancellationToken cancellationToken)
             => GetNetworkCloudStorageAppliancesAsync(null, null, cancellationToken);
 
-		/// <summary>
+        /// <summary>
         /// Get the list of storage appliance for the subscription
         /// <list type="bullet">
         /// <item>
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         public virtual Pageable<NetworkCloudStorageApplianceResource> GetNetworkCloudStorageAppliances(CancellationToken cancellationToken)
             => GetNetworkCloudStorageAppliances(null, null, cancellationToken);
 
-		/// <summary>
+        /// <summary>
         /// Get the list of trunked networks for the subscription
         /// <list type="bullet">
         /// <item>
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         public virtual AsyncPageable<NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetworksAsync(CancellationToken cancellationToken)
             => GetNetworkCloudTrunkedNetworksAsync(null, null, cancellationToken);
 
-		/// <summary>
+        /// <summary>
         /// Get the list of trunked networks for the subscription
         /// <list type="bullet">
         /// <item>
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         public virtual Pageable<NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetworks(CancellationToken cancellationToken)
             => GetNetworkCloudTrunkedNetworks(null, null, cancellationToken);
 
-		/// <summary>
+        /// <summary>
         /// Get the list of virtual machines for the subscription
         /// <list type="bullet">
         /// <item>
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         public virtual AsyncPageable<NetworkCloudVirtualMachineResource> GetNetworkCloudVirtualMachinesAsync(CancellationToken cancellationToken)
             => GetNetworkCloudVirtualMachinesAsync(null, null, cancellationToken);
 
-		/// <summary>
+        /// <summary>
         /// Get the list of virtual machines for the subscription
         /// <list type="bullet">
         /// <item>
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         public virtual AsyncPageable<NetworkCloudVolumeResource> GetNetworkCloudVolumesAsync(CancellationToken cancellationToken)
             => GetNetworkCloudVolumesAsync(null, null, cancellationToken);
 
-		/// <summary>
+        /// <summary>
         /// Get the list of volumes for the subscription
         /// <list type="bullet">
         /// <item>

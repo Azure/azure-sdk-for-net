@@ -269,7 +269,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await using (var _ = pooledProducer.ConfigureAwait(false))
             {
-            };
+            }
+            ;
 
             GetExpirationCallBack(transportProducerPool).Invoke(null);
 
@@ -433,7 +434,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 client
                     .Setup(client => client.ServiceEndpoint)
-                    .Returns(new Uri($"amgp://{ fullyQualifiedNamespace }.com/{ eventHubName }"));
+                    .Returns(new Uri($"amgp://{fullyQualifiedNamespace}.com/{eventHubName}"));
 
                 return client.Object;
             }

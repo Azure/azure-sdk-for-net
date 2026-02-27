@@ -49,6 +49,18 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         public bool EnableLiveMetrics { get; set; } = true;
 
         /// <summary>
+        /// Gets or sets a value indicating whether standard metrics should be collected.
+        /// Default is true.
+        /// </summary>
+        public bool EnableStandardMetrics { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether performance counters should be collected.
+        /// Default is true.
+        /// </summary>
+        public bool EnablePerfCounters { get; set; } = true;
+
+        /// <summary>
         /// Enables or disables filtering logs based on trace sampling decisions.
         /// </summary>
         /// <remarks>
@@ -61,7 +73,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         /// <summary>
         /// Gets or sets the ratio of telemetry items to be sampled. The value must be between 0.0F and 1.0F, inclusive.
         /// For example, specifying 0.4 means that 40% of traces are sampled and 60% are dropped.
-        /// The default value is 1.0F, indicating that all telemetry items are sampled.
         /// </summary>
         public float SamplingRatio { get; set; } = 1.0F;
 
@@ -70,7 +81,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         /// For example, specifying 0.5 means one request every two seconds.
         /// When both TracesPerSecond and SamplingRatio are specified, TracesPerSecond takes precedence.
         /// </summary>
-        public double? TracesPerSecond { get; set; }
+        public double? TracesPerSecond { get; set; } = 5.0;
 
         /// <summary>
         /// Override the default directory for offline storage.
@@ -96,6 +107,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             exporterOptions.TracesPerSecond = TracesPerSecond;
             exporterOptions.StorageDirectory = StorageDirectory;
             exporterOptions.EnableLiveMetrics = EnableLiveMetrics;
+            exporterOptions.EnableStandardMetrics = EnableStandardMetrics;
+            exporterOptions.EnablePerfCounters = EnablePerfCounters;
             exporterOptions.EnableTraceBasedLogsSampler = EnableTraceBasedLogsSampler;
             if (Transport != null)
             {

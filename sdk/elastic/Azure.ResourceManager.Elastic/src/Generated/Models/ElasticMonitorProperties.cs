@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Elastic.Models
     /// <summary> Properties specific to the monitor resource. </summary>
     public partial class ElasticMonitorProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ElasticMonitorProperties"/>. </summary>
         public ElasticMonitorProperties()
@@ -66,8 +37,8 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="isApiKeyGenerated"> Flag to determine if User API Key has to be generated and shared. </param>
         /// <param name="hostingType"> Hosting type of the monitor resource - either Hosted deployments OR Serverless Projects. </param>
         /// <param name="projectDetails"> Project details of the monitor resource IF it belongs to Serverless offer kind. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticMonitorProperties(ElasticProvisioningState? provisioningState, ElasticMonitoringStatus? monitoringStatus, ElasticCloudProperties elasticProperties, ElasticUserInfo userInfo, ElasticPlanDetails planDetails, string version, string subscriptionState, string saaSAzureSubscriptionStatus, string sourceCampaignName, string sourceCampaignId, ElasticLiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference, bool? isApiKeyGenerated, MonitorResourceHostingType? hostingType, MonitorResourceProjectDetails projectDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticMonitorProperties(ElasticProvisioningState? provisioningState, ElasticMonitoringStatus? monitoringStatus, ElasticCloudProperties elasticProperties, ElasticUserInfo userInfo, ElasticPlanDetails planDetails, string version, string subscriptionState, string saaSAzureSubscriptionStatus, string sourceCampaignName, string sourceCampaignId, ElasticLiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference, bool? isApiKeyGenerated, MonitorResourceHostingType? hostingType, MonitorResourceProjectDetails projectDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             MonitoringStatus = monitoringStatus;
@@ -84,34 +55,48 @@ namespace Azure.ResourceManager.Elastic.Models
             IsApiKeyGenerated = isApiKeyGenerated;
             HostingType = hostingType;
             ProjectDetails = projectDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
         /// <summary> Flag specifying if the resource monitoring is enabled or disabled. </summary>
         public ElasticMonitoringStatus? MonitoringStatus { get; set; }
+
         /// <summary> Elastic cloud properties. </summary>
         public ElasticCloudProperties ElasticProperties { get; set; }
+
         /// <summary> User information. </summary>
         public ElasticUserInfo UserInfo { get; set; }
+
         /// <summary> Plan details of the monitor resource. </summary>
         public ElasticPlanDetails PlanDetails { get; set; }
+
         /// <summary> Version of elastic of the monitor resource. </summary>
         public string Version { get; set; }
+
         /// <summary> State of the Azure Subscription containing the monitor resource. </summary>
         public string SubscriptionState { get; set; }
+
         /// <summary> Status of Azure Subscription where Marketplace SaaS is located. </summary>
         public string SaaSAzureSubscriptionStatus { get; set; }
+
         /// <summary> Name of the marketing campaign. </summary>
         public string SourceCampaignName { get; set; }
+
         /// <summary> A unique identifier associated with the campaign. </summary>
         public string SourceCampaignId { get; set; }
-        /// <summary> Gets the liftr resource category. </summary>
+
+        /// <summary> Gets the LiftrResourceCategory. </summary>
         public ElasticLiftrResourceCategory? LiftrResourceCategory { get; }
+
         /// <summary> The priority of the resource. </summary>
         public int? LiftrResourcePreference { get; }
+
         /// <summary> Flag to determine if User API Key has to be generated and shared. </summary>
         public bool? IsApiKeyGenerated { get; set; }
+
         /// <summary> Hosting type of the monitor resource - either Hosted deployments OR Serverless Projects. </summary>
         public MonitorResourceHostingType? HostingType { get; set; }
+
         /// <summary> Project details of the monitor resource IF it belongs to Serverless offer kind. </summary>
         public MonitorResourceProjectDetails ProjectDetails { get; set; }
     }

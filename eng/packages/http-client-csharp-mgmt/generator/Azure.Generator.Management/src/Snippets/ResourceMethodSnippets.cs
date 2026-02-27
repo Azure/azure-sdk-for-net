@@ -4,6 +4,7 @@
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Generator.Management.Visitors;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -12,6 +13,7 @@ using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Text.Json;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Snippets
@@ -110,13 +112,17 @@ namespace Azure.Generator.Management.Snippets
                 out var resultVariable);
             statements.Add(resultDeclaration);
 
-            // Response<T> response = Response.FromValue((T)result, result);
+            // For enum/extensible enum types: Response<T> response = Response.FromValue(new T(JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions).RootElement.GetString()), result);
+            // For model types: Response<T> response = Response.FromValue(T.FromResponse(result), result);
+            ValueExpression deserializedValue = responseGenericType.IsEnum
+                ? New.Instance(responseGenericType, Static(typeof(JsonDocument)).Invoke(nameof(JsonDocument.Parse), [resultVariable.Property("Content"), Static<ModelSerializationExtensionsDefinition>().Property("JsonDocumentOptions")]).Property(nameof(JsonDocument.RootElement)).Invoke(nameof(JsonElement.GetString)))
+                : Static(responseGenericType).Invoke(SerializationVisitor.FromResponseMethodName, [resultVariable]);
             var responseDeclaration = Declare(
                 "response",
                 new CSharpType(typeof(Response<>), responseGenericType),
                 Static(typeof(Response)).Invoke(
                     nameof(Response.FromValue),
-                    [Static(responseGenericType).Invoke(SerializationVisitor.FromResponseMethodName, [resultVariable]), resultVariable]),
+                    [deserializedValue, resultVariable]),
                 out var responseVar);
             responseVariable = responseVar.As<Response>();
             statements.Add(responseDeclaration);

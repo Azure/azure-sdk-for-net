@@ -186,7 +186,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         public WebPubSubFunctionsOptions() { }
         public string ConnectionString { get { throw null; } set { } }
         public string Hub { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         string Microsoft.Azure.WebJobs.Hosting.IOptionsFormatter.Format() { throw null; }
     }
     public enum WebPubSubTriggerAcceptedClientProtocols

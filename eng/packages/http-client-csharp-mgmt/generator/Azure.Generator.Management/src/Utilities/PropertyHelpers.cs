@@ -113,6 +113,18 @@ namespace Azure.Generator.Management.Utilities
             }
             else if (includeGetterNullCheck == false)
             {
+                // For collection types with a settable internal property, initialize the internal property
+                // to avoid returning null, which would cause NullReferenceException during serialization.
+                if (innerProperty.Type.IsCollection && internalProperty.Body.HasSetter)
+                {
+                    return new List<MethodBodyStatement> {
+                        new IfStatement(checkNullExpression)
+                        {
+                            internalProperty.Assign(New.Instance(innerModel.Type)).Terminate()
+                        },
+                        Return(new MemberExpression(internalProperty, innerProperty.Name))
+                    };
+                }
                 return Return(new TernaryConditionalExpression(checkNullExpression, Default, new MemberExpression(internalProperty, innerProperty.Name)));
             }
             else
@@ -207,6 +219,7 @@ namespace Azure.Generator.Management.Utilities
                 return immediateParentPropertyName;
 
             var parentWords = immediateParentPropertyName.SplitByCamelCase();
+            bool suffixStripped = false;
             if (immediateParentPropertyName.EndsWith("Profile", StringComparison.Ordinal) ||
                 immediateParentPropertyName.EndsWith("Policy", StringComparison.Ordinal) ||
                 immediateParentPropertyName.EndsWith("Configuration", StringComparison.Ordinal) ||
@@ -214,6 +227,7 @@ namespace Azure.Generator.Management.Utilities
                 immediateParentPropertyName.EndsWith("Settings", StringComparison.Ordinal))
             {
                 parentWords = parentWords.Take(parentWords.Count() - 1);
+                suffixStripped = true;
             }
 
             var parentWordArray = parentWords.ToArray();
@@ -236,8 +250,8 @@ namespace Azure.Generator.Management.Utilities
                     }
                 }
 
-                //need to depluralize the last word and check
-                if (i == nameWords.Length - 1 && parentWordsHash.Contains(lastWord.Pluralize()))
+                //need to pluralize or singularize the last word and check
+                if (i == nameWords.Length - 1 && (parentWordsHash.Contains(lastWord.Pluralize()) || (suffixStripped && parentWordsHash.Contains(lastWord.Singularize()))))
                     return innerProperty.Name;
             }
 

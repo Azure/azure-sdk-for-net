@@ -71,9 +71,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static Azure.Media.VideoAnalyzer.Edge.Models.GrpcExtensionDataTransferMode Embedded { get { throw null; } }
         public static Azure.Media.VideoAnalyzer.Edge.Models.GrpcExtensionDataTransferMode SharedMemory { get { throw null; } }
         public bool Equals(Azure.Media.VideoAnalyzer.Edge.Models.GrpcExtensionDataTransferMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Media.VideoAnalyzer.Edge.Models.GrpcExtensionDataTransferMode left, Azure.Media.VideoAnalyzer.Edge.Models.GrpcExtensionDataTransferMode right) { throw null; }
         public static implicit operator Azure.Media.VideoAnalyzer.Edge.Models.GrpcExtensionDataTransferMode (string value) { throw null; }
@@ -97,9 +95,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static Azure.Media.VideoAnalyzer.Edge.Models.H264Profile High { get { throw null; } }
         public static Azure.Media.VideoAnalyzer.Edge.Models.H264Profile Main { get { throw null; } }
         public bool Equals(Azure.Media.VideoAnalyzer.Edge.Models.H264Profile other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Media.VideoAnalyzer.Edge.Models.H264Profile left, Azure.Media.VideoAnalyzer.Edge.Models.H264Profile right) { throw null; }
         public static implicit operator Azure.Media.VideoAnalyzer.Edge.Models.H264Profile (string value) { throw null; }
@@ -156,9 +152,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static Azure.Media.VideoAnalyzer.Edge.Models.ImageFormatRawPixelFormat Rgba { get { throw null; } }
         public static Azure.Media.VideoAnalyzer.Edge.Models.ImageFormatRawPixelFormat Yuv420P { get { throw null; } }
         public bool Equals(Azure.Media.VideoAnalyzer.Edge.Models.ImageFormatRawPixelFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Media.VideoAnalyzer.Edge.Models.ImageFormatRawPixelFormat left, Azure.Media.VideoAnalyzer.Edge.Models.ImageFormatRawPixelFormat right) { throw null; }
         public static implicit operator Azure.Media.VideoAnalyzer.Edge.Models.ImageFormatRawPixelFormat (string value) { throw null; }
@@ -188,9 +182,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static Azure.Media.VideoAnalyzer.Edge.Models.ImageScaleMode PreserveAspectRatio { get { throw null; } }
         public static Azure.Media.VideoAnalyzer.Edge.Models.ImageScaleMode Stretch { get { throw null; } }
         public bool Equals(Azure.Media.VideoAnalyzer.Edge.Models.ImageScaleMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Media.VideoAnalyzer.Edge.Models.ImageScaleMode left, Azure.Media.VideoAnalyzer.Edge.Models.ImageScaleMode right) { throw null; }
         public static implicit operator Azure.Media.VideoAnalyzer.Edge.Models.ImageScaleMode (string value) { throw null; }
@@ -278,9 +270,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static Azure.Media.VideoAnalyzer.Edge.Models.LivePipelineState Deactivating { get { throw null; } }
         public static Azure.Media.VideoAnalyzer.Edge.Models.LivePipelineState Inactive { get { throw null; } }
         public bool Equals(Azure.Media.VideoAnalyzer.Edge.Models.LivePipelineState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Media.VideoAnalyzer.Edge.Models.LivePipelineState left, Azure.Media.VideoAnalyzer.Edge.Models.LivePipelineState right) { throw null; }
         public static implicit operator Azure.Media.VideoAnalyzer.Edge.Models.LivePipelineState (string value) { throw null; }
@@ -328,9 +318,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static Azure.Media.VideoAnalyzer.Edge.Models.MotionDetectionSensitivity Low { get { throw null; } }
         public static Azure.Media.VideoAnalyzer.Edge.Models.MotionDetectionSensitivity Medium { get { throw null; } }
         public bool Equals(Azure.Media.VideoAnalyzer.Edge.Models.MotionDetectionSensitivity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Media.VideoAnalyzer.Edge.Models.MotionDetectionSensitivity left, Azure.Media.VideoAnalyzer.Edge.Models.MotionDetectionSensitivity right) { throw null; }
         public static implicit operator Azure.Media.VideoAnalyzer.Edge.Models.MotionDetectionSensitivity (string value) { throw null; }
@@ -352,9 +340,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static Azure.Media.VideoAnalyzer.Edge.Models.Mpeg4Profile ASP { get { throw null; } }
         public static Azure.Media.VideoAnalyzer.Edge.Models.Mpeg4Profile SP { get { throw null; } }
         public bool Equals(Azure.Media.VideoAnalyzer.Edge.Models.Mpeg4Profile other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Media.VideoAnalyzer.Edge.Models.Mpeg4Profile left, Azure.Media.VideoAnalyzer.Edge.Models.Mpeg4Profile right) { throw null; }
         public static implicit operator Azure.Media.VideoAnalyzer.Edge.Models.Mpeg4Profile (string value) { throw null; }
@@ -399,9 +385,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static Azure.Media.VideoAnalyzer.Edge.Models.ObjectTrackingAccuracy Low { get { throw null; } }
         public static Azure.Media.VideoAnalyzer.Edge.Models.ObjectTrackingAccuracy Medium { get { throw null; } }
         public bool Equals(Azure.Media.VideoAnalyzer.Edge.Models.ObjectTrackingAccuracy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Media.VideoAnalyzer.Edge.Models.ObjectTrackingAccuracy left, Azure.Media.VideoAnalyzer.Edge.Models.ObjectTrackingAccuracy right) { throw null; }
         public static implicit operator Azure.Media.VideoAnalyzer.Edge.Models.ObjectTrackingAccuracy (string value) { throw null; }
@@ -461,9 +445,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static Azure.Media.VideoAnalyzer.Edge.Models.OnvifSystemDateTimeType Manual { get { throw null; } }
         public static Azure.Media.VideoAnalyzer.Edge.Models.OnvifSystemDateTimeType Ntp { get { throw null; } }
         public bool Equals(Azure.Media.VideoAnalyzer.Edge.Models.OnvifSystemDateTimeType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Media.VideoAnalyzer.Edge.Models.OnvifSystemDateTimeType left, Azure.Media.VideoAnalyzer.Edge.Models.OnvifSystemDateTimeType right) { throw null; }
         public static implicit operator Azure.Media.VideoAnalyzer.Edge.Models.OnvifSystemDateTimeType (string value) { throw null; }
@@ -486,9 +468,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static Azure.Media.VideoAnalyzer.Edge.Models.OutputSelectorOperator Is { get { throw null; } }
         public static Azure.Media.VideoAnalyzer.Edge.Models.OutputSelectorOperator IsNot { get { throw null; } }
         public bool Equals(Azure.Media.VideoAnalyzer.Edge.Models.OutputSelectorOperator other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Media.VideoAnalyzer.Edge.Models.OutputSelectorOperator left, Azure.Media.VideoAnalyzer.Edge.Models.OutputSelectorOperator right) { throw null; }
         public static implicit operator Azure.Media.VideoAnalyzer.Edge.Models.OutputSelectorOperator (string value) { throw null; }
@@ -503,9 +483,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public OutputSelectorProperty(string value) { throw null; }
         public static Azure.Media.VideoAnalyzer.Edge.Models.OutputSelectorProperty MediaType { get { throw null; } }
         public bool Equals(Azure.Media.VideoAnalyzer.Edge.Models.OutputSelectorProperty other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Media.VideoAnalyzer.Edge.Models.OutputSelectorProperty left, Azure.Media.VideoAnalyzer.Edge.Models.OutputSelectorProperty right) { throw null; }
         public static implicit operator Azure.Media.VideoAnalyzer.Edge.Models.OutputSelectorProperty (string value) { throw null; }
@@ -539,9 +517,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static Azure.Media.VideoAnalyzer.Edge.Models.ParameterType SecretString { get { throw null; } }
         public static Azure.Media.VideoAnalyzer.Edge.Models.ParameterType String { get { throw null; } }
         public bool Equals(Azure.Media.VideoAnalyzer.Edge.Models.ParameterType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Media.VideoAnalyzer.Edge.Models.ParameterType left, Azure.Media.VideoAnalyzer.Edge.Models.ParameterType right) { throw null; }
         public static implicit operator Azure.Media.VideoAnalyzer.Edge.Models.ParameterType (string value) { throw null; }
@@ -671,9 +647,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static Azure.Media.VideoAnalyzer.Edge.Models.RtspTransport Http { get { throw null; } }
         public static Azure.Media.VideoAnalyzer.Edge.Models.RtspTransport Tcp { get { throw null; } }
         public bool Equals(Azure.Media.VideoAnalyzer.Edge.Models.RtspTransport other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Media.VideoAnalyzer.Edge.Models.RtspTransport left, Azure.Media.VideoAnalyzer.Edge.Models.RtspTransport right) { throw null; }
         public static implicit operator Azure.Media.VideoAnalyzer.Edge.Models.RtspTransport (string value) { throw null; }
@@ -730,9 +704,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static Azure.Media.VideoAnalyzer.Edge.Models.SpatialAnalysisOperationFocus Center { get { throw null; } }
         public static Azure.Media.VideoAnalyzer.Edge.Models.SpatialAnalysisOperationFocus Footprint { get { throw null; } }
         public bool Equals(Azure.Media.VideoAnalyzer.Edge.Models.SpatialAnalysisOperationFocus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Media.VideoAnalyzer.Edge.Models.SpatialAnalysisOperationFocus left, Azure.Media.VideoAnalyzer.Edge.Models.SpatialAnalysisOperationFocus right) { throw null; }
         public static implicit operator Azure.Media.VideoAnalyzer.Edge.Models.SpatialAnalysisOperationFocus (string value) { throw null; }
@@ -754,9 +726,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static Azure.Media.VideoAnalyzer.Edge.Models.SpatialAnalysisPersonCountEventTrigger Event { get { throw null; } }
         public static Azure.Media.VideoAnalyzer.Edge.Models.SpatialAnalysisPersonCountEventTrigger Interval { get { throw null; } }
         public bool Equals(Azure.Media.VideoAnalyzer.Edge.Models.SpatialAnalysisPersonCountEventTrigger other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Media.VideoAnalyzer.Edge.Models.SpatialAnalysisPersonCountEventTrigger left, Azure.Media.VideoAnalyzer.Edge.Models.SpatialAnalysisPersonCountEventTrigger right) { throw null; }
         public static implicit operator Azure.Media.VideoAnalyzer.Edge.Models.SpatialAnalysisPersonCountEventTrigger (string value) { throw null; }
@@ -791,9 +761,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static Azure.Media.VideoAnalyzer.Edge.Models.SpatialAnalysisPersonDistanceEventTrigger Event { get { throw null; } }
         public static Azure.Media.VideoAnalyzer.Edge.Models.SpatialAnalysisPersonDistanceEventTrigger Interval { get { throw null; } }
         public bool Equals(Azure.Media.VideoAnalyzer.Edge.Models.SpatialAnalysisPersonDistanceEventTrigger other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Media.VideoAnalyzer.Edge.Models.SpatialAnalysisPersonDistanceEventTrigger left, Azure.Media.VideoAnalyzer.Edge.Models.SpatialAnalysisPersonDistanceEventTrigger right) { throw null; }
         public static implicit operator Azure.Media.VideoAnalyzer.Edge.Models.SpatialAnalysisPersonDistanceEventTrigger (string value) { throw null; }
@@ -840,9 +808,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static Azure.Media.VideoAnalyzer.Edge.Models.SpatialAnalysisPersonZoneCrossingEventType ZoneCrossing { get { throw null; } }
         public static Azure.Media.VideoAnalyzer.Edge.Models.SpatialAnalysisPersonZoneCrossingEventType ZoneDwellTime { get { throw null; } }
         public bool Equals(Azure.Media.VideoAnalyzer.Edge.Models.SpatialAnalysisPersonZoneCrossingEventType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Media.VideoAnalyzer.Edge.Models.SpatialAnalysisPersonZoneCrossingEventType left, Azure.Media.VideoAnalyzer.Edge.Models.SpatialAnalysisPersonZoneCrossingEventType right) { throw null; }
         public static implicit operator Azure.Media.VideoAnalyzer.Edge.Models.SpatialAnalysisPersonZoneCrossingEventType (string value) { throw null; }
@@ -932,9 +898,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static Azure.Media.VideoAnalyzer.Edge.Models.VideoEncoding Jpeg { get { throw null; } }
         public static Azure.Media.VideoAnalyzer.Edge.Models.VideoEncoding Mpeg4 { get { throw null; } }
         public bool Equals(Azure.Media.VideoAnalyzer.Edge.Models.VideoEncoding other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Media.VideoAnalyzer.Edge.Models.VideoEncoding left, Azure.Media.VideoAnalyzer.Edge.Models.VideoEncoding right) { throw null; }
         public static implicit operator Azure.Media.VideoAnalyzer.Edge.Models.VideoEncoding (string value) { throw null; }

@@ -14,29 +14,29 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
     public partial class DeployJobStepStatistics : EdgeJobStepStatistics
     {
         /// <summary> Initializes a new instance of <see cref="DeployJobStepStatistics"/>. </summary>
-        internal DeployJobStepStatistics()
+        internal DeployJobStepStatistics() : base(EdgeJobType.Deploy)
         {
-            StatisticsType = EdgeJobType.Deploy;
         }
 
         /// <summary> Initializes a new instance of <see cref="DeployJobStepStatistics"/>. </summary>
         /// <param name="statisticsType"> Statistics type discriminator value. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="totalCount"> Total count of items processed in this step. </param>
         /// <param name="successCount"> Count of successful items in this step. </param>
         /// <param name="failedCount"> Count of failed items in this step. </param>
-        internal DeployJobStepStatistics(EdgeJobType statisticsType, IDictionary<string, BinaryData> serializedAdditionalRawData, int? totalCount, int? successCount, int? failedCount) : base(statisticsType, serializedAdditionalRawData)
+        internal DeployJobStepStatistics(EdgeJobType statisticsType, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? totalCount, int? successCount, int? failedCount) : base(statisticsType, additionalBinaryDataProperties)
         {
             TotalCount = totalCount;
             SuccessCount = successCount;
             FailedCount = failedCount;
-            StatisticsType = statisticsType;
         }
 
         /// <summary> Total count of items processed in this step. </summary>
         public int? TotalCount { get; }
+
         /// <summary> Count of successful items in this step. </summary>
         public int? SuccessCount { get; }
+
         /// <summary> Count of failed items in this step. </summary>
         public int? FailedCount { get; }
     }

@@ -261,9 +261,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         public static Azure.ResourceManager.ContainerOrchestratorRuntime.Models.AdvertiseMode Bgp { get { throw null; } }
         public static Azure.ResourceManager.ContainerOrchestratorRuntime.Models.AdvertiseMode Both { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerOrchestratorRuntime.Models.AdvertiseMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerOrchestratorRuntime.Models.AdvertiseMode left, Azure.ResourceManager.ContainerOrchestratorRuntime.Models.AdvertiseMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerOrchestratorRuntime.Models.AdvertiseMode (string value) { throw null; }
@@ -401,9 +399,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         public static Azure.ResourceManager.ContainerOrchestratorRuntime.Models.ContainerOrchestratorProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.ContainerOrchestratorRuntime.Models.ContainerOrchestratorProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerOrchestratorRuntime.Models.ContainerOrchestratorProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerOrchestratorRuntime.Models.ContainerOrchestratorProvisioningState left, Azure.ResourceManager.ContainerOrchestratorRuntime.Models.ContainerOrchestratorProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerOrchestratorRuntime.Models.ContainerOrchestratorProvisioningState (string value) { throw null; }
@@ -420,9 +416,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         public static Azure.ResourceManager.ContainerOrchestratorRuntime.Models.DataResilienceTier DataResilient { get { throw null; } }
         public static Azure.ResourceManager.ContainerOrchestratorRuntime.Models.DataResilienceTier NotDataResilient { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerOrchestratorRuntime.Models.DataResilienceTier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerOrchestratorRuntime.Models.DataResilienceTier left, Azure.ResourceManager.ContainerOrchestratorRuntime.Models.DataResilienceTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerOrchestratorRuntime.Models.DataResilienceTier (string value) { throw null; }
@@ -441,9 +435,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         public static Azure.ResourceManager.ContainerOrchestratorRuntime.Models.FailoverTier Slow { get { throw null; } }
         public static Azure.ResourceManager.ContainerOrchestratorRuntime.Models.FailoverTier Super { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerOrchestratorRuntime.Models.FailoverTier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerOrchestratorRuntime.Models.FailoverTier left, Azure.ResourceManager.ContainerOrchestratorRuntime.Models.FailoverTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerOrchestratorRuntime.Models.FailoverTier (string value) { throw null; }
@@ -473,9 +465,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         public static Azure.ResourceManager.ContainerOrchestratorRuntime.Models.NfsDirectoryActionOnVolumeDeletion Delete { get { throw null; } }
         public static Azure.ResourceManager.ContainerOrchestratorRuntime.Models.NfsDirectoryActionOnVolumeDeletion Retain { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerOrchestratorRuntime.Models.NfsDirectoryActionOnVolumeDeletion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerOrchestratorRuntime.Models.NfsDirectoryActionOnVolumeDeletion left, Azure.ResourceManager.ContainerOrchestratorRuntime.Models.NfsDirectoryActionOnVolumeDeletion right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerOrchestratorRuntime.Models.NfsDirectoryActionOnVolumeDeletion (string value) { throw null; }
@@ -513,9 +503,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         public static Azure.ResourceManager.ContainerOrchestratorRuntime.Models.PerformanceTier Ultra { get { throw null; } }
         public static Azure.ResourceManager.ContainerOrchestratorRuntime.Models.PerformanceTier Undefined { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerOrchestratorRuntime.Models.PerformanceTier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerOrchestratorRuntime.Models.PerformanceTier left, Azure.ResourceManager.ContainerOrchestratorRuntime.Models.PerformanceTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerOrchestratorRuntime.Models.PerformanceTier (string value) { throw null; }
@@ -564,9 +552,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         public static Azure.ResourceManager.ContainerOrchestratorRuntime.Models.StorageClassAccessMode ReadWriteMany { get { throw null; } }
         public static Azure.ResourceManager.ContainerOrchestratorRuntime.Models.StorageClassAccessMode ReadWriteOnce { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerOrchestratorRuntime.Models.StorageClassAccessMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerOrchestratorRuntime.Models.StorageClassAccessMode left, Azure.ResourceManager.ContainerOrchestratorRuntime.Models.StorageClassAccessMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerOrchestratorRuntime.Models.StorageClassAccessMode (string value) { throw null; }
@@ -643,9 +629,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         public static Azure.ResourceManager.ContainerOrchestratorRuntime.Models.VolumeBindingMode Immediate { get { throw null; } }
         public static Azure.ResourceManager.ContainerOrchestratorRuntime.Models.VolumeBindingMode WaitForFirstConsumer { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerOrchestratorRuntime.Models.VolumeBindingMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerOrchestratorRuntime.Models.VolumeBindingMode left, Azure.ResourceManager.ContainerOrchestratorRuntime.Models.VolumeBindingMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerOrchestratorRuntime.Models.VolumeBindingMode (string value) { throw null; }
@@ -662,9 +646,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         public static Azure.ResourceManager.ContainerOrchestratorRuntime.Models.VolumeExpansion Allow { get { throw null; } }
         public static Azure.ResourceManager.ContainerOrchestratorRuntime.Models.VolumeExpansion Disallow { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerOrchestratorRuntime.Models.VolumeExpansion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerOrchestratorRuntime.Models.VolumeExpansion left, Azure.ResourceManager.ContainerOrchestratorRuntime.Models.VolumeExpansion right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerOrchestratorRuntime.Models.VolumeExpansion (string value) { throw null; }

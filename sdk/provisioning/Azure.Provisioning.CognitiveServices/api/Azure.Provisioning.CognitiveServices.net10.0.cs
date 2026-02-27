@@ -90,7 +90,6 @@ namespace Azure.Provisioning.CognitiveServices
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.CognitiveServices.CognitiveServicesAccount FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public Azure.Provisioning.CognitiveServices.ServiceAccountApiKeys GetKeys() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
@@ -264,11 +263,8 @@ namespace Azure.Provisioning.CognitiveServices
         public static Azure.Provisioning.CognitiveServices.CognitiveServicesBuiltInRole CognitiveServicesUsagesReader { get { throw null; } }
         public static Azure.Provisioning.CognitiveServices.CognitiveServicesBuiltInRole CognitiveServicesUser { get { throw null; } }
         public bool Equals(Azure.Provisioning.CognitiveServices.CognitiveServicesBuiltInRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static string GetBuiltInRoleName(Azure.Provisioning.CognitiveServices.CognitiveServicesBuiltInRole value) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Provisioning.CognitiveServices.CognitiveServicesBuiltInRole left, Azure.Provisioning.CognitiveServices.CognitiveServicesBuiltInRole right) { throw null; }
         public static implicit operator Azure.Provisioning.CognitiveServices.CognitiveServicesBuiltInRole (string value) { throw null; }

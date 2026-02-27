@@ -44,9 +44,7 @@ namespace Azure.Search.Documents
         public static Azure.Search.Documents.SearchAudience AzureGovernment { get { throw null; } }
         public static Azure.Search.Documents.SearchAudience AzurePublicCloud { get { throw null; } }
         public bool Equals(Azure.Search.Documents.SearchAudience other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.SearchAudience left, Azure.Search.Documents.SearchAudience right) { throw null; }
         public static implicit operator Azure.Search.Documents.SearchAudience (string value) { throw null; }
@@ -344,30 +342,20 @@ namespace Azure.Search.Documents.Indexes
         public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexer> CreateIndexer(Azure.Search.Documents.Indexes.Models.SearchIndexer indexer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexer>> CreateIndexerAsync(Azure.Search.Documents.Indexes.Models.SearchIndexer indexer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection> CreateOrUpdateDataSourceConnection(Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection dataSourceConnection, bool onlyIfUnchanged = false, bool? ignoreCacheResetRequirements = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection> CreateOrUpdateDataSourceConnection(Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection dataSourceConnection, bool onlyIfUnchanged, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection>> CreateOrUpdateDataSourceConnectionAsync(Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection dataSourceConnection, bool onlyIfUnchanged = false, bool? ignoreCacheResetRequirements = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection>> CreateOrUpdateDataSourceConnectionAsync(Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection dataSourceConnection, bool onlyIfUnchanged, System.Threading.CancellationToken cancellationToken) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexer> CreateOrUpdateIndexer(Azure.Search.Documents.Indexes.Models.SearchIndexer indexer, bool onlyIfUnchanged, bool disableCacheReprocessingChangeDetection, bool ignoreCacheResetRequirements, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexer> CreateOrUpdateIndexer(Azure.Search.Documents.Indexes.Models.SearchIndexer indexer, bool onlyIfUnchanged = false, bool? ignoreCacheResetRequirements = default(bool?), bool? disableCacheReprocessingChangeDetection = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexer> CreateOrUpdateIndexer(Azure.Search.Documents.Indexes.Models.SearchIndexer indexer, bool onlyIfUnchanged, System.Threading.CancellationToken cancellationToken) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexer>> CreateOrUpdateIndexerAsync(Azure.Search.Documents.Indexes.Models.SearchIndexer indexer, bool onlyIfUnchanged, bool disableCacheReprocessingChangeDetection, bool ignoreCacheResetRequirements, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexer>> CreateOrUpdateIndexerAsync(Azure.Search.Documents.Indexes.Models.SearchIndexer indexer, bool onlyIfUnchanged = false, bool? ignoreCacheResetRequirements = default(bool?), bool? disableCacheReprocessingChangeDetection = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexer>> CreateOrUpdateIndexerAsync(Azure.Search.Documents.Indexes.Models.SearchIndexer indexer, bool onlyIfUnchanged, System.Threading.CancellationToken cancellationToken) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexerSkillset> CreateOrUpdateSkillset(Azure.Search.Documents.Indexes.Models.SearchIndexerSkillset skillset, bool onlyIfUnchanged, bool disableCacheReprocessingChangeDetection, bool ignoreCacheResetRequirements, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexerSkillset> CreateOrUpdateSkillset(Azure.Search.Documents.Indexes.Models.SearchIndexerSkillset skillset, bool onlyIfUnchanged = false, bool? ignoreCacheResetRequirements = default(bool?), bool? disableCacheReprocessingChangeDetection = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexerSkillset> CreateOrUpdateSkillset(Azure.Search.Documents.Indexes.Models.SearchIndexerSkillset skillset, bool onlyIfUnchanged, System.Threading.CancellationToken cancellationToken) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexerSkillset>> CreateOrUpdateSkillsetAsync(Azure.Search.Documents.Indexes.Models.SearchIndexerSkillset skillset, bool onlyIfUnchanged, bool disableCacheReprocessingChangeDetection, bool ignoreCacheResetRequirements, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexerSkillset>> CreateOrUpdateSkillsetAsync(Azure.Search.Documents.Indexes.Models.SearchIndexerSkillset skillset, bool onlyIfUnchanged = false, bool? ignoreCacheResetRequirements = default(bool?), bool? disableCacheReprocessingChangeDetection = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexerSkillset>> CreateOrUpdateSkillsetAsync(Azure.Search.Documents.Indexes.Models.SearchIndexerSkillset skillset, bool onlyIfUnchanged, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexerSkillset> CreateSkillset(Azure.Search.Documents.Indexes.Models.SearchIndexerSkillset skillset, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexerSkillset>> CreateSkillsetAsync(Azure.Search.Documents.Indexes.Models.SearchIndexerSkillset skillset, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -454,9 +442,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName OpenAIClipImageTextEmbeddingsVitBasePatch32 { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName OpenAIClipImageTextEmbeddingsViTLargePatch14336 { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName left, Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName (string value) { throw null; }
@@ -672,9 +658,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.AzureOpenAIModelName TextEmbedding3Small { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.AzureOpenAIModelName TextEmbeddingAda002 { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.AzureOpenAIModelName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.AzureOpenAIModelName left, Azure.Search.Documents.Indexes.Models.AzureOpenAIModelName right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.AzureOpenAIModelName (string value) { throw null; }
@@ -739,9 +723,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.BlobIndexerDataToExtract ContentAndMetadata { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.BlobIndexerDataToExtract StorageMetadata { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.BlobIndexerDataToExtract other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.BlobIndexerDataToExtract left, Azure.Search.Documents.Indexes.Models.BlobIndexerDataToExtract right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.BlobIndexerDataToExtract (string value) { throw null; }
@@ -758,9 +740,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.BlobIndexerImageAction GenerateNormalizedImages { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.BlobIndexerImageAction None { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.BlobIndexerImageAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.BlobIndexerImageAction left, Azure.Search.Documents.Indexes.Models.BlobIndexerImageAction right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.BlobIndexerImageAction (string value) { throw null; }
@@ -781,9 +761,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.BlobIndexerParsingMode Markdown { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.BlobIndexerParsingMode Text { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.BlobIndexerParsingMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.BlobIndexerParsingMode left, Azure.Search.Documents.Indexes.Models.BlobIndexerParsingMode right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.BlobIndexerParsingMode (string value) { throw null; }
@@ -799,9 +777,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.BlobIndexerPdfTextRotationAlgorithm DetectAngles { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.BlobIndexerPdfTextRotationAlgorithm None { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.BlobIndexerPdfTextRotationAlgorithm other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.BlobIndexerPdfTextRotationAlgorithm left, Azure.Search.Documents.Indexes.Models.BlobIndexerPdfTextRotationAlgorithm right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.BlobIndexerPdfTextRotationAlgorithm (string value) { throw null; }
@@ -839,9 +815,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public CharFilterName(string value) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.CharFilterName HtmlStrip { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.CharFilterName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.CharFilterName left, Azure.Search.Documents.Indexes.Models.CharFilterName right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.CharFilterName (string value) { throw null; }
@@ -858,9 +832,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.ChatCompletionExtraParametersBehavior Error { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.ChatCompletionExtraParametersBehavior PassThrough { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.ChatCompletionExtraParametersBehavior other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.ChatCompletionExtraParametersBehavior left, Azure.Search.Documents.Indexes.Models.ChatCompletionExtraParametersBehavior right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.ChatCompletionExtraParametersBehavior (string value) { throw null; }
@@ -1063,9 +1035,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public ContentUnderstandingSkillChunkingUnit(string value) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.ContentUnderstandingSkillChunkingUnit Characters { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.ContentUnderstandingSkillChunkingUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.ContentUnderstandingSkillChunkingUnit left, Azure.Search.Documents.Indexes.Models.ContentUnderstandingSkillChunkingUnit right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.ContentUnderstandingSkillChunkingUnit (string value) { throw null; }
@@ -1081,9 +1051,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.ContentUnderstandingSkillExtractionOptions Images { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.ContentUnderstandingSkillExtractionOptions LocationMetadata { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.ContentUnderstandingSkillExtractionOptions other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.ContentUnderstandingSkillExtractionOptions left, Azure.Search.Documents.Indexes.Models.ContentUnderstandingSkillExtractionOptions right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.ContentUnderstandingSkillExtractionOptions (string value) { throw null; }
@@ -1183,9 +1151,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.CustomEntityLookupSkillLanguage Ko { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.CustomEntityLookupSkillLanguage Pt { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.CustomEntityLookupSkillLanguage other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.CustomEntityLookupSkillLanguage left, Azure.Search.Documents.Indexes.Models.CustomEntityLookupSkillLanguage right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.CustomEntityLookupSkillLanguage (string value) { throw null; }
@@ -1321,9 +1287,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public DocumentIntelligenceLayoutSkillChunkingUnit(string value) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillChunkingUnit Characters { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillChunkingUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillChunkingUnit left, Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillChunkingUnit right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillChunkingUnit (string value) { throw null; }
@@ -1339,9 +1303,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillExtractionOptions Images { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillExtractionOptions LocationMetadata { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillExtractionOptions other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillExtractionOptions left, Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillExtractionOptions right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillExtractionOptions (string value) { throw null; }
@@ -1361,9 +1323,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillMarkdownHeaderDepth H5 { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillMarkdownHeaderDepth H6 { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillMarkdownHeaderDepth other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillMarkdownHeaderDepth left, Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillMarkdownHeaderDepth right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillMarkdownHeaderDepth (string value) { throw null; }
@@ -1379,9 +1339,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillOutputFormat Markdown { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillOutputFormat Text { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillOutputFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillOutputFormat left, Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillOutputFormat right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillOutputFormat (string value) { throw null; }
@@ -1396,9 +1354,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public DocumentIntelligenceLayoutSkillOutputMode(string value) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillOutputMode OneToMany { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillOutputMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillOutputMode left, Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillOutputMode right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillOutputMode (string value) { throw null; }
@@ -1461,9 +1417,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.EntityCategory Quantity { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.EntityCategory Url { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.EntityCategory other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.EntityCategory left, Azure.Search.Documents.Indexes.Models.EntityCategory right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.EntityCategory (string value) { throw null; }
@@ -1485,7 +1439,6 @@ namespace Azure.Search.Documents.Indexes.Models
     }
     public partial class EntityRecognitionSkill : Azure.Search.Documents.Indexes.Models.SearchIndexerSkill, System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill>
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public EntityRecognitionSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs) { }
         public EntityRecognitionSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs, Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion skillVersion) { }
         public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.EntityCategory> Categories { get { throw null; } }
@@ -1506,13 +1459,10 @@ namespace Azure.Search.Documents.Indexes.Models
             private readonly int _dummyPrimitive;
             public SkillVersion(string value) { throw null; }
             public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion Latest { get { throw null; } }
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion V1 { get { throw null; } }
             public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion V3 { get { throw null; } }
             public bool Equals(Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion other) { throw null; }
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public override bool Equals(object obj) { throw null; }
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public override int GetHashCode() { throw null; }
             public static bool operator ==(Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion left, Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion right) { throw null; }
             public static bool operator >=(Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion left, Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion right) { throw null; }
@@ -1552,9 +1502,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage ZhHans { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage ZhHant { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage left, Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage (string value) { throw null; }
@@ -1738,9 +1686,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage ZhHans { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage ZhHant { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage left, Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage (string value) { throw null; }
@@ -1756,9 +1702,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.ImageDetail Celebrities { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.ImageDetail Landmarks { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.ImageDetail other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.ImageDetail left, Azure.Search.Documents.Indexes.Models.ImageDetail right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.ImageDetail (string value) { throw null; }
@@ -1834,9 +1778,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.IndexerExecutionEnvironment Private { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.IndexerExecutionEnvironment Standard { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.IndexerExecutionEnvironment other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.IndexerExecutionEnvironment left, Azure.Search.Documents.Indexes.Models.IndexerExecutionEnvironment right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.IndexerExecutionEnvironment (string value) { throw null; }
@@ -1881,9 +1823,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.IndexerExecutionStatusDetail ResetDocs { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.IndexerExecutionStatusDetail Resync { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.IndexerExecutionStatusDetail other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.IndexerExecutionStatusDetail left, Azure.Search.Documents.Indexes.Models.IndexerExecutionStatusDetail right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.IndexerExecutionStatusDetail (string value) { throw null; }
@@ -1900,9 +1840,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.IndexerPermissionOption RbacScope { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.IndexerPermissionOption UserIds { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.IndexerPermissionOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.IndexerPermissionOption left, Azure.Search.Documents.Indexes.Models.IndexerPermissionOption right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.IndexerPermissionOption (string value) { throw null; }
@@ -1917,9 +1855,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public IndexerResyncOption(string value) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.IndexerResyncOption Permissions { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.IndexerResyncOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.IndexerResyncOption left, Azure.Search.Documents.Indexes.Models.IndexerResyncOption right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.IndexerResyncOption (string value) { throw null; }
@@ -1976,9 +1912,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.IndexingMode IndexingResync { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.IndexingMode ResetDocuments { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.IndexingMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.IndexingMode left, Azure.Search.Documents.Indexes.Models.IndexingMode right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.IndexingMode (string value) { throw null; }
@@ -1989,7 +1923,6 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         public IndexingParameters() { }
         public int? BatchSize { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Collections.Generic.IDictionary<string, object> Configuration { get { throw null; } }
         public Azure.Search.Documents.Indexes.Models.IndexingParametersConfiguration IndexingParametersConfiguration { get { throw null; } set { } }
         public int? MaxFailedItems { get { throw null; } set { } }
@@ -2066,9 +1999,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.IndexProjectionMode IncludeIndexingParentDocuments { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.IndexProjectionMode SkipIndexingParentDocuments { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.IndexProjectionMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.IndexProjectionMode left, Azure.Search.Documents.Indexes.Models.IndexProjectionMode right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.IndexProjectionMode (string value) { throw null; }
@@ -2150,9 +2081,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.KeyPhraseExtractionSkillLanguage Ru { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.KeyPhraseExtractionSkillLanguage Sv { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.KeyPhraseExtractionSkillLanguage other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.KeyPhraseExtractionSkillLanguage left, Azure.Search.Documents.Indexes.Models.KeyPhraseExtractionSkillLanguage right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.KeyPhraseExtractionSkillLanguage (string value) { throw null; }
@@ -2232,9 +2161,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public KnowledgeBaseModelKind(string value) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.KnowledgeBaseModelKind AzureOpenAI { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.KnowledgeBaseModelKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.KnowledgeBaseModelKind left, Azure.Search.Documents.Indexes.Models.KnowledgeBaseModelKind right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.KnowledgeBaseModelKind (string value) { throw null; }
@@ -2551,9 +2478,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName ZhHantLucene { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName ZhHantMicrosoft { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName left, Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName (string value) { throw null; }
@@ -2679,9 +2604,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.LexicalNormalizerName Standard { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.LexicalNormalizerName Uppercase { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.LexicalNormalizerName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.LexicalNormalizerName left, Azure.Search.Documents.Indexes.Models.LexicalNormalizerName right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.LexicalNormalizerName (string value) { throw null; }
@@ -2727,9 +2650,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.LexicalTokenizerName UaxUrlEmail { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.LexicalTokenizerName Whitespace { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.LexicalTokenizerName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.LexicalTokenizerName left, Azure.Search.Documents.Indexes.Models.LexicalTokenizerName right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.LexicalTokenizerName (string value) { throw null; }
@@ -2830,9 +2751,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.MarkdownHeaderDepth H5 { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.MarkdownHeaderDepth H6 { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.MarkdownHeaderDepth other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.MarkdownHeaderDepth left, Azure.Search.Documents.Indexes.Models.MarkdownHeaderDepth right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.MarkdownHeaderDepth (string value) { throw null; }
@@ -2848,9 +2767,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.MarkdownParsingSubmode OneToMany { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.MarkdownParsingSubmode OneToOne { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.MarkdownParsingSubmode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.MarkdownParsingSubmode left, Azure.Search.Documents.Indexes.Models.MarkdownParsingSubmode right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.MarkdownParsingSubmode (string value) { throw null; }
@@ -3034,9 +2951,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.OcrLineEnding LineFeed { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.OcrLineEnding Space { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.OcrLineEnding other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.OcrLineEnding left, Azure.Search.Documents.Indexes.Models.OcrLineEnding right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.OcrLineEnding (string value) { throw null; }
@@ -3233,9 +3148,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage ZhHant { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Zu { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.OcrSkillLanguage other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.OcrSkillLanguage left, Azure.Search.Documents.Indexes.Models.OcrSkillLanguage right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.OcrSkillLanguage (string value) { throw null; }
@@ -3342,9 +3255,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.PermissionFilter RbacScope { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.PermissionFilter UserIds { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.PermissionFilter other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.PermissionFilter left, Azure.Search.Documents.Indexes.Models.PermissionFilter right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.PermissionFilter (string value) { throw null; }
@@ -3409,9 +3320,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.PiiDetectionSkillMaskingMode None { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.PiiDetectionSkillMaskingMode Replace { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.PiiDetectionSkillMaskingMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.PiiDetectionSkillMaskingMode left, Azure.Search.Documents.Indexes.Models.PiiDetectionSkillMaskingMode right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.PiiDetectionSkillMaskingMode (string value) { throw null; }
@@ -3427,9 +3336,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.RankingOrder BoostedRerankerScore { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.RankingOrder ReRankerScore { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.RankingOrder other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.RankingOrder left, Azure.Search.Documents.Indexes.Models.RankingOrder right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.RankingOrder (string value) { throw null; }
@@ -3451,9 +3358,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.RegexFlag UnicodeCase { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.RegexFlag UnixLines { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.RegexFlag other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.RegexFlag left, Azure.Search.Documents.Indexes.Models.RegexFlag right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.RegexFlag (string value) { throw null; }
@@ -3637,9 +3542,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.SearchFieldDataType String { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.SearchFieldDataType Collection(Azure.Search.Documents.Indexes.Models.SearchFieldDataType type) { throw null; }
         public bool Equals(Azure.Search.Documents.Indexes.Models.SearchFieldDataType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.SearchFieldDataType left, Azure.Search.Documents.Indexes.Models.SearchFieldDataType right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.SearchFieldDataType (string value) { throw null; }
@@ -3789,9 +3692,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceType OneLake { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceType SharePoint { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceType left, Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceType right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceType (string value) { throw null; }
@@ -4144,7 +4045,6 @@ namespace Azure.Search.Documents.Indexes.Models
     }
     public partial class SentimentSkill : Azure.Search.Documents.Indexes.Models.SearchIndexerSkill, System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.SentimentSkill>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.SentimentSkill>
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public SentimentSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs) { }
         public SentimentSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs, Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion skillVersion) { }
         public Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage? DefaultLanguageCode { get { throw null; } set { } }
@@ -4163,13 +4063,10 @@ namespace Azure.Search.Documents.Indexes.Models
             private readonly int _dummyPrimitive;
             public SkillVersion(string value) { throw null; }
             public static Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion Latest { get { throw null; } }
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion V1 { get { throw null; } }
             public static Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion V3 { get { throw null; } }
             public bool Equals(Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion other) { throw null; }
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public override bool Equals(object obj) { throw null; }
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public override int GetHashCode() { throw null; }
             public static bool operator ==(Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion left, Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion right) { throw null; }
             public static bool operator >=(Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion left, Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion right) { throw null; }
@@ -4201,9 +4098,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage Sv { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage Tr { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage left, Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage (string value) { throw null; }
@@ -4348,9 +4243,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.SplitSkillEncoderModelName P50KEdit { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.SplitSkillEncoderModelName R50KBase { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.SplitSkillEncoderModelName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.SplitSkillEncoderModelName left, Azure.Search.Documents.Indexes.Models.SplitSkillEncoderModelName right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.SplitSkillEncoderModelName (string value) { throw null; }
@@ -4397,9 +4290,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.SplitSkillLanguage Ur { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.SplitSkillLanguage Zh { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.SplitSkillLanguage other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.SplitSkillLanguage left, Azure.Search.Documents.Indexes.Models.SplitSkillLanguage right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.SplitSkillLanguage (string value) { throw null; }
@@ -4415,9 +4306,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.SplitSkillUnit AzureOpenAITokens { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.SplitSkillUnit Characters { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.SplitSkillUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.SplitSkillUnit left, Azure.Search.Documents.Indexes.Models.SplitSkillUnit right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.SplitSkillUnit (string value) { throw null; }
@@ -4645,9 +4534,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.TextSplitMode Pages { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.TextSplitMode Sentences { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.TextSplitMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.TextSplitMode left, Azure.Search.Documents.Indexes.Models.TextSplitMode right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.TextSplitMode (string value) { throw null; }
@@ -4746,9 +4633,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.TextTranslationSkillLanguage ZhHans { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.TextTranslationSkillLanguage ZhHant { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.TextTranslationSkillLanguage other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.TextTranslationSkillLanguage left, Azure.Search.Documents.Indexes.Models.TextTranslationSkillLanguage right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.TextTranslationSkillLanguage (string value) { throw null; }
@@ -4826,9 +4711,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.TokenFilterName Uppercase { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.TokenFilterName WordDelimiter { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.TokenFilterName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.TokenFilterName left, Azure.Search.Documents.Indexes.Models.TokenFilterName right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.TokenFilterName (string value) { throw null; }
@@ -4876,9 +4759,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public VectorEncodingFormat(string value) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.VectorEncodingFormat PackedBit { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.VectorEncodingFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.VectorEncodingFormat left, Azure.Search.Documents.Indexes.Models.VectorEncodingFormat right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.VectorEncodingFormat (string value) { throw null; }
@@ -4925,9 +4806,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.VectorSearchAlgorithmMetric Euclidean { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.VectorSearchAlgorithmMetric Hamming { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.VectorSearchAlgorithmMetric other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.VectorSearchAlgorithmMetric left, Azure.Search.Documents.Indexes.Models.VectorSearchAlgorithmMetric right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.VectorSearchAlgorithmMetric (string value) { throw null; }
@@ -4958,9 +4837,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.VectorSearchCompressionRescoreStorageMethod DiscardOriginals { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.VectorSearchCompressionRescoreStorageMethod PreserveOriginals { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.VectorSearchCompressionRescoreStorageMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.VectorSearchCompressionRescoreStorageMethod left, Azure.Search.Documents.Indexes.Models.VectorSearchCompressionRescoreStorageMethod right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.VectorSearchCompressionRescoreStorageMethod (string value) { throw null; }
@@ -4975,9 +4852,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public VectorSearchCompressionTarget(string value) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.VectorSearchCompressionTarget Int8 { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.VectorSearchCompressionTarget other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.VectorSearchCompressionTarget left, Azure.Search.Documents.Indexes.Models.VectorSearchCompressionTarget right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.VectorSearchCompressionTarget (string value) { throw null; }
@@ -5043,9 +4918,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.VisualFeature Objects { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.VisualFeature Tags { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.VisualFeature other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.VisualFeature left, Azure.Search.Documents.Indexes.Models.VisualFeature right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.VisualFeature (string value) { throw null; }
@@ -5394,9 +5267,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         public static Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMessageContentType Image { get { throw null; } }
         public static Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMessageContentType Text { get { throw null; } }
         public bool Equals(Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMessageContentType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMessageContentType left, Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMessageContentType right) { throw null; }
         public static implicit operator Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMessageContentType (string value) { throw null; }
@@ -5635,9 +5506,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         public KnowledgeRetrievalIntentType(string value) { throw null; }
         public static Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalIntentType Semantic { get { throw null; } }
         public bool Equals(Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalIntentType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalIntentType left, Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalIntentType right) { throw null; }
         public static implicit operator Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalIntentType (string value) { throw null; }
@@ -5683,9 +5552,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         public static Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalOutputMode AnswerSynthesis { get { throw null; } }
         public static Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalOutputMode ExtractiveData { get { throw null; } }
         public bool Equals(Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalOutputMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalOutputMode left, Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalOutputMode right) { throw null; }
         public static implicit operator Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalOutputMode (string value) { throw null; }
@@ -5712,9 +5579,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         public static Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalReasoningEffortKind Medium { get { throw null; } }
         public static Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalReasoningEffortKind Minimal { get { throw null; } }
         public bool Equals(Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalReasoningEffortKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalReasoningEffortKind left, Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalReasoningEffortKind right) { throw null; }
         public static implicit operator Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalReasoningEffortKind (string value) { throw null; }
@@ -5856,9 +5721,7 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Models.ChatCompletionResponseFormatType JsonSchema { get { throw null; } }
         public static Azure.Search.Documents.Models.ChatCompletionResponseFormatType Text { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Models.ChatCompletionResponseFormatType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Models.ChatCompletionResponseFormatType left, Azure.Search.Documents.Models.ChatCompletionResponseFormatType right) { throw null; }
         public static implicit operator Azure.Search.Documents.Models.ChatCompletionResponseFormatType (string value) { throw null; }
@@ -5939,9 +5802,7 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Models.HybridCountAndFacetMode CountAllResults { get { throw null; } }
         public static Azure.Search.Documents.Models.HybridCountAndFacetMode CountRetrievableResults { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Models.HybridCountAndFacetMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Models.HybridCountAndFacetMode left, Azure.Search.Documents.Models.HybridCountAndFacetMode right) { throw null; }
         public static implicit operator Azure.Search.Documents.Models.HybridCountAndFacetMode (string value) { throw null; }
@@ -6033,9 +5894,7 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Models.IndexedSharePointContainerName DefaultSiteLibrary { get { throw null; } }
         public static Azure.Search.Documents.Models.IndexedSharePointContainerName UseQuery { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Models.IndexedSharePointContainerName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Models.IndexedSharePointContainerName left, Azure.Search.Documents.Models.IndexedSharePointContainerName right) { throw null; }
         public static implicit operator Azure.Search.Documents.Models.IndexedSharePointContainerName (string value) { throw null; }
@@ -6087,9 +5946,7 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Models.KnowledgeSourceContentExtractionMode Minimal { get { throw null; } }
         public static Azure.Search.Documents.Models.KnowledgeSourceContentExtractionMode Standard { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Models.KnowledgeSourceContentExtractionMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Models.KnowledgeSourceContentExtractionMode left, Azure.Search.Documents.Models.KnowledgeSourceContentExtractionMode right) { throw null; }
         public static implicit operator Azure.Search.Documents.Models.KnowledgeSourceContentExtractionMode (string value) { throw null; }
@@ -6106,9 +5963,7 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Models.KnowledgeSourceIngestionPermissionOption RbacScope { get { throw null; } }
         public static Azure.Search.Documents.Models.KnowledgeSourceIngestionPermissionOption UserIds { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Models.KnowledgeSourceIngestionPermissionOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Models.KnowledgeSourceIngestionPermissionOption left, Azure.Search.Documents.Models.KnowledgeSourceIngestionPermissionOption right) { throw null; }
         public static implicit operator Azure.Search.Documents.Models.KnowledgeSourceIngestionPermissionOption (string value) { throw null; }
@@ -6125,9 +5980,7 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Models.KnowledgeSourceSynchronizationStatus Creating { get { throw null; } }
         public static Azure.Search.Documents.Models.KnowledgeSourceSynchronizationStatus Deleting { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Models.KnowledgeSourceSynchronizationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Models.KnowledgeSourceSynchronizationStatus left, Azure.Search.Documents.Models.KnowledgeSourceSynchronizationStatus right) { throw null; }
         public static implicit operator Azure.Search.Documents.Models.KnowledgeSourceSynchronizationStatus (string value) { throw null; }
@@ -6166,9 +6019,7 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Models.QueryAnswerType Extractive { get { throw null; } }
         public static Azure.Search.Documents.Models.QueryAnswerType None { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Models.QueryAnswerType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Models.QueryAnswerType left, Azure.Search.Documents.Models.QueryAnswerType right) { throw null; }
         public static implicit operator Azure.Search.Documents.Models.QueryAnswerType (string value) { throw null; }
@@ -6204,9 +6055,7 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Models.QueryCaptionType Extractive { get { throw null; } }
         public static Azure.Search.Documents.Models.QueryCaptionType None { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Models.QueryCaptionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Models.QueryCaptionType left, Azure.Search.Documents.Models.QueryCaptionType right) { throw null; }
         public static implicit operator Azure.Search.Documents.Models.QueryCaptionType (string value) { throw null; }
@@ -6226,9 +6075,7 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Models.QueryDebugMode Semantic { get { throw null; } }
         public static Azure.Search.Documents.Models.QueryDebugMode Vector { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Models.QueryDebugMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Models.QueryDebugMode left, Azure.Search.Documents.Models.QueryDebugMode right) { throw null; }
         public static implicit operator Azure.Search.Documents.Models.QueryDebugMode (string value) { throw null; }
@@ -6314,9 +6161,7 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Models.QueryLanguage ZhCn { get { throw null; } }
         public static Azure.Search.Documents.Models.QueryLanguage ZhTw { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Models.QueryLanguage other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Models.QueryLanguage left, Azure.Search.Documents.Models.QueryLanguage right) { throw null; }
         public static implicit operator Azure.Search.Documents.Models.QueryLanguage (string value) { throw null; }
@@ -6400,9 +6245,7 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Models.QueryRewritesType Generative { get { throw null; } }
         public static Azure.Search.Documents.Models.QueryRewritesType None { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Models.QueryRewritesType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Models.QueryRewritesType left, Azure.Search.Documents.Models.QueryRewritesType right) { throw null; }
         public static implicit operator Azure.Search.Documents.Models.QueryRewritesType (string value) { throw null; }
@@ -6430,9 +6273,7 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Models.QuerySpellerType Lexicon { get { throw null; } }
         public static Azure.Search.Documents.Models.QuerySpellerType None { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Models.QuerySpellerType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Models.QuerySpellerType left, Azure.Search.Documents.Models.QuerySpellerType right) { throw null; }
         public static implicit operator Azure.Search.Documents.Models.QuerySpellerType (string value) { throw null; }
@@ -6521,9 +6362,7 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Models.SearchIndexPermissionFilterOption Disabled { get { throw null; } }
         public static Azure.Search.Documents.Models.SearchIndexPermissionFilterOption Enabled { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Models.SearchIndexPermissionFilterOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Models.SearchIndexPermissionFilterOption left, Azure.Search.Documents.Models.SearchIndexPermissionFilterOption right) { throw null; }
         public static implicit operator Azure.Search.Documents.Models.SearchIndexPermissionFilterOption (string value) { throw null; }
@@ -6541,7 +6380,6 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Indexes.Models.AnalyzeTextOptions AnalyzeTextOptions(string text = null, Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName? analyzerName = default(Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName?), Azure.Search.Documents.Indexes.Models.LexicalTokenizerName? tokenizerName = default(Azure.Search.Documents.Indexes.Models.LexicalTokenizerName?), Azure.Search.Documents.Indexes.Models.LexicalNormalizerName? normalizerName = default(Azure.Search.Documents.Indexes.Models.LexicalNormalizerName?), System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.TokenFilterName> tokenFilters = null, System.Collections.Generic.IEnumerable<string> charFilters = null) { throw null; }
         public static Azure.Search.Documents.Models.AutocompleteItem AutocompleteItem(string text, string queryPlusText) { throw null; }
         public static Azure.Search.Documents.Models.AutocompleteResults AutocompleteResults(double? coverage = default(double?), System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.AutocompleteItem> results = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Models.AutocompleteResults AutocompleteResults(double? coverage, System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Models.AutocompleteItem> results) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.KnowledgeSource AzureBlobKnowledgeSource(string name = null, string description = null, string kind = null, string eTag = null, Azure.Search.Documents.Indexes.Models.SearchResourceEncryptionKey encryptionKey = null, System.Collections.Generic.IDictionary<string, System.BinaryData> serializedAdditionalRawData = null, Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSourceParameters azureBlobParameters = null) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSourceParameters AzureBlobKnowledgeSourceParameters(string connectionString = null, string containerName = null, string folderPath = null, bool? isAdlsGen2 = default(bool?), Azure.Search.Documents.Indexes.Models.KnowledgeSourceIngestionParameters ingestionParameters = null, System.Collections.Generic.IReadOnlyDictionary<string, string> createdResources = null) { throw null; }
@@ -6552,9 +6390,7 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Indexes.Models.DataDeletionDetectionPolicy DataDeletionDetectionPolicy(string oDataType) { throw null; }
         public static Azure.Search.Documents.Models.DebugInfo DebugInfo(Azure.Search.Documents.Models.QueryRewritesDebugInfo queryRewrites = null) { throw null; }
         public static Azure.Search.Documents.Models.DocumentDebugInfo DocumentDebugInfo(Azure.Search.Documents.Models.SemanticDebugInfo semantic = null, Azure.Search.Documents.Models.VectorsDebugInfo vectors = null, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IList<Azure.Search.Documents.Models.QueryResultDocumentInnerHit>> innerHits = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Models.DocumentDebugInfo DocumentDebugInfo(Azure.Search.Documents.Models.VectorsDebugInfo vectors) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Models.FacetResult FacetResult(long? count = default(long?), System.Collections.Generic.IReadOnlyDictionary<string, object> additionalProperties = null) { throw null; }
         public static Azure.Search.Documents.Models.FacetResult FacetResult(long? count = default(long?), double? avg = default(double?), double? min = default(double?), double? max = default(double?), double? sum = default(double?), long? cardinality = default(long?), System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IList<Azure.Search.Documents.Models.FacetResult>> facets = null, System.Collections.Generic.IReadOnlyDictionary<string, object> additionalProperties = null) { throw null; }
         public static Azure.Search.Documents.Models.IndexDocumentsResult IndexDocumentsResult(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.IndexingResult> results) { throw null; }
@@ -6562,9 +6398,7 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Indexes.Models.IndexedSharePointKnowledgeSourceParameters IndexedSharePointKnowledgeSourceParameters(string connectionString = null, Azure.Search.Documents.Models.IndexedSharePointContainerName containerName = default(Azure.Search.Documents.Models.IndexedSharePointContainerName), string query = null, Azure.Search.Documents.Indexes.Models.KnowledgeSourceIngestionParameters ingestionParameters = null, System.Collections.Generic.IReadOnlyDictionary<string, string> createdResources = null) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.IndexerChangeTrackingState IndexerChangeTrackingState(string allDocumentsInitialState, string allDocumentsFinalState, string resetDocumentsInitialState, string resetDocumentsFinalState) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.IndexerExecutionResult IndexerExecutionResult(Azure.Search.Documents.Indexes.Models.IndexerExecutionStatus status = Azure.Search.Documents.Indexes.Models.IndexerExecutionStatus.TransientFailure, Azure.Search.Documents.Indexes.Models.IndexerExecutionStatusDetail? statusDetail = default(Azure.Search.Documents.Indexes.Models.IndexerExecutionStatusDetail?), Azure.Search.Documents.Indexes.Models.IndexingMode? mode = default(Azure.Search.Documents.Indexes.Models.IndexingMode?), string errorMessage = null, System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.SearchIndexerError> errors = null, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.SearchIndexerWarning> warnings = null, int itemCount = 0, int failedItemCount = 0, string initialTrackingState = null, string finalTrackingState = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Indexes.Models.IndexerExecutionResult IndexerExecutionResult(Azure.Search.Documents.Indexes.Models.IndexerExecutionStatus status = Azure.Search.Documents.Indexes.Models.IndexerExecutionStatus.TransientFailure, string errorMessage = null, System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.SearchIndexerError> errors = null, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.SearchIndexerWarning> warnings = null, int itemCount = 0, int failedItemCount = 0, string initialTrackingState = null, string finalTrackingState = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Indexes.Models.IndexerExecutionResult IndexerExecutionResult(Azure.Search.Documents.Indexes.Models.IndexerExecutionStatus status, string errorMessage, System.DateTimeOffset? startTime, System.DateTimeOffset? endTime, System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Indexes.Models.SearchIndexerError> errors, System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Indexes.Models.SearchIndexerWarning> warnings, int itemCount, int failedItemCount, string initialTrackingState, string finalTrackingState) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.IndexerRuntime IndexerRuntime(long usedSeconds = (long)0, long? remainingSeconds = default(long?), System.DateTimeOffset beginningTime = default(System.DateTimeOffset), System.DateTimeOffset endingTime = default(System.DateTimeOffset)) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.IndexerState IndexerState(Azure.Search.Documents.Indexes.Models.IndexingMode? mode = default(Azure.Search.Documents.Indexes.Models.IndexingMode?), string allDocumentsInitialChangeTrackingState = null, string allDocumentsFinalChangeTrackingState = null, string resetDocumentsInitialChangeTrackingState = null, string resetDocumentsFinalChangeTrackingState = null, System.Collections.Generic.IEnumerable<string> resetDocumentKeys = null, System.Collections.Generic.IEnumerable<string> resetDataSourceDocumentIds = null) { throw null; }
@@ -6616,61 +6450,43 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Indexes.Models.ScoringFunction ScoringFunction(string type, string fieldName, double boost, Azure.Search.Documents.Indexes.Models.ScoringFunctionInterpolation? interpolation) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchAlias SearchAlias(string name = null, System.Collections.Generic.IList<string> indexes = null, string etag = null, System.Collections.Generic.IDictionary<string, System.BinaryData> serializedAdditionalRawData = null) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchIndex SearchIndex(string name = null, string description = null, System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SearchField> fields = null, System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.ScoringProfile> scoringProfiles = null, string defaultScoringProfile = null, Azure.Search.Documents.Indexes.Models.CorsOptions corsOptions = null, System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SearchSuggester> suggesters = null, System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.LexicalAnalyzer> analyzers = null, System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.LexicalTokenizer> tokenizers = null, System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.TokenFilter> tokenFilters = null, System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.CharFilter> charFilters = null, System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.LexicalNormalizer> normalizers = null, Azure.Search.Documents.Indexes.Models.SearchResourceEncryptionKey encryptionKey = null, Azure.Search.Documents.Indexes.Models.SimilarityAlgorithm similarity = null, Azure.Search.Documents.Indexes.Models.SemanticSearch semanticSearch = null, Azure.Search.Documents.Indexes.Models.VectorSearch vectorSearch = null, Azure.Search.Documents.Models.SearchIndexPermissionFilterOption permissionFilterOption = default(Azure.Search.Documents.Models.SearchIndexPermissionFilterOption), string etag = null, System.Collections.Generic.IDictionary<string, System.BinaryData> serializedAdditionalRawData = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Indexes.Models.SearchIndex SearchIndex(string name = null, string description = null, System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SearchField> fields = null, System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.ScoringProfile> scoringProfiles = null, string defaultScoringProfile = null, Azure.Search.Documents.Indexes.Models.CorsOptions corsOptions = null, System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SearchSuggester> suggesters = null, System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.LexicalAnalyzer> analyzers = null, System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.LexicalTokenizer> tokenizers = null, System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.TokenFilter> tokenFilters = null, System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.CharFilter> charFilters = null, System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.LexicalNormalizer> normalizers = null, Azure.Search.Documents.Indexes.Models.SearchResourceEncryptionKey encryptionKey = null, Azure.Search.Documents.Indexes.Models.SimilarityAlgorithm similarity = null, Azure.Search.Documents.Indexes.Models.SemanticSearch semanticSearch = null, Azure.Search.Documents.Indexes.Models.VectorSearch vectorSearch = null, string etag = null, System.Collections.Generic.IDictionary<string, System.BinaryData> serializedAdditionalRawData = null) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchIndexer SearchIndexer(string name = null, string description = null, string dataSourceName = null, string skillsetName = null, string targetIndexName = null, Azure.Search.Documents.Indexes.Models.IndexingSchedule schedule = null, Azure.Search.Documents.Indexes.Models.IndexingParameters parameters = null, System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.FieldMapping> fieldMappings = null, System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.FieldMapping> outputFieldMappings = null, bool? isDisabled = default(bool?), string etag = null, Azure.Search.Documents.Indexes.Models.SearchResourceEncryptionKey encryptionKey = null, Azure.Search.Documents.Indexes.Models.SearchIndexerCache cache = null, System.Collections.Generic.IDictionary<string, System.BinaryData> serializedAdditionalRawData = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Indexes.Models.SearchIndexer SearchIndexer(string name = null, string description = null, string dataSourceName = null, string skillsetName = null, string targetIndexName = null, Azure.Search.Documents.Indexes.Models.IndexingSchedule schedule = null, Azure.Search.Documents.Indexes.Models.IndexingParameters parameters = null, System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.FieldMapping> fieldMappings = null, System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.FieldMapping> outputFieldMappings = null, bool? isDisabled = default(bool?), string etag = null, Azure.Search.Documents.Indexes.Models.SearchResourceEncryptionKey encryptionKey = null, System.Collections.Generic.IDictionary<string, System.BinaryData> serializedAdditionalRawData = null) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection SearchIndexerDataSourceConnection(string name = null, string description = null, Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceType type = default(Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceType), string connectionString = null, Azure.Search.Documents.Indexes.Models.SearchIndexerDataContainer container = null, Azure.Search.Documents.Indexes.Models.DataChangeDetectionPolicy dataChangeDetectionPolicy = null, Azure.Search.Documents.Indexes.Models.DataDeletionDetectionPolicy dataDeletionDetectionPolicy = null, string etag = null, Azure.Search.Documents.Indexes.Models.SearchResourceEncryptionKey encryptionKey = null, System.Collections.Generic.IDictionary<string, System.BinaryData> serializedAdditionalRawData = null) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchIndexerError SearchIndexerError(string key, string errorMessage, int statusCode, string name, string details, string documentationLink) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchIndexerLimits SearchIndexerLimits(System.TimeSpan? maxRunTime, long? maxDocumentExtractionSize, long? maxDocumentContentCharactersToExtract) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchIndexerSkill SearchIndexerSkill(string oDataType, string name, string description, string context, System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Indexes.Models.SearchIndexerStatus SearchIndexerStatus(Azure.Search.Documents.Indexes.Models.IndexerStatus status = Azure.Search.Documents.Indexes.Models.IndexerStatus.Unknown, Azure.Search.Documents.Indexes.Models.IndexerExecutionResult lastResult = null, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.IndexerExecutionResult> executionHistory = null, Azure.Search.Documents.Indexes.Models.SearchIndexerLimits limits = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Indexes.Models.SearchIndexerStatus SearchIndexerStatus(Azure.Search.Documents.Indexes.Models.IndexerStatus status, Azure.Search.Documents.Indexes.Models.IndexerExecutionResult lastResult, System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Indexes.Models.IndexerExecutionResult> executionHistory, Azure.Search.Documents.Indexes.Models.SearchIndexerLimits limits) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Indexes.Models.SearchIndexerStatus SearchIndexerStatus(string name = null, Azure.Search.Documents.Indexes.Models.IndexerStatus status = Azure.Search.Documents.Indexes.Models.IndexerStatus.Unknown, Azure.Search.Documents.Indexes.Models.IndexerExecutionResult lastResult = null, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.IndexerExecutionResult> executionHistory = null, Azure.Search.Documents.Indexes.Models.SearchIndexerLimits limits = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Indexes.Models.SearchIndexerStatus SearchIndexerStatus(string name = null, Azure.Search.Documents.Indexes.Models.IndexerStatus status = Azure.Search.Documents.Indexes.Models.IndexerStatus.Unknown, Azure.Search.Documents.Indexes.Models.IndexerRuntime runtime = null, Azure.Search.Documents.Indexes.Models.IndexerExecutionResult lastResult = null, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.IndexerExecutionResult> executionHistory = null, Azure.Search.Documents.Indexes.Models.SearchIndexerLimits limits = null) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchIndexerStatus SearchIndexerStatus(string name = null, Azure.Search.Documents.Indexes.Models.IndexerStatus status = Azure.Search.Documents.Indexes.Models.IndexerStatus.Unknown, Azure.Search.Documents.Indexes.Models.IndexerRuntime runtime = null, Azure.Search.Documents.Indexes.Models.IndexerExecutionResult lastResult = null, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.IndexerExecutionResult> executionHistory = null, Azure.Search.Documents.Indexes.Models.SearchIndexerLimits limits = null, Azure.Search.Documents.Indexes.Models.IndexerState currentState = null) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchIndexerWarning SearchIndexerWarning(string key, string message, string name, string details, string documentationLink) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.KnowledgeSource SearchIndexKnowledgeSource(string name = null, string description = null, string kind = null, string eTag = null, Azure.Search.Documents.Indexes.Models.SearchResourceEncryptionKey encryptionKey = null, System.Collections.Generic.IDictionary<string, System.BinaryData> serializedAdditionalRawData = null, Azure.Search.Documents.Indexes.Models.SearchIndexKnowledgeSourceParameters searchIndexParameters = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Indexes.Models.SearchIndexStatistics SearchIndexStatistics(long documentCount, long storageSize) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchIndexStatistics SearchIndexStatistics(long documentCount = (long)0, long storageSize = (long)0, long vectorIndexSize = (long)0) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchResourceCounter SearchResourceCounter(long usage, long? quota) { throw null; }
         public static Azure.Search.Documents.Models.SearchResultsPage<T> SearchResultsPage<T>(Azure.Search.Documents.Models.SearchResults<T> results) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Models.SearchResults<T> SearchResults<T>(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.SearchResult<T>> values, long? totalCount, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<Azure.Search.Documents.Models.FacetResult>> facets, double? coverage, Azure.Response rawResponse) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Models.SearchResults<T> SearchResults<T>(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.SearchResult<T>> values, long? totalCount, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<Azure.Search.Documents.Models.FacetResult>> facets, double? coverage, Azure.Response rawResponse, Azure.Search.Documents.Models.SemanticSearchResults semanticSearch) { throw null; }
         public static Azure.Search.Documents.Models.SearchResults<T> SearchResults<T>(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.SearchResult<T>> values, long? totalCount, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<Azure.Search.Documents.Models.FacetResult>> facets, double? coverage, Azure.Response rawResponse, Azure.Search.Documents.Models.SemanticSearchResults semanticSearch, Azure.Search.Documents.Models.DebugInfo debugInfo) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Models.SearchResult<T> SearchResult<T>(T document, double? score, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>> highlights) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Models.SearchResult<T> SearchResult<T>(T document, double? score, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>> highlights, Azure.Search.Documents.Models.SemanticSearchResult semanticSearch) { throw null; }
         public static Azure.Search.Documents.Models.SearchResult<T> SearchResult<T>(T document, double? score, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>> highlights, Azure.Search.Documents.Models.SemanticSearchResult semanticSearch, Azure.Search.Documents.Models.DocumentDebugInfo documentDebugInfo) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Indexes.Models.SearchServiceCounters SearchServiceCounters(Azure.Search.Documents.Indexes.Models.SearchResourceCounter documentCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter indexCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter indexerCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter dataSourceCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter storageSizeCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter synonymMapCounter) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Indexes.Models.SearchServiceCounters SearchServiceCounters(Azure.Search.Documents.Indexes.Models.SearchResourceCounter documentCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter indexCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter indexerCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter dataSourceCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter storageSizeCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter synonymMapCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter skillsetCounter) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Indexes.Models.SearchServiceCounters SearchServiceCounters(Azure.Search.Documents.Indexes.Models.SearchResourceCounter documentCounter = null, Azure.Search.Documents.Indexes.Models.SearchResourceCounter indexCounter = null, Azure.Search.Documents.Indexes.Models.SearchResourceCounter indexerCounter = null, Azure.Search.Documents.Indexes.Models.SearchResourceCounter dataSourceCounter = null, Azure.Search.Documents.Indexes.Models.SearchResourceCounter storageSizeCounter = null, Azure.Search.Documents.Indexes.Models.SearchResourceCounter synonymMapCounter = null, Azure.Search.Documents.Indexes.Models.SearchResourceCounter skillsetCounter = null, Azure.Search.Documents.Indexes.Models.SearchResourceCounter vectorIndexSizeCounter = null) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchServiceCounters SearchServiceCounters(Azure.Search.Documents.Indexes.Models.SearchResourceCounter aliasCounter = null, Azure.Search.Documents.Indexes.Models.SearchResourceCounter documentCounter = null, Azure.Search.Documents.Indexes.Models.SearchResourceCounter indexCounter = null, Azure.Search.Documents.Indexes.Models.SearchResourceCounter indexerCounter = null, Azure.Search.Documents.Indexes.Models.SearchResourceCounter dataSourceCounter = null, Azure.Search.Documents.Indexes.Models.SearchResourceCounter storageSizeCounter = null, Azure.Search.Documents.Indexes.Models.SearchResourceCounter synonymMapCounter = null, Azure.Search.Documents.Indexes.Models.SearchResourceCounter skillsetCounter = null, Azure.Search.Documents.Indexes.Models.SearchResourceCounter vectorIndexSizeCounter = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Indexes.Models.SearchServiceLimits SearchServiceLimits(int? maxFieldsPerIndex, int? maxFieldNestingDepthPerIndex, int? maxComplexCollectionFieldsPerIndex, int? maxComplexObjectsInCollectionsPerDocument) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Indexes.Models.SearchServiceLimits SearchServiceLimits(int? maxFieldsPerIndex, int? maxFieldNestingDepthPerIndex, int? maxComplexCollectionFieldsPerIndex, int? maxComplexObjectsInCollectionsPerDocument, long? maxStoragePerIndexInBytes) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchServiceLimits SearchServiceLimits(int? maxFieldsPerIndex = default(int?), int? maxFieldNestingDepthPerIndex = default(int?), int? maxComplexCollectionFieldsPerIndex = default(int?), int? maxComplexObjectsInCollectionsPerDocument = default(int?), long? maxStoragePerIndexInBytes = default(long?), long? maxCumulativeIndexerRuntimeSeconds = default(long?)) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchServiceStatistics SearchServiceStatistics(Azure.Search.Documents.Indexes.Models.SearchServiceCounters counters, Azure.Search.Documents.Indexes.Models.SearchServiceLimits limits) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchServiceStatistics SearchServiceStatistics(Azure.Search.Documents.Indexes.Models.SearchServiceCounters counters = null, Azure.Search.Documents.Indexes.Models.ServiceIndexersRuntime indexersRuntime = null, Azure.Search.Documents.Indexes.Models.SearchServiceLimits limits = null) { throw null; }
         public static Azure.Search.Documents.Models.SearchSuggestion<T> SearchSuggestion<T>(T document, string text) { throw null; }
         public static Azure.Search.Documents.Models.SemanticDebugInfo SemanticDebugInfo(Azure.Search.Documents.Models.QueryResultDocumentSemanticField titleField = null, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.QueryResultDocumentSemanticField> contentFields = null, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.QueryResultDocumentSemanticField> keywordFields = null, Azure.Search.Documents.Models.QueryResultDocumentRerankerInput rerankerInput = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Models.SemanticSearchResult SemanticSearchResult(double? rerankerScore, System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Models.QueryCaptionResult> captions) { throw null; }
         public static Azure.Search.Documents.Models.SemanticSearchResult SemanticSearchResult(double? rerankerScore, double? rerankerBoostedScore, System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Models.QueryCaptionResult> captions) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Models.SemanticSearchResults SemanticSearchResults(System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Models.QueryAnswerResult> answers, Azure.Search.Documents.Models.SemanticErrorReason? errorReason, Azure.Search.Documents.Models.SemanticSearchResultsType? resultsType) { throw null; }
         public static Azure.Search.Documents.Models.SemanticSearchResults SemanticSearchResults(System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Models.QueryAnswerResult> answers, Azure.Search.Documents.Models.SemanticErrorReason? errorReason, Azure.Search.Documents.Models.SemanticSearchResultsType? resultsType, Azure.Search.Documents.Models.SemanticQueryRewritesResultType? semanticQueryRewritesResultType) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.ServiceIndexersRuntime ServiceIndexersRuntime(long usedSeconds = (long)0, long? remainingSeconds = default(long?), System.DateTimeOffset beginningTime = default(System.DateTimeOffset), System.DateTimeOffset endingTime = default(System.DateTimeOffset)) { throw null; }
@@ -6762,9 +6578,7 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Models.SemanticErrorMode Fail { get { throw null; } }
         public static Azure.Search.Documents.Models.SemanticErrorMode Partial { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Models.SemanticErrorMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Models.SemanticErrorMode left, Azure.Search.Documents.Models.SemanticErrorMode right) { throw null; }
         public static implicit operator Azure.Search.Documents.Models.SemanticErrorMode (string value) { throw null; }
@@ -6781,9 +6595,7 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Models.SemanticErrorReason MaxWaitExceeded { get { throw null; } }
         public static Azure.Search.Documents.Models.SemanticErrorReason Transient { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Models.SemanticErrorReason other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Models.SemanticErrorReason left, Azure.Search.Documents.Models.SemanticErrorReason right) { throw null; }
         public static implicit operator Azure.Search.Documents.Models.SemanticErrorReason (string value) { throw null; }
@@ -6800,9 +6612,7 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Models.SemanticFieldState Unused { get { throw null; } }
         public static Azure.Search.Documents.Models.SemanticFieldState Used { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Models.SemanticFieldState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Models.SemanticFieldState left, Azure.Search.Documents.Models.SemanticFieldState right) { throw null; }
         public static implicit operator Azure.Search.Documents.Models.SemanticFieldState (string value) { throw null; }
@@ -6817,9 +6627,7 @@ namespace Azure.Search.Documents.Models
         public SemanticQueryRewritesResultType(string value) { throw null; }
         public static Azure.Search.Documents.Models.SemanticQueryRewritesResultType OriginalQueryOnly { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Models.SemanticQueryRewritesResultType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Models.SemanticQueryRewritesResultType left, Azure.Search.Documents.Models.SemanticQueryRewritesResultType right) { throw null; }
         public static implicit operator Azure.Search.Documents.Models.SemanticQueryRewritesResultType (string value) { throw null; }
@@ -6862,9 +6670,7 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Models.SemanticSearchResultsType BaseResults { get { throw null; } }
         public static Azure.Search.Documents.Models.SemanticSearchResultsType RerankedResults { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Models.SemanticSearchResultsType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Models.SemanticSearchResultsType left, Azure.Search.Documents.Models.SemanticSearchResultsType right) { throw null; }
         public static implicit operator Azure.Search.Documents.Models.SemanticSearchResultsType (string value) { throw null; }
@@ -6916,9 +6722,7 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Models.VectorFilterMode PreFilter { get { throw null; } }
         public static Azure.Search.Documents.Models.VectorFilterMode StrictPostFilter { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Models.VectorFilterMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Models.VectorFilterMode left, Azure.Search.Documents.Models.VectorFilterMode right) { throw null; }
         public static implicit operator Azure.Search.Documents.Models.VectorFilterMode (string value) { throw null; }

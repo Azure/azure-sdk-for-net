@@ -14,49 +14,15 @@ namespace Azure.AI.Language.Conversations.Models
     /// <summary> Summary Results. </summary>
     public partial class SummaryResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SummaryResult"/>. </summary>
         /// <param name="conversations"> array of conversations. </param>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversations"/>, <paramref name="errors"/> or <paramref name="modelVersion"/> is null. </exception>
         internal SummaryResult(IEnumerable<ConversationsSummaryResult> conversations, IEnumerable<DocumentError> errors, string modelVersion)
         {
-            Argument.AssertNotNull(conversations, nameof(conversations));
-            Argument.AssertNotNull(errors, nameof(errors));
-            Argument.AssertNotNull(modelVersion, nameof(modelVersion));
-
             Conversations = conversations.ToList();
             Errors = errors.ToList();
             ModelVersion = modelVersion;
@@ -67,27 +33,25 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> statistics. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SummaryResult(IReadOnlyList<ConversationsSummaryResult> conversations, IReadOnlyList<DocumentError> errors, RequestStatistics statistics, string modelVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SummaryResult(IList<ConversationsSummaryResult> conversations, IList<DocumentError> errors, RequestStatistics statistics, string modelVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Conversations = conversations;
             Errors = errors;
             Statistics = statistics;
             ModelVersion = modelVersion;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SummaryResult"/> for deserialization. </summary>
-        internal SummaryResult()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> array of conversations. </summary>
-        public IReadOnlyList<ConversationsSummaryResult> Conversations { get; }
+        public IList<ConversationsSummaryResult> Conversations { get; }
+
         /// <summary> Errors by document id. </summary>
-        public IReadOnlyList<DocumentError> Errors { get; }
+        public IList<DocumentError> Errors { get; }
+
         /// <summary> statistics. </summary>
         public RequestStatistics Statistics { get; }
+
         /// <summary> This field indicates which model is used for scoring. </summary>
         public string ModelVersion { get; }
     }

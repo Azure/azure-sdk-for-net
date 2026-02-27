@@ -117,7 +117,12 @@ namespace Azure.Generator.Providers
                 Declare("result", ResponseModelType, responseVariable.CastTo(ResponseModelType), out var resultVariable),
             };
 
-            var nextPageExpression = _paging.NextLink != null ? nextPageVariable.NullConditional().Property("AbsoluteUri") : nextPageVariable;
+            ValueExpression nextPageExpression = _paging.NextLink != null
+                ? new TernaryConditionalExpression(
+                    nextPageVariable.NullConditional().Property(nameof(Uri.IsAbsoluteUri)).Equal(True),
+                    nextPageVariable.Property(nameof(Uri.AbsoluteUri)),
+                    nextPageVariable.NullConditional().Property(nameof(Uri.OriginalString)))
+                : nextPageVariable;
             if (_isProtocol)
             {
                 // Convert items to BinaryData

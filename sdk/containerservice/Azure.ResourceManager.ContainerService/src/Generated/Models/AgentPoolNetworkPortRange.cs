@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> The port range. </summary>
+    /// <summary>
+    /// The port range.
+    /// Serialized Name: PortRange
+    /// </summary>
     public partial class AgentPoolNetworkPortRange
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AgentPoolNetworkPortRange"/>. </summary>
-        /// <param name="portStart"> The minimum port that is included in the range. It should be ranged from 1 to 65535, and be less than or equal to portEnd. </param>
-        /// <param name="portEnd"> The maximum port that is included in the range. It should be ranged from 1 to 65535, and be greater than or equal to portStart. </param>
-        /// <param name="protocol"> The network protocol of the port. </param>
+        /// <param name="portStart">
+        /// The minimum port that is included in the range. It should be ranged from 1 to 65535, and be less than or equal to portEnd.
+        /// Serialized Name: PortRange.portStart
+        /// </param>
+        /// <param name="portEnd">
+        /// The maximum port that is included in the range. It should be ranged from 1 to 65535, and be greater than or equal to portStart.
+        /// Serialized Name: PortRange.portEnd
+        /// </param>
+        /// <param name="protocol">
+        /// The network protocol of the port.
+        /// Serialized Name: PortRange.protocol
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AgentPoolNetworkPortRange(int? portStart, int? portEnd, AgentPoolNetworkPortProtocol? protocol, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,13 +75,22 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The minimum port that is included in the range. It should be ranged from 1 to 65535, and be less than or equal to portEnd. </summary>
+        /// <summary>
+        /// The minimum port that is included in the range. It should be ranged from 1 to 65535, and be less than or equal to portEnd.
+        /// Serialized Name: PortRange.portStart
+        /// </summary>
         [WirePath("portStart")]
         public int? PortStart { get; set; }
-        /// <summary> The maximum port that is included in the range. It should be ranged from 1 to 65535, and be greater than or equal to portStart. </summary>
+        /// <summary>
+        /// The maximum port that is included in the range. It should be ranged from 1 to 65535, and be greater than or equal to portStart.
+        /// Serialized Name: PortRange.portEnd
+        /// </summary>
         [WirePath("portEnd")]
         public int? PortEnd { get; set; }
-        /// <summary> The network protocol of the port. </summary>
+        /// <summary>
+        /// The network protocol of the port.
+        /// Serialized Name: PortRange.protocol
+        /// </summary>
         [WirePath("protocol")]
         public AgentPoolNetworkPortProtocol? Protocol { get; set; }
     }

@@ -4,9 +4,38 @@
 
 ### Features Added
 
+* Add ability to specify EnableStandardMetrics and EnablePerfCounters
+  ([#56438](https://github.com/Azure/azure-sdk-for-net/pull/56438))
+
 ### Breaking Changes
 
+*  **Default Sampler Changed**: The default sampling behavior has been changed from
+  `ApplicationInsightsSampler` with 100% sampling (all traces sampled) to
+  `RateLimitedSampler` with 5.0 traces per second. This change significantly
+  reduces telemetry volume for high-traffic applications and provides better
+  cost optimization out of the box.
+  **Impact**: Applications with more than 5 requests per second will see fewer
+  traces exported by default.
+  **Migration**: To maintain the previous behavior (100% sampling), explicitly
+  configure the sampler:
+
+  ```csharp
+  // Option 1: Set SamplingRatio and clear TracesPerSecond
+  builder.Services.AddOpenTelemetry()
+      .UseAzureMonitor(options =>
+      {
+          options.SamplingRatio = 1.0f;
+          options.TracesPerSecond = null;
+      });
+  // Option 2: Use environment variables
+  // OTEL_TRACES_SAMPLER=microsoft.fixed_percentage
+  // OTEL_TRACES_SAMPLER_ARG=1.0
+  ```
 ### Bugs Fixed
+
+* Fixed an issue where Azure Container Apps instances were showing VM instance GUIDs
+  instead of replica names in the Role Instance field.
+  ([#54586](https://github.com/Azure/azure-sdk-for-net/pull/54586))
 
 ### Other Changes
 
@@ -52,7 +81,7 @@
   - `preview.item.dropped.count`
   - `preview.item.retry.count`
   ([#53010](https://github.com/Azure/azure-sdk-for-net/pull/53010))
-* Add `enduser.pseudo.id` as ai.user.id 
+* Add `enduser.pseudo.id` as ai.user.id
 ([#52722](https://github.com/Azure/azure-sdk-for-net/pull/52722))
 * Add `ai.location.ip` mapping for all telemetry types ([#52211](https://github.com/Azure/azure-sdk-for-net/pull/52211))
 

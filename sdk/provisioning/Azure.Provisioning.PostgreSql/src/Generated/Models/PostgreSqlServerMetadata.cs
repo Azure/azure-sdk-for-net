@@ -26,7 +26,7 @@ public partial class PostgreSqlServerMetadata : ProvisionableConstruct
     private BicepValue<AzureLocation>? _location;
 
     /// <summary>
-    /// Version for database engine.
+    /// Major version of PostgreSQL database engine.
     /// </summary>
     public BicepValue<string> Version 
     {
@@ -35,7 +35,7 @@ public partial class PostgreSqlServerMetadata : ProvisionableConstruct
     private BicepValue<string>? _version;
 
     /// <summary>
-    /// Storage size in MB for database server.
+    /// Storage size (in MB) for database server.
     /// </summary>
     public BicepValue<int> StorageMb 
     {
@@ -44,7 +44,8 @@ public partial class PostgreSqlServerMetadata : ProvisionableConstruct
     private BicepValue<int>? _storageMb;
 
     /// <summary>
-    /// SKU for the database server. This object is empty for PG single server.
+    /// Compute tier and size of the database server. This object is empty for
+    /// an Azure Database for PostgreSQL single server.
     /// </summary>
     public PostgreSqlFlexibleServersServerSku ServerSku 
     {

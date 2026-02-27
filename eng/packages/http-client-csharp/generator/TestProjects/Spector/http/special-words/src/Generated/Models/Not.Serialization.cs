@@ -16,6 +16,19 @@ namespace SpecialWords._Models
     {
         internal Not() => throw null;
 
+        protected virtual Not PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        BinaryData IPersistableModel<Not>.Write(ModelReaderWriterOptions options) => throw null;
+
+        Not IPersistableModel<Not>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        string IPersistableModel<Not>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
+        /// <param name="not"> The <see cref="Not"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(Not @not) => throw null;
+
         void IJsonModel<Not>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -23,18 +36,5 @@ namespace SpecialWords._Models
         Not IJsonModel<Not>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual Not JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<Not>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
-        Not IPersistableModel<Not>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual Not PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        string IPersistableModel<Not>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        /// <param name="not"> The <see cref="Not"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(Not @not) => throw null;
     }
 }

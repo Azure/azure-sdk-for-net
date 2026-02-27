@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PureStorageBlock
 {
@@ -24,69 +25,75 @@ namespace Azure.ResourceManager.PureStorageBlock
     /// </summary>
     public partial class PureStorageAvsStorageContainerCollection : ArmCollection, IEnumerable<PureStorageAvsStorageContainerResource>, IAsyncEnumerable<PureStorageAvsStorageContainerResource>
     {
-        private readonly ClientDiagnostics _pureStorageAvsStorageContainerAvsStorageContainersClientDiagnostics;
-        private readonly AvsStorageContainersRestOperations _pureStorageAvsStorageContainerAvsStorageContainersRestClient;
+        private readonly ClientDiagnostics _avsStorageContainersClientDiagnostics;
+        private readonly AvsStorageContainers _avsStorageContainersRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="PureStorageAvsStorageContainerCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of PureStorageAvsStorageContainerCollection for mocking. </summary>
         protected PureStorageAvsStorageContainerCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PureStorageAvsStorageContainerCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PureStorageAvsStorageContainerCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PureStorageAvsStorageContainerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _pureStorageAvsStorageContainerAvsStorageContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock", PureStorageAvsStorageContainerResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(PureStorageAvsStorageContainerResource.ResourceType, out string pureStorageAvsStorageContainerAvsStorageContainersApiVersion);
-            _pureStorageAvsStorageContainerAvsStorageContainersRestClient = new AvsStorageContainersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, pureStorageAvsStorageContainerAvsStorageContainersApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(PureStorageAvsStorageContainerResource.ResourceType, out string pureStorageAvsStorageContainerApiVersion);
+            _avsStorageContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock", PureStorageAvsStorageContainerResource.ResourceType.Namespace, Diagnostics);
+            _avsStorageContainersRestClient = new AvsStorageContainers(_avsStorageContainersClientDiagnostics, Pipeline, Endpoint, pureStorageAvsStorageContainerApiVersion ?? "2024-11-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != PureStoragePoolResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PureStoragePoolResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PureStoragePoolResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get an AVS storage container
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsStorageContainers/{storageContainerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsStorageContainers/{storageContainerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AvsStorageContainer_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AvsStorageContainers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PureStorageAvsStorageContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageContainerName"> Name of the storage container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<PureStorageAvsStorageContainerResource>> GetAsync(string storageContainerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageContainerName, nameof(storageContainerName));
 
-            using var scope = _pureStorageAvsStorageContainerAvsStorageContainersClientDiagnostics.CreateScope("PureStorageAvsStorageContainerCollection.Get");
+            using DiagnosticScope scope = _avsStorageContainersClientDiagnostics.CreateScope("PureStorageAvsStorageContainerCollection.Get");
             scope.Start();
             try
             {
-                var response = await _pureStorageAvsStorageContainerAvsStorageContainersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageContainerName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _avsStorageContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageContainerName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PureStorageAvsStorageContainerData> response = Response.FromValue(PureStorageAvsStorageContainerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PureStorageAvsStorageContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -100,38 +107,42 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// Get an AVS storage container
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsStorageContainers/{storageContainerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsStorageContainers/{storageContainerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AvsStorageContainer_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AvsStorageContainers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PureStorageAvsStorageContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageContainerName"> Name of the storage container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<PureStorageAvsStorageContainerResource> Get(string storageContainerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageContainerName, nameof(storageContainerName));
 
-            using var scope = _pureStorageAvsStorageContainerAvsStorageContainersClientDiagnostics.CreateScope("PureStorageAvsStorageContainerCollection.Get");
+            using DiagnosticScope scope = _avsStorageContainersClientDiagnostics.CreateScope("PureStorageAvsStorageContainerCollection.Get");
             scope.Start();
             try
             {
-                var response = _pureStorageAvsStorageContainerAvsStorageContainersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageContainerName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _avsStorageContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageContainerName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PureStorageAvsStorageContainerData> response = Response.FromValue(PureStorageAvsStorageContainerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PureStorageAvsStorageContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,50 +156,44 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// List AVS storage containers by storage pool
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsStorageContainers</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsStorageContainers. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AvsStorageContainer_ListByStoragePool</description>
+        /// <term> Operation Id. </term>
+        /// <description> AvsStorageContainers_ListByStoragePool. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PureStorageAvsStorageContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PureStorageAvsStorageContainerResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PureStorageAvsStorageContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PureStorageAvsStorageContainerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _pureStorageAvsStorageContainerAvsStorageContainersRestClient.CreateListByStoragePoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _pureStorageAvsStorageContainerAvsStorageContainersRestClient.CreateListByStoragePoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PureStorageAvsStorageContainerResource(Client, PureStorageAvsStorageContainerData.DeserializePureStorageAvsStorageContainerData(e)), _pureStorageAvsStorageContainerAvsStorageContainersClientDiagnostics, Pipeline, "PureStorageAvsStorageContainerCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<PureStorageAvsStorageContainerData, PureStorageAvsStorageContainerResource>(new AvsStorageContainersGetByStoragePoolAsyncCollectionResultOfT(_avsStorageContainersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new PureStorageAvsStorageContainerResource(Client, data));
         }
 
         /// <summary>
         /// List AVS storage containers by storage pool
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsStorageContainers</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsStorageContainers. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AvsStorageContainer_ListByStoragePool</description>
+        /// <term> Operation Id. </term>
+        /// <description> AvsStorageContainers_ListByStoragePool. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PureStorageAvsStorageContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,45 +201,61 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <returns> A collection of <see cref="PureStorageAvsStorageContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PureStorageAvsStorageContainerResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _pureStorageAvsStorageContainerAvsStorageContainersRestClient.CreateListByStoragePoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _pureStorageAvsStorageContainerAvsStorageContainersRestClient.CreateListByStoragePoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PureStorageAvsStorageContainerResource(Client, PureStorageAvsStorageContainerData.DeserializePureStorageAvsStorageContainerData(e)), _pureStorageAvsStorageContainerAvsStorageContainersClientDiagnostics, Pipeline, "PureStorageAvsStorageContainerCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<PureStorageAvsStorageContainerData, PureStorageAvsStorageContainerResource>(new AvsStorageContainersGetByStoragePoolCollectionResultOfT(_avsStorageContainersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new PureStorageAvsStorageContainerResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsStorageContainers/{storageContainerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsStorageContainers/{storageContainerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AvsStorageContainer_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AvsStorageContainers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PureStorageAvsStorageContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageContainerName"> Name of the storage container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string storageContainerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageContainerName, nameof(storageContainerName));
 
-            using var scope = _pureStorageAvsStorageContainerAvsStorageContainersClientDiagnostics.CreateScope("PureStorageAvsStorageContainerCollection.Exists");
+            using DiagnosticScope scope = _avsStorageContainersClientDiagnostics.CreateScope("PureStorageAvsStorageContainerCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _pureStorageAvsStorageContainerAvsStorageContainersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageContainerName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _avsStorageContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageContainerName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PureStorageAvsStorageContainerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PureStorageAvsStorageContainerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PureStorageAvsStorageContainerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,36 +269,50 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsStorageContainers/{storageContainerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsStorageContainers/{storageContainerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AvsStorageContainer_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AvsStorageContainers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PureStorageAvsStorageContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageContainerName"> Name of the storage container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string storageContainerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageContainerName, nameof(storageContainerName));
 
-            using var scope = _pureStorageAvsStorageContainerAvsStorageContainersClientDiagnostics.CreateScope("PureStorageAvsStorageContainerCollection.Exists");
+            using DiagnosticScope scope = _avsStorageContainersClientDiagnostics.CreateScope("PureStorageAvsStorageContainerCollection.Exists");
             scope.Start();
             try
             {
-                var response = _pureStorageAvsStorageContainerAvsStorageContainersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageContainerName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _avsStorageContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageContainerName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PureStorageAvsStorageContainerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PureStorageAvsStorageContainerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PureStorageAvsStorageContainerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -291,38 +326,54 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsStorageContainers/{storageContainerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsStorageContainers/{storageContainerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AvsStorageContainer_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AvsStorageContainers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PureStorageAvsStorageContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageContainerName"> Name of the storage container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<PureStorageAvsStorageContainerResource>> GetIfExistsAsync(string storageContainerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageContainerName, nameof(storageContainerName));
 
-            using var scope = _pureStorageAvsStorageContainerAvsStorageContainersClientDiagnostics.CreateScope("PureStorageAvsStorageContainerCollection.GetIfExists");
+            using DiagnosticScope scope = _avsStorageContainersClientDiagnostics.CreateScope("PureStorageAvsStorageContainerCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _pureStorageAvsStorageContainerAvsStorageContainersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageContainerName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _avsStorageContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageContainerName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PureStorageAvsStorageContainerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PureStorageAvsStorageContainerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PureStorageAvsStorageContainerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<PureStorageAvsStorageContainerResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new PureStorageAvsStorageContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -336,38 +387,54 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsStorageContainers/{storageContainerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsStorageContainers/{storageContainerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AvsStorageContainer_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AvsStorageContainers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PureStorageAvsStorageContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageContainerName"> Name of the storage container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<PureStorageAvsStorageContainerResource> GetIfExists(string storageContainerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageContainerName, nameof(storageContainerName));
 
-            using var scope = _pureStorageAvsStorageContainerAvsStorageContainersClientDiagnostics.CreateScope("PureStorageAvsStorageContainerCollection.GetIfExists");
+            using DiagnosticScope scope = _avsStorageContainersClientDiagnostics.CreateScope("PureStorageAvsStorageContainerCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _pureStorageAvsStorageContainerAvsStorageContainersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageContainerName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _avsStorageContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageContainerName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PureStorageAvsStorageContainerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PureStorageAvsStorageContainerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PureStorageAvsStorageContainerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<PureStorageAvsStorageContainerResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new PureStorageAvsStorageContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,6 +454,7 @@ namespace Azure.ResourceManager.PureStorageBlock
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<PureStorageAvsStorageContainerResource> IAsyncEnumerable<PureStorageAvsStorageContainerResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

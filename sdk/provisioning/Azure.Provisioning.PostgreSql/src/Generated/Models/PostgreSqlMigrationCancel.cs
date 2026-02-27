@@ -6,7 +6,7 @@
 namespace Azure.Provisioning.PostgreSql;
 
 /// <summary>
-/// To trigger cancel for entire migration we need to send this flag as True.
+/// Indicates if cancel must be triggered for the entire migration.
 /// </summary>
 public enum PostgreSqlMigrationCancel
 {

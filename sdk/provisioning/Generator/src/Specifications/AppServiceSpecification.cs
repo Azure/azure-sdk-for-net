@@ -48,6 +48,7 @@ public class AppServiceSpecification() :
             r.ResourceType = "Microsoft.Web/sites/config";
         });
         CustomizeProperty<SiteAuthSettingsV2>("Name", p => { p.GenerateDefaultValue = true; p.HideAccessors = true; p.IsReadOnly = false; }); // must be `authsettingsV2`
+        CustomizeProperty<SlotConfigNamesResource>("Name", p => { p.GenerateDefaultValue = true; p.HideAccessors = true; p.IsReadOnly = false; }); // must be `slotConfigNames`
 
         // Not generated today:
         // CustomizePropertyIsoDuration<MetricAvailability>("BlobDuration");

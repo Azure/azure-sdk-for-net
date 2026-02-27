@@ -361,16 +361,15 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new SystemAssignedServiceIdentity(principalId, tenantId, @type, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The type used for update operations of the Namespace. </summary>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="namespaceUpdateMessagingEndpoints"> Dictionary of messaging endpoints. </param>
         /// <returns> A new <see cref="Models.DeviceRegistryNamespacePatch"/> instance for mocking. </returns>
-        public static DeviceRegistryNamespacePatch DeviceRegistryNamespacePatch(SystemAssignedServiceIdentity identity = default, IDictionary<string, string> tags = default, NamespaceUpdateProperties properties = default)
+        public static DeviceRegistryNamespacePatch DeviceRegistryNamespacePatch(SystemAssignedServiceIdentity identity = default, IDictionary<string, string> tags = default, IDictionary<string, MessagingEndpoint> namespaceUpdateMessagingEndpoints = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DeviceRegistryNamespacePatch(identity, tags, properties, additionalBinaryDataProperties: null);
+            return new DeviceRegistryNamespacePatch(identity, tags, namespaceUpdateMessagingEndpoints is null ? default : new NamespaceUpdateProperties(new Messaging(namespaceUpdateMessagingEndpoints, null), null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Request body for the migrate resources operation in to Namespace resource. </summary>

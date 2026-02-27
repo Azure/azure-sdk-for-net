@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
 using Microsoft.Identity.Client;
 using NUnit.Framework;
-using Azure.Core.TestFramework;
 
 namespace Azure.Identity.Tests
 {
@@ -39,13 +39,13 @@ namespace Azure.Identity.Tests
                 new CredentialPipeline(new HttpPipeline(new MockTransport()), new ClientDiagnostics(Moq.Mock.Of<ClientOptions>())),
                 "tenant",
                 "client",
-                new InteractiveBrowserCredentialOptions(){ IsUnsafeSupportLoggingEnabled = logPii });
+                new InteractiveBrowserCredentialOptions() { IsUnsafeSupportLoggingEnabled = logPii });
 
             var client_2 = new MockMsalClient(
                 new CredentialPipeline(new HttpPipeline(new MockTransport()), new ClientDiagnostics(Moq.Mock.Of<ClientOptions>())),
                 "tenant",
                 "client",
-                new InteractiveBrowserCredentialOptions(){ IsUnsafeSupportLoggingEnabled = false }); // never log PII
+                new InteractiveBrowserCredentialOptions() { IsUnsafeSupportLoggingEnabled = false }); // never log PII
 
             Assert.AreEqual(logPii, client_1.IsSupportLoggingEnabled);
 

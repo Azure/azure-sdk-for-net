@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DevOpsInfrastructure;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
     public readonly partial struct CheckNameAvailabilityReason : IEquatable<CheckNameAvailabilityReason>
     {
         private readonly string _value;
+        /// <summary> The name is invalid. </summary>
+        private const string InvalidValue = "Invalid";
+        /// <summary> The name already exists. </summary>
+        private const string AlreadyExistsValue = "AlreadyExists";
 
         /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CheckNameAvailabilityReason(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InvalidValue = "Invalid";
-        private const string AlreadyExistsValue = "AlreadyExists";
+            _value = value;
+        }
 
         /// <summary> The name is invalid. </summary>
         public static CheckNameAvailabilityReason Invalid { get; } = new CheckNameAvailabilityReason(InvalidValue);
+
         /// <summary> The name already exists. </summary>
         public static CheckNameAvailabilityReason AlreadyExists { get; } = new CheckNameAvailabilityReason(AlreadyExistsValue);
+
         /// <summary> Determines if two <see cref="CheckNameAvailabilityReason"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CheckNameAvailabilityReason left, CheckNameAvailabilityReason right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CheckNameAvailabilityReason"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CheckNameAvailabilityReason left, CheckNameAvailabilityReason right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CheckNameAvailabilityReason"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CheckNameAvailabilityReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CheckNameAvailabilityReason(string value) => new CheckNameAvailabilityReason(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CheckNameAvailabilityReason"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CheckNameAvailabilityReason?(string value) => value == null ? null : new CheckNameAvailabilityReason(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CheckNameAvailabilityReason other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CheckNameAvailabilityReason other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

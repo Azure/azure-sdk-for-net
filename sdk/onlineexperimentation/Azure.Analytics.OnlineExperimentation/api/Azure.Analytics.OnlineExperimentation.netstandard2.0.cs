@@ -47,9 +47,7 @@ namespace Azure.Analytics.OnlineExperimentation
         public static Azure.Analytics.OnlineExperimentation.DesiredDirection Increase { get { throw null; } }
         public static Azure.Analytics.OnlineExperimentation.DesiredDirection Neutral { get { throw null; } }
         public bool Equals(Azure.Analytics.OnlineExperimentation.DesiredDirection other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.OnlineExperimentation.DesiredDirection left, Azure.Analytics.OnlineExperimentation.DesiredDirection right) { throw null; }
         public static implicit operator Azure.Analytics.OnlineExperimentation.DesiredDirection (string value) { throw null; }
@@ -68,9 +66,7 @@ namespace Azure.Analytics.OnlineExperimentation
         public static Azure.Analytics.OnlineExperimentation.DiagnosticCode InvalidExperimentMetricDefinition { get { throw null; } }
         public static Azure.Analytics.OnlineExperimentation.DiagnosticCode UnsupportedEventCondition { get { throw null; } }
         public bool Equals(Azure.Analytics.OnlineExperimentation.DiagnosticCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.OnlineExperimentation.DiagnosticCode left, Azure.Analytics.OnlineExperimentation.DiagnosticCode right) { throw null; }
         public static implicit operator Azure.Analytics.OnlineExperimentation.DiagnosticCode (string value) { throw null; }
@@ -191,9 +187,7 @@ namespace Azure.Analytics.OnlineExperimentation
         public static Azure.Analytics.OnlineExperimentation.LifecycleStage Active { get { throw null; } }
         public static Azure.Analytics.OnlineExperimentation.LifecycleStage Inactive { get { throw null; } }
         public bool Equals(Azure.Analytics.OnlineExperimentation.LifecycleStage other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.OnlineExperimentation.LifecycleStage left, Azure.Analytics.OnlineExperimentation.LifecycleStage right) { throw null; }
         public static implicit operator Azure.Analytics.OnlineExperimentation.LifecycleStage (string value) { throw null; }
@@ -240,10 +234,10 @@ namespace Azure.Analytics.OnlineExperimentation
         public virtual Azure.Response<Azure.Analytics.OnlineExperimentation.ExperimentMetric> GetMetric(string experimentMetricId, Azure.RequestConditions requestConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetMetricAsync(string experimentMetricId, Azure.RequestConditions requestConditions, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.OnlineExperimentation.ExperimentMetric>> GetMetricAsync(string experimentMetricId, Azure.RequestConditions requestConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetMetrics(int? top, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.Analytics.OnlineExperimentation.ExperimentMetric> GetMetrics(int? top = default(int?), int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetMetricsAsync(int? top, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Analytics.OnlineExperimentation.ExperimentMetric> GetMetricsAsync(int? top = default(int?), int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetMetrics(int? maxCount, int? skip, int? maxPageSize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Analytics.OnlineExperimentation.ExperimentMetric> GetMetrics(int? maxCount = default(int?), int? skip = default(int?), int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetMetricsAsync(int? maxCount, int? skip, int? maxPageSize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Analytics.OnlineExperimentation.ExperimentMetric> GetMetricsAsync(int? maxCount = default(int?), int? skip = default(int?), int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.OnlineExperimentation.ExperimentMetric> UpdateMetric(string experimentMetricId, Azure.Analytics.OnlineExperimentation.ExperimentMetricUpdate metric, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.OnlineExperimentation.ExperimentMetric>> UpdateMetricAsync(string experimentMetricId, Azure.Analytics.OnlineExperimentation.ExperimentMetricUpdate metric, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.OnlineExperimentation.ExperimentMetricValidationResult> ValidateMetric(Azure.Analytics.OnlineExperimentation.ExperimentMetric body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

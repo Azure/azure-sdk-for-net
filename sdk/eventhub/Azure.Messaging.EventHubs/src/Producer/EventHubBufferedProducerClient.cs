@@ -1130,18 +1130,18 @@ namespace Azure.Messaging.EventHubs.Producer
                     }
                     else
                     {
-                       // Publishing should cancel any active send operations and prioritize the clear.
+                        // Publishing should cancel any active send operations and prioritize the clear.
 
-                       try
-                       {
-                           await StopPublishingAsync(cancelActiveSendOperations: true, cancellationToken).ConfigureAwait(false);
-                       }
-                       catch (OperationCanceledException)
-                       {
-                           // This is expected and should not impact the clear.
-                       }
+                        try
+                        {
+                            await StopPublishingAsync(cancelActiveSendOperations: true, cancellationToken).ConfigureAwait(false);
+                        }
+                        catch (OperationCanceledException)
+                        {
+                            // This is expected and should not impact the clear.
+                        }
 
-                       ClearInternal(CancellationToken.None);
+                        ClearInternal(CancellationToken.None);
                     }
                 }
                 catch (Exception ex)
@@ -1176,8 +1176,8 @@ namespace Azure.Messaging.EventHubs.Producer
                     }
                     catch (Exception ex)
                     {
-                       Logger.ClientCloseError(nameof(EventHubBufferedProducerClient), EventHubName, Identifier, ex.Message);
-                       (capturedExceptions ??= new List<Exception>()).Add(ex);
+                        Logger.ClientCloseError(nameof(EventHubBufferedProducerClient), EventHubName, Identifier, ex.Message);
+                        (capturedExceptions ??= new List<Exception>()).Add(ex);
                     }
                 }
 
@@ -1223,7 +1223,7 @@ namespace Azure.Messaging.EventHubs.Producer
             else if (capturedExceptions is not null)
             {
                 throw new AggregateException(capturedExceptions);
-            };
+            }
         }
 
         /// <summary>
@@ -1678,7 +1678,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
                 while (partitionState.TryReadEvent(out readEvent))
                 {
-                   events.Add(readEvent);
+                    events.Add(readEvent);
                 }
 
                 var partitionStateDelta = (partitionState.BufferedEventCount * -1);
@@ -1985,7 +1985,7 @@ namespace Azure.Messaging.EventHubs.Producer
             else if (capturedExceptions is not null)
             {
                 throw new AggregateException(capturedExceptions);
-            };
+            }
         }
 
         /// <summary>
@@ -2365,7 +2365,7 @@ namespace Azure.Messaging.EventHubs.Producer
                 // As a result, there's no need to synchronize them.
 
                 _partitions = queriedPartitions;
-                _partitionHash = new HashSet<string>(queriedPartitions);;
+                _partitionHash = new HashSet<string>(queriedPartitions);
             }
         }
 

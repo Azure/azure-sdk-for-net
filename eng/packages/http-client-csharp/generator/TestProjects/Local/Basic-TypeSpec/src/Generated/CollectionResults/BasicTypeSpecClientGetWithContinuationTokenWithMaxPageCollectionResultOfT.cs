@@ -50,7 +50,7 @@ namespace BasicTypeSpec
                 ListWithContinuationTokenWithMaxPageResponse result = (ListWithContinuationTokenWithMaxPageResponse)response;
                 yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)result.Things, nextPage, response);
                 nextPage = result.NextToken;
-                if (nextPage == null)
+                if (string.IsNullOrEmpty(nextPage))
                 {
                     yield break;
                 }

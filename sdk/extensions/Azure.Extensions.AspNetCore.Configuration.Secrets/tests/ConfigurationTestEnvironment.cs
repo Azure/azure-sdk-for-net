@@ -5,7 +5,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
 {
-    public class ConfigurationTestEnvironment: TestEnvironment
+    public class ConfigurationTestEnvironment : TestEnvironment
     {
         public string KeyVaultUrl => GetVariable("AZURE_KEYVAULT_URL");
     }

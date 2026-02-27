@@ -110,7 +110,6 @@ namespace Azure.AI.Translation.Text
         /// Specifies the language of the input text. Find which languages are available to translate by 
         /// looking up supported languages using the translation scope. If the language parameter isn't 
         /// specified, automatic language detection is applied to determine the source language.
-        /// 
         /// You must use the language parameter rather than autodetection when using the dynamic dictionary feature. 
         /// Note: the dynamic dictionary feature is case-sensitive.
         /// </param>
@@ -152,11 +151,9 @@ namespace Azure.AI.Translation.Text
         /// Default is 'general', which uses NMT system.
         /// 'abc-inc-gpt-4o', and 'abc-inc-gpt-4o-mini' are examples of deployment names which use GPT-4o uses or
         /// GPT-4o-mini model. 'gpt-4o' uses GPT-4o model.
-        /// 
         /// '&lt;custom model id&gt;' uses the custom NMT model tuned by customer.
         /// 'best' system determines which is the best model to use for the request. This intelligence could be introduced
         /// in future. Customer should have deployed it in their resource.
-        /// 
         /// </param>
         /// <param name="allowFallback">
         /// In the case where a custom system is being used, specifies that the service is allowed to fall back to a
@@ -164,7 +161,6 @@ namespace Azure.AI.Translation.Text
         /// In the case where a Large Language Model is being used, specifies that the service is allowed to fall
         /// back to a Small Language Model if an error occurs.
         /// Possible values are: true (default) or false.
-        /// 
         /// allowFallback=false specifies that the translation should only use systems trained for the category specified 
         /// by the request. If a translation for language X to language Y requires chaining through a pivot language E, 
         /// then all the systems in the chain (X → E and E → Y) will need to be custom and have the same category. 
@@ -233,11 +229,11 @@ namespace Azure.AI.Translation.Text
 
         /// <summary> Translation result. </summary>
         /// <param name="language"> A string representing the language code of the target language. </param>
-        /// <param name="sourceCharacters"> An interger indicating the number of characters in the source text string. </param>
-        /// <param name="instructionTokens"> An interger indicating the number of tokens used in generating the translated text. </param>
-        /// <param name="sourceTokens"> An interger indicating the number of tokens used in the source sentence. </param>
-        /// <param name="responseTokens"> An interger indicating the number of tokens used in the translation response. </param>
-        /// <param name="targetTokens"> An interger indicating the number of tokens used in the target sentence. </param>
+        /// <param name="sourceCharacters"> An integer indicating the number of characters in the source text string. </param>
+        /// <param name="instructionTokens"> An integer indicating the number of tokens used in generating the translated text. </param>
+        /// <param name="sourceTokens"> An integer indicating the number of tokens used in the source sentence. </param>
+        /// <param name="responseTokens"> An integer indicating the number of tokens used in the translation response. </param>
+        /// <param name="targetTokens"> An integer indicating the number of tokens used in the target sentence. </param>
         /// <param name="text"> A string giving the translated text. </param>
         /// <returns> A new <see cref="Text.TranslationText"/> instance for mocking. </returns>
         public static TranslationText TranslationText(string language = default, int? sourceCharacters = default, int? instructionTokens = default, int? sourceTokens = default, int? responseTokens = default, int? targetTokens = default, string text = default)

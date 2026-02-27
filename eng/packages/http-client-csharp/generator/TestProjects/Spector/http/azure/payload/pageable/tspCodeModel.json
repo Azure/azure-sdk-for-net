@@ -30,6 +30,11 @@
       "usage": "Output,Json",
       "doc": "Paged collection of User items",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Page"
+        }
+      },
       "properties": [
         {
           "$id": "4",
@@ -50,6 +55,11 @@
               "usage": "Output,Json",
               "doc": "User model",
               "decorators": [],
+              "serializationOptions": {
+                "json": {
+                  "name": "User"
+                }
+              },
               "properties": [
                 {
                   "$id": "7",
@@ -175,10 +185,34 @@
                 "scope": "Method",
                 "decorators": [],
                 "crossLanguageDefinitionId": "_Specs_.Azure.Payload.Pageable.list.maxpagesize",
-                "readOnly": false
+                "readOnly": false,
+                "methodParameterSegments": [
+                  {
+                    "$id": "17",
+                    "kind": "method",
+                    "name": "maxpagesize",
+                    "serializedName": "maxpagesize",
+                    "doc": "The maximum number of result items per page.",
+                    "type": {
+                      "$id": "18",
+                      "kind": "int32",
+                      "name": "int32",
+                      "crossLanguageDefinitionId": "TypeSpec.int32",
+                      "decorators": []
+                    },
+                    "location": "Query",
+                    "isApiVersion": false,
+                    "optional": true,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.Payload.Pageable.list.maxpagesize",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": []
+                  }
+                ]
               },
               {
-                "$id": "17",
+                "$id": "19",
                 "kind": "header",
                 "name": "accept",
                 "serializedName": "Accept",
@@ -191,7 +225,26 @@
                 "scope": "Constant",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "_Specs_.Azure.Payload.Pageable.list.accept"
+                "crossLanguageDefinitionId": "_Specs_.Azure.Payload.Pageable.list.accept",
+                "methodParameterSegments": [
+                  {
+                    "$id": "20",
+                    "kind": "method",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "1"
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Constant",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.Payload.Pageable.list.accept",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": []
+                  }
+                ]
               }
             ],
             "responses": [
@@ -216,47 +269,15 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.Payload.Pageable.list",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Payload.Pageable"
           },
           "parameters": [
             {
-              "$id": "18",
-              "kind": "method",
-              "name": "maxpagesize",
-              "serializedName": "maxpagesize",
-              "doc": "The maximum number of result items per page.",
-              "type": {
-                "$id": "19",
-                "kind": "int32",
-                "name": "int32",
-                "crossLanguageDefinitionId": "TypeSpec.int32",
-                "decorators": []
-              },
-              "location": "Query",
-              "isApiVersion": false,
-              "optional": true,
-              "scope": "Method",
-              "crossLanguageDefinitionId": "_Specs_.Azure.Payload.Pageable.list.maxpagesize",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "17"
             },
             {
-              "$id": "20",
-              "kind": "method",
-              "name": "accept",
-              "serializedName": "Accept",
-              "type": {
-                "$ref": "1"
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Constant",
-              "crossLanguageDefinitionId": "_Specs_.Azure.Payload.Pageable.list.accept",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "20"
             }
           ],
           "response": {
@@ -322,7 +343,8 @@
       "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "_Specs_.Azure.Payload.Pageable",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     }
   ]
 }

@@ -213,7 +213,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString() => $"Sequence: [{ SequenceNumber }] | Offset: [{ OffsetString }] | Enqueued: [{ EnqueuedTime }] | Last Received: [{ LastReceivedTime }]";
+        public override string ToString() => $"Sequence: [{SequenceNumber}] | Offset: [{OffsetString}] | Enqueued: [{EnqueuedTime}] | Last Received: [{LastReceivedTime}]";
 
         /// <summary>
         ///   Determines whether the specified <see cref="LastEnqueuedEventProperties" /> instances are equal to each other.

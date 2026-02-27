@@ -1,17 +1,27 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 1.0.0-beta.8 (Unreleased)
 
 ### Features Added
-
-- A new option to pass transparent statement verification key sets mapped to domain names for offline verification using `CodeTransparencyVerificationOptions.OfflineKeys`
-- A new option to restrict the use of a network resolution of the ledger keys when using `OfflineKeys` with `CodeTransparencyVerificationOptions.OfflineKeysBehavior`
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.7 (2026-02-17)
+
+### Features Added
+
+- Added `CodeTransparencyRedirectPolicy` to automatically follow HTTP 307/308 redirects while preserving the Authorization header. Previously, redirects between Confidential Ledger nodes could return HTTP 307/308 responses that were not automatically followed by the default pipeline, causing these requests to fail unless clients implemented redirect handling themselves.
+
+## 1.0.0-beta.6 (2025-12-17)
+
+### Features Added
+
+- A new option to pass transparent statement verification key sets mapped to domain names for offline verification using `CodeTransparencyVerificationOptions.OfflineKeys`
+- A new option to restrict the use of a network resolution of the ledger keys when using `OfflineKeys` with `CodeTransparencyVerificationOptions.OfflineKeysBehavior`
 
 ## 1.0.0-beta.5 (2025-10-20)
 

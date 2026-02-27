@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Information about a service principal identity for the cluster to use for manipulating Azure APIs. </summary>
+    /// <summary>
+    /// Information about a service principal identity for the cluster to use for manipulating Azure APIs.
+    /// Serialized Name: ManagedClusterServicePrincipalProfile
+    /// </summary>
     public partial class ManagedClusterServicePrincipalProfile
     {
         /// <summary>
@@ -46,7 +49,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterServicePrincipalProfile"/>. </summary>
-        /// <param name="clientId"> The ID for the service principal. </param>
+        /// <param name="clientId">
+        /// The ID for the service principal.
+        /// Serialized Name: ManagedClusterServicePrincipalProfile.clientId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientId"/> is null. </exception>
         public ManagedClusterServicePrincipalProfile(string clientId)
         {
@@ -56,8 +62,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterServicePrincipalProfile"/>. </summary>
-        /// <param name="clientId"> The ID for the service principal. </param>
-        /// <param name="secret"> The secret password associated with the service principal in plain text. </param>
+        /// <param name="clientId">
+        /// The ID for the service principal.
+        /// Serialized Name: ManagedClusterServicePrincipalProfile.clientId
+        /// </param>
+        /// <param name="secret">
+        /// The secret password associated with the service principal in plain text.
+        /// Serialized Name: ManagedClusterServicePrincipalProfile.secret
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterServicePrincipalProfile(string clientId, string secret, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,10 +83,16 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
         }
 
-        /// <summary> The ID for the service principal. </summary>
+        /// <summary>
+        /// The ID for the service principal.
+        /// Serialized Name: ManagedClusterServicePrincipalProfile.clientId
+        /// </summary>
         [WirePath("clientId")]
         public string ClientId { get; set; }
-        /// <summary> The secret password associated with the service principal in plain text. </summary>
+        /// <summary>
+        /// The secret password associated with the service principal in plain text.
+        /// Serialized Name: ManagedClusterServicePrincipalProfile.secret
+        /// </summary>
         [WirePath("secret")]
         public string Secret { get; set; }
     }

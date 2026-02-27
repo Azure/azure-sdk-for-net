@@ -6,7 +6,7 @@
 namespace Azure.Provisioning.PostgreSql;
 
 /// <summary>
-/// public network access is enabled or not.
+/// Indicates if public network access is enabled or not.
 /// </summary>
 public enum PostgreSqlFlexibleServerPublicNetworkAccessState
 {

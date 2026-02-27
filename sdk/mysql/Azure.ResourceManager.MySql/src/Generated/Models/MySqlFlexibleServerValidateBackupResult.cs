@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Represents ValidateBackup API Response. </summary>
     public partial class MySqlFlexibleServerValidateBackupResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerValidateBackupResult"/>. </summary>
         internal MySqlFlexibleServerValidateBackupResult()
@@ -51,15 +22,24 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerValidateBackupResult"/>. </summary>
-        /// <param name="numberOfContainers"> Estimated no of storage containers required for resource data to be backed up. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MySqlFlexibleServerValidateBackupResult(int? numberOfContainers, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> The response properties of a pre backup operation. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlFlexibleServerValidateBackupResult(ValidateBackupResponseProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            NumberOfContainers = numberOfContainers;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The response properties of a pre backup operation. </summary>
+        internal ValidateBackupResponseProperties Properties { get; }
+
         /// <summary> Estimated no of storage containers required for resource data to be backed up. </summary>
-        public int? NumberOfContainers { get; }
+        public int? NumberOfContainers
+        {
+            get
+            {
+                return Properties.NumberOfContainers;
+            }
+        }
     }
 }

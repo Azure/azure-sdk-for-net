@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Language.Conversations.Authoring;
 using Azure.AI.Language.Conversations.Authoring.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using System.Threading.Tasks;
 
 namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 {
@@ -27,6 +27,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAuthoringProject projectClient = client.GetProject(projectName);
             ConversationAuthoringCreateProjectDetails projectData = new ConversationAuthoringCreateProjectDetails(
                   projectKind: "Conversation",
+                  projectName: projectName,
                   language: "en-us"
                 )
             {
@@ -51,8 +52,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             #region Snippet:Sample1_ConversationsAuthoring_CreateProjectAsync
             string projectName = "{projectName}";
             ConversationAuthoringProject projectClient = client.GetProject(projectName);
+
             ConversationAuthoringCreateProjectDetails projectData = new ConversationAuthoringCreateProjectDetails(
                   projectKind: "Conversation",
+                  projectName: projectName,
                   language: "en-us"
                 )
             {

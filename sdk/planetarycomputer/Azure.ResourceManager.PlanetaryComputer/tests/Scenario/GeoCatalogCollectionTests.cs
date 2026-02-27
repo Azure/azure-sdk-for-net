@@ -8,9 +8,9 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.PlanetaryComputer;
 using Azure.ResourceManager.PlanetaryComputer.Models;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.PlanetaryComputer.Tests

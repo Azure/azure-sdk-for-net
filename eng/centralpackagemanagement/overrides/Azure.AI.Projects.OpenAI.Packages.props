@@ -1,0 +1,8 @@
+<Project>
+  <ItemGroup>
+    <PackageVersion Include="OpenAI" Version="2.8.0" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(IsTestProject)' == 'true'">
+    <PackageVersion Include="Microsoft.ClientModel.TestFramework" Version="1.0.0-alpha.20251110.1" />
+  </ItemGroup>
+</Project>

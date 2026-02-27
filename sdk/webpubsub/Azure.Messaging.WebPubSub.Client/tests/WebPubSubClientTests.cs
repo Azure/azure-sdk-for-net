@@ -176,7 +176,7 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
             var client = new WebPubSubClient(new WebPubSubClientCredential(_ =>
             {
                 return new ValueTask<Uri>(new Uri("wss://test.com"));
-            }), new WebPubSubClientOptions() { Protocol = p});
+            }), new WebPubSubClientOptions() { Protocol = p });
 
             client.Connected += new(e =>
             {
@@ -379,7 +379,7 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
             var tcs = new MultipleTimesTaskCompletionSource<object>(10);
 
             var clientMoc = new Mock<WebPubSubClient>(new Uri("wss://test.com"), TestUtils.GetClientOptionsForRetryTest());
-            clientMoc.Setup(c => c.SendToGroupAttemptAsync(It.IsAny<string>(), It.IsAny<BinaryData>(), It.IsAny<WebPubSubDataType>(),It.IsAny<long?>(), It.IsAny<bool>(), It.IsAny<bool>(), It.IsAny<CancellationToken>())).ReturnsAsync(() =>
+            clientMoc.Setup(c => c.SendToGroupAttemptAsync(It.IsAny<string>(), It.IsAny<BinaryData>(), It.IsAny<WebPubSubDataType>(), It.IsAny<long?>(), It.IsAny<bool>(), It.IsAny<bool>(), It.IsAny<CancellationToken>())).ReturnsAsync(() =>
             {
                 tcs.IncreaseCallTimes(null);
                 throw new SendMessageFailedException("msg", null, string.Empty);

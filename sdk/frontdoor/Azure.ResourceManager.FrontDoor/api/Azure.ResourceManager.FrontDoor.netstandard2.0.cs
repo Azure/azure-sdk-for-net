@@ -481,9 +481,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.BackendEnabledState Disabled { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.BackendEnabledState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.BackendEnabledState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.BackendEnabledState left, Azure.ResourceManager.FrontDoor.Models.BackendEnabledState right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.BackendEnabledState (string value) { throw null; }
@@ -514,9 +512,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.BackendPrivateEndpointStatus Rejected { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.BackendPrivateEndpointStatus Timeout { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.BackendPrivateEndpointStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.BackendPrivateEndpointStatus left, Azure.ResourceManager.FrontDoor.Models.BackendPrivateEndpointStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.BackendPrivateEndpointStatus (string value) { throw null; }
@@ -549,9 +545,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.CustomRuleEnabledState Disabled { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.CustomRuleEnabledState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.CustomRuleEnabledState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.CustomRuleEnabledState left, Azure.ResourceManager.FrontDoor.Models.CustomRuleEnabledState right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.CustomRuleEnabledState (string value) { throw null; }
@@ -567,9 +561,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.DynamicCompressionEnabled Disabled { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.DynamicCompressionEnabled Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.DynamicCompressionEnabled other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.DynamicCompressionEnabled left, Azure.ResourceManager.FrontDoor.Models.DynamicCompressionEnabled right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.DynamicCompressionEnabled (string value) { throw null; }
@@ -585,9 +577,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.EnforceCertificateNameCheckEnabledState Disabled { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.EnforceCertificateNameCheckEnabledState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.EnforceCertificateNameCheckEnabledState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.EnforceCertificateNameCheckEnabledState left, Azure.ResourceManager.FrontDoor.Models.EnforceCertificateNameCheckEnabledState right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.EnforceCertificateNameCheckEnabledState (string value) { throw null; }
@@ -667,9 +657,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorCertificateSource AzureKeyVault { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorCertificateSource FrontDoor { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontDoorCertificateSource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontDoorCertificateSource left, Azure.ResourceManager.FrontDoor.Models.FrontDoorCertificateSource right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontDoorCertificateSource (string value) { throw null; }
@@ -685,9 +673,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorEnabledState Disabled { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorEnabledState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontDoorEnabledState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontDoorEnabledState left, Azure.ResourceManager.FrontDoor.Models.FrontDoorEnabledState right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontDoorEnabledState (string value) { throw null; }
@@ -702,9 +688,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public FrontDoorEndpointConnectionCertificateType(string value) { throw null; }
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointConnectionCertificateType Dedicated { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointConnectionCertificateType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointConnectionCertificateType left, Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointConnectionCertificateType right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointConnectionCertificateType (string value) { throw null; }
@@ -733,9 +717,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointType AzureTrafficManager { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointType Cdn { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointType left, Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointType right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointType (string value) { throw null; }
@@ -786,9 +768,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentState Disabled { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentState left, Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentState right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentState (string value) { throw null; }
@@ -805,9 +785,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorForwardingProtocol HttpsOnly { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorForwardingProtocol MatchRequest { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontDoorForwardingProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontDoorForwardingProtocol left, Azure.ResourceManager.FrontDoor.Models.FrontDoorForwardingProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontDoorForwardingProtocol (string value) { throw null; }
@@ -823,9 +801,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorHealthProbeMethod Get { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorHealthProbeMethod Head { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontDoorHealthProbeMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontDoorHealthProbeMethod left, Azure.ResourceManager.FrontDoor.Models.FrontDoorHealthProbeMethod right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontDoorHealthProbeMethod (string value) { throw null; }
@@ -896,9 +872,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityState Available { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityState Unavailable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityState left, Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityState right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityState (string value) { throw null; }
@@ -926,9 +900,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorProtocol Http { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorProtocol Https { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontDoorProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontDoorProtocol left, Azure.ResourceManager.FrontDoor.Models.FrontDoorProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontDoorProtocol (string value) { throw null; }
@@ -946,9 +918,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorQuery StripNone { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorQuery StripOnly { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontDoorQuery other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontDoorQuery left, Azure.ResourceManager.FrontDoor.Models.FrontDoorQuery right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontDoorQuery (string value) { throw null; }
@@ -965,9 +935,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorRedirectProtocol HttpsOnly { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorRedirectProtocol MatchRequest { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontDoorRedirectProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontDoorRedirectProtocol left, Azure.ResourceManager.FrontDoor.Models.FrontDoorRedirectProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontDoorRedirectProtocol (string value) { throw null; }
@@ -985,9 +953,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorRedirectType PermanentRedirect { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorRedirectType TemporaryRedirect { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontDoorRedirectType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontDoorRedirectType left, Azure.ResourceManager.FrontDoor.Models.FrontDoorRedirectType right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontDoorRedirectType (string value) { throw null; }
@@ -1003,9 +969,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorRequiredMinimumTlsVersion Tls1_0 { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorRequiredMinimumTlsVersion Tls1_2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontDoorRequiredMinimumTlsVersion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontDoorRequiredMinimumTlsVersion left, Azure.ResourceManager.FrontDoor.Models.FrontDoorRequiredMinimumTlsVersion right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontDoorRequiredMinimumTlsVersion (string value) { throw null; }
@@ -1040,9 +1004,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceState Migrated { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceState Migrating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceState left, Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceState right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceState (string value) { throw null; }
@@ -1064,9 +1026,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorSkuName PremiumAzureFrontDoor { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorSkuName StandardAzureFrontDoor { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontDoorSkuName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontDoorSkuName left, Azure.ResourceManager.FrontDoor.Models.FrontDoorSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontDoorSkuName (string value) { throw null; }
@@ -1082,9 +1042,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesAggregationInterval Daily { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesAggregationInterval Hourly { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesAggregationInterval other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesAggregationInterval left, Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesAggregationInterval right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesAggregationInterval (string value) { throw null; }
@@ -1129,9 +1087,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesInfoAggregationInterval Daily { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesInfoAggregationInterval Hourly { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesInfoAggregationInterval other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesInfoAggregationInterval left, Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesInfoAggregationInterval right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesInfoAggregationInterval (string value) { throw null; }
@@ -1149,9 +1105,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesType LatencyP95 { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesType MeasurementCounts { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesType left, Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesType right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesType (string value) { throw null; }
@@ -1166,9 +1120,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public FrontDoorTlsProtocolType(string value) { throw null; }
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorTlsProtocolType ServerNameIndication { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontDoorTlsProtocolType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontDoorTlsProtocolType left, Azure.ResourceManager.FrontDoor.Models.FrontDoorTlsProtocolType right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontDoorTlsProtocolType (string value) { throw null; }
@@ -1220,9 +1172,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyGroupByVariableName None { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyGroupByVariableName SocketAddr { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyGroupByVariableName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyGroupByVariableName left, Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyGroupByVariableName right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyGroupByVariableName (string value) { throw null; }
@@ -1238,9 +1188,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyMode Detection { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyMode Prevention { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyMode left, Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyMode (string value) { throw null; }
@@ -1271,9 +1219,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyResourceState Enabled { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyResourceState Enabling { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyResourceState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyResourceState left, Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyResourceState right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyResourceState (string value) { throw null; }
@@ -1312,9 +1258,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningState Enabling { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningState Failed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningState left, Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningState (string value) { throw null; }
@@ -1338,9 +1282,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningSubstate PendingDomainControlValidationRequestApproval { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningSubstate SubmittingDomainControlValidationRequest { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningSubstate other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningSubstate left, Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningSubstate right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningSubstate (string value) { throw null; }
@@ -1356,9 +1298,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.HealthProbeEnabled Disabled { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.HealthProbeEnabled Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.HealthProbeEnabled other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.HealthProbeEnabled left, Azure.ResourceManager.FrontDoor.Models.HealthProbeEnabled right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.HealthProbeEnabled (string value) { throw null; }
@@ -1414,9 +1354,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.LatencyScorecardAggregationInterval Monthly { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.LatencyScorecardAggregationInterval Weekly { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.LatencyScorecardAggregationInterval other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.LatencyScorecardAggregationInterval left, Azure.ResourceManager.FrontDoor.Models.LatencyScorecardAggregationInterval right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.LatencyScorecardAggregationInterval (string value) { throw null; }
@@ -1446,9 +1384,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.ManagedRuleEnabledState Disabled { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.ManagedRuleEnabledState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.ManagedRuleEnabledState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.ManagedRuleEnabledState left, Azure.ResourceManager.FrontDoor.Models.ManagedRuleEnabledState right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.ManagedRuleEnabledState (string value) { throw null; }
@@ -1480,9 +1416,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.ManagedRuleExclusionMatchVariable RequestCookieNames { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.ManagedRuleExclusionMatchVariable RequestHeaderNames { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.ManagedRuleExclusionMatchVariable other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.ManagedRuleExclusionMatchVariable left, Azure.ResourceManager.FrontDoor.Models.ManagedRuleExclusionMatchVariable right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.ManagedRuleExclusionMatchVariable (string value) { throw null; }
@@ -1501,9 +1435,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.ManagedRuleExclusionSelectorMatchOperator EqualsValue { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.ManagedRuleExclusionSelectorMatchOperator StartsWith { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.ManagedRuleExclusionSelectorMatchOperator other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.ManagedRuleExclusionSelectorMatchOperator left, Azure.ResourceManager.FrontDoor.Models.ManagedRuleExclusionSelectorMatchOperator right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.ManagedRuleExclusionSelectorMatchOperator (string value) { throw null; }
@@ -1575,9 +1507,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.ManagedRuleSetActionType Log { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.ManagedRuleSetActionType Redirect { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.ManagedRuleSetActionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.ManagedRuleSetActionType left, Azure.ResourceManager.FrontDoor.Models.ManagedRuleSetActionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.ManagedRuleSetActionType (string value) { throw null; }
@@ -1608,9 +1538,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.MatchProcessingBehavior Continue { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.MatchProcessingBehavior Stop { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.MatchProcessingBehavior other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.MatchProcessingBehavior left, Azure.ResourceManager.FrontDoor.Models.MatchProcessingBehavior right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.MatchProcessingBehavior (string value) { throw null; }
@@ -1630,9 +1558,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.NetworkExperimentResourceState Enabled { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.NetworkExperimentResourceState Enabling { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.NetworkExperimentResourceState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.NetworkExperimentResourceState left, Azure.ResourceManager.FrontDoor.Models.NetworkExperimentResourceState right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.NetworkExperimentResourceState (string value) { throw null; }
@@ -1648,9 +1574,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.PolicyEnabledState Disabled { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.PolicyEnabledState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.PolicyEnabledState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.PolicyEnabledState left, Azure.ResourceManager.FrontDoor.Models.PolicyEnabledState right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.PolicyEnabledState (string value) { throw null; }
@@ -1666,9 +1590,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.PolicyRequestBodyCheck Disabled { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.PolicyRequestBodyCheck Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.PolicyRequestBodyCheck other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.PolicyRequestBodyCheck left, Azure.ResourceManager.FrontDoor.Models.PolicyRequestBodyCheck right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.PolicyRequestBodyCheck (string value) { throw null; }
@@ -1742,9 +1664,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.RoutingRuleEnabledState Disabled { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.RoutingRuleEnabledState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.RoutingRuleEnabledState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.RoutingRuleEnabledState left, Azure.ResourceManager.FrontDoor.Models.RoutingRuleEnabledState right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.RoutingRuleEnabledState (string value) { throw null; }
@@ -1765,9 +1685,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.RuleMatchActionType Log { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.RuleMatchActionType Redirect { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.RuleMatchActionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.RuleMatchActionType left, Azure.ResourceManager.FrontDoor.Models.RuleMatchActionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.RuleMatchActionType (string value) { throw null; }
@@ -1810,9 +1728,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.RulesEngineHeaderActionType Delete { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.RulesEngineHeaderActionType Overwrite { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.RulesEngineHeaderActionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.RulesEngineHeaderActionType left, Azure.ResourceManager.FrontDoor.Models.RulesEngineHeaderActionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.RulesEngineHeaderActionType (string value) { throw null; }
@@ -1848,9 +1764,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.RulesEngineMatchTransform UriDecode { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.RulesEngineMatchTransform UriEncode { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.RulesEngineMatchTransform other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.RulesEngineMatchTransform left, Azure.ResourceManager.FrontDoor.Models.RulesEngineMatchTransform right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.RulesEngineMatchTransform (string value) { throw null; }
@@ -1876,9 +1790,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.RulesEngineMatchVariable RequestScheme { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.RulesEngineMatchVariable RequestUri { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.RulesEngineMatchVariable other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.RulesEngineMatchVariable left, Azure.ResourceManager.FrontDoor.Models.RulesEngineMatchVariable right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.RulesEngineMatchVariable (string value) { throw null; }
@@ -1903,9 +1815,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.RulesEngineOperator LessThan { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.RulesEngineOperator LessThanOrEqual { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.RulesEngineOperator other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.RulesEngineOperator left, Azure.ResourceManager.FrontDoor.Models.RulesEngineOperator right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.RulesEngineOperator (string value) { throw null; }
@@ -1936,9 +1846,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.ScrubbingRuleEntryMatchOperator EqualsAny { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.ScrubbingRuleEntryMatchOperator EqualsValue { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.ScrubbingRuleEntryMatchOperator other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.ScrubbingRuleEntryMatchOperator left, Azure.ResourceManager.FrontDoor.Models.ScrubbingRuleEntryMatchOperator right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.ScrubbingRuleEntryMatchOperator (string value) { throw null; }
@@ -1959,9 +1867,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.ScrubbingRuleEntryMatchVariable RequestIPAddress { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.ScrubbingRuleEntryMatchVariable RequestUri { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.ScrubbingRuleEntryMatchVariable other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.ScrubbingRuleEntryMatchVariable left, Azure.ResourceManager.FrontDoor.Models.ScrubbingRuleEntryMatchVariable right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.ScrubbingRuleEntryMatchVariable (string value) { throw null; }
@@ -1977,9 +1883,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.ScrubbingRuleEntryState Disabled { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.ScrubbingRuleEntryState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.ScrubbingRuleEntryState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.ScrubbingRuleEntryState left, Azure.ResourceManager.FrontDoor.Models.ScrubbingRuleEntryState right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.ScrubbingRuleEntryState (string value) { throw null; }
@@ -1995,9 +1899,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.SessionAffinityEnabledState Disabled { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.SessionAffinityEnabledState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.SessionAffinityEnabledState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.SessionAffinityEnabledState left, Azure.ResourceManager.FrontDoor.Models.SessionAffinityEnabledState right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.SessionAffinityEnabledState (string value) { throw null; }
@@ -2046,9 +1948,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.WebApplicationFirewallScrubbingState Disabled { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.WebApplicationFirewallScrubbingState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.WebApplicationFirewallScrubbingState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.WebApplicationFirewallScrubbingState left, Azure.ResourceManager.FrontDoor.Models.WebApplicationFirewallScrubbingState right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.WebApplicationFirewallScrubbingState (string value) { throw null; }
@@ -2090,9 +1990,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchOperator LessThanOrEqual { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchOperator RegEX { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchOperator other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchOperator left, Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchOperator right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchOperator (string value) { throw null; }
@@ -2112,9 +2010,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchTransformType UriDecode { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchTransformType UriEncode { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchTransformType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchTransformType left, Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchTransformType right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchTransformType (string value) { throw null; }
@@ -2137,9 +2033,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchVariable RequestUri { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchVariable SocketAddr { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchVariable other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchVariable left, Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchVariable right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchVariable (string value) { throw null; }
@@ -2155,9 +2049,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleType MatchRule { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleType RateLimitRule { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleType left, Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleType right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleType (string value) { throw null; }

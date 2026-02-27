@@ -2267,7 +2267,8 @@ namespace Azure.Storage.Queues
                     if (response.IsUnavailable())
                     {
                         return response.GetRawResponse().AsNoBodyResponse<QueueMessage[]>();
-                    } else
+                    }
+                    else
                     {
                         QueueMessage[] queueMessages = await ToQueueMessagesWithInvalidMessageHandling(response.Value, async, cancellationToken).ConfigureAwait(false);
 
@@ -3289,7 +3290,7 @@ namespace Azure.Storage.Queues
         /// </param>
         /// <param name="userDelegationKey">
         /// Required. A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="QueueServiceClient.GetUserDelegationKeyAsync"/>.
+        /// <see cref="QueueServiceClient.GetUserDelegationKeyAsync(QueueGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <returns>
         /// A <see cref="Uri"/> containing the SAS Uri.
@@ -3322,7 +3323,7 @@ namespace Azure.Storage.Queues
         /// </param>
         /// <param name="userDelegationKey">
         /// Required. A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="QueueServiceClient.GetUserDelegationKeyAsync"/>.
+        /// <see cref="QueueServiceClient.GetUserDelegationKeyAsync(QueueGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <param name="stringToSign">
         /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the SAS Uri.
@@ -3354,7 +3355,7 @@ namespace Azure.Storage.Queues
         /// </param>
         /// <param name="userDelegationKey">
         /// Required. A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="QueueServiceClient.GetUserDelegationKeyAsync"/>.
+        /// <see cref="QueueServiceClient.GetUserDelegationKeyAsync(QueueGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <returns>
         /// A <see cref="Uri"/> containing the SAS Uri.
@@ -3382,7 +3383,7 @@ namespace Azure.Storage.Queues
         /// </param>
         /// <param name="userDelegationKey">
         /// Required. A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="QueueServiceClient.GetUserDelegationKeyAsync"/>.
+        /// <see cref="QueueServiceClient.GetUserDelegationKeyAsync(QueueGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <param name="stringToSign">
         /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the SAS Uri.
@@ -3423,7 +3424,8 @@ namespace Azure.Storage.Queues
             if (input == null)
             {
                 return null;
-            } else
+            }
+            else
             {
                 return new BinaryData(input);
             }

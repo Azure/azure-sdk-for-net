@@ -217,9 +217,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         public static Azure.ResourceManager.NetworkAnalytics.Models.DataProductControlState Disabled { get { throw null; } }
         public static Azure.ResourceManager.NetworkAnalytics.Models.DataProductControlState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkAnalytics.Models.DataProductControlState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkAnalytics.Models.DataProductControlState left, Azure.ResourceManager.NetworkAnalytics.Models.DataProductControlState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkAnalytics.Models.DataProductControlState (string value) { throw null; }
@@ -252,9 +250,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         public static Azure.ResourceManager.NetworkAnalytics.Models.DataProductDataTypeState Running { get { throw null; } }
         public static Azure.ResourceManager.NetworkAnalytics.Models.DataProductDataTypeState Stopped { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkAnalytics.Models.DataProductDataTypeState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkAnalytics.Models.DataProductDataTypeState left, Azure.ResourceManager.NetworkAnalytics.Models.DataProductDataTypeState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkAnalytics.Models.DataProductDataTypeState (string value) { throw null; }
@@ -314,9 +310,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         public static Azure.ResourceManager.NetworkAnalytics.Models.DataProductUserRole Reader { get { throw null; } }
         public static Azure.ResourceManager.NetworkAnalytics.Models.DataProductUserRole SensitiveReader { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkAnalytics.Models.DataProductUserRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkAnalytics.Models.DataProductUserRole left, Azure.ResourceManager.NetworkAnalytics.Models.DataProductUserRole right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkAnalytics.Models.DataProductUserRole (string value) { throw null; }
@@ -356,9 +350,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         public static Azure.ResourceManager.NetworkAnalytics.Models.NetworkAclDefaultAction Allow { get { throw null; } }
         public static Azure.ResourceManager.NetworkAnalytics.Models.NetworkAclDefaultAction Deny { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkAnalytics.Models.NetworkAclDefaultAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkAnalytics.Models.NetworkAclDefaultAction left, Azure.ResourceManager.NetworkAnalytics.Models.NetworkAclDefaultAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkAnalytics.Models.NetworkAclDefaultAction (string value) { throw null; }
@@ -414,9 +406,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         public static Azure.ResourceManager.NetworkAnalytics.Models.NetworkAnalyticsProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.NetworkAnalytics.Models.NetworkAnalyticsProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkAnalytics.Models.NetworkAnalyticsProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkAnalytics.Models.NetworkAnalyticsProvisioningState left, Azure.ResourceManager.NetworkAnalytics.Models.NetworkAnalyticsProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkAnalytics.Models.NetworkAnalyticsProvisioningState (string value) { throw null; }
