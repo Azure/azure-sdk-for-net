@@ -4,6 +4,7 @@
 #nullable disable
 
 using System.Threading;
+using Azure.ResourceManager.Maintenance.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Maintenance

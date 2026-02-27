@@ -16,27 +16,27 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Maintenance
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ApplyUpdateResource"/> and their operations.
-    /// Each <see cref="ApplyUpdateResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="ApplyUpdateCollection"/> instance call the GetApplyUpdates method from an instance of <see cref="ArmResource"/>.
+    /// A class representing a collection of <see cref="MaintenanceApplyUpdateResource"/> and their operations.
+    /// Each <see cref="MaintenanceApplyUpdateResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="MaintenanceApplyUpdateCollection"/> instance call the GetApplyUpdates method from an instance of <see cref="ArmResource"/>.
     /// </summary>
-    public partial class ApplyUpdateCollection : ArmCollection
+    public partial class MaintenanceApplyUpdateCollection : ArmCollection
     {
         private readonly ClientDiagnostics _maintenanceApplyUpdateClientDiagnostics;
         private readonly MaintenanceApplyUpdate _maintenanceApplyUpdateRestClient;
 
-        /// <summary> Initializes a new instance of ApplyUpdateCollection for mocking. </summary>
-        protected ApplyUpdateCollection()
+        /// <summary> Initializes a new instance of MaintenanceApplyUpdateCollection for mocking. </summary>
+        protected MaintenanceApplyUpdateCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApplyUpdateCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceApplyUpdateCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ApplyUpdateCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MaintenanceApplyUpdateCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ApplyUpdateResource.ResourceType, out string applyUpdateApiVersion);
-            _maintenanceApplyUpdateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", ApplyUpdateResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(MaintenanceApplyUpdateResource.ResourceType, out string applyUpdateApiVersion);
+            _maintenanceApplyUpdateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceApplyUpdateResource.ResourceType.Namespace, Diagnostics);
             _maintenanceApplyUpdateRestClient = new MaintenanceApplyUpdate(_maintenanceApplyUpdateClientDiagnostics, Pipeline, Endpoint, applyUpdateApiVersion ?? "2023-10-01-preview");
         }
 
@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applyUpdateName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ApplyUpdateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string applyUpdateName, MaintenanceApplyUpdateData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MaintenanceApplyUpdateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string applyUpdateName, MaintenanceApplyUpdateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("ApplyUpdateCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("MaintenanceApplyUpdateCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Maintenance
                 Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MaintenanceArmOperation<ApplyUpdateResource> operation = new MaintenanceArmOperation<ApplyUpdateResource>(Response.FromValue(new ApplyUpdateResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                MaintenanceArmOperation<MaintenanceApplyUpdateResource> operation = new MaintenanceArmOperation<MaintenanceApplyUpdateResource>(Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applyUpdateName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ApplyUpdateResource> CreateOrUpdate(WaitUntil waitUntil, string applyUpdateName, MaintenanceApplyUpdateData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MaintenanceApplyUpdateResource> CreateOrUpdate(WaitUntil waitUntil, string applyUpdateName, MaintenanceApplyUpdateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("ApplyUpdateCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("MaintenanceApplyUpdateCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Maintenance
                 Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MaintenanceArmOperation<ApplyUpdateResource> operation = new MaintenanceArmOperation<ApplyUpdateResource>(Response.FromValue(new ApplyUpdateResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                MaintenanceArmOperation<MaintenanceApplyUpdateResource> operation = new MaintenanceArmOperation<MaintenanceApplyUpdateResource>(Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -171,11 +171,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applyUpdateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ApplyUpdateResource>> GetAsync(string applyUpdateName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaintenanceApplyUpdateResource>> GetAsync(string applyUpdateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
 
-            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("ApplyUpdateCollection.Get");
+            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("MaintenanceApplyUpdateCollection.Get");
             scope.Start();
             try
             {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ApplyUpdateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -220,11 +220,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applyUpdateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ApplyUpdateResource> Get(string applyUpdateName, CancellationToken cancellationToken = default)
+        public virtual Response<MaintenanceApplyUpdateResource> Get(string applyUpdateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
 
-            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("ApplyUpdateCollection.Get");
+            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("MaintenanceApplyUpdateCollection.Get");
             scope.Start();
             try
             {
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ApplyUpdateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Maintenance
         {
             Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
 
-            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("ApplyUpdateCollection.Exists");
+            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("MaintenanceApplyUpdateCollection.Exists");
             scope.Start();
             try
             {
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Maintenance
         {
             Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
 
-            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("ApplyUpdateCollection.Exists");
+            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("MaintenanceApplyUpdateCollection.Exists");
             scope.Start();
             try
             {
@@ -383,11 +383,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applyUpdateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<ApplyUpdateResource>> GetIfExistsAsync(string applyUpdateName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<MaintenanceApplyUpdateResource>> GetIfExistsAsync(string applyUpdateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
 
-            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("ApplyUpdateCollection.GetIfExists");
+            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("MaintenanceApplyUpdateCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -412,9 +412,9 @@ namespace Azure.ResourceManager.Maintenance
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ApplyUpdateResource>(response.GetRawResponse());
+                    return new NoValueResponse<MaintenanceApplyUpdateResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ApplyUpdateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -444,11 +444,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applyUpdateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<ApplyUpdateResource> GetIfExists(string applyUpdateName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<MaintenanceApplyUpdateResource> GetIfExists(string applyUpdateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
 
-            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("ApplyUpdateCollection.GetIfExists");
+            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("MaintenanceApplyUpdateCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -473,9 +473,9 @@ namespace Azure.ResourceManager.Maintenance
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ApplyUpdateResource>(response.GetRawResponse());
+                    return new NoValueResponse<MaintenanceApplyUpdateResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ApplyUpdateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

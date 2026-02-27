@@ -75,21 +75,21 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             return await GetConfigurationAssignments(scope).GetAsync(configurationAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets an object representing a <see cref="ApplyUpdateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="MaintenanceApplyUpdateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplyUpdateResource"/> object. </returns>
-        public virtual ApplyUpdateResource GetApplyUpdateResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MaintenanceApplyUpdateResource"/> object. </returns>
+        public virtual MaintenanceApplyUpdateResource GetMaintenanceApplyUpdateResource(ResourceIdentifier id)
         {
-            ApplyUpdateResource.ValidateResourceId(id);
-            return new ApplyUpdateResource(Client, id);
+            MaintenanceApplyUpdateResource.ValidateResourceId(id);
+            return new MaintenanceApplyUpdateResource(Client, id);
         }
 
-        /// <summary> Gets a collection of <see cref="ApplyUpdateCollection"/> objects within the specified scope. </summary>
+        /// <summary> Gets a collection of <see cref="MaintenanceApplyUpdateCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="ApplyUpdateResource"/> objects. </returns>
-        public virtual ApplyUpdateCollection GetApplyUpdates(ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="MaintenanceApplyUpdateResource"/> objects. </returns>
+        public virtual MaintenanceApplyUpdateCollection GetApplyUpdates(ResourceIdentifier scope)
         {
-            return new ApplyUpdateCollection(Client, scope);
+            return new MaintenanceApplyUpdateCollection(Client, scope);
         }
 
         /// <summary> Track maintenance updates to resource with parent. </summary>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="applyUpdateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ApplyUpdateResource> GetApplyUpdate(ResourceIdentifier scope, string applyUpdateName, CancellationToken cancellationToken = default)
+        public virtual Response<MaintenanceApplyUpdateResource> GetApplyUpdate(ResourceIdentifier scope, string applyUpdateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="applyUpdateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApplyUpdateResource>> GetApplyUpdateAsync(ResourceIdentifier scope, string applyUpdateName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaintenanceApplyUpdateResource>> GetApplyUpdateAsync(ResourceIdentifier scope, string applyUpdateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
 

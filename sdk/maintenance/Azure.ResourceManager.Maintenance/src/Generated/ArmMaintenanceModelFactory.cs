@@ -23,6 +23,8 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="namespace"> Gets or sets namespace of the resource. </param>
         /// <param name="extensionProperties"> Gets or sets extensionProperties of the maintenanceConfiguration. </param>
         /// <param name="maintenanceScope"> Gets or sets maintenanceScope of the configuration. </param>
@@ -33,10 +35,8 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <param name="duration"> Duration of the maintenance window in HH:mm format. If not provided, default value will be used based on maintenance scope provided. Example: 05:00. </param>
         /// <param name="timeZone"> Name of the timezone. List of timezones can be obtained by executing [System.TimeZoneInfo]::GetSystemTimeZones() in PowerShell. Example: Pacific Standard Time, UTC, W. Europe Standard Time, Korea Standard Time, Cen. Australia Standard Time. </param>
         /// <param name="recurEvery"> Rate at which a Maintenance window is expected to recur. The rate can be expressed as daily, weekly, or monthly schedules. Daily schedule are formatted as recurEvery: [Frequency as integer]['Day(s)']. If no frequency is provided, the default frequency is 1. Daily schedule examples are recurEvery: Day, recurEvery: 3Days.  Weekly schedule are formatted as recurEvery: [Frequency as integer]['Week(s)'] [Optional comma separated list of weekdays Monday-Sunday]. Weekly schedule examples are recurEvery: 3Weeks, recurEvery: Week Saturday,Sunday. Monthly schedules are formatted as [Frequency as integer]['Month(s)'] [Comma separated list of month days] or [Frequency as integer]['Month(s)'] [Week of Month (First, Second, Third, Fourth, Last)] [Weekday Monday-Sunday] [Optional Offset(No. of days)]. Offset value must be between -6 to 6 inclusive. Monthly schedule examples are recurEvery: Month, recurEvery: 2Months, recurEvery: Month day23,day24, recurEvery: Month Last Sunday, recurEvery: Month Fourth Monday, recurEvery: Month Last Sunday Offset-3, recurEvery: Month Third Sunday Offset6. </param>
-        /// <param name="location"> Gets or sets location of the resource. </param>
-        /// <param name="tags"> Gets or sets tags of the resource. </param>
         /// <returns> A new <see cref="Maintenance.MaintenanceConfigurationData"/> instance for mocking. </returns>
-        public static MaintenanceConfigurationData MaintenanceConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string @namespace = default, IDictionary<string, string> extensionProperties = default, MaintenanceScope? maintenanceScope = default, MaintenanceConfigurationVisibility? visibility = default, MaintenancePatchConfiguration installPatches = default, DateTimeOffset? startOn = default, DateTimeOffset? expireOn = default, string duration = default, string timeZone = default, string recurEvery = default, string location = default, IDictionary<string, string> tags = default)
+        public static MaintenanceConfigurationData MaintenanceConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string @namespace = default, IDictionary<string, string> extensionProperties = default, MaintenanceScope? maintenanceScope = default, MaintenanceConfigurationVisibility? visibility = default, MaintenancePatchConfiguration installPatches = default, DateTimeOffset? startOn = default, DateTimeOffset? expireOn = default, string duration = default, string timeZone = default, string recurEvery = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -46,6 +46,8 @@ namespace Azure.ResourceManager.Maintenance.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                tags,
+                location,
                 @namespace is null && extensionProperties is null && maintenanceScope is null && visibility is null && installPatches is null && startOn is null && expireOn is null && duration is null && timeZone is null && recurEvery is null ? default : new MaintenanceConfigurationProperties(
                     @namespace,
                     extensionProperties,
@@ -59,9 +61,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                         null),
                     visibility,
                     installPatches,
-                    null),
-                location,
-                tags);
+                    null));
         }
 
         /// <summary> Input properties for patching a Windows machine. </summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <param name="resourceId"> The unique resourceId. </param>
         /// <param name="filter"> Properties of the configuration assignment. </param>
         /// <param name="location"> Location of the resource. </param>
-        /// <returns> A new <see cref="Maintenance.MaintenanceConfigurationAssignmentData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.MaintenanceConfigurationAssignmentData"/> instance for mocking. </returns>
         public static MaintenanceConfigurationAssignmentData MaintenanceConfigurationAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier maintenanceConfigurationId = default, ResourceIdentifier resourceId = default, MaintenanceConfigurationAssignmentFilter filter = default, string location = default)
         {
             return new MaintenanceConfigurationAssignmentData(
@@ -221,9 +221,31 @@ namespace Azure.ResourceManager.Maintenance.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                default,
+                tags,
                 location,
-                tags);
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MaintenanceConfigurationAssignmentData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="location"> Location of the resource. </param>
+        /// <param name="maintenanceConfigurationId"> The maintenance configuration Id. </param>
+        /// <param name="resourceId"> The unique resourceId. </param>
+        /// <returns> A new <see cref="Models.MaintenanceConfigurationAssignmentData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MaintenanceConfigurationAssignmentData MaintenanceConfigurationAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ResourceIdentifier maintenanceConfigurationId, ResourceIdentifier resourceId)
+        {
+            return new MaintenanceConfigurationAssignmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default,
+                location);
         }
     }
 }
