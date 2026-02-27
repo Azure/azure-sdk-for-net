@@ -171,6 +171,7 @@ public partial class DistributedAvailabilityGroup : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _primaryAvailabilityGroupName = DefineProperty<string>("PrimaryAvailabilityGroupName", ["properties", "primaryAvailabilityGroupName"]);
         _replicationMode = DefineProperty<DistributedAvailabilityGroupReplicationMode>("ReplicationMode", ["properties", "replicationMode"]);
@@ -196,6 +197,11 @@ public partial class DistributedAvailabilityGroup : ProvisionableResource
         /// 2023-08-01.
         /// </summary>
         public static readonly string V2023_08_01 = "2023-08-01";
+
+        /// <summary>
+        /// 2021-11-01-preview.
+        /// </summary>
+        public static readonly string V2021_11_01_preview = "2021-11-01-preview";
 
         /// <summary>
         /// 2021-11-01.

@@ -95,6 +95,7 @@ public partial class ManagedInstanceServerConfigurationOption : ProvisionableRes
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _serverConfigurationOptionValue = DefineProperty<int>("ServerConfigurationOptionValue", ["properties", "serverConfigurationOptionValue"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);

@@ -94,6 +94,7 @@ public partial class LedgerDigestUpload : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _digestStorageEndpoint = DefineProperty<string>("DigestStorageEndpoint", ["properties", "digestStorageEndpoint"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);

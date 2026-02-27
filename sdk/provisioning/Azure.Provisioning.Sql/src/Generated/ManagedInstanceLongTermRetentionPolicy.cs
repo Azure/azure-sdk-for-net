@@ -125,6 +125,7 @@ public partial class ManagedInstanceLongTermRetentionPolicy : ProvisionableResou
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _backupStorageAccessTier = DefineProperty<SqlBackupStorageAccessTier>("BackupStorageAccessTier", ["properties", "backupStorageAccessTier"]);
         _monthlyRetention = DefineProperty<string>("MonthlyRetention", ["properties", "monthlyRetention"]);

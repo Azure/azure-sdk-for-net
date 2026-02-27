@@ -195,6 +195,7 @@ public partial class SqlServerDatabaseReplicationLink : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _linkId = DefineProperty<string>("LinkId", ["LinkId"], isRequired: true);
         _linkType = DefineProperty<ReplicationLinkType>("LinkType", ["properties", "linkType"]);

@@ -114,6 +114,7 @@ public partial class ManagedInstanceAdministrator : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _administratorType = DefineProperty<ManagedInstanceAdministratorType>("AdministratorType", ["properties", "administratorType"]);
         _login = DefineProperty<string>("Login", ["properties", "login"]);

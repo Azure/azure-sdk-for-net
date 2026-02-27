@@ -123,6 +123,7 @@ public partial class ManagedInstanceDtc : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _dtcEnabled = DefineProperty<bool>("DtcEnabled", ["properties", "dtcEnabled"]);
         _externalDnsSuffixSearchList = DefineListProperty<string>("ExternalDnsSuffixSearchList", ["properties", "externalDnsSuffixSearchList"]);

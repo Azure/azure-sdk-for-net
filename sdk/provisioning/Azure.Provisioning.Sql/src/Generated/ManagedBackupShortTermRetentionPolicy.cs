@@ -86,6 +86,7 @@ public partial class ManagedBackupShortTermRetentionPolicy : ProvisionableResour
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _retentionDays = DefineProperty<int>("RetentionDays", ["properties", "retentionDays"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);

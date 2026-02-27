@@ -286,6 +286,7 @@ public partial class SqlServerBlobAuditingPolicy : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _auditActionsAndGroups = DefineListProperty<string>("AuditActionsAndGroups", ["properties", "auditActionsAndGroups"]);
         _isAzureMonitorTargetEnabled = DefineProperty<bool>("IsAzureMonitorTargetEnabled", ["properties", "isAzureMonitorTargetEnabled"]);

@@ -114,6 +114,7 @@ public partial class LongTermRetentionPolicy : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _monthlyRetention = DefineProperty<string>("MonthlyRetention", ["properties", "monthlyRetention"]);
         _weeklyRetention = DefineProperty<string>("WeeklyRetention", ["properties", "weeklyRetention"]);

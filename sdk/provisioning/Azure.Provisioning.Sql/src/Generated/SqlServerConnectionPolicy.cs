@@ -102,6 +102,7 @@ public partial class SqlServerConnectionPolicy : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _connectionType = DefineProperty<ServerConnectionType>("ConnectionType", ["properties", "connectionType"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);

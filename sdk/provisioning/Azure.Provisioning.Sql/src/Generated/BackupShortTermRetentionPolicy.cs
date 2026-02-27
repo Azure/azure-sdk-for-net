@@ -98,6 +98,7 @@ public partial class BackupShortTermRetentionPolicy : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _diffBackupIntervalInHours = DefineProperty<int>("DiffBackupIntervalInHours", ["properties", "diffBackupIntervalInHours"]);
         _retentionDays = DefineProperty<int>("RetentionDays", ["properties", "retentionDays"]);

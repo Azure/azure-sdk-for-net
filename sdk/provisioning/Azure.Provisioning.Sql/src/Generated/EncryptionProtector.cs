@@ -151,6 +151,7 @@ public partial class EncryptionProtector : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _isAutoRotationEnabled = DefineProperty<bool>("IsAutoRotationEnabled", ["properties", "autoRotationEnabled"]);
         _serverKeyName = DefineProperty<string>("ServerKeyName", ["properties", "serverKeyName"]);

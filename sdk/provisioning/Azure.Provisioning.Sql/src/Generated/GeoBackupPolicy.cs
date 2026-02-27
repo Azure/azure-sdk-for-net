@@ -122,6 +122,7 @@ public partial class GeoBackupPolicy : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _state = DefineProperty<GeoBackupPolicyState>("State", ["State"], isRequired: true);
         _geoBackupPolicyState = DefineProperty<GeoBackupPolicyState>("GeoBackupPolicyState", ["properties", "state"]);

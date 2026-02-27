@@ -125,6 +125,7 @@ public partial class ManagedInstanceStartStopSchedule : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _description = DefineProperty<string>("Description", ["properties", "description"]);
         _scheduleList = DefineListProperty<SqlScheduleItem>("ScheduleList", ["properties", "scheduleList"]);

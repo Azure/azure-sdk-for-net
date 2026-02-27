@@ -86,6 +86,7 @@ public partial class ManagedInstanceAzureADOnlyAuthentication : ProvisionableRes
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _isAzureADOnlyAuthenticationEnabled = DefineProperty<bool>("IsAzureADOnlyAuthenticationEnabled", ["properties", "azureADOnlyAuthentication"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);

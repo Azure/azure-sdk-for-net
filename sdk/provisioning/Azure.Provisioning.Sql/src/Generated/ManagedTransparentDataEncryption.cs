@@ -85,6 +85,7 @@ public partial class ManagedTransparentDataEncryption : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _state = DefineProperty<TransparentDataEncryptionState>("State", ["properties", "state"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);

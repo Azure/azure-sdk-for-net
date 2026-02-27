@@ -94,6 +94,7 @@ public partial class ManagedLedgerDigestUpload : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _digestStorageEndpoint = DefineProperty<string>("DigestStorageEndpoint", ["properties", "digestStorageEndpoint"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
@@ -108,14 +109,14 @@ public partial class ManagedLedgerDigestUpload : ProvisionableResource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2021-11-01.
-        /// </summary>
-        public static readonly string V2021_11_01 = "2021-11-01";
-
-        /// <summary>
         /// 2023-08-01.
         /// </summary>
         public static readonly string V2023_08_01 = "2023-08-01";
+
+        /// <summary>
+        /// 2021-11-01.
+        /// </summary>
+        public static readonly string V2021_11_01 = "2021-11-01";
     }
 
     /// <summary>

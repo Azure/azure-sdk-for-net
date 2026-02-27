@@ -161,6 +161,7 @@ public partial class SqlDatabaseSecurityAlertPolicy : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _disabledAlerts = DefineListProperty<string>("DisabledAlerts", ["properties", "disabledAlerts"]);
         _emailAddresses = DefineListProperty<string>("EmailAddresses", ["properties", "emailAddresses"]);
