@@ -433,7 +433,7 @@ namespace Azure.Search.Documents.Tests
                  SentimentSkill.SkillVersion.V3)
             {
                 Context = "/document/reviews_text/pages/*",
-                DefaultLanguageCode = "en"
+                LanguageCode = "en"
             };
 
             SearchIndexerSkill skill3 = new LanguageDetectionSkill(
