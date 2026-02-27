@@ -2,6 +2,14 @@
 
 ## 1.4.0-beta.1 (Unreleased)
 
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.3.1 (2026-01-06)
 
 ### Bugs Fixed

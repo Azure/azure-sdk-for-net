@@ -2,6 +2,14 @@
 
 ## 1.2.0-beta.1 (Unreleased)
 
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.1.2 (2025-07-15)
 
 ### Bugs Fixed

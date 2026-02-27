@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Upgraded dependency on `Azure.ResourceManager.Network` to version 1.15.0.
+- Regenerated from `Azure.ResourceManager.Network` version 1.15.0.
 
 ## 1.0.0-beta.3 (2026-01-07)
 
