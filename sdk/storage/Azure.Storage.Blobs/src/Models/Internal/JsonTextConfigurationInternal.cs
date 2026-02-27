@@ -6,5 +6,5 @@ using Azure.Core;
 namespace Azure.Storage.Blobs.Models
 {
     [CodeGenModel("JsonTextConfiguration")]
-    internal partial class JsonTextConfigurationInternal {}
+    internal partial class JsonTextConfigurationInternal { }
 }

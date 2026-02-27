@@ -214,7 +214,7 @@ namespace Azure.Communication.Rooms.Tests
             CancellationToken cancellationToken = new CancellationTokenSource().Token;
 
             mockRoomsClient
-            .Setup(roomsClient => roomsClient.UpdateRoom(roomId, validFrom, validUntil,  cancellationToken))
+            .Setup(roomsClient => roomsClient.UpdateRoom(roomId, validFrom, validUntil, cancellationToken))
             .Returns(expectedRoomResult);
 
             Response<CommunicationRoom> actualResponse = mockRoomsClient.Object.UpdateRoom(roomId, validFrom, validUntil, cancellationToken);

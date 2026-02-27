@@ -15,7 +15,7 @@ namespace Azure.Analytics.Purview.DataMap
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
 
-        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
         internal HttpMessage CreateGetLineageRequest(string guid, string direction, int? depth, RequestContext context)
         {
@@ -45,7 +45,10 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath("/lineage/", false);
             uri.AppendPath(guid, true);
             uri.AppendPath("/next", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             uri.AppendQuery("direction", direction, true);
             if (offset != null)
             {

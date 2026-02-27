@@ -5,12 +5,12 @@
 
 using System;
 using System.ClientModel;
-using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
-namespace Azure.AI.Projects.Tests;
+namespace Azure.AI.Projects.Tests.Samples;
 
-public partial class Readme : SamplesBase<AIProjectsTestEnvironment>
+public partial class Readme : SamplesBase
 {
     [Test]
     public void Authenticate()
@@ -19,7 +19,7 @@ public partial class Readme : SamplesBase<AIProjectsTestEnvironment>
 #if SNIPPET
         var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 #else
-        var endpoint = TestEnvironment.PROJECTENDPOINT;
+        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
 #endif
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
         #endregion
@@ -28,7 +28,7 @@ public partial class Readme : SamplesBase<AIProjectsTestEnvironment>
     [Test]
     public void Troubleshooting()
     {
-        var endpoint = TestEnvironment.PROJECTENDPOINT;
+        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
         #region Snippet:AI_Projects_Readme_Troubleshooting
@@ -43,4 +43,6 @@ public partial class Readme : SamplesBase<AIProjectsTestEnvironment>
         }
         #endregion
     }
+
+    public Readme(bool isAsync) : base(isAsync) { }
 }

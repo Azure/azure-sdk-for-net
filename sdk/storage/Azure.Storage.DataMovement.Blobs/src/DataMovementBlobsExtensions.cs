@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Storage.Blobs.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Azure.Storage.Blobs.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
@@ -640,7 +640,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 ContentType = (options?._isContentTypeSet ?? false)
                     ? options?.ContentType
                     : properties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentType, out object contentType) == true
-                        ? (string) contentType
+                        ? (string)contentType
                         : default,
                 ContentEncoding = (options?._isContentEncodingSet ?? false)
                     ? options?.ContentEncoding

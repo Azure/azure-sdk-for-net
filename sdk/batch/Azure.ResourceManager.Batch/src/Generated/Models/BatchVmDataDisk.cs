@@ -29,28 +29,28 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="lun"> The lun is used to uniquely identify each data disk. If attaching multiple disks, each should have a distinct lun. The value must be between 0 and 63, inclusive. </param>
         /// <param name="caching">
         /// Values are:
-        /// 
+        ///
         /// none - The caching mode for the disk is not enabled.
         /// readOnly - The caching mode for the disk is read only.
         /// readWrite - The caching mode for the disk is read and write.
-        /// 
+        ///
         /// The default value for caching is none. For information about the caching options see: https://blogs.msdn.microsoft.com/windowsazurestorage/2012/06/27/exploring-windows-azure-drives-disks-and-images/.
         /// </param>
         /// <param name="diskSizeInGB"> The initial disk size in GB when creating new data disk. </param>
-        /// <param name="storageAccountType">
-        /// If omitted, the default is "Standard_LRS". Values are:
-        /// 
-        /// Standard_LRS - The data disk should use standard locally redundant storage.
-        /// Premium_LRS - The data disk should use premium locally redundant storage.
-        /// </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchVmDataDisk(int lun, BatchDiskCachingType? caching, int diskSizeInGB, BatchStorageAccountType? storageAccountType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="managedDisk"> The managed disk parameters. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchVmDataDisk(int lun, BatchDiskCachingType? caching, int diskSizeInGB, ManagedDisk managedDisk, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Lun = lun;
             Caching = caching;
             DiskSizeInGB = diskSizeInGB;
-            StorageAccountType = storageAccountType;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            ManagedDisk = managedDisk;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchVmDataDisk"/> for deserialization. </summary>
+        internal BatchVmDataDisk()
+        {
         }
 
         /// <summary> The lun is used to uniquely identify each data disk. If attaching multiple disks, each should have a distinct lun. The value must be between 0 and 63, inclusive. </summary>
@@ -58,24 +58,18 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary>
         /// Values are:
-        /// 
+        ///
         /// none - The caching mode for the disk is not enabled.
         /// readOnly - The caching mode for the disk is read only.
         /// readWrite - The caching mode for the disk is read and write.
-        /// 
+        ///
         /// The default value for caching is none. For information about the caching options see: https://blogs.msdn.microsoft.com/windowsazurestorage/2012/06/27/exploring-windows-azure-drives-disks-and-images/.
         /// </summary>
         public BatchDiskCachingType? Caching { get; set; }
 
         /// <summary> The initial disk size in GB when creating new data disk. </summary>
         public int DiskSizeInGB { get; set; }
-
-        /// <summary>
-        /// If omitted, the default is "Standard_LRS". Values are:
-        /// 
-        /// Standard_LRS - The data disk should use standard locally redundant storage.
-        /// Premium_LRS - The data disk should use premium locally redundant storage.
-        /// </summary>
-        public BatchStorageAccountType? StorageAccountType { get; set; }
+        /// <summary> The managed disk parameters. </summary>
+        public ManagedDisk ManagedDisk { get; set; }
     }
 }

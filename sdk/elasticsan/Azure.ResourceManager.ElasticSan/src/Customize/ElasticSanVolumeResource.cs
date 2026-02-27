@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ElasticSanDeleteSnapshotsUnderVolume? deleteSnapshots = null, ElasticSanForceDeleteVolume? forceDelete = null, ElasticSanDeleteType? deleteType = null, CancellationToken cancellationToken = default)
-            => await DeleteAsync(waitUntil,deleteSnapshots,forceDelete,cancellationToken).ConfigureAwait(false);
+            => await DeleteAsync(waitUntil, deleteSnapshots, forceDelete, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Delete an Volume.
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation Delete(WaitUntil waitUntil, ElasticSanDeleteSnapshotsUnderVolume? deleteSnapshots = null, ElasticSanForceDeleteVolume? forceDelete = null, ElasticSanDeleteType? deleteType = null, CancellationToken cancellationToken = default)
-            => Delete(waitUntil,deleteSnapshots,forceDelete,cancellationToken);
+            => Delete(waitUntil, deleteSnapshots, forceDelete, cancellationToken);
 
         /// <summary>
         /// Restore Soft Deleted Volumes. The volume name is obtained by using the API to list soft deleted volumes by volume group

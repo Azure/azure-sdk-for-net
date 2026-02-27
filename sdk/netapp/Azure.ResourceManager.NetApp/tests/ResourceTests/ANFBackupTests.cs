@@ -6,14 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.ResourceManager.NetApp.Tests.Helpers;
-using Azure.ResourceManager.NetApp.Models;
-using NUnit.Framework;
-using Azure.Core.TestFramework;
-using FluentAssertions;
-using Polly.Contrib.WaitAndRetry;
-using Polly;
 using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.NetApp.Models;
+using Azure.ResourceManager.NetApp.Tests.Helpers;
+using FluentAssertions;
+using NUnit.Framework;
+using Polly;
+using Polly.Contrib.WaitAndRetry;
 
 namespace Azure.ResourceManager.NetApp.Tests
 {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             await LiveDelay(60000);
             await WaitForBackupSucceeded(_backupCollection, secondBackupName);
 
-            List<NetAppBackupVaultBackupResource> backupsListResult = await _backupCollection.GetAllAsync(filter:volumeResource1.Id).ToEnumerableAsync();
+            List<NetAppBackupVaultBackupResource> backupsListResult = await _backupCollection.GetAllAsync(filter: volumeResource1.Id).ToEnumerableAsync();
             backupsListResult.Should().HaveCount(2);
 
             //Test delete action on backup deleting the first backup
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             //create Backup for second volume
             NetAppBackupData vol2backupData = new(volumeResourceId: volume2Resource.Id)
             {
-               Label = "adHocBackup"
+                Label = "adHocBackup"
             };
 
             NetAppBackupVaultBackupResource vol2backupResource = (await _backupCollection.CreateOrUpdateAsync(WaitUntil.Completed, vol2backupName, vol2backupData)).Value;

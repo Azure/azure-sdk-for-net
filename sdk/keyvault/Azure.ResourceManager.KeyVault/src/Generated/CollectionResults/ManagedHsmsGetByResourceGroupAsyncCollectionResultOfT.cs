@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.KeyVault
                     yield break;
                 }
                 ManagedHsmListResult result = ManagedHsmListResult.FromResponse(response);
-                yield return Page<ManagedHsmData>.FromValues((IReadOnlyList<ManagedHsmData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ManagedHsmData>.FromValues((IReadOnlyList<ManagedHsmData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

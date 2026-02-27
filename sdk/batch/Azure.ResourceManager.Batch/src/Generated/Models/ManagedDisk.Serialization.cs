@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.Batch;
+using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -44,7 +46,12 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("securityProfile"u8);
                 writer.WriteObjectValue(SecurityProfile, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (Optional.IsDefined(DiskEncryptionSet))
+            {
+                writer.WritePropertyName("diskEncryptionSet"u8);
+                ((IJsonModel<WritableSubResource>)DiskEncryptionSet).Write(writer, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -87,9 +94,11 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             BatchStorageAccountType? storageAccountType = default;
-            VMDiskSecurityProfile securityProfile = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            VmDiskSecurityProfile securityProfile = default;
+            WritableSubResource diskEncryptionSet = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
                 if (prop.NameEquals("storageAccountType"u8))
                 {
@@ -109,12 +118,22 @@ namespace Azure.ResourceManager.Batch.Models
                     securityProfile = VMDiskSecurityProfile.DeserializeVMDiskSecurityProfile(prop.Value, options);
                     continue;
                 }
+                if (property.NameEquals("diskEncryptionSet"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskEncryptionSet = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerBatchContext.Default);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedDisk(storageAccountType, securityProfile, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ManagedDisk(storageAccountType, securityProfile, diskEncryptionSet, serializedAdditionalRawData);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

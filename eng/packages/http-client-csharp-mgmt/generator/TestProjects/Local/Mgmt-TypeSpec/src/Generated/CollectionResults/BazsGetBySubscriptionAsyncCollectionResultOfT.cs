@@ -50,7 +50,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     yield break;
                 }
                 BazListResult result = BazListResult.FromResponse(response);
-                yield return Page<BazData>.FromValues((IReadOnlyList<BazData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<BazData>.FromValues((IReadOnlyList<BazData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

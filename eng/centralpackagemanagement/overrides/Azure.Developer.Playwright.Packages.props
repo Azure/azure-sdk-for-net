@@ -1,0 +1,6 @@
+<Project>
+  <ItemGroup Condition="'$(IsTestProject)' != 'true'">
+    <PackageVersion Include="MSTest.TestFramework" Version="$(MSTestVersion)" />
+    <PackageVersion Include="NUnit" Version="$(NUnitVersion)" />
+  </ItemGroup>
+</Project>

@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.Security.KeyVault.Secrets
 {
@@ -83,6 +85,20 @@ namespace Azure.Security.KeyVault.Secrets
         public SecretClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version;
+
+            this.ConfigureLogging();
+        }
+
+        [Experimental("SCME0002")]
+        internal SecretClientOptions(IConfigurationSection section)
+            : base(section, null)
+        {
+            Version = LatestVersion;
+
+            if (bool.TryParse(section["DisableChallengeResourceVerification"], out bool disableChallengeResourceVerification))
+            {
+                DisableChallengeResourceVerification = disableChallengeResourceVerification;
+            }
 
             this.ConfigureLogging();
         }

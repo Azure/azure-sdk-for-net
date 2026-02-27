@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.AppConfiguration;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
@@ -14,37 +16,8 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     /// <summary> The parameters for updating a configuration store. </summary>
     public partial class AppConfigurationStorePatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppConfigurationStorePatch"/>. </summary>
         public AppConfigurationStorePatch()
@@ -53,70 +26,192 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppConfigurationStorePatch"/>. </summary>
+        /// <param name="properties"> The properties for updating a configuration store. </param>
         /// <param name="identity"> The managed identity information for the configuration store. </param>
         /// <param name="sku"> The SKU of the configuration store. </param>
         /// <param name="tags"> The ARM resource tags. </param>
-        /// <param name="encryption"> The encryption settings of the configuration store. </param>
-        /// <param name="disableLocalAuth"> Disables all authentication methods other than AAD authentication. </param>
-        /// <param name="publicNetworkAccess"> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </param>
-        /// <param name="enablePurgeProtection"> Property specifying whether protection against purge is enabled for this configuration store. </param>
-        /// <param name="dataPlaneProxy"> Property specifying the configuration of data plane proxy for Azure Resource Manager (ARM). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppConfigurationStorePatch(ManagedServiceIdentity identity, AppConfigurationSku sku, IDictionary<string, string> tags, AppConfigurationStoreEncryptionProperties encryption, bool? disableLocalAuth, AppConfigurationPublicNetworkAccess? publicNetworkAccess, bool? enablePurgeProtection, AppConfigurationDataPlaneProxyProperties dataPlaneProxy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AppConfigurationStorePatch(ConfigurationStorePropertiesUpdateParameters properties, ManagedServiceIdentity identity, AppConfigurationSku sku, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Properties = properties;
             Identity = identity;
             Sku = sku;
             Tags = tags;
-            Encryption = encryption;
-            DisableLocalAuth = disableLocalAuth;
-            PublicNetworkAccess = publicNetworkAccess;
-            EnablePurgeProtection = enablePurgeProtection;
-            DataPlaneProxy = dataPlaneProxy;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The properties for updating a configuration store. </summary>
+        [WirePath("properties")]
+        internal ConfigurationStorePropertiesUpdateParameters Properties { get; set; }
 
         /// <summary> The managed identity information for the configuration store. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> The SKU of the configuration store. </summary>
+        [WirePath("sku")]
         internal AppConfigurationSku Sku { get; set; }
-        /// <summary> The SKU name of the configuration store. </summary>
-        [WirePath("sku.name")]
-        public string SkuName
-        {
-            get => Sku is null ? default : Sku.Name;
-            set => Sku = new AppConfigurationSku(value);
-        }
 
         /// <summary> The ARM resource tags. </summary>
         [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
-        /// <summary> The encryption settings of the configuration store. </summary>
-        internal AppConfigurationStoreEncryptionProperties Encryption { get; set; }
+
+        /// <summary> Disables all authentication methods other than AAD authentication. </summary>
+        [WirePath("properties.disableLocalAuth")]
+        public bool? DisableLocalAuth
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisableLocalAuth;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConfigurationStorePropertiesUpdateParameters();
+                }
+                Properties.DisableLocalAuth = value.Value;
+            }
+        }
+
+        /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
+        [WirePath("properties.publicNetworkAccess")]
+        public AppConfigurationPublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConfigurationStorePropertiesUpdateParameters();
+                }
+                Properties.PublicNetworkAccess = value.Value;
+            }
+        }
+
+        /// <summary> Property specifying whether protection against purge is enabled for this configuration store. </summary>
+        [WirePath("properties.enablePurgeProtection")]
+        public bool? EnablePurgeProtection
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnablePurgeProtection;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConfigurationStorePropertiesUpdateParameters();
+                }
+                Properties.EnablePurgeProtection = value.Value;
+            }
+        }
+
+        /// <summary> Property specifying the configuration of data plane proxy for Azure Resource Manager (ARM). </summary>
+        [WirePath("properties.dataPlaneProxy")]
+        public AppConfigurationDataPlaneProxyProperties DataPlaneProxy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataPlaneProxy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConfigurationStorePropertiesUpdateParameters();
+                }
+                Properties.DataPlaneProxy = value;
+            }
+        }
+
+        /// <summary> The duration in seconds to retain new key value revisions. Defaults to 604800 (7 days) for Free SKU stores and 2592000 (30 days) for Standard SKU stores and Premium SKU stores. </summary>
+        [WirePath("properties.defaultKeyValueRevisionRetentionPeriodInSeconds")]
+        public long? DefaultKeyValueRevisionRetentionPeriodInSeconds
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DefaultKeyValueRevisionRetentionPeriodInSeconds;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConfigurationStorePropertiesUpdateParameters();
+                }
+                Properties.DefaultKeyValueRevisionRetentionPeriodInSeconds = value.Value;
+            }
+        }
+
         /// <summary> Key vault properties. </summary>
         [WirePath("properties.encryption.keyVaultProperties")]
         public AppConfigurationKeyVaultProperties EncryptionKeyVaultProperties
         {
-            get => Encryption is null ? default : Encryption.KeyVaultProperties;
+            get
+            {
+                return Properties is null ? default : Properties.EncryptionKeyVaultProperties;
+            }
             set
             {
-                if (Encryption is null)
-                    Encryption = new AppConfigurationStoreEncryptionProperties();
-                Encryption.KeyVaultProperties = value;
+                if (Properties is null)
+                {
+                    Properties = new ConfigurationStorePropertiesUpdateParameters();
+                }
+                Properties.EncryptionKeyVaultProperties = value;
             }
         }
 
-        /// <summary> Disables all authentication methods other than AAD authentication. </summary>
-        [WirePath("properties.disableLocalAuth")]
-        public bool? DisableLocalAuth { get; set; }
-        /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
-        [WirePath("properties.publicNetworkAccess")]
-        public AppConfigurationPublicNetworkAccess? PublicNetworkAccess { get; set; }
-        /// <summary> Property specifying whether protection against purge is enabled for this configuration store. </summary>
-        [WirePath("properties.enablePurgeProtection")]
-        public bool? EnablePurgeProtection { get; set; }
-        /// <summary> Property specifying the configuration of data plane proxy for Azure Resource Manager (ARM). </summary>
-        [WirePath("properties.dataPlaneProxy")]
-        public AppConfigurationDataPlaneProxyProperties DataPlaneProxy { get; set; }
+        /// <summary> Resource ID of a resource enabling telemetry collection. </summary>
+        [WirePath("properties.telemetry.resourceId")]
+        public ResourceIdentifier TelemetryResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TelemetryResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConfigurationStorePropertiesUpdateParameters();
+                }
+                Properties.TelemetryResourceId = value;
+            }
+        }
+
+        /// <summary> Resource ID of an Azure Front Door profile. </summary>
+        [WirePath("properties.azureFrontDoor.resourceId")]
+        public ResourceIdentifier AzureFrontDoorResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AzureFrontDoorResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConfigurationStorePropertiesUpdateParameters();
+                }
+                Properties.AzureFrontDoorResourceId = value;
+            }
+        }
+
+        /// <summary> The SKU name of the configuration store. </summary>
+        [WirePath("sku.name")]
+        public string SkuName
+        {
+            get
+            {
+                return Sku is null ? default : Sku.Name;
+            }
+            set
+            {
+                Sku = new AppConfigurationSku(value);
+            }
+        }
     }
 }

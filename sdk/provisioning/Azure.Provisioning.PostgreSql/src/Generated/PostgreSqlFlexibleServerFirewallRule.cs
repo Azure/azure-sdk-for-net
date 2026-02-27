@@ -19,7 +19,7 @@ namespace Azure.Provisioning.PostgreSql;
 public partial class PostgreSqlFlexibleServerFirewallRule : ProvisionableResource
 {
     /// <summary>
-    /// The name of the server firewall rule.
+    /// Name of the firewall rule.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -29,7 +29,8 @@ public partial class PostgreSqlFlexibleServerFirewallRule : ProvisionableResourc
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// The end IP address of the server firewall rule. Must be IPv4 format.
+    /// IP address defining the end of the range of addresses of a firewall
+    /// rule. Must be expressed in IPv4 format.
     /// </summary>
     public BicepValue<IPAddress> EndIPAddress 
     {
@@ -39,7 +40,8 @@ public partial class PostgreSqlFlexibleServerFirewallRule : ProvisionableResourc
     private BicepValue<IPAddress>? _endIPAddress;
 
     /// <summary>
-    /// The start IP address of the server firewall rule. Must be IPv4 format.
+    /// IP address defining the start of the range of addresses of a firewall
+    /// rule. Must be expressed in IPv4 format.
     /// </summary>
     public BicepValue<IPAddress> StartIPAddress 
     {
@@ -87,7 +89,7 @@ public partial class PostgreSqlFlexibleServerFirewallRule : ProvisionableResourc
     /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlFlexibleServerFirewallRule.</param>
     public PostgreSqlFlexibleServerFirewallRule(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/flexibleServers/firewallRules", resourceVersion ?? "2024-08-01")
+        : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/flexibleServers/firewallRules", resourceVersion ?? "2025-08-01")
     {
     }
 
@@ -97,6 +99,7 @@ public partial class PostgreSqlFlexibleServerFirewallRule : ProvisionableResourc
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _endIPAddress = DefineProperty<IPAddress>("EndIPAddress", ["properties", "endIpAddress"], isRequired: true);
         _startIPAddress = DefineProperty<IPAddress>("StartIPAddress", ["properties", "startIpAddress"], isRequired: true);
@@ -110,6 +113,11 @@ public partial class PostgreSqlFlexibleServerFirewallRule : ProvisionableResourc
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-08-01.
+        /// </summary>
+        public static readonly string V2025_08_01 = "2025-08-01";
+
         /// <summary>
         /// 2024-08-01.
         /// </summary>

@@ -15,7 +15,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
 
-        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
         internal HttpMessage CreateGetAnswersRequest(string projectName, string deploymentName, RequestContent content, RequestContext context)
         {
@@ -23,7 +23,10 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
             uri.Reset(_endpoint);
             uri.AppendPath("/language", false);
             uri.AppendPath("/:query-knowledgebases", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             uri.AppendQuery("projectName", projectName, true);
             uri.AppendQuery("deploymentName", deploymentName, true);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
@@ -42,7 +45,10 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
             uri.Reset(_endpoint);
             uri.AppendPath("/language", false);
             uri.AppendPath("/:query-text", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;

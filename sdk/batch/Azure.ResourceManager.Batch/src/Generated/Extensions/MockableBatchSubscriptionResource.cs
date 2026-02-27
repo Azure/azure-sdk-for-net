@@ -58,8 +58,12 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// <description> BatchAccounts_List. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -86,8 +90,12 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// <description> BatchAccounts_List. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -103,186 +111,6 @@ namespace Azure.ResourceManager.Batch.Mocking
         }
 
         /// <summary>
-        /// Gets the Batch service quotas for the specified subscription at the given location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Batch/locations/{locationName}/quotas. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LocationOperationGroup_GetQuotas. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="locationName"> The region for which to retrieve Batch service quotas. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<BatchLocationQuota>> GetQuotasAsync(string locationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-
-            using DiagnosticScope scope = LocationClientDiagnostics.CreateScope("MockableBatchSubscriptionResource.GetQuotas");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = LocationRestClient.CreateGetQuotasRequest(Guid.Parse(Id.SubscriptionId), locationName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<BatchLocationQuota> response = Response.FromValue(BatchLocationQuota.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the Batch service quotas for the specified subscription at the given location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Batch/locations/{locationName}/quotas. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LocationOperationGroup_GetQuotas. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="locationName"> The region for which to retrieve Batch service quotas. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<BatchLocationQuota> GetQuotas(string locationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-
-            using DiagnosticScope scope = LocationClientDiagnostics.CreateScope("MockableBatchSubscriptionResource.GetQuotas");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = LocationRestClient.CreateGetQuotasRequest(Guid.Parse(Id.SubscriptionId), locationName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<BatchLocationQuota> response = Response.FromValue(BatchLocationQuota.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the list of Batch supported Virtual Machine VM sizes available at the given location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Batch/locations/{locationName}/virtualMachineSkus. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LocationOperationGroup_ListSupportedVirtualMachineSkus. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="locationName"> The region for which to retrieve Batch service supported SKUs. </param>
-        /// <param name="maxresults"> The maximum number of items to return in the response. </param>
-        /// <param name="filter"> OData filter expression. Valid properties for filtering are "familyName". </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="BatchSupportedSku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BatchSupportedSku> GetSupportedVirtualMachineSkusAsync(string locationName, int? maxresults = default, string filter = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new LocationGetSupportedVirtualMachineSkusAsyncCollectionResultOfT(
-                LocationRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                locationName,
-                maxresults,
-                filter,
-                context);
-        }
-
-        /// <summary>
-        /// Gets the list of Batch supported Virtual Machine VM sizes available at the given location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Batch/locations/{locationName}/virtualMachineSkus. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LocationOperationGroup_ListSupportedVirtualMachineSkus. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="locationName"> The region for which to retrieve Batch service supported SKUs. </param>
-        /// <param name="maxresults"> The maximum number of items to return in the response. </param>
-        /// <param name="filter"> OData filter expression. Valid properties for filtering are "familyName". </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="BatchSupportedSku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BatchSupportedSku> GetSupportedVirtualMachineSkus(string locationName, int? maxresults = default, string filter = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new LocationGetSupportedVirtualMachineSkusCollectionResultOfT(
-                LocationRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                locationName,
-                maxresults,
-                filter,
-                context);
-        }
-
-        /// <summary>
         /// Checks whether the Batch account name is available in the specified region.
         /// <list type="bullet">
         /// <item>
@@ -294,8 +122,8 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// <description> LocationOperationGroup_CheckNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -345,8 +173,8 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// <description> LocationOperationGroup_CheckNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -382,6 +210,134 @@ namespace Azure.ResourceManager.Batch.Mocking
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets the Batch service quotas for the specified subscription at the given location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Batch/locations/{locationName}/quotas</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Location_GetQuotas</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationName"> The region for which to retrieve Batch service quotas. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<BatchLocationQuota>> GetBatchQuotasAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
+        {
+            using var scope = LocationClientDiagnostics.CreateScope("MockableBatchSubscriptionResource.GetBatchQuotas");
+            scope.Start();
+            try
+            {
+                var response = await LocationRestClient.GetQuotasAsync(Id.SubscriptionId, locationName, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the Batch service quotas for the specified subscription at the given location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Batch/locations/{locationName}/quotas</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Location_GetQuotas</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationName"> The region for which to retrieve Batch service quotas. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<BatchLocationQuota> GetBatchQuotas(AzureLocation locationName, CancellationToken cancellationToken = default)
+        {
+            using var scope = LocationClientDiagnostics.CreateScope("MockableBatchSubscriptionResource.GetBatchQuotas");
+            scope.Start();
+            try
+            {
+                var response = LocationRestClient.GetQuotas(Id.SubscriptionId, locationName, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the list of Batch supported Virtual Machine VM sizes available at the given location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Batch/locations/{locationName}/virtualMachineSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Location_ListSupportedVirtualMachineSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationName"> The region for which to retrieve Batch service supported SKUs. </param>
+        /// <param name="maxresults"> The maximum number of items to return in the response. </param>
+        /// <param name="filter"> OData filter expression. Valid properties for filtering are "familyName". </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="BatchSupportedSku"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BatchSupportedSku> GetBatchSupportedVirtualMachineSkusAsync(AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LocationRestClient.CreateListSupportedVirtualMachineSkusRequest(Id.SubscriptionId, locationName, maxresults, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LocationRestClient.CreateListSupportedVirtualMachineSkusNextPageRequest(nextLink, Id.SubscriptionId, locationName, maxresults, filter);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchSupportedSku.DeserializeBatchSupportedSku(e), LocationClientDiagnostics, Pipeline, "MockableBatchSubscriptionResource.GetBatchSupportedVirtualMachineSkus", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the list of Batch supported Virtual Machine VM sizes available at the given location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Batch/locations/{locationName}/virtualMachineSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Location_ListSupportedVirtualMachineSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationName"> The region for which to retrieve Batch service supported SKUs. </param>
+        /// <param name="maxresults"> The maximum number of items to return in the response. </param>
+        /// <param name="filter"> OData filter expression. Valid properties for filtering are "familyName". </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BatchSupportedSku"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BatchSupportedSku> GetBatchSupportedVirtualMachineSkus(AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LocationRestClient.CreateListSupportedVirtualMachineSkusRequest(Id.SubscriptionId, locationName, maxresults, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LocationRestClient.CreateListSupportedVirtualMachineSkusNextPageRequest(nextLink, Id.SubscriptionId, locationName, maxresults, filter);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchSupportedSku.DeserializeBatchSupportedSku(e), LocationClientDiagnostics, Pipeline, "MockableBatchSubscriptionResource.GetBatchSupportedVirtualMachineSkus", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -55,7 +55,27 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (Optional.IsCollectionDefined(IPFamilies))
+            {
+                writer.WritePropertyName("ipFamilies"u8);
+                writer.WriteStartArray();
+                foreach (var item in IPFamilies)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(IPTags))
+            {
+                writer.WritePropertyName("ipTags"u8);
+                writer.WriteStartArray();
+                foreach (var item in IPTags)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -99,8 +119,11 @@ namespace Azure.ResourceManager.Batch.Models
             }
             BatchIPAddressProvisioningType? provision = default;
             IList<ResourceIdentifier> ipAddressIds = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IList<BatchIPFamily> ipFamilies = default;
+            IList<BatchIPTag> ipTags = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
                 if (prop.NameEquals("provision"u8))
                 {
@@ -132,12 +155,41 @@ namespace Azure.ResourceManager.Batch.Models
                     ipAddressIds = array;
                     continue;
                 }
+                if (property.NameEquals("ipFamilies"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<BatchIPFamily> array = new List<BatchIPFamily>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new BatchIPFamily(item.GetString()));
+                    }
+                    ipFamilies = array;
+                    continue;
+                }
+                if (property.NameEquals("ipTags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<BatchIPTag> array = new List<BatchIPTag>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(BatchIPTag.DeserializeBatchIPTag(item, options));
+                    }
+                    ipTags = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BatchPublicIPAddressConfiguration(provision, ipAddressIds ?? new ChangeTrackingList<ResourceIdentifier>(), additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BatchPublicIPAddressConfiguration(provision, ipAddressIds ?? new ChangeTrackingList<ResourceIdentifier>(), ipFamilies ?? new ChangeTrackingList<BatchIPFamily>(), ipTags ?? new ChangeTrackingList<BatchIPTag>(), serializedAdditionalRawData);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

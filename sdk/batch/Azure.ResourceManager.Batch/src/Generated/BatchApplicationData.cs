@@ -27,80 +27,35 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchApplicationData"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> The properties associated with the Application. </param>
-        /// <param name="eTag"> The ETag of the resource, used for concurrency statements. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
         /// <param name="tags"> The tags of the resource. </param>
-        internal BatchApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApplicationProperties properties, ETag? eTag, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        /// <param name="displayName"> The display name for the application. </param>
+        /// <param name="allowUpdates"> A value indicating whether packages within the application may be overwritten using the same version string. </param>
+        /// <param name="defaultVersion"> The package to use if a client requests the application but does not specify a version. This property can only be set to the name of an existing package. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> tags, string displayName, bool? allowUpdates, string defaultVersion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-            Properties = properties;
-            ETag = eTag;
+            ETag = etag;
             Tags = tags;
+            DisplayName = displayName;
+            AllowUpdates = allowUpdates;
+            DefaultVersion = defaultVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-
-        /// <summary> The properties associated with the Application. </summary>
-        internal ApplicationProperties Properties { get; set; }
 
         /// <summary> The ETag of the resource, used for concurrency statements. </summary>
         public ETag? ETag { get; }
-
         /// <summary> The tags of the resource. </summary>
         public IDictionary<string, string> Tags { get; }
-
         /// <summary> The display name for the application. </summary>
-        public string DisplayName
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DisplayName;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ApplicationProperties();
-                }
-                Properties.DisplayName = value;
-            }
-        }
-
+        public string DisplayName { get; set; }
         /// <summary> A value indicating whether packages within the application may be overwritten using the same version string. </summary>
-        public bool? AllowUpdates
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AllowUpdates;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ApplicationProperties();
-                }
-                Properties.AllowUpdates = value.Value;
-            }
-        }
-
+        public bool? AllowUpdates { get; set; }
         /// <summary> The package to use if a client requests the application but does not specify a version. This property can only be set to the name of an existing package. </summary>
-        public string DefaultVersion
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DefaultVersion;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ApplicationProperties();
-                }
-                Properties.DefaultVersion = value;
-            }
-        }
+        public string DefaultVersion { get; set; }
     }
 }

@@ -183,10 +183,13 @@ namespace Azure.ResourceManager.Batch
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties,
-                properties,
-                eTag,
-                tags ?? new ChangeTrackingDictionary<string, string>());
+                etag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                provisioningState,
+                privateEndpoint,
+                groupIds ?? new ChangeTrackingList<string>(),
+                privateLinkServiceConnectionState,
+                serializedAdditionalRawData);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

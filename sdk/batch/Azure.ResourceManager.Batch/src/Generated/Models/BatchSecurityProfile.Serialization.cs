@@ -49,7 +49,12 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("uefiSettings"u8);
                 writer.WriteObjectValue(UefiSettings, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (Optional.IsDefined(ProxyAgentSettings))
+            {
+                writer.WritePropertyName("proxyAgentSettings"u8);
+                writer.WriteObjectValue(ProxyAgentSettings, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -94,8 +99,10 @@ namespace Azure.ResourceManager.Batch.Models
             BatchSecurityType? securityType = default;
             bool? encryptionAtHost = default;
             BatchUefiSettings uefiSettings = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            BatchProxyAgentSettings proxyAgentSettings = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
                 if (prop.NameEquals("securityType"u8))
                 {
@@ -124,12 +131,22 @@ namespace Azure.ResourceManager.Batch.Models
                     uefiSettings = BatchUefiSettings.DeserializeBatchUefiSettings(prop.Value, options);
                     continue;
                 }
+                if (property.NameEquals("proxyAgentSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    proxyAgentSettings = BatchProxyAgentSettings.DeserializeBatchProxyAgentSettings(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BatchSecurityProfile(securityType, encryptionAtHost, uefiSettings, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BatchSecurityProfile(securityType, encryptionAtHost, uefiSettings, proxyAgentSettings, serializedAdditionalRawData);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Xml.Linq;
 using System;
 using System.Collections.Generic;
-using System.Xml;
 using System.Globalization;
-using Azure.Core.Pipeline;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Linq;
+using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.ServiceBus.Administration
 {

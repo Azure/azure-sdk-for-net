@@ -27,7 +27,7 @@ public partial class ServerThreatProtectionSettingsModel : ProvisionableResource
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// The name of the Threat Protection state.
+    /// Name of the advanced threat protection settings.
     /// </summary>
     public BicepValue<ThreatProtectionName> ThreatProtectionName 
     {
@@ -37,8 +37,8 @@ public partial class ServerThreatProtectionSettingsModel : ProvisionableResource
     private BicepValue<ThreatProtectionName>? _threatProtectionName;
 
     /// <summary>
-    /// Specifies the state of the Threat Protection, whether it is enabled or
-    /// disabled or a state has not been applied yet on the specific server.
+    /// Specifies the state of the advanced threat protection, whether it is
+    /// enabled, disabled, or a state has not been applied yet on the server.
     /// </summary>
     public BicepValue<ThreatProtectionState> State 
     {
@@ -48,7 +48,7 @@ public partial class ServerThreatProtectionSettingsModel : ProvisionableResource
     private BicepValue<ThreatProtectionState>? _state;
 
     /// <summary>
-    /// Specifies the UTC creation time of the policy.
+    /// Specifies the creation time (UTC) of the policy.
     /// </summary>
     public BicepValue<DateTimeOffset> CreatedOn 
     {
@@ -95,7 +95,7 @@ public partial class ServerThreatProtectionSettingsModel : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the ServerThreatProtectionSettingsModel.</param>
     public ServerThreatProtectionSettingsModel(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/flexibleServers/advancedThreatProtectionSettings", resourceVersion ?? "2024-08-01")
+        : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/flexibleServers/advancedThreatProtectionSettings", resourceVersion ?? "2025-08-01")
     {
     }
 
@@ -105,6 +105,7 @@ public partial class ServerThreatProtectionSettingsModel : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _threatProtectionName = DefineProperty<ThreatProtectionName>("ThreatProtectionName", ["ThreatProtectionName"], isRequired: true);
         _state = DefineProperty<ThreatProtectionState>("State", ["properties", "state"]);
@@ -119,6 +120,11 @@ public partial class ServerThreatProtectionSettingsModel : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-08-01.
+        /// </summary>
+        public static readonly string V2025_08_01 = "2025-08-01";
+
         /// <summary>
         /// 2024-08-01.
         /// </summary>

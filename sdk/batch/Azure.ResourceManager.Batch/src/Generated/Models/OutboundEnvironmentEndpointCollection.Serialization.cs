@@ -94,8 +94,9 @@ namespace Azure.ResourceManager.Batch.Models
             }
             IReadOnlyList<BatchAccountOutboundEnvironmentEndpoint> value = default;
             Uri nextLink = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
@@ -109,11 +110,11 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 if (prop.NameEquals("nextLink"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    nextLink = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -121,7 +122,8 @@ namespace Azure.ResourceManager.Batch.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OutboundEnvironmentEndpointCollection(value, nextLink, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new OutboundEnvironmentEndpointCollection(value, nextLink, serializedAdditionalRawData);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

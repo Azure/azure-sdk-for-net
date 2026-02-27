@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetWinRMListener"/>. </summary>
         /// <param name="protocol">
-        /// Specifies the protocol of WinRM listener. Possible values are: **http,**
-        /// **https.**
+        /// Specifies the protocol of WinRM listener. Possible values are: <b>http,</b>
+        /// <b>https.</b>
         /// </param>
         /// <param name="certificateUri">
         /// This is the URL of a certificate that has been uploaded to Key Vault as a
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         }
 
         /// <summary>
-        /// Specifies the protocol of WinRM listener. Possible values are: **http,**
-        /// **https.**
+        /// Specifies the protocol of WinRM listener. Possible values are: <b>http,</b>
+        /// <b>https.</b>
         /// </summary>
         public ComputeFleetProtocolType? Protocol { get; set; }
 

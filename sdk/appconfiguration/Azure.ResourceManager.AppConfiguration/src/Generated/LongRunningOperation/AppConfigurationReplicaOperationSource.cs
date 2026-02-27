@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
-    internal class AppConfigurationReplicaOperationSource : IOperationSource<AppConfigurationReplicaResource>
+    /// <summary></summary>
+    internal partial class AppConfigurationReplicaOperationSource : IOperationSource<AppConfigurationReplicaResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal AppConfigurationReplicaOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         AppConfigurationReplicaResource IOperationSource<AppConfigurationReplicaResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AppConfigurationReplicaData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppConfigurationContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            AppConfigurationReplicaData data = AppConfigurationReplicaData.DeserializeAppConfigurationReplicaData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new AppConfigurationReplicaResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<AppConfigurationReplicaResource> IOperationSource<AppConfigurationReplicaResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AppConfigurationReplicaData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppConfigurationContext.Default);
-            return await Task.FromResult(new AppConfigurationReplicaResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            AppConfigurationReplicaData data = AppConfigurationReplicaData.DeserializeAppConfigurationReplicaData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new AppConfigurationReplicaResource(_client, data);
         }
     }
 }

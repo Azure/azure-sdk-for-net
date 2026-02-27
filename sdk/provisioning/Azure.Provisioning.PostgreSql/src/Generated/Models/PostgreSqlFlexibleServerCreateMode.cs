@@ -6,7 +6,7 @@
 namespace Azure.Provisioning.PostgreSql;
 
 /// <summary>
-/// The mode to create a new PostgreSQL server.
+/// Creation mode of a new server.
 /// </summary>
 public enum PostgreSqlFlexibleServerCreateMode
 {

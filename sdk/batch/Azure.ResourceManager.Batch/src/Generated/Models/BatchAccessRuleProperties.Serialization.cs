@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("direction"u8);
                 writer.WriteStringValue(Direction.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AddressPrefixes))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AddressPrefixes))
             {
                 writer.WritePropertyName("addressPrefixes"u8);
                 writer.WriteStartArray();
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Subscriptions))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Subscriptions))
             {
                 writer.WritePropertyName("subscriptions"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NetworkSecurityPerimeters))
+            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkSecurityPerimeters))
             {
                 writer.WritePropertyName("networkSecurityPerimeters"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(EmailAddresses))
+            if (options.Format != "W" && Optional.IsCollectionDefined(EmailAddresses))
             {
                 writer.WritePropertyName("emailAddresses"u8);
                 writer.WriteStartArray();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PhoneNumbers))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PhoneNumbers))
             {
                 writer.WritePropertyName("phoneNumbers"u8);
                 writer.WriteStartArray();

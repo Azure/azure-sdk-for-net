@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.ElasticSan
             uri.AppendPath("/providers/Microsoft.ElasticSan/elasticSans/", false);
             uri.AppendPath(elasticSanName, true);
             uri.AppendPath("/privateLinkResources", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

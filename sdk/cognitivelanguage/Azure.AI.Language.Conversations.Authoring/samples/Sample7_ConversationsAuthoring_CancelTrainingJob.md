@@ -32,7 +32,7 @@ Operation<ConversationAuthoringTrainingJobResult> cancelOperation = projectClien
     jobId: jobId
 );
 
- // Extract the operation-location header
+// Extract the operation-location header
 string operationLocation = cancelOperation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
 Console.WriteLine($"Operation Location: {operationLocation}");
 

@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Language.Conversations.Authoring;
 using Azure.AI.Language.Conversations.Authoring.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using System.Threading.Tasks;
 
 namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 {
@@ -29,7 +29,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 waitUntil: WaitUntil.Completed
             );
 
-             // Extract the operation-location header
+            // Extract the operation-location header
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
             Console.WriteLine($"Operation Location: {operationLocation}");
 

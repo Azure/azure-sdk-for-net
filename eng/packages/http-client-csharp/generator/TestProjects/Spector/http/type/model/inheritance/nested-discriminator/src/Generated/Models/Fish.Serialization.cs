@@ -18,21 +18,13 @@ namespace _Type.Model.Inheritance.NestedDiscriminator
     {
         internal Fish() => throw null;
 
-        void IJsonModel<Fish>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        Fish IJsonModel<Fish>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual Fish JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<Fish>.Write(ModelReaderWriterOptions options) => throw null;
+        protected virtual Fish PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        Fish IPersistableModel<Fish>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<Fish>.Write(ModelReaderWriterOptions options) => throw null;
 
-        protected virtual Fish PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Fish IPersistableModel<Fish>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<Fish>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
@@ -40,5 +32,13 @@ namespace _Type.Model.Inheritance.NestedDiscriminator
         public static implicit operator RequestContent(Fish fish) => throw null;
 
         public static explicit operator Fish(Response response) => throw null;
+
+        void IJsonModel<Fish>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        Fish IJsonModel<Fish>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual Fish JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }
 }

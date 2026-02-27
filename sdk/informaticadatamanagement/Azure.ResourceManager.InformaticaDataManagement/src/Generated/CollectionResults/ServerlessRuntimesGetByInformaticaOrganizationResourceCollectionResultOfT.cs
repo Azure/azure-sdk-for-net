@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                     yield break;
                 }
                 InformaticaServerlessRuntimeResourceListResult result = InformaticaServerlessRuntimeResourceListResult.FromResponse(response);
-                yield return Page<InformaticaServerlessRuntimeData>.FromValues((IReadOnlyList<InformaticaServerlessRuntimeData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<InformaticaServerlessRuntimeData>.FromValues((IReadOnlyList<InformaticaServerlessRuntimeData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -35,7 +35,7 @@ namespace Azure.Communication.CallingServer
                 var callConnection = callResponse.Value.CallConnection;
                 callConnectionId = callConnection.CallConnectionId;
                 var playResponse = await callConnection.GetCallMedia().PlayAsync(
-                    new FileSource(new Uri(playAudioUri)) { PlaySourceId = "playSourceId"},
+                    new FileSource(new Uri(playAudioUri)) { PlaySourceId = "playSourceId" },
                     new CommunicationUserIdentifier[] { targetUser });
                 Assert.NotNull(playResponse);
                 Assert.AreEqual(202, playResponse.Status);

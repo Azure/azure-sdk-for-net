@@ -91,8 +91,8 @@ namespace Azure.ResourceManager.EdgeActions
         Azure.ResourceManager.EdgeActions.EdgeActionExecutionFilterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.EdgeActionExecutionFilterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.EdgeActionExecutionFilterData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.EdgeActionExecutionFilterData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EdgeActions.EdgeActionExecutionFilterResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.EdgeActions.EdgeActionExecutionFilterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EdgeActions.EdgeActionExecutionFilterResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EdgeActions.EdgeActionExecutionFilterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EdgeActions.EdgeActionExecutionFilterResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.EdgeActions.Models.EdgeActionExecutionFilterPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EdgeActions.EdgeActionExecutionFilterResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EdgeActions.Models.EdgeActionExecutionFilterPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class EdgeActionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeActions.EdgeActionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.EdgeActionData>
     {
@@ -100,15 +100,11 @@ namespace Azure.ResourceManager.EdgeActions
         protected EdgeActionResource() { }
         public virtual Azure.ResourceManager.EdgeActions.EdgeActionData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EdgeActions.Models.EdgeActionAttachmentResult> AddAttachment(Azure.WaitUntil waitUntil, Azure.ResourceManager.EdgeActions.Models.EdgeActionAttachment content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EdgeActions.Models.EdgeActionAttachmentResult>> AddAttachmentAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EdgeActions.Models.EdgeActionAttachment content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EdgeActions.EdgeActionResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EdgeActions.EdgeActionResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string edgeActionName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation DeleteAttachment(Azure.WaitUntil waitUntil, Azure.ResourceManager.EdgeActions.Models.EdgeActionAttachment content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAttachmentAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EdgeActions.Models.EdgeActionAttachment content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EdgeActions.EdgeActionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EdgeActions.EdgeActionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EdgeActions.EdgeActionExecutionFilterResource> GetEdgeActionExecutionFilter(string executionFilter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -126,8 +122,8 @@ namespace Azure.ResourceManager.EdgeActions
         Azure.ResourceManager.EdgeActions.EdgeActionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.EdgeActionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.EdgeActionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.EdgeActionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EdgeActions.EdgeActionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.EdgeActions.EdgeActionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EdgeActions.EdgeActionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EdgeActions.EdgeActionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EdgeActions.EdgeActionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.EdgeActions.Models.EdgeActionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EdgeActions.EdgeActionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EdgeActions.Models.EdgeActionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public static partial class EdgeActionsExtensions
     {
@@ -199,8 +195,8 @@ namespace Azure.ResourceManager.EdgeActions
         Azure.ResourceManager.EdgeActions.EdgeActionVersionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.EdgeActionVersionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.EdgeActionVersionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.EdgeActionVersionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EdgeActions.EdgeActionVersionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.EdgeActions.EdgeActionVersionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EdgeActions.EdgeActionVersionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EdgeActions.EdgeActionVersionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EdgeActions.EdgeActionVersionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EdgeActions.EdgeActionVersionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.EdgeActions.Mocking
@@ -231,18 +227,20 @@ namespace Azure.ResourceManager.EdgeActions.Models
     public static partial class ArmEdgeActionsModelFactory
     {
         public static Azure.ResourceManager.EdgeActions.Models.EdgeActionAttachment EdgeActionAttachment(string id = null, Azure.Core.ResourceIdentifier attachedResourceId = null) { throw null; }
-        public static Azure.ResourceManager.EdgeActions.Models.EdgeActionAttachmentResult EdgeActionAttachmentResult(string edgeActionId = null) { throw null; }
         public static Azure.ResourceManager.EdgeActions.EdgeActionData EdgeActionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.EdgeActions.Models.EdgeActionProperties properties = null, Azure.ResourceManager.EdgeActions.Models.EdgeActionSkuType sku = null) { throw null; }
         public static Azure.ResourceManager.EdgeActions.EdgeActionExecutionFilterData EdgeActionExecutionFilterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.EdgeActions.Models.EdgeActionExecutionFilterProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.EdgeActions.Models.EdgeActionExecutionFilterProperties EdgeActionExecutionFilterProperties(Azure.Core.ResourceIdentifier versionId = null, System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), string executionFilterIdentifierHeaderName = null, string executionFilterIdentifierHeaderValue = null, Azure.ResourceManager.EdgeActions.Models.EdgeActionProvisioningState? provisioningState = default(Azure.ResourceManager.EdgeActions.Models.EdgeActionProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.EdgeActions.Models.EdgeActionExecutionFilterPatch EdgeActionExecutionFilterPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.EdgeActions.Models.EdgeActionExecutionFilterUpdateProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.EdgeActions.Models.EdgeActionExecutionFilterProperties EdgeActionExecutionFilterProperties(Azure.Core.ResourceIdentifier versionId = null, System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), string executionFilterIdentifierHeaderName = null, string executionFilterIdentifierHeaderValue = null, Azure.ResourceManager.EdgeActions.Models.EdgeActionProvisioningState? provisioningState = default(Azure.ResourceManager.EdgeActions.Models.EdgeActionProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.EdgeActions.Models.EdgeActionPatch EdgeActionPatch(Azure.ResourceManager.EdgeActions.Models.EdgeActionPropertiesUpdate properties = null, Azure.ResourceManager.EdgeActions.Models.EdgeActionSkuTypeUpdate sku = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.EdgeActions.Models.EdgeActionProperties EdgeActionProperties(Azure.ResourceManager.EdgeActions.Models.EdgeActionProvisioningState? provisioningState = default(Azure.ResourceManager.EdgeActions.Models.EdgeActionProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.EdgeActions.Models.EdgeActionAttachment> attachments = null) { throw null; }
         public static Azure.ResourceManager.EdgeActions.EdgeActionVersionData EdgeActionVersionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionProperties EdgeActionVersionProperties(Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionDeploymentType deploymentType = default(Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionDeploymentType), Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionValidationStatus validationStatus = default(Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionValidationStatus), Azure.ResourceManager.EdgeActions.Models.EdgeActionProvisioningState? provisioningState = default(Azure.ResourceManager.EdgeActions.Models.EdgeActionProvisioningState?), Azure.ResourceManager.EdgeActions.Models.EdgeActionIsDefaultVersion isDefaultVersion = default(Azure.ResourceManager.EdgeActions.Models.EdgeActionIsDefaultVersion), System.DateTimeOffset lastPackageUpdatedOn = default(System.DateTimeOffset)) { throw null; }
+        public static Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionPatch EdgeActionVersionPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionUpdateProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionProperties EdgeActionVersionProperties(Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionDeploymentType deploymentType = default(Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionDeploymentType), Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionValidationStatus? validationStatus = default(Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionValidationStatus?), Azure.ResourceManager.EdgeActions.Models.EdgeActionProvisioningState? provisioningState = default(Azure.ResourceManager.EdgeActions.Models.EdgeActionProvisioningState?), Azure.ResourceManager.EdgeActions.Models.EdgeActionIsDefaultVersion isDefaultVersion = default(Azure.ResourceManager.EdgeActions.Models.EdgeActionIsDefaultVersion), System.DateTimeOffset? lastPackageUpdatedOn = default(System.DateTimeOffset?)) { throw null; }
     }
     public partial class EdgeActionAttachment : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionAttachment>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionAttachment>
     {
-        public EdgeActionAttachment(Azure.Core.ResourceIdentifier attachedResourceId) { }
-        public Azure.Core.ResourceIdentifier AttachedResourceId { get { throw null; } set { } }
+        internal EdgeActionAttachment() { }
+        public Azure.Core.ResourceIdentifier AttachedResourceId { get { throw null; } }
         public string Id { get { throw null; } }
         protected virtual Azure.ResourceManager.EdgeActions.Models.EdgeActionAttachment JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -254,26 +252,27 @@ namespace Azure.ResourceManager.EdgeActions.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionAttachment>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionAttachment>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EdgeActionAttachmentResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionAttachmentResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionAttachmentResult>
+    public partial class EdgeActionExecutionFilterPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionExecutionFilterPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionExecutionFilterPatch>
     {
-        internal EdgeActionAttachmentResult() { }
-        public string EdgeActionId { get { throw null; } }
-        protected virtual Azure.ResourceManager.EdgeActions.Models.EdgeActionAttachmentResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public EdgeActionExecutionFilterPatch() { }
+        public Azure.ResourceManager.EdgeActions.Models.EdgeActionExecutionFilterUpdateProperties Properties { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.EdgeActions.Models.EdgeActionExecutionFilterPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.EdgeActions.Models.EdgeActionAttachmentResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.EdgeActions.Models.EdgeActionExecutionFilterPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.EdgeActions.Models.EdgeActionAttachmentResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionAttachmentResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionAttachmentResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.EdgeActions.Models.EdgeActionAttachmentResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionAttachmentResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionAttachmentResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionAttachmentResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.EdgeActions.Models.EdgeActionExecutionFilterPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionExecutionFilterPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionExecutionFilterPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeActions.Models.EdgeActionExecutionFilterPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionExecutionFilterPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionExecutionFilterPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionExecutionFilterPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class EdgeActionExecutionFilterProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionExecutionFilterProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionExecutionFilterProperties>
     {
         public EdgeActionExecutionFilterProperties(Azure.Core.ResourceIdentifier versionId, string executionFilterIdentifierHeaderName, string executionFilterIdentifierHeaderValue) { }
         public string ExecutionFilterIdentifierHeaderName { get { throw null; } set { } }
         public string ExecutionFilterIdentifierHeaderValue { get { throw null; } set { } }
-        public System.DateTimeOffset LastUpdatedOn { get { throw null; } }
+        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
         public Azure.ResourceManager.EdgeActions.Models.EdgeActionProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier VersionId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.EdgeActions.Models.EdgeActionExecutionFilterProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -285,6 +284,22 @@ namespace Azure.ResourceManager.EdgeActions.Models
         Azure.ResourceManager.EdgeActions.Models.EdgeActionExecutionFilterProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionExecutionFilterProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionExecutionFilterProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionExecutionFilterProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class EdgeActionExecutionFilterUpdateProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionExecutionFilterUpdateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionExecutionFilterUpdateProperties>
+    {
+        public EdgeActionExecutionFilterUpdateProperties() { }
+        public string ExecutionFilterIdentifierHeaderName { get { throw null; } set { } }
+        public string ExecutionFilterIdentifierHeaderValue { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier VersionId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.EdgeActions.Models.EdgeActionExecutionFilterUpdateProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.EdgeActions.Models.EdgeActionExecutionFilterUpdateProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.EdgeActions.Models.EdgeActionExecutionFilterUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionExecutionFilterUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionExecutionFilterUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeActions.Models.EdgeActionExecutionFilterUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionExecutionFilterUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionExecutionFilterUpdateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionExecutionFilterUpdateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EdgeActionIsDefaultVersion : System.IEquatable<Azure.ResourceManager.EdgeActions.Models.EdgeActionIsDefaultVersion>
@@ -303,6 +318,22 @@ namespace Azure.ResourceManager.EdgeActions.Models
         public static bool operator !=(Azure.ResourceManager.EdgeActions.Models.EdgeActionIsDefaultVersion left, Azure.ResourceManager.EdgeActions.Models.EdgeActionIsDefaultVersion right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class EdgeActionPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionPatch>
+    {
+        public EdgeActionPatch() { }
+        public Azure.ResourceManager.EdgeActions.Models.EdgeActionPropertiesUpdate Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.EdgeActions.Models.EdgeActionSkuTypeUpdate Sku { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.EdgeActions.Models.EdgeActionPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.EdgeActions.Models.EdgeActionPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.EdgeActions.Models.EdgeActionPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeActions.Models.EdgeActionPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class EdgeActionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionProperties>
     {
         public EdgeActionProperties() { }
@@ -317,6 +348,19 @@ namespace Azure.ResourceManager.EdgeActions.Models
         Azure.ResourceManager.EdgeActions.Models.EdgeActionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class EdgeActionPropertiesUpdate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionPropertiesUpdate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionPropertiesUpdate>
+    {
+        public EdgeActionPropertiesUpdate() { }
+        protected virtual Azure.ResourceManager.EdgeActions.Models.EdgeActionPropertiesUpdate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.EdgeActions.Models.EdgeActionPropertiesUpdate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.EdgeActions.Models.EdgeActionPropertiesUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionPropertiesUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionPropertiesUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeActions.Models.EdgeActionPropertiesUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionPropertiesUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionPropertiesUpdate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionPropertiesUpdate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EdgeActionProvisioningState : System.IEquatable<Azure.ResourceManager.EdgeActions.Models.EdgeActionProvisioningState>
@@ -353,6 +397,21 @@ namespace Azure.ResourceManager.EdgeActions.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionSkuType>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionSkuType>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class EdgeActionSkuTypeUpdate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionSkuTypeUpdate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionSkuTypeUpdate>
+    {
+        public EdgeActionSkuTypeUpdate() { }
+        public string Name { get { throw null; } set { } }
+        public string Tier { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.EdgeActions.Models.EdgeActionSkuTypeUpdate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.EdgeActions.Models.EdgeActionSkuTypeUpdate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.EdgeActions.Models.EdgeActionSkuTypeUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionSkuTypeUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionSkuTypeUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeActions.Models.EdgeActionSkuTypeUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionSkuTypeUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionSkuTypeUpdate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionSkuTypeUpdate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class EdgeActionVersionCode : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionCode>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionCode>
     {
         public EdgeActionVersionCode(string content, string name) { }
@@ -386,14 +445,29 @@ namespace Azure.ResourceManager.EdgeActions.Models
         public static bool operator !=(Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionDeploymentType left, Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionDeploymentType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class EdgeActionVersionPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionPatch>
+    {
+        public EdgeActionVersionPatch() { }
+        public Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionUpdateProperties Properties { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class EdgeActionVersionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionProperties>
     {
         public EdgeActionVersionProperties(Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionDeploymentType deploymentType, Azure.ResourceManager.EdgeActions.Models.EdgeActionIsDefaultVersion isDefaultVersion) { }
         public Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionDeploymentType DeploymentType { get { throw null; } set { } }
         public Azure.ResourceManager.EdgeActions.Models.EdgeActionIsDefaultVersion IsDefaultVersion { get { throw null; } set { } }
-        public System.DateTimeOffset LastPackageUpdatedOn { get { throw null; } }
+        public System.DateTimeOffset? LastPackageUpdatedOn { get { throw null; } }
         public Azure.ResourceManager.EdgeActions.Models.EdgeActionProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionValidationStatus ValidationStatus { get { throw null; } }
+        public Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionValidationStatus? ValidationStatus { get { throw null; } }
         protected virtual Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -403,6 +477,21 @@ namespace Azure.ResourceManager.EdgeActions.Models
         Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class EdgeActionVersionUpdateProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionUpdateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionUpdateProperties>
+    {
+        public EdgeActionVersionUpdateProperties() { }
+        public Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionDeploymentType? DeploymentType { get { throw null; } set { } }
+        public Azure.ResourceManager.EdgeActions.Models.EdgeActionIsDefaultVersion? IsDefaultVersion { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionUpdateProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionUpdateProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionUpdateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionUpdateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EdgeActionVersionValidationStatus : System.IEquatable<Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionValidationStatus>

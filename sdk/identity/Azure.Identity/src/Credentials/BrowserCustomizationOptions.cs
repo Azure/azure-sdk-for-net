@@ -5,6 +5,7 @@ using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 
+using Microsoft.Extensions.Configuration;
 using Microsoft.Identity.Client;
 
 namespace Azure.Identity
@@ -14,6 +15,33 @@ namespace Azure.Identity
     /// </summary>
     public class BrowserCustomizationOptions
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BrowserCustomizationOptions"/> class.
+        /// </summary>
+        public BrowserCustomizationOptions() { }
+
+        internal BrowserCustomizationOptions(IConfigurationSection section)
+        {
+            if (section == null || !section.Exists())
+            {
+                return;
+            }
+            if (section[nameof(SuccessMessage)] is string successMessage)
+            {
+                SuccessMessage = successMessage;
+            }
+            if (section[nameof(ErrorMessage)] is string errorMessage)
+            {
+                ErrorMessage = errorMessage;
+            }
+#pragma warning disable CS0618 // Type or member is obsolete
+            if (bool.TryParse(section[nameof(UseEmbeddedWebView)], out bool useEmbeddedWebView))
+            {
+                UseEmbeddedWebView = useEmbeddedWebView;
+            }
+#pragma warning restore CS0618 // Type or member is obsolete
+        }
+
         /// <summary>
         /// Specifies if the public client application should used an embedded web browser
         /// or the system default browser
@@ -66,6 +94,19 @@ namespace Azure.Identity
             {
                 systemWebViewOptions.HtmlMessageError = value;
             }
+        }
+
+        internal BrowserCustomizationOptions Clone()
+        {
+            var clone = new BrowserCustomizationOptions
+            {
+                ErrorMessage = ErrorMessage,
+                SuccessMessage = SuccessMessage,
+#pragma warning disable CS0618 // Type or member is obsolete
+                UseEmbeddedWebView = UseEmbeddedWebView ?? false
+#pragma warning restore CS0618 // Type or member is obsolete
+            };
+            return clone;
         }
     }
 }

@@ -50,7 +50,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             uri.AppendPath("/providers/Microsoft.DBforMySQL/locations/", false);
             uri.AppendPath(locationName.ToString(), true);
             uri.AppendPath("/checkVirtualNetworkSubnetUsage", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

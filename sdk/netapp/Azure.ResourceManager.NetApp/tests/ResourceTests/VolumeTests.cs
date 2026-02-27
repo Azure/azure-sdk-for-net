@@ -3,27 +3,27 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.NetApp.Models;
 using Azure.ResourceManager.NetApp.Tests.Helpers;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
-using NUnit.Framework;
-using Azure.Core;
+using Azure.ResourceManager.Resources;
 using FluentAssertions;
-using Polly.Contrib.WaitAndRetry;
+using NUnit.Framework;
 using Polly;
-using System.Net;
+using Polly.Contrib.WaitAndRetry;
 
 namespace Azure.ResourceManager.NetApp.Tests
 {
     public class VolumeTests : NetAppTestBase
     {
         private string _pool1Name = "pool1";
-        private NetAppAccountCollection _netAppAccountCollection { get => _resourceGroup.GetNetAppAccounts();}
+        private NetAppAccountCollection _netAppAccountCollection { get => _resourceGroup.GetNetAppAccounts(); }
 
         public VolumeTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
@@ -702,7 +702,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             {
                 try
                 {
-                    replicationStatus =     await volumeResource.GetReplicationStatusAsync();
+                    replicationStatus = await volumeResource.GetReplicationStatusAsync();
                     attempts++;
                 }
                 catch (RequestFailedException ex)

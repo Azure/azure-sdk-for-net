@@ -6,7 +6,7 @@
 namespace Azure.Provisioning.PostgreSql;
 
 /// <summary>
-/// If Enabled, Password authentication is enabled.
+/// Indicates if the server supports password based authentication.
 /// </summary>
 public enum PostgreSqlFlexibleServerPasswordAuthEnum
 {

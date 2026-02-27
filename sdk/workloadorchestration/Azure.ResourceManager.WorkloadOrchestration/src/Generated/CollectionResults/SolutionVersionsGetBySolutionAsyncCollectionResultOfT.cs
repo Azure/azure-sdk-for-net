@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                     yield break;
                 }
                 SolutionVersionListResult result = SolutionVersionListResult.FromResponse(response);
-                yield return Page<EdgeSolutionVersionData>.FromValues((IReadOnlyList<EdgeSolutionVersionData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<EdgeSolutionVersionData>.FromValues((IReadOnlyList<EdgeSolutionVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

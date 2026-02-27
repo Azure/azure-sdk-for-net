@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Advisor
                     yield break;
                 }
                 SuppressionContractListResult result = SuppressionContractListResult.FromResponse(response);
-                yield return Page<AdvisorSuppressionContractData>.FromValues((IReadOnlyList<AdvisorSuppressionContractData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<AdvisorSuppressionContractData>.FromValues((IReadOnlyList<AdvisorSuppressionContractData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -11,29 +11,20 @@ using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    /// <summary> Specifies the EncryptionType of the managed disk. It is set to VMGuestStateOnly for encryption of just the VMGuestState blob, and NonPersistedTPM for not persisting firmware state in the VMGuestState blob. **Note**: It can be set for only Confidential VMs and required when using Confidential VMs. </summary>
+    /// <summary> Specifies the EncryptionType of the managed disk. It is set to DiskWithVMGuestState for encryption of the managed disk along with VMGuestState blob, VMGuestStateOnly for encryption of just the VMGuestState blob, and NonPersistedTPM for not persisting firmware state in the VMGuestState blob. **Note**: It can be set for only Confidential VMs and required when using Confidential VMs. </summary>
     public readonly partial struct BatchSecurityEncryptionType : IEquatable<BatchSecurityEncryptionType>
     {
         private readonly string _value;
         private const string NonPersistedTPMValue = "NonPersistedTPM";
         private const string VmGuestStateOnlyValue = "VMGuestStateOnly";
+        private const string DiskWithVmGuestStateValue = "DiskWithVMGuestState";
 
-        /// <summary> Initializes a new instance of <see cref="BatchSecurityEncryptionType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BatchSecurityEncryptionType(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the NonPersistedTPM. </summary>
+        /// <summary> EncryptionType of the managed disk is set to NonPersistedTPM for not persisting firmware state in the VMGuestState blob. </summary>
         public static BatchSecurityEncryptionType NonPersistedTPM { get; } = new BatchSecurityEncryptionType(NonPersistedTPMValue);
-
-        /// <summary> Gets the VmGuestStateOnly. </summary>
+        /// <summary> EncryptionType of the managed disk is set to VMGuestStateOnly for encryption of just the VMGuestState blob. </summary>
         public static BatchSecurityEncryptionType VmGuestStateOnly { get; } = new BatchSecurityEncryptionType(VmGuestStateOnlyValue);
-
+        /// <summary> EncryptionType of the managed disk is set to DiskWithVMGuestState for encryption of the managed disk along with VMGuestState blob. It is not supported in data disks. </summary>
+        public static BatchSecurityEncryptionType DiskWithVmGuestState { get; } = new BatchSecurityEncryptionType(DiskWithVmGuestStateValue);
         /// <summary> Determines if two <see cref="BatchSecurityEncryptionType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>

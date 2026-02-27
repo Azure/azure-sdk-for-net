@@ -6,7 +6,7 @@
 namespace Azure.Provisioning.PostgreSql;
 
 /// <summary>
-/// To migrate roles and permissions we need to send this flag as True.
+/// Indicates if roles and permissions must be migrated.
 /// </summary>
 public enum MigrateRolesEnum
 {

@@ -6,7 +6,7 @@
 namespace Azure.Provisioning.PostgreSql;
 
 /// <summary>
-/// Data type of the configuration.
+/// Data type of the configuration (also known as server parameter).
 /// </summary>
 public enum PostgreSqlFlexibleServerConfigurationDataType
 {
@@ -29,4 +29,14 @@ public enum PostgreSqlFlexibleServerConfigurationDataType
     /// Enumeration.
     /// </summary>
     Enumeration,
+
+    /// <summary>
+    /// String.
+    /// </summary>
+    String,
+
+    /// <summary>
+    /// Set.
+    /// </summary>
+    Set,
 }

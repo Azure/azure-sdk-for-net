@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.Batch.Models
             }
             writer.WritePropertyName("diskSizeGB"u8);
             writer.WriteNumberValue(DiskSizeInGB);
-            if (Optional.IsDefined(StorageAccountType))
+            if (Optional.IsDefined(ManagedDisk))
             {
-                writer.WritePropertyName("storageAccountType"u8);
-                writer.WriteStringValue(StorageAccountType.Value.ToSerialString());
+                writer.WritePropertyName("managedDisk"u8);
+                writer.WriteObjectValue(ManagedDisk, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -97,10 +97,11 @@ namespace Azure.ResourceManager.Batch.Models
             }
             int lun = default;
             BatchDiskCachingType? caching = default;
-            int diskSizeInGB = default;
-            BatchStorageAccountType? storageAccountType = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            int diskSizeGB = default;
+            ManagedDisk managedDisk = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
                 if (prop.NameEquals("lun"u8))
                 {
@@ -121,13 +122,13 @@ namespace Azure.ResourceManager.Batch.Models
                     diskSizeInGB = prop.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("storageAccountType"u8))
+                if (property.NameEquals("managedDisk"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    storageAccountType = prop.Value.GetString().ToBatchStorageAccountType();
+                    managedDisk = ManagedDisk.DeserializeManagedDisk(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -135,7 +136,8 @@ namespace Azure.ResourceManager.Batch.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BatchVmDataDisk(lun, caching, diskSizeInGB, storageAccountType, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BatchVmDataDisk(lun, caching, diskSizeGB, managedDisk, serializedAdditionalRawData);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

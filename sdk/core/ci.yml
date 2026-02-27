@@ -28,7 +28,7 @@ extends:
       triggeringPaths:
       - /sdk/resourcemanager/
       - /eng/Versioning.targets
-      - /eng/Packages.Data.props
+      - /eng/centralpackagemanagement
       - /eng/Directory.Build.Common.props
       - /eng/Directory.Build.Common.targets
       - /eng/service.proj

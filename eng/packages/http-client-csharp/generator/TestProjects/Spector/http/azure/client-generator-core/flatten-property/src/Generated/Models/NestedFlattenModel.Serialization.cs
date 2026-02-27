@@ -17,21 +17,13 @@ namespace Specs.Azure.ClientGenerator.Core.FlattenProperty
     {
         internal NestedFlattenModel() => throw null;
 
-        void IJsonModel<NestedFlattenModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        NestedFlattenModel IJsonModel<NestedFlattenModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual NestedFlattenModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<NestedFlattenModel>.Write(ModelReaderWriterOptions options) => throw null;
+        protected virtual NestedFlattenModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        NestedFlattenModel IPersistableModel<NestedFlattenModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<NestedFlattenModel>.Write(ModelReaderWriterOptions options) => throw null;
 
-        protected virtual NestedFlattenModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        NestedFlattenModel IPersistableModel<NestedFlattenModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<NestedFlattenModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
@@ -39,5 +31,13 @@ namespace Specs.Azure.ClientGenerator.Core.FlattenProperty
         public static implicit operator RequestContent(NestedFlattenModel nestedFlattenModel) => throw null;
 
         public static explicit operator NestedFlattenModel(Response response) => throw null;
+
+        void IJsonModel<NestedFlattenModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        NestedFlattenModel IJsonModel<NestedFlattenModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual NestedFlattenModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }
 }

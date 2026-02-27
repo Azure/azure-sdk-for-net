@@ -10,18 +10,33 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary> Client options for Azure.Communication.JobRouter library clients. </summary>
+    /// <summary> Client options for clients in this library. </summary>
     public partial class JobRouterClientOptions : ClientOptions
     {
+        private const ServiceVersion LatestVersion = ServiceVersion.V2024_01_18_Preview;
+
+        /// <summary> Initializes a new instance of JobRouterAdministrationClientOptions. </summary>
+        /// <param name="version"> The service version. </param>
+        public JobRouterClientOptions(ServiceVersion version = LatestVersion)
+        {
+            Version = version switch
+            {
+                ServiceVersion.V2023_11_01 => "2023-11-01",
+                ServiceVersion.V2024_01_18_Preview => "2024-01-18-preview",
+                _ => throw new NotSupportedException()
+            };
+        }
+
+        /// <summary> Gets the Version. </summary>
+        internal string Version { get; }
+
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "2023-11-01". </summary>
+            /// <summary> JobRouter 2023-11-01 api version. </summary>
             V2023_11_01 = 1,
-            /// <summary> Service version "2024-01-18-preview". </summary>
-            V2024_01_18_Preview = 2,
+            /// <summary> JobRouter 2024-01-18-preview api version. </summary>
+            V2024_01_18_Preview = 2
         }
-
-        internal string Version { get; }
     }
 }

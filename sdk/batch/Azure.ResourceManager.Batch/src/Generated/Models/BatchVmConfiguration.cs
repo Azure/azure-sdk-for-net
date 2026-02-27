@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="dataDisks"> This property must be specified if the compute nodes in the pool need to have empty data disks attached to them. </param>
         /// <param name="licenseType">
         /// This only applies to images that contain the Windows operating system, and should only be used when you hold valid on-premises licenses for the nodes which will be deployed. If omitted, no on-premises licensing discount is applied. Values are:
-        /// 
+        ///
         /// Windows_Server - The on-premises license is for Windows Server.
         /// Windows_Client - The on-premises license is for Windows Client.
         /// </param>
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="osDisk"> Contains configuration for ephemeral OSDisk settings. </param>
         /// <param name="securityProfile"> Specifies the security profile settings for the virtual machine or virtual machine scale set. </param>
         /// <param name="serviceArtifactReference"> The service artifact reference id in the form of /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/serviceArtifacts/{serviceArtifactName}/vmArtifactsProfiles/{vmArtifactsProfilesName}. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchVmConfiguration(BatchImageReference imageReference, string nodeAgentSkuId, WindowsConfiguration windowsConfiguration, IList<BatchVmDataDisk> dataDisks, string licenseType, BatchVmContainerConfiguration containerConfiguration, DiskEncryptionConfiguration diskEncryptionConfiguration, NodePlacementConfiguration nodePlacementConfiguration, IList<BatchVmExtension> extensions, BatchOSDisk osDisk, BatchSecurityProfile securityProfile, ServiceArtifactReference serviceArtifactReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchVmConfiguration(BatchImageReference imageReference, string nodeAgentSkuId, WindowsConfiguration windowsConfiguration, IList<BatchVmDataDisk> dataDisks, string licenseType, BatchVmContainerConfiguration containerConfiguration, BatchDiskEncryptionConfiguration diskEncryptionConfiguration, NodePlacementConfiguration nodePlacementConfiguration, IList<BatchVmExtension> extensions, BatchOSDisk osDisk, BatchSecurityProfile securityProfile, WritableSubResource serviceArtifactReference, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ImageReference = imageReference;
             NodeAgentSkuId = nodeAgentSkuId;
@@ -127,19 +127,21 @@ namespace Azure.ResourceManager.Batch.Models
             }
         }
 
-        /// <summary> On Linux pool, only "TemporaryDisk" is supported; on Windows pool, "OsDisk" and "TemporaryDisk" must be specified. </summary>
-        public IList<BatchDiskEncryptionTarget> DiskEncryptionTargets
-        {
-            get
-            {
-                if (DiskEncryptionConfiguration is null)
-                {
-                    DiskEncryptionConfiguration = new DiskEncryptionConfiguration();
-                }
-                return DiskEncryptionConfiguration.Targets;
-            }
-        }
-
+        /// <summary> This property must be specified if the compute nodes in the pool need to have empty data disks attached to them. </summary>
+        public IList<BatchVmDataDisk> DataDisks { get; }
+        /// <summary>
+        /// This only applies to images that contain the Windows operating system, and should only be used when you hold valid on-premises licenses for the nodes which will be deployed. If omitted, no on-premises licensing discount is applied. Values are:
+        ///
+        /// Windows_Server - The on-premises license is for Windows Server.
+        /// Windows_Client - The on-premises license is for Windows Client.
+        /// </summary>
+        public string LicenseType { get; set; }
+        /// <summary> If specified, setup is performed on each node in the pool to allow tasks to run in containers. All regular tasks and job manager tasks run on this pool must specify the containerSettings property, and all other tasks may specify it. </summary>
+        public BatchVmContainerConfiguration ContainerConfiguration { get; set; }
+        /// <summary> If specified, encryption is performed on each node in the pool during node provisioning. </summary>
+        public BatchDiskEncryptionConfiguration DiskEncryptionConfiguration { get; set; }
+        /// <summary> This configuration will specify rules on how nodes in the pool will be physically allocated. </summary>
+        internal NodePlacementConfiguration NodePlacementConfiguration { get; set; }
         /// <summary> Allocation policy used by Batch Service to provision the nodes. If not specified, Batch will use the regional policy. </summary>
         public BatchNodePlacementPolicyType? NodePlacementPolicy
         {

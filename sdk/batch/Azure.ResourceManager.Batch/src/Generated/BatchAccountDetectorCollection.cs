@@ -66,8 +66,12 @@ namespace Azure.ResourceManager.Batch
         /// <description> DetectorResponses_GetDetector. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountDetectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -115,8 +119,12 @@ namespace Azure.ResourceManager.Batch
         /// <description> DetectorResponses_GetDetector. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountDetectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -164,8 +172,12 @@ namespace Azure.ResourceManager.Batch
         /// <description> DetectorResponses_ListDetectors. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountDetectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -192,8 +204,12 @@ namespace Azure.ResourceManager.Batch
         /// <description> DetectorResponses_ListDetectors. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountDetectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,8 +236,12 @@ namespace Azure.ResourceManager.Batch
         /// <description> DetectorResponses_GetDetector. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountDetectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -277,8 +297,12 @@ namespace Azure.ResourceManager.Batch
         /// <description> DetectorResponses_GetDetector. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountDetectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -334,8 +358,12 @@ namespace Azure.ResourceManager.Batch
         /// <description> DetectorResponses_GetDetector. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountDetectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,8 +423,12 @@ namespace Azure.ResourceManager.Batch
         /// <description> DetectorResponses_GetDetector. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountDetectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed challenge-based authentication to correctly parse tenant ID from DSTSv2 authority URIs. 
+
 ### Other Changes
 
 - The default service version is now `2025-07-01`.

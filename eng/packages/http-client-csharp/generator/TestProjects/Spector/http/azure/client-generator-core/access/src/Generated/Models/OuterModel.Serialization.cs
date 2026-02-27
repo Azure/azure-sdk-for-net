@@ -16,6 +16,18 @@ namespace Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation
     {
         internal OuterModel() => throw null;
 
+        protected override BaseModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        BinaryData IPersistableModel<OuterModel>.Write(ModelReaderWriterOptions options) => throw null;
+
+        OuterModel IPersistableModel<OuterModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        string IPersistableModel<OuterModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator OuterModel(Response response) => throw null;
+
         void IJsonModel<OuterModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -23,17 +35,5 @@ namespace Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation
         OuterModel IJsonModel<OuterModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected override BaseModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<OuterModel>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
-        OuterModel IPersistableModel<OuterModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected override BaseModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        string IPersistableModel<OuterModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        public static explicit operator OuterModel(Response response) => throw null;
     }
 }

@@ -115,6 +115,7 @@ public partial class PostgreSqlServerAdministrator : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _administratorType = DefineProperty<PostgreSqlAdministratorType>("AdministratorType", ["properties", "administratorType"]);
         _loginAccountName = DefineProperty<string>("LoginAccountName", ["properties", "login"]);

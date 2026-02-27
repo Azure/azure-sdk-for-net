@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Batch.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationProperties"/>. </summary>
-        internal NetworkSecurityPerimeterConfigurationProperties()
+        public NetworkSecurityPerimeterConfigurationProperties()
         {
             ProvisioningIssues = new ChangeTrackingList<BatchProvisioningIssue>();
         }
@@ -45,14 +45,11 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> List of provisioning issues, if any. </summary>
         public IReadOnlyList<BatchProvisioningIssue> ProvisioningIssues { get; }
-
-        /// <summary> Gets the NetworkSecurityPerimeter. </summary>
-        public NetworkSecurityPerimeter NetworkSecurityPerimeter { get; }
-
-        /// <summary> Gets the ResourceAssociation. </summary>
-        public BatchResourceAssociation ResourceAssociation { get; }
-
-        /// <summary> Gets the Profile. </summary>
-        public NetworkSecurityProfile Profile { get; }
+        /// <summary> Information about a network security perimeter (NSP). </summary>
+        public NetworkSecurityPerimeter NetworkSecurityPerimeter { get; set; }
+        /// <summary> Information about resource association. </summary>
+        public BatchResourceAssociation ResourceAssociation { get; set; }
+        /// <summary> Network security perimeter configuration profile. </summary>
+        public NetworkSecurityProfile Profile { get; set; }
     }
 }

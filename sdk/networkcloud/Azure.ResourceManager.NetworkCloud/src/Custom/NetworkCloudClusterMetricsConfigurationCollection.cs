@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudClusterMetricsConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<NetworkCloudClusterMetricsConfigurationResource> GetAllAsync(CancellationToken cancellationToken)
-			=> GetAllAsync(null, null, cancellationToken);
+            => GetAllAsync(null, null, cancellationToken);
 
         /// <summary>
         /// Get a list of metrics configurations for the provided cluster.
@@ -124,6 +124,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudClusterMetricsConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<NetworkCloudClusterMetricsConfigurationResource> GetAll(CancellationToken cancellationToken)
-			=> GetAll(null, null, cancellationToken);
+            => GetAll(null, null, cancellationToken);
     }
 }

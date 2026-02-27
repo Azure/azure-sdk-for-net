@@ -128,7 +128,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="queueName">The queue to create a processor for.</param>
         /// <param name="options">The set of options to use when configuring the processor.</param>
         protected ServiceBusSessionProcessor(ServiceBusClient client, string queueName, ServiceBusSessionProcessorOptions options) :
-            this(client?.Connection, queueName,  options)
+            this(client?.Connection, queueName, options)
         {
         }
 
@@ -140,7 +140,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="subscriptionName">The subscription to create a processor for.</param>
         /// <param name="options">The set of options to use when configuring the processor.</param>
         protected ServiceBusSessionProcessor(ServiceBusClient client, string topicName, string subscriptionName, ServiceBusSessionProcessorOptions options) :
-            this(client?.Connection, EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),  options)
+            this(client?.Connection, EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName), options)
         {
         }
 

@@ -7,8 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.AI.Agents.Persistent.Telemetry;
+using Azure.Core;
 
 namespace Azure.AI.Agents.Persistent
 {

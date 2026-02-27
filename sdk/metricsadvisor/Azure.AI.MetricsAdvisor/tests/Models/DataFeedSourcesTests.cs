@@ -253,8 +253,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     d.UpdateConnectionString(NewSecret);
                     break;
                 case InfluxDbDataFeedSource d:
-                    if (secretPropertyName == "connectionString") d.UpdateConnectionString(NewSecret);
-                    else d.UpdatePassword(NewSecret);
+                    if (secretPropertyName == "connectionString")
+                        d.UpdateConnectionString(NewSecret);
+                    else
+                        d.UpdatePassword(NewSecret);
                     break;
                 case LogAnalyticsDataFeedSource d:
                     d.UpdateClientSecret(NewSecret);
@@ -273,7 +275,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     break;
                 default:
                     throw new ArgumentOutOfRangeException($"Unknown data source type: {dataSource.GetType()}");
-            };
+            }
+            ;
         }
     }
 }

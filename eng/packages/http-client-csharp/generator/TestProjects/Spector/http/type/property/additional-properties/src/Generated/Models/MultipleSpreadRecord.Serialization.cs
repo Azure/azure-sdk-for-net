@@ -17,21 +17,13 @@ namespace _Type.Property.AdditionalProperties
     {
         internal MultipleSpreadRecord() => throw null;
 
-        void IJsonModel<MultipleSpreadRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        MultipleSpreadRecord IJsonModel<MultipleSpreadRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual MultipleSpreadRecord JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<MultipleSpreadRecord>.Write(ModelReaderWriterOptions options) => throw null;
+        protected virtual MultipleSpreadRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        MultipleSpreadRecord IPersistableModel<MultipleSpreadRecord>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<MultipleSpreadRecord>.Write(ModelReaderWriterOptions options) => throw null;
 
-        protected virtual MultipleSpreadRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        MultipleSpreadRecord IPersistableModel<MultipleSpreadRecord>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<MultipleSpreadRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
@@ -39,5 +31,13 @@ namespace _Type.Property.AdditionalProperties
         public static implicit operator RequestContent(MultipleSpreadRecord multipleSpreadRecord) => throw null;
 
         public static explicit operator MultipleSpreadRecord(Response response) => throw null;
+
+        void IJsonModel<MultipleSpreadRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        MultipleSpreadRecord IJsonModel<MultipleSpreadRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual MultipleSpreadRecord JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }
 }

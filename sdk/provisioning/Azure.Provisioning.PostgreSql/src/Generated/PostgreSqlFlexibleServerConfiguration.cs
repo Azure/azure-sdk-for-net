@@ -18,7 +18,7 @@ namespace Azure.Provisioning.PostgreSql;
 public partial class PostgreSqlFlexibleServerConfiguration : ProvisionableResource
 {
     /// <summary>
-    /// The name of the server configuration.
+    /// Name of the configuration (also known as server parameter).
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -28,7 +28,9 @@ public partial class PostgreSqlFlexibleServerConfiguration : ProvisionableResour
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// Source of the configuration. Required to update the configuration.
+    /// Source of the value assigned to the configuration (also known as server
+    /// parameter). Required to update the value assigned to a specific
+    /// modifiable configuration.
     /// </summary>
     public BicepValue<string> Source 
     {
@@ -38,7 +40,8 @@ public partial class PostgreSqlFlexibleServerConfiguration : ProvisionableResour
     private BicepValue<string>? _source;
 
     /// <summary>
-    /// Value of the configuration. Required to update the configuration.
+    /// Value of the configuration (also known as server parameter). Required
+    /// to update the value assigned to a specific modifiable configuration.
     /// </summary>
     public BicepValue<string> Value 
     {
@@ -48,7 +51,7 @@ public partial class PostgreSqlFlexibleServerConfiguration : ProvisionableResour
     private BicepValue<string>? _value;
 
     /// <summary>
-    /// Allowed values of the configuration.
+    /// Allowed values of the configuration (also known as server parameter).
     /// </summary>
     public BicepValue<string> AllowedValues 
     {
@@ -57,7 +60,7 @@ public partial class PostgreSqlFlexibleServerConfiguration : ProvisionableResour
     private BicepValue<string>? _allowedValues;
 
     /// <summary>
-    /// Data type of the configuration.
+    /// Data type of the configuration (also known as server parameter).
     /// </summary>
     public BicepValue<PostgreSqlFlexibleServerConfigurationDataType> DataType 
     {
@@ -66,7 +69,8 @@ public partial class PostgreSqlFlexibleServerConfiguration : ProvisionableResour
     private BicepValue<PostgreSqlFlexibleServerConfigurationDataType>? _dataType;
 
     /// <summary>
-    /// Default value of the configuration.
+    /// Value assigned by default to the configuration (also known as server
+    /// parameter).
     /// </summary>
     public BicepValue<string> DefaultValue 
     {
@@ -75,7 +79,7 @@ public partial class PostgreSqlFlexibleServerConfiguration : ProvisionableResour
     private BicepValue<string>? _defaultValue;
 
     /// <summary>
-    /// Description of the configuration.
+    /// Description of the configuration (also known as server parameter).
     /// </summary>
     public BicepValue<string> Description 
     {
@@ -84,7 +88,8 @@ public partial class PostgreSqlFlexibleServerConfiguration : ProvisionableResour
     private BicepValue<string>? _description;
 
     /// <summary>
-    /// Configuration documentation link.
+    /// Link pointing to the documentation of the configuration (also known as
+    /// server parameter).
     /// </summary>
     public BicepValue<string> DocumentationLink 
     {
@@ -102,7 +107,8 @@ public partial class PostgreSqlFlexibleServerConfiguration : ProvisionableResour
     private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
-    /// Configuration is pending restart or not.
+    /// Indicates if the value assigned to the configuration (also known as
+    /// server parameter) is pending a server restart for it to take effect.
     /// </summary>
     public BicepValue<bool> IsConfigPendingRestart 
     {
@@ -111,7 +117,12 @@ public partial class PostgreSqlFlexibleServerConfiguration : ProvisionableResour
     private BicepValue<bool>? _isConfigPendingRestart;
 
     /// <summary>
-    /// Configuration dynamic or static.
+    /// Indicates if it&apos;s a dynamic (true) or static (false) configuration
+    /// (also known as server parameter). Static server parameters require a
+    /// server restart after changing the value assigned to them, for the
+    /// change to take effect. Dynamic server parameters do not require a
+    /// server restart after changing the value assigned to them, for the
+    /// change to take effect.
     /// </summary>
     public BicepValue<bool> IsDynamicConfig 
     {
@@ -120,7 +131,8 @@ public partial class PostgreSqlFlexibleServerConfiguration : ProvisionableResour
     private BicepValue<bool>? _isDynamicConfig;
 
     /// <summary>
-    /// Configuration read-only or not.
+    /// Indicates if it&apos;s a read-only (true) or modifiable (false)
+    /// configuration (also known as server parameter).
     /// </summary>
     public BicepValue<bool> IsReadOnly 
     {
@@ -138,7 +150,8 @@ public partial class PostgreSqlFlexibleServerConfiguration : ProvisionableResour
     private SystemData? _systemData;
 
     /// <summary>
-    /// Configuration unit.
+    /// Units in which the configuration (also known as server parameter) value
+    /// is expressed.
     /// </summary>
     public BicepValue<string> Unit 
     {
@@ -167,7 +180,7 @@ public partial class PostgreSqlFlexibleServerConfiguration : ProvisionableResour
     /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlFlexibleServerConfiguration.</param>
     public PostgreSqlFlexibleServerConfiguration(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/flexibleServers/configurations", resourceVersion ?? "2024-08-01")
+        : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/flexibleServers/configurations", resourceVersion ?? "2025-08-01")
     {
     }
 
@@ -177,6 +190,7 @@ public partial class PostgreSqlFlexibleServerConfiguration : ProvisionableResour
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _source = DefineProperty<string>("Source", ["properties", "source"]);
         _value = DefineProperty<string>("Value", ["properties", "value"]);
@@ -199,6 +213,11 @@ public partial class PostgreSqlFlexibleServerConfiguration : ProvisionableResour
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-08-01.
+        /// </summary>
+        public static readonly string V2025_08_01 = "2025-08-01";
+
         /// <summary>
         /// 2024-08-01.
         /// </summary>

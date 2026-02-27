@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.TrustedSigning
                     yield break;
                 }
                 CodeSigningAccountListResult result = CodeSigningAccountListResult.FromResponse(response);
-                yield return Page<TrustedSigningAccountData>.FromValues((IReadOnlyList<TrustedSigningAccountData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<TrustedSigningAccountData>.FromValues((IReadOnlyList<TrustedSigningAccountData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
