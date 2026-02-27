@@ -52,6 +52,45 @@
       "createdDate": "2024-08-19 08:41:49Z",
       "expirationDate": "2025-02-05 08:50:31Z",
       "justification": "This error is baselined with an expiration date of 180 days from 2024-08-19 08:50:31Z"
+    },
+    "d7aa9144bf22e976b80daa80cbb86db7e10c20d9de4030f7836e7faf1bbc21a7": {
+      "signature": "d7aa9144bf22e976b80daa80cbb86db7e10c20d9de4030f7836e7faf1bbc21a7",
+      "alternativeSignatures": [],
+      "target": "artifacts/bin/Azure.GeneratorAgent/Release/net10.0/runtimes/win-x64/native/copilot.exe",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "binskim",
+      "ruleId": "BA2008",
+      "createdDate": "2026-02-27 02:20:00Z",
+      "expirationDate": "2026-08-26 02:20:00Z",
+      "justification": "Third-party native binary from GitHub.Copilot.SDK NuGet package. CFG cannot be enabled by consumers."
+    },
+    "d8fa2792ef9eb16a1adfbb925d0b505ffd357ab7a349f5920bfa5f3c177bfe77": {
+      "signature": "d8fa2792ef9eb16a1adfbb925d0b505ffd357ab7a349f5920bfa5f3c177bfe77",
+      "alternativeSignatures": [],
+      "target": "artifacts/obj/Azure.GeneratorAgent/Release/net10.0/copilot-cli/0.0.409/win32-x64/copilot.exe",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "binskim",
+      "ruleId": "BA2008",
+      "createdDate": "2026-02-27 02:20:00Z",
+      "expirationDate": "2026-08-26 02:20:00Z",
+      "justification": "Third-party native binary from GitHub.Copilot.SDK NuGet package. CFG cannot be enabled by consumers."
+    },
+    "fa02910e07bf46fcbca420213d73a5eaa32cb76abd37f121fcdb351ea95d79be": {
+      "signature": "fa02910e07bf46fcbca420213d73a5eaa32cb76abd37f121fcdb351ea95d79be",
+      "alternativeSignatures": [],
+      "target": "artifacts/bin/Azure.GeneratorAgent/Release/net10.0/publish/runtimes/win-x64/native/copilot.exe",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "binskim",
+      "ruleId": "BA2008",
+      "createdDate": "2026-02-27 02:20:00Z",
+      "expirationDate": "2026-08-26 02:20:00Z",
+      "justification": "Third-party native binary from GitHub.Copilot.SDK NuGet package. CFG cannot be enabled by consumers."
     }
   }
 }
