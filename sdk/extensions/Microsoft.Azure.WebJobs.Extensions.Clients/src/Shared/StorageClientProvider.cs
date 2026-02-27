@@ -220,9 +220,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Clients.Shared
                 string connectionString = config.Value;
                 authInfo.AuthenticationType = StorageAuthenticationType.ConnectionString;
                 authInfo.AccountName = ExtractAccountNameFromConnectionString(connectionString);
-                authInfo.Details = "Using connection string";
 
-                Logger.ConfigurationStructureAnalyzed(_logger, connectionName, "ConnectionString");
+                // Check for SAS token in connection string
+                bool hasSasToken = ContainsSasToken(connectionString);
+                authInfo.Details = hasSasToken
+                    ? "Using connection string with SAS token"
+                    : "Using connection string";
+
+                Logger.ConfigurationStructureAnalyzed(_logger, connectionName, hasSasToken ? "ConnectionString+SAS" : "ConnectionString");
                 Logger.ConnectionStringDetected(_logger, connectionName, authInfo.AccountName ?? "Unknown");
 
                 return authInfo;
@@ -246,8 +251,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Clients.Shared
             }
 
             authInfo.AccountName = accountName;
-            authInfo.ServiceUri = blobServiceUri ?? queueServiceUri ?? serviceUri;
-            authInfo.ClientId = clientId;
+            // Sanitize service URI before storing to prevent SAS token leakage in logs
+            authInfo.ServiceUri = RemoveSasTokenFromUri(blobServiceUri ?? queueServiceUri ?? serviceUri);
+            authInfo.ClientId = MaskSensitiveValue(clientId);
 
             // DETECTION 3: Determine credential type
             if (!string.IsNullOrEmpty(clientSecret))
@@ -266,7 +272,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Clients.Shared
             {
                 authInfo.AuthenticationType = StorageAuthenticationType.ManagedIdentityUser;
                 authInfo.Details = $"User-Assigned, ClientId: {MaskSensitiveValue(clientId)}";
-                Logger.ManagedIdentityDetected(_logger, connectionName, "User-Assigned", clientId);
+                Logger.ManagedIdentityDetected(_logger, connectionName, "User-Assigned", MaskSensitiveValue(clientId));
             }
             else if (!string.IsNullOrEmpty(accountName) || !string.IsNullOrEmpty(serviceUri))
             {
@@ -370,6 +376,57 @@ namespace Microsoft.Azure.WebJobs.Extensions.Clients.Shared
             }
 
             return $"{value.Substring(0, 4)}...{value.Substring(value.Length - 4)}";
+        }
+
+        /// <summary>
+        /// Checks if a connection string contains a SAS token.
+        /// </summary>
+        private static bool ContainsSasToken(string connectionString)
+        {
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                return false;
+            }
+
+            // SAS tokens in connection strings typically have SharedAccessSignature parameter
+            // or the connection string itself might be a SAS URI
+            return connectionString.Contains("SharedAccessSignature=", StringComparison.OrdinalIgnoreCase) ||
+                   connectionString.Contains("sig=", StringComparison.OrdinalIgnoreCase) ||
+                   connectionString.Contains("?sv=", StringComparison.OrdinalIgnoreCase);
+        }
+
+        /// <summary>
+        /// Removes SAS token from a URI for safe logging.
+        /// </summary>
+        private static string RemoveSasTokenFromUri(string uriString)
+        {
+            if (string.IsNullOrEmpty(uriString))
+            {
+                return uriString;
+            }
+
+            try
+            {
+                var uri = new Uri(uriString);
+                if (string.IsNullOrEmpty(uri.Query))
+                {
+                    return uriString;
+                }
+
+                // Check if query string contains SAS parameters
+                if (uri.Query.Contains("sig=", StringComparison.OrdinalIgnoreCase) ||
+                    uri.Query.Contains("sv=", StringComparison.OrdinalIgnoreCase))
+                {
+                    // Return URI without query string, indicating SAS was redacted
+                    return $"{uri.GetLeftPart(UriPartial.Path)}?{RedactedLog}";
+                }
+
+                return uriString;
+            }
+            catch
+            {
+                return uriString;
+            }
         }
     }
 
