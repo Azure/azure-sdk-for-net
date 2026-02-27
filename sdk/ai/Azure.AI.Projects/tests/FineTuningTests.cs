@@ -725,7 +725,7 @@ public class FineTuningTests : ProjectsClientTestBase
     public async Task Test_FineTuning_List_Checkpoints()
     {
         // Note: This test uses a pre-completed fine-tuning job ID because checkpoints
-        // are only available for jobs in terminal state and completing a job takes signicant
+        // are only available for jobs in terminal state and completing a job takes significant
         // time and the test can't be halted that long. When re-recording this test, ensure the
         // job used is in terminal state.
         string preCompletedJobId = TestEnvironment.FINE_TUNING_COMPLETED_JOB;

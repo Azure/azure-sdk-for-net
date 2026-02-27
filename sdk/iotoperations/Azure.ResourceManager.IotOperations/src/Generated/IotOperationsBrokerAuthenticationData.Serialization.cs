@@ -37,6 +37,41 @@ namespace Azure.ResourceManager.IotOperations
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IotOperationsBrokerAuthenticationData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(IotOperationsBrokerAuthenticationData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<IotOperationsBrokerAuthenticationData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IotOperationsBrokerAuthenticationData IPersistableModel<IotOperationsBrokerAuthenticationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (IotOperationsBrokerAuthenticationData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IotOperationsBrokerAuthenticationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="iotOperationsBrokerAuthenticationData"> The <see cref="IotOperationsBrokerAuthenticationData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(IotOperationsBrokerAuthenticationData iotOperationsBrokerAuthenticationData)
+        {
+            if (iotOperationsBrokerAuthenticationData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(iotOperationsBrokerAuthenticationData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="IotOperationsBrokerAuthenticationData"/> from. </param>
         internal static IotOperationsBrokerAuthenticationData FromResponse(Response response)
         {
@@ -172,41 +207,6 @@ namespace Azure.ResourceManager.IotOperations
                 additionalBinaryDataProperties,
                 properties,
                 extendedLocation);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IotOperationsBrokerAuthenticationData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<IotOperationsBrokerAuthenticationData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(IotOperationsBrokerAuthenticationData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        IotOperationsBrokerAuthenticationData IPersistableModel<IotOperationsBrokerAuthenticationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (IotOperationsBrokerAuthenticationData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IotOperationsBrokerAuthenticationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="iotOperationsBrokerAuthenticationData"> The <see cref="IotOperationsBrokerAuthenticationData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(IotOperationsBrokerAuthenticationData iotOperationsBrokerAuthenticationData)
-        {
-            if (iotOperationsBrokerAuthenticationData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(iotOperationsBrokerAuthenticationData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

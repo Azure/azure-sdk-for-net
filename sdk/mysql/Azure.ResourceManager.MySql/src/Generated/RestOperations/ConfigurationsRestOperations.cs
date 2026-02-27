@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             uri.AppendPath(serverName, true);
             uri.AppendPath("/configurations/", false);
             uri.AppendPath(configurationName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +77,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             uri.AppendPath(serverName, true);
             uri.AppendPath("/configurations/", false);
             uri.AppendPath(configurationName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -97,7 +103,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             uri.AppendPath(serverName, true);
             uri.AppendPath("/configurations/", false);
             uri.AppendPath(configurationName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -119,7 +128,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             uri.AppendPath("/providers/Microsoft.DBforMySQL/flexibleServers/", false);
             uri.AppendPath(serverName, true);
             uri.AppendPath("/configurations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (tags != null)
             {
                 uri.AppendQuery("tags", tags, true);
@@ -147,8 +159,18 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         internal HttpMessage CreateNextGetByServerRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string serverName, string tags, string keyword, int? page, int? pageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -168,7 +190,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             uri.AppendPath("/providers/Microsoft.DBforMySQL/flexibleServers/", false);
             uri.AppendPath(serverName, true);
             uri.AppendPath("/updateConfigurations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

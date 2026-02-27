@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Elastic
                     yield break;
                 }
                 OpenAIIntegrationRPModelListResponse result = OpenAIIntegrationRPModelListResponse.FromResponse(response);
-                yield return Page<ElasticOpenAIIntegrationData>.FromValues((IReadOnlyList<ElasticOpenAIIntegrationData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ElasticOpenAIIntegrationData>.FromValues((IReadOnlyList<ElasticOpenAIIntegrationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

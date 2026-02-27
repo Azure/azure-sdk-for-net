@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs
                     yield break;
                 }
                 WorkloadNetworkDnsZonesList result = WorkloadNetworkDnsZonesList.FromResponse(response);
-                yield return Page<WorkloadNetworkDnsZoneData>.FromValues((IReadOnlyList<WorkloadNetworkDnsZoneData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<WorkloadNetworkDnsZoneData>.FromValues((IReadOnlyList<WorkloadNetworkDnsZoneData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

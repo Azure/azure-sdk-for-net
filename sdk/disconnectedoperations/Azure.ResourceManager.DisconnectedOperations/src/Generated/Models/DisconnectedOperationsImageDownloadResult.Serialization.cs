@@ -34,6 +34,29 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DisconnectedOperationsImageDownloadResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDisconnectedOperationsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DisconnectedOperationsImageDownloadResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DisconnectedOperationsImageDownloadResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DisconnectedOperationsImageDownloadResult IPersistableModel<DisconnectedOperationsImageDownloadResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DisconnectedOperationsImageDownloadResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DisconnectedOperationsImageDownloadResult"/> from. </param>
         internal static DisconnectedOperationsImageDownloadResult FromResponse(Response response)
         {
@@ -236,7 +259,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                 }
                 if (prop.NameEquals("downloadLink"u8))
                 {
-                    downloadLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    downloadLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("linkExpiry"u8))
@@ -262,28 +285,5 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                 linkExpiry,
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DisconnectedOperationsImageDownloadResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DisconnectedOperationsImageDownloadResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDisconnectedOperationsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DisconnectedOperationsImageDownloadResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DisconnectedOperationsImageDownloadResult IPersistableModel<DisconnectedOperationsImageDownloadResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DisconnectedOperationsImageDownloadResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

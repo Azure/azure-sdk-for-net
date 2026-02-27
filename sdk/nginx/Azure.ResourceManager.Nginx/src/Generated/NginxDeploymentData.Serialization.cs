@@ -42,6 +42,41 @@ namespace Azure.ResourceManager.Nginx
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNginxContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NginxDeploymentData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NginxDeploymentData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NginxDeploymentData IPersistableModel<NginxDeploymentData>.Create(BinaryData data, ModelReaderWriterOptions options) => (NginxDeploymentData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NginxDeploymentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="nginxDeploymentData"> The <see cref="NginxDeploymentData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(NginxDeploymentData nginxDeploymentData)
+        {
+            if (nginxDeploymentData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(nginxDeploymentData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NginxDeploymentData"/> from. </param>
         internal static NginxDeploymentData FromResponse(Response response)
         {
@@ -223,41 +258,6 @@ namespace Azure.ResourceManager.Nginx
                 properties,
                 identity,
                 sku);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NginxDeploymentData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNginxContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NginxDeploymentData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NginxDeploymentData IPersistableModel<NginxDeploymentData>.Create(BinaryData data, ModelReaderWriterOptions options) => (NginxDeploymentData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NginxDeploymentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="nginxDeploymentData"> The <see cref="NginxDeploymentData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(NginxDeploymentData nginxDeploymentData)
-        {
-            if (nginxDeploymentData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(nginxDeploymentData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

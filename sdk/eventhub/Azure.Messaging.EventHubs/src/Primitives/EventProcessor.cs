@@ -1360,10 +1360,18 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         /// <returns>The set of identifiers for the Event Hub partitions.</returns>
         ///
-        protected virtual Task<string[]> ListPartitionIdsAsync(EventHubConnection connection,
-                                                                     CancellationToken cancellationToken)
+        protected virtual async Task<string[]> ListPartitionIdsAsync(EventHubConnection connection,
+                                                                           CancellationToken cancellationToken)
         {
-            return Task.FromResult(EventHubProperties.PartitionIds);
+            if (EventHubProperties != null)
+            {
+                return EventHubProperties.PartitionIds;
+            }
+
+            // If EventHubProperties hasn't been initialized (processor not yet started),
+            // fall back to querying the service directly to preserve pre-5.12.0 behavior.
+
+            return await connection.GetPartitionIdsAsync(RetryPolicy, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

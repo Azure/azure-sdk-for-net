@@ -38,6 +38,29 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<UniformInt64RangePartitionScheme>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(UniformInt64RangePartitionScheme)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<UniformInt64RangePartitionScheme>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        UniformInt64RangePartitionScheme IPersistableModel<UniformInt64RangePartitionScheme>.Create(BinaryData data, ModelReaderWriterOptions options) => (UniformInt64RangePartitionScheme)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<UniformInt64RangePartitionScheme>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<UniformInt64RangePartitionScheme>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -124,28 +147,5 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
             return new UniformInt64RangePartitionScheme(partitionScheme, additionalBinaryDataProperties, count, lowKey, highKey);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<UniformInt64RangePartitionScheme>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<UniformInt64RangePartitionScheme>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(UniformInt64RangePartitionScheme)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        UniformInt64RangePartitionScheme IPersistableModel<UniformInt64RangePartitionScheme>.Create(BinaryData data, ModelReaderWriterOptions options) => (UniformInt64RangePartitionScheme)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<UniformInt64RangePartitionScheme>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

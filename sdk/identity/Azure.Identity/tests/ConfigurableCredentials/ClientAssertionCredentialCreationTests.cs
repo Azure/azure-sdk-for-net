@@ -19,7 +19,16 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.ClientAssertion
     /// </summary>
     internal class ClientAssertionCredentialCreationTests : CredentialCreationTestBase<ClientAssertionCredential>
     {
-        protected override string CredentialSource => "ManagedIdentityAsFederatedIdentity";
+        protected override string CredentialSource => "ManagedIdentityAsFederatedIdentityCredential";
+
+        protected override Dictionary<string, string> GetRequiredConfigValues() => new()
+        {
+            { "TenantId", "test-tenant" },
+            { "ClientId", "test-client" },
+            { "AzureCloud", "public" },
+            { "ManagedIdentityIdKind", "ClientId" },
+            { "ManagedIdentityId", "test-mi-client-id" },
+        };
 
         private static object GetMsalClient(ClientAssertionCredential cred)
             => ReadProperty<object>(cred, "Client");

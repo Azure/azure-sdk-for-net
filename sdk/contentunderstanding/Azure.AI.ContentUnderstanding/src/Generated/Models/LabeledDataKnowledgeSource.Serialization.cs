@@ -80,7 +80,7 @@ namespace Azure.AI.ContentUnderstanding
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("containerUrl"u8);
-            writer.WriteStringValue(ContainerUrl.AbsoluteUri);
+            writer.WriteStringValue(ContainerUri.AbsoluteUri);
             if (Optional.IsDefined(Prefix))
             {
                 writer.WritePropertyName("prefix"u8);
@@ -117,7 +117,7 @@ namespace Azure.AI.ContentUnderstanding
             }
             KnowledgeSourceKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            Uri containerUrl = default;
+            Uri containerUri = default;
             string prefix = default;
             string fileListPath = default;
             foreach (var prop in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("containerUrl"u8))
                 {
-                    containerUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    containerUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("prefix"u8))
@@ -147,7 +147,7 @@ namespace Azure.AI.ContentUnderstanding
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LabeledDataKnowledgeSource(kind, additionalBinaryDataProperties, containerUrl, prefix, fileListPath);
+            return new LabeledDataKnowledgeSource(kind, additionalBinaryDataProperties, containerUri, prefix, fileListPath);
         }
     }
 }

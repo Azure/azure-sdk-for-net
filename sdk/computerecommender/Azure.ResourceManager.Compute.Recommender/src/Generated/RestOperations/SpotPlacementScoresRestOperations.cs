@@ -50,7 +50,10 @@ namespace Azure.ResourceManager.Compute.Recommender
             uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/placementScores/spot", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -68,7 +71,10 @@ namespace Azure.ResourceManager.Compute.Recommender
             uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/placementScores/spot/generate", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

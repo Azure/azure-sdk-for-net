@@ -7,7 +7,8 @@ namespace Azure.AI.Projects.OpenAI;
 
 // Public type renames
 
-[CodeGenType("AgentRecord")] public partial class AgentRecord
+[CodeGenType("AgentRecord")]
+public partial class AgentRecord
 {
     [CodeGenMember("Object")]
     private string Object { get; } = "agent";

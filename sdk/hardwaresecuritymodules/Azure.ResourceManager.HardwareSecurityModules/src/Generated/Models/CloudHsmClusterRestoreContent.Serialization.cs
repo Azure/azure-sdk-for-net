@@ -39,6 +39,41 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CloudHsmClusterRestoreContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CloudHsmClusterRestoreContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CloudHsmClusterRestoreContent IPersistableModel<CloudHsmClusterRestoreContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (CloudHsmClusterRestoreContent)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CloudHsmClusterRestoreContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="cloudHsmClusterRestoreContent"> The <see cref="CloudHsmClusterRestoreContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(CloudHsmClusterRestoreContent cloudHsmClusterRestoreContent)
+        {
+            if (cloudHsmClusterRestoreContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(cloudHsmClusterRestoreContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CloudHsmClusterRestoreContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -95,7 +130,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             {
                 if (prop.NameEquals("azureStorageBlobContainerUri"u8))
                 {
-                    azureStorageBlobContainerUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    azureStorageBlobContainerUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("token"u8))
@@ -114,41 +149,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 }
             }
             return new CloudHsmClusterRestoreContent(azureStorageBlobContainerUri, token, additionalBinaryDataProperties, backupId);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CloudHsmClusterRestoreContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(CloudHsmClusterRestoreContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CloudHsmClusterRestoreContent IPersistableModel<CloudHsmClusterRestoreContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (CloudHsmClusterRestoreContent)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CloudHsmClusterRestoreContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="cloudHsmClusterRestoreContent"> The <see cref="CloudHsmClusterRestoreContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(CloudHsmClusterRestoreContent cloudHsmClusterRestoreContent)
-        {
-            if (cloudHsmClusterRestoreContent == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(cloudHsmClusterRestoreContent, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

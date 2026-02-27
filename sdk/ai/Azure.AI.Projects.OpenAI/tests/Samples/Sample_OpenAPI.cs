@@ -51,7 +51,7 @@ public class Sample_OpenAPI : ProjectsOpenAITestBase
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant.",
-            Tools = {openapiTool}
+            Tools = { openapiTool }
         };
         AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: "myAgent",

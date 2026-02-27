@@ -37,6 +37,41 @@ namespace Azure.ResourceManager.DatabaseWatcher
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DatabaseWatcherSharedPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDatabaseWatcherContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DatabaseWatcherSharedPrivateLinkResourceData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DatabaseWatcherSharedPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DatabaseWatcherSharedPrivateLinkResourceData IPersistableModel<DatabaseWatcherSharedPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DatabaseWatcherSharedPrivateLinkResourceData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DatabaseWatcherSharedPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="databaseWatcherSharedPrivateLinkResourceData"> The <see cref="DatabaseWatcherSharedPrivateLinkResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DatabaseWatcherSharedPrivateLinkResourceData databaseWatcherSharedPrivateLinkResourceData)
+        {
+            if (databaseWatcherSharedPrivateLinkResourceData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(databaseWatcherSharedPrivateLinkResourceData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DatabaseWatcherSharedPrivateLinkResourceData"/> from. </param>
         internal static DatabaseWatcherSharedPrivateLinkResourceData FromResponse(Response response)
         {
@@ -156,41 +191,6 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 systemData,
                 additionalBinaryDataProperties,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DatabaseWatcherSharedPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DatabaseWatcherSharedPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDatabaseWatcherContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DatabaseWatcherSharedPrivateLinkResourceData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DatabaseWatcherSharedPrivateLinkResourceData IPersistableModel<DatabaseWatcherSharedPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DatabaseWatcherSharedPrivateLinkResourceData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DatabaseWatcherSharedPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="databaseWatcherSharedPrivateLinkResourceData"> The <see cref="DatabaseWatcherSharedPrivateLinkResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DatabaseWatcherSharedPrivateLinkResourceData databaseWatcherSharedPrivateLinkResourceData)
-        {
-            if (databaseWatcherSharedPrivateLinkResourceData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(databaseWatcherSharedPrivateLinkResourceData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

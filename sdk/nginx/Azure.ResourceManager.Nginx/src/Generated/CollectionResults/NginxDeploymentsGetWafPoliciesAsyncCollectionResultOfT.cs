@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Nginx
                     yield break;
                 }
                 NginxDeploymentWafPolicyListResponse result = NginxDeploymentWafPolicyListResponse.FromResponse(response);
-                yield return Page<NginxDeploymentWafPolicyMetadata>.FromValues((IReadOnlyList<NginxDeploymentWafPolicyMetadata>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<NginxDeploymentWafPolicyMetadata>.FromValues((IReadOnlyList<NginxDeploymentWafPolicyMetadata>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

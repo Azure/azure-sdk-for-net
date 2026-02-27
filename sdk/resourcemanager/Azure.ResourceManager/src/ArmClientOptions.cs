@@ -7,8 +7,8 @@ using System.IO;
 using System.Reflection;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager
 {

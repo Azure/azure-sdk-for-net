@@ -37,6 +37,41 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NeonDatabase>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNeonPostgresContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NeonDatabase)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NeonDatabase>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NeonDatabase IPersistableModel<NeonDatabase>.Create(BinaryData data, ModelReaderWriterOptions options) => (NeonDatabase)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NeonDatabase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="neonDatabase"> The <see cref="NeonDatabase"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(NeonDatabase neonDatabase)
+        {
+            if (neonDatabase == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(neonDatabase, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NeonDatabase"/> from. </param>
         internal static NeonDatabase FromResponse(Response response)
         {
@@ -156,41 +191,6 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 systemData,
                 additionalBinaryDataProperties,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NeonDatabase>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NeonDatabase>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNeonPostgresContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NeonDatabase)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NeonDatabase IPersistableModel<NeonDatabase>.Create(BinaryData data, ModelReaderWriterOptions options) => (NeonDatabase)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NeonDatabase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="neonDatabase"> The <see cref="NeonDatabase"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(NeonDatabase neonDatabase)
-        {
-            if (neonDatabase == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(neonDatabase, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

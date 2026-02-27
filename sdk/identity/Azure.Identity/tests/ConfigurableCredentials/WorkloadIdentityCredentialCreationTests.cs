@@ -18,7 +18,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.WorkloadIdentity
     /// </summary>
     internal class WorkloadIdentityCredentialCreationTests : CredentialCreationTestBase<WorkloadIdentityCredential>
     {
-        protected override string CredentialSource => "WorkloadIdentity";
+        protected override string CredentialSource => nameof(WorkloadIdentityCredential);
 
         private static ClientAssertionCredential GetClientAssertionCredential(WorkloadIdentityCredential wic)
             => ReadField<ClientAssertionCredential>(wic, "_clientAssertionCredential");

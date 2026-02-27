@@ -42,6 +42,41 @@ namespace Azure.ResourceManager.IotOperations
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IotOperationsInstanceData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(IotOperationsInstanceData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<IotOperationsInstanceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IotOperationsInstanceData IPersistableModel<IotOperationsInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (IotOperationsInstanceData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IotOperationsInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="iotOperationsInstanceData"> The <see cref="IotOperationsInstanceData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(IotOperationsInstanceData iotOperationsInstanceData)
+        {
+            if (iotOperationsInstanceData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(iotOperationsInstanceData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="IotOperationsInstanceData"/> from. </param>
         internal static IotOperationsInstanceData FromResponse(Response response)
         {
@@ -216,41 +251,6 @@ namespace Azure.ResourceManager.IotOperations
                 properties,
                 extendedLocation,
                 identity);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IotOperationsInstanceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<IotOperationsInstanceData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(IotOperationsInstanceData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        IotOperationsInstanceData IPersistableModel<IotOperationsInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (IotOperationsInstanceData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IotOperationsInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="iotOperationsInstanceData"> The <see cref="IotOperationsInstanceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(IotOperationsInstanceData iotOperationsInstanceData)
-        {
-            if (iotOperationsInstanceData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(iotOperationsInstanceData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

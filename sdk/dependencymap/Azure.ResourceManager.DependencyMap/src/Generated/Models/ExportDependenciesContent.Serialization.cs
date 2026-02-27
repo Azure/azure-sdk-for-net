@@ -34,6 +34,41 @@ namespace Azure.ResourceManager.DependencyMap.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExportDependenciesContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDependencyMapContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ExportDependenciesContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ExportDependenciesContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExportDependenciesContent IPersistableModel<ExportDependenciesContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ExportDependenciesContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="exportDependenciesContent"> The <see cref="ExportDependenciesContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ExportDependenciesContent exportDependenciesContent)
+        {
+            if (exportDependenciesContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(exportDependenciesContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExportDependenciesContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -170,41 +205,6 @@ namespace Azure.ResourceManager.DependencyMap.Models
                 }
             }
             return new ExportDependenciesContent(focusedMachineId, filters, applianceNameList ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExportDependenciesContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ExportDependenciesContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDependencyMapContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ExportDependenciesContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ExportDependenciesContent IPersistableModel<ExportDependenciesContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExportDependenciesContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="exportDependenciesContent"> The <see cref="ExportDependenciesContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ExportDependenciesContent exportDependenciesContent)
-        {
-            if (exportDependenciesContent == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(exportDependenciesContent, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

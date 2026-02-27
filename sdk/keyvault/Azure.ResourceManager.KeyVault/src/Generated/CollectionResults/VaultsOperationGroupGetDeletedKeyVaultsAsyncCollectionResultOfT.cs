@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.KeyVault
                     yield break;
                 }
                 DeletedVaultListResult result = DeletedVaultListResult.FromResponse(response);
-                yield return Page<DeletedKeyVaultData>.FromValues((IReadOnlyList<DeletedKeyVaultData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DeletedKeyVaultData>.FromValues((IReadOnlyList<DeletedKeyVaultData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

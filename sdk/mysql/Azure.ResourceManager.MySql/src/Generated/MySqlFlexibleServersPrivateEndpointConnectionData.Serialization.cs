@@ -38,6 +38,41 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServersPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMySqlContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServersPrivateEndpointConnectionData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MySqlFlexibleServersPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MySqlFlexibleServersPrivateEndpointConnectionData IPersistableModel<MySqlFlexibleServersPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (MySqlFlexibleServersPrivateEndpointConnectionData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MySqlFlexibleServersPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="mySqlFlexibleServersPrivateEndpointConnectionData"> The <see cref="MySqlFlexibleServersPrivateEndpointConnectionData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(MySqlFlexibleServersPrivateEndpointConnectionData mySqlFlexibleServersPrivateEndpointConnectionData)
+        {
+            if (mySqlFlexibleServersPrivateEndpointConnectionData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(mySqlFlexibleServersPrivateEndpointConnectionData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MySqlFlexibleServersPrivateEndpointConnectionData"/> from. </param>
         internal static MySqlFlexibleServersPrivateEndpointConnectionData FromResponse(Response response)
         {
@@ -157,41 +192,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 systemData,
                 additionalBinaryDataProperties,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MySqlFlexibleServersPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServersPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMySqlContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServersPrivateEndpointConnectionData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MySqlFlexibleServersPrivateEndpointConnectionData IPersistableModel<MySqlFlexibleServersPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (MySqlFlexibleServersPrivateEndpointConnectionData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MySqlFlexibleServersPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="mySqlFlexibleServersPrivateEndpointConnectionData"> The <see cref="MySqlFlexibleServersPrivateEndpointConnectionData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(MySqlFlexibleServersPrivateEndpointConnectionData mySqlFlexibleServersPrivateEndpointConnectionData)
-        {
-            if (mySqlFlexibleServersPrivateEndpointConnectionData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(mySqlFlexibleServersPrivateEndpointConnectionData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

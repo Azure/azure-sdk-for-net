@@ -3,7 +3,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -113,7 +112,16 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
             Assert.AreEqual(DateTimeOffset.MaxValue, token.ExpiresOn);
         }
 
-        [Test]
+        [TestCase("AzureCliCredential", typeof(AzureCliCredential))]
+        [TestCase("VisualStudioCredential", typeof(VisualStudioCredential))]
+        [TestCase("VisualStudioCodeCredential", typeof(VisualStudioCodeCredential))]
+        [TestCase("AzurePowerShellCredential", typeof(AzurePowerShellCredential))]
+        [TestCase("AzureDeveloperCliCredential", typeof(AzureDeveloperCliCredential))]
+        [TestCase("EnvironmentCredential", typeof(EnvironmentCredential))]
+        [TestCase("WorkloadIdentityCredential", typeof(WorkloadIdentityCredential))]
+        [TestCase("ManagedIdentityCredential", typeof(ManagedIdentityCredential))]
+        [TestCase("InteractiveBrowserCredential", typeof(InteractiveBrowserCredential))]
+        // Back-compat short names
         [TestCase("AzureCli", typeof(AzureCliCredential))]
         [TestCase("VisualStudio", typeof(VisualStudioCredential))]
         [TestCase("VisualStudioCode", typeof(VisualStudioCodeCredential))]
@@ -141,6 +149,23 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
         [Test]
         public void Constructor_WithBrokerCredentialSource_CreatesExactlyOneInteractiveBrowserCredential()
         {
+            var settings = CreateCredentialSettings("BrokerCredential");
+
+            var credential = new ConfigurableCredential(settings);
+            var innerCredential = GetInnerCredential(credential) as DefaultAzureCredential;
+
+            Assert.IsNotNull(innerCredential);
+
+            var sources = GetDefaultAzureCredentialSources(innerCredential);
+            Assert.IsNotNull(sources);
+            Assert.AreEqual(1, sources.Length, $"Expected exactly one credential source for Broker, but found {sources.Length}");
+            // Broker maps to InteractiveBrowserCredential with broker enabled
+            Assert.IsInstanceOf<InteractiveBrowserCredential>(sources[0], $"Expected InteractiveBrowserCredential for Broker but got {sources[0].GetType().Name}");
+        }
+
+        [Test]
+        public void Constructor_WithBrokerCredentialSource_BackCompat_CreatesExactlyOneInteractiveBrowserCredential()
+        {
             var settings = CreateCredentialSettings("Broker");
 
             var credential = new ConfigurableCredential(settings);
@@ -162,29 +187,6 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
 
             var ex = Assert.Throws<InvalidOperationException>(() => new ConfigurableCredential(settings));
             Assert.That(ex.Message, Does.Contain("CredentialSource is required"));
-        }
-
-        [Test]
-        [TestCase("VisualStudio", typeof(VisualStudioCredential))]
-        [TestCase("AzureCli", typeof(AzureCliCredential))]
-        [TestCase("AzurePowerShell", typeof(AzurePowerShellCredential))]
-        [TestCase("ManagedIdentity", typeof(ManagedIdentityCredential))]
-        public void Constructor_VariousCredentialSources_CreatesCorrectSingleCredential(string credentialSource, Type expectedType)
-        {
-            var settings = CreateCredentialSettings(credentialSource);
-            var credential = new ConfigurableCredential(settings);
-            var innerCredential = GetInnerCredential(credential) as DefaultAzureCredential;
-
-            Assert.IsNotNull(innerCredential);
-
-            var sources = GetDefaultAzureCredentialSources(innerCredential);
-            Assert.IsNotNull(sources);
-            Assert.AreEqual(1, sources.Length, $"Expected exactly one credential for {credentialSource}");
-            Assert.IsInstanceOf(expectedType, sources[0]);
-
-            // Verify no API key token was created
-            var apiKeyToken = GetApiKeyToken(credential);
-            Assert.AreEqual(default(AccessToken), apiKeyToken);
         }
 
         [Test]
@@ -261,48 +263,6 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
             Assert.AreNotEqual(token1.Token, token2.Token);
             Assert.AreEqual("key1", token1.Token);
             Assert.AreEqual("key2", token2.Token);
-        }
-
-        [Test]
-        public void Constructor_WithAzureCliSource_OnlyAzureCliCredentialInChain()
-        {
-            var settings = CreateCredentialSettings("AzureCli");
-            var credential = new ConfigurableCredential(settings);
-            var innerCredential = GetInnerCredential(credential) as DefaultAzureCredential;
-
-            var sources = GetDefaultAzureCredentialSources(innerCredential);
-
-            // Verify only one credential is present
-            Assert.AreEqual(1, sources.Length);
-
-            // Verify it's the correct type
-            Assert.IsInstanceOf<AzureCliCredential>(sources[0]);
-
-            // Verify no other credential types are present
-            Assert.IsFalse(sources.Any(s => s is VisualStudioCredential));
-            Assert.IsFalse(sources.Any(s => s is ManagedIdentityCredential));
-            Assert.IsFalse(sources.Any(s => s is EnvironmentCredential));
-        }
-
-        [Test]
-        public void Constructor_WithManagedIdentitySource_OnlyManagedIdentityCredentialInChain()
-        {
-            var settings = CreateCredentialSettings("ManagedIdentity");
-            var credential = new ConfigurableCredential(settings);
-            var innerCredential = GetInnerCredential(credential) as DefaultAzureCredential;
-
-            var sources = GetDefaultAzureCredentialSources(innerCredential);
-
-            // Verify only one credential is present
-            Assert.AreEqual(1, sources.Length);
-
-            // Verify it's the correct type
-            Assert.IsInstanceOf<ManagedIdentityCredential>(sources[0]);
-
-            // Verify no other credential types are present
-            Assert.IsFalse(sources.Any(s => s is AzureCliCredential));
-            Assert.IsFalse(sources.Any(s => s is VisualStudioCredential));
-            Assert.IsFalse(sources.Any(s => s is EnvironmentCredential));
         }
     }
 }

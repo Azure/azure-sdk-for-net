@@ -37,6 +37,41 @@ namespace Azure.ResourceManager.MongoCluster
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MongoClusterUserData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMongoClusterContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MongoClusterUserData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MongoClusterUserData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MongoClusterUserData IPersistableModel<MongoClusterUserData>.Create(BinaryData data, ModelReaderWriterOptions options) => (MongoClusterUserData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MongoClusterUserData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="mongoClusterUserData"> The <see cref="MongoClusterUserData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(MongoClusterUserData mongoClusterUserData)
+        {
+            if (mongoClusterUserData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(mongoClusterUserData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MongoClusterUserData"/> from. </param>
         internal static MongoClusterUserData FromResponse(Response response)
         {
@@ -156,41 +191,6 @@ namespace Azure.ResourceManager.MongoCluster
                 systemData,
                 additionalBinaryDataProperties,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MongoClusterUserData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MongoClusterUserData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMongoClusterContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MongoClusterUserData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MongoClusterUserData IPersistableModel<MongoClusterUserData>.Create(BinaryData data, ModelReaderWriterOptions options) => (MongoClusterUserData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MongoClusterUserData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="mongoClusterUserData"> The <see cref="MongoClusterUserData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(MongoClusterUserData mongoClusterUserData)
-        {
-            if (mongoClusterUserData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(mongoClusterUserData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

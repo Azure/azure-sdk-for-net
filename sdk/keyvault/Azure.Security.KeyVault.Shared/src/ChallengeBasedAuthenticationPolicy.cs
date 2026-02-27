@@ -269,6 +269,10 @@ namespace Azure.Security.KeyVault
             {
                 AuthorizationUri = authorizationUri;
                 TenantId = authorizationUri.Segments[1].Trim('/');
+                if (TenantId.Equals("dstsv2", StringComparison.OrdinalIgnoreCase) && authorizationUri.Segments.Length > 2)
+                {
+                    TenantId = authorizationUri.Segments[2].Trim('/');
+                }
                 Scopes = scopes;
             }
 

@@ -42,6 +42,41 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DevOpsPoolData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevOpsInfrastructureContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DevOpsPoolData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DevOpsPoolData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DevOpsPoolData IPersistableModel<DevOpsPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DevOpsPoolData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DevOpsPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="devOpsPoolData"> The <see cref="DevOpsPoolData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DevOpsPoolData devOpsPoolData)
+        {
+            if (devOpsPoolData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(devOpsPoolData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DevOpsPoolData"/> from. </param>
         internal static DevOpsPoolData FromResponse(Response response)
         {
@@ -207,41 +242,6 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
                 location,
                 properties,
                 identity);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DevOpsPoolData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DevOpsPoolData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevOpsInfrastructureContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DevOpsPoolData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DevOpsPoolData IPersistableModel<DevOpsPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DevOpsPoolData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DevOpsPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="devOpsPoolData"> The <see cref="DevOpsPoolData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DevOpsPoolData devOpsPoolData)
-        {
-            if (devOpsPoolData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(devOpsPoolData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

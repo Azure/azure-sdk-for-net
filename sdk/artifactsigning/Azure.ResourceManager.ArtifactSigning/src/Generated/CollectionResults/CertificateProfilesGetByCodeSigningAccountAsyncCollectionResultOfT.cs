@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                     yield break;
                 }
                 CertificateProfileListResult result = CertificateProfileListResult.FromResponse(response);
-                yield return Page<ArtifactSigningCertificateProfileData>.FromValues((IReadOnlyList<ArtifactSigningCertificateProfileData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ArtifactSigningCertificateProfileData>.FromValues((IReadOnlyList<ArtifactSigningCertificateProfileData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

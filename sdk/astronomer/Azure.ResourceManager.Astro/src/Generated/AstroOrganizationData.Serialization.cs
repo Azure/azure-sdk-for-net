@@ -42,6 +42,41 @@ namespace Azure.ResourceManager.Astro
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AstroOrganizationData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAstroContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AstroOrganizationData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AstroOrganizationData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AstroOrganizationData IPersistableModel<AstroOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AstroOrganizationData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AstroOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="astroOrganizationData"> The <see cref="AstroOrganizationData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(AstroOrganizationData astroOrganizationData)
+        {
+            if (astroOrganizationData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(astroOrganizationData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AstroOrganizationData"/> from. </param>
         internal static AstroOrganizationData FromResponse(Response response)
         {
@@ -207,41 +242,6 @@ namespace Azure.ResourceManager.Astro
                 location,
                 properties,
                 identity);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AstroOrganizationData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AstroOrganizationData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAstroContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AstroOrganizationData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AstroOrganizationData IPersistableModel<AstroOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AstroOrganizationData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AstroOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="astroOrganizationData"> The <see cref="AstroOrganizationData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(AstroOrganizationData astroOrganizationData)
-        {
-            if (astroOrganizationData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(astroOrganizationData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Avs
                     yield break;
                 }
                 WorkloadNetworkDhcpList result = WorkloadNetworkDhcpList.FromResponse(response);
-                yield return Page<WorkloadNetworkDhcpData>.FromValues((IReadOnlyList<WorkloadNetworkDhcpData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<WorkloadNetworkDhcpData>.FromValues((IReadOnlyList<WorkloadNetworkDhcpData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

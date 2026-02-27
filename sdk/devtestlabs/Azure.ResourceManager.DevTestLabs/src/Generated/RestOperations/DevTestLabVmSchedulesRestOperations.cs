@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath(virtualMachineName, true);
             uri.AppendPath("/schedules/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -82,7 +85,10 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath(virtualMachineName, true);
             uri.AppendPath("/schedules/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -107,7 +113,10 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath(virtualMachineName, true);
             uri.AppendPath("/schedules/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -132,7 +141,10 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath(virtualMachineName, true);
             uri.AppendPath("/schedules/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -153,7 +165,10 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/virtualmachines/", false);
             uri.AppendPath(virtualMachineName, true);
             uri.AppendPath("/schedules", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -181,8 +196,18 @@ namespace Azure.ResourceManager.DevTestLabs
         internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string labName, string virtualMachineName, string expand, string filter, int? top, string @orderby, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -206,7 +231,10 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/schedules/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/execute", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

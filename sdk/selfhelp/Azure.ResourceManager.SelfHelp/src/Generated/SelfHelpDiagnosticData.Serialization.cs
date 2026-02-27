@@ -37,6 +37,41 @@ namespace Azure.ResourceManager.SelfHelp
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SelfHelpDiagnosticData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSelfHelpContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SelfHelpDiagnosticData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SelfHelpDiagnosticData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SelfHelpDiagnosticData IPersistableModel<SelfHelpDiagnosticData>.Create(BinaryData data, ModelReaderWriterOptions options) => (SelfHelpDiagnosticData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SelfHelpDiagnosticData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="selfHelpDiagnosticData"> The <see cref="SelfHelpDiagnosticData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(SelfHelpDiagnosticData selfHelpDiagnosticData)
+        {
+            if (selfHelpDiagnosticData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(selfHelpDiagnosticData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SelfHelpDiagnosticData"/> from. </param>
         internal static SelfHelpDiagnosticData FromResponse(Response response)
         {
@@ -156,41 +191,6 @@ namespace Azure.ResourceManager.SelfHelp
                 systemData,
                 additionalBinaryDataProperties,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SelfHelpDiagnosticData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SelfHelpDiagnosticData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSelfHelpContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SelfHelpDiagnosticData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SelfHelpDiagnosticData IPersistableModel<SelfHelpDiagnosticData>.Create(BinaryData data, ModelReaderWriterOptions options) => (SelfHelpDiagnosticData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SelfHelpDiagnosticData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="selfHelpDiagnosticData"> The <see cref="SelfHelpDiagnosticData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(SelfHelpDiagnosticData selfHelpDiagnosticData)
-        {
-            if (selfHelpDiagnosticData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(selfHelpDiagnosticData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

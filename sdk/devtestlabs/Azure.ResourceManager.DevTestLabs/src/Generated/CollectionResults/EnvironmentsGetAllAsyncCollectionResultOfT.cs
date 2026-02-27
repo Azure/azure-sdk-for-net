@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     yield break;
                 }
                 DtlEnvironmentList result = DtlEnvironmentList.FromResponse(response);
-                yield return Page<DevTestLabEnvironmentData>.FromValues((IReadOnlyList<DevTestLabEnvironmentData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DevTestLabEnvironmentData>.FromValues((IReadOnlyList<DevTestLabEnvironmentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

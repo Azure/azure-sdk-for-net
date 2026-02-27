@@ -6,7 +6,9 @@
 namespace Azure.Provisioning.PostgreSql;
 
 /// <summary>
-/// Primary encryption key status for Data encryption enabled server.
+/// Status of key used by a server configured with data encryption based on
+/// customer managed key, to encrypt the primary storage associated to the
+/// server.
 /// </summary>
 public enum PostgreSqlKeyStatus
 {

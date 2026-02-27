@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     yield break;
                 }
                 ApplicationTypeResourceList result = ApplicationTypeResourceList.FromResponse(response);
-                yield return Page<ServiceFabricManagedApplicationTypeData>.FromValues((IReadOnlyList<ServiceFabricManagedApplicationTypeData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ServiceFabricManagedApplicationTypeData>.FromValues((IReadOnlyList<ServiceFabricManagedApplicationTypeData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

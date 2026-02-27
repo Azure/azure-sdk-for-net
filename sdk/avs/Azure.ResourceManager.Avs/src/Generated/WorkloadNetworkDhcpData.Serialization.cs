@@ -37,6 +37,41 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WorkloadNetworkDhcpData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAvsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(WorkloadNetworkDhcpData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<WorkloadNetworkDhcpData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WorkloadNetworkDhcpData IPersistableModel<WorkloadNetworkDhcpData>.Create(BinaryData data, ModelReaderWriterOptions options) => (WorkloadNetworkDhcpData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WorkloadNetworkDhcpData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="workloadNetworkDhcpData"> The <see cref="WorkloadNetworkDhcpData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(WorkloadNetworkDhcpData workloadNetworkDhcpData)
+        {
+            if (workloadNetworkDhcpData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(workloadNetworkDhcpData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="WorkloadNetworkDhcpData"/> from. </param>
         internal static WorkloadNetworkDhcpData FromResponse(Response response)
         {
@@ -156,41 +191,6 @@ namespace Azure.ResourceManager.Avs
                 systemData,
                 additionalBinaryDataProperties,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WorkloadNetworkDhcpData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkloadNetworkDhcpData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAvsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(WorkloadNetworkDhcpData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        WorkloadNetworkDhcpData IPersistableModel<WorkloadNetworkDhcpData>.Create(BinaryData data, ModelReaderWriterOptions options) => (WorkloadNetworkDhcpData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<WorkloadNetworkDhcpData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="workloadNetworkDhcpData"> The <see cref="WorkloadNetworkDhcpData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(WorkloadNetworkDhcpData workloadNetworkDhcpData)
-        {
-            if (workloadNetworkDhcpData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(workloadNetworkDhcpData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

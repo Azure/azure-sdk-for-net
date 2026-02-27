@@ -54,7 +54,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             uri.AppendPath("/autoUpgradeProfiles/", false);
             uri.AppendPath(autoUpgradeProfileName, true);
             uri.AppendPath("/generateUpdateRun", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
