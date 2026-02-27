@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -22,5 +23,14 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             OdataType = skillVersion.ToString();
         }
+
+        /// <summary> Deprecated. A value indicating which language code to use. Default is en. </summary>
+        [Obsolete("This property is deprecated. Use SentimentLanguageCode instead.", true)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public SentimentSkillLanguage? DefaultLanguageCode { get; set; }
+
+        /// <summary> A value indicating which language code to use. Default is `en`. </summary>
+        [CodeGenMember("DefaultLanguageCode")]
+        public string LanguageCode { get; set; }
     }
 }

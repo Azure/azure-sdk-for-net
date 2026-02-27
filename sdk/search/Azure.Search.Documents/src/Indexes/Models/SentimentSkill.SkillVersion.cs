@@ -14,6 +14,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             private readonly string _value;
 
+            private const string V1Value = "#Microsoft.Skills.Text.SentimentSkill";
             private const string V3Value = "#Microsoft.Skills.Text.V3.SentimentSkill";
 
             /// <summary> Creates a new instance of <see cref="SkillVersion"/>. </summary>
@@ -22,6 +23,11 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 _value = value ?? throw new ArgumentNullException(nameof(value));
             }
+
+            /// <summary> Deprecated. Version 1 of the <see cref="SentimentSkill"/>. </summary>
+            [Obsolete("This skill version is deprecated. Use V3 instead.")]
+            [EditorBrowsable(EditorBrowsableState.Never)]
+            public static SkillVersion V1 { get; } = new SkillVersion(V1Value);
 
             /// <summary> Version 3 of the <see cref="SkillVersion"/>. </summary>
             public static SkillVersion V3 { get; } = new SkillVersion(V3Value);

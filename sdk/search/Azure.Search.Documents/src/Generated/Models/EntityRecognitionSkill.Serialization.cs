@@ -80,11 +80,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new FormatException($"The model {nameof(EntityRecognitionSkill)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsCollectionDefined(Categories))
+            if (Optional.IsCollectionDefined(EntityCategories))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
-                foreach (string item in Categories)
+                foreach (string item in EntityCategories)
                 {
                     if (item == null)
                     {
@@ -95,10 +95,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DefaultLanguageCode))
+            if (Optional.IsDefined(LanguageCode))
             {
                 writer.WritePropertyName("defaultLanguageCode"u8);
-                writer.WriteStringValue(DefaultLanguageCode);
+                writer.WriteStringValue(LanguageCode);
             }
             if (Optional.IsDefined(MinimumPrecision))
             {
@@ -144,8 +144,8 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<string> categories = default;
-            string defaultLanguageCode = default;
+            IList<string> entityCategories = default;
+            string languageCode = default;
             double? minimumPrecision = default;
             string modelVersion = default;
             foreach (var prop in element.EnumerateObject())
@@ -208,17 +208,17 @@ namespace Azure.Search.Documents.Indexes.Models
                             array.Add(item.GetString());
                         }
                     }
-                    categories = array;
+                    entityCategories = array;
                     continue;
                 }
                 if (prop.NameEquals("defaultLanguageCode"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        defaultLanguageCode = null;
+                        languageCode = null;
                         continue;
                     }
-                    defaultLanguageCode = prop.Value.GetString();
+                    languageCode = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("minimumPrecision"u8))
@@ -253,8 +253,8 @@ namespace Azure.Search.Documents.Indexes.Models
                 inputs,
                 outputs,
                 additionalBinaryDataProperties,
-                categories ?? new ChangeTrackingList<string>(),
-                defaultLanguageCode,
+                entityCategories ?? new ChangeTrackingList<string>(),
+                languageCode,
                 minimumPrecision,
                 modelVersion);
         }
