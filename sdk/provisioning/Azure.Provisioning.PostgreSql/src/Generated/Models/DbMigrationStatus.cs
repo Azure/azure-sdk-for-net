@@ -16,7 +16,7 @@ namespace Azure.Provisioning.PostgreSql;
 public partial class DbMigrationStatus : ProvisionableConstruct
 {
     /// <summary>
-    /// Name of the database.
+    /// Name of database.
     /// </summary>
     public BicepValue<string> DatabaseName 
     {
@@ -25,7 +25,7 @@ public partial class DbMigrationStatus : ProvisionableConstruct
     private BicepValue<string>? _databaseName;
 
     /// <summary>
-    /// Migration db state of an individual database.
+    /// Migration state of a database.
     /// </summary>
     public BicepValue<MigrationDbState> MigrationState 
     {
@@ -34,7 +34,7 @@ public partial class DbMigrationStatus : ProvisionableConstruct
     private BicepValue<MigrationDbState>? _migrationState;
 
     /// <summary>
-    /// Migration operation of an individual database.
+    /// Migration operation of a database.
     /// </summary>
     public BicepValue<string> MigrationOperation 
     {
@@ -43,7 +43,7 @@ public partial class DbMigrationStatus : ProvisionableConstruct
     private BicepValue<string>? _migrationOperation;
 
     /// <summary>
-    /// Start date-time of a migration state.
+    /// Start time of a migration state.
     /// </summary>
     public BicepValue<DateTimeOffset> StartedOn 
     {
@@ -52,7 +52,7 @@ public partial class DbMigrationStatus : ProvisionableConstruct
     private BicepValue<DateTimeOffset>? _startedOn;
 
     /// <summary>
-    /// End date-time of a migration state.
+    /// End time of a migration state.
     /// </summary>
     public BicepValue<DateTimeOffset> EndedOn 
     {
@@ -61,7 +61,7 @@ public partial class DbMigrationStatus : ProvisionableConstruct
     private BicepValue<DateTimeOffset>? _endedOn;
 
     /// <summary>
-    /// Number of tables queued for the migration of a DB.
+    /// Number of tables queued for the migration of a database.
     /// </summary>
     public BicepValue<int> FullLoadQueuedTables 
     {
@@ -70,7 +70,7 @@ public partial class DbMigrationStatus : ProvisionableConstruct
     private BicepValue<int>? _fullLoadQueuedTables;
 
     /// <summary>
-    /// Number of tables errored out during the migration of a DB.
+    /// Number of tables encountering errors during the migration of a database.
     /// </summary>
     public BicepValue<int> FullLoadErroredTables 
     {
@@ -79,7 +79,7 @@ public partial class DbMigrationStatus : ProvisionableConstruct
     private BicepValue<int>? _fullLoadErroredTables;
 
     /// <summary>
-    /// Number of tables loading during the migration of a DB.
+    /// Number of tables loading during the migration of a database.
     /// </summary>
     public BicepValue<int> FullLoadLoadingTables 
     {
@@ -88,7 +88,7 @@ public partial class DbMigrationStatus : ProvisionableConstruct
     private BicepValue<int>? _fullLoadLoadingTables;
 
     /// <summary>
-    /// Number of tables loaded during the migration of a DB.
+    /// Number of tables loaded during the migration of a database.
     /// </summary>
     public BicepValue<int> FullLoadCompletedTables 
     {
@@ -97,7 +97,7 @@ public partial class DbMigrationStatus : ProvisionableConstruct
     private BicepValue<int>? _fullLoadCompletedTables;
 
     /// <summary>
-    /// CDC update counter.
+    /// Change Data Capture update counter.
     /// </summary>
     public BicepValue<int> CdcUpdateCounter 
     {
@@ -106,7 +106,7 @@ public partial class DbMigrationStatus : ProvisionableConstruct
     private BicepValue<int>? _cdcUpdateCounter;
 
     /// <summary>
-    /// CDC delete counter.
+    /// Change Data Capture delete counter.
     /// </summary>
     public BicepValue<int> CdcDeleteCounter 
     {
@@ -115,7 +115,7 @@ public partial class DbMigrationStatus : ProvisionableConstruct
     private BicepValue<int>? _cdcDeleteCounter;
 
     /// <summary>
-    /// CDC insert counter.
+    /// Change Data Capture insert counter.
     /// </summary>
     public BicepValue<int> CdcInsertCounter 
     {
@@ -124,7 +124,7 @@ public partial class DbMigrationStatus : ProvisionableConstruct
     private BicepValue<int>? _cdcInsertCounter;
 
     /// <summary>
-    /// CDC applied changes counter.
+    /// Change Data Capture applied changes counter.
     /// </summary>
     public BicepValue<int> AppliedChanges 
     {
@@ -133,7 +133,7 @@ public partial class DbMigrationStatus : ProvisionableConstruct
     private BicepValue<int>? _appliedChanges;
 
     /// <summary>
-    /// CDC incoming changes counter.
+    /// Change Data Capture incoming changes counter.
     /// </summary>
     public BicepValue<int> IncomingChanges 
     {

@@ -161,6 +161,7 @@ public partial class AppConfigurationKeyValue : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _contentType = DefineProperty<string>("ContentType", ["properties", "contentType"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["properties", "tags"]);

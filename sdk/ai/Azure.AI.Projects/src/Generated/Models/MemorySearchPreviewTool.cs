@@ -18,7 +18,7 @@ namespace Azure.AI.Projects
         /// Use special variable `{{$userId}}` to scope memories to the current signed-in user.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="memoryStoreName"/> or <paramref name="scope"/> is null. </exception>
-        public MemorySearchPreviewTool(string memoryStoreName, string scope) : base(ToolType.MemorySearch)
+        public MemorySearchPreviewTool(string memoryStoreName, string scope) : base(ToolType.MemorySearchPreview)
         {
             Argument.AssertNotNull(memoryStoreName, nameof(memoryStoreName));
             Argument.AssertNotNull(scope, nameof(scope));

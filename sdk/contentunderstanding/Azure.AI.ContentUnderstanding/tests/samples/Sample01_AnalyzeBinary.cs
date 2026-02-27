@@ -37,12 +37,12 @@ namespace Azure.AI.ContentUnderstanding.Samples
             byte[] fileBytes = File.ReadAllBytes(filePath);
             BinaryData binaryData = BinaryData.FromBytes(fileBytes);
 
-            Operation<AnalyzeResult> operation = await client.AnalyzeBinaryAsync(
+            Operation<AnalysisResult> operation = await client.AnalyzeBinaryAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
                 binaryData);
 
-            AnalyzeResult result = operation.Value;
+            AnalysisResult result = operation.Value;
             #endregion
 
             #region Assertion:ContentUnderstandingAnalyzeBinaryAsync
@@ -62,7 +62,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             #region Snippet:ContentUnderstandingExtractMarkdown
             // A PDF file has only one content element even if it contains multiple pages
-            MediaContent content = result.Contents!.First();
+            AnalysisContent content = result.Contents!.First();
             Console.WriteLine(content.Markdown);
             #endregion
 
@@ -71,7 +71,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsTrue(result.Contents!.Count > 0, "Result should have at least one content");
             Assert.AreEqual(1, result.Contents.Count, "PDF file should have exactly one content element");
             Assert.IsNotNull(content, "Content should not be null");
-            Assert.IsInstanceOf<MediaContent>(content, "Content should be of type MediaContent");
+            Assert.IsInstanceOf<AnalysisContent>(content, "Content should be of type AnalysisContent");
             Assert.IsNotNull(content.Markdown, "Markdown content should not be null");
             Assert.IsTrue(content.Markdown.Length > 0, "Markdown content should not be empty");
             Assert.IsFalse(string.IsNullOrWhiteSpace(content.Markdown),

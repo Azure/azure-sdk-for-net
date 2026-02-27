@@ -247,7 +247,7 @@ namespace Azure.Identity.Tests
         public void AuthenticateWithDeveloperCliCredential_ExceptionScenarios(Action<object> exceptionOnStartHandler, string errorMessage, string expectedMessage, bool isChained)
         {
             var testProcess = new TestProcess { Error = errorMessage, ExceptionOnStartHandler = exceptionOnStartHandler };
-            var credential = CreateCredential(new TestProcessService(testProcess));
+            var credential = CreateCredentialWithChainedOption(new TestProcessService(testProcess), isChained);
             var ex = Assert.ThrowsAsync(GetExpectedExceptionType(isChained),
                 async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
             Assert.That(ex.Message, Does.Contain(expectedMessage));
@@ -346,6 +346,106 @@ namespace Azure.Identity.Tests
                 Assert.ThrowsAsync(GetExpectedExceptionType(false),
                     async () => await credential.GetTokenAsync(tokenRequestContext, default), ScopeUtilities.InvalidScopeMessage);
             }
+        }
+
+        [Test]
+        public void AzdJsonErrorOutput_ExtractsCleanMessage()
+        {
+            // Simulates azd returning JSON error with nested message
+            string rawJsonError = "{\"type\":\"consoleMessage\",\"timestamp\":\"2024-01-01T00:00:00Z\",\"data\":{\"message\":\"\\nERROR: fetching token: interactive login needed\"}}";
+            var testProcess = new TestProcess { Error = rawJsonError };
+            var credential = CreateCredential(new TestProcessService(testProcess));
+
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(false),
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+
+            // Should extract and trim the message, not show raw JSON
+            Assert.That(ex.Message, Does.Contain("ERROR: fetching token: interactive login needed"));
+            Assert.That(ex.Message, Does.Not.Contain("{\"type\":\"consoleMessage\""));
+        }
+
+        [Test]
+        public void AzdJsonErrorOutput_WithWhitespace_TrimsProperly()
+        {
+            string jsonWithWhitespace = "{\"type\":\"consoleMessage\",\"data\":{\"message\":\"  \\n\\nERROR: token expired  \\n  \"}}";
+            var testProcess = new TestProcess { Error = jsonWithWhitespace };
+            var credential = CreateCredential(new TestProcessService(testProcess));
+
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(false),
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+
+            Assert.That(ex.Message, Does.Contain("ERROR: token expired"));
+            // Verify no leading/trailing whitespace in the extracted message
+            Assert.That(ex.Message, Does.Not.Contain("  \n\nERROR"));
+        }
+
+        [Test]
+        public void AzdJsonErrorOutput_InvalidJson_FallsBackToRawText()
+        {
+            string malformedJson = "{invalid json here";
+            var testProcess = new TestProcess { Error = malformedJson };
+            var credential = CreateCredential(new TestProcessService(testProcess));
+
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(false),
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+
+            // Should include raw text when JSON parsing fails
+            Assert.That(ex.Message, Does.Contain("{invalid json here"));
+        }
+
+        [Test]
+        public void AzdJsonErrorOutput_MissingDataMessage_FallsBackToRawText()
+        {
+            string jsonWithoutMessage = "{\"type\":\"consoleMessage\",\"data\":{}}";
+            var testProcess = new TestProcess { Error = jsonWithoutMessage };
+            var credential = CreateCredential(new TestProcessService(testProcess));
+
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(false),
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+
+            Assert.That(ex.Message, Does.Contain(jsonWithoutMessage));
+        }
+
+        [Test]
+        public void AzdJsonErrorOutput_EmptyMessage_FallsBackToRawText()
+        {
+            string jsonWithEmptyMessage = "{\"type\":\"consoleMessage\",\"data\":{\"message\":\"\"}}";
+            var testProcess = new TestProcess { Error = jsonWithEmptyMessage };
+            var credential = CreateCredential(new TestProcessService(testProcess));
+
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(false),
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+
+            Assert.That(ex.Message, Does.Contain(jsonWithEmptyMessage));
+        }
+
+        [Test]
+        public void AzdJsonErrorOutput_PlainTextError_UsesAsIs()
+        {
+            string plainError = "ERROR: authentication required";
+            var testProcess = new TestProcess { Error = plainError };
+            var credential = CreateCredential(new TestProcessService(testProcess));
+
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(false),
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+
+            Assert.That(ex.Message, Does.Contain(plainError));
+        }
+
+        [Test]
+        public void AzdJsonErrorOutput_LoginRequiredInJson_UsesAzdMessage()
+        {
+            // When azd returns a JSON error about login, use our standard message and throw CredentialUnavailableException
+            string jsonLoginError = "{\"type\":\"consoleMessage\",\"data\":{\"message\":\"ERROR: no auth configuration found. Please run `azd auth login` to setup account\"}}";
+            var testProcess = new TestProcess { Error = jsonLoginError };
+            var credential = CreateCredential(new TestProcessService(testProcess));
+
+            var ex = Assert.ThrowsAsync<CredentialUnavailableException>(
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+
+            // Should use our standard AzdNotLogIn message, not the parsed JSON message
+            Assert.That(ex.Message, Does.Contain(AzureDeveloperCliCredential.AzdNotLogIn));
+            Assert.That(ex.Message, Does.Not.Contain("{\"type\":\"consoleMessage\""));
         }
     }
 }

@@ -17,8 +17,7 @@ namespace Azure.AI.Projects.OpenAI
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/openai/conversations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendPath("/openai/v1/conversations", false);
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
             request.Headers.Set("Content-Type", "application/json");
@@ -32,9 +31,8 @@ namespace Azure.AI.Projects.OpenAI
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/openai/conversations/", false);
+            uri.AppendPath("/openai/v1/conversations/", false);
             uri.AppendPath(conversationId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
             request.Headers.Set("Content-Type", "application/json");

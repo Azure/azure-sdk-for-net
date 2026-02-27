@@ -42,6 +42,41 @@ namespace Azure.ResourceManager.PineconeVectorDB
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PineconeVectorDBOrganizationData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPineconeVectorDBContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PineconeVectorDBOrganizationData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PineconeVectorDBOrganizationData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PineconeVectorDBOrganizationData IPersistableModel<PineconeVectorDBOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (PineconeVectorDBOrganizationData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PineconeVectorDBOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="pineconeVectorDBOrganizationData"> The <see cref="PineconeVectorDBOrganizationData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(PineconeVectorDBOrganizationData pineconeVectorDBOrganizationData)
+        {
+            if (pineconeVectorDBOrganizationData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(pineconeVectorDBOrganizationData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PineconeVectorDBOrganizationData"/> from. </param>
         internal static PineconeVectorDBOrganizationData FromResponse(Response response)
         {
@@ -207,41 +242,6 @@ namespace Azure.ResourceManager.PineconeVectorDB
                 location,
                 properties,
                 identity);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PineconeVectorDBOrganizationData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PineconeVectorDBOrganizationData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPineconeVectorDBContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PineconeVectorDBOrganizationData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PineconeVectorDBOrganizationData IPersistableModel<PineconeVectorDBOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (PineconeVectorDBOrganizationData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PineconeVectorDBOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="pineconeVectorDBOrganizationData"> The <see cref="PineconeVectorDBOrganizationData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(PineconeVectorDBOrganizationData pineconeVectorDBOrganizationData)
-        {
-            if (pineconeVectorDBOrganizationData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(pineconeVectorDBOrganizationData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

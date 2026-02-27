@@ -38,6 +38,29 @@ namespace Azure.ResourceManager.Terraform.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExportQueryTerraform>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerTerraformContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ExportQueryTerraform)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ExportQueryTerraform>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExportQueryTerraform IPersistableModel<ExportQueryTerraform>.Create(BinaryData data, ModelReaderWriterOptions options) => (ExportQueryTerraform)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ExportQueryTerraform>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExportQueryTerraform>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -284,28 +307,5 @@ namespace Azure.ResourceManager.Terraform.Models
                 table,
                 authorizationScopeFilter);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExportQueryTerraform>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ExportQueryTerraform>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerTerraformContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ExportQueryTerraform)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ExportQueryTerraform IPersistableModel<ExportQueryTerraform>.Create(BinaryData data, ModelReaderWriterOptions options) => (ExportQueryTerraform)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExportQueryTerraform>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -29,10 +29,10 @@ This skill guides the process of regenerating `Azure.Provisioning.*` libraries t
 
 ## Step 2A: Update Management Library Version (If Needed)
 
-Edit `eng/Packages.Data.props` to update the management library version:
+Edit `eng/centralpackagemanagement/Directory.Packages.props` to update the management library version:
 
 ```xml
-<PackageReference Update="Azure.ResourceManager.{ServiceName}" Version="{NewVersion}" />
+<PackageVersion Include="Azure.ResourceManager.{ServiceName}" Version="{NewVersion}" />
 ```
 
 ## Step 2B: Check for Resource Whitelist (If Applicable)
@@ -64,7 +64,7 @@ cd sdk/provisioning/Generator/src
 dotnet run --framework net10.0 -- --filter {ServiceName}
 ```
 
-**Important:** The generator reads from NuGet packages, NOT local source code. The version in `eng/Packages.Data.props` determines which package version is used.
+**Important:** The generator reads from NuGet packages, NOT local source code. The version in `eng/centralpackagemanagement/Directory.Packages.props` determines which package version is used.
 
 ### Verify Only Target Library Changed
 
@@ -210,30 +210,11 @@ If CI fails with "Unknown word" errors, add the words to `sdk/provisioning/cspel
 
 **Important:** Use `sdk/provisioning/cspell.yaml`, NOT `.vscode/cspell.json`.
 
-## Step 7: Export API and Update Snippets
+## Step 7: Run Pre-Commit Checks
 
-```shell
-pwsh eng\scripts\Export-API.ps1 provisioning
-pwsh eng\scripts\Update-Snippets.ps1 provisioning
-```
+Before committing, invoke the `pre-commit-checks` skill with the service directory set to `provisioning`. This will handle code formatting, API export, and snippet updates.
 
-## Step 8: Run Pre-Commit Checks
-
-Before committing, run:
-
-```shell
-pwsh eng\scripts\CodeChecks.ps1 -ServiceDirectory provisioning
-```
-
-This runs:
-- Code generation verification
-- API export
-- Snippet updates
-- Installation instruction validation
-
-All checks must pass with 0 errors.
-
-## Step 9: Update CHANGELOG and Commit
+## Step 8: Update CHANGELOG and Commit
 
 1. Update the CHANGELOG at `sdk/provisioning/Azure.Provisioning.{Service}/CHANGELOG.md`:
    ```markdown
@@ -254,7 +235,7 @@ All checks must pass with 0 errors.
 
 The requirement was to add PostgreSQL versions 17 and 18, which required updating the management library.
 
-1. **Updated `eng/Packages.Data.props`**: Changed `Azure.ResourceManager.PostgreSql` from 1.3.1 to 1.4.1
+1. **Updated `eng/centralpackagemanagement/Directory.Packages.props`**: Changed `Azure.ResourceManager.PostgreSql` from 1.3.1 to 1.4.1
 2. **Ran generator**: `dotnet run --framework net10.0 -- --filter PostgreSql`
 3. **Handled breaking changes**: Property renames, obsolete stubs, enum ordering, ApiCompatBaseline
 4. **Fixed CI issues**: Added spell check words to `cspell.yaml`
@@ -283,7 +264,7 @@ The requirement was to add NetworkSecurityPerimeter support. The resources alrea
 
 | File | Purpose |
 |------|---------|
-| `eng/Packages.Data.props` | Management library version |
+| `eng/centralpackagemanagement/Directory.Packages.props` | Management library version |
 | `sdk/provisioning/Generator/src/Specifications/{Service}Specification.cs` | Generator customizations and resource whitelist |
 | `sdk/provisioning/Generator/src/Model/Specification.Customize.cs` | Customization API (`OrderEnum`, `CustomizeResource`, etc.) |
 | `sdk/provisioning/Azure.Provisioning.{Service}/src/BackwardCompatible/` | Backward-compatible customizations |
@@ -298,7 +279,7 @@ The requirement was to add NetworkSecurityPerimeter support. The resources alrea
 - Ensure the management library version is correct
 
 ### Generator fails to find types
-- Ensure the management library version in `eng/Packages.Data.props` is correct and published
+- Ensure the management library version in `eng/centralpackagemanagement/Directory.Packages.props` is correct and published
 - Try running `dotnet restore` before the generator
 
 ### API compatibility errors

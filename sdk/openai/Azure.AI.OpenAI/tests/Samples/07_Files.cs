@@ -16,7 +16,6 @@ public partial class AzureOpenAISamples
 {
     public void BasicFileUpload()
     {
-        #region Snippet:BasicFileUpload
         AzureOpenAIClient azureClient = new(
             new Uri("https://your-azure-openai-resource.com"),
             new DefaultAzureCredential());
@@ -45,7 +44,6 @@ public partial class AzureOpenAISamples
         Console.WriteLine($"  Filename: {uploadedFile.Filename}");
         Console.WriteLine($"  Size: {uploadedFile.SizeInBytes} bytes");
         Console.WriteLine($"  Purpose: {uploadedFile.Purpose}");
-        #endregion
     }
 
     public void FileUploadForBatch()
@@ -58,7 +56,6 @@ public partial class AzureOpenAISamples
         OpenAIFileClient fileClient = azureClient.GetOpenAIFileClient();
 #pragma warning restore AOAI001
 
-        #region Snippet:FileUploadForBatch
         // Create JSONL content for batch processing
         var batchRequests = new StringBuilder();
         batchRequests.AppendLine("{\"custom_id\": \"request-1\", \"method\": \"POST\", \"url\": \"/v1/chat/completions\", \"body\": {\"model\": \"gpt-35-turbo\", \"messages\": [{\"role\": \"user\", \"content\": \"What is the capital of France?\"}]}}");
@@ -77,7 +74,6 @@ public partial class AzureOpenAISamples
         Console.WriteLine($"  ID: {batchFile.Id}");
         Console.WriteLine($"  Filename: {batchFile.Filename}");
         Console.WriteLine($"  Purpose: {batchFile.Purpose}");
-        #endregion
     }
 
     public void FileManagement()
@@ -90,7 +86,6 @@ public partial class AzureOpenAISamples
         OpenAIFileClient fileClient = azureClient.GetOpenAIFileClient();
 #pragma warning restore AOAI001
 
-        #region Snippet:FileManagement
         // List all uploaded files
         Console.WriteLine("Listing all uploaded files:");
         OpenAIFileCollection files = fileClient.GetFiles();
@@ -127,7 +122,6 @@ public partial class AzureOpenAISamples
         Console.WriteLine($"\nFile deletion result:");
         Console.WriteLine($"  Deleted: {deletionResult.Deleted}");
         Console.WriteLine($"  File ID: {deletionResult.FileId}");
-        #endregion
     }
 
     public void DocumentProcessingWorkflow()
@@ -140,7 +134,6 @@ public partial class AzureOpenAISamples
         OpenAIFileClient fileClient = azureClient.GetOpenAIFileClient();
 #pragma warning restore AOAI001
 
-        #region Snippet:DocumentProcessingWorkflow
         // Scenario: Process multiple documents for an AI assistant
 
         // Sample documents with different types of content
@@ -219,7 +212,6 @@ public partial class AzureOpenAISamples
         // as they would be used by assistants or other AI services
 
         Console.WriteLine("\nWorkflow complete! Files available for AI processing.");
-        #endregion
     }
 
     public void FileContentPreparation()
@@ -232,7 +224,6 @@ public partial class AzureOpenAISamples
         OpenAIFileClient fileClient = azureClient.GetOpenAIFileClient();
 #pragma warning restore AOAI001
 
-        #region Snippet:FileContentPreparation
         // Best practices for preparing file content for AI processing
 
         Console.WriteLine("Demonstrating file content preparation best practices...");
@@ -318,6 +309,5 @@ public partial class AzureOpenAISamples
         Console.WriteLine("✓ Use JSON for complex nested data");
         Console.WriteLine("✓ Keep file sizes reasonable (< 512MB)");
         Console.WriteLine("✓ Use descriptive filenames");
-        #endregion
     }
 }

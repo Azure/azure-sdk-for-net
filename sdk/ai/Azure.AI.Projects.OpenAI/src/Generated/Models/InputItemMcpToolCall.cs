@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace Azure.AI.Projects.OpenAI
 {
@@ -27,6 +28,7 @@ namespace Azure.AI.Projects.OpenAI
             ServerLabel = serverLabel;
             Name = name;
             Arguments = arguments;
+            Error = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InputItemMcpToolCall"/>. </summary>
@@ -40,7 +42,7 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="error"></param>
         /// <param name="status"> The status of the tool call. One of `in_progress`, `completed`, `incomplete`, `calling`, or `failed`. </param>
         /// <param name="approvalRequestId"></param>
-        internal InputItemMcpToolCall(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string serverLabel, string name, string arguments, string output, string error, MCPToolCallStatus? status, string approvalRequestId) : base(@type, additionalBinaryDataProperties)
+        internal InputItemMcpToolCall(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string serverLabel, string name, string arguments, string output, IDictionary<string, BinaryData> error, MCPToolCallStatus? status, string approvalRequestId) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             ServerLabel = serverLabel;
@@ -67,8 +69,33 @@ namespace Azure.AI.Projects.OpenAI
         /// <summary> Gets or sets the Output. </summary>
         public string Output { get; set; }
 
-        /// <summary> Gets or sets the Error. </summary>
-        public string Error { get; set; }
+        /// <summary>
+        /// Gets the Error.
+        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public IDictionary<string, BinaryData> Error { get; }
 
         /// <summary> The status of the tool call. One of `in_progress`, `completed`, `incomplete`, `calling`, or `failed`. </summary>
         public MCPToolCallStatus? Status { get; set; }

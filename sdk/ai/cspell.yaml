@@ -29,6 +29,7 @@ words:
   - ubinary
   - UPIA
   - wfresp
-  - aiservices 
+  - aiservices
+  - aaip
 ignorePaths:
   - "**/*jsonl"

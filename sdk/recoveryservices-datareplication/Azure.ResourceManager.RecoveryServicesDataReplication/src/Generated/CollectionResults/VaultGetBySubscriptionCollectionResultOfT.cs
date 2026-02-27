@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                     yield break;
                 }
                 VaultModelListResult result = VaultModelListResult.FromResponse(response);
-                yield return Page<DataReplicationVaultData>.FromValues((IReadOnlyList<DataReplicationVaultData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DataReplicationVaultData>.FromValues((IReadOnlyList<DataReplicationVaultData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

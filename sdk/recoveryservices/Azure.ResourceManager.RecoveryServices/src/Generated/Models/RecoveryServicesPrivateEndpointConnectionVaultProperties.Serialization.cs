@@ -36,6 +36,29 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesPrivateEndpointConnectionVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RecoveryServicesPrivateEndpointConnectionVaultProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RecoveryServicesPrivateEndpointConnectionVaultProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RecoveryServicesPrivateEndpointConnectionVaultProperties IPersistableModel<RecoveryServicesPrivateEndpointConnectionVaultProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (RecoveryServicesPrivateEndpointConnectionVaultProperties)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RecoveryServicesPrivateEndpointConnectionVaultProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RecoveryServicesPrivateEndpointConnectionVaultProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -165,28 +188,5 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 properties,
                 location);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RecoveryServicesPrivateEndpointConnectionVaultProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesPrivateEndpointConnectionVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(RecoveryServicesPrivateEndpointConnectionVaultProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        RecoveryServicesPrivateEndpointConnectionVaultProperties IPersistableModel<RecoveryServicesPrivateEndpointConnectionVaultProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (RecoveryServicesPrivateEndpointConnectionVaultProperties)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RecoveryServicesPrivateEndpointConnectionVaultProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

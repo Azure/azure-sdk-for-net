@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.CloudHealth
                     yield break;
                 }
                 RelationshipListResult result = RelationshipListResult.FromResponse(response);
-                yield return Page<HealthModelRelationshipData>.FromValues((IReadOnlyList<HealthModelRelationshipData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<HealthModelRelationshipData>.FromValues((IReadOnlyList<HealthModelRelationshipData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

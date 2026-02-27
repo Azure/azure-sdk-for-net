@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.Peering
             uri.AppendPath("/providers/Microsoft.Peering/peerings/", false);
             uri.AppendPath(peeringName, true);
             uri.AppendPath("/rpUnbilledPrefixes", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (consolidate != null)
             {
                 uri.AppendQuery("consolidate", TypeFormatters.ConvertToString(consolidate), true);
@@ -68,8 +71,18 @@ namespace Azure.ResourceManager.Peering
         internal HttpMessage CreateNextGetRpUnbilledPrefixesRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string peeringName, bool? consolidate, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

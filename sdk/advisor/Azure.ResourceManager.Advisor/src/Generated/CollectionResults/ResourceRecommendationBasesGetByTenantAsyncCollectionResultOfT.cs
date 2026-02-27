@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Advisor
                     yield break;
                 }
                 ResourceRecommendationBaseListResult result = ResourceRecommendationBaseListResult.FromResponse(response);
-                yield return Page<AdvisorRecommendationData>.FromValues((IReadOnlyList<AdvisorRecommendationData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<AdvisorRecommendationData>.FromValues((IReadOnlyList<AdvisorRecommendationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

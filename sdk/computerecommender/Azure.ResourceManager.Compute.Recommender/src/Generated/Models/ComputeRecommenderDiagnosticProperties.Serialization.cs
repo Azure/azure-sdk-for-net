@@ -33,6 +33,29 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderDiagnosticProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeRecommenderContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ComputeRecommenderDiagnosticProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ComputeRecommenderDiagnosticProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ComputeRecommenderDiagnosticProperties IPersistableModel<ComputeRecommenderDiagnosticProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ComputeRecommenderDiagnosticProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ComputeRecommenderDiagnosticProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -140,28 +163,5 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
             }
             return new ComputeRecommenderDiagnosticProperties(supportedResourceTypes ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ComputeRecommenderDiagnosticProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderDiagnosticProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeRecommenderContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ComputeRecommenderDiagnosticProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ComputeRecommenderDiagnosticProperties IPersistableModel<ComputeRecommenderDiagnosticProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ComputeRecommenderDiagnosticProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

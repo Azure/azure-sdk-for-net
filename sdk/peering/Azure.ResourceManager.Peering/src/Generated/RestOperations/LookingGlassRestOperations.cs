@@ -48,7 +48,10 @@ namespace Azure.ResourceManager.Peering
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Peering/lookingGlass", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             uri.AppendQuery("command", command, true);
             uri.AppendQuery("sourceType", sourceType, true);
             uri.AppendQuery("sourceLocation", sourceLocation, true);

@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects
 {
     /// <summary> Type of the task. </summary>
-    internal readonly partial struct ScheduleTaskType : IEquatable<ScheduleTaskType>
+    public readonly partial struct ScheduleTaskType : IEquatable<ScheduleTaskType>
     {
         private readonly string _value;
         /// <summary> Evaluation task. </summary>

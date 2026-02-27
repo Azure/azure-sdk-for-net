@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                     yield break;
                 }
                 ProvisioningServiceDescriptionListResult result = ProvisioningServiceDescriptionListResult.FromResponse(response);
-                yield return Page<DeviceProvisioningServiceData>.FromValues((IReadOnlyList<DeviceProvisioningServiceData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DeviceProvisioningServiceData>.FromValues((IReadOnlyList<DeviceProvisioningServiceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

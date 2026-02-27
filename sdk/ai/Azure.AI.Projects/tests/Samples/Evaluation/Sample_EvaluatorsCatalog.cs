@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -14,7 +14,7 @@ namespace Azure.AI.Projects.Tests.Samples.Evaluation;
 
 public class Sample_EvaluatorsCatalog : SamplesBase
 {
-    #region Snippet:Sampple_PromptEvaluator_EvaluatorsCatalog
+    #region Snippet:Sample_PromptEvaluator_EvaluatorsCatalog
     private static EvaluatorVersion GetPromptEvaluatorVersion()
     {
         EvaluatorMetric metric = new()
@@ -79,7 +79,7 @@ public class Sample_EvaluatorsCatalog : SamplesBase
         };
     }
     #endregion
-    #region Snippet:Sampple_CodeEvaluator_EvaluatorsCatalog
+    #region Snippet:Sample_CodeEvaluator_EvaluatorsCatalog
     private static EvaluatorVersion GetCodeEvaluatorVersion()
     {
         EvaluatorMetric resultMetric = new()
@@ -129,7 +129,7 @@ public class Sample_EvaluatorsCatalog : SamplesBase
         return evaluatorVersion;
     }
     #endregion
-    #region Snippet:Sampple_DisplayEvaluator_EvaluatorsCatalog
+    #region Snippet:Sample_DisplayEvaluator_EvaluatorsCatalog
     private static void DisplayEvaluatorVersion(EvaluatorVersion evaluator)
     {
         Console.WriteLine($"Evaluator ID: {evaluator.Id}");
@@ -146,7 +146,7 @@ public class Sample_EvaluatorsCatalog : SamplesBase
     [AsyncOnly]
     public async Task EvaluatorsCatalogExampleAsync()
     {
-        #region Snippet:Sampple_CreateClients_EvaluatorsCatalog
+        #region Snippet:Sample_CreateClients_EvaluatorsCatalog
 #if SNIPPET
         var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 #else
@@ -182,7 +182,7 @@ public class Sample_EvaluatorsCatalog : SamplesBase
         #endregion
         #region Snippet:Sample_UpdateEvaluator_EvaluatorsCatalog_Async
         Console.WriteLine("Updating code-based evaluator.");
-        BinaryData evalustorVersionUpdate = BinaryData.FromObjectAsJson(
+        BinaryData evaluatorVersionUpdate = BinaryData.FromObjectAsJson(
             new
             {
                 categories = new[] { EvaluatorCategory.Quality.ToString() },
@@ -190,11 +190,11 @@ public class Sample_EvaluatorsCatalog : SamplesBase
                 description = "Custom evaluator description changed"
             }
         );
-        using BinaryContent evalustorVersionUpdateContent = BinaryContent.Create(evalustorVersionUpdate);
+        using BinaryContent evaluatorVersionUpdateContent = BinaryContent.Create(evaluatorVersionUpdate);
         ClientResult response = await projectClient.Evaluators.UpdateVersionAsync(
             name: codeEvaluator.Name,
             version: codeEvaluator.Version,
-            content: evalustorVersionUpdateContent
+            content: evaluatorVersionUpdateContent
         );
         EvaluatorVersion updatedEvaluator = ClientResult.FromValue((EvaluatorVersion)response, response.GetRawResponse());
         DisplayEvaluatorVersion(updatedEvaluator);
@@ -257,7 +257,7 @@ public class Sample_EvaluatorsCatalog : SamplesBase
         #endregion
         #region Snippet:Sample_UpdateEvaluator_EvaluatorsCatalog_Sync
         Console.WriteLine("Updating code-based evaluator.");
-        BinaryData evalustorVersionUpdate = BinaryData.FromObjectAsJson(
+        BinaryData evaluatorVersionUpdate = BinaryData.FromObjectAsJson(
             new
             {
                 categories = new[] { EvaluatorCategory.Quality.ToString() },
@@ -265,11 +265,11 @@ public class Sample_EvaluatorsCatalog : SamplesBase
                 description = "Custom evaluator description changed"
             }
         );
-        using BinaryContent evalustorVersionUpdateContent = BinaryContent.Create(evalustorVersionUpdate);
+        using BinaryContent evaluatorVersionUpdateContent = BinaryContent.Create(evaluatorVersionUpdate);
         ClientResult response = projectClient.Evaluators.UpdateVersion(
             name: codeEvaluator.Name,
             version: codeEvaluator.Version,
-            content: evalustorVersionUpdateContent
+            content: evaluatorVersionUpdateContent
         );
         EvaluatorVersion updatedEvaluator = ClientResult.FromValue((EvaluatorVersion)response, response.GetRawResponse());
         DisplayEvaluatorVersion(updatedEvaluator);

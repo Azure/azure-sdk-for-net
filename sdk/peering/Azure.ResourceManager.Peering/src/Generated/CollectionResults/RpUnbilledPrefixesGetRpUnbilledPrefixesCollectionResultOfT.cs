@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Peering
                     yield break;
                 }
                 RpUnbilledPrefixListResult result = RpUnbilledPrefixListResult.FromResponse(response);
-                yield return Page<RoutingPreferenceUnbilledPrefix>.FromValues((IReadOnlyList<RoutingPreferenceUnbilledPrefix>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<RoutingPreferenceUnbilledPrefix>.FromValues((IReadOnlyList<RoutingPreferenceUnbilledPrefix>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -50,7 +50,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // Create analyzer configuration
             var config = new ContentAnalyzerConfig
             {
-                ReturnDetails = true,
+                ShouldReturnDetails = true,
                 EnableSegment = true // Enable automatic segmentation by category
             };
 
@@ -92,7 +92,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // Create analyzer configuration
             var config = new ContentAnalyzerConfig
             {
-                ReturnDetails = true,
+                ShouldReturnDetails = true,
                 EnableSegment = true // Enable automatic segmentation by category
             };
 
@@ -149,7 +149,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             // Verify classifier config
             Assert.IsNotNull(result.Config, "Classifier config should not be null");
-            Assert.IsTrue(result.Config.ReturnDetails, "ReturnDetails should be true");
+            Assert.IsTrue(result.Config.ShouldReturnDetails, "ReturnDetails should be true");
             Assert.IsTrue(result.Config.EnableSegment == true, "EnableSegment should be true");
             Console.WriteLine("Classifier config verified (ReturnDetails=true, EnableSegment=true)");
 
@@ -241,7 +241,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             string analyzerId = Recording.GetVariable("analyzerId_no_segment", defaultId) ?? defaultId;
             var config = new ContentAnalyzerConfig
             {
-                ReturnDetails = true,
+                ShouldReturnDetails = true,
                 EnableSegment = false // No automatic segmentation
             };
             config.ContentCategories.Add("Invoice", new ContentCategoryDefinition
@@ -268,7 +268,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 // Analyze a document (EnableSegment=false means entire document is one category)
                 string filePath = "<file_path>";
                 byte[] fileBytes = File.ReadAllBytes(filePath);
-                Operation<AnalyzeResult> analyzeOperation = await client.AnalyzeBinaryAsync(
+                Operation<AnalysisResult> analyzeOperation = await client.AnalyzeBinaryAsync(
                     WaitUntil.Completed,
                     analyzerId,
                     BinaryData.FromBytes(fileBytes));
@@ -276,7 +276,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 // Analyze a document (EnableSegment=false means entire document is one category)
                 var filePath = ContentUnderstandingClientTestEnvironment.CreatePath("mixed_financial_docs.pdf");
                 var fileBytes = File.ReadAllBytes(filePath);
-                Operation<AnalyzeResult> analyzeOperation = await client.AnalyzeBinaryAsync(
+                Operation<AnalysisResult> analyzeOperation = await client.AnalyzeBinaryAsync(
                     WaitUntil.Completed,
                     analyzerId,
                     BinaryData.FromBytes(fileBytes));
@@ -438,7 +438,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             string analyzerId = Recording.GetVariable("analyzerId_with_segment", defaultId) ?? defaultId;
             var config = new ContentAnalyzerConfig
             {
-                ReturnDetails = true,
+                ShouldReturnDetails = true,
                 EnableSegment = true // Enable automatic segmentation
             };
             config.ContentCategories.Add("Invoice", new ContentCategoryDefinition
@@ -466,7 +466,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 // Analyze a document (EnableSegment=true automatically segments by category)
                 string filePath = "<file_path>";
                 byte[] fileBytes = File.ReadAllBytes(filePath);
-                Operation<AnalyzeResult> analyzeOperation = await client.AnalyzeBinaryAsync(
+                Operation<AnalysisResult> analyzeOperation = await client.AnalyzeBinaryAsync(
                     WaitUntil.Completed,
                     analyzerId,
                     BinaryData.FromBytes(fileBytes));
@@ -474,7 +474,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 // Analyze a document (EnableSegment=true automatically segments by category)
                 var filePath = ContentUnderstandingClientTestEnvironment.CreatePath("mixed_financial_docs.pdf");
                 var fileBytes = File.ReadAllBytes(filePath);
-                Operation<AnalyzeResult> analyzeOperation = await client.AnalyzeBinaryAsync(
+                Operation<AnalysisResult> analyzeOperation = await client.AnalyzeBinaryAsync(
                     WaitUntil.Completed,
                     analyzerId,
                     BinaryData.FromBytes(fileBytes));

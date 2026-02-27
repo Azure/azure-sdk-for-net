@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects;
 
 /// <summary> The ApiError. </summary>
-[CodeGenType("Error")]
+[CodeGenType("ApiError")]
 internal partial class FoundryOpenAIError
 {
     internal static FoundryOpenAIError TryCreateFromResponse(PipelineResponse response)

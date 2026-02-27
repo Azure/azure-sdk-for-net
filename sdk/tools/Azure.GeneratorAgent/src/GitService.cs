@@ -68,7 +68,7 @@ public sealed class GitService
             return null;
         }
 
-        _logger.LogInformation("Latest commit SHA for {Owner}/{Repo}:{Path}: {CommitSha}", owner, repoName, path, commitSha);
+        _logger.LogDebug("Latest commit SHA for {Owner}/{Repo}:{Path}: {CommitSha}", owner, repoName, path, commitSha);
 
         return commitSha;
     }

@@ -127,6 +127,11 @@ namespace Azure.Identity
                 AzurePipelinesSystemAccessToken = azurePipelinesSystemAccessToken;
             }
 
+            if (section[nameof(AzureCloud)] is string azureCloud)
+            {
+                AzureCloud = azureCloud;
+            }
+
             if (bool.TryParse(section[nameof(DisableAutomaticAuthentication)], out bool disableAutomaticAuthentication))
             {
                 DisableAutomaticAuthentication = disableAutomaticAuthentication;
@@ -191,36 +196,55 @@ namespace Azure.Identity
 
         internal string ApiKey { get; private set; }
 
-        private static string ConvertCredentialSource(string value) => value switch
+        internal static string ConvertCredentialSource(string value)
         {
-            null => throw new InvalidOperationException("CredentialSource is required when configuring credentials. Specify a valid CredentialSource in the configuration."),
-            "VisualStudio" => Constants.VisualStudioCredential,
-            "VisualStudioCode" => Constants.VisualStudioCodeCredential,
-            "AzureCli" => Constants.AzureCliCredential,
-            "AzurePowerShell" => Constants.AzurePowerShellCredential,
-            "AzureDeveloperCli" => Constants.AzureDeveloperCliCredential,
-            "Environment" => Constants.EnvironmentCredential,
-            "WorkloadIdentity" => Constants.WorkloadIdentityCredential,
-            "ManagedIdentity" => Constants.ManagedIdentityCredential,
-            "InteractiveBrowser" => Constants.InteractiveBrowserCredential,
-            "Broker" => Constants.BrokerCredential,
-            "AzurePipelines" => Constants.AzurePipelinesCredential,
-            "ApiKey" => Constants.ApiKeyCredential,
-            // Accept already-converted values (e.g. from Clone)
-            Constants.VisualStudioCredential or
-            Constants.VisualStudioCodeCredential or
-            Constants.AzureCliCredential or
-            Constants.AzurePowerShellCredential or
-            Constants.AzureDeveloperCliCredential or
-            Constants.EnvironmentCredential or
-            Constants.WorkloadIdentityCredential or
-            Constants.ManagedIdentityCredential or
-            Constants.InteractiveBrowserCredential or
-            Constants.BrokerCredential or
-            Constants.AzurePipelinesCredential or
-            Constants.ApiKeyCredential => value,
-            _ => throw new InvalidOperationException($"Unsupported CredentialSource found in configuration: {value}."),
-        };
+            if (!TryConvertCredentialSource(value, out string result))
+            {
+                throw new InvalidOperationException(value is null
+                    ? "CredentialSource is required when configuring credentials. Specify a valid CredentialSource in the configuration."
+                    : $"Unsupported CredentialSource found in configuration: {value}.");
+            }
+
+            return result;
+        }
+
+        internal static bool TryConvertCredentialSource(string value, out string result)
+        {
+            result = value?.ToLowerInvariant() switch
+            {
+                // Full credential names and already-converted lowercase values match directly
+                Constants.VisualStudioCredential => Constants.VisualStudioCredential,
+                Constants.VisualStudioCodeCredential => Constants.VisualStudioCodeCredential,
+                Constants.AzureCliCredential => Constants.AzureCliCredential,
+                Constants.AzurePowerShellCredential => Constants.AzurePowerShellCredential,
+                Constants.AzureDeveloperCliCredential => Constants.AzureDeveloperCliCredential,
+                Constants.EnvironmentCredential => Constants.EnvironmentCredential,
+                Constants.WorkloadIdentityCredential => Constants.WorkloadIdentityCredential,
+                Constants.ManagedIdentityCredential => Constants.ManagedIdentityCredential,
+                Constants.InteractiveBrowserCredential => Constants.InteractiveBrowserCredential,
+                Constants.BrokerCredential => Constants.BrokerCredential,
+                Constants.AzurePipelinesCredential => Constants.AzurePipelinesCredential,
+                Constants.ManagedIdentityAsFederatedIdentityCredential => Constants.ManagedIdentityAsFederatedIdentityCredential,
+                Constants.ApiKeyCredential => Constants.ApiKeyCredential,
+                // Short names (back-compat)
+                "visualstudio" => Constants.VisualStudioCredential,
+                "visualstudiocode" => Constants.VisualStudioCodeCredential,
+                "azurecli" => Constants.AzureCliCredential,
+                "azurepowershell" => Constants.AzurePowerShellCredential,
+                "azuredevelopercli" => Constants.AzureDeveloperCliCredential,
+                "environment" => Constants.EnvironmentCredential,
+                "workloadidentity" => Constants.WorkloadIdentityCredential,
+                "managedidentity" => Constants.ManagedIdentityCredential,
+                "interactivebrowser" => Constants.InteractiveBrowserCredential,
+                "broker" => Constants.BrokerCredential,
+                "azurepipelines" => Constants.AzurePipelinesCredential,
+                "managedidentityasfederatedidentity" => Constants.ManagedIdentityAsFederatedIdentityCredential,
+                "apikey" => Constants.ApiKeyCredential,
+                _ => null,
+            };
+
+            return result is not null;
+        }
 
         /// <summary>
         /// The ID of the tenant to which the credential will authenticate by default. If not specified, the credential will authenticate to any requested tenant, and will default to the tenant to which the chosen authentication method was originally authenticated.
@@ -517,6 +541,11 @@ namespace Azure.Identity
         /// </summary>
         internal string AzurePipelinesSystemAccessToken { get; set; }
 
+        /// <summary>
+        /// Specifies the Azure cloud environment for Managed Identity as FIC. Valid values are "public", "usgov", "china".
+        /// </summary>
+        internal string AzureCloud { get; set; }
+
         internal bool DisableAutomaticAuthentication { get; set; }
 
         internal string LoginHint { get; set; }
@@ -581,6 +610,7 @@ namespace Azure.Identity
                 dacClone.ClientId = ClientId;
                 dacClone.AzurePipelinesServiceConnectionId = AzurePipelinesServiceConnectionId;
                 dacClone.AzurePipelinesSystemAccessToken = AzurePipelinesSystemAccessToken;
+                dacClone.AzureCloud = AzureCloud;
                 dacClone.DisableAutomaticAuthentication = DisableAutomaticAuthentication;
                 dacClone.LoginHint = LoginHint;
                 if (BrowserCustomization != null)

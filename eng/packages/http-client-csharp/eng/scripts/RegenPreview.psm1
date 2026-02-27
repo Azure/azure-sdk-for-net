@@ -174,7 +174,7 @@ function Update-AzureGeneratorVersion {
         [string]$NewVersion
     )
     
-    Write-Host "Updating AzureGeneratorVersion to $NewVersion in Packages.Data.props" -ForegroundColor Gray
+    Write-Host "Updating AzureGeneratorVersion to $NewVersion in Directory.Generation.Packages.props" -ForegroundColor Gray
     
     $content = Get-Content $PackagesDataPropsPath -Raw
 
@@ -213,7 +213,7 @@ function Update-MgmtGenerator {
 
     .PARAMETER EngFolder
         The eng folder path in azure-sdk-for-net. All other paths (mgmt generator, 
-        package paths, Packages.Data.props) are derived from this.
+        package paths, Directory.Packages.props) are derived from this.
 
     .PARAMETER DebugFolder
         The debug folder path where the packaged generators (.tgz files) are located.

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ElasticSan
                     yield break;
                 }
                 ElasticSanPrivateEndpointConnectionListResult result = ElasticSanPrivateEndpointConnectionListResult.FromResponse(response);
-                yield return Page<ElasticSanPrivateEndpointConnectionData>.FromValues((IReadOnlyList<ElasticSanPrivateEndpointConnectionData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ElasticSanPrivateEndpointConnectionData>.FromValues((IReadOnlyList<ElasticSanPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -187,17 +187,18 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="id"> Unique identifier for the evaluation rule. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult CreateOrUpdate(string id, BinaryContent content, RequestOptions options = null)
+        public virtual ClientResult CreateOrUpdate(string id, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateOrUpdateRequest(id, content, options);
+            using PipelineMessage message = CreateCreateOrUpdateRequest(id, content, foundryFeatures, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -211,49 +212,52 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="id"> Unique identifier for the evaluation rule. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> CreateOrUpdateAsync(string id, BinaryContent content, RequestOptions options = null)
+        public virtual async Task<ClientResult> CreateOrUpdateAsync(string id, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateOrUpdateRequest(id, content, options);
+            using PipelineMessage message = CreateCreateOrUpdateRequest(id, content, foundryFeatures, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Create or update an evaluation rule. </summary>
         /// <param name="id"> Unique identifier for the evaluation rule. </param>
         /// <param name="evaluationRule"> Evaluation rule resource. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="evaluationRule"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<EvaluationRule> CreateOrUpdate(string id, EvaluationRule evaluationRule, CancellationToken cancellationToken = default)
+        public virtual ClientResult<EvaluationRule> CreateOrUpdate(string id, EvaluationRule evaluationRule, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(evaluationRule, nameof(evaluationRule));
 
-            ClientResult result = CreateOrUpdate(id, evaluationRule, cancellationToken.ToRequestOptions());
+            ClientResult result = CreateOrUpdate(id, evaluationRule, foundryFeatures?.ToString(), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((EvaluationRule)result, result.GetRawResponse());
         }
 
         /// <summary> Create or update an evaluation rule. </summary>
         /// <param name="id"> Unique identifier for the evaluation rule. </param>
         /// <param name="evaluationRule"> Evaluation rule resource. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="evaluationRule"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<EvaluationRule>> CreateOrUpdateAsync(string id, EvaluationRule evaluationRule, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<EvaluationRule>> CreateOrUpdateAsync(string id, EvaluationRule evaluationRule, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(evaluationRule, nameof(evaluationRule));
 
-            ClientResult result = await CreateOrUpdateAsync(id, evaluationRule, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await CreateOrUpdateAsync(id, evaluationRule, foundryFeatures?.ToString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((EvaluationRule)result, result.GetRawResponse());
         }
 

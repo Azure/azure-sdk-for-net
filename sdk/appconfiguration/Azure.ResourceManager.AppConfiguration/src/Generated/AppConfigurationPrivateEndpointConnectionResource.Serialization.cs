@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
+    /// <summary></summary>
     public partial class AppConfigurationPrivateEndpointConnectionResource : IJsonModel<AppConfigurationPrivateEndpointConnectionData>
     {
-        private static AppConfigurationPrivateEndpointConnectionData s_dataDeserializationInstance;
-        private static AppConfigurationPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AppConfigurationPrivateEndpointConnectionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AppConfigurationPrivateEndpointConnectionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AppConfigurationPrivateEndpointConnectionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AppConfigurationPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AppConfigurationPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        AppConfigurationPrivateEndpointConnectionData IJsonModel<AppConfigurationPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppConfigurationPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AppConfigurationPrivateEndpointConnectionData IJsonModel<AppConfigurationPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AppConfigurationPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppConfigurationPrivateEndpointConnectionData>(Data, options, AzureResourceManagerAppConfigurationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AppConfigurationPrivateEndpointConnectionData IPersistableModel<AppConfigurationPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppConfigurationPrivateEndpointConnectionData>(data, options, AzureResourceManagerAppConfigurationContext.Default);
 
-        string IPersistableModel<AppConfigurationPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppConfigurationPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AppConfigurationPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

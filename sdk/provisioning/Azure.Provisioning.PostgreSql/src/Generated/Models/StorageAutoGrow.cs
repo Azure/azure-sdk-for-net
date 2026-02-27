@@ -6,7 +6,9 @@
 namespace Azure.Provisioning.PostgreSql;
 
 /// <summary>
-/// Flag to enable / disable Storage Auto grow for flexible server.
+/// Flag to enable or disable the automatic growth of storage size of a server
+/// when available space is nearing zero and conditions allow for
+/// automatically growing storage size.
 /// </summary>
 public enum StorageAutoGrow
 {

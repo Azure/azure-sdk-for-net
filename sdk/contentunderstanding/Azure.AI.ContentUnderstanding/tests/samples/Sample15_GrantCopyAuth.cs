@@ -79,7 +79,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 EnableLayout = true,
                 EnableOcr = true,
                 EstimateFieldSourceAndConfidence = true,
-                ReturnDetails = true
+                ShouldReturnDetails = true
             };
 
             var sourceFieldSchema = new ContentFieldSchema(
@@ -279,7 +279,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.AreEqual(true, sourceConfig.EnableLayout, "EnableLayout should be true");
             Assert.AreEqual(true, sourceConfig.EnableOcr, "EnableOcr should be true");
             Assert.AreEqual(true, sourceConfig.EstimateFieldSourceAndConfidence, "EstimateFieldSourceAndConfidence should be true");
-            Assert.AreEqual(true, sourceConfig.ReturnDetails, "ReturnDetails should be true");
+            Assert.AreEqual(true, sourceConfig.ShouldReturnDetails, "ReturnDetails should be true");
             Console.WriteLine("Source config verified");
 
             // Verify source field schema

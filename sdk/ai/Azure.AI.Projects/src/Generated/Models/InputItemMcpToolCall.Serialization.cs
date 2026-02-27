@@ -89,10 +89,28 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("output"u8);
                 writer.WriteStringValue(Output);
             }
-            if (Optional.IsDefined(Error))
+            if (Optional.IsCollectionDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteStringValue(Error);
+                writer.WriteStartObject();
+                foreach (var item in Error)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+                writer.WriteEndObject();
             }
             if (Optional.IsDefined(Status))
             {
@@ -138,7 +156,7 @@ namespace Azure.AI.Projects
             string name = default;
             string arguments = default;
             string output = default;
-            string error = default;
+            IDictionary<string, BinaryData> error = default;
             MCPToolCallStatus? status = default;
             string approvalRequestId = default;
             foreach (var prop in element.EnumerateObject())
@@ -182,10 +200,21 @@ namespace Azure.AI.Projects
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        error = null;
                         continue;
                     }
-                    error = prop.Value.GetString();
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                        }
+                    }
+                    error = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -220,7 +249,7 @@ namespace Azure.AI.Projects
                 name,
                 arguments,
                 output,
-                error,
+                error ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 status,
                 approvalRequestId);
         }

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                     yield break;
                 }
                 AssetListResult result = AssetListResult.FromResponse(response);
-                yield return Page<DeviceRegistryAssetData>.FromValues((IReadOnlyList<DeviceRegistryAssetData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DeviceRegistryAssetData>.FromValues((IReadOnlyList<DeviceRegistryAssetData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

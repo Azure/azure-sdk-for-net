@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     yield break;
                 }
                 FaultSimulationListResult result = FaultSimulationListResult.FromResponse(response);
-                yield return Page<FaultSimulation>.FromValues((IReadOnlyList<FaultSimulation>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<FaultSimulation>.FromValues((IReadOnlyList<FaultSimulation>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

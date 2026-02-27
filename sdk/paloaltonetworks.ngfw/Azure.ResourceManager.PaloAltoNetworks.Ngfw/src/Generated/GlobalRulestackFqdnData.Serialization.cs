@@ -42,6 +42,41 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GlobalRulestackFqdnData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(GlobalRulestackFqdnData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<GlobalRulestackFqdnData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GlobalRulestackFqdnData IPersistableModel<GlobalRulestackFqdnData>.Create(BinaryData data, ModelReaderWriterOptions options) => (GlobalRulestackFqdnData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GlobalRulestackFqdnData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="globalRulestackFqdnData"> The <see cref="GlobalRulestackFqdnData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(GlobalRulestackFqdnData globalRulestackFqdnData)
+        {
+            if (globalRulestackFqdnData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(globalRulestackFqdnData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GlobalRulestackFqdnData"/> from. </param>
         internal static GlobalRulestackFqdnData FromResponse(Response response)
         {
@@ -154,41 +189,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 systemData,
                 additionalBinaryDataProperties,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GlobalRulestackFqdnData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<GlobalRulestackFqdnData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(GlobalRulestackFqdnData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        GlobalRulestackFqdnData IPersistableModel<GlobalRulestackFqdnData>.Create(BinaryData data, ModelReaderWriterOptions options) => (GlobalRulestackFqdnData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GlobalRulestackFqdnData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="globalRulestackFqdnData"> The <see cref="GlobalRulestackFqdnData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(GlobalRulestackFqdnData globalRulestackFqdnData)
-        {
-            if (globalRulestackFqdnData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(globalRulestackFqdnData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

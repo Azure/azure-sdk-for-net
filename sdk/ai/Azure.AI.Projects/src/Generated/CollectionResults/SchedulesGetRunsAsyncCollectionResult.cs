@@ -6,7 +6,7 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using Azure.Core.Foundations;
+using Azure.Core;
 
 namespace Azure.AI.Projects
 {
@@ -14,16 +14,22 @@ namespace Azure.AI.Projects
     {
         private readonly Schedules _client;
         private readonly string _id;
+        private readonly string _type;
+        private readonly bool? _enabled;
         private readonly RequestOptions _options;
 
         /// <summary> Initializes a new instance of SchedulesGetRunsAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Schedules client used to send requests. </param>
         /// <param name="id"> Identifier of the schedule. </param>
+        /// <param name="type"> Filter by the type of schedule. </param>
+        /// <param name="enabled"> Filter by the enabled status. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public SchedulesGetRunsAsyncCollectionResult(Schedules client, string id, RequestOptions options)
+        public SchedulesGetRunsAsyncCollectionResult(Schedules client, string id, string @type, bool? enabled, RequestOptions options)
         {
             _client = client;
             _id = id;
+            _type = @type;
+            _enabled = enabled;
             _options = options;
         }
 
@@ -31,7 +37,7 @@ namespace Azure.AI.Projects
         /// <returns> The raw pages of the collection. </returns>
         public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
         {
-            PipelineMessage message = _client.CreateGetRunsRequest(_id, _options);
+            PipelineMessage message = _client.CreateGetRunsRequest(_id, _type, _enabled, _options);
             Uri nextPageUri = null;
             while (true)
             {
@@ -43,7 +49,7 @@ namespace Azure.AI.Projects
                 {
                     yield break;
                 }
-                message = _client.CreateNextGetRunsRequest(nextPageUri, _id, _options);
+                message = _client.CreateNextGetRunsRequest(nextPageUri, _id, _type, _enabled, _options);
             }
         }
 

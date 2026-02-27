@@ -21,11 +21,11 @@ foreach (var sparkJob in sparkJobList.SparkJobs)
 {
     if (sparkJob.State == "Running")
     {
-        Console.WriteLine ($"{sparkJob.Name} has been running for {sparkJob.RunningDuration}");
+        Console.WriteLine($"{sparkJob.Name} has been running for {sparkJob.RunningDuration}");
     }
     else
     {
-        Console.WriteLine ($"{sparkJob.Name} has been in {sparkJob.State} for {sparkJob.QueuedDuration}");
+        Console.WriteLine($"{sparkJob.Name} has been in {sparkJob.State} for {sparkJob.QueuedDuration}");
     }
 }
 ```

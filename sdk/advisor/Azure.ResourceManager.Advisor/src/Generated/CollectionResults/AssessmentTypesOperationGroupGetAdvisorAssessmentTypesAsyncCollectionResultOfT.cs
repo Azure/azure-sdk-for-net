@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Advisor
                     yield break;
                 }
                 AssessmentTypeListResult result = AssessmentTypeListResult.FromResponse(response);
-                yield return Page<AdvisorAssessmentType>.FromValues((IReadOnlyList<AdvisorAssessmentType>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<AdvisorAssessmentType>.FromValues((IReadOnlyList<AdvisorAssessmentType>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

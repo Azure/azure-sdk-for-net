@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Nginx
                     yield break;
                 }
                 NginxDeploymentApiKeyListResponse result = NginxDeploymentApiKeyListResponse.FromResponse(response);
-                yield return Page<NginxDeploymentApiKeyData>.FromValues((IReadOnlyList<NginxDeploymentApiKeyData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<NginxDeploymentApiKeyData>.FromValues((IReadOnlyList<NginxDeploymentApiKeyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
