@@ -1,6 +1,14 @@
-# MPG Migration: Customization Patterns
+---
+name: mitigate-breaking-changes
+description: Patterns and techniques for mitigating breaking changes during Azure management-plane SDK migration from Swagger/AutoRest to TypeSpec. Covers SDK-side customizations (partial classes, CodeGenType, CodeGenSuppress) and TypeSpec decorator customizations (clientName, access, markAsPageable, alternateType).
+---
+# Skill: mitigate-breaking-changes
 
-Reference for SDK and TypeSpec customization techniques used during management-plane SDK migration.
+Patterns and techniques for mitigating breaking changes when migrating or regenerating Azure management-plane .NET SDKs. Use these to preserve backward compatibility in the generated SDK surface.
+
+## When Invoked
+
+Trigger phrases: "mitigate breaking changes", "fix breaking change", "customization patterns", "how to keep backward compat", "CodeGenType", "CodeGenSuppress", "markAsPageable".
 
 ## SDK-Side Customizations (in SDK repo)
 

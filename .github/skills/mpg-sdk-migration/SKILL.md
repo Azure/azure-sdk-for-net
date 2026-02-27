@@ -156,12 +156,12 @@ sdk/<service>/<PACKAGE_NAME>/
 
 ## Phase 5 — Customization (Naming Review)
 
-Apply naming rules from the `azure-sdk-pr-review` skill. For detailed customization techniques, see [customization-patterns.md](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/mpg-sdk-migration/customization-patterns.md).
+Apply naming rules from the `azure-sdk-pr-review` skill. For detailed customization techniques, invoke the `mitigate-breaking-changes` skill.
 
 Key approaches:
 - **SDK-side**: Partial classes under `Custom/` or `Customization/` with `[CodeGenType]`, `[CodeGenSuppress]`, `[CodeGenMember]`
 - **Spec-side**: `@@clientName`, `@@access`, `@@markAsPageable`, `@@alternateType` decorators in `client.tsp`
-- **Extension resources**: Parameterized scopes, `ActionSync<>` for sub-resource ops (see [customization-patterns.md](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/mpg-sdk-migration/customization-patterns.md))
+- **Extension resources**: Parameterized scopes, `ActionSync<>` for sub-resource ops (see the `mitigate-breaking-changes` skill)
 
 ## Phase 6 — Code Generation
 
@@ -401,7 +401,7 @@ Execute these in order after planning:
 After completing (or making significant progress on) a migration, review what was learned and update the skill files:
 
 1. **New error patterns**: Add to [error-reference.md](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/mpg-sdk-migration/error-reference.md).
-2. **New decorators or TypeSpec patterns**: Add to [customization-patterns.md](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/mpg-sdk-migration/customization-patterns.md).
+2. **New decorators or TypeSpec patterns**: Add to the `mitigate-breaking-changes` skill.
 3. **New workarounds or pitfalls**: Add to [error-reference.md](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/mpg-sdk-migration/error-reference.md) Common Pitfalls section.
 4. **Migration flow changes**: Update this file (SKILL.md).
 
