@@ -4,7 +4,6 @@
 using System.ClientModel.Primitives;
 using System.IO;
 using System.Text.Json;
-using Azure.Core;
 using Azure.Search.Documents.Indexes.Models;
 using NUnit.Framework;
 
@@ -41,7 +40,7 @@ namespace Azure.Search.Documents.Tests.Models
             using MemoryStream stream = new MemoryStream();
             using (Utf8JsonWriter writer = new Utf8JsonWriter(stream))
             {
-                ((IUtf8JsonSerializable)sut).Write(writer);
+                ((IJsonModel<LuceneStandardTokenizer>)sut).Write(writer, ModelReaderWriterOptions.Json);
             }
 
             stream.Position = 0;
