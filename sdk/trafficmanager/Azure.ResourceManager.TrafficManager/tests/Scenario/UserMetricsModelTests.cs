@@ -28,11 +28,12 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         }
 
         [RecordedTest]
+        [Test]
         public async Task DeleteTest()
         {
             await Create();
 
-            TrafficManagerUserMetricResource userMetricsModelResource = _subscription.GetTrafficManagerUserMetrics().Get().Value;
+            TrafficManagerUserMetricResource userMetricsModelResource = (await _subscription.GetTrafficManagerUserMetrics().GetAsync()).Value;
             userMetricsModelResource = await userMetricsModelResource.GetAsync();
 
             Assert.IsNotEmpty(userMetricsModelResource.Data.Key);
@@ -45,6 +46,7 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         }
 
         [RecordedTest]
+        [Test]
         public async Task DeleteFailureTest()
         {
             const string FalseySubId = "5941c11c-485a-4a27-a87f-db38d642b886";
@@ -57,11 +59,12 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         }
 
         [RecordedTest]
+        [Test]
         public async Task CreateTest()
         {
             await Delete();
 
-            TrafficManagerUserMetricResource userMetricsModelResource = _subscription.GetTrafficManagerUserMetrics().Get().Value;
+            TrafficManagerUserMetricResource userMetricsModelResource = (await _subscription.GetTrafficManagerUserMetrics().GetAsync()).Value;
             userMetricsModelResource = await userMetricsModelResource.GetAsync();
 
             Assert.IsEmpty(userMetricsModelResource.Data.Key);
@@ -75,9 +78,7 @@ namespace Azure.ResourceManager.TrafficManager.Tests
 
         private async Task Delete()
         {
-            TrafficManagerUserMetricResource userMetricsModelResource = _subscription.GetTrafficManagerUserMetrics().Get().Value;
-
-            userMetricsModelResource = await userMetricsModelResource.GetAsync();
+            TrafficManagerUserMetricResource userMetricsModelResource = (await _subscription.GetTrafficManagerUserMetrics().GetAsync()).Value;
 
             await userMetricsModelResource.DeleteAsync(WaitUntil.Completed);
         }
