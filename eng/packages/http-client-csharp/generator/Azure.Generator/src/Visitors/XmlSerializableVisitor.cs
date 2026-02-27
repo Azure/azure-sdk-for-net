@@ -53,6 +53,7 @@ namespace Azure.Generator.Visitors
         private const string WriteObjectValueMethodName = "WriteObjectValue";
         private const string ToRequestContentMethodName = "ToRequestContent";
         private const string NameHintParameterName = "nameHint";
+        private const string FromEnumerableMethodName = "FromEnumerable";
         private static readonly CSharpType IXmlSerializableType = typeof(IXmlSerializable);
         private static readonly CSharpType RequestContentType = typeof(RequestContent);
         private static readonly CSharpType ModelReaderWriterOptionsType = typeof(ModelReaderWriterOptions);
@@ -203,8 +204,6 @@ namespace Azure.Generator.Visitors
 
         private static void UpdateFromEnumerableMethod(TypeProvider type)
         {
-            const string FromEnumerableMethodName = "FromEnumerable";
-
             // Find the existing FromEnumerable<T> method with 3 parameters (enumerable, rootNameHint, childNameHint)
             var fromEnumerableMethod = type.Methods
                 .FirstOrDefault(m => m.Signature.Name == FromEnumerableMethodName &&
