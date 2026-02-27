@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applyUpdateName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ApplyUpdateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string applyUpdateName, ApplyUpdateData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ApplyUpdateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string applyUpdateName, MaintenanceApplyUpdateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
             Argument.AssertNotNull(data, nameof(data));
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceApplyUpdateRestClient.CreateCreateOrUpdateOrCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, applyUpdateName, ApplyUpdateData.ToRequestContent(data), context);
+                HttpMessage message = _maintenanceApplyUpdateRestClient.CreateCreateOrUpdateOrCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, applyUpdateName, MaintenanceApplyUpdateData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ApplyUpdateData> response = Response.FromValue(ApplyUpdateData.FromResponse(result), result);
+                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 MaintenanceArmOperation<ApplyUpdateResource> operation = new MaintenanceArmOperation<ApplyUpdateResource>(Response.FromValue(new ApplyUpdateResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applyUpdateName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ApplyUpdateResource> CreateOrUpdate(WaitUntil waitUntil, string applyUpdateName, ApplyUpdateData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ApplyUpdateResource> CreateOrUpdate(WaitUntil waitUntil, string applyUpdateName, MaintenanceApplyUpdateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
             Argument.AssertNotNull(data, nameof(data));
@@ -131,9 +131,9 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceApplyUpdateRestClient.CreateCreateOrUpdateOrCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, applyUpdateName, ApplyUpdateData.ToRequestContent(data), context);
+                HttpMessage message = _maintenanceApplyUpdateRestClient.CreateCreateOrUpdateOrCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, applyUpdateName, MaintenanceApplyUpdateData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ApplyUpdateData> response = Response.FromValue(ApplyUpdateData.FromResponse(result), result);
+                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 MaintenanceArmOperation<ApplyUpdateResource> operation = new MaintenanceArmOperation<ApplyUpdateResource>(Response.FromValue(new ApplyUpdateResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Maintenance
                 };
                 HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetApplyUpdatesByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, Id.ResourceType.Type, applyUpdateName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ApplyUpdateData> response = Response.FromValue(ApplyUpdateData.FromResponse(result), result);
+                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Maintenance
                 };
                 HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetApplyUpdatesByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, Id.ResourceType.Type, applyUpdateName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ApplyUpdateData> response = Response.FromValue(ApplyUpdateData.FromResponse(result), result);
+                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -284,14 +284,14 @@ namespace Azure.ResourceManager.Maintenance
                 HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetApplyUpdatesByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, Id.ResourceType.Type, applyUpdateName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ApplyUpdateData> response = default;
+                Response<MaintenanceApplyUpdateData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ApplyUpdateData.FromResponse(result), result);
+                        response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ApplyUpdateData)null, result);
+                        response = Response.FromValue((MaintenanceApplyUpdateData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -341,14 +341,14 @@ namespace Azure.ResourceManager.Maintenance
                 HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetApplyUpdatesByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, Id.ResourceType.Type, applyUpdateName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ApplyUpdateData> response = default;
+                Response<MaintenanceApplyUpdateData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ApplyUpdateData.FromResponse(result), result);
+                        response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ApplyUpdateData)null, result);
+                        response = Response.FromValue((MaintenanceApplyUpdateData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -398,14 +398,14 @@ namespace Azure.ResourceManager.Maintenance
                 HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetApplyUpdatesByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, Id.ResourceType.Type, applyUpdateName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ApplyUpdateData> response = default;
+                Response<MaintenanceApplyUpdateData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ApplyUpdateData.FromResponse(result), result);
+                        response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ApplyUpdateData)null, result);
+                        response = Response.FromValue((MaintenanceApplyUpdateData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -459,14 +459,14 @@ namespace Azure.ResourceManager.Maintenance
                 HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetApplyUpdatesByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, Id.ResourceType.Type, applyUpdateName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ApplyUpdateData> response = default;
+                Response<MaintenanceApplyUpdateData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ApplyUpdateData.FromResponse(result), result);
+                        response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ApplyUpdateData)null, result);
+                        response = Response.FromValue((MaintenanceApplyUpdateData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationListResult"/>. </summary>
         internal MaintenanceConfigurationListResult()
         {
-            Value = new ChangeTrackingList<MaintenancePublicConfigurationData>();
+            Value = new ChangeTrackingList<MaintenanceConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationListResult"/>. </summary>
         /// <param name="value"> The list of maintenance Configurations. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MaintenanceConfigurationListResult(IList<MaintenancePublicConfigurationData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MaintenanceConfigurationListResult(IList<MaintenanceConfigurationData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         }
 
         /// <summary> The list of maintenance Configurations. </summary>
-        public IList<MaintenancePublicConfigurationData> Value { get; }
+        public IList<MaintenanceConfigurationData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

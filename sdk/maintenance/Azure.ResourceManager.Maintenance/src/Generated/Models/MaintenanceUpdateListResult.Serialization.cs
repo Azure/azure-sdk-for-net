@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (Update item in Value)
+                foreach (MaintenanceUpdate item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 return null;
             }
-            IList<Update> value = default;
+            IList<MaintenanceUpdate> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.Maintenance.Models
                     {
                         continue;
                     }
-                    List<Update> array = new List<Update>();
+                    List<MaintenanceUpdate> array = new List<MaintenanceUpdate>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Update.DeserializeUpdate(item, options));
+                        array.Add(MaintenanceUpdate.DeserializeMaintenanceUpdate(item, options));
                     }
                     value = array;
                     continue;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MaintenanceUpdateListResult(value ?? new ChangeTrackingList<Update>(), nextLink, additionalBinaryDataProperties);
+            return new MaintenanceUpdateListResult(value ?? new ChangeTrackingList<MaintenanceUpdate>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

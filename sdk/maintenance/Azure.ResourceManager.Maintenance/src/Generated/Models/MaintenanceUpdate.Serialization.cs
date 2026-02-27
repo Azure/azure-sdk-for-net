@@ -14,51 +14,51 @@ using Azure.ResourceManager.Maintenance;
 namespace Azure.ResourceManager.Maintenance.Models
 {
     /// <summary> Maintenance update on a resource. </summary>
-    public partial class Update : IJsonModel<Update>
+    public partial class MaintenanceUpdate : IJsonModel<MaintenanceUpdate>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Update PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual MaintenanceUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Update>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceUpdate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeUpdate(document.RootElement, options);
+                        return DeserializeMaintenanceUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Update)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaintenanceUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Update>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceUpdate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMaintenanceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(Update)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaintenanceUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<Update>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MaintenanceUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Update IPersistableModel<Update>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MaintenanceUpdate IPersistableModel<MaintenanceUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<Update>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MaintenanceUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<Update>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MaintenanceUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Update>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Update)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MaintenanceUpdate)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(MaintenanceScope))
             {
@@ -123,32 +123,32 @@ namespace Azure.ResourceManager.Maintenance.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Update IJsonModel<Update>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MaintenanceUpdate IJsonModel<MaintenanceUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Update JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual MaintenanceUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Update>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Update)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MaintenanceUpdate)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUpdate(document.RootElement, options);
+            return DeserializeMaintenanceUpdate(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static Update DeserializeUpdate(JsonElement element, ModelReaderWriterOptions options)
+        internal static MaintenanceUpdate DeserializeMaintenanceUpdate(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             MaintenanceScope? maintenanceScope = default;
-            ImpactType? impactType = default;
-            UpdateStatus? status = default;
+            MaintenanceImpactType? impactType = default;
+            MaintenanceUpdateStatus? status = default;
             int? impactDurationInSec = default;
             DateTimeOffset? notBefore = default;
             UpdateProperties properties = default;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     {
                         continue;
                     }
-                    impactType = new ImpactType(prop.Value.GetString());
+                    impactType = new MaintenanceImpactType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     {
                         continue;
                     }
-                    status = new UpdateStatus(prop.Value.GetString());
+                    status = new MaintenanceUpdateStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("impactDurationInSec"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new Update(
+            return new MaintenanceUpdate(
                 maintenanceScope,
                 impactType,
                 status,

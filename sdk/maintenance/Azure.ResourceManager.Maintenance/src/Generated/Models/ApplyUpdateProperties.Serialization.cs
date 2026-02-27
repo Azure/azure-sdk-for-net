@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 return null;
             }
-            UpdateStatus? status = default;
+            MaintenanceUpdateStatus? status = default;
             ResourceIdentifier resourceId = default;
             DateTimeOffset? lastUpdatedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     {
                         continue;
                     }
-                    status = new UpdateStatus(prop.Value.GetString());
+                    status = new MaintenanceUpdateStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("resourceId"u8))

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <param name="resourceId"> The resourceId. </param>
         /// <param name="lastUpdatedOn"> Last Update time. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplyUpdateProperties(UpdateStatus? status, ResourceIdentifier resourceId, DateTimeOffset? lastUpdatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplyUpdateProperties(MaintenanceUpdateStatus? status, ResourceIdentifier resourceId, DateTimeOffset? lastUpdatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             ResourceId = resourceId;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         }
 
         /// <summary> The status. </summary>
-        public UpdateStatus? Status { get; set; }
+        public MaintenanceUpdateStatus? Status { get; set; }
 
         /// <summary> The resourceId. </summary>
         public ResourceIdentifier ResourceId { get; set; }

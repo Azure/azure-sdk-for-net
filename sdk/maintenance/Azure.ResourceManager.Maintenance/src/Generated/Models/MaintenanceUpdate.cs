@@ -12,17 +12,17 @@ using Azure.Core;
 namespace Azure.ResourceManager.Maintenance.Models
 {
     /// <summary> Maintenance update on a resource. </summary>
-    public partial class Update
+    public partial class MaintenanceUpdate
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="Update"/>. </summary>
-        internal Update()
+        /// <summary> Initializes a new instance of <see cref="MaintenanceUpdate"/>. </summary>
+        internal MaintenanceUpdate()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="Update"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceUpdate"/>. </summary>
         /// <param name="maintenanceScope"> The impact area. </param>
         /// <param name="impactType"> The impact type. </param>
         /// <param name="status"> The status. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <param name="notBefore"> Time when Azure will start force updates if not self-updated by customer before this time. </param>
         /// <param name="properties"> Properties of the apply update. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Update(MaintenanceScope? maintenanceScope, ImpactType? impactType, UpdateStatus? status, int? impactDurationInSec, DateTimeOffset? notBefore, UpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MaintenanceUpdate(MaintenanceScope? maintenanceScope, MaintenanceImpactType? impactType, MaintenanceUpdateStatus? status, int? impactDurationInSec, DateTimeOffset? notBefore, UpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MaintenanceScope = maintenanceScope;
             ImpactType = impactType;
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.Maintenance.Models
         public MaintenanceScope? MaintenanceScope { get; }
 
         /// <summary> The impact type. </summary>
-        public ImpactType? ImpactType { get; }
+        public MaintenanceImpactType? ImpactType { get; }
 
         /// <summary> The status. </summary>
-        public UpdateStatus? Status { get; }
+        public MaintenanceUpdateStatus? Status { get; }
 
         /// <summary> Duration of impact in seconds. </summary>
         public int? ImpactDurationInSec { get; }

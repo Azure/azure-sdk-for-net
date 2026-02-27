@@ -14,7 +14,7 @@ using Azure.ResourceManager.Maintenance.Models;
 
 namespace Azure.ResourceManager.Maintenance
 {
-    internal partial class PublicMaintenanceConfigurationsGetAllCollectionResultOfT : Pageable<MaintenancePublicConfigurationData>
+    internal partial class PublicMaintenanceConfigurationsGetAllCollectionResultOfT : Pageable<MaintenanceConfigurationData>
     {
         private readonly PublicMaintenanceConfigurations _client;
         private readonly Guid _subscriptionId;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of PublicMaintenanceConfigurationsGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<MaintenancePublicConfigurationData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<MaintenanceConfigurationData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Maintenance
                     yield break;
                 }
                 MaintenanceConfigurationListResult result = MaintenanceConfigurationListResult.FromResponse(response);
-                yield return Page<MaintenancePublicConfigurationData>.FromValues((IReadOnlyList<MaintenancePublicConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<MaintenanceConfigurationData>.FromValues((IReadOnlyList<MaintenanceConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

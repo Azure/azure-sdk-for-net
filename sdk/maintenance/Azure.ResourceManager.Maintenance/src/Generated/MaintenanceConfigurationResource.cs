@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Maintenance
     {
         private readonly ClientDiagnostics _maintenanceConfigurationsClientDiagnostics;
         private readonly MaintenanceConfigurations _maintenanceConfigurationsRestClient;
-        private readonly MaintenancePublicConfigurationData _data;
+        private readonly MaintenanceConfigurationData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Maintenance/maintenanceConfigurations";
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal MaintenanceConfigurationResource(ArmClient client, MaintenancePublicConfigurationData data) : this(client, data.Id)
+        internal MaintenanceConfigurationResource(ArmClient client, MaintenanceConfigurationData data) : this(client, data.Id)
         {
             this.HasData = true;
             _data = data;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Maintenance
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual MaintenancePublicConfigurationData Data
+        public virtual MaintenanceConfigurationData Data
         {
             get
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Maintenance
                 };
                 HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MaintenancePublicConfigurationData> response = Response.FromValue(MaintenancePublicConfigurationData.FromResponse(result), result);
+                Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Maintenance
                 };
                 HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MaintenancePublicConfigurationData> response = Response.FromValue(MaintenancePublicConfigurationData.FromResponse(result), result);
+                Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="data"> The configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<MaintenanceConfigurationResource>> UpdateAsync(MaintenancePublicConfigurationData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaintenanceConfigurationResource>> UpdateAsync(MaintenanceConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -224,9 +224,9 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceConfigurationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MaintenancePublicConfigurationData.ToRequestContent(data), context);
+                HttpMessage message = _maintenanceConfigurationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MaintenanceConfigurationData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MaintenancePublicConfigurationData> response = Response.FromValue(MaintenancePublicConfigurationData.FromResponse(result), result);
+                Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="data"> The configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<MaintenanceConfigurationResource> Update(MaintenancePublicConfigurationData data, CancellationToken cancellationToken = default)
+        public virtual Response<MaintenanceConfigurationResource> Update(MaintenanceConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -276,9 +276,9 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceConfigurationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MaintenancePublicConfigurationData.ToRequestContent(data), context);
+                HttpMessage message = _maintenanceConfigurationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MaintenanceConfigurationData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MaintenancePublicConfigurationData> response = Response.FromValue(MaintenancePublicConfigurationData.FromResponse(result), result);
+                Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Maintenance
                 };
                 HttpMessage message = _maintenanceConfigurationsRestClient.CreateDeleteExRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MaintenancePublicConfigurationData> response = Response.FromValue(MaintenancePublicConfigurationData.FromResponse(result), result);
+                Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 MaintenanceArmOperation<MaintenanceConfigurationResource> operation = new MaintenanceArmOperation<MaintenanceConfigurationResource>(Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.Maintenance
                 };
                 HttpMessage message = _maintenanceConfigurationsRestClient.CreateDeleteExRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MaintenancePublicConfigurationData> response = Response.FromValue(MaintenancePublicConfigurationData.FromResponse(result), result);
+                Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 MaintenanceArmOperation<MaintenanceConfigurationResource> operation = new MaintenanceArmOperation<MaintenanceConfigurationResource>(Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -421,13 +421,13 @@ namespace Azure.ResourceManager.Maintenance
                     };
                     HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<MaintenancePublicConfigurationData> response = Response.FromValue(MaintenancePublicConfigurationData.FromResponse(result), result);
+                    Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                     return Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    MaintenancePublicConfigurationData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    MaintenancePublicConfigurationData patch = new MaintenancePublicConfigurationData();
+                    MaintenanceConfigurationData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    MaintenanceConfigurationData patch = new MaintenanceConfigurationData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -469,13 +469,13 @@ namespace Azure.ResourceManager.Maintenance
                     };
                     HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<MaintenancePublicConfigurationData> response = Response.FromValue(MaintenancePublicConfigurationData.FromResponse(result), result);
+                    Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                     return Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    MaintenancePublicConfigurationData current = this.Get(cancellationToken: cancellationToken).Value.Data;
-                    MaintenancePublicConfigurationData patch = new MaintenancePublicConfigurationData();
+                    MaintenanceConfigurationData current = this.Get(cancellationToken: cancellationToken).Value.Data;
+                    MaintenanceConfigurationData patch = new MaintenanceConfigurationData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -516,13 +516,13 @@ namespace Azure.ResourceManager.Maintenance
                     };
                     HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<MaintenancePublicConfigurationData> response = Response.FromValue(MaintenancePublicConfigurationData.FromResponse(result), result);
+                    Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                     return Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    MaintenancePublicConfigurationData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    MaintenancePublicConfigurationData patch = new MaintenancePublicConfigurationData();
+                    MaintenanceConfigurationData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    MaintenanceConfigurationData patch = new MaintenanceConfigurationData();
                     patch.Tags.ReplaceWith(tags);
                     Response<MaintenanceConfigurationResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -559,13 +559,13 @@ namespace Azure.ResourceManager.Maintenance
                     };
                     HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<MaintenancePublicConfigurationData> response = Response.FromValue(MaintenancePublicConfigurationData.FromResponse(result), result);
+                    Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                     return Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    MaintenancePublicConfigurationData current = this.Get(cancellationToken: cancellationToken).Value.Data;
-                    MaintenancePublicConfigurationData patch = new MaintenancePublicConfigurationData();
+                    MaintenanceConfigurationData current = this.Get(cancellationToken: cancellationToken).Value.Data;
+                    MaintenanceConfigurationData patch = new MaintenanceConfigurationData();
                     patch.Tags.ReplaceWith(tags);
                     Response<MaintenanceConfigurationResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -601,13 +601,13 @@ namespace Azure.ResourceManager.Maintenance
                     };
                     HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<MaintenancePublicConfigurationData> response = Response.FromValue(MaintenancePublicConfigurationData.FromResponse(result), result);
+                    Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                     return Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    MaintenancePublicConfigurationData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    MaintenancePublicConfigurationData patch = new MaintenancePublicConfigurationData();
+                    MaintenanceConfigurationData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    MaintenanceConfigurationData patch = new MaintenanceConfigurationData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -647,13 +647,13 @@ namespace Azure.ResourceManager.Maintenance
                     };
                     HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<MaintenancePublicConfigurationData> response = Response.FromValue(MaintenancePublicConfigurationData.FromResponse(result), result);
+                    Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                     return Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    MaintenancePublicConfigurationData current = this.Get(cancellationToken: cancellationToken).Value.Data;
-                    MaintenancePublicConfigurationData patch = new MaintenancePublicConfigurationData();
+                    MaintenanceConfigurationData current = this.Get(cancellationToken: cancellationToken).Value.Data;
+                    MaintenanceConfigurationData patch = new MaintenanceConfigurationData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

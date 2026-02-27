@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
             MaintenanceConfigurationResource config1 = await CreateMaintenanceConfiguration();
             MaintenanceConfigurationResource config2 = await CreateMaintenanceConfiguration();
 
-            var list = await _configCollection.GetAllAsync().ToEnumerableAsync();
+            var list = await _resourceGroup.GetMaintenanceConfigurationsAsync().ToEnumerableAsync();
             Assert.IsTrue(list.Count >= 2);
             Assert.IsNotEmpty(list);
             Assert.IsTrue(list.Exists(item => item.Data.Name == config1.Data.Name));
@@ -89,14 +89,14 @@ namespace Azure.ResourceManager.Maintenance.Tests
         private async Task<MaintenanceConfigurationResource> CreateMaintenanceConfiguration()
         {
             string resourceName = Recording.GenerateAssetName("maintenance-config-");
-            MaintenanceConfigurationData data = new MaintenanceConfigurationData(Location)
+            MaintenanceConfigurationData data = new MaintenanceConfigurationData()
             {
                 Namespace = "Microsoft.Maintenance",
                 MaintenanceScope = MaintenanceScope.InGuestPatch,
                 Visibility = MaintenanceConfigurationVisibility.Custom,
                 StartOn = DateTimeOffset.Parse("2024-12-31 14:00"),
                 ExpireOn = DateTimeOffset.Parse("9999-12-31 00:00"),
-                Duration = TimeSpan.Parse("03:00"),
+                Duration = "03:00",
                 TimeZone = "Pacific Standard Time",
                 RecurEvery = "Day",
 

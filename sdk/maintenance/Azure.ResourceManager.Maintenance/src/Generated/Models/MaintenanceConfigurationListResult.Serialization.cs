@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (MaintenancePublicConfigurationData item in Value)
+                foreach (MaintenanceConfigurationData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 return null;
             }
-            IList<MaintenancePublicConfigurationData> value = default;
+            IList<MaintenanceConfigurationData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.Maintenance.Models
                     {
                         continue;
                     }
-                    List<MaintenancePublicConfigurationData> array = new List<MaintenancePublicConfigurationData>();
+                    List<MaintenanceConfigurationData> array = new List<MaintenanceConfigurationData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MaintenancePublicConfigurationData.DeserializeMaintenancePublicConfigurationData(item, options));
+                        array.Add(MaintenanceConfigurationData.DeserializeMaintenanceConfigurationData(item, options));
                     }
                     value = array;
                     continue;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MaintenanceConfigurationListResult(value ?? new ChangeTrackingList<MaintenancePublicConfigurationData>(), nextLink, additionalBinaryDataProperties);
+            return new MaintenanceConfigurationListResult(value ?? new ChangeTrackingList<MaintenanceConfigurationData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

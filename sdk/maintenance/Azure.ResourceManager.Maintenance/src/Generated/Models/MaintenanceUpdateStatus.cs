@@ -12,7 +12,7 @@ using Azure.ResourceManager.Maintenance;
 namespace Azure.ResourceManager.Maintenance.Models
 {
     /// <summary> The status. </summary>
-    public readonly partial struct UpdateStatus : IEquatable<UpdateStatus>
+    public readonly partial struct MaintenanceUpdateStatus : IEquatable<MaintenanceUpdateStatus>
     {
         private readonly string _value;
         /// <summary> There are pending updates to be installed. </summary>
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <summary> Send the Cancelled response to the user if request came to cancel the schedule. Applicable to Maintenance Configuration resource type only. </summary>
         private const string CancelledValue = "Cancelled";
 
-        /// <summary> Initializes a new instance of <see cref="UpdateStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceUpdateStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public UpdateStatus(string value)
+        public MaintenanceUpdateStatus(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -43,53 +43,53 @@ namespace Azure.ResourceManager.Maintenance.Models
         }
 
         /// <summary> There are pending updates to be installed. </summary>
-        public static UpdateStatus Pending { get; } = new UpdateStatus(PendingValue);
+        public static MaintenanceUpdateStatus Pending { get; } = new MaintenanceUpdateStatus(PendingValue);
 
         /// <summary> Updates installation are in progress. </summary>
-        public static UpdateStatus InProgress { get; } = new UpdateStatus(InProgressValue);
+        public static MaintenanceUpdateStatus InProgress { get; } = new MaintenanceUpdateStatus(InProgressValue);
 
         /// <summary> All updates are successfully applied. </summary>
-        public static UpdateStatus Completed { get; } = new UpdateStatus(CompletedValue);
+        public static MaintenanceUpdateStatus Completed { get; } = new MaintenanceUpdateStatus(CompletedValue);
 
         /// <summary> Updates installation failed but are ready to retry again. </summary>
-        public static UpdateStatus RetryNow { get; } = new UpdateStatus(RetryNowValue);
+        public static MaintenanceUpdateStatus RetryNow { get; } = new MaintenanceUpdateStatus(RetryNowValue);
 
         /// <summary> Updates installation failed and should be retried later. </summary>
-        public static UpdateStatus RetryLater { get; } = new UpdateStatus(RetryLaterValue);
+        public static MaintenanceUpdateStatus RetryLater { get; } = new MaintenanceUpdateStatus(RetryLaterValue);
 
         /// <summary> No updates are pending. </summary>
-        public static UpdateStatus NoUpdatesPending { get; } = new UpdateStatus(NoUpdatesPendingValue);
+        public static MaintenanceUpdateStatus NoUpdatesPending { get; } = new MaintenanceUpdateStatus(NoUpdatesPendingValue);
 
         /// <summary> Cancel the schedule and stop creating PMR for resources part of it. Applicable to Maintenance Configuration resource type only. </summary>
-        public static UpdateStatus Cancel { get; } = new UpdateStatus(CancelValue);
+        public static MaintenanceUpdateStatus Cancel { get; } = new MaintenanceUpdateStatus(CancelValue);
 
         /// <summary> Send the Cancelled response to the user if request came to cancel the schedule. Applicable to Maintenance Configuration resource type only. </summary>
-        public static UpdateStatus Cancelled { get; } = new UpdateStatus(CancelledValue);
+        public static MaintenanceUpdateStatus Cancelled { get; } = new MaintenanceUpdateStatus(CancelledValue);
 
-        /// <summary> Determines if two <see cref="UpdateStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="MaintenanceUpdateStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(UpdateStatus left, UpdateStatus right) => left.Equals(right);
+        public static bool operator ==(MaintenanceUpdateStatus left, MaintenanceUpdateStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="UpdateStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="MaintenanceUpdateStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(UpdateStatus left, UpdateStatus right) => !left.Equals(right);
+        public static bool operator !=(MaintenanceUpdateStatus left, MaintenanceUpdateStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="UpdateStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="MaintenanceUpdateStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UpdateStatus(string value) => new UpdateStatus(value);
+        public static implicit operator MaintenanceUpdateStatus(string value) => new MaintenanceUpdateStatus(value);
 
-        /// <summary> Converts a string to a <see cref="UpdateStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="MaintenanceUpdateStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UpdateStatus?(string value) => value == null ? null : new UpdateStatus(value);
+        public static implicit operator MaintenanceUpdateStatus?(string value) => value == null ? null : new MaintenanceUpdateStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is UpdateStatus other && Equals(other);
+        public override bool Equals(object obj) => obj is MaintenanceUpdateStatus other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(UpdateStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(MaintenanceUpdateStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

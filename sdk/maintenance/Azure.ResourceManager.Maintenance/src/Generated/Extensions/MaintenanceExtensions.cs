@@ -680,8 +680,8 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="Update"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Update> GetUpdatesByParentAsync(this SubscriptionResource subscriptionResource, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MaintenanceUpdate"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MaintenanceUpdate> GetUpdatesByParentAsync(this SubscriptionResource subscriptionResource, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -704,8 +704,8 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="Update"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Update> GetUpdatesByParent(this SubscriptionResource subscriptionResource, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MaintenanceUpdate"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MaintenanceUpdate> GetUpdatesByParent(this SubscriptionResource subscriptionResource, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -726,8 +726,8 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="Update"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Update> GetUpdatesAsync(this SubscriptionResource subscriptionResource, string resourceGroupName, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MaintenanceUpdate"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MaintenanceUpdate> GetUpdatesAsync(this SubscriptionResource subscriptionResource, string resourceGroupName, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -748,8 +748,8 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="Update"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Update> GetUpdates(this SubscriptionResource subscriptionResource, string resourceGroupName, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MaintenanceUpdate"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MaintenanceUpdate> GetUpdates(this SubscriptionResource subscriptionResource, string resourceGroupName, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

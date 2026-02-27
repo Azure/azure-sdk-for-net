@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
     {
         private SubscriptionResource _subscription;
         private ResourceGroupResource _resourceGroup;
-        private MaintenanceApplyUpdateCollection _configCollection;
+        private ApplyUpdateCollection _configCollection;
 
         public MaintanenceConfigurationCancellationTests(bool isAsync) : base(isAsync) //, RecordedTestMode.Record)
         { }
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
                "Maintenance-RG-",
                Location);
 
-            _configCollection = _resourceGroup.GetMaintenanceApplyUpdates();
+            _configCollection = Client.GetApplyUpdates(_resourceGroup.Id);
         }
 
         [TearDown]

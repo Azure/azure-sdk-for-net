@@ -14,7 +14,7 @@ using Azure.ResourceManager.Maintenance.Models;
 
 namespace Azure.ResourceManager.Maintenance
 {
-    internal partial class MaintenanceApplyUpdateGetAllCollectionResultOfT : Pageable<ApplyUpdateData>
+    internal partial class MaintenanceApplyUpdateGetAllCollectionResultOfT : Pageable<MaintenanceApplyUpdateData>
     {
         private readonly MaintenanceApplyUpdate _client;
         private readonly Guid _subscriptionId;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of MaintenanceApplyUpdateGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ApplyUpdateData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<MaintenanceApplyUpdateData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Maintenance
                     yield break;
                 }
                 MaintenanceApplyUpdateListResult result = MaintenanceApplyUpdateListResult.FromResponse(response);
-                yield return Page<ApplyUpdateData>.FromValues((IReadOnlyList<ApplyUpdateData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<MaintenanceApplyUpdateData>.FromValues((IReadOnlyList<MaintenanceApplyUpdateData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApplyUpdateData, ApplyUpdateResource>(new MaintenanceApplyUpdateGetAllAsyncCollectionResultOfT(MaintenanceApplyUpdateRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ApplyUpdateResource(Client, data));
+            return new AsyncPageableWrapper<MaintenanceApplyUpdateData, ApplyUpdateResource>(new MaintenanceApplyUpdateGetAllAsyncCollectionResultOfT(MaintenanceApplyUpdateRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ApplyUpdateResource(Client, data));
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApplyUpdateData, ApplyUpdateResource>(new MaintenanceApplyUpdateGetAllCollectionResultOfT(MaintenanceApplyUpdateRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ApplyUpdateResource(Client, data));
+            return new PageableWrapper<MaintenanceApplyUpdateData, ApplyUpdateResource>(new MaintenanceApplyUpdateGetAllCollectionResultOfT(MaintenanceApplyUpdateRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ApplyUpdateResource(Client, data));
         }
 
         /// <summary>
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
                 };
                 HttpMessage message = MaintenanceApplyUpdateRestClient.CreateCreateOrUpdateApplyUpdateByParentRequest(Guid.Parse(Id.SubscriptionId), resourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ApplyUpdateData> response = Response.FromValue(ApplyUpdateData.FromResponse(result), result);
+                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
                 };
                 HttpMessage message = MaintenanceApplyUpdateRestClient.CreateCreateOrUpdateApplyUpdateByParentRequest(Guid.Parse(Id.SubscriptionId), resourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ApplyUpdateData> response = Response.FromValue(ApplyUpdateData.FromResponse(result), result);
+                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
                 };
                 HttpMessage message = MaintenanceApplyUpdateRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), resourceGroupName, providerName, resourceType, resourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ApplyUpdateData> response = Response.FromValue(ApplyUpdateData.FromResponse(result), result);
+                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
                 };
                 HttpMessage message = MaintenanceApplyUpdateRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), resourceGroupName, providerName, resourceType, resourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ApplyUpdateData> response = Response.FromValue(ApplyUpdateData.FromResponse(result), result);
+                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -697,8 +697,8 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="Update"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Update> GetUpdatesByParentAsync(string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MaintenanceUpdate"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MaintenanceUpdate> GetUpdatesByParentAsync(string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
@@ -749,8 +749,8 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="Update"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Update> GetUpdatesByParent(string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MaintenanceUpdate"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MaintenanceUpdate> GetUpdatesByParent(string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
@@ -799,8 +799,8 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="Update"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Update> GetUpdatesAsync(string resourceGroupName, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MaintenanceUpdate"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MaintenanceUpdate> GetUpdatesAsync(string resourceGroupName, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
@@ -845,8 +845,8 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="Update"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Update> GetUpdates(string resourceGroupName, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MaintenanceUpdate"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MaintenanceUpdate> GetUpdates(string resourceGroupName, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));

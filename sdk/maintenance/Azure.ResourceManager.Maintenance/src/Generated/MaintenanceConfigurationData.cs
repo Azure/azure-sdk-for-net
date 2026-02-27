@@ -14,18 +14,18 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Maintenance
 {
     /// <summary> Maintenance configuration record type. </summary>
-    public partial class MaintenancePublicConfigurationData : ResourceData
+    public partial class MaintenanceConfigurationData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MaintenancePublicConfigurationData"/>. </summary>
-        public MaintenancePublicConfigurationData()
+        /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationData"/>. </summary>
+        public MaintenanceConfigurationData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MaintenancePublicConfigurationData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="properties"> Gets or sets properties of the resource. </param>
         /// <param name="location"> Gets or sets location of the resource. </param>
         /// <param name="tags"> Gets or sets tags of the resource. </param>
-        internal MaintenancePublicConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, MaintenanceConfigurationProperties properties, string location, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal MaintenanceConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, MaintenanceConfigurationProperties properties, string location, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

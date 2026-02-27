@@ -12,7 +12,7 @@ using Azure.ResourceManager.Maintenance;
 namespace Azure.ResourceManager.Maintenance.Models
 {
     /// <summary> The impact type. </summary>
-    public readonly partial struct ImpactType : IEquatable<ImpactType>
+    public readonly partial struct MaintenanceImpactType : IEquatable<MaintenanceImpactType>
     {
         private readonly string _value;
         /// <summary> Pending updates has no impact on resource. </summary>
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <summary> Pending updates can redeploy resource. </summary>
         private const string RedeployValue = "Redeploy";
 
-        /// <summary> Initializes a new instance of <see cref="ImpactType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceImpactType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ImpactType(string value)
+        public MaintenanceImpactType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,41 +35,41 @@ namespace Azure.ResourceManager.Maintenance.Models
         }
 
         /// <summary> Pending updates has no impact on resource. </summary>
-        public static ImpactType None { get; } = new ImpactType(NoneValue);
+        public static MaintenanceImpactType None { get; } = new MaintenanceImpactType(NoneValue);
 
         /// <summary> Pending updates can freeze network or disk io operation on resource. </summary>
-        public static ImpactType Freeze { get; } = new ImpactType(FreezeValue);
+        public static MaintenanceImpactType Freeze { get; } = new MaintenanceImpactType(FreezeValue);
 
         /// <summary> Pending updates can cause resource to restart. </summary>
-        public static ImpactType Restart { get; } = new ImpactType(RestartValue);
+        public static MaintenanceImpactType Restart { get; } = new MaintenanceImpactType(RestartValue);
 
         /// <summary> Pending updates can redeploy resource. </summary>
-        public static ImpactType Redeploy { get; } = new ImpactType(RedeployValue);
+        public static MaintenanceImpactType Redeploy { get; } = new MaintenanceImpactType(RedeployValue);
 
-        /// <summary> Determines if two <see cref="ImpactType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="MaintenanceImpactType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ImpactType left, ImpactType right) => left.Equals(right);
+        public static bool operator ==(MaintenanceImpactType left, MaintenanceImpactType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ImpactType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="MaintenanceImpactType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ImpactType left, ImpactType right) => !left.Equals(right);
+        public static bool operator !=(MaintenanceImpactType left, MaintenanceImpactType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ImpactType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="MaintenanceImpactType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImpactType(string value) => new ImpactType(value);
+        public static implicit operator MaintenanceImpactType(string value) => new MaintenanceImpactType(value);
 
-        /// <summary> Converts a string to a <see cref="ImpactType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="MaintenanceImpactType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImpactType?(string value) => value == null ? null : new ImpactType(value);
+        public static implicit operator MaintenanceImpactType?(string value) => value == null ? null : new MaintenanceImpactType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ImpactType other && Equals(other);
+        public override bool Equals(object obj) => obj is MaintenanceImpactType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ImpactType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(MaintenanceImpactType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

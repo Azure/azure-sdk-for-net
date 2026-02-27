@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Maintenance
     {
         private readonly ClientDiagnostics _maintenanceApplyUpdateClientDiagnostics;
         private readonly MaintenanceApplyUpdate _maintenanceApplyUpdateRestClient;
-        private readonly ApplyUpdateData _data;
+        private readonly MaintenanceApplyUpdateData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Maintenance/applyUpdates";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <summary> Initializes a new instance of <see cref="ApplyUpdateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ApplyUpdateResource(ArmClient client, ApplyUpdateData data) : this(client, data.Id)
+        internal ApplyUpdateResource(ArmClient client, MaintenanceApplyUpdateData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Maintenance
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ApplyUpdateData Data
+        public virtual MaintenanceApplyUpdateData Data
         {
             get
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Maintenance
                 };
                 HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.Name, Id.Parent.Parent.ResourceType.Type, applyUpdateName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ApplyUpdateData> response = Response.FromValue(ApplyUpdateData.FromResponse(result), result);
+                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Maintenance
                 };
                 HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.Name, Id.Parent.Parent.ResourceType.Type, applyUpdateName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ApplyUpdateData> response = Response.FromValue(ApplyUpdateData.FromResponse(result), result);
+                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Maintenance
                 };
                 HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetApplyUpdatesByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.Name, Id.Parent.Parent.ResourceType.Type, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ApplyUpdateData> response = Response.FromValue(ApplyUpdateData.FromResponse(result), result);
+                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Maintenance
                 };
                 HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetApplyUpdatesByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.Name, Id.Parent.Parent.ResourceType.Type, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ApplyUpdateData> response = Response.FromValue(ApplyUpdateData.FromResponse(result), result);
+                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applyUpdateName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ApplyUpdateResource>> UpdateAsync(WaitUntil waitUntil, string applyUpdateName, ApplyUpdateData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ApplyUpdateResource>> UpdateAsync(WaitUntil waitUntil, string applyUpdateName, MaintenanceApplyUpdateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
             Argument.AssertNotNull(data, nameof(data));
@@ -337,9 +337,9 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceApplyUpdateRestClient.CreateCreateOrUpdateOrCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.Name, Id.Parent.Parent.ResourceType.Type, applyUpdateName, ApplyUpdateData.ToRequestContent(data), context);
+                HttpMessage message = _maintenanceApplyUpdateRestClient.CreateCreateOrUpdateOrCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.Name, Id.Parent.Parent.ResourceType.Type, applyUpdateName, MaintenanceApplyUpdateData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ApplyUpdateData> response = Response.FromValue(ApplyUpdateData.FromResponse(result), result);
+                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 MaintenanceArmOperation<ApplyUpdateResource> operation = new MaintenanceArmOperation<ApplyUpdateResource>(Response.FromValue(new ApplyUpdateResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applyUpdateName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ApplyUpdateResource> Update(WaitUntil waitUntil, string applyUpdateName, ApplyUpdateData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ApplyUpdateResource> Update(WaitUntil waitUntil, string applyUpdateName, MaintenanceApplyUpdateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
             Argument.AssertNotNull(data, nameof(data));
@@ -396,9 +396,9 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceApplyUpdateRestClient.CreateCreateOrUpdateOrCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.Name, Id.Parent.Parent.ResourceType.Type, applyUpdateName, ApplyUpdateData.ToRequestContent(data), context);
+                HttpMessage message = _maintenanceApplyUpdateRestClient.CreateCreateOrUpdateOrCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.Name, Id.Parent.Parent.ResourceType.Type, applyUpdateName, MaintenanceApplyUpdateData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ApplyUpdateData> response = Response.FromValue(ApplyUpdateData.FromResponse(result), result);
+                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 MaintenanceArmOperation<ApplyUpdateResource> operation = new MaintenanceArmOperation<ApplyUpdateResource>(Response.FromValue(new ApplyUpdateResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);

@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<MaintenanceConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceName, MaintenancePublicConfigurationData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MaintenanceConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceName, MaintenanceConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNull(data, nameof(data));
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, MaintenancePublicConfigurationData.ToRequestContent(data), context);
+                HttpMessage message = _maintenanceConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, MaintenanceConfigurationData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MaintenancePublicConfigurationData> response = Response.FromValue(MaintenancePublicConfigurationData.FromResponse(result), result);
+                Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 MaintenanceArmOperation<MaintenanceConfigurationResource> operation = new MaintenanceArmOperation<MaintenanceConfigurationResource>(Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<MaintenanceConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string resourceName, MaintenancePublicConfigurationData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MaintenanceConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string resourceName, MaintenanceConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNull(data, nameof(data));
@@ -144,9 +144,9 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, MaintenancePublicConfigurationData.ToRequestContent(data), context);
+                HttpMessage message = _maintenanceConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, MaintenanceConfigurationData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MaintenancePublicConfigurationData> response = Response.FromValue(MaintenancePublicConfigurationData.FromResponse(result), result);
+                Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 MaintenanceArmOperation<MaintenanceConfigurationResource> operation = new MaintenanceArmOperation<MaintenanceConfigurationResource>(Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Maintenance
                 };
                 HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MaintenancePublicConfigurationData> response = Response.FromValue(MaintenancePublicConfigurationData.FromResponse(result), result);
+                Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Maintenance
                 };
                 HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MaintenancePublicConfigurationData> response = Response.FromValue(MaintenancePublicConfigurationData.FromResponse(result), result);
+                Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -297,14 +297,14 @@ namespace Azure.ResourceManager.Maintenance
                 HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<MaintenancePublicConfigurationData> response = default;
+                Response<MaintenanceConfigurationData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MaintenancePublicConfigurationData.FromResponse(result), result);
+                        response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MaintenancePublicConfigurationData)null, result);
+                        response = Response.FromValue((MaintenanceConfigurationData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -354,14 +354,14 @@ namespace Azure.ResourceManager.Maintenance
                 HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<MaintenancePublicConfigurationData> response = default;
+                Response<MaintenanceConfigurationData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MaintenancePublicConfigurationData.FromResponse(result), result);
+                        response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MaintenancePublicConfigurationData)null, result);
+                        response = Response.FromValue((MaintenanceConfigurationData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -411,14 +411,14 @@ namespace Azure.ResourceManager.Maintenance
                 HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<MaintenancePublicConfigurationData> response = default;
+                Response<MaintenanceConfigurationData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MaintenancePublicConfigurationData.FromResponse(result), result);
+                        response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MaintenancePublicConfigurationData)null, result);
+                        response = Response.FromValue((MaintenanceConfigurationData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -472,14 +472,14 @@ namespace Azure.ResourceManager.Maintenance
                 HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<MaintenancePublicConfigurationData> response = default;
+                Response<MaintenanceConfigurationData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MaintenancePublicConfigurationData.FromResponse(result), result);
+                        response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MaintenancePublicConfigurationData)null, result);
+                        response = Response.FromValue((MaintenanceConfigurationData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

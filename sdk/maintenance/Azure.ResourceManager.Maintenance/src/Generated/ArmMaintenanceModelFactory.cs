@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Maintenance;
@@ -34,12 +35,12 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <param name="recurEvery"> Rate at which a Maintenance window is expected to recur. The rate can be expressed as daily, weekly, or monthly schedules. Daily schedule are formatted as recurEvery: [Frequency as integer]['Day(s)']. If no frequency is provided, the default frequency is 1. Daily schedule examples are recurEvery: Day, recurEvery: 3Days.  Weekly schedule are formatted as recurEvery: [Frequency as integer]['Week(s)'] [Optional comma separated list of weekdays Monday-Sunday]. Weekly schedule examples are recurEvery: 3Weeks, recurEvery: Week Saturday,Sunday. Monthly schedules are formatted as [Frequency as integer]['Month(s)'] [Comma separated list of month days] or [Frequency as integer]['Month(s)'] [Week of Month (First, Second, Third, Fourth, Last)] [Weekday Monday-Sunday] [Optional Offset(No. of days)]. Offset value must be between -6 to 6 inclusive. Monthly schedule examples are recurEvery: Month, recurEvery: 2Months, recurEvery: Month day23,day24, recurEvery: Month Last Sunday, recurEvery: Month Fourth Monday, recurEvery: Month Last Sunday Offset-3, recurEvery: Month Third Sunday Offset6. </param>
         /// <param name="location"> Gets or sets location of the resource. </param>
         /// <param name="tags"> Gets or sets tags of the resource. </param>
-        /// <returns> A new <see cref="Maintenance.MaintenancePublicConfigurationData"/> instance for mocking. </returns>
-        public static MaintenancePublicConfigurationData MaintenancePublicConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string @namespace = default, IDictionary<string, string> extensionProperties = default, MaintenanceScope? maintenanceScope = default, MaintenanceConfigurationVisibility? visibility = default, MaintenancePatchConfiguration installPatches = default, DateTimeOffset? startOn = default, DateTimeOffset? expireOn = default, string duration = default, string timeZone = default, string recurEvery = default, string location = default, IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Maintenance.MaintenanceConfigurationData"/> instance for mocking. </returns>
+        public static MaintenanceConfigurationData MaintenanceConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string @namespace = default, IDictionary<string, string> extensionProperties = default, MaintenanceScope? maintenanceScope = default, MaintenanceConfigurationVisibility? visibility = default, MaintenancePatchConfiguration installPatches = default, DateTimeOffset? startOn = default, DateTimeOffset? expireOn = default, string duration = default, string timeZone = default, string recurEvery = default, string location = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new MaintenancePublicConfigurationData(
+            return new MaintenanceConfigurationData(
                 id,
                 name,
                 resourceType,
@@ -99,10 +100,10 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <param name="status"> The status. </param>
         /// <param name="resourceId"> The resourceId. </param>
         /// <param name="lastUpdatedOn"> Last Update time. </param>
-        /// <returns> A new <see cref="Maintenance.ApplyUpdateData"/> instance for mocking. </returns>
-        public static ApplyUpdateData ApplyUpdateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, UpdateStatus? status = default, ResourceIdentifier resourceId = default, DateTimeOffset? lastUpdatedOn = default)
+        /// <returns> A new <see cref="Maintenance.MaintenanceApplyUpdateData"/> instance for mocking. </returns>
+        public static MaintenanceApplyUpdateData MaintenanceApplyUpdateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MaintenanceUpdateStatus? status = default, ResourceIdentifier resourceId = default, DateTimeOffset? lastUpdatedOn = default)
         {
-            return new ApplyUpdateData(
+            return new MaintenanceApplyUpdateData(
                 id,
                 name,
                 resourceType,
@@ -178,10 +179,10 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <param name="impactDurationInSec"> Duration of impact in seconds. </param>
         /// <param name="notBefore"> Time when Azure will start force updates if not self-updated by customer before this time. </param>
         /// <param name="resourceId"> The resourceId. </param>
-        /// <returns> A new <see cref="Models.Update"/> instance for mocking. </returns>
-        public static Update Update(MaintenanceScope? maintenanceScope = default, ImpactType? impactType = default, UpdateStatus? status = default, int? impactDurationInSec = default, DateTimeOffset? notBefore = default, ResourceIdentifier resourceId = default)
+        /// <returns> A new <see cref="Models.MaintenanceUpdate"/> instance for mocking. </returns>
+        public static MaintenanceUpdate MaintenanceUpdate(MaintenanceScope? maintenanceScope = default, MaintenanceImpactType? impactType = default, MaintenanceUpdateStatus? status = default, int? impactDurationInSec = default, DateTimeOffset? notBefore = default, ResourceIdentifier resourceId = default)
         {
-            return new Update(
+            return new MaintenanceUpdate(
                 maintenanceScope,
                 impactType,
                 status,
@@ -189,6 +190,40 @@ namespace Azure.ResourceManager.Maintenance.Models
                 notBefore,
                 resourceId is null ? default : new UpdateProperties(resourceId, null),
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Maintenance.MaintenanceConfigurationData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="namespace"> Gets or sets namespace of the resource. </param>
+        /// <param name="extensionProperties"> Gets or sets extensionProperties of the maintenanceConfiguration. </param>
+        /// <param name="maintenanceScope"> Gets or sets maintenanceScope of the configuration. </param>
+        /// <param name="visibility"> Gets or sets the visibility of the configuration. The default value is 'Custom'. </param>
+        /// <param name="startOn"> Effective start date of the maintenance window in YYYY-MM-DD hh:mm format. The start date can be set to either the current date or future date. The window will be created in the time zone provided and adjusted to daylight savings according to that time zone. </param>
+        /// <param name="expireOn"> Effective expiration date of the maintenance window in YYYY-MM-DD hh:mm format. The window will be created in the time zone provided and adjusted to daylight savings according to that time zone. Expiration date must be set to a future date. If not provided, it will be set to the maximum datetime 9999-12-31 23:59:59. </param>
+        /// <param name="duration"> Duration of the maintenance window in HH:mm format. If not provided, default value will be used based on maintenance scope provided. Example: 05:00. </param>
+        /// <param name="timeZone"> Name of the timezone. List of timezones can be obtained by executing [System.TimeZoneInfo]::GetSystemTimeZones() in PowerShell. Example: Pacific Standard Time, UTC, W. Europe Standard Time, Korea Standard Time, Cen. Australia Standard Time. </param>
+        /// <param name="recurEvery"> Rate at which a Maintenance window is expected to recur. The rate can be expressed as daily, weekly, or monthly schedules. Daily schedule are formatted as recurEvery: [Frequency as integer]['Day(s)']. If no frequency is provided, the default frequency is 1. Daily schedule examples are recurEvery: Day, recurEvery: 3Days.  Weekly schedule are formatted as recurEvery: [Frequency as integer]['Week(s)'] [Optional comma separated list of weekdays Monday-Sunday]. Weekly schedule examples are recurEvery: 3Weeks, recurEvery: Week Saturday,Sunday. Monthly schedules are formatted as [Frequency as integer]['Month(s)'] [Comma separated list of month days] or [Frequency as integer]['Month(s)'] [Week of Month (First, Second, Third, Fourth, Last)] [Weekday Monday-Sunday]. Monthly schedule examples are recurEvery: Month, recurEvery: 2Months, recurEvery: Month day23,day24, recurEvery: Month Last Sunday, recurEvery: Month Fourth Monday. </param>
+        /// <returns> A new <see cref="Maintenance.MaintenanceConfigurationData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MaintenanceConfigurationData MaintenanceConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string @namespace, IDictionary<string, string> extensionProperties, MaintenanceScope? maintenanceScope, MaintenanceConfigurationVisibility? visibility, DateTimeOffset? startOn, DateTimeOffset? expireOn, TimeSpan? duration, string timeZone, string recurEvery)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            extensionProperties ??= new ChangeTrackingDictionary<string, string>();
+
+            return new MaintenanceConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default,
+                location,
+                tags);
         }
     }
 }

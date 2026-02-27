@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (ApplyUpdateData item in Value)
+                foreach (MaintenanceApplyUpdateData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 return null;
             }
-            IList<ApplyUpdateData> value = default;
+            IList<MaintenanceApplyUpdateData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.Maintenance.Models
                     {
                         continue;
                     }
-                    List<ApplyUpdateData> array = new List<ApplyUpdateData>();
+                    List<MaintenanceApplyUpdateData> array = new List<MaintenanceApplyUpdateData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ApplyUpdateData.DeserializeApplyUpdateData(item, options));
+                        array.Add(MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(item, options));
                     }
                     value = array;
                     continue;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MaintenanceApplyUpdateListResult(value ?? new ChangeTrackingList<ApplyUpdateData>(), nextLink, additionalBinaryDataProperties);
+            return new MaintenanceApplyUpdateListResult(value ?? new ChangeTrackingList<MaintenanceApplyUpdateData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }
