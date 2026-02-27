@@ -1106,12 +1106,12 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The names of the load balancers to rebalance. If set to empty, all load balancers will be rebalanced. </summary>
         /// <param name="loadBalancerNames"> The load balancer names list. </param>
-        /// <returns> A new <see cref="Models.RebalanceLoadBalancersRequestContent"/> instance for mocking. </returns>
-        public static RebalanceLoadBalancersRequestContent RebalanceLoadBalancersRequestContent(IEnumerable<string> loadBalancerNames = default)
+        /// <returns> A new <see cref="Models.RebalanceLoadBalancersContent"/> instance for mocking. </returns>
+        public static RebalanceLoadBalancersContent RebalanceLoadBalancersContent(IEnumerable<string> loadBalancerNames = default)
         {
             loadBalancerNames ??= new ChangeTrackingList<string>();
 
-            return new RebalanceLoadBalancersRequestContent(loadBalancerNames.ToList(), additionalBinaryDataProperties: null);
+            return new RebalanceLoadBalancersContent(loadBalancerNames.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Available version information for an agent pool. </summary>

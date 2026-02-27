@@ -1370,7 +1370,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="content"> The names of the load balancers to be rebalanced. If set to empty, all load balancers will be rebalanced. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> RebalanceLoadBalancersAsync(WaitUntil waitUntil, RebalanceLoadBalancersRequestContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> RebalanceLoadBalancersAsync(WaitUntil waitUntil, RebalanceLoadBalancersContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1382,7 +1382,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateRebalanceLoadBalancersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RebalanceLoadBalancersRequestContent.ToRequestContent(content), context);
+                HttpMessage message = _managedClustersRestClient.CreateRebalanceLoadBalancersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RebalanceLoadBalancersContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceArmOperation operation = new ContainerServiceArmOperation(_managedClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -1423,7 +1423,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="content"> The names of the load balancers to be rebalanced. If set to empty, all load balancers will be rebalanced. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation RebalanceLoadBalancers(WaitUntil waitUntil, RebalanceLoadBalancersRequestContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation RebalanceLoadBalancers(WaitUntil waitUntil, RebalanceLoadBalancersContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1435,7 +1435,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateRebalanceLoadBalancersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RebalanceLoadBalancersRequestContent.ToRequestContent(content), context);
+                HttpMessage message = _managedClustersRestClient.CreateRebalanceLoadBalancersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RebalanceLoadBalancersContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceArmOperation operation = new ContainerServiceArmOperation(_managedClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)

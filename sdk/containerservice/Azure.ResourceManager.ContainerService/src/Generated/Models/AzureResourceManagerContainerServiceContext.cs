@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.ContainerService
     [ModelReaderWriterBuildable(typeof(NodeImageVersionsListResult))]
     [ModelReaderWriterBuildable(typeof(OutboundEnvironmentEndpointListResult))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
-    [ModelReaderWriterBuildable(typeof(RebalanceLoadBalancersRequestContent))]
+    [ModelReaderWriterBuildable(typeof(RebalanceLoadBalancersContent))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SafeguardsAvailableVersionData))]
     [ModelReaderWriterBuildable(typeof(SafeguardsAvailableVersionResource))]

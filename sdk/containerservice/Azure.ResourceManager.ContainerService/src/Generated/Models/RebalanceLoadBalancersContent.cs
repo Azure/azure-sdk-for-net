@@ -12,21 +12,21 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> The names of the load balancers to rebalance. If set to empty, all load balancers will be rebalanced. </summary>
-    public partial class RebalanceLoadBalancersRequestContent
+    public partial class RebalanceLoadBalancersContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RebalanceLoadBalancersRequestContent"/>. </summary>
-        public RebalanceLoadBalancersRequestContent()
+        /// <summary> Initializes a new instance of <see cref="RebalanceLoadBalancersContent"/>. </summary>
+        public RebalanceLoadBalancersContent()
         {
             LoadBalancerNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RebalanceLoadBalancersRequestContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RebalanceLoadBalancersContent"/>. </summary>
         /// <param name="loadBalancerNames"> The load balancer names list. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RebalanceLoadBalancersRequestContent(IList<string> loadBalancerNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RebalanceLoadBalancersContent(IList<string> loadBalancerNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LoadBalancerNames = loadBalancerNames;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
