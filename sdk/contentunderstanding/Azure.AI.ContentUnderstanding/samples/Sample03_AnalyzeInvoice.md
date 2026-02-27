@@ -59,20 +59,20 @@ Analyze an invoice from a URL using the `prebuilt-invoice` analyzer:
 ```C# Snippet:ContentUnderstandingAnalyzeInvoice
 // You can replace this URL with your own invoice file URL
 Uri invoiceUrl = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-dotnet/main/ContentUnderstanding.Common/data/invoice.pdf");
-Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
+Operation<AnalysisResult> operation = await client.AnalyzeAsync(
     WaitUntil.Completed,
     "prebuilt-invoice",
-    inputs: new[] { new AnalyzeInput { Url = invoiceUrl } });
+    inputs: new[] { new AnalysisInput { Uri = invoiceUrl } });
 
-AnalyzeResult result = operation.Value;
+AnalysisResult result = operation.Value;
 ```
 
 ## Extract invoice fields
 
-The `prebuilt-invoice` analyzer returns **fields**, which are extracted structured data from the document. Fields can be accessed via `MediaContent.Fields`, which is an `IDictionary<string, ContentField>` where the key is the field name and the value is a `ContentField` object. Fields come in different types derived from `ContentField`:
+The `prebuilt-invoice` analyzer returns **fields**, which are extracted structured data from the document. Fields can be accessed via `AnalysisContent.Fields`, which is an `IDictionary<string, ContentField>` where the key is the field name and the value is a `ContentField` object. Fields come in different types derived from `ContentField`:
 
-- **Simple field types**: `StringField`, `NumberField`, `IntegerField`, `DateField`, `TimeField`, `BooleanField`, `JsonField`
-- **Complex field types**: `ObjectField`, `ArrayField`
+- **Simple field types**: `ContentStringField`, `ContentNumberField`, `ContentIntegerField`, `ContentDateTimeOffsetField`, `ContentTimeField`, `ContentBooleanField`, `ContentJsonField`
+- **Complex field types**: `ContentObjectField`, `ContentArrayField`
 
 The following code snippet shows small examples of extracting some of the many fields available from a `prebuilt-invoice` result:
 
@@ -96,7 +96,26 @@ Console.WriteLine();
 var customerNameField = documentContent.Fields["CustomerName"];
 Console.WriteLine($"Customer Name: {customerNameField.Value ?? "(None)"}");
 Console.WriteLine($"  Confidence: {customerNameField.Confidence?.ToString("F2") ?? "N/A"}");
-Console.WriteLine($"  Source: {customerNameField.Source ?? "N/A"}");
+
+// Access parsed sources to find where the field value appears in the original document.
+// Polygon: the precise region (rotated quadrilateral) around the extracted text.
+// BoundingBox: an axis-aligned rectangle computed from the polygon — useful for
+//              drawing highlight overlays without handling rotation.
+if (customerNameField.Sources != null)
+{
+    foreach (var source in customerNameField.Sources)
+    {
+        if (source is DocumentSource docSource)
+        {
+            Console.WriteLine($"  Page {docSource.PageNumber}");
+            Console.WriteLine($"  Polygon: [{string.Join(", ", docSource.Polygon!.Select(p => $"({p.X:F4},{p.Y:F4})"))}]");
+
+            RectangleF bbox = docSource.BoundingBox!.Value;
+            Console.WriteLine($"  BoundingBox: x={bbox.X:F4}, y={bbox.Y:F4}, w={bbox.Width:F4}, h={bbox.Height:F4}");
+        }
+    }
+}
+
 if (customerNameField.Spans?.Count > 0)
 {
     var span = customerNameField.Spans[0];
@@ -107,7 +126,20 @@ if (customerNameField.Spans?.Count > 0)
 var invoiceDateField = documentContent.Fields.GetFieldOrDefault("InvoiceDate");
 Console.WriteLine($"Invoice Date: {invoiceDateField?.Value ?? "(None)"}");
 Console.WriteLine($"  Confidence: {invoiceDateField?.Confidence?.ToString("F2") ?? "N/A"}");
-Console.WriteLine($"  Source: {invoiceDateField?.Source ?? "N/A"}");
+
+// Access parsed sources for date field
+if (invoiceDateField?.Sources != null)
+{
+    foreach (var source in invoiceDateField.Sources)
+    {
+        if (source is DocumentSource docSource)
+        {
+            Console.WriteLine($"  Page {docSource.PageNumber}");
+            Console.WriteLine($"  BoundingBox: {docSource.BoundingBox}");
+        }
+    }
+}
+
 if (invoiceDateField?.Spans?.Count > 0)
 {
     var span = invoiceDateField.Spans[0];
@@ -115,25 +147,37 @@ if (invoiceDateField?.Spans?.Count > 0)
 }
 
 // Extract object fields (nested structures)
-if (documentContent.Fields.GetFieldOrDefault("TotalAmount") is ObjectField totalAmountObj)
+if (documentContent.Fields.GetFieldOrDefault("TotalAmount") is ContentObjectField totalAmountObj)
 {
-    var amount = totalAmountObj.ValueObject?.GetFieldOrDefault("Amount")?.Value as double?;
-    var currency = totalAmountObj.ValueObject?.GetFieldOrDefault("CurrencyCode")?.Value;
+    var amount = totalAmountObj.Value?.GetFieldOrDefault("Amount")?.Value as double?;
+    var currency = totalAmountObj.Value?.GetFieldOrDefault("CurrencyCode")?.Value;
     Console.WriteLine($"Total: {currency ?? "$"}{amount?.ToString("F2") ?? "(None)"}");
     Console.WriteLine($"  Confidence: {totalAmountObj.Confidence?.ToString("F2") ?? "N/A"}");
-    Console.WriteLine($"  Source: {totalAmountObj.Source ?? "N/A"}");
+
+    // Access parsed sources for object field
+    if (totalAmountObj.Sources != null)
+    {
+        foreach (var source in totalAmountObj.Sources)
+        {
+            if (source is DocumentSource docSource)
+            {
+                Console.WriteLine($"  Page {docSource.PageNumber}");
+                Console.WriteLine($"  BoundingBox: {docSource.BoundingBox}");
+            }
+        }
+    }
 }
 
 // Extract array fields (collections like line items)
-if (documentContent.Fields.GetFieldOrDefault("LineItems") is ArrayField lineItems)
+if (documentContent.Fields.GetFieldOrDefault("LineItems") is ContentArrayField lineItems)
 {
     Console.WriteLine($"Line Items ({lineItems.Count}):");
     for (int i = 0; i < lineItems.Count; i++)
     {
-        if (lineItems[i] is ObjectField item)
+        if (lineItems[i] is ContentObjectField item)
         {
-            var description = item.ValueObject?.GetFieldOrDefault("Description")?.Value;
-            var quantity = item.ValueObject?.GetFieldOrDefault("Quantity")?.Value as double?;
+            var description = item.Value?.GetFieldOrDefault("Description")?.Value;
+            var quantity = item.Value?.GetFieldOrDefault("Quantity")?.Value as double?;
             Console.WriteLine($"  Item {i + 1}: {description ?? "N/A"} (Qty: {quantity?.ToString() ?? "N/A"})");
             Console.WriteLine($"    Confidence: {item.Confidence?.ToString("F2") ?? "N/A"}");
         }
@@ -148,54 +192,52 @@ if (documentContent.Fields.GetFieldOrDefault("LineItems") is ArrayField lineItem
 Fields are organized into three categories that can be combined to form complex data structures:
 
 - **Simple fields** - Single values of primitive types. Access values using type-specific properties:
-  - `StringField.ValueString` - Returns `string` (non-nullable)
-  - `NumberField.ValueNumber` - Returns `double?` (nullable)
-  - `IntegerField.ValueInteger` - Returns `long?` (nullable)
-  - `DateField.ValueDate` - Returns `DateTimeOffset?` (nullable, ISO 8601 YYYY-MM-DD format)
-  - `TimeField.ValueTime` - Returns `TimeSpan?` (nullable, ISO 8601 hh:mm:ss format)
-  - `BooleanField.ValueBoolean` - Returns `bool?` (nullable)
-  - `JsonField.ValueJson` - Returns `BinaryData` (non-nullable)
+  - `ContentStringField.Value` - Returns `string` (non-nullable)
+  - `ContentNumberField.Value` - Returns `double?` (nullable)
+  - `ContentIntegerField.Value` - Returns `long?` (nullable)
+  - `ContentDateTimeOffsetField.Value` - Returns `DateTimeOffset?` (nullable, ISO 8601 YYYY-MM-DD format)
+  - `ContentTimeField.Value` - Returns `TimeSpan?` (nullable, ISO 8601 hh:mm:ss format)
+  - `ContentBooleanField.Value` - Returns `bool?` (nullable)
+  - `ContentJsonField.Value` - Returns `BinaryData` (non-nullable)
 
   Alternatively, use the convenience property `ContentField.Value` which returns the value as an `object` (automatically converts to the appropriate type).
-- **Object fields** - Nested structures containing multiple fields. Access nested fields via `ObjectField.ValueObject`, which returns `IDictionary<string, ContentField>` (non-nullable) where the key is the nested field name and the value is a `ContentField` object. The dictionary can contain any `ContentField`-derived classes, including simple fields (e.g., `StringField`, `NumberField`), object fields (`ObjectField`), or array fields (`ArrayField`), allowing for arbitrarily nested and complex data structures. Use `GetFieldOrDefault()` or the indexer to retrieve individual nested fields (see sample code below).
-- **Array fields** - Collections of fields (can contain simple fields, object fields, or other arrays). Access elements via `ArrayField.ValueArray`, which returns `IList<ContentField>` (non-nullable). Alternatively, use the convenience `Count` property (returns `int`) and indexer `[i]` (returns `ContentField`) to access elements. Each element can be cast to the appropriate field type.
+- **Object fields** - Nested structures containing multiple fields. Access nested fields via `ContentObjectField.Value`, which returns `IDictionary<string, ContentField>` (non-nullable) where the key is the nested field name and the value is a `ContentField` object. The dictionary can contain any `ContentField`-derived classes, including simple fields (e.g., `ContentStringField`, `ContentNumberField`), object fields (`ContentObjectField`), or array fields (`ContentArrayField`), allowing for arbitrarily nested and complex data structures. Use `GetFieldOrDefault()` or the indexer to retrieve individual nested fields (see sample code below).
+- **Array fields** - Collections of fields (can contain simple fields, object fields, or other arrays). Access elements via `ContentArrayField.Value`, which returns `IList<ContentField>` (non-nullable). Alternatively, use the convenience `Count` property (returns `int`) and indexer `[i]` (returns `ContentField`) to access elements. Each element can be cast to the appropriate field type.
 
 ### Accessing field values
 
 For **simple fields**, use the `ContentField.Value` convenience property to get the value without needing to know the specific field type. Alternatively, you can access type-specific properties directly for each field type:
-- `StringField.ValueString` - Returns `string` (non-nullable)
-- `NumberField.ValueNumber` - Returns `double?` (nullable)
-- `IntegerField.ValueInteger` - Returns `long?` (nullable)
-- `DateField.ValueDate` - Returns `DateTimeOffset?` (nullable, ISO 8601 YYYY-MM-DD format)
-- `TimeField.ValueTime` - Returns `TimeSpan?` (nullable, ISO 8601 hh:mm:ss format)
-- `BooleanField.ValueBoolean` - Returns `bool?` (nullable)
-- `JsonField.ValueJson` - Returns `BinaryData` (non-nullable)
+- `ContentStringField.Value` - Returns `string` (non-nullable)
+- `ContentNumberField.Value` - Returns `double?` (nullable)
+- `ContentIntegerField.Value` - Returns `long?` (nullable)
+- `ContentDateTimeOffsetField.Value` - Returns `DateTimeOffset?` (nullable, ISO 8601 YYYY-MM-DD format)
+- `ContentTimeField.Value` - Returns `TimeSpan?` (nullable, ISO 8601 hh:mm:ss format)
+- `ContentBooleanField.Value` - Returns `bool?` (nullable)
+- `ContentJsonField.Value` - Returns `BinaryData` (non-nullable)
 
-For **object fields**, access nested fields through `ValueObject` (an `IDictionary<string, ContentField>`). The dictionary can contain any `ContentField`-derived classes, including simple fields, object fields, or array fields. See the sample code above for examples.
+For **object fields**, access nested fields through `ContentObjectField.Value` (an `IDictionary<string, ContentField>`). The dictionary can contain any `ContentField`-derived classes, including simple fields, object fields, or array fields. See the sample code above for examples.
 
-For **array fields**, access elements via `ValueArray` (returns `IList<ContentField>`) or use the convenience `Count` property and indexer. See the sample code above for examples.
+For **array fields**, access elements via `ContentArrayField.Value` (returns `IList<ContentField>`) or use the convenience `Count` property and indexer. See the sample code above for examples.
 
 ### Understanding field metadata
 
 Each extracted field provides metadata to help you understand the extraction quality:
 
 - **Confidence**: A float value between 0.0 and 1.0 indicating how certain the analyzer is about the extracted value. Higher values indicate higher confidence. Use this to filter or flag low-confidence extractions for manual review.
-- **Source**: An encoded identifier that contains bounding box coordinates identifying the position of the field value in the original document. The format is `D(pageNumber, x1, y1, x2, y2, x3, y3, x4, y4)` where:
-  - `pageNumber`: The page number (1-indexed) where the field was found
-  - `x1, y1, x2, y2, x3, y3, x4, y4`: The four corner coordinates of the bounding box
+- **Sources**: Parsed source objects that identify where the field value appears in the original content. The `Sources` property returns a `ContentSource[]?` — each element is a `DocumentSource` (for documents) or `AudioVisualSource` (for audio/video). For documents, `DocumentSource` provides:
+  - `PageNumber`: The page number (1-indexed) where the field was found
+  - `Polygon`: The precise region around the extracted text as `PointF` coordinates (typically 4 points forming a quadrilateral that may be rotated to match the text orientation)
+  - `BoundingBox`: An axis-aligned `RectangleF` computed from the polygon — useful for drawing highlight overlays without handling rotation
   - Coordinates are in the document's unit (typically "inch" for US documents, as indicated by `DocumentContent.Unit`)
 
-  For example, a source value like `D(1,1.265,1.0836,2.4972,1.0816,2.4964,1.4117,1.2645,1.4117)` indicates:
-  - Page 1
-  - Bounding box with corners at (1.265, 1.0836), (2.4972, 1.0816), (2.4964, 1.4117), and (1.2645, 1.4117)
-  - All coordinates are in inches (since `DocumentContent.Unit` is "inch")
+  Use `Polygon` when you need the exact text region (e.g., for precise cropping or OCR verification). Use `BoundingBox` when you need a simple rectangle (e.g., for drawing highlights in a document viewer).
 
   The source can be used to trace back to the exact location where the value was found in the original document. For more information, see the [Source documentation][source-docs].
 - **Spans**: A list of `ContentSpan` objects that indicate the position of the field value in the markdown content. Each span contains:
   - `Offset`: The starting position (0-indexed) in characters
   - `Length`: The length of the text in characters
 
-These metadata properties are available on all field types (`StringField`, `NumberField`, `DateField`, `ObjectField`, `ArrayField`, etc.).
+These metadata properties are available on all field types (`ContentStringField`, `ContentNumberField`, `ContentDateTimeOffsetField`, `ContentObjectField`, `ContentArrayField`, etc.).
 
 ## Understanding analyzer schemas
 
@@ -205,7 +247,7 @@ See [Sample 06: Get analyzer information][sample06] to learn how to retrieve and
 
 ### Document unit
 
-The `DocumentContent.Unit` property indicates the measurement system used for coordinates in the `Source` field. For US documents, this is typically "inch", meaning all bounding box coordinates in the source field are measured in inches. This allows you to precisely locate extracted values in the original document.
+The `DocumentContent.Unit` property indicates the measurement system used for polygon coordinates in `DocumentSource`. For US documents, this is typically "inch", meaning all bounding box coordinates are measured in inches. This allows you to precisely locate extracted values in the original document.
 
 For more details about `DocumentContent` and all available document elements (pages, paragraphs, tables, figures, etc.), see the [Document elements documentation][document-elements-docs].
 

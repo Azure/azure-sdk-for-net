@@ -1,0 +1,6 @@
+directory: specification/managedoperations/ManagedOps.Management
+commit: 5dfb097302f2588f698e3a7c6d31f9194e64a2f9
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

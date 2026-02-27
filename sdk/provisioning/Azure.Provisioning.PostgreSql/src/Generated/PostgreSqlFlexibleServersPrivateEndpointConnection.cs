@@ -19,7 +19,8 @@ namespace Azure.Provisioning.PostgreSql;
 public partial class PostgreSqlFlexibleServersPrivateEndpointConnection : ProvisionableResource
 {
     /// <summary>
-    /// The name of the private endpoint connection.
+    /// The name of the private endpoint connection associated with the Azure
+    /// resource.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -106,7 +107,7 @@ public partial class PostgreSqlFlexibleServersPrivateEndpointConnection : Provis
     /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlFlexibleServersPrivateEndpointConnection.</param>
     public PostgreSqlFlexibleServersPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/flexibleServers/privateEndpointConnections", resourceVersion ?? "2024-08-01")
+        : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/flexibleServers/privateEndpointConnections", resourceVersion ?? "2025-08-01")
     {
     }
 
@@ -116,6 +117,7 @@ public partial class PostgreSqlFlexibleServersPrivateEndpointConnection : Provis
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _connectionState = DefineModelProperty<PostgreSqlFlexibleServersPrivateLinkServiceConnectionState>("ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
         _groupIds = DefineListProperty<string>("GroupIds", ["properties", "groupIds"], isOutput: true);
@@ -132,6 +134,11 @@ public partial class PostgreSqlFlexibleServersPrivateEndpointConnection : Provis
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-08-01.
+        /// </summary>
+        public static readonly string V2025_08_01 = "2025-08-01";
+
         /// <summary>
         /// 2024-08-01.
         /// </summary>

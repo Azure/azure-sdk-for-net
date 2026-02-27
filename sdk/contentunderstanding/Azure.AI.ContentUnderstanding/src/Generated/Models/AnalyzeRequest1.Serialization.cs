@@ -16,6 +16,11 @@ namespace Azure.AI.ContentUnderstanding
     /// <summary> The AnalyzeRequest1. </summary>
     internal partial class AnalyzeRequest1 : IJsonModel<AnalyzeRequest1>
     {
+        /// <summary> Initializes a new instance of <see cref="AnalyzeRequest1"/> for deserialization. </summary>
+        internal AnalyzeRequest1()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AnalyzeRequest1 PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -86,16 +91,13 @@ namespace Azure.AI.ContentUnderstanding
             {
                 throw new FormatException($"The model {nameof(AnalyzeRequest1)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Inputs))
+            writer.WritePropertyName("inputs"u8);
+            writer.WriteStartArray();
+            foreach (AnalysisInput item in Inputs)
             {
-                writer.WritePropertyName("inputs"u8);
-                writer.WriteStartArray();
-                foreach (AnalyzeInput item in Inputs)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item, options);
             }
+            writer.WriteEndArray();
             if (Optional.IsCollectionDefined(ModelDeployments))
             {
                 writer.WritePropertyName("modelDeployments"u8);
@@ -154,21 +156,17 @@ namespace Azure.AI.ContentUnderstanding
             {
                 return null;
             }
-            IList<AnalyzeInput> inputs = default;
+            IList<AnalysisInput> inputs = default;
             IDictionary<string, string> modelDeployments = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("inputs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<AnalyzeInput> array = new List<AnalyzeInput>();
+                    List<AnalysisInput> array = new List<AnalysisInput>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AnalyzeInput.DeserializeAnalyzeInput(item, options));
+                        array.Add(AnalysisInput.DeserializeAnalysisInput(item, options));
                     }
                     inputs = array;
                     continue;
@@ -199,7 +197,7 @@ namespace Azure.AI.ContentUnderstanding
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AnalyzeRequest1(inputs ?? new ChangeTrackingList<AnalyzeInput>(), modelDeployments ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new AnalyzeRequest1(inputs, modelDeployments ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
     }
 }

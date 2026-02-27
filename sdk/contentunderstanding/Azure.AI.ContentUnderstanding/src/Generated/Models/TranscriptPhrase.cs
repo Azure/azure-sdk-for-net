@@ -18,33 +18,33 @@ namespace Azure.AI.ContentUnderstanding
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TranscriptPhrase"/>. </summary>
-        /// <param name="startTimeMs"> Start time of the phrase in milliseconds. </param>
-        /// <param name="endTimeMs"> End time of the phrase in milliseconds. </param>
+        /// <param name="startTimeMsValue"> Start time of the phrase in milliseconds. </param>
+        /// <param name="endTimeMsValue"> End time of the phrase in milliseconds. </param>
         /// <param name="text"> Transcript text. </param>
         /// <param name="words"> List of words in the phrase. </param>
-        internal TranscriptPhrase(long startTimeMs, long endTimeMs, string text, IEnumerable<TranscriptWord> words)
+        internal TranscriptPhrase(long startTimeMsValue, long endTimeMsValue, string text, IEnumerable<TranscriptWord> words)
         {
-            StartTimeMs = startTimeMs;
-            EndTimeMs = endTimeMs;
+            StartTimeMsValue = startTimeMsValue;
+            EndTimeMsValue = endTimeMsValue;
             Text = text;
             Words = words.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="TranscriptPhrase"/>. </summary>
         /// <param name="speaker"> Speaker index or name. </param>
-        /// <param name="startTimeMs"> Start time of the phrase in milliseconds. </param>
-        /// <param name="endTimeMs"> End time of the phrase in milliseconds. </param>
+        /// <param name="startTimeMsValue"> Start time of the phrase in milliseconds. </param>
+        /// <param name="endTimeMsValue"> End time of the phrase in milliseconds. </param>
         /// <param name="locale"> Detected locale of the phrase.  Ex. en-US. </param>
         /// <param name="text"> Transcript text. </param>
         /// <param name="confidence"> Confidence of predicting the phrase. </param>
         /// <param name="span"> Span of the phrase in the markdown content. </param>
         /// <param name="words"> List of words in the phrase. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TranscriptPhrase(string speaker, long startTimeMs, long endTimeMs, string locale, string text, float? confidence, ContentSpan span, IList<TranscriptWord> words, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TranscriptPhrase(string speaker, long startTimeMsValue, long endTimeMsValue, string locale, string text, float? confidence, ContentSpan span, IList<TranscriptWord> words, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Speaker = speaker;
-            StartTimeMs = startTimeMs;
-            EndTimeMs = endTimeMs;
+            StartTimeMsValue = startTimeMsValue;
+            EndTimeMsValue = endTimeMsValue;
             Locale = locale;
             Text = text;
             Confidence = confidence;
@@ -55,12 +55,6 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary> Speaker index or name. </summary>
         public string Speaker { get; }
-
-        /// <summary> Start time of the phrase in milliseconds. </summary>
-        public long StartTimeMs { get; }
-
-        /// <summary> End time of the phrase in milliseconds. </summary>
-        public long EndTimeMs { get; }
 
         /// <summary> Detected locale of the phrase.  Ex. en-US. </summary>
         public string Locale { get; }
