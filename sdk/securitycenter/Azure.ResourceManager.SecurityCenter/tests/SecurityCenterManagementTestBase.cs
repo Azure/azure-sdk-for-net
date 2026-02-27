@@ -215,6 +215,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
                 Capacity = 1
             };
             IotHubDescriptionData data = new IotHubDescriptionData(resourceGroup.Data.Location, sku) { };
+            data.Tags.Clear();  // This is a workaround to make sure the tags property can be serialized in the test.
             var iotHub = await resourceGroup.GetIotHubDescriptions().CreateOrUpdateAsync(WaitUntil.Completed, iotHubName, data);
             return iotHub.Value;
         }
