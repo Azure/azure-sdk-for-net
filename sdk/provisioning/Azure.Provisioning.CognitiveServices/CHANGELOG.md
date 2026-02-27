@@ -2,14 +2,6 @@
 
 ## 1.3.0-beta.1 (Unreleased)
 
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.2.0 (2025-12-09)
 
 ### Features Added

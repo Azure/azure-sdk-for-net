@@ -6,12 +6,6 @@
 
 - Regenerated from updated `Azure.ResourceManager.PostgreSql` 1.4.1 package, adding PostgreSQL versions 17 and 18 to `PostgreSqlFlexibleServerVersion`.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.1.1 (2025-06-25)
 
 ### Bugs Fixed

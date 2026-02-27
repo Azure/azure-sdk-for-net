@@ -1,16 +1,10 @@
 # Release History
 
-## 1.0.0-beta.4 (2026-02-27)
+## 1.0.0-beta.4 (2026-03-03)
 
 ### Features Added
 
 - Upgraded dependency on `Azure.ResourceManager.Network` to version 1.15.0.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.3 (2026-01-07)
 
