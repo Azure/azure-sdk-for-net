@@ -5,6 +5,8 @@
 ### Features Added
 
 - Regenerated from `Azure.ResourceManager.Network` version 1.15.0.
+- Added `ServiceGatewayId` property to `NatGateway` and `SubnetResource`.
+- Added new `FirewallPolicyIntrusionDetectionProfileType` values: `Off`, `Emerging`, `Core`, and `Extended`.
 
 ## 1.0.0-beta.3 (2026-01-07)
 
