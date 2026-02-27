@@ -5,7 +5,6 @@
 
 using System;
 using System.ClientModel;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
