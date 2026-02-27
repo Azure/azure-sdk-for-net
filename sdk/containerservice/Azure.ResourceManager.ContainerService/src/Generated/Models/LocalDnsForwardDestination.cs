@@ -7,54 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Destination server for DNS queries to be forwarded from localDNS.
-    /// Serialized Name: LocalDNSForwardDestination
-    /// </summary>
+    /// <summary> Destination server for DNS queries to be forwarded from localDNS. </summary>
     public readonly partial struct LocalDnsForwardDestination : IEquatable<LocalDnsForwardDestination>
     {
         private readonly string _value;
+        /// <summary> Forward DNS queries from localDNS to cluster CoreDNS. </summary>
+        private const string ClusterCoreDnsValue = "ClusterCoreDNS";
+        /// <summary> Forward DNS queries from localDNS to DNS server configured in the VNET. A VNET can have multiple DNS servers configured. </summary>
+        private const string VnetDnsValue = "VnetDNS";
 
         /// <summary> Initializes a new instance of <see cref="LocalDnsForwardDestination"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LocalDnsForwardDestination(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string ClusterCoreDnsValue = "ClusterCoreDNS";
-        private const string VnetDnsValue = "VnetDNS";
-
-        /// <summary>
-        /// Forward DNS queries from localDNS to cluster CoreDNS.
-        /// Serialized Name: LocalDNSForwardDestination.ClusterCoreDNS
-        /// </summary>
+        /// <summary> Forward DNS queries from localDNS to cluster CoreDNS. </summary>
         public static LocalDnsForwardDestination ClusterCoreDns { get; } = new LocalDnsForwardDestination(ClusterCoreDnsValue);
-        /// <summary>
-        /// Forward DNS queries from localDNS to DNS server configured in the VNET. A VNET can have multiple DNS servers configured.
-        /// Serialized Name: LocalDNSForwardDestination.VnetDNS
-        /// </summary>
+
+        /// <summary> Forward DNS queries from localDNS to DNS server configured in the VNET. A VNET can have multiple DNS servers configured. </summary>
         public static LocalDnsForwardDestination VnetDns { get; } = new LocalDnsForwardDestination(VnetDnsValue);
+
         /// <summary> Determines if two <see cref="LocalDnsForwardDestination"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LocalDnsForwardDestination left, LocalDnsForwardDestination right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LocalDnsForwardDestination"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LocalDnsForwardDestination left, LocalDnsForwardDestination right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LocalDnsForwardDestination"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LocalDnsForwardDestination"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LocalDnsForwardDestination(string value) => new LocalDnsForwardDestination(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LocalDnsForwardDestination"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LocalDnsForwardDestination?(string value) => value == null ? null : new LocalDnsForwardDestination(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LocalDnsForwardDestination other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LocalDnsForwardDestination other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

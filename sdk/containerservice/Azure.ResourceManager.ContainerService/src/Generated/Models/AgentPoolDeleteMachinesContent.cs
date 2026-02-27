@@ -8,52 +8,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Specifies a list of machine names from the agent pool to be deleted.
-    /// Serialized Name: AgentPoolDeleteMachinesParameter
-    /// </summary>
+    /// <summary> Specifies a list of machine names from the agent pool to be deleted. </summary>
     public partial class AgentPoolDeleteMachinesContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AgentPoolDeleteMachinesContent"/>. </summary>
-        /// <param name="machineNames">
-        /// The agent pool machine names.
-        /// Serialized Name: AgentPoolDeleteMachinesParameter.machineNames
-        /// </param>
+        /// <param name="machineNames"> The agent pool machine names. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="machineNames"/> is null. </exception>
         public AgentPoolDeleteMachinesContent(IEnumerable<string> machineNames)
         {
@@ -63,26 +29,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AgentPoolDeleteMachinesContent"/>. </summary>
-        /// <param name="machineNames">
-        /// The agent pool machine names.
-        /// Serialized Name: AgentPoolDeleteMachinesParameter.machineNames
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AgentPoolDeleteMachinesContent(IList<string> machineNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="machineNames"> The agent pool machine names. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AgentPoolDeleteMachinesContent(IList<string> machineNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MachineNames = machineNames;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentPoolDeleteMachinesContent"/> for deserialization. </summary>
-        internal AgentPoolDeleteMachinesContent()
-        {
-        }
-
-        /// <summary>
-        /// The agent pool machine names.
-        /// Serialized Name: AgentPoolDeleteMachinesParameter.machineNames
-        /// </summary>
+        /// <summary> The agent pool machine names. </summary>
         [WirePath("machineNames")]
         public IList<string> MachineNames { get; }
     }

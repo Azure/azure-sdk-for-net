@@ -7,46 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Ingress profile for the container service cluster.
-    /// Serialized Name: ManagedClusterIngressProfile
-    /// </summary>
-    internal partial class ManagedClusterIngressProfile
+    /// <summary> Ingress profile for the container service cluster. </summary>
+    public partial class ManagedClusterIngressProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterIngressProfile"/>. </summary>
         public ManagedClusterIngressProfile()
@@ -54,22 +23,46 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterIngressProfile"/>. </summary>
-        /// <param name="webAppRouting">
-        /// App Routing settings for the ingress profile. You can find an overview and onboarding guide for this feature at https://learn.microsoft.com/en-us/azure/aks/app-routing?tabs=default%2Cdeploy-app-default.
-        /// Serialized Name: ManagedClusterIngressProfile.webAppRouting
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterIngressProfile(ManagedClusterIngressProfileWebAppRouting webAppRouting, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="webAppRouting"> App Routing settings for the ingress profile. You can find an overview and onboarding guide for this feature at https://learn.microsoft.com/en-us/azure/aks/app-routing?tabs=default%2Cdeploy-app-default. </param>
+        /// <param name="gatewayAPI"> Settings for the managed Gateway API installation. </param>
+        /// <param name="applicationLoadBalancer"> Settings for the managed Application Load Balancer installation. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterIngressProfile(ManagedClusterIngressProfileWebAppRouting webAppRouting, ManagedClusterIngressProfileGatewayConfiguration gatewayAPI, ManagedClusterIngressProfileApplicationLoadBalancer applicationLoadBalancer, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WebAppRouting = webAppRouting;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            GatewayAPI = gatewayAPI;
+            ApplicationLoadBalancer = applicationLoadBalancer;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// App Routing settings for the ingress profile. You can find an overview and onboarding guide for this feature at https://learn.microsoft.com/en-us/azure/aks/app-routing?tabs=default%2Cdeploy-app-default.
-        /// Serialized Name: ManagedClusterIngressProfile.webAppRouting
-        /// </summary>
+        /// <summary> App Routing settings for the ingress profile. You can find an overview and onboarding guide for this feature at https://learn.microsoft.com/en-us/azure/aks/app-routing?tabs=default%2Cdeploy-app-default. </summary>
         [WirePath("webAppRouting")]
         public ManagedClusterIngressProfileWebAppRouting WebAppRouting { get; set; }
+
+        /// <summary> Settings for the managed Gateway API installation. </summary>
+        [WirePath("gatewayAPI")]
+        internal ManagedClusterIngressProfileGatewayConfiguration GatewayAPI { get; set; }
+
+        /// <summary> Settings for the managed Application Load Balancer installation. </summary>
+        [WirePath("applicationLoadBalancer")]
+        public ManagedClusterIngressProfileApplicationLoadBalancer ApplicationLoadBalancer { get; set; }
+
+        /// <summary> Configuration for the managed Gateway API installation. If not specified, the default is 'Disabled'. See https://aka.ms/k8s-gateway-api for more details. </summary>
+        [WirePath("gatewayAPI.installation")]
+        public ManagedGatewayType? GatewayAPIInstallation
+        {
+            get
+            {
+                return GatewayAPI is null ? default : GatewayAPI.Installation;
+            }
+            set
+            {
+                if (GatewayAPI is null)
+                {
+                    GatewayAPI = new ManagedClusterIngressProfileGatewayConfiguration();
+                }
+                GatewayAPI.Installation = value;
+            }
+        }
     }
 }
