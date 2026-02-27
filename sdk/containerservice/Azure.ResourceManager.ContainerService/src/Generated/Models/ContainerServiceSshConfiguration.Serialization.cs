@@ -14,7 +14,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> SSH configuration for Linux-based VMs running on Azure. </summary>
-    internal partial class ContainerServiceSshConfiguration : IJsonModel<ContainerServiceSshConfiguration>
+    public partial class ContainerServiceSshConfiguration : IJsonModel<ContainerServiceSshConfiguration>
     {
         /// <summary> Initializes a new instance of <see cref="ContainerServiceSshConfiguration"/> for deserialization. </summary>
         internal ContainerServiceSshConfiguration()

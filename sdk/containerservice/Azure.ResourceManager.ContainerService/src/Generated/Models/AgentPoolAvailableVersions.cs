@@ -42,15 +42,5 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Properties of agent pool available versions. </summary>
         [WirePath("properties")]
         internal AgentPoolAvailableVersionsProperties Properties { get; }
-
-        /// <summary> List of versions available for agent pool. </summary>
-        [WirePath("properties.agentPoolVersions")]
-        public IList<AgentPoolAvailableVersion> AgentPoolVersions
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AgentPoolVersions;
-            }
-        }
     }
 }

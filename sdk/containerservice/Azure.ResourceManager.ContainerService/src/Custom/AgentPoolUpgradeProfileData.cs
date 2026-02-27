@@ -19,7 +19,8 @@ namespace Azure.ResourceManager.ContainerService
         {
             get
             {
-                return Properties is null ? default : Properties.Upgrades.ToArray();
+                var upgrades = Properties?.Upgrades;
+                return upgrades is null ? default : upgrades.ToArray();
             }
         }
     }

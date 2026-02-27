@@ -19,19 +19,6 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceLinuxProfile"/>. </summary>
         /// <param name="adminUsername"> The administrator username to use for Linux VMs. </param>
-        /// <param name="sshPublicKeys"> The list of SSH public keys used to authenticate with Linux-based VMs. A maximum of 1 key may be specified. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="adminUsername"/> or <paramref name="sshPublicKeys"/> is null. </exception>
-        public ContainerServiceLinuxProfile(string adminUsername, IList<ContainerServiceSshPublicKey> sshPublicKeys)
-        {
-            Argument.AssertNotNull(adminUsername, nameof(adminUsername));
-            Argument.AssertNotNull(sshPublicKeys, nameof(sshPublicKeys));
-
-            AdminUsername = adminUsername;
-            Ssh = new ContainerServiceSshConfiguration(sshPublicKeys);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceLinuxProfile"/>. </summary>
-        /// <param name="adminUsername"> The administrator username to use for Linux VMs. </param>
         /// <param name="ssh"> The SSH configuration for Linux-based VMs running on Azure. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ContainerServiceLinuxProfile(string adminUsername, ContainerServiceSshConfiguration ssh, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -48,19 +35,5 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> The SSH configuration for Linux-based VMs running on Azure. </summary>
         [WirePath("ssh")]
         internal ContainerServiceSshConfiguration Ssh { get; set; }
-
-        /// <summary> The list of SSH public keys used to authenticate with Linux-based VMs. A maximum of 1 key may be specified. </summary>
-        [WirePath("ssh.publicKeys")]
-        public IList<ContainerServiceSshPublicKey> SshPublicKeys
-        {
-            get
-            {
-                if (Ssh is null)
-                {
-                    Ssh = new ContainerServiceSshConfiguration();
-                }
-                return Ssh.PublicKeys;
-            }
-        }
     }
 }

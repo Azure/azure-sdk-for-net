@@ -637,6 +637,16 @@ namespace Azure.ResourceManager.ContainerService.Models
                 name);
         }
 
+        /// <summary> SSH configuration for Linux-based VMs running on Azure. </summary>
+        /// <param name="publicKeys"> The list of SSH public keys used to authenticate with Linux-based VMs. A maximum of 1 key may be specified. </param>
+        /// <returns> A new <see cref="Models.ContainerServiceSshConfiguration"/> instance for mocking. </returns>
+        public static ContainerServiceSshConfiguration ContainerServiceSshConfiguration(IEnumerable<ContainerServiceSshPublicKey> publicKeys = default)
+        {
+            publicKeys ??= new ChangeTrackingList<ContainerServiceSshPublicKey>();
+
+            return new ContainerServiceSshConfiguration(publicKeys.ToList(), additionalBinaryDataProperties: null);
+        }
+
         /// <summary> A Kubernetes add-on profile for a managed cluster. </summary>
         /// <param name="isEnabled"> Whether the add-on is enabled or not. </param>
         /// <param name="config"> Key-value pairs for configuring an add-on. </param>
