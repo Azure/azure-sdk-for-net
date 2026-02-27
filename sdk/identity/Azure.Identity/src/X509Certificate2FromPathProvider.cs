@@ -78,7 +78,7 @@ namespace Azure.Identity
             }
         }
 
-        private static async ValueTask<X509Certificate2> LoadCertificateFromStore(StoreLocation storeLocation, string storeName, string thumbprint)
+        private async ValueTask<X509Certificate2> LoadCertificateFromStore(StoreLocation storeLocation, string storeName, string thumbprint)
         {
             using X509Store store = new(storeName, storeLocation);
             store.Open(OpenFlags.ReadOnly | OpenFlags.OpenExistingOnly);
@@ -88,7 +88,7 @@ namespace Azure.Identity
 
             return certs.Count switch
             {
-                1 => certs[0],
+                1 => Certificate = certs[0],
                 0 => throw new CredentialUnavailableException($"No certificate found in {storeLocation}/{storeName} store with thumbprint {thumbprint}"),
                 _ => throw new CredentialUnavailableException($"{certs.Count} certificates found in {storeLocation}/{storeName} store with thumbprint {thumbprint}")
             };
@@ -98,11 +98,6 @@ namespace Azure.Identity
         // However, the loader is not available in earlier versions.
         private async ValueTask<X509Certificate2> LoadCertificateFromPfxFileAsync(bool async, string clientCertificatePath, string certificatePassword, CancellationToken cancellationToken)
         {
-            if (!(Certificate is null))
-            {
-                return Certificate;
-            }
-
             try
             {
                 if (!async)
@@ -133,11 +128,6 @@ namespace Azure.Identity
 
         private async ValueTask<X509Certificate2> LoadCertificateFromPemFileAsync(bool async, string clientCertificatePath, CancellationToken cancellationToken)
         {
-            if (!(Certificate is null))
-            {
-                return Certificate;
-            }
-
             string certficateText;
 
             try
