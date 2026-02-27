@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Consumption.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ConsumptionReservationRecommendation ConsumptionReservationRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, ETag? etag = null, IReadOnlyDictionary<string, string> tags = null, AzureLocation? location = null, string sku = null)
         {
-            return ConsumptionReservationRecommendation(id, name, resourceType, systemData, kind, location, sku, etag, tags);
+            throw new NotImplementedException("This method is for backward compatibility only and should not be called directly.");
         }
 
         // we have this customization because the order of properties changed in the consolidation when a model has multiple `allOf` in their swagger definition.
@@ -61,31 +61,7 @@ namespace Azure.ResourceManager.Consumption.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ConsumptionModernReservationRecommendation ConsumptionModernReservationRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag = null, IReadOnlyDictionary<string, string> tags = null, AzureLocation? location = null, string sku = null, string locationPropertiesLocation = null, int? lookBackPeriod = null, float? instanceFlexibilityRatio = null, string instanceFlexibilityGroup = null, string normalizedSize = null, float? recommendedQuantityNormalized = null, Guid? meterId = null, string term = null, ConsumptionAmount costWithNoReservedInstances = null, decimal? recommendedQuantity = null, ConsumptionAmount totalCostWithReservedInstances = null, ConsumptionAmount netSavings = null, DateTimeOffset? firstUsageOn = null, string scope = null, IEnumerable<ConsumptionSkuProperty> skuProperties = null, string skuName = null)
         {
-            return ConsumptionModernReservationRecommendation(
-                id,
-                name,
-                resourceType,
-                systemData,
-                location,
-                sku,
-                etag,
-                tags,
-                locationPropertiesLocation,
-                lookBackPeriod,
-                instanceFlexibilityRatio,
-                instanceFlexibilityGroup,
-                normalizedSize,
-                recommendedQuantityNormalized,
-                meterId,
-                term,
-                costWithNoReservedInstances,
-                recommendedQuantity,
-                totalCostWithReservedInstances,
-                netSavings,
-                firstUsageOn,
-                scope,
-                skuProperties,
-                skuName);
+            throw new NotImplementedException("This method is for backward compatibility only and should not be called directly.");
         }
     }
 }

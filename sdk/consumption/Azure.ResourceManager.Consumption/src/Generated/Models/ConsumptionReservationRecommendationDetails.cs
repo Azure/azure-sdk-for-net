@@ -7,7 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Consumption;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
@@ -15,37 +17,8 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> Reservation recommendation details. </summary>
     public partial class ConsumptionReservationRecommendationDetails : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionReservationRecommendationDetails"/>. </summary>
         internal ConsumptionReservationRecommendationDetails()
@@ -54,55 +27,93 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionReservationRecommendationDetails"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="location"> Resource Location. </param>
         /// <param name="sku"> Resource sku. </param>
-        /// <param name="currency"> An ISO 4217 currency code identifier for the costs and savings. </param>
-        /// <param name="properties"> Resource specific properties. </param>
-        /// <param name="resourceGroup"> Resource Group. </param>
-        /// <param name="savings"> Savings information for the recommendation. </param>
-        /// <param name="scope"> Scope of the reservation, ex: Single or Shared. </param>
-        /// <param name="usage"> Historical usage details used to calculate the estimated savings. </param>
-        /// <param name="etag"> The etag for the resource. </param>
+        /// <param name="reserRecomDetailsProperties"> The properties of the reservation recommendation. </param>
+        /// <param name="eTag"> The etag for the resource. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConsumptionReservationRecommendationDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string sku, string currency, ConsumptionResourceProperties properties, string resourceGroup, ConsumptionSavingsProperties savings, string scope, ConsumptionUsageProperties usage, ETag? etag, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ConsumptionReservationRecommendationDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation? location, string sku, ReservationRecommendationDetailsProperties reserRecomDetailsProperties, ETag? eTag, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Location = location;
             Sku = sku;
-            Currency = currency;
-            Properties = properties;
-            ResourceGroup = resourceGroup;
-            Savings = savings;
-            Scope = scope;
-            Usage = usage;
-            ETag = etag;
+            ReserRecomDetailsProperties = reserRecomDetailsProperties;
+            ETag = eTag;
             Tags = tags;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource Location. </summary>
         public AzureLocation? Location { get; }
+
         /// <summary> Resource sku. </summary>
         public string Sku { get; }
-        /// <summary> An ISO 4217 currency code identifier for the costs and savings. </summary>
-        public string Currency { get; }
-        /// <summary> Resource specific properties. </summary>
-        public ConsumptionResourceProperties Properties { get; }
-        /// <summary> Resource Group. </summary>
-        public string ResourceGroup { get; }
-        /// <summary> Savings information for the recommendation. </summary>
-        public ConsumptionSavingsProperties Savings { get; }
-        /// <summary> Scope of the reservation, ex: Single or Shared. </summary>
-        public string Scope { get; }
-        /// <summary> Historical usage details used to calculate the estimated savings. </summary>
-        public ConsumptionUsageProperties Usage { get; }
+
+        /// <summary> The properties of the reservation recommendation. </summary>
+        internal ReservationRecommendationDetailsProperties ReserRecomDetailsProperties { get; }
+
         /// <summary> The etag for the resource. </summary>
         public ETag? ETag { get; }
+
         /// <summary> Resource tags. </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
+
+        /// <summary> An ISO 4217 currency code identifier for the costs and savings. </summary>
+        public string Currency
+        {
+            get
+            {
+                return ReserRecomDetailsProperties.Currency;
+            }
+        }
+
+        /// <summary> Resource specific properties. </summary>
+        public ConsumptionResourceProperties Properties
+        {
+            get
+            {
+                return ReserRecomDetailsProperties.Properties;
+            }
+        }
+
+        /// <summary> Resource Group. </summary>
+        public string ResourceGroup
+        {
+            get
+            {
+                return ReserRecomDetailsProperties.ResourceGroup;
+            }
+        }
+
+        /// <summary> Savings information for the recommendation. </summary>
+        public ConsumptionSavingsProperties Savings
+        {
+            get
+            {
+                return ReserRecomDetailsProperties.Savings;
+            }
+        }
+
+        /// <summary> Scope of the reservation, ex: Single or Shared. </summary>
+        public string Scope
+        {
+            get
+            {
+                return ReserRecomDetailsProperties.Scope;
+            }
+        }
+
+        /// <summary> Historical usage details used to calculate the estimated savings. </summary>
+        public ConsumptionUsageProperties Usage
+        {
+            get
+            {
+                return ReserRecomDetailsProperties.Usage;
+            }
+        }
     }
 }

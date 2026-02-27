@@ -8,65 +8,74 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Consumption;
 using Azure.ResourceManager.Consumption.Models;
+using Azure.ResourceManager.ManagementGroups;
 
 namespace Azure.ResourceManager.Consumption.Mocking
 {
-    /// <summary> A class to add extension methods to ManagementGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ManagementGroupResource"/>. </summary>
     public partial class MockableConsumptionManagementGroupResource : ArmResource
     {
         private ClientDiagnostics _aggregatedCostClientDiagnostics;
-        private AggregatedCostRestOperations _aggregatedCostRestClient;
+        private AggregatedCost _aggregatedCostRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableConsumptionManagementGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableConsumptionManagementGroupResource for mocking. </summary>
         protected MockableConsumptionManagementGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableConsumptionManagementGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableConsumptionManagementGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableConsumptionManagementGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics AggregatedCostClientDiagnostics => _aggregatedCostClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private AggregatedCostRestOperations AggregatedCostRestClient => _aggregatedCostRestClient ??= new AggregatedCostRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics AggregatedCostClientDiagnostics => _aggregatedCostClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private AggregatedCost AggregatedCostRestClient => _aggregatedCostRestClient ??= new AggregatedCost(AggregatedCostClientDiagnostics, Pipeline, Endpoint, "2024-08-01");
 
         /// <summary>
         /// Provides the aggregate cost of a management group and all child management groups by current billing period.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Consumption/aggregatedcost</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Consumption/aggregatedcost. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AggregatedCost_GetByManagementGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> AggregatedCostOperationGroup_GetByManagementGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> May be used to filter aggregated cost by properties/usageStart (Utc time), properties/usageEnd (Utc time). The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
+        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ConsumptionAggregatedCostResult>> GetAggregatedCostAsync(string filter = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConsumptionAggregatedCostResult>> GetAggregatedCostAsync(string filter = default, CancellationToken cancellationToken = default)
         {
-            using var scope = AggregatedCostClientDiagnostics.CreateScope("MockableConsumptionManagementGroupResource.GetAggregatedCost");
+            using DiagnosticScope scope = AggregatedCostClientDiagnostics.CreateScope("MockableConsumptionManagementGroupResource.GetAggregatedCost");
             scope.Start();
             try
             {
-                var response = await AggregatedCostRestClient.GetByManagementGroupAsync(Id.Name, filter, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = AggregatedCostRestClient.CreateGetAggregatedCostRequest(Id.Name, filter, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ConsumptionAggregatedCostResult> response = Response.FromValue(ConsumptionAggregatedCostResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -80,28 +89,136 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// Provides the aggregate cost of a management group and all child management groups by current billing period.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Consumption/aggregatedcost</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Consumption/aggregatedcost. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AggregatedCost_GetByManagementGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> AggregatedCostOperationGroup_GetByManagementGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> May be used to filter aggregated cost by properties/usageStart (Utc time), properties/usageEnd (Utc time). The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
+        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConsumptionAggregatedCostResult> GetAggregatedCost(string filter = null, CancellationToken cancellationToken = default)
+        public virtual Response<ConsumptionAggregatedCostResult> GetAggregatedCost(string filter = default, CancellationToken cancellationToken = default)
         {
-            using var scope = AggregatedCostClientDiagnostics.CreateScope("MockableConsumptionManagementGroupResource.GetAggregatedCost");
+            using DiagnosticScope scope = AggregatedCostClientDiagnostics.CreateScope("MockableConsumptionManagementGroupResource.GetAggregatedCost");
             scope.Start();
             try
             {
-                var response = AggregatedCostRestClient.GetByManagementGroup(Id.Name, filter, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = AggregatedCostRestClient.CreateGetAggregatedCostRequest(Id.Name, filter, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ConsumptionAggregatedCostResult> response = Response.FromValue(ConsumptionAggregatedCostResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Provides the aggregate cost of a management group and all child management groups by specified billing period
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/aggregatedCost. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AggregatedCostOperationGroup_GetForBillingPeriodByManagementGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingPeriodName"> Billing Period Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingPeriodName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingPeriodName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ConsumptionAggregatedCostResult>> GetForBillingPeriodByManagementGroupAsync(string billingPeriodName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(billingPeriodName, nameof(billingPeriodName));
+
+            using DiagnosticScope scope = AggregatedCostClientDiagnostics.CreateScope("MockableConsumptionManagementGroupResource.GetForBillingPeriodByManagementGroup");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = AggregatedCostRestClient.CreateGetForBillingPeriodByManagementGroupRequest(Id.Name, billingPeriodName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ConsumptionAggregatedCostResult> response = Response.FromValue(ConsumptionAggregatedCostResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Provides the aggregate cost of a management group and all child management groups by specified billing period
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/aggregatedCost. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AggregatedCostOperationGroup_GetForBillingPeriodByManagementGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingPeriodName"> Billing Period Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingPeriodName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingPeriodName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ConsumptionAggregatedCostResult> GetForBillingPeriodByManagementGroup(string billingPeriodName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(billingPeriodName, nameof(billingPeriodName));
+
+            using DiagnosticScope scope = AggregatedCostClientDiagnostics.CreateScope("MockableConsumptionManagementGroupResource.GetForBillingPeriodByManagementGroup");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = AggregatedCostRestClient.CreateGetForBillingPeriodByManagementGroupRequest(Id.Name, billingPeriodName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ConsumptionAggregatedCostResult> response = Response.FromValue(ConsumptionAggregatedCostResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)

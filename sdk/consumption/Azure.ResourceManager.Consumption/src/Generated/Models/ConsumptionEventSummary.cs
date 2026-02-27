@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -15,145 +16,267 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> An event summary resource. </summary>
     public partial class ConsumptionEventSummary : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionEventSummary"/>. </summary>
-        public ConsumptionEventSummary()
+        internal ConsumptionEventSummary()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionEventSummary"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="transactOn"> The date of the event. </param>
-        /// <param name="description"> The description of the event. </param>
-        /// <param name="newCredit"> The amount of new credit or commitment for NewCredit or SettleCharges event. </param>
-        /// <param name="adjustments"> The amount of balance adjustment. The property is not available for ConsumptionCommitment lots. </param>
-        /// <param name="creditExpired"> The amount of expired credit or commitment for NewCredit or SettleCharges event. </param>
-        /// <param name="charges"> The amount of charges for events of type SettleCharges and PendingEligibleCharges. </param>
-        /// <param name="closedBalance"> The balance after the event. </param>
-        /// <param name="eventType"> Identifies the type of the event. </param>
-        /// <param name="invoiceNumber"> The number which uniquely identifies the invoice on which the event was billed. This will be empty for unbilled events. </param>
-        /// <param name="billingProfileId"> The ID that uniquely identifies the billing profile for which the event happened. The property is only available for billing account of type MicrosoftCustomerAgreement. </param>
-        /// <param name="billingProfileDisplayName"> The display name of the billing profile for which the event happened. The property is only available for billing account of type MicrosoftCustomerAgreement. </param>
-        /// <param name="lotId"> The ID that uniquely identifies the lot for which the event happened. </param>
-        /// <param name="lotSource"> Identifies the source of the lot for which the event happened. </param>
-        /// <param name="canceledCredit"> Amount of canceled credit. </param>
-        /// <param name="creditCurrency"> The credit currency of the event. </param>
-        /// <param name="billingCurrency"> The billing currency of the event. </param>
-        /// <param name="reseller"> The reseller of the event. </param>
-        /// <param name="creditExpiredInBillingCurrency"> The amount of expired credit or commitment for NewCredit or SettleCharges event in billing currency. </param>
-        /// <param name="newCreditInBillingCurrency"> The amount of new credit or commitment for NewCredit or SettleCharges event in billing currency. </param>
-        /// <param name="adjustmentsInBillingCurrency"> The amount of balance adjustment in billing currency. </param>
-        /// <param name="chargesInBillingCurrency"> The amount of charges for events of type SettleCharges and PendingEligibleCharges in billing currency. </param>
-        /// <param name="closedBalanceInBillingCurrency"> The balance in billing currency after the event. </param>
-        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConsumptionEventSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? transactOn, string description, ConsumptionAmount newCredit, ConsumptionAmount adjustments, ConsumptionAmount creditExpired, ConsumptionAmount charges, ConsumptionAmount closedBalance, ConsumptionEventType? eventType, string invoiceNumber, ResourceIdentifier billingProfileId, string billingProfileDisplayName, ResourceIdentifier lotId, string lotSource, ConsumptionAmount canceledCredit, string creditCurrency, string billingCurrency, ConsumptionReseller reseller, ConsumptionAmountWithExchangeRate creditExpiredInBillingCurrency, ConsumptionAmountWithExchangeRate newCreditInBillingCurrency, ConsumptionAmountWithExchangeRate adjustmentsInBillingCurrency, ConsumptionAmountWithExchangeRate chargesInBillingCurrency, ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The event properties. </param>
+        /// <param name="eTag"> The eTag for the resource. </param>
+        internal ConsumptionEventSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, EventProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
-            TransactOn = transactOn;
-            Description = description;
-            NewCredit = newCredit;
-            Adjustments = adjustments;
-            CreditExpired = creditExpired;
-            Charges = charges;
-            ClosedBalance = closedBalance;
-            EventType = eventType;
-            InvoiceNumber = invoiceNumber;
-            BillingProfileId = billingProfileId;
-            BillingProfileDisplayName = billingProfileDisplayName;
-            LotId = lotId;
-            LotSource = lotSource;
-            CanceledCredit = canceledCredit;
-            CreditCurrency = creditCurrency;
-            BillingCurrency = billingCurrency;
-            Reseller = reseller;
-            CreditExpiredInBillingCurrency = creditExpiredInBillingCurrency;
-            NewCreditInBillingCurrency = newCreditInBillingCurrency;
-            AdjustmentsInBillingCurrency = adjustmentsInBillingCurrency;
-            ChargesInBillingCurrency = chargesInBillingCurrency;
-            ClosedBalanceInBillingCurrency = closedBalanceInBillingCurrency;
-            ETag = etag;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            ETag = eTag;
         }
+
+        /// <summary> The event properties. </summary>
+        internal EventProperties Properties { get; }
+
+        /// <summary> The eTag for the resource. </summary>
+        public ETag? ETag { get; }
 
         /// <summary> The date of the event. </summary>
-        public DateTimeOffset? TransactOn { get; }
+        public DateTimeOffset? TransactOn
+        {
+            get
+            {
+                return Properties.TransactOn;
+            }
+        }
+
         /// <summary> The description of the event. </summary>
-        public string Description { get; }
+        public string Description
+        {
+            get
+            {
+                return Properties.Description;
+            }
+        }
+
         /// <summary> The amount of new credit or commitment for NewCredit or SettleCharges event. </summary>
-        public ConsumptionAmount NewCredit { get; }
+        public ConsumptionAmount NewCredit
+        {
+            get
+            {
+                return Properties.NewCredit;
+            }
+        }
+
         /// <summary> The amount of balance adjustment. The property is not available for ConsumptionCommitment lots. </summary>
-        public ConsumptionAmount Adjustments { get; }
+        public ConsumptionAmount Adjustments
+        {
+            get
+            {
+                return Properties.Adjustments;
+            }
+        }
+
         /// <summary> The amount of expired credit or commitment for NewCredit or SettleCharges event. </summary>
-        public ConsumptionAmount CreditExpired { get; }
+        public ConsumptionAmount CreditExpired
+        {
+            get
+            {
+                return Properties.CreditExpired;
+            }
+        }
+
         /// <summary> The amount of charges for events of type SettleCharges and PendingEligibleCharges. </summary>
-        public ConsumptionAmount Charges { get; }
-        /// <summary> The balance after the event. </summary>
-        public ConsumptionAmount ClosedBalance { get; }
+        public ConsumptionAmount Charges
+        {
+            get
+            {
+                return Properties.Charges;
+            }
+        }
+
+        /// <summary> The balance after the event, Note: This will not be returned for Contributor Organization Type in Multi-Entity consumption commitment. </summary>
+        public ConsumptionAmount ClosedBalance
+        {
+            get
+            {
+                return Properties.ClosedBalance;
+            }
+        }
+
+        /// <summary> Identifier of the billing account. </summary>
+        public string BillingAccountId
+        {
+            get
+            {
+                return Properties.BillingAccountId;
+            }
+        }
+
+        /// <summary> Name of the billing account. </summary>
+        public string BillingAccountDisplayName
+        {
+            get
+            {
+                return Properties.BillingAccountDisplayName;
+            }
+        }
+
         /// <summary> Identifies the type of the event. </summary>
-        public ConsumptionEventType? EventType { get; set; }
+        public ConsumptionEventType? EventType
+        {
+            get
+            {
+                return Properties.EventType;
+            }
+        }
+
         /// <summary> The number which uniquely identifies the invoice on which the event was billed. This will be empty for unbilled events. </summary>
-        public string InvoiceNumber { get; }
+        public string InvoiceNumber
+        {
+            get
+            {
+                return Properties.InvoiceNumber;
+            }
+        }
+
         /// <summary> The ID that uniquely identifies the billing profile for which the event happened. The property is only available for billing account of type MicrosoftCustomerAgreement. </summary>
-        public ResourceIdentifier BillingProfileId { get; }
+        public ResourceIdentifier BillingProfileId
+        {
+            get
+            {
+                return Properties.BillingProfileId;
+            }
+        }
+
         /// <summary> The display name of the billing profile for which the event happened. The property is only available for billing account of type MicrosoftCustomerAgreement. </summary>
-        public string BillingProfileDisplayName { get; }
+        public string BillingProfileDisplayName
+        {
+            get
+            {
+                return Properties.BillingProfileDisplayName;
+            }
+        }
+
         /// <summary> The ID that uniquely identifies the lot for which the event happened. </summary>
-        public ResourceIdentifier LotId { get; }
+        public ResourceIdentifier LotId
+        {
+            get
+            {
+                return Properties.LotId;
+            }
+        }
+
         /// <summary> Identifies the source of the lot for which the event happened. </summary>
-        public string LotSource { get; }
+        public string LotSource
+        {
+            get
+            {
+                return Properties.LotSource;
+            }
+        }
+
         /// <summary> Amount of canceled credit. </summary>
-        public ConsumptionAmount CanceledCredit { get; }
+        public ConsumptionAmount CanceledCredit
+        {
+            get
+            {
+                return Properties.CanceledCredit;
+            }
+        }
+
         /// <summary> The credit currency of the event. </summary>
-        public string CreditCurrency { get; }
+        public string CreditCurrency
+        {
+            get
+            {
+                return Properties.CreditCurrency;
+            }
+        }
+
         /// <summary> The billing currency of the event. </summary>
-        public string BillingCurrency { get; }
+        public string BillingCurrency
+        {
+            get
+            {
+                return Properties.BillingCurrency;
+            }
+        }
+
         /// <summary> The reseller of the event. </summary>
-        public ConsumptionReseller Reseller { get; }
+        public ConsumptionReseller Reseller
+        {
+            get
+            {
+                return Properties.Reseller;
+            }
+        }
+
         /// <summary> The amount of expired credit or commitment for NewCredit or SettleCharges event in billing currency. </summary>
-        public ConsumptionAmountWithExchangeRate CreditExpiredInBillingCurrency { get; }
+        public ConsumptionAmountWithExchangeRate CreditExpiredInBillingCurrency
+        {
+            get
+            {
+                return Properties.CreditExpiredInBillingCurrency;
+            }
+        }
+
         /// <summary> The amount of new credit or commitment for NewCredit or SettleCharges event in billing currency. </summary>
-        public ConsumptionAmountWithExchangeRate NewCreditInBillingCurrency { get; }
+        public ConsumptionAmountWithExchangeRate NewCreditInBillingCurrency
+        {
+            get
+            {
+                return Properties.NewCreditInBillingCurrency;
+            }
+        }
+
         /// <summary> The amount of balance adjustment in billing currency. </summary>
-        public ConsumptionAmountWithExchangeRate AdjustmentsInBillingCurrency { get; }
+        public ConsumptionAmountWithExchangeRate AdjustmentsInBillingCurrency
+        {
+            get
+            {
+                return Properties.AdjustmentsInBillingCurrency;
+            }
+        }
+
         /// <summary> The amount of charges for events of type SettleCharges and PendingEligibleCharges in billing currency. </summary>
-        public ConsumptionAmountWithExchangeRate ChargesInBillingCurrency { get; }
-        /// <summary> The balance in billing currency after the event. </summary>
-        public ConsumptionAmountWithExchangeRate ClosedBalanceInBillingCurrency { get; }
-        /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
-        public ETag? ETag { get; set; }
+        public ConsumptionAmountWithExchangeRate ChargesInBillingCurrency
+        {
+            get
+            {
+                return Properties.ChargesInBillingCurrency;
+            }
+        }
+
+        /// <summary> The balance in billing currency after the event, Note: This will not be returned for Contributor Organization Type in Multi-Entity consumption commitment. </summary>
+        public ConsumptionAmountWithExchangeRate ClosedBalanceInBillingCurrency
+        {
+            get
+            {
+                return Properties.ClosedBalanceInBillingCurrency;
+            }
+        }
+
+        /// <summary> If true, the listed details are based on an estimation and it will be subjected to change. </summary>
+        public bool? IsEstimatedBalance
+        {
+            get
+            {
+                return Properties.IsEstimatedBalance;
+            }
+        }
+
+        /// <summary> The eTag for the resource. </summary>
+        public string PropertiesETag
+        {
+            get
+            {
+                return Properties.PropertiesETag;
+            }
+        }
     }
 }

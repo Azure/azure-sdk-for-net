@@ -1,0 +1,4 @@
+directory: specification/consumption/resource-manager/Microsoft.Consumption/Consumption
+commit: 9ce0f6702256b5cdf5838e91e91a4a624755f2e4
+repo: live1206/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- Upgraded API version to `2024-08-01`
+- Migrated from Swagger to TypeSpec-based generation
+
 ### Breaking Changes
 
 ### Bugs Fixed
