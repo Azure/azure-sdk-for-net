@@ -15,37 +15,43 @@ using Azure.ResourceManager.DesktopVirtualization.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    internal partial class AppAttachPackageInfoImportAsyncCollectionResultOfT : AsyncPageable<AppAttachPackageData>
+    internal partial class PrivateLinkResourcesGetPrivateLinkResourcesAsyncCollectionResultOfT : AsyncPageable<DesktopVirtualizationPrivateLinkResourceData>
     {
-        private readonly AppAttachPackageInfo _client;
+        private readonly PrivateLinkResources _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _hostPoolName;
-        private readonly RequestContent _content;
+        private readonly int? _pageSize;
+        private readonly bool? _isDescending;
+        private readonly int? _initialSkip;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of AppAttachPackageInfoImportAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The AppAttachPackageInfo client used to send requests. </param>
+        /// <summary> Initializes a new instance of PrivateLinkResourcesGetPrivateLinkResourcesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The PrivateLinkResources client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="pageSize"> Number of items per page. </param>
+        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
+        /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public AppAttachPackageInfoImportAsyncCollectionResultOfT(AppAttachPackageInfo client, Guid subscriptionId, string resourceGroupName, string hostPoolName, RequestContent content, RequestContext context) : base(context?.CancellationToken ?? default)
+        public PrivateLinkResourcesGetPrivateLinkResourcesAsyncCollectionResultOfT(PrivateLinkResources client, Guid subscriptionId, string resourceGroupName, string hostPoolName, int? pageSize, bool? isDescending, int? initialSkip, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _hostPoolName = hostPoolName;
-            _content = content;
+            _pageSize = pageSize;
+            _isDescending = isDescending;
+            _initialSkip = initialSkip;
             _context = context;
         }
 
-        /// <summary> Gets the pages of AppAttachPackageInfoImportAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of PrivateLinkResourcesGetPrivateLinkResourcesAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of AppAttachPackageInfoImportAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<AppAttachPackageData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of PrivateLinkResourcesGetPrivateLinkResourcesAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<DesktopVirtualizationPrivateLinkResourceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -55,8 +61,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     yield break;
                 }
-                AppAttachPackageList result = AppAttachPackageList.FromResponse(response);
-                yield return Page<AppAttachPackageData>.FromValues((IReadOnlyList<AppAttachPackageData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                DesktopVirtualizationPrivateLinkResourceListResult result = DesktopVirtualizationPrivateLinkResourceListResult.FromResponse(response);
+                yield return Page<DesktopVirtualizationPrivateLinkResourceData>.FromValues((IReadOnlyList<DesktopVirtualizationPrivateLinkResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -70,8 +76,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextImportRequest(nextLink, _subscriptionId, _resourceGroupName, _hostPoolName, _content, _context) : _client.CreateImportRequest(_subscriptionId, _resourceGroupName, _hostPoolName, _content, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HostPoolResource.Import");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetPrivateLinkResourcesRequest(nextLink, _subscriptionId, _resourceGroupName, _hostPoolName, _pageSize, _isDescending, _initialSkip, _context) : _client.CreateGetPrivateLinkResourcesRequest(_subscriptionId, _resourceGroupName, _hostPoolName, _pageSize, _isDescending, _initialSkip, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HostPoolResource.GetPrivateLinkResources");
             scope.Start();
             try
             {

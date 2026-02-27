@@ -14,43 +14,37 @@ using Azure.ResourceManager.DesktopVirtualization.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    internal partial class PrivateLinkResourcesGetByHostPoolCollectionResultOfT : Pageable<DesktopVirtualizationPrivateLinkResourceData>
+    internal partial class MSIXImagesExpandMsixImagesCollectionResultOfT : Pageable<ExpandMsixImage>
     {
-        private readonly PrivateLinkResources _client;
+        private readonly MSIXImages _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _hostPoolName;
-        private readonly int? _pageSize;
-        private readonly bool? _isDescending;
-        private readonly int? _initialSkip;
+        private readonly RequestContent _content;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of PrivateLinkResourcesGetByHostPoolCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The PrivateLinkResources client used to send requests. </param>
+        /// <summary> Initializes a new instance of MSIXImagesExpandMsixImagesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The MSIXImages client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
-        /// <param name="pageSize"> Number of items per page. </param>
-        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
-        /// <param name="initialSkip"> Initial number of items to skip. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public PrivateLinkResourcesGetByHostPoolCollectionResultOfT(PrivateLinkResources client, Guid subscriptionId, string resourceGroupName, string hostPoolName, int? pageSize, bool? isDescending, int? initialSkip, RequestContext context) : base(context?.CancellationToken ?? default)
+        public MSIXImagesExpandMsixImagesCollectionResultOfT(MSIXImages client, Guid subscriptionId, string resourceGroupName, string hostPoolName, RequestContent content, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _hostPoolName = hostPoolName;
-            _pageSize = pageSize;
-            _isDescending = isDescending;
-            _initialSkip = initialSkip;
+            _content = content;
             _context = context;
         }
 
-        /// <summary> Gets the pages of PrivateLinkResourcesGetByHostPoolCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of MSIXImagesExpandMsixImagesCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of PrivateLinkResourcesGetByHostPoolCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<DesktopVirtualizationPrivateLinkResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of MSIXImagesExpandMsixImagesCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<ExpandMsixImage>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -60,8 +54,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     yield break;
                 }
-                DesktopVirtualizationPrivateLinkResourceListResult result = DesktopVirtualizationPrivateLinkResourceListResult.FromResponse(response);
-                yield return Page<DesktopVirtualizationPrivateLinkResourceData>.FromValues((IReadOnlyList<DesktopVirtualizationPrivateLinkResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                ExpandMsixImageList result = ExpandMsixImageList.FromResponse(response);
+                yield return Page<ExpandMsixImage>.FromValues((IReadOnlyList<ExpandMsixImage>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -75,8 +69,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByHostPoolRequest(nextLink, _subscriptionId, _resourceGroupName, _hostPoolName, _pageSize, _isDescending, _initialSkip, _context) : _client.CreateGetByHostPoolRequest(_subscriptionId, _resourceGroupName, _hostPoolName, _pageSize, _isDescending, _initialSkip, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HostPoolResource.GetByHostPool");
+            HttpMessage message = nextLink != null ? _client.CreateNextExpandMsixImagesRequest(nextLink, _subscriptionId, _resourceGroupName, _hostPoolName, _content, _context) : _client.CreateExpandMsixImagesRequest(_subscriptionId, _resourceGroupName, _hostPoolName, _content, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HostPoolResource.ExpandMsixImages");
             scope.Start();
             try
             {

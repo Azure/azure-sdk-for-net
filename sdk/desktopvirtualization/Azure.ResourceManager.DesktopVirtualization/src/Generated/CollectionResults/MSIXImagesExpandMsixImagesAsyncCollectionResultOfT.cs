@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -14,23 +15,23 @@ using Azure.ResourceManager.DesktopVirtualization.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    internal partial class AppAttachPackageInfoImportCollectionResultOfT : Pageable<AppAttachPackageData>
+    internal partial class MSIXImagesExpandMsixImagesAsyncCollectionResultOfT : AsyncPageable<ExpandMsixImage>
     {
-        private readonly AppAttachPackageInfo _client;
+        private readonly MSIXImages _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _hostPoolName;
         private readonly RequestContent _content;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of AppAttachPackageInfoImportCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The AppAttachPackageInfo client used to send requests. </param>
+        /// <summary> Initializes a new instance of MSIXImagesExpandMsixImagesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The MSIXImages client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public AppAttachPackageInfoImportCollectionResultOfT(AppAttachPackageInfo client, Guid subscriptionId, string resourceGroupName, string hostPoolName, RequestContent content, RequestContext context) : base(context?.CancellationToken ?? default)
+        public MSIXImagesExpandMsixImagesAsyncCollectionResultOfT(MSIXImages client, Guid subscriptionId, string resourceGroupName, string hostPoolName, RequestContent content, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -40,22 +41,22 @@ namespace Azure.ResourceManager.DesktopVirtualization
             _context = context;
         }
 
-        /// <summary> Gets the pages of AppAttachPackageInfoImportCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of MSIXImagesExpandMsixImagesAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of AppAttachPackageInfoImportCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<AppAttachPackageData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of MSIXImagesExpandMsixImagesAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<ExpandMsixImage>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
                 }
-                AppAttachPackageList result = AppAttachPackageList.FromResponse(response);
-                yield return Page<AppAttachPackageData>.FromValues((IReadOnlyList<AppAttachPackageData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                ExpandMsixImageList result = ExpandMsixImageList.FromResponse(response);
+                yield return Page<ExpandMsixImage>.FromValues((IReadOnlyList<ExpandMsixImage>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -67,14 +68,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextImportRequest(nextLink, _subscriptionId, _resourceGroupName, _hostPoolName, _content, _context) : _client.CreateImportRequest(_subscriptionId, _resourceGroupName, _hostPoolName, _content, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HostPoolResource.Import");
+            HttpMessage message = nextLink != null ? _client.CreateNextExpandMsixImagesRequest(nextLink, _subscriptionId, _resourceGroupName, _hostPoolName, _content, _context) : _client.CreateExpandMsixImagesRequest(_subscriptionId, _resourceGroupName, _hostPoolName, _content, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HostPoolResource.ExpandMsixImages");
             scope.Start();
             try
             {
-                return _client.Pipeline.ProcessMessage(message, _context);
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {

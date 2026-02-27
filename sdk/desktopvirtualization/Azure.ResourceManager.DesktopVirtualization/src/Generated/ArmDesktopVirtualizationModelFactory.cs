@@ -296,21 +296,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 description is null && friendlyName is null && showInFeed is null ? default : new ApplicationGroupPatchProperties(description, friendlyName, showInFeed, null));
         }
 
-        /// <summary> The ImportParameterBody. </summary>
-        /// <param name="importPackageInfoRequest"> Information to import app attach package. </param>
-        /// <returns> A new <see cref="Models.ImportParameterBody"/> instance for mocking. </returns>
-        public static ImportParameterBody ImportParameterBody(ImportPackageInfoContent importPackageInfoRequest = default)
-        {
-            return new ImportParameterBody(importPackageInfoRequest, additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="msixImageURIUri"> URI to Image. </param>
-        /// <returns> A new <see cref="Models.ExpandParameterBody"/> instance for mocking. </returns>
-        public static ExpandParameterBody ExpandParameterBody(Uri msixImageURIUri = default)
-        {
-            return new ExpandParameterBody(msixImageURIUri is null ? default : new MsixImageUri(msixImageURIUri, null), additionalBinaryDataProperties: null);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>

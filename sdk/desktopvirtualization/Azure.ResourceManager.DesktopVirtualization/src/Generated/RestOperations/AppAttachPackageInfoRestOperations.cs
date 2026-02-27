@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateImportRequest(Guid subscriptionId, string resourceGroupName, string hostPoolName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateImportAppAttachPackageInfosRequest(Guid subscriptionId, string resourceGroupName, string hostPoolName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             return message;
         }
 
-        internal HttpMessage CreateNextImportRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string hostPoolName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateNextImportAppAttachPackageInfosRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string hostPoolName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
