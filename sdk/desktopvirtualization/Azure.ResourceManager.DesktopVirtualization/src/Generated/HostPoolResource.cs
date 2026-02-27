@@ -777,13 +777,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="msixImageURI"> Represents URI referring to MSIX Image. </param>
+        /// <param name="msixImageUri"> Represents URI referring to MSIX Image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="msixImageURI"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="msixImageUri"/> is null. </exception>
         /// <returns> A collection of <see cref="ExpandMsixImage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ExpandMsixImage> ExpandMsixImagesAsync(MsixImageUri msixImageURI, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ExpandMsixImage> ExpandMsixImagesAsync(MsixImageUri msixImageUri, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(msixImageURI, nameof(msixImageURI));
+            Argument.AssertNotNull(msixImageUri, nameof(msixImageUri));
 
             RequestContext context = new RequestContext
             {
@@ -794,7 +794,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
-                MsixImageUri.ToRequestContent(msixImageURI),
+                MsixImageUri.ToRequestContent(msixImageUri),
                 context);
         }
 
@@ -820,13 +820,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="msixImageURI"> Represents URI referring to MSIX Image. </param>
+        /// <param name="msixImageUri"> Represents URI referring to MSIX Image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="msixImageURI"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="msixImageUri"/> is null. </exception>
         /// <returns> A collection of <see cref="ExpandMsixImage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ExpandMsixImage> ExpandMsixImages(MsixImageUri msixImageURI, CancellationToken cancellationToken = default)
+        public virtual Pageable<ExpandMsixImage> ExpandMsixImages(MsixImageUri msixImageUri, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(msixImageURI, nameof(msixImageURI));
+            Argument.AssertNotNull(msixImageUri, nameof(msixImageUri));
 
             RequestContext context = new RequestContext
             {
@@ -837,7 +837,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
-                MsixImageUri.ToRequestContent(msixImageURI),
+                MsixImageUri.ToRequestContent(msixImageUri),
                 context);
         }
 

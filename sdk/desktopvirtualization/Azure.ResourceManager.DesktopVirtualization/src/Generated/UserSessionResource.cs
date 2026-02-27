@@ -400,12 +400,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="sendMessage"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Response> SendMessageAsync(UserSessionMessage body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="sendMessage"/> is null. </exception>
+        public virtual async Task<Response> SendMessageAsync(UserSessionMessage sendMessage, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(sendMessage, nameof(sendMessage));
 
             using DiagnosticScope scope = _userSessionsClientDiagnostics.CreateScope("UserSessionResource.SendMessage");
             scope.Start();
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _userSessionsRestClient.CreateSendMessageRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, UserSessionMessage.ToRequestContent(body), context);
+                HttpMessage message = _userSessionsRestClient.CreateSendMessageRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, UserSessionMessage.ToRequestContent(sendMessage), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -447,12 +447,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="sendMessage"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Response SendMessage(UserSessionMessage body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="sendMessage"/> is null. </exception>
+        public virtual Response SendMessage(UserSessionMessage sendMessage, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(sendMessage, nameof(sendMessage));
 
             using DiagnosticScope scope = _userSessionsClientDiagnostics.CreateScope("UserSessionResource.SendMessage");
             scope.Start();
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _userSessionsRestClient.CreateSendMessageRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, UserSessionMessage.ToRequestContent(body), context);
+                HttpMessage message = _userSessionsRestClient.CreateSendMessageRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, UserSessionMessage.ToRequestContent(sendMessage), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
