@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.TrafficManager.Models
 {
     /// <summary> The result of the request or operation. </summary>
-    public partial class DeleteOperationResult
+    public partial class TrafficManagerDeleteOperationResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeleteOperationResult"/>. </summary>
-        internal DeleteOperationResult()
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerDeleteOperationResult"/>. </summary>
+        internal TrafficManagerDeleteOperationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeleteOperationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerDeleteOperationResult"/>. </summary>
         /// <param name="operationResult"> The result of the operation or request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeleteOperationResult(bool? operationResult, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TrafficManagerDeleteOperationResult(bool? operationResult, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperationResult = operationResult;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

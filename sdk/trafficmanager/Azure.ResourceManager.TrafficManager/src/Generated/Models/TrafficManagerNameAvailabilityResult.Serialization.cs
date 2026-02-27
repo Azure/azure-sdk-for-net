@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value);
+                writer.WriteStringValue(ResourceType.Value);
             }
             if (Optional.IsDefined(IsNameAvailable))
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 return null;
             }
             string name = default;
-            ResourceType? @type = default;
+            ResourceType? resourceType = default;
             bool? isNameAvailable = default;
             string unavailableReason = default;
             string message = default;
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     {
                         continue;
                     }
-                    @type = new ResourceType(prop.Value.GetString());
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("nameAvailable"u8))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             }
             return new TrafficManagerNameAvailabilityResult(
                 name,
-                @type,
+                resourceType,
                 isNameAvailable,
                 unavailableReason,
                 message,

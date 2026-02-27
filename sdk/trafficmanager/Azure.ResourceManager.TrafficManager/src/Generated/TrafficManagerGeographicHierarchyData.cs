@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.TrafficManager
     public partial class TrafficManagerGeographicHierarchyData : TrafficManagerProxyResourceData
     {
         /// <summary> Initializes a new instance of <see cref="TrafficManagerGeographicHierarchyData"/>. </summary>
-        internal TrafficManagerGeographicHierarchyData()
+        public TrafficManagerGeographicHierarchyData()
         {
         }
 
@@ -32,14 +32,22 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary> The properties of the Geographic Hierarchy resource. </summary>
-        internal GeographicHierarchyProperties Properties { get; }
+        internal GeographicHierarchyProperties Properties { get; set; }
 
         /// <summary> The region at the root of the hierarchy from all the regions in the hierarchy can be retrieved. </summary>
         public TrafficManagerRegion GeographicHierarchy
         {
             get
             {
-                return Properties.GeographicHierarchy;
+                return Properties is null ? default : Properties.GeographicHierarchy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GeographicHierarchyProperties();
+                }
+                Properties.GeographicHierarchy = value;
             }
         }
     }

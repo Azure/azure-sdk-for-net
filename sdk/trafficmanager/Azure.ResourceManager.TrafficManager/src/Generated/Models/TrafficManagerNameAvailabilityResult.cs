@@ -24,15 +24,15 @@ namespace Azure.ResourceManager.TrafficManager.Models
 
         /// <summary> Initializes a new instance of <see cref="TrafficManagerNameAvailabilityResult"/>. </summary>
         /// <param name="name"> The relative name. </param>
-        /// <param name="type"> Traffic Manager profile resource type. </param>
+        /// <param name="resourceType"> Traffic Manager profile resource type. </param>
         /// <param name="isNameAvailable"> Describes whether the relative name is available or not. </param>
         /// <param name="unavailableReason"> The reason why the name is not available, when applicable. </param>
         /// <param name="message"> Descriptive message that explains why the name is not available, when applicable. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TrafficManagerNameAvailabilityResult(string name, ResourceType? @type, bool? isNameAvailable, string unavailableReason, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TrafficManagerNameAvailabilityResult(string name, ResourceType? resourceType, bool? isNameAvailable, string unavailableReason, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Type = @type;
+            ResourceType = resourceType;
             IsNameAvailable = isNameAvailable;
             UnavailableReason = unavailableReason;
             Message = message;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public string Name { get; }
 
         /// <summary> Traffic Manager profile resource type. </summary>
-        public ResourceType? Type { get; }
+        public ResourceType? ResourceType { get; }
 
         /// <summary> Describes whether the relative name is available or not. </summary>
         public bool? IsNameAvailable { get; }

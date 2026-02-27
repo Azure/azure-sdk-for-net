@@ -9,16 +9,16 @@ namespace Azure.ResourceManager.TrafficManager
     public partial class TrafficManagerEndpointCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData>, System.Collections.IEnumerable
     {
         protected TrafficManagerEndpointCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.TrafficManager.Models.EndpointType endpointType, string endpointName, Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.TrafficManager.Models.EndpointType endpointType, string endpointName, Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.TrafficManager.Models.EndpointType endpointType, string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.TrafficManager.Models.EndpointType endpointType, string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointResource> Get(Azure.ResourceManager.TrafficManager.Models.EndpointType endpointType, string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointType endpointType, string endpointName, Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointType endpointType, string endpointName, Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointType endpointType, string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointType endpointType, string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointResource> Get(Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointType endpointType, string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData> GetAll() { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData> GetAllAsync() { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointResource>> GetAsync(Azure.ResourceManager.TrafficManager.Models.EndpointType endpointType, string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointResource> GetIfExists(Azure.ResourceManager.TrafficManager.Models.EndpointType endpointType, string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointResource>> GetIfExistsAsync(Azure.ResourceManager.TrafficManager.Models.EndpointType endpointType, string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointResource>> GetAsync(Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointType endpointType, string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointResource> GetIfExists(Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointType endpointType, string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointResource>> GetIfExistsAsync(Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointType endpointType, string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData> System.Collections.Generic.IEnumerable<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.TrafficManager
         protected TrafficManagerEndpointResource() { }
         public virtual Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, Azure.ResourceManager.TrafficManager.Models.EndpointType endpointType, string endpointName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.TrafficManager.Models.DeleteOperationResult> Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.TrafficManager.Models.DeleteOperationResult>> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointType endpointType, string endpointName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.TrafficManager.Models.TrafficManagerDeleteOperationResult> Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.TrafficManager.Models.TrafficManagerDeleteOperationResult>> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -104,8 +104,8 @@ namespace Azure.ResourceManager.TrafficManager
     }
     public partial class TrafficManagerGeographicHierarchyData : Azure.ResourceManager.TrafficManager.Models.TrafficManagerProxyResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrafficManager.TrafficManagerGeographicHierarchyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerGeographicHierarchyData>
     {
-        internal TrafficManagerGeographicHierarchyData() { }
-        public Azure.ResourceManager.TrafficManager.Models.TrafficManagerRegion GeographicHierarchy { get { throw null; } }
+        public TrafficManagerGeographicHierarchyData() { }
+        public Azure.ResourceManager.TrafficManager.Models.TrafficManagerRegion GeographicHierarchy { get { throw null; } set { } }
         protected override Azure.ResourceManager.TrafficManager.Models.TrafficManagerResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.ResourceManager.TrafficManager.Models.TrafficManagerResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -143,10 +143,10 @@ namespace Azure.ResourceManager.TrafficManager
     }
     public partial class TrafficManagerHeatMapData : Azure.ResourceManager.TrafficManager.Models.TrafficManagerProxyResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrafficManager.TrafficManagerHeatMapData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerHeatMapData>
     {
-        internal TrafficManagerHeatMapData() { }
-        public System.DateTimeOffset? EndOn { get { throw null; } }
+        public TrafficManagerHeatMapData() { }
+        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapEndpoint> Endpoints { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapTrafficFlow> TrafficFlows { get { throw null; } }
         protected override Azure.ResourceManager.TrafficManager.Models.TrafficManagerResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -220,12 +220,12 @@ namespace Azure.ResourceManager.TrafficManager
         public virtual Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerProfileResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerProfileResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.TrafficManager.Models.DeleteOperationResult> Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.TrafficManager.Models.DeleteOperationResult>> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.TrafficManager.Models.TrafficManagerDeleteOperationResult> Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.TrafficManager.Models.TrafficManagerDeleteOperationResult>> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerProfileResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerProfileResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointResource> GetTrafficManagerEndpoint(Azure.ResourceManager.TrafficManager.Models.EndpointType endpointType, string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointResource>> GetTrafficManagerEndpointAsync(Azure.ResourceManager.TrafficManager.Models.EndpointType endpointType, string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointResource> GetTrafficManagerEndpoint(Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointType endpointType, string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointResource>> GetTrafficManagerEndpointAsync(Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointType endpointType, string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.TrafficManager.TrafficManagerEndpointCollection GetTrafficManagerEndpoints() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerHeatMapResource> GetTrafficManagerHeatMap(Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapType heatMapType, System.Collections.Generic.IEnumerable<double> topLeft = null, System.Collections.Generic.IEnumerable<double> botRight = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerHeatMapResource>> GetTrafficManagerHeatMapAsync(Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapType heatMapType, System.Collections.Generic.IEnumerable<double> topLeft = null, System.Collections.Generic.IEnumerable<double> botRight = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -256,8 +256,8 @@ namespace Azure.ResourceManager.TrafficManager
     }
     public partial class TrafficManagerUserMetricData : Azure.ResourceManager.TrafficManager.Models.TrafficManagerProxyResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricData>
     {
-        internal TrafficManagerUserMetricData() { }
-        public string Key { get { throw null; } }
+        public TrafficManagerUserMetricData() { }
+        public string Key { get { throw null; } set { } }
         protected override Azure.ResourceManager.TrafficManager.Models.TrafficManagerResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.ResourceManager.TrafficManager.Models.TrafficManagerResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -275,8 +275,8 @@ namespace Azure.ResourceManager.TrafficManager
         public virtual Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.TrafficManager.Models.DeleteOperationResult> Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.TrafficManager.Models.DeleteOperationResult>> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.TrafficManager.Models.TrafficManagerDeleteOperationResult> Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.TrafficManager.Models.TrafficManagerDeleteOperationResult>> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -350,39 +350,14 @@ namespace Azure.ResourceManager.TrafficManager.Models
     }
     public static partial class ArmTrafficManagerModelFactory
     {
-        public static Azure.ResourceManager.TrafficManager.Models.DeleteOperationResult DeleteOperationResult(bool? operationResult = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerDeleteOperationResult TrafficManagerDeleteOperationResult(bool? operationResult = default(bool?)) { throw null; }
         public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerDnsConfig TrafficManagerDnsConfig(string relativeName = null, string fqdn = null, long? ttl = default(long?)) { throw null; }
-        public static Azure.ResourceManager.TrafficManager.TrafficManagerGeographicHierarchyData TrafficManagerGeographicHierarchyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ResourceManager.TrafficManager.Models.TrafficManagerRegion geographicHierarchy = null) { throw null; }
-        public static Azure.ResourceManager.TrafficManager.TrafficManagerHeatMapData TrafficManagerHeatMapData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapEndpoint> endpoints = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapTrafficFlow> trafficFlows = null) { throw null; }
-        public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapEndpoint TrafficManagerHeatMapEndpoint(Azure.Core.ResourceIdentifier resourceId = null, int? endpointId = default(int?)) { throw null; }
-        public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapQueryExperience TrafficManagerHeatMapQueryExperience(int endpointId = 0, int queryCount = 0, double? latency = default(double?)) { throw null; }
-        public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapTrafficFlow TrafficManagerHeatMapTrafficFlow(string sourceIp = null, double? latitude = default(double?), double? longitude = default(double?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapQueryExperience> queryExperiences = null) { throw null; }
+        public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapTrafficFlow TrafficManagerHeatMapTrafficFlow(System.Net.IPAddress sourceIP = null, double? latitude = default(double?), double? longitude = default(double?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapQueryExperience> queryExperiences = null) { throw null; }
         public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorConfig TrafficManagerMonitorConfig(Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileMonitorStatus? profileMonitorStatus = default(Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileMonitorStatus?), Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorProtocol? protocol = default(Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorProtocol?), long? port = default(long?), string path = null, long? intervalInSeconds = default(long?), long? timeoutInSeconds = default(long?), long? toleratedNumberOfFailures = default(long?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorConfigCustomHeaderInfo> customHeaders = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.TrafficManager.Models.ExpectedStatusCodeRangeInfo> expectedStatusCodeRanges = null) { throw null; }
-        public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerNameAvailabilityResult TrafficManagerNameAvailabilityResult(string name = null, Azure.Core.ResourceType? type = default(Azure.Core.ResourceType?), bool? isNameAvailable = default(bool?), string unavailableReason = null, string message = null) { throw null; }
+        public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerNameAvailabilityResult TrafficManagerNameAvailabilityResult(string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), bool? isNameAvailable = default(bool?), string unavailableReason = null, string message = null) { throw null; }
         public static Azure.ResourceManager.TrafficManager.TrafficManagerProfileData TrafficManagerProfileData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileStatus? profileStatus = default(Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileStatus?), Azure.ResourceManager.TrafficManager.Models.TrafficRoutingMethod? trafficRoutingMethod = default(Azure.ResourceManager.TrafficManager.Models.TrafficRoutingMethod?), Azure.ResourceManager.TrafficManager.Models.TrafficManagerDnsConfig dnsConfig = null, Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorConfig monitorConfig = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData> endpoints = null, Azure.ResourceManager.TrafficManager.Models.TrafficViewEnrollmentStatus? trafficViewEnrollmentStatus = default(Azure.ResourceManager.TrafficManager.Models.TrafficViewEnrollmentStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.TrafficManager.Models.AllowedEndpointRecordType> allowedEndpointRecordTypes = null, long? maxReturn = default(long?)) { throw null; }
         public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerRegion TrafficManagerRegion(string code = null, string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.TrafficManager.Models.TrafficManagerRegion> regions = null) { throw null; }
         public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerTrackedResourceData TrafficManagerTrackedResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
-        public static Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricData TrafficManagerUserMetricData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), string key = null) { throw null; }
-    }
-    public partial class DeleteOperationResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrafficManager.Models.DeleteOperationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.DeleteOperationResult>
-    {
-        internal DeleteOperationResult() { }
-        public bool? OperationResult { get { throw null; } }
-        protected virtual Azure.ResourceManager.TrafficManager.Models.DeleteOperationResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.TrafficManager.Models.DeleteOperationResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.TrafficManager.Models.DeleteOperationResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrafficManager.Models.DeleteOperationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrafficManager.Models.DeleteOperationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.TrafficManager.Models.DeleteOperationResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.DeleteOperationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.DeleteOperationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.DeleteOperationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public enum EndpointType
-    {
-        AzureEndpoints = 0,
-        ExternalEndpoints = 1,
-        NestedEndpoints = 2,
     }
     public partial class ExpectedStatusCodeRangeInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrafficManager.Models.ExpectedStatusCodeRangeInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.ExpectedStatusCodeRangeInfo>
     {
@@ -398,6 +373,20 @@ namespace Azure.ResourceManager.TrafficManager.Models
         Azure.ResourceManager.TrafficManager.Models.ExpectedStatusCodeRangeInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.ExpectedStatusCodeRangeInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.ExpectedStatusCodeRangeInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.ExpectedStatusCodeRangeInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class TrafficManagerDeleteOperationResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerDeleteOperationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerDeleteOperationResult>
+    {
+        internal TrafficManagerDeleteOperationResult() { }
+        public bool? OperationResult { get { throw null; } }
+        protected virtual Azure.ResourceManager.TrafficManager.Models.TrafficManagerDeleteOperationResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.TrafficManager.Models.TrafficManagerDeleteOperationResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.TrafficManager.Models.TrafficManagerDeleteOperationResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerDeleteOperationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerDeleteOperationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.TrafficManager.Models.TrafficManagerDeleteOperationResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerDeleteOperationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerDeleteOperationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerDeleteOperationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class TrafficManagerDnsConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerDnsConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerDnsConfig>
     {
@@ -502,11 +491,17 @@ namespace Azure.ResourceManager.TrafficManager.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointSubnetInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointSubnetInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public enum TrafficManagerEndpointType
+    {
+        AzureEndpoints = 0,
+        ExternalEndpoints = 1,
+        NestedEndpoints = 2,
+    }
     public partial class TrafficManagerHeatMapEndpoint : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapEndpoint>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapEndpoint>
     {
-        internal TrafficManagerHeatMapEndpoint() { }
-        public int? EndpointId { get { throw null; } }
-        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
+        public TrafficManagerHeatMapEndpoint() { }
+        public int? EndpointId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapEndpoint JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapEndpoint PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -519,10 +514,10 @@ namespace Azure.ResourceManager.TrafficManager.Models
     }
     public partial class TrafficManagerHeatMapQueryExperience : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapQueryExperience>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapQueryExperience>
     {
-        internal TrafficManagerHeatMapQueryExperience() { }
-        public int EndpointId { get { throw null; } }
-        public double? Latency { get { throw null; } }
-        public int QueryCount { get { throw null; } }
+        public TrafficManagerHeatMapQueryExperience(int endpointId, int queryCount) { }
+        public int EndpointId { get { throw null; } set { } }
+        public double? Latency { get { throw null; } set { } }
+        public int QueryCount { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapQueryExperience JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapQueryExperience PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -535,11 +530,11 @@ namespace Azure.ResourceManager.TrafficManager.Models
     }
     public partial class TrafficManagerHeatMapTrafficFlow : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapTrafficFlow>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapTrafficFlow>
     {
-        internal TrafficManagerHeatMapTrafficFlow() { }
-        public double? Latitude { get { throw null; } }
-        public double? Longitude { get { throw null; } }
+        public TrafficManagerHeatMapTrafficFlow() { }
+        public double? Latitude { get { throw null; } set { } }
+        public double? Longitude { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapQueryExperience> QueryExperiences { get { throw null; } }
-        public string SourceIp { get { throw null; } }
+        public System.Net.IPAddress SourceIP { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapTrafficFlow JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapTrafficFlow PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -627,7 +622,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
         public string Name { get { throw null; } }
-        public Azure.Core.ResourceType? Type { get { throw null; } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         public string UnavailableReason { get { throw null; } }
         protected virtual Azure.ResourceManager.TrafficManager.Models.TrafficManagerNameAvailabilityResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -691,9 +686,9 @@ namespace Azure.ResourceManager.TrafficManager.Models
     }
     public partial class TrafficManagerRegion : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerRegion>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerRegion>
     {
-        internal TrafficManagerRegion() { }
-        public string Code { get { throw null; } }
-        public string Name { get { throw null; } }
+        public TrafficManagerRegion() { }
+        public string Code { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.TrafficManager.Models.TrafficManagerRegion> Regions { get { throw null; } }
         protected virtual Azure.ResourceManager.TrafficManager.Models.TrafficManagerRegion JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.TrafficManager
     public partial class TrafficManagerHeatMapData : TrafficManagerProxyResourceData
     {
         /// <summary> Initializes a new instance of <see cref="TrafficManagerHeatMapData"/>. </summary>
-        internal TrafficManagerHeatMapData()
+        public TrafficManagerHeatMapData()
         {
         }
 
@@ -32,14 +32,22 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary> The properties of the Traffic Manager HeatMap. </summary>
-        internal HeatMapProperties Properties { get; }
+        internal HeatMapProperties Properties { get; set; }
 
         /// <summary> The beginning of the time window for this HeatMap, inclusive. </summary>
         public DateTimeOffset? StartOn
         {
             get
             {
-                return Properties.StartOn;
+                return Properties is null ? default : Properties.StartOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HeatMapProperties();
+                }
+                Properties.StartOn = value.Value;
             }
         }
 
@@ -48,7 +56,15 @@ namespace Azure.ResourceManager.TrafficManager
         {
             get
             {
-                return Properties.EndOn;
+                return Properties is null ? default : Properties.EndOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HeatMapProperties();
+                }
+                Properties.EndOn = value.Value;
             }
         }
 
@@ -57,6 +73,10 @@ namespace Azure.ResourceManager.TrafficManager
         {
             get
             {
+                if (Properties is null)
+                {
+                    Properties = new HeatMapProperties();
+                }
                 return Properties.Endpoints;
             }
         }
@@ -66,6 +86,10 @@ namespace Azure.ResourceManager.TrafficManager
         {
             get
             {
+                if (Properties is null)
+                {
+                    Properties = new HeatMapProperties();
+                }
                 return Properties.TrafficFlows;
             }
         }

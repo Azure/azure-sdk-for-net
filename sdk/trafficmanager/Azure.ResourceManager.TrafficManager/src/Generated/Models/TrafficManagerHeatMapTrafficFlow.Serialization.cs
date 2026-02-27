@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.ResourceManager.TrafficManager;
 
@@ -74,10 +75,10 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 throw new FormatException($"The model {nameof(TrafficManagerHeatMapTrafficFlow)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SourceIp))
+            if (Optional.IsDefined(SourceIP))
             {
                 writer.WritePropertyName("sourceIp"u8);
-                writer.WriteStringValue(SourceIp);
+                writer.WriteStringValue(SourceIP.ToString());
             }
             if (Optional.IsDefined(Latitude))
             {
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 return null;
             }
-            string sourceIp = default;
+            IPAddress sourceIP = default;
             double? latitude = default;
             double? longitude = default;
             IList<TrafficManagerHeatMapQueryExperience> queryExperiences = default;
@@ -150,7 +151,11 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 if (prop.NameEquals("sourceIp"u8))
                 {
-                    sourceIp = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceIP = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("latitude"u8))
@@ -190,7 +195,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TrafficManagerHeatMapTrafficFlow(sourceIp, latitude, longitude, queryExperiences ?? new ChangeTrackingList<TrafficManagerHeatMapQueryExperience>(), additionalBinaryDataProperties);
+            return new TrafficManagerHeatMapTrafficFlow(sourceIP, latitude, longitude, queryExperiences ?? new ChangeTrackingList<TrafficManagerHeatMapQueryExperience>(), additionalBinaryDataProperties);
         }
     }
 }

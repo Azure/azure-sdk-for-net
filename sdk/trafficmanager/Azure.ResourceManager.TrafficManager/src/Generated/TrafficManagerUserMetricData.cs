@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.TrafficManager
     public partial class TrafficManagerUserMetricData : TrafficManagerProxyResourceData
     {
         /// <summary> Initializes a new instance of <see cref="TrafficManagerUserMetricData"/>. </summary>
-        internal TrafficManagerUserMetricData()
+        public TrafficManagerUserMetricData()
         {
         }
 
@@ -32,14 +32,22 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary> The properties of the Traffic Manager User Metrics. </summary>
-        internal UserMetricsProperties Properties { get; }
+        internal UserMetricsProperties Properties { get; set; }
 
         /// <summary> The key returned by the User Metrics operation. </summary>
         public string Key
         {
             get
             {
-                return Properties.Key;
+                return Properties is null ? default : Properties.Key;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UserMetricsProperties();
+                }
+                Properties.Key = value;
             }
         }
     }

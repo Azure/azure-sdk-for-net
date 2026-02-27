@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<TrafficManagerEndpointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, EndpointType endpointType, string endpointName, TrafficManagerEndpointData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<TrafficManagerEndpointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, TrafficManagerEndpointType endpointType, string endpointName, TrafficManagerEndpointData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
             Argument.AssertNotNull(data, nameof(data));
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<TrafficManagerEndpointResource> CreateOrUpdate(WaitUntil waitUntil, EndpointType endpointType, string endpointName, TrafficManagerEndpointData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<TrafficManagerEndpointResource> CreateOrUpdate(WaitUntil waitUntil, TrafficManagerEndpointType endpointType, string endpointName, TrafficManagerEndpointData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
             Argument.AssertNotNull(data, nameof(data));
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<TrafficManagerEndpointResource>> GetAsync(EndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TrafficManagerEndpointResource>> GetAsync(TrafficManagerEndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<TrafficManagerEndpointResource> Get(EndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
+        public virtual Response<TrafficManagerEndpointResource> Get(TrafficManagerEndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(EndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(TrafficManagerEndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(EndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(TrafficManagerEndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<TrafficManagerEndpointResource>> GetIfExistsAsync(EndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<TrafficManagerEndpointResource>> GetIfExistsAsync(TrafficManagerEndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<TrafficManagerEndpointResource> GetIfExists(EndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<TrafficManagerEndpointResource> GetIfExists(TrafficManagerEndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 

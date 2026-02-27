@@ -15,58 +15,58 @@ using Azure.ResourceManager.TrafficManager;
 namespace Azure.ResourceManager.TrafficManager.Models
 {
     /// <summary> The result of the request or operation. </summary>
-    public partial class DeleteOperationResult : IJsonModel<DeleteOperationResult>
+    public partial class TrafficManagerDeleteOperationResult : IJsonModel<TrafficManagerDeleteOperationResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DeleteOperationResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual TrafficManagerDeleteOperationResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeleteOperationResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerDeleteOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDeleteOperationResult(document.RootElement, options);
+                        return DeserializeTrafficManagerDeleteOperationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeleteOperationResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrafficManagerDeleteOperationResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeleteOperationResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerDeleteOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerTrafficManagerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DeleteOperationResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrafficManagerDeleteOperationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DeleteOperationResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<TrafficManagerDeleteOperationResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeleteOperationResult IPersistableModel<DeleteOperationResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        TrafficManagerDeleteOperationResult IPersistableModel<TrafficManagerDeleteOperationResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DeleteOperationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TrafficManagerDeleteOperationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DeleteOperationResult"/> from. </param>
-        internal static DeleteOperationResult FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TrafficManagerDeleteOperationResult"/> from. </param>
+        internal static TrafficManagerDeleteOperationResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDeleteOperationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeTrafficManagerDeleteOperationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DeleteOperationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TrafficManagerDeleteOperationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.TrafficManager.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeleteOperationResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerDeleteOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeleteOperationResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TrafficManagerDeleteOperationResult)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsDefined(OperationResult))
             {
@@ -106,24 +106,24 @@ namespace Azure.ResourceManager.TrafficManager.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeleteOperationResult IJsonModel<DeleteOperationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        TrafficManagerDeleteOperationResult IJsonModel<TrafficManagerDeleteOperationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DeleteOperationResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual TrafficManagerDeleteOperationResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeleteOperationResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerDeleteOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeleteOperationResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TrafficManagerDeleteOperationResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDeleteOperationResult(document.RootElement, options);
+            return DeserializeTrafficManagerDeleteOperationResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DeleteOperationResult DeserializeDeleteOperationResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static TrafficManagerDeleteOperationResult DeserializeTrafficManagerDeleteOperationResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeleteOperationResult(operationResult, additionalBinaryDataProperties);
+            return new TrafficManagerDeleteOperationResult(operationResult, additionalBinaryDataProperties);
         }
     }
 }

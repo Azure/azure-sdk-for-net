@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.ResourceManager.TrafficManager;
 
 namespace Azure.ResourceManager.TrafficManager.Models
@@ -18,20 +19,20 @@ namespace Azure.ResourceManager.TrafficManager.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TrafficManagerHeatMapTrafficFlow"/>. </summary>
-        internal TrafficManagerHeatMapTrafficFlow()
+        public TrafficManagerHeatMapTrafficFlow()
         {
             QueryExperiences = new ChangeTrackingList<TrafficManagerHeatMapQueryExperience>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TrafficManagerHeatMapTrafficFlow"/>. </summary>
-        /// <param name="sourceIp"> The IP address that this query experience originated from. </param>
+        /// <param name="sourceIP"> The IP address that this query experience originated from. </param>
         /// <param name="latitude"> The approximate latitude that these queries originated from. </param>
         /// <param name="longitude"> The approximate longitude that these queries originated from. </param>
         /// <param name="queryExperiences"> The query experiences produced in this HeatMap calculation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TrafficManagerHeatMapTrafficFlow(string sourceIp, double? latitude, double? longitude, IList<TrafficManagerHeatMapQueryExperience> queryExperiences, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TrafficManagerHeatMapTrafficFlow(IPAddress sourceIP, double? latitude, double? longitude, IList<TrafficManagerHeatMapQueryExperience> queryExperiences, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SourceIp = sourceIp;
+            SourceIP = sourceIP;
             Latitude = latitude;
             Longitude = longitude;
             QueryExperiences = queryExperiences;
@@ -39,13 +40,13 @@ namespace Azure.ResourceManager.TrafficManager.Models
         }
 
         /// <summary> The IP address that this query experience originated from. </summary>
-        public string SourceIp { get; }
+        public IPAddress SourceIP { get; set; }
 
         /// <summary> The approximate latitude that these queries originated from. </summary>
-        public double? Latitude { get; }
+        public double? Latitude { get; set; }
 
         /// <summary> The approximate longitude that these queries originated from. </summary>
-        public double? Longitude { get; }
+        public double? Longitude { get; set; }
 
         /// <summary> The query experiences produced in this HeatMap calculation. </summary>
         public IList<TrafficManagerHeatMapQueryExperience> QueryExperiences { get; }

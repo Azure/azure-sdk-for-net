@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<DeleteOperationResult>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<TrafficManagerDeleteOperationResult>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _profilesClientDiagnostics.CreateScope("TrafficManagerProfileResource.Delete");
             scope.Start();
@@ -328,10 +328,10 @@ namespace Azure.ResourceManager.TrafficManager
                 };
                 HttpMessage message = _profilesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DeleteOperationResult> response = Response.FromValue(DeleteOperationResult.FromResponse(result), result);
+                Response<TrafficManagerDeleteOperationResult> response = Response.FromValue(TrafficManagerDeleteOperationResult.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                TrafficManagerArmOperation<DeleteOperationResult> operation = new TrafficManagerArmOperation<DeleteOperationResult>(response, rehydrationToken);
+                TrafficManagerArmOperation<TrafficManagerDeleteOperationResult> operation = new TrafficManagerArmOperation<TrafficManagerDeleteOperationResult>(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<DeleteOperationResult> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<TrafficManagerDeleteOperationResult> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _profilesClientDiagnostics.CreateScope("TrafficManagerProfileResource.Delete");
             scope.Start();
@@ -380,10 +380,10 @@ namespace Azure.ResourceManager.TrafficManager
                 };
                 HttpMessage message = _profilesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DeleteOperationResult> response = Response.FromValue(DeleteOperationResult.FromResponse(result), result);
+                Response<TrafficManagerDeleteOperationResult> response = Response.FromValue(TrafficManagerDeleteOperationResult.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                TrafficManagerArmOperation<DeleteOperationResult> operation = new TrafficManagerArmOperation<DeleteOperationResult>(response, rehydrationToken);
+                TrafficManagerArmOperation<TrafficManagerDeleteOperationResult> operation = new TrafficManagerArmOperation<TrafficManagerDeleteOperationResult>(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -685,7 +685,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<TrafficManagerEndpointResource>> GetTrafficManagerEndpointAsync(EndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TrafficManagerEndpointResource>> GetTrafficManagerEndpointAsync(TrafficManagerEndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
@@ -699,7 +699,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<TrafficManagerEndpointResource> GetTrafficManagerEndpoint(EndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
+        public virtual Response<TrafficManagerEndpointResource> GetTrafficManagerEndpoint(TrafficManagerEndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 

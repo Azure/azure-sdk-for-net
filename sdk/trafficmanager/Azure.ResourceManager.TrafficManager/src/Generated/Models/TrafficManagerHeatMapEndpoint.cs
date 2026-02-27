@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TrafficManagerHeatMapEndpoint"/>. </summary>
-        internal TrafficManagerHeatMapEndpoint()
+        public TrafficManagerHeatMapEndpoint()
         {
         }
 
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.TrafficManager.Models
         }
 
         /// <summary> The ARM Resource ID of this Traffic Manager endpoint. </summary>
-        public ResourceIdentifier ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; set; }
 
         /// <summary> A number uniquely identifying this endpoint in query experiences. </summary>
-        public int? EndpointId { get; }
+        public int? EndpointId { get; set; }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HeatMapProperties"/>. </summary>
-        internal HeatMapProperties()
+        public HeatMapProperties()
         {
             Endpoints = new ChangeTrackingList<TrafficManagerHeatMapEndpoint>();
             TrafficFlows = new ChangeTrackingList<TrafficManagerHeatMapTrafficFlow>();
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.TrafficManager.Models
         }
 
         /// <summary> The beginning of the time window for this HeatMap, inclusive. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartOn { get; set; }
 
         /// <summary> The ending of the time window for this HeatMap, exclusive. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndOn { get; set; }
 
         /// <summary> The endpoints used in this HeatMap calculation. </summary>
         public IList<TrafficManagerHeatMapEndpoint> Endpoints { get; } = new ChangeTrackingList<TrafficManagerHeatMapEndpoint>();

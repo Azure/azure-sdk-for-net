@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.TrafficManager;
 
@@ -19,10 +20,10 @@ namespace Azure.ResourceManager.TrafficManager.Models
 
         /// <summary> The result of the request or operation. </summary>
         /// <param name="operationResult"> The result of the operation or request. </param>
-        /// <returns> A new <see cref="Models.DeleteOperationResult"/> instance for mocking. </returns>
-        public static DeleteOperationResult DeleteOperationResult(bool? operationResult = default)
+        /// <returns> A new <see cref="Models.TrafficManagerDeleteOperationResult"/> instance for mocking. </returns>
+        public static TrafficManagerDeleteOperationResult TrafficManagerDeleteOperationResult(bool? operationResult = default)
         {
-            return new DeleteOperationResult(operationResult, additionalBinaryDataProperties: null);
+            return new TrafficManagerDeleteOperationResult(operationResult, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}. </param>
@@ -123,30 +124,20 @@ namespace Azure.ResourceManager.TrafficManager.Models
 
         /// <summary> Class representing a Traffic Manager Name Availability response. </summary>
         /// <param name="name"> The relative name. </param>
-        /// <param name="type"> Traffic Manager profile resource type. </param>
+        /// <param name="resourceType"> Traffic Manager profile resource type. </param>
         /// <param name="isNameAvailable"> Describes whether the relative name is available or not. </param>
         /// <param name="unavailableReason"> The reason why the name is not available, when applicable. </param>
         /// <param name="message"> Descriptive message that explains why the name is not available, when applicable. </param>
         /// <returns> A new <see cref="Models.TrafficManagerNameAvailabilityResult"/> instance for mocking. </returns>
-        public static TrafficManagerNameAvailabilityResult TrafficManagerNameAvailabilityResult(string name = default, ResourceType? @type = default, bool? isNameAvailable = default, string unavailableReason = default, string message = default)
+        public static TrafficManagerNameAvailabilityResult TrafficManagerNameAvailabilityResult(string name = default, ResourceType? resourceType = default, bool? isNameAvailable = default, string unavailableReason = default, string message = default)
         {
             return new TrafficManagerNameAvailabilityResult(
                 name,
-                @type,
+                resourceType,
                 isNameAvailable,
                 unavailableReason,
                 message,
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. Ex- Microsoft.Network/trafficManagerProfiles. </param>
-        /// <param name="geographicHierarchy"> The region at the root of the hierarchy from all the regions in the hierarchy can be retrieved. </param>
-        /// <returns> A new <see cref="TrafficManager.TrafficManagerGeographicHierarchyData"/> instance for mocking. </returns>
-        public static TrafficManagerGeographicHierarchyData TrafficManagerGeographicHierarchyData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, TrafficManagerRegion geographicHierarchy = default)
-        {
-            return new TrafficManagerGeographicHierarchyData(id, name, resourceType, additionalBinaryDataProperties: null, geographicHierarchy is null ? default : new GeographicHierarchyProperties(geographicHierarchy, null));
         }
 
         /// <summary> Class representing a region in the Geographic hierarchy used with the Geographic traffic routing method. </summary>
@@ -161,59 +152,17 @@ namespace Azure.ResourceManager.TrafficManager.Models
             return new TrafficManagerRegion(code, name, regions.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. Ex- Microsoft.Network/trafficManagerProfiles. </param>
-        /// <param name="startOn"> The beginning of the time window for this HeatMap, inclusive. </param>
-        /// <param name="endOn"> The ending of the time window for this HeatMap, exclusive. </param>
-        /// <param name="endpoints"> The endpoints used in this HeatMap calculation. </param>
-        /// <param name="trafficFlows"> The traffic flows produced in this HeatMap calculation. </param>
-        /// <returns> A new <see cref="TrafficManager.TrafficManagerHeatMapData"/> instance for mocking. </returns>
-        public static TrafficManagerHeatMapData TrafficManagerHeatMapData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<TrafficManagerHeatMapEndpoint> endpoints = default, IEnumerable<TrafficManagerHeatMapTrafficFlow> trafficFlows = default)
-        {
-            return new TrafficManagerHeatMapData(id, name, resourceType, additionalBinaryDataProperties: null, startOn is null && endOn is null && endpoints is null && trafficFlows is null ? default : new HeatMapProperties(startOn, endOn, (endpoints ?? new ChangeTrackingList<TrafficManagerHeatMapEndpoint>()).ToList(), (trafficFlows ?? new ChangeTrackingList<TrafficManagerHeatMapTrafficFlow>()).ToList(), null));
-        }
-
-        /// <summary> Class which is a sparse representation of a Traffic Manager endpoint. </summary>
-        /// <param name="resourceId"> The ARM Resource ID of this Traffic Manager endpoint. </param>
-        /// <param name="endpointId"> A number uniquely identifying this endpoint in query experiences. </param>
-        /// <returns> A new <see cref="Models.TrafficManagerHeatMapEndpoint"/> instance for mocking. </returns>
-        public static TrafficManagerHeatMapEndpoint TrafficManagerHeatMapEndpoint(ResourceIdentifier resourceId = default, int? endpointId = default)
-        {
-            return new TrafficManagerHeatMapEndpoint(resourceId, endpointId, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Class representing a Traffic Manager HeatMap traffic flow properties. </summary>
-        /// <param name="sourceIp"> The IP address that this query experience originated from. </param>
+        /// <param name="sourceIP"> The IP address that this query experience originated from. </param>
         /// <param name="latitude"> The approximate latitude that these queries originated from. </param>
         /// <param name="longitude"> The approximate longitude that these queries originated from. </param>
         /// <param name="queryExperiences"> The query experiences produced in this HeatMap calculation. </param>
         /// <returns> A new <see cref="Models.TrafficManagerHeatMapTrafficFlow"/> instance for mocking. </returns>
-        public static TrafficManagerHeatMapTrafficFlow TrafficManagerHeatMapTrafficFlow(string sourceIp = default, double? latitude = default, double? longitude = default, IEnumerable<TrafficManagerHeatMapQueryExperience> queryExperiences = default)
+        public static TrafficManagerHeatMapTrafficFlow TrafficManagerHeatMapTrafficFlow(IPAddress sourceIP = default, double? latitude = default, double? longitude = default, IEnumerable<TrafficManagerHeatMapQueryExperience> queryExperiences = default)
         {
             queryExperiences ??= new ChangeTrackingList<TrafficManagerHeatMapQueryExperience>();
 
-            return new TrafficManagerHeatMapTrafficFlow(sourceIp, latitude, longitude, queryExperiences.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Class representing a Traffic Manager HeatMap query experience properties. </summary>
-        /// <param name="endpointId"> The id of the endpoint from the 'endpoints' array which these queries were routed to. </param>
-        /// <param name="queryCount"> The number of queries originating from this location. </param>
-        /// <param name="latency"> The latency experienced by queries originating from this location. </param>
-        /// <returns> A new <see cref="Models.TrafficManagerHeatMapQueryExperience"/> instance for mocking. </returns>
-        public static TrafficManagerHeatMapQueryExperience TrafficManagerHeatMapQueryExperience(int endpointId = default, int queryCount = default, double? latency = default)
-        {
-            return new TrafficManagerHeatMapQueryExperience(endpointId, queryCount, latency, additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. Ex- Microsoft.Network/trafficManagerProfiles. </param>
-        /// <param name="key"> The key returned by the User Metrics operation. </param>
-        /// <returns> A new <see cref="TrafficManager.TrafficManagerUserMetricData"/> instance for mocking. </returns>
-        public static TrafficManagerUserMetricData TrafficManagerUserMetricData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, string key = default)
-        {
-            return new TrafficManagerUserMetricData(id, name, resourceType, additionalBinaryDataProperties: null, key is null ? default : new UserMetricsProperties(key, null));
+            return new TrafficManagerHeatMapTrafficFlow(sourceIP, latitude, longitude, queryExperiences.ToList(), additionalBinaryDataProperties: null);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TrafficManagerRegion"/>. </summary>
-        internal TrafficManagerRegion()
+        public TrafficManagerRegion()
         {
             Regions = new ChangeTrackingList<TrafficManagerRegion>();
         }
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.TrafficManager.Models
         }
 
         /// <summary> The code of the region. </summary>
-        public string Code { get; }
+        public string Code { get; set; }
 
         /// <summary> The name of the region. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary> The list of Regions grouped under this Region in the Geographic Hierarchy. </summary>
         public IList<TrafficManagerRegion> Regions { get; }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="UserMetricsProperties"/>. </summary>
-        internal UserMetricsProperties()
+        public UserMetricsProperties()
         {
         }
 
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.TrafficManager.Models
         }
 
         /// <summary> The key returned by the User Metrics operation. </summary>
-        public string Key { get; }
+        public string Key { get; set; }
     }
 }

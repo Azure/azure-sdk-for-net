@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.TrafficManager
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(DeleteOperationResult))]
     [ModelReaderWriterBuildable(typeof(EndpointProperties))]
     [ModelReaderWriterBuildable(typeof(ExpectedStatusCodeRangeInfo))]
     [ModelReaderWriterBuildable(typeof(GeographicHierarchyProperties))]
     [ModelReaderWriterBuildable(typeof(HeatMapProperties))]
     [ModelReaderWriterBuildable(typeof(ProfileListResult))]
     [ModelReaderWriterBuildable(typeof(ProfileProperties))]
+    [ModelReaderWriterBuildable(typeof(TrafficManagerDeleteOperationResult))]
     [ModelReaderWriterBuildable(typeof(TrafficManagerDnsConfig))]
     [ModelReaderWriterBuildable(typeof(TrafficManagerEndpointCustomHeaderInfo))]
     [ModelReaderWriterBuildable(typeof(TrafficManagerEndpointData))]
