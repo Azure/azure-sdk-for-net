@@ -27,7 +27,7 @@ For each build error, determine the root cause:
 
 ## ApiCompat Error Patterns
 
-ApiCompat compares the new generated API against the existing API surface files (`api/*.cs`). ApiCompat errors surface via `dotnet pack` (not `dotnet build`). **Do NOT use `ApiCompatBaseline.txt` to bypass breaking changes** — mitigate them with custom code instead.
+ApiCompat compares the new generated API against the existing API surface files (`api/*.cs`). ApiCompat errors surface via `dotnet pack` (not `dotnet build`). **Do NOT use `ApiCompatBaseline.txt` to bypass breaking changes** — mitigate them with custom code instead. **Do NOT remove `ApiCompatVersion` from the csproj** — all breaking changes must be resolved, even during migration.
 
 | ApiCompat Error | Cause | Fix |
 |----------------|-------|-----|
@@ -39,19 +39,40 @@ ApiCompat compares the new generated API against the existing API surface files 
 
 ### Handling ApiCompat Errors in the Migration Flow
 
-For each ApiCompat error:
+**Fix order matters.** Always resolve errors in this priority order — fixing higher-priority errors often eliminates many lower-priority ones:
 
-1. **Missing member/type**: The old API had a public member that no longer exists. Determine why:
-   - **Renamed**: Add `@@clientName` in `client.tsp` to restore the old name, or add a backward-compat wrapper in Custom code.
-   - **Removed from spec**: If the member was removed in a newer API version, it may be acceptable. Document in CHANGELOG.
-   - **Changed signature**: Add a Custom code overload with the old signature that delegates to the new one.
-   - **Changed accessibility**: Use `@@access` or `[CodeGenType]` to restore public visibility.
-2. After fixing all breaking changes, re-export the API surface:
+#### Priority 1: TypesMustExist (fix first)
+Missing types cause cascading `MembersMustExist` errors for every member of that type. Fixing a single missing type can resolve dozens of member errors.
+
+- **Renamed type**: Add `@@clientName` in `client.tsp` to restore the old name, then regenerate.
+- **Deprecated type alias**: If the old API had `[Obsolete]` wrapper types (common in previous HciCluster→Cluster style renames), create backward-compat type aliases in Custom code that inherit from the new type.
+- **Removed from spec**: If the type was removed in a newer API version, create a minimal Custom type with the old public surface.
+
+#### Priority 2: CannotRemoveBaseTypeOrInterface
+Types that lost interfaces (e.g., `IJsonModel<T>`, `IEquatable<T>`) — implement the required interfaces on Custom code types.
+
+#### Priority 3: CannotSealType / CannotMakeMemberNonVirtual
+Types that became sealed (private constructor) or lost virtual methods — add protected constructors or restore virtual modifiers via Custom partial classes.
+
+#### Priority 4: CannotRemoveAttribute / CannotChangeAttribute
+Missing or changed attributes (e.g., `[Obsolete]`, `[WirePath]`). For WirePath changes, use `enable-wire-path-attribute: true` in tspconfig.yaml. For missing `[Obsolete]`, add the attribute on Custom partial class members.
+
+#### Priority 5: MembersMustExist (fix last)
+After fixing all type-level errors, re-assess member errors — many will have been resolved. For remaining members:
+- **Renamed**: Add `@@clientName` in `client.tsp` or add Custom wrapper property/method.
+- **Removed setter**: Add `[CodeGenSuppress]` + Custom property with setter in partial class.
+- **Changed signature**: Add Custom overload with old signature that delegates to the new one.
+- **Changed type** (e.g., `Guid?` → `string`): Use `@@alternateType` in `client.tsp` or add a Custom wrapper property.
+
+**Important:** Do NOT remove `ApiCompatVersion` from the csproj. Do NOT use `ApiCompatBaseline.txt`. All breaking changes must be resolved with Custom code or spec decorators.
+
+#### After fixing all errors
+1. Re-export the API surface:
    ```powershell
    pwsh eng/scripts/Export-API.ps1 <SERVICE_NAME>
    ```
    Where `<SERVICE_NAME>` is the service folder name under `sdk/` (e.g., `guestconfiguration`, NOT the full package name).
-3. Verify the full build passes: `dotnet build`.
+2. Verify the full build passes: `dotnet build`.
 
 ## Common Pitfalls
 

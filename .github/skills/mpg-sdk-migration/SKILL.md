@@ -182,7 +182,7 @@ dotnet build /t:GenerateCode
 After generation:
 1. Check `src/Generated/` for output files — verify file contents changed, not just file names.
 2. Use `git diff --stat` to confirm the scope of changes. A typical migration touches hundreds of files with significant content changes.
-3. Verify no compile errors: `dotnet build`. ApiCompat errors (`MembersMustExist`, `TypesMustExist`) indicate **breaking changes** — these must be investigated and fixed, not skipped.
+3. Verify no compile errors: `dotnet build`. ApiCompat errors (`MembersMustExist`, `TypesMustExist`) indicate **breaking changes** — these must be investigated and fixed, not skipped. **Do NOT remove `ApiCompatVersion` from the csproj** — all breaking changes must be resolved with custom code even during migration.
 4. Run existing tests if available: `dotnet test`.
 5. Check ApiCompat with `dotnet pack --no-restore` — ApiCompat errors only surface during pack, not during build.
 6. **Export the API surface** after all errors are fixed:
