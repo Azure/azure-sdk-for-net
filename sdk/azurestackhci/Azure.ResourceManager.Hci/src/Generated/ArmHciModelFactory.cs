@@ -9,19 +9,146 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmHciModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Hci.ArcSettingData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kubernetesVersionValue"> Represents kubernetes version. </param>
+        /// <returns> A new <see cref="Models.KubernetesVersion"/> instance for mocking. </returns>
+        public static KubernetesVersion KubernetesVersion(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kubernetesVersionValue = default)
+        {
+            return new KubernetesVersion(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                kubernetesVersionValue is null ? default : new KubernetesVersionProperties(kubernetesVersionValue, null));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="platformUpdateDetails"> Represents applicable platform updates. </param>
+        /// <returns> A new <see cref="Hci.PlatformUpdateData"/> instance for mocking. </returns>
+        public static PlatformUpdateData PlatformUpdateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<PlatformUpdateDetails> platformUpdateDetails = default)
+        {
+            return new PlatformUpdateData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                platformUpdateDetails is null ? default : new PlatformUpdateProperties((platformUpdateDetails ?? new ChangeTrackingList<PlatformUpdateDetails>()).ToList(), null));
+        }
+
+        /// <summary> Represents details of a specific platform update. </summary>
+        /// <param name="validatedSolutionRecipeVersion"> Represents validated solution recipe version of a platform update. </param>
+        /// <param name="platformVersion"> Represents version of a platform update. </param>
+        /// <param name="platformPayloads"> Represents the platform payloads of a platform update. </param>
+        /// <returns> A new <see cref="Models.PlatformUpdateDetails"/> instance for mocking. </returns>
+        public static PlatformUpdateDetails PlatformUpdateDetails(string validatedSolutionRecipeVersion = default, string platformVersion = default, IEnumerable<PlatformPayload> platformPayloads = default)
+        {
+            platformPayloads ??= new ChangeTrackingList<PlatformPayload>();
+
+            return new PlatformUpdateDetails(validatedSolutionRecipeVersion, platformVersion, platformPayloads.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents details of a specific platform update payload. </summary>
+        /// <param name="payloadUri"> Represents url of a platform update payload. </param>
+        /// <param name="payloadHash"> Represents hash of a platform update payload. </param>
+        /// <param name="payloadPackageSizeInBytes"> Represents size in bytes of a platform update payload. </param>
+        /// <param name="payloadIdentifier"> Represents identifier of a platform update payload. </param>
+        /// <returns> A new <see cref="Models.PlatformPayload"/> instance for mocking. </returns>
+        public static PlatformPayload PlatformPayload(string payloadUri = default, string payloadHash = default, string payloadPackageSizeInBytes = default, string payloadIdentifier = default)
+        {
+            return new PlatformPayload(payloadUri, payloadHash, payloadPackageSizeInBytes, payloadIdentifier, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents a os image resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Hci.OsImageData"/> instance for mocking. </returns>
+        public static OsImageData OsImageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OsImageProperties properties = default)
+        {
+            return new OsImageData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Represents properties of a os image resource. </summary>
+        /// <param name="validatedSolutionRecipeVersion"> Represents validated solution recipe version of a os image. </param>
+        /// <param name="composedImageVersion"> Represents composed image version of a os image. </param>
+        /// <param name="composedImageIsoUri"> Represents composed image iso download url of a os image. </param>
+        /// <param name="composedImageIsoHash"> Represents composed image iso hash of a os image. </param>
+        /// <returns> A new <see cref="Models.OsImageProperties"/> instance for mocking. </returns>
+        public static OsImageProperties OsImageProperties(string validatedSolutionRecipeVersion = default, string composedImageVersion = default, string composedImageIsoUri = default, string composedImageIsoHash = default)
+        {
+            return new OsImageProperties(validatedSolutionRecipeVersion, composedImageVersion, composedImageIsoUri, composedImageIsoHash, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="updatePayloads"> Represents the payloads of a update content resource. </param>
+        /// <returns> A new <see cref="Hci.UpdateContentData"/> instance for mocking. </returns>
+        public static UpdateContentData UpdateContentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<ContentPayload> updatePayloads = default)
+        {
+            return new UpdateContentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                updatePayloads is null ? default : new UpdateContentProperties((updatePayloads ?? new ChangeTrackingList<ContentPayload>()).ToList(), null));
+        }
+
+        /// <summary> Represents details of a specific update content payload. </summary>
+        /// <param name="uri"> Represents url of a update payload. </param>
+        /// <param name="hash"> Represents hash of a update payload. </param>
+        /// <param name="hashAlgorithm"> Represents hash algorithm of a update payload. </param>
+        /// <param name="identifier"> Represents identifier of a update payload. </param>
+        /// <param name="packageSizeInBytes"> Represents size in bytes of a update payload. </param>
+        /// <param name="group"> Represents the group of a update payload. </param>
+        /// <param name="fileName"> Represents the file name of a update payload. </param>
+        /// <returns> A new <see cref="Models.ContentPayload"/> instance for mocking. </returns>
+        public static ContentPayload ContentPayload(string uri = default, string hash = default, string hashAlgorithm = default, string identifier = default, string packageSizeInBytes = default, string @group = default, string fileName = default)
+        {
+            return new ContentPayload(
+                uri,
+                hash,
+                hashAlgorithm,
+                identifier,
+                packageSizeInBytes,
+                @group,
+                fileName,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="provisioningState"> Provisioning state of the ArcSetting proxy resource. </param>
         /// <param name="arcInstanceResourceGroup"> The resource group that hosts the Arc agents, ie. Hybrid Compute Machine resources. </param>
         /// <param name="arcApplicationClientId"> App id of arc AAD identity. </param>
@@ -33,88 +160,147 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="connectivityProperties"> contains connectivity related configuration for ARC resources. </param>
         /// <param name="defaultExtensions"> Properties for each of the default extensions category. </param>
         /// <returns> A new <see cref="Hci.ArcSettingData"/> instance for mocking. </returns>
-        public static ArcSettingData ArcSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HciProvisioningState? provisioningState = null, string arcInstanceResourceGroup = null, Guid? arcApplicationClientId = null, Guid? arcApplicationTenantId = null, Guid? arcServicePrincipalObjectId = null, Guid? arcApplicationObjectId = null, ArcSettingAggregateState? aggregateState = null, IEnumerable<PerNodeArcState> perNodeDetails = null, BinaryData connectivityProperties = null, IEnumerable<ArcDefaultExtensionDetails> defaultExtensions = null)
+        public static ArcSettingData ArcSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciProvisioningState? provisioningState = default, string arcInstanceResourceGroup = default, string arcApplicationClientId = default, string arcApplicationTenantId = default, string arcServicePrincipalObjectId = default, string arcApplicationObjectId = default, ArcSettingAggregateState? aggregateState = default, IEnumerable<PerNodeArcState> perNodeDetails = default, ArcConnectivityProperties connectivityProperties = default, IEnumerable<DefaultExtensionDetails> defaultExtensions = default)
         {
-            perNodeDetails ??= new List<PerNodeArcState>();
-            defaultExtensions ??= new List<ArcDefaultExtensionDetails>();
-
             return new ArcSettingData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                provisioningState,
-                arcInstanceResourceGroup,
-                arcApplicationClientId,
-                arcApplicationTenantId,
-                arcServicePrincipalObjectId,
-                arcApplicationObjectId,
-                aggregateState,
-                perNodeDetails?.ToList(),
-                connectivityProperties,
-                defaultExtensions?.ToList(),
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                provisioningState is null && arcInstanceResourceGroup is null && arcApplicationClientId is null && arcApplicationTenantId is null && arcServicePrincipalObjectId is null && arcApplicationObjectId is null && aggregateState is null && perNodeDetails is null && connectivityProperties is null && defaultExtensions is null ? default : new ArcSettingProperties(
+                    provisioningState,
+                    arcInstanceResourceGroup,
+                    arcApplicationClientId,
+                    arcApplicationTenantId,
+                    arcServicePrincipalObjectId,
+                    arcApplicationObjectId,
+                    aggregateState,
+                    (perNodeDetails ?? new ChangeTrackingList<PerNodeArcState>()).ToList(),
+                    connectivityProperties,
+                    (defaultExtensions ?? new ChangeTrackingList<DefaultExtensionDetails>()).ToList(),
+                    null));
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PerNodeArcState"/>. </summary>
+        /// <summary> Status of Arc agent for a particular node in HCI Cluster. </summary>
         /// <param name="name"> Name of the Node in HCI Cluster. </param>
         /// <param name="arcInstance"> Fully qualified resource ID for the Arc agent of this node. </param>
         /// <param name="arcNodeServicePrincipalObjectId"> The service principal id of the arc for server node. </param>
-        /// <param name="state"> State of Arc agent in this node. </param>
+        /// <param name="state"> State of the Arc agent in this node. Indicates the current lifecycle status of the agent, such as whether it's being provisioned, connected, updated, or has encountered an error. </param>
         /// <returns> A new <see cref="Models.PerNodeArcState"/> instance for mocking. </returns>
-        public static PerNodeArcState PerNodeArcState(string name = null, string arcInstance = null, Guid? arcNodeServicePrincipalObjectId = null, NodeArcState? state = null)
+        public static PerNodeArcState PerNodeArcState(string name = default, string arcInstance = default, string arcNodeServicePrincipalObjectId = default, NodeArcState? state = default)
         {
-            return new PerNodeArcState(name, arcInstance, arcNodeServicePrincipalObjectId, state, serializedAdditionalRawData: null);
+            return new PerNodeArcState(name, arcInstance, arcNodeServicePrincipalObjectId, state, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ArcDefaultExtensionDetails"/>. </summary>
+        /// <summary> Connectivity related configuration required by arc server. </summary>
+        /// <param name="enabled"> True indicates ARC connectivity is enabled. </param>
+        /// <param name="serviceConfigurations"> Service configurations associated with the connectivity resource. They are only processed by the server if 'enabled' property is set to 'true'. </param>
+        /// <returns> A new <see cref="Models.ArcConnectivityProperties"/> instance for mocking. </returns>
+        public static ArcConnectivityProperties ArcConnectivityProperties(bool? enabled = default, IEnumerable<ServiceConfiguration> serviceConfigurations = default)
+        {
+            serviceConfigurations ??= new ChangeTrackingList<ServiceConfiguration>();
+
+            return new ArcConnectivityProperties(enabled, serviceConfigurations.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Properties for a particular default extension category. </summary>
         /// <param name="category"> Default extension category. </param>
         /// <param name="consentOn"> Consent time for extension category. </param>
-        /// <returns> A new <see cref="Models.ArcDefaultExtensionDetails"/> instance for mocking. </returns>
-        public static ArcDefaultExtensionDetails ArcDefaultExtensionDetails(string category = null, DateTimeOffset? consentOn = null)
+        /// <returns> A new <see cref="Models.DefaultExtensionDetails"/> instance for mocking. </returns>
+        public static DefaultExtensionDetails DefaultExtensionDetails(string category = default, DateTimeOffset? consentOn = default)
         {
-            return new ArcDefaultExtensionDetails(category, consentOn, serializedAdditionalRawData: null);
+            return new DefaultExtensionDetails(category, consentOn, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ArcPasswordCredential"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="connectivityProperties"> contains connectivity related configuration for ARC resources. </param>
+        /// <returns> A new <see cref="Models.ArcSettingPatch"/> instance for mocking. </returns>
+        public static ArcSettingPatch ArcSettingPatch(IDictionary<string, string> tags = default, ArcConnectivityProperties connectivityProperties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ArcSettingPatch(tags, connectivityProperties is null ? default : new ArcSettingsPatchProperties(connectivityProperties, null), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The PasswordCredential. </summary>
         /// <param name="secretText"></param>
         /// <param name="keyId"></param>
         /// <param name="startOn"></param>
         /// <param name="endOn"></param>
-        /// <returns> A new <see cref="Models.ArcPasswordCredential"/> instance for mocking. </returns>
-        public static ArcPasswordCredential ArcPasswordCredential(string secretText = null, string keyId = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null)
+        /// <returns> A new <see cref="Models.PasswordCredential"/> instance for mocking. </returns>
+        public static PasswordCredential PasswordCredential(string secretText = default, string keyId = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default)
         {
-            return new ArcPasswordCredential(secretText, keyId, startOn, endOn, serializedAdditionalRawData: null);
+            return new PasswordCredential(secretText, keyId, startOn, endOn, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ArcIdentityResult"/>. </summary>
-        /// <param name="arcApplicationClientId"></param>
-        /// <param name="arcApplicationTenantId"></param>
-        /// <param name="arcServicePrincipalObjectId"></param>
-        /// <param name="arcApplicationObjectId"></param>
-        /// <returns> A new <see cref="Models.ArcIdentityResult"/> instance for mocking. </returns>
-        public static ArcIdentityResult ArcIdentityResult(Guid? arcApplicationClientId = null, Guid? arcApplicationTenantId = null, Guid? arcServicePrincipalObjectId = null, Guid? arcApplicationObjectId = null)
+        /// <param name="arcApplicationClientId"> Gets the ArcApplicationClientId. </param>
+        /// <param name="arcApplicationTenantId"> Gets the ArcApplicationTenantId. </param>
+        /// <param name="arcServicePrincipalObjectId"> Gets the ArcServicePrincipalObjectId. </param>
+        /// <param name="arcApplicationObjectId"> Gets the ArcApplicationObjectId. </param>
+        /// <returns> A new <see cref="Models.ArcIdentityResponse"/> instance for mocking. </returns>
+        public static ArcIdentityResponse ArcIdentityResponse(string arcApplicationClientId = default, string arcApplicationTenantId = default, string arcServicePrincipalObjectId = default, string arcApplicationObjectId = default)
         {
-            return new ArcIdentityResult(arcApplicationClientId, arcApplicationTenantId, arcServicePrincipalObjectId, arcApplicationObjectId, serializedAdditionalRawData: null);
+            return new ArcIdentityResponse(arcApplicationClientId is null && arcApplicationTenantId is null && arcServicePrincipalObjectId is null && arcApplicationObjectId is null ? default : new ArcIdentityResponseProperties(arcApplicationClientId, arcApplicationTenantId, arcServicePrincipalObjectId, arcApplicationObjectId, null), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Hci.HciClusterData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="provisioningState"> Provisioning state. </param>
-        /// <param name="status"> Status of the cluster agent. </param>
-        /// <param name="connectivityStatus"> Overall connectivity status for the cluster resource. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> Provisioning State. </param>
+        /// <param name="publisherId"> Identifier of the Publisher for the offer. </param>
+        /// <param name="content"> JSON serialized catalog content of the offer. </param>
+        /// <param name="contentVersion"> The API version of the catalog service used to serve the catalog content. </param>
+        /// <param name="skuMappings"> Array of SKU mappings. </param>
+        /// <returns> A new <see cref="Hci.OfferData"/> instance for mocking. </returns>
+        public static OfferData OfferData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string provisioningState = default, string publisherId = default, string content = default, string contentVersion = default, IEnumerable<SkuMappings> skuMappings = default)
+        {
+            return new OfferData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                provisioningState is null && publisherId is null && content is null && contentVersion is null && skuMappings is null ? default : new OfferProperties(
+                    provisioningState,
+                    publisherId,
+                    content,
+                    contentVersion,
+                    (skuMappings ?? new ChangeTrackingList<SkuMappings>()).ToList(),
+                    null));
+        }
+
+        /// <summary> SKU Mapping details. </summary>
+        /// <param name="catalogPlanId"> Identifier of the CatalogPlan for the sku. </param>
+        /// <param name="marketplaceSkuId"> Identifier for the sku. </param>
+        /// <param name="marketplaceSkuVersions"> Array of SKU versions available. </param>
+        /// <returns> A new <see cref="Models.SkuMappings"/> instance for mocking. </returns>
+        public static SkuMappings SkuMappings(string catalogPlanId = default, string marketplaceSkuId = default, IEnumerable<string> marketplaceSkuVersions = default)
+        {
+            marketplaceSkuVersions ??= new ChangeTrackingList<string>();
+
+            return new SkuMappings(catalogPlanId, marketplaceSkuId, marketplaceSkuVersions.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="provisioningState"> Provisioning state. Indicates the current lifecycle status of the resource, including creation, update, deletion, connectivity, and error states. </param>
+        /// <param name="status"> Status of the cluster agent. Indicates the current connectivity, validation, and deployment state of the agent within the cluster. </param>
+        /// <param name="connectivityStatus"> Overall connectivity status for the cluster resource. Indicates whether the cluster is connected to Azure, partially connected, or has not recently communicated. </param>
         /// <param name="cloudId"> Unique, immutable resource id. </param>
+        /// <param name="ring"> The ring to which this cluster belongs to. </param>
         /// <param name="cloudManagementEndpoint"> Endpoint configured for management from the Azure portal. </param>
         /// <param name="aadClientId"> App id of cluster AAD identity. </param>
         /// <param name="aadTenantId"> Tenant id of cluster AAD identity. </param>
         /// <param name="aadApplicationObjectId"> Object id of cluster AAD identity. </param>
         /// <param name="aadServicePrincipalObjectId"> Id of cluster identity service principal. </param>
         /// <param name="softwareAssuranceProperties"> Software Assurance properties of the cluster. </param>
+        /// <param name="isManagementCluster"> Is Management Cluster, when true indicates that the cluster is used for managing other clusters. </param>
         /// <param name="logCollectionProperties"> Log Collection properties of the cluster. </param>
         /// <param name="remoteSupportProperties"> RemoteSupport properties of the cluster. </param>
         /// <param name="desiredProperties"> Desired properties of the cluster. </param>
@@ -127,132 +313,117 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="lastBillingTimestamp"> Most recent billing meter timestamp. </param>
         /// <param name="serviceEndpoint"> Region specific DataPath Endpoint of the cluster. </param>
         /// <param name="resourceProviderObjectId"> Object id of RP Service Principal. </param>
-        /// <param name="principalId"> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="tenantId"> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="typeIdentityType"> Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed). </param>
-        /// <param name="userAssignedIdentities"> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </param>
-        /// <returns> A new <see cref="Hci.HciClusterData"/> instance for mocking. </returns>
-        public static HciClusterData HciClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HciProvisioningState? provisioningState = null, HciClusterStatus? status = null, HciClusterConnectivityStatus? connectivityStatus = null, Guid? cloudId = null, string cloudManagementEndpoint = null, Guid? aadClientId = null, Guid? aadTenantId = null, Guid? aadApplicationObjectId = null, Guid? aadServicePrincipalObjectId = null, SoftwareAssuranceProperties softwareAssuranceProperties = null, LogCollectionProperties logCollectionProperties = null, RemoteSupportProperties remoteSupportProperties = null, HciClusterDesiredProperties desiredProperties = null, HciClusterReportedProperties reportedProperties = null, IsolatedVmAttestationConfiguration isolatedVmAttestationConfiguration = null, float? trialDaysRemaining = null, string billingModel = null, DateTimeOffset? registrationTimestamp = null, DateTimeOffset? lastSyncTimestamp = null, DateTimeOffset? lastBillingTimestamp = null, string serviceEndpoint = null, string resourceProviderObjectId = null, Guid? principalId = null, Guid? tenantId = null, HciManagedServiceIdentityType? typeIdentityType = null, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = null)
+        /// <param name="secretsLocations"> List of secret locations. </param>
+        /// <param name="clusterPattern"> Supported Storage Type for HCI Cluster. </param>
+        /// <param name="confidentialVmProperties"> Represents the Confidential Virtual Machine (CVM) support intent and current status for the cluster resource. </param>
+        /// <param name="sdnProperties"> Software Defined Networking Properties of the cluster. </param>
+        /// <param name="localAvailabilityZones"> Local Availability Zone information for HCI cluster. </param>
+        /// <param name="identityProvider"> Identity Provider for the cluster. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="kind"> This property identifies the purpose of the Cluster deployment. For example, a valid value is AzureLocal. </param>
+        /// <returns> A new <see cref="Hci.ClusterData"/> instance for mocking. </returns>
+        public static ClusterData ClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciProvisioningState? provisioningState = default, Status? status = default, ConnectivityStatus? connectivityStatus = default, string cloudId = default, string ring = default, string cloudManagementEndpoint = default, string aadClientId = default, string aadTenantId = default, string aadApplicationObjectId = default, string aadServicePrincipalObjectId = default, SoftwareAssuranceProperties softwareAssuranceProperties = default, bool? isManagementCluster = default, LogCollectionProperties logCollectionProperties = default, RemoteSupportProperties remoteSupportProperties = default, ClusterDesiredProperties desiredProperties = default, ClusterReportedProperties reportedProperties = default, IsolatedVmAttestationConfiguration isolatedVmAttestationConfiguration = default, float? trialDaysRemaining = default, string billingModel = default, DateTimeOffset? registrationTimestamp = default, DateTimeOffset? lastSyncTimestamp = default, DateTimeOffset? lastBillingTimestamp = default, string serviceEndpoint = default, string resourceProviderObjectId = default, IEnumerable<SecretsLocationDetails> secretsLocations = default, ClusterPattern? clusterPattern = default, ConfidentialVmProperties confidentialVmProperties = default, ClusterSdnProperties sdnProperties = default, IEnumerable<LocalAvailabilityZones> localAvailabilityZones = default, IdentityProvider? identityProvider = default, ManagedServiceIdentity identity = default, string kind = default)
         {
-            tags ??= new Dictionary<string, string>();
-            userAssignedIdentities ??= new Dictionary<string, UserAssignedIdentity>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new HciClusterData(
+            return new ClusterData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                provisioningState,
-                status,
-                connectivityStatus,
-                cloudId,
-                cloudManagementEndpoint,
-                aadClientId,
-                aadTenantId,
-                aadApplicationObjectId,
-                aadServicePrincipalObjectId,
-                softwareAssuranceProperties,
-                logCollectionProperties,
-                remoteSupportProperties,
-                desiredProperties,
-                reportedProperties,
-                isolatedVmAttestationConfiguration,
-                trialDaysRemaining,
-                billingModel,
-                registrationTimestamp,
-                lastSyncTimestamp,
-                lastBillingTimestamp,
-                serviceEndpoint,
-                resourceProviderObjectId,
-                principalId,
-                tenantId,
-                typeIdentityType,
-                userAssignedIdentities,
-                serializedAdditionalRawData: null);
+                provisioningState is null && status is null && connectivityStatus is null && cloudId is null && ring is null && cloudManagementEndpoint is null && aadClientId is null && aadTenantId is null && aadApplicationObjectId is null && aadServicePrincipalObjectId is null && softwareAssuranceProperties is null && isManagementCluster is null && logCollectionProperties is null && remoteSupportProperties is null && desiredProperties is null && reportedProperties is null && isolatedVmAttestationConfiguration is null && trialDaysRemaining is null && billingModel is null && registrationTimestamp is null && lastSyncTimestamp is null && lastBillingTimestamp is null && serviceEndpoint is null && resourceProviderObjectId is null && secretsLocations is null && clusterPattern is null && confidentialVmProperties is null && sdnProperties is null && localAvailabilityZones is null && identityProvider is null ? default : new ClusterProperties(
+                    provisioningState,
+                    status,
+                    connectivityStatus,
+                    cloudId,
+                    ring,
+                    cloudManagementEndpoint,
+                    aadClientId,
+                    aadTenantId,
+                    aadApplicationObjectId,
+                    aadServicePrincipalObjectId,
+                    softwareAssuranceProperties,
+                    isManagementCluster,
+                    logCollectionProperties,
+                    remoteSupportProperties,
+                    desiredProperties,
+                    reportedProperties,
+                    isolatedVmAttestationConfiguration,
+                    trialDaysRemaining,
+                    billingModel,
+                    registrationTimestamp,
+                    lastSyncTimestamp,
+                    lastBillingTimestamp,
+                    serviceEndpoint,
+                    resourceProviderObjectId,
+                    (secretsLocations ?? new ChangeTrackingList<SecretsLocationDetails>()).ToList(),
+                    clusterPattern,
+                    confidentialVmProperties,
+                    sdnProperties,
+                    (localAvailabilityZones ?? new ChangeTrackingList<LocalAvailabilityZones>()).ToList(),
+                    identityProvider,
+                    null),
+                identity,
+                kind);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SoftwareAssuranceProperties"/>. </summary>
+        /// <summary> Software Assurance properties of the cluster. </summary>
         /// <param name="softwareAssuranceStatus"> Status of the Software Assurance for the cluster. </param>
         /// <param name="softwareAssuranceIntent"> Customer Intent for Software Assurance Benefit. </param>
-        /// <param name="lastUpdatedOn"> TimeStamp denoting the latest SA benefit applicability is validated. </param>
+        /// <param name="lastUpdated"> TimeStamp denoting the latest SA benefit applicability is validated. </param>
         /// <returns> A new <see cref="Models.SoftwareAssuranceProperties"/> instance for mocking. </returns>
-        public static SoftwareAssuranceProperties SoftwareAssuranceProperties(SoftwareAssuranceStatus? softwareAssuranceStatus = null, SoftwareAssuranceIntent? softwareAssuranceIntent = null, DateTimeOffset? lastUpdatedOn = null)
+        public static SoftwareAssuranceProperties SoftwareAssuranceProperties(SoftwareAssuranceStatus? softwareAssuranceStatus = default, SoftwareAssuranceIntent? softwareAssuranceIntent = default, DateTimeOffset? lastUpdated = default)
         {
-            return new SoftwareAssuranceProperties(softwareAssuranceStatus, softwareAssuranceIntent, lastUpdatedOn, serializedAdditionalRawData: null);
+            return new SoftwareAssuranceProperties(softwareAssuranceStatus, softwareAssuranceIntent, lastUpdated, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.LogCollectionProperties"/>. </summary>
+        /// <summary> Log Collection properties of the cluster. </summary>
         /// <param name="fromDate"> From DateTimeStamp from when logs need to be connected. </param>
         /// <param name="toDate"> To DateTimeStamp till when logs need to be connected. </param>
         /// <param name="lastLogGenerated"> Recent DateTimeStamp where logs are successfully generated. </param>
         /// <param name="logCollectionSessionDetails"></param>
         /// <returns> A new <see cref="Models.LogCollectionProperties"/> instance for mocking. </returns>
-        public static LogCollectionProperties LogCollectionProperties(DateTimeOffset? fromDate = null, DateTimeOffset? toDate = null, DateTimeOffset? lastLogGenerated = null, IEnumerable<LogCollectionSession> logCollectionSessionDetails = null)
+        public static LogCollectionProperties LogCollectionProperties(DateTimeOffset? fromDate = default, DateTimeOffset? toDate = default, DateTimeOffset? lastLogGenerated = default, IEnumerable<LogCollectionSession> logCollectionSessionDetails = default)
         {
-            logCollectionSessionDetails ??= new List<LogCollectionSession>();
+            logCollectionSessionDetails ??= new ChangeTrackingList<LogCollectionSession>();
 
-            return new LogCollectionProperties(fromDate, toDate, lastLogGenerated, logCollectionSessionDetails?.ToList(), serializedAdditionalRawData: null);
+            return new LogCollectionProperties(fromDate, toDate, lastLogGenerated, logCollectionSessionDetails.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.LogCollectionSession"/>. </summary>
-        /// <param name="logStartOn"> Start Time of the logs when it was collected. </param>
-        /// <param name="logEndOn"> End Time of the logs when it was collected. </param>
-        /// <param name="timeCollected"> Duration of logs collected. </param>
-        /// <param name="logSize"> Size of the logs collected. </param>
-        /// <param name="logCollectionStatus"> LogCollection status. </param>
-        /// <param name="logCollectionJobType"> LogCollection job type. </param>
-        /// <param name="correlationId"> CorrelationId of the log collection. </param>
-        /// <param name="endTimeCollected"> End Time of the logs when it was collected. </param>
-        /// <param name="logCollectionError"> Log Collection Error details of the cluster. </param>
-        /// <returns> A new <see cref="Models.LogCollectionSession"/> instance for mocking. </returns>
-        public static LogCollectionSession LogCollectionSession(DateTimeOffset? logStartOn = null, DateTimeOffset? logEndOn = null, DateTimeOffset? timeCollected = null, long? logSize = null, LogCollectionStatus? logCollectionStatus = null, LogCollectionJobType? logCollectionJobType = null, string correlationId = null, DateTimeOffset? endTimeCollected = null, LogCollectionError logCollectionError = null)
-        {
-            return new LogCollectionSession(
-                logStartOn,
-                logEndOn,
-                timeCollected,
-                logSize,
-                logCollectionStatus,
-                logCollectionJobType,
-                correlationId,
-                endTimeCollected,
-                logCollectionError,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.LogCollectionError"/>. </summary>
+        /// <summary> Log Collection Error details of the cluster. </summary>
         /// <param name="errorCode"> Error Code of the log collection. </param>
         /// <param name="errorMessage"> Error Message of the log collection. </param>
         /// <returns> A new <see cref="Models.LogCollectionError"/> instance for mocking. </returns>
-        public static LogCollectionError LogCollectionError(string errorCode = null, string errorMessage = null)
+        public static LogCollectionError LogCollectionError(string errorCode = default, string errorMessage = default)
         {
-            return new LogCollectionError(errorCode, errorMessage, serializedAdditionalRawData: null);
+            return new LogCollectionError(errorCode, errorMessage, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RemoteSupportProperties"/>. </summary>
+        /// <summary> Remote Support properties of the cluster. </summary>
         /// <param name="accessLevel"> Remote Support Access Level. </param>
-        /// <param name="expireOn"> Expiration DateTimeStamp when Remote Support Access will be expired. </param>
+        /// <param name="expirationTimeStamp"> Expiration DateTimeStamp when Remote Support Access will be expired. </param>
         /// <param name="remoteSupportType"> Remote Support Type for cluster. </param>
         /// <param name="remoteSupportNodeSettings"></param>
         /// <param name="remoteSupportSessionDetails"></param>
         /// <returns> A new <see cref="Models.RemoteSupportProperties"/> instance for mocking. </returns>
-        public static RemoteSupportProperties RemoteSupportProperties(HciClusterAccessLevel? accessLevel = null, DateTimeOffset? expireOn = null, RemoteSupportType? remoteSupportType = null, IEnumerable<RemoteSupportNodeSettings> remoteSupportNodeSettings = null, IEnumerable<PerNodeRemoteSupportSession> remoteSupportSessionDetails = null)
+        public static RemoteSupportProperties RemoteSupportProperties(HciClusterAccessLevel? accessLevel = default, DateTimeOffset? expirationTimeStamp = default, RemoteSupportType? remoteSupportType = default, IEnumerable<RemoteSupportNodeSettings> remoteSupportNodeSettings = default, IEnumerable<PerNodeRemoteSupportSession> remoteSupportSessionDetails = default)
         {
-            remoteSupportNodeSettings ??= new List<RemoteSupportNodeSettings>();
-            remoteSupportSessionDetails ??= new List<PerNodeRemoteSupportSession>();
+            remoteSupportNodeSettings ??= new ChangeTrackingList<RemoteSupportNodeSettings>();
+            remoteSupportSessionDetails ??= new ChangeTrackingList<PerNodeRemoteSupportSession>();
 
             return new RemoteSupportProperties(
                 accessLevel,
-                expireOn,
+                expirationTimeStamp,
                 remoteSupportType,
-                remoteSupportNodeSettings?.ToList(),
-                remoteSupportSessionDetails?.ToList(),
-                serializedAdditionalRawData: null);
+                remoteSupportNodeSettings.ToList(),
+                remoteSupportSessionDetails.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RemoteSupportNodeSettings"/>. </summary>
+        /// <summary> Remote Support Node Settings of the cluster. </summary>
         /// <param name="arcResourceId"> Arc ResourceId of the Node. </param>
         /// <param name="state"> Remote Support Access Connection State on the Node. </param>
         /// <param name="createdOn"> Remote Support Enablement Request Created TimeStamp on the Node. </param>
@@ -261,7 +432,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="connectionErrorMessage"> Remote Support Access Connection Error Message on the Node. </param>
         /// <param name="transcriptLocation"> Remote Support Transcript location on the node. </param>
         /// <returns> A new <see cref="Models.RemoteSupportNodeSettings"/> instance for mocking. </returns>
-        public static RemoteSupportNodeSettings RemoteSupportNodeSettings(ResourceIdentifier arcResourceId = null, string state = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string connectionStatus = null, string connectionErrorMessage = null, string transcriptLocation = null)
+        public static RemoteSupportNodeSettings RemoteSupportNodeSettings(string arcResourceId = default, string state = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string connectionStatus = default, string connectionErrorMessage = default, string transcriptLocation = default)
         {
             return new RemoteSupportNodeSettings(
                 arcResourceId,
@@ -271,17 +442,17 @@ namespace Azure.ResourceManager.Hci.Models
                 connectionStatus,
                 connectionErrorMessage,
                 transcriptLocation,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PerNodeRemoteSupportSession"/>. </summary>
+        /// <summary> Remote Support Node Session Details on the Node. </summary>
         /// <param name="sessionStartOn"> Remote Support Session StartTime on the Node. </param>
         /// <param name="sessionEndOn"> Remote Support Session EndTime on the Node. </param>
         /// <param name="nodeName"> Name of the node. </param>
         /// <param name="duration"> Duration of Remote Support Enablement. </param>
         /// <param name="accessLevel"> Remote Support Access Level. </param>
         /// <returns> A new <see cref="Models.PerNodeRemoteSupportSession"/> instance for mocking. </returns>
-        public static PerNodeRemoteSupportSession PerNodeRemoteSupportSession(DateTimeOffset? sessionStartOn = null, DateTimeOffset? sessionEndOn = null, string nodeName = null, long? duration = null, HciClusterAccessLevel? accessLevel = null)
+        public static PerNodeRemoteSupportSession PerNodeRemoteSupportSession(DateTimeOffset? sessionStartOn = default, DateTimeOffset? sessionEndOn = default, string nodeName = default, long? duration = default, HciClusterAccessLevel? accessLevel = default)
         {
             return new PerNodeRemoteSupportSession(
                 sessionStartOn,
@@ -289,43 +460,47 @@ namespace Azure.ResourceManager.Hci.Models
                 nodeName,
                 duration,
                 accessLevel,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciClusterReportedProperties"/>. </summary>
+        /// <summary> Properties reported by cluster agent. </summary>
         /// <param name="clusterName"> Name of the on-prem cluster connected to this resource. </param>
         /// <param name="clusterId"> Unique id generated by the on-prem cluster. </param>
         /// <param name="clusterVersion"> Version of the cluster software. </param>
         /// <param name="nodes"> List of nodes reported by the cluster. </param>
-        /// <param name="lastUpdatedOn"> Last time the cluster reported the data. </param>
+        /// <param name="lastUpdated"> Last time the cluster reported the data. </param>
+        /// <param name="msiExpirationTimeStamp"> Specifies the expiration timestamp of the cluster's Managed Service Identity (MSI). The value is expressed in Coordinated Universal Time (UTC). </param>
         /// <param name="imdsAttestation"> IMDS attestation status of the cluster. </param>
         /// <param name="diagnosticLevel"> Level of diagnostic data emitted by the cluster. </param>
         /// <param name="supportedCapabilities"> Capabilities supported by the cluster. </param>
-        /// <param name="clusterType"> The node type of all the nodes of the cluster. </param>
+        /// <param name="clusterType"> Specifies the type of hardware vendor for all nodes in the cluster. Indicates whether the nodes are provided by Microsoft or a third-party vendor. </param>
         /// <param name="manufacturer"> The manufacturer of all the nodes of the cluster. </param>
         /// <param name="oemActivation"> OEM activation status of the cluster. </param>
-        /// <returns> A new <see cref="Models.HciClusterReportedProperties"/> instance for mocking. </returns>
-        public static HciClusterReportedProperties HciClusterReportedProperties(string clusterName = null, Guid? clusterId = null, string clusterVersion = null, IEnumerable<HciClusterNode> nodes = null, DateTimeOffset? lastUpdatedOn = null, ImdsAttestationState? imdsAttestation = null, HciClusterDiagnosticLevel? diagnosticLevel = null, IEnumerable<string> supportedCapabilities = null, ClusterNodeType? clusterType = null, string manufacturer = null, OemActivation? oemActivation = null)
+        /// <param name="hardwareClass"> Hardware class of the cluster. </param>
+        /// <returns> A new <see cref="Models.ClusterReportedProperties"/> instance for mocking. </returns>
+        public static ClusterReportedProperties ClusterReportedProperties(string clusterName = default, string clusterId = default, string clusterVersion = default, IEnumerable<ClusterNode> nodes = default, DateTimeOffset? lastUpdated = default, DateTimeOffset? msiExpirationTimeStamp = default, ImdsAttestation? imdsAttestation = default, DiagnosticLevel? diagnosticLevel = default, IEnumerable<string> supportedCapabilities = default, ClusterNodeType? clusterType = default, string manufacturer = default, OemActivation? oemActivation = default, HardwareClass? hardwareClass = default)
         {
-            nodes ??= new List<HciClusterNode>();
-            supportedCapabilities ??= new List<string>();
+            nodes ??= new ChangeTrackingList<ClusterNode>();
+            supportedCapabilities ??= new ChangeTrackingList<string>();
 
-            return new HciClusterReportedProperties(
+            return new ClusterReportedProperties(
                 clusterName,
                 clusterId,
                 clusterVersion,
-                nodes?.ToList(),
-                lastUpdatedOn,
+                nodes.ToList(),
+                lastUpdated,
+                msiExpirationTimeStamp,
                 imdsAttestation,
                 diagnosticLevel,
-                supportedCapabilities?.ToList(),
+                supportedCapabilities.ToList(),
                 clusterType,
                 manufacturer,
                 oemActivation,
-                serializedAdditionalRawData: null);
+                hardwareClass,
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciClusterNode"/>. </summary>
+        /// <summary> Cluster node details. </summary>
         /// <param name="name"> Name of the cluster node. </param>
         /// <param name="id"> Id of the node in the cluster. </param>
         /// <param name="windowsServerSubscription"> State of Windows Server Subscription. </param>
@@ -341,10 +516,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="memoryInGiB"> Total available memory on the cluster node (in GiB). </param>
         /// <param name="lastLicensingTimestamp"> Most recent licensing timestamp. </param>
         /// <param name="oemActivation"> OEM activation status of the node. </param>
-        /// <returns> A new <see cref="Models.HciClusterNode"/> instance for mocking. </returns>
-        public static HciClusterNode HciClusterNode(string name = null, float? id = null, WindowsServerSubscription? windowsServerSubscription = null, ClusterNodeType? nodeType = null, string ehcResourceId = null, string manufacturer = null, string model = null, string osName = null, string osVersion = null, string osDisplayVersion = null, string serialNumber = null, float? coreCount = null, float? memoryInGiB = null, DateTimeOffset? lastLicensingTimestamp = null, OemActivation? oemActivation = null)
+        /// <returns> A new <see cref="Models.ClusterNode"/> instance for mocking. </returns>
+        public static ClusterNode ClusterNode(string name = default, float? id = default, WindowsServerSubscription? windowsServerSubscription = default, ClusterNodeType? nodeType = default, string ehcResourceId = default, string manufacturer = default, string model = default, string osName = default, string osVersion = default, string osDisplayVersion = default, string serialNumber = default, float? coreCount = default, float? memoryInGiB = default, DateTimeOffset? lastLicensingTimestamp = default, OemActivation? oemActivation = default)
         {
-            return new HciClusterNode(
+            return new ClusterNode(
                 name,
                 id,
                 windowsServerSubscription,
@@ -360,356 +535,1166 @@ namespace Azure.ResourceManager.Hci.Models
                 memoryInGiB,
                 lastLicensingTimestamp,
                 oemActivation,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.IsolatedVmAttestationConfiguration"/>. </summary>
+        /// <summary> Attestation configurations for isolated VM (e.g. TVM, CVM) of the cluster. </summary>
         /// <param name="attestationResourceId"> Fully qualified Azure resource id of the Microsoft Azure attestation resource associated with this cluster. </param>
         /// <param name="relyingPartyServiceEndpoint"> Region specific endpoint for relying party service. </param>
         /// <param name="attestationServiceEndpoint"> Region specific endpoint for Microsoft Azure Attestation service for the cluster. </param>
         /// <returns> A new <see cref="Models.IsolatedVmAttestationConfiguration"/> instance for mocking. </returns>
-        public static IsolatedVmAttestationConfiguration IsolatedVmAttestationConfiguration(ResourceIdentifier attestationResourceId = null, string relyingPartyServiceEndpoint = null, string attestationServiceEndpoint = null)
+        public static IsolatedVmAttestationConfiguration IsolatedVmAttestationConfiguration(ResourceIdentifier attestationResourceId = default, string relyingPartyServiceEndpoint = default, string attestationServiceEndpoint = default)
         {
-            return new IsolatedVmAttestationConfiguration(attestationResourceId, relyingPartyServiceEndpoint, attestationServiceEndpoint, serializedAdditionalRawData: null);
+            return new IsolatedVmAttestationConfiguration(attestationResourceId, relyingPartyServiceEndpoint, attestationServiceEndpoint, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciClusterPatch"/>. </summary>
+        /// <summary> Represents the Confidential Virtual Machine (CVM) support intent and current status for the cluster resource. </summary>
+        /// <param name="confidentialVmIntent"> Captures the customer's intent to enable or disable CVM support on the cluster, either during initial deployment (Day-0) or at a later stage (Day-N). </param>
+        /// <param name="confidentialVmStatus"> Captures the current status of CVM support on the cluster. </param>
+        /// <param name="confidentialVmStatusSummary"> Additional context about CVM support on the cluster, such as reasons for partial enablement or hardware constraints. </param>
+        /// <returns> A new <see cref="Models.ConfidentialVmProperties"/> instance for mocking. </returns>
+        public static ConfidentialVmProperties ConfidentialVmProperties(ConfidentialVmIntent? confidentialVmIntent = default, ConfidentialVmStatus? confidentialVmStatus = default, string confidentialVmStatusSummary = default)
+        {
+            return new ConfidentialVmProperties(confidentialVmIntent, confidentialVmStatus, confidentialVmStatusSummary, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents the Software Defined Networking (SDN) configuration state of the Azure Stack HCI cluster. </summary>
+        /// <param name="sdnStatus"> Indicates the current Software Defined Networking (SDN) status of the resource, which may be an individual device or a cluster. </param>
+        /// <param name="sdnDomainName"> The fully qualified domain name (FQDN) associated with the SDN deployment. This value is propagated from the Device Management Extension to the cluster resource. It is typically in the format `&lt;sdnPrefix&gt;-nc.&lt;domain&gt;` when SDN is enabled. May be null or absent in unsupported or disabled states. </param>
+        /// <param name="sdnApiAddress"> Represents the API address for the SDN deployment. </param>
+        /// <param name="sdnIntegrationIntent"> Indicates whether Software Defined Networking (SDN) integration should be enabled or disabled for this deployment. </param>
+        /// <returns> A new <see cref="Models.ClusterSdnProperties"/> instance for mocking. </returns>
+        public static ClusterSdnProperties ClusterSdnProperties(SdnStatus? sdnStatus = default, string sdnDomainName = default, string sdnApiAddress = default, SdnIntegrationIntent? sdnIntegrationIntent = default)
+        {
+            return new ClusterSdnProperties(sdnStatus, sdnDomainName, sdnApiAddress, additionalBinaryDataProperties: null, sdnIntegrationIntent);
+        }
+
+        /// <summary> Represents the Software Defined Networking (SDN) configuration state. </summary>
+        /// <param name="sdnStatus"> Indicates the current Software Defined Networking (SDN) status of the resource, which may be an individual device or a cluster. </param>
+        /// <param name="sdnDomainName"> The fully qualified domain name (FQDN) associated with the SDN deployment. This value is propagated from the Device Management Extension to the cluster resource. It is typically in the format `&lt;sdnPrefix&gt;-nc.&lt;domain&gt;` when SDN is enabled. May be null or absent in unsupported or disabled states. </param>
+        /// <param name="sdnApiAddress"> Represents the API address for the SDN deployment. </param>
+        /// <returns> A new <see cref="Models.SdnProperties"/> instance for mocking. </returns>
+        public static SdnProperties SdnProperties(SdnStatus? sdnStatus = default, string sdnDomainName = default, string sdnApiAddress = default)
+        {
+            return new SdnProperties(sdnStatus, sdnDomainName, sdnApiAddress, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Local Availability Zone information for HCI cluster. </summary>
+        /// <param name="localAvailabilityZoneName"> Local Availability Zone name for HCI cluster. </param>
+        /// <param name="nodes"> Nodes belonging to a particular zone. </param>
+        /// <returns> A new <see cref="Models.LocalAvailabilityZones"/> instance for mocking. </returns>
+        public static LocalAvailabilityZones LocalAvailabilityZones(string localAvailabilityZoneName = default, IEnumerable<string> nodes = default)
+        {
+            nodes ??= new ChangeTrackingList<string>();
+
+            return new LocalAvailabilityZones(localAvailabilityZoneName, nodes.ToList(), additionalBinaryDataProperties: null);
+        }
+
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> Identity of Cluster resource. </param>
         /// <param name="cloudManagementEndpoint"> Endpoint configured for management from the Azure portal. </param>
         /// <param name="aadClientId"> App id of cluster AAD identity. </param>
         /// <param name="aadTenantId"> Tenant id of cluster AAD identity. </param>
         /// <param name="desiredProperties"> Desired properties of the cluster. </param>
-        /// <param name="principalId"> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="tenantId"> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="managedServiceIdentityType"> Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed). </param>
-        /// <param name="userAssignedIdentities"> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </param>
-        /// <returns> A new <see cref="Models.HciClusterPatch"/> instance for mocking. </returns>
-        public static HciClusterPatch HciClusterPatch(IDictionary<string, string> tags = null, string cloudManagementEndpoint = null, Guid? aadClientId = null, Guid? aadTenantId = null, HciClusterDesiredProperties desiredProperties = null, Guid? principalId = null, Guid? tenantId = null, HciManagedServiceIdentityType? managedServiceIdentityType = null, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = null)
+        /// <returns> A new <see cref="Models.ClusterPatch"/> instance for mocking. </returns>
+        public static ClusterPatch ClusterPatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, string cloudManagementEndpoint = default, string aadClientId = default, string aadTenantId = default, ClusterDesiredProperties desiredProperties = default)
         {
-            tags ??= new Dictionary<string, string>();
-            userAssignedIdentities ??= new Dictionary<string, UserAssignedIdentity>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new HciClusterPatch(
-                tags,
-                cloudManagementEndpoint,
-                aadClientId,
-                aadTenantId,
-                desiredProperties,
-                principalId,
-                tenantId,
-                managedServiceIdentityType,
-                userAssignedIdentities,
-                serializedAdditionalRawData: null);
+            return new ClusterPatch(tags, identity, cloudManagementEndpoint is null && aadClientId is null && aadTenantId is null && desiredProperties is null ? default : new ClusterPatchProperties(cloudManagementEndpoint, aadClientId, aadTenantId, desiredProperties, null), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciClusterIdentityResult"/>. </summary>
-        /// <param name="aadClientId"></param>
-        /// <param name="aadTenantId"></param>
-        /// <param name="aadServicePrincipalObjectId"></param>
-        /// <param name="aadApplicationObjectId"></param>
-        /// <returns> A new <see cref="Models.HciClusterIdentityResult"/> instance for mocking. </returns>
-        public static HciClusterIdentityResult HciClusterIdentityResult(Guid? aadClientId = null, Guid? aadTenantId = null, Guid? aadServicePrincipalObjectId = null, Guid? aadApplicationObjectId = null)
+        /// <summary> Update secrets locations change  Request. </summary>
+        /// <param name="properties"> List of secret locations. </param>
+        /// <returns> A new <see cref="Models.SecretsLocationsChangeRequest"/> instance for mocking. </returns>
+        public static SecretsLocationsChangeRequest SecretsLocationsChangeRequest(IEnumerable<SecretsLocationDetails> properties = default)
         {
-            return new HciClusterIdentityResult(aadClientId, aadTenantId, aadServicePrincipalObjectId, aadApplicationObjectId, serializedAdditionalRawData: null);
+            properties ??= new ChangeTrackingList<SecretsLocationDetails>();
+
+            return new SecretsLocationsChangeRequest(properties.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RemoteSupportContentProperties"/>. </summary>
+        /// <param name="aadClientId"> Gets the AadClientId. </param>
+        /// <param name="aadTenantId"> Gets the AadTenantId. </param>
+        /// <param name="aadServicePrincipalObjectId"> Gets the AadServicePrincipalObjectId. </param>
+        /// <param name="aadApplicationObjectId"> Gets the AadApplicationObjectId. </param>
+        /// <returns> A new <see cref="Models.ClusterIdentityResponse"/> instance for mocking. </returns>
+        public static ClusterIdentityResponse ClusterIdentityResponse(string aadClientId = default, string aadTenantId = default, string aadServicePrincipalObjectId = default, string aadApplicationObjectId = default)
+        {
+            return new ClusterIdentityResponse(aadClientId is null && aadTenantId is null && aadServicePrincipalObjectId is null && aadApplicationObjectId is null ? default : new ClusterIdentityResponseProperties(aadClientId, aadTenantId, aadServicePrincipalObjectId, aadApplicationObjectId, null), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Properties for Log Collection Request. </summary>
+        /// <param name="fromDate"> From DateTimeStamp from when logs need to be connected. </param>
+        /// <param name="toDate"> To DateTimeStamp till when logs need to be connected. </param>
+        /// <returns> A new <see cref="Models.LogCollectionRequestProperties"/> instance for mocking. </returns>
+        public static LogCollectionRequestProperties LogCollectionRequestProperties(DateTimeOffset fromDate = default, DateTimeOffset toDate = default)
+        {
+            return new LogCollectionRequestProperties(fromDate, toDate, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Properties for Remote Support Request. </summary>
         /// <param name="accessLevel"> Remote Support Access Level. </param>
-        /// <param name="expireOn"> Expiration DateTimeStamp when Remote Support Access will be expired. </param>
+        /// <param name="expirationTimeStamp"> Expiration DateTimeStamp when Remote Support Access will be expired. </param>
         /// <param name="remoteSupportType"> Remote Support Type for cluster. </param>
-        /// <returns> A new <see cref="Models.RemoteSupportContentProperties"/> instance for mocking. </returns>
-        public static RemoteSupportContentProperties RemoteSupportContentProperties(HciClusterAccessLevel? accessLevel = null, DateTimeOffset? expireOn = null, RemoteSupportType? remoteSupportType = null)
+        /// <returns> A new <see cref="Models.RemoteSupportRequestProperties"/> instance for mocking. </returns>
+        public static RemoteSupportRequestProperties RemoteSupportRequestProperties(HciClusterAccessLevel? accessLevel = default, DateTimeOffset? expirationTimeStamp = default, RemoteSupportType? remoteSupportType = default)
         {
-            return new RemoteSupportContentProperties(accessLevel, expireOn, remoteSupportType, serializedAdditionalRawData: null);
+            return new RemoteSupportRequestProperties(accessLevel, expirationTimeStamp, remoteSupportType, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Hci.HciClusterDeploymentSettingData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="provisioningState"> DeploymentSetting provisioning state. </param>
         /// <param name="arcNodeResourceIds"> Azure resource ids of Arc machines to be part of cluster. </param>
         /// <param name="deploymentMode"> The deployment mode for cluster deployment. </param>
         /// <param name="operationType"> The intended operation for a cluster. </param>
         /// <param name="deploymentConfiguration"> Scale units will contains list of deployment data. </param>
         /// <param name="reportedProperties"> Deployment Status reported from cluster. </param>
-        /// <returns> A new <see cref="Hci.HciClusterDeploymentSettingData"/> instance for mocking. </returns>
-        public static HciClusterDeploymentSettingData HciClusterDeploymentSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HciProvisioningState? provisioningState = null, IEnumerable<ResourceIdentifier> arcNodeResourceIds = null, EceDeploymentMode? deploymentMode = null, HciClusterOperationType? operationType = null, HciClusterDeploymentConfiguration deploymentConfiguration = null, EceReportedProperties reportedProperties = null)
+        /// <returns> A new <see cref="Hci.DeploymentSettingData"/> instance for mocking. </returns>
+        public static DeploymentSettingData DeploymentSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciProvisioningState? provisioningState = default, IEnumerable<string> arcNodeResourceIds = default, DeploymentMode? deploymentMode = default, OperationType? operationType = default, DeploymentConfiguration deploymentConfiguration = default, EceReportedProperties reportedProperties = default)
         {
-            arcNodeResourceIds ??= new List<ResourceIdentifier>();
-
-            return new HciClusterDeploymentSettingData(
+            return new DeploymentSettingData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                provisioningState,
-                arcNodeResourceIds?.ToList(),
-                deploymentMode,
-                operationType,
-                deploymentConfiguration,
-                reportedProperties,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                provisioningState is null && arcNodeResourceIds is null && deploymentMode is null && operationType is null && deploymentConfiguration is null && reportedProperties is null ? default : new DeploymentSettingsProperties(
+                    provisioningState,
+                    (arcNodeResourceIds ?? new ChangeTrackingList<string>()).ToList(),
+                    deploymentMode.Value,
+                    operationType,
+                    deploymentConfiguration,
+                    reportedProperties,
+                    null));
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.EceReportedProperties"/>. </summary>
+        /// <summary> Deployment Configuration. </summary>
+        /// <param name="version"> deployment template version. </param>
+        /// <param name="scaleUnits"> Scale units will contains list of deployment data. </param>
+        /// <returns> A new <see cref="Models.DeploymentConfiguration"/> instance for mocking. </returns>
+        public static DeploymentConfiguration DeploymentConfiguration(string version = default, IEnumerable<ScaleUnits> scaleUnits = default)
+        {
+            scaleUnits ??= new ChangeTrackingList<ScaleUnits>();
+
+            return new DeploymentConfiguration(version, scaleUnits.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="securitySettings"> SecuritySettings to deploy AzureStackHCI Cluster. </param>
+        /// <param name="observability"> Observability config to deploy AzureStackHCI Cluster. </param>
+        /// <param name="cluster"> Observability config to deploy AzureStackHCI Cluster. </param>
+        /// <param name="identityProvider"> Identity Provider for the cluster. </param>
+        /// <param name="storageConfigurationMode"> By default, this mode is set to Express and your storage is configured as per best practices based on the number of nodes in the cluster. Allowed values are 'Express','InfraOnly', 'KeepStorage'. </param>
+        /// <param name="namingPrefix"> naming prefix to deploy cluster. </param>
+        /// <param name="domainFqdn"> FQDN to deploy cluster. </param>
+        /// <param name="infrastructureNetwork"> InfrastructureNetwork config to deploy AzureStackHCI Cluster. </param>
+        /// <param name="physicalNodes"> list of physical nodes config to deploy AzureStackHCI Cluster. </param>
+        /// <param name="hostNetwork"> HostNetwork config to deploy AzureStackHCI Cluster. </param>
+        /// <param name="sdnIntegrationNetworkController"> network controller config for SDN Integration to deploy AzureStackHCI Cluster. </param>
+        /// <param name="isManagementCluster"> Is Management Cluster, when true indicates that the cluster is used for managing other clusters. </param>
+        /// <param name="adouPath"> The path to the Active Directory Organizational Unit container object prepared for the deployment. </param>
+        /// <param name="secretsLocation"> Azure key vault endpoint. This property is deprecated from 2023-12-01-preview. Please use secrets property instead. </param>
+        /// <param name="secrets"> secrets used for cloud deployment. </param>
+        /// <param name="optionalServicesCustomLocation"> The name of custom location. </param>
+        /// <param name="localAvailabilityZones"> Local Availability Zone information for HCI cluster. </param>
+        /// <param name="assemblyInfo"> Assembly Package details for Validated Solution Recipe for AzureStackHCI Cluster. </param>
+        /// <returns> A new <see cref="Models.DeploymentData"/> instance for mocking. </returns>
+        public static DeploymentData DeploymentData(DeploymentSecuritySettings securitySettings = default, Observability observability = default, DeploymentCluster cluster = default, IdentityProvider? identityProvider = default, string storageConfigurationMode = default, string namingPrefix = default, string domainFqdn = default, IEnumerable<InfrastructureNetwork> infrastructureNetwork = default, IEnumerable<PhysicalNodes> physicalNodes = default, DeploymentSettingHostNetwork hostNetwork = default, NetworkController sdnIntegrationNetworkController = default, bool? isManagementCluster = default, string adouPath = default, string secretsLocation = default, IEnumerable<EceDeploymentSecrets> secrets = default, string optionalServicesCustomLocation = default, IEnumerable<LocalAvailabilityZones> localAvailabilityZones = default, AssemblyInfo assemblyInfo = default)
+        {
+            infrastructureNetwork ??= new ChangeTrackingList<InfrastructureNetwork>();
+            physicalNodes ??= new ChangeTrackingList<PhysicalNodes>();
+            secrets ??= new ChangeTrackingList<EceDeploymentSecrets>();
+            localAvailabilityZones ??= new ChangeTrackingList<LocalAvailabilityZones>();
+
+            return new DeploymentData(
+                securitySettings,
+                observability,
+                cluster,
+                identityProvider,
+                storageConfigurationMode is null ? default : new Storage(storageConfigurationMode, null),
+                namingPrefix,
+                domainFqdn,
+                infrastructureNetwork.ToList(),
+                physicalNodes.ToList(),
+                hostNetwork,
+                sdnIntegrationNetworkController is null ? default : new SdnIntegration(sdnIntegrationNetworkController, null),
+                isManagementCluster,
+                adouPath,
+                secretsLocation,
+                secrets.ToList(),
+                optionalServicesCustomLocation is null ? default : new OptionalServices(optionalServicesCustomLocation, null),
+                localAvailabilityZones.ToList(),
+                assemblyInfo,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> AzureStackHCI Cluster deployment properties. </summary>
+        /// <param name="name"> The cluster name provided when preparing Active Directory. </param>
+        /// <param name="witnessType"> Use a cloud witness if you have internet access and if you use an Azure Storage account to provide a vote on cluster quorum. A cloud witness uses Azure Blob Storage to read or write a blob file and then uses it to arbitrate in split-brain resolution. Only allowed values are 'Cloud', 'FileShare'. </param>
+        /// <param name="witnessPath"> Specify the fileshare path for the local witness for your Azure Stack HCI cluster. </param>
+        /// <param name="cloudAccountName"> Specify the Azure Storage account name for cloud witness for your Azure Stack HCI cluster. </param>
+        /// <param name="azureServiceEndpoint"> For Azure blob service endpoint type, select either Default or Custom domain. If you selected **Custom domain, enter the domain for the blob service in this format core.windows.net. </param>
+        /// <param name="hardwareClass"> Hardware class of the cluster. </param>
+        /// <param name="clusterPattern"> Cluster Pattern supported. </param>
+        /// <returns> A new <see cref="Models.DeploymentCluster"/> instance for mocking. </returns>
+        public static DeploymentCluster DeploymentCluster(string name = default, string witnessType = default, string witnessPath = default, string cloudAccountName = default, string azureServiceEndpoint = default, HardwareClass? hardwareClass = default, ClusterPattern? clusterPattern = default)
+        {
+            return new DeploymentCluster(
+                name,
+                witnessType,
+                witnessPath,
+                cloudAccountName,
+                azureServiceEndpoint,
+                hardwareClass,
+                clusterPattern,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The InfrastructureNetwork of a AzureStackHCI Cluster. </summary>
+        /// <param name="subnetMask"> Subnet mask that matches the provided IP address space. </param>
+        /// <param name="gateway"> Default gateway that should be used for the provided IP address space. </param>
+        /// <param name="ipPools"> Range of IP addresses from which addresses are allocated for nodes within a subnet. </param>
+        /// <param name="dnsServerConfig"> Specifies how DNS servers are configured for the infrastructure network. Allowed values are 'UseDnsServer' to use the provided DNS servers, and 'UseForwarder' to use DNS forwarders. </param>
+        /// <param name="dnsZones"> Details of the DNS Zones to be configured. </param>
+        /// <param name="dnsServers"> IPv4 address of the DNS servers in your environment. </param>
+        /// <param name="useDhcp"> Allows customers to use DHCP for Hosts and Cluster IPs. If not declared, the deployment will default to static IPs. When true, GW and DNS servers are not required. </param>
+        /// <returns> A new <see cref="Models.InfrastructureNetwork"/> instance for mocking. </returns>
+        public static InfrastructureNetwork InfrastructureNetwork(string subnetMask = default, string gateway = default, IEnumerable<IpPools> ipPools = default, DnsServerConfig? dnsServerConfig = default, IEnumerable<DnsZones> dnsZones = default, IEnumerable<string> dnsServers = default, bool? useDhcp = default)
+        {
+            ipPools ??= new ChangeTrackingList<IpPools>();
+            dnsZones ??= new ChangeTrackingList<DnsZones>();
+            dnsServers ??= new ChangeTrackingList<string>();
+
+            return new InfrastructureNetwork(
+                subnetMask,
+                gateway,
+                ipPools.ToList(),
+                dnsServerConfig,
+                dnsZones.ToList(),
+                dnsServers.ToList(),
+                useDhcp,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Details of the DNS Zones to be configured. </summary>
+        /// <param name="dnsZoneName"> Name of the DNS Zone to be configured. </param>
+        /// <param name="dnsForwarder"> Forwarder details of the DNS Zone to be configured. </param>
+        /// <returns> A new <see cref="Models.DnsZones"/> instance for mocking. </returns>
+        public static DnsZones DnsZones(string dnsZoneName = default, IEnumerable<string> dnsForwarder = default)
+        {
+            dnsForwarder ??= new ChangeTrackingList<string>();
+
+            return new DnsZones(dnsZoneName, dnsForwarder.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The HostNetwork of a cluster. </summary>
+        /// <param name="intents"> The network intents assigned to the network reference pattern used for the deployment. Each intent will define its own name, traffic type, adapter names, and overrides as recommended by your OEM. </param>
+        /// <param name="storageNetworks"> List of StorageNetworks config to deploy AzureStackHCI Cluster. </param>
+        /// <param name="storageConnectivitySwitchless"> Defines how the storage adapters between nodes are connected either switch or switch less.. </param>
+        /// <param name="enableStorageAutoIp"> Optional parameter required only for 3 Nodes Switchless deployments. This allows users to specify IPs and Mask for Storage NICs when Network ATC is not assigning the IPs for storage automatically. </param>
+        /// <returns> A new <see cref="Models.DeploymentSettingHostNetwork"/> instance for mocking. </returns>
+        public static DeploymentSettingHostNetwork DeploymentSettingHostNetwork(IEnumerable<DeploymentSettingIntents> intents = default, IEnumerable<DeploymentSettingStorageNetworks> storageNetworks = default, bool? storageConnectivitySwitchless = default, bool? enableStorageAutoIp = default)
+        {
+            intents ??= new ChangeTrackingList<DeploymentSettingIntents>();
+            storageNetworks ??= new ChangeTrackingList<DeploymentSettingStorageNetworks>();
+
+            return new DeploymentSettingHostNetwork(intents.ToList(), storageNetworks.ToList(), storageConnectivitySwitchless, enableStorageAutoIp, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The Intents of a cluster. </summary>
+        /// <param name="name"> Name of the network intent you wish to create. </param>
+        /// <param name="trafficType"> List of network traffic types. Only allowed values are 'Compute', 'Storage', 'Management'. </param>
+        /// <param name="adapter"> Array of network interfaces used for the network intent. </param>
+        /// <param name="overrideVirtualSwitchConfiguration"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
+        /// <param name="virtualSwitchConfigurationOverrides"> Set virtualSwitch ConfigurationOverrides for cluster. </param>
+        /// <param name="overrideQosPolicy"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
+        /// <param name="qosPolicyOverrides"> Set QoS PolicyOverrides for cluster. </param>
+        /// <param name="overrideAdapterProperty"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
+        /// <param name="adapterPropertyOverrides"> Set Adapter PropertyOverrides for cluster. </param>
+        /// <returns> A new <see cref="Models.DeploymentSettingIntents"/> instance for mocking. </returns>
+        public static DeploymentSettingIntents DeploymentSettingIntents(string name = default, IEnumerable<string> trafficType = default, IEnumerable<string> adapter = default, bool? overrideVirtualSwitchConfiguration = default, DeploymentSettingVirtualSwitchConfigurationOverrides virtualSwitchConfigurationOverrides = default, bool? overrideQosPolicy = default, QosPolicyOverrides qosPolicyOverrides = default, bool? overrideAdapterProperty = default, DeploymentSettingAdapterPropertyOverrides adapterPropertyOverrides = default)
+        {
+            trafficType ??= new ChangeTrackingList<string>();
+            adapter ??= new ChangeTrackingList<string>();
+
+            return new DeploymentSettingIntents(
+                name,
+                trafficType.ToList(),
+                adapter.ToList(),
+                overrideVirtualSwitchConfiguration,
+                virtualSwitchConfigurationOverrides,
+                overrideQosPolicy,
+                qosPolicyOverrides,
+                overrideAdapterProperty,
+                adapterPropertyOverrides,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The StorageNetworks of a cluster. </summary>
+        /// <param name="name"> Name of the storage network. </param>
+        /// <param name="networkAdapterName"> Name of the storage network adapter. </param>
+        /// <param name="vlanId"> ID specified for the VLAN storage network. This setting is applied to the network interfaces that route the storage and VM migration traffic. </param>
+        /// <param name="storageAdapterIPInfo"> List of Storage adapter physical nodes config to deploy AzureStackHCI Cluster. </param>
+        /// <returns> A new <see cref="Models.DeploymentSettingStorageNetworks"/> instance for mocking. </returns>
+        public static DeploymentSettingStorageNetworks DeploymentSettingStorageNetworks(string name = default, string networkAdapterName = default, string vlanId = default, IEnumerable<DeploymentSettingStorageAdapterIPInfo> storageAdapterIPInfo = default)
+        {
+            storageAdapterIPInfo ??= new ChangeTrackingList<DeploymentSettingStorageAdapterIPInfo>();
+
+            return new DeploymentSettingStorageNetworks(name, networkAdapterName, vlanId, storageAdapterIPInfo.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Assembly Package details for Validated Solution Recipe for AzureStackHCI Cluster. </summary>
+        /// <param name="packageVersion"> Assembly Package version for Validated Solution Recipe for AzureStackHCI Cluster. </param>
+        /// <param name="payload"> Payload properties for Validated Solution Recipe for AzureStackHCI Cluster. </param>
+        /// <returns> A new <see cref="Models.AssemblyInfo"/> instance for mocking. </returns>
+        public static AssemblyInfo AssemblyInfo(string packageVersion = default, IEnumerable<AssemblyInfoPayload> payload = default)
+        {
+            payload ??= new ChangeTrackingList<AssemblyInfoPayload>();
+
+            return new AssemblyInfo(packageVersion, payload.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Payload properties for Validated Solution Recipe for AzureStackHCI Cluster. </summary>
+        /// <param name="identifier"> assembly identifier for Validated Solution Recipe for AzureStackHCI Cluster. </param>
+        /// <param name="hash"> Hash of assembly package for Validated Solution Recipe for AzureStackHCI Cluster. </param>
+        /// <param name="fileName"> File name of assembly package for Validated Solution Recipe for AzureStackHCI Cluster. </param>
+        /// <param name="uri"> Url of assembly package for Validated Solution Recipe for AzureStackHCI Cluster. </param>
+        /// <returns> A new <see cref="Models.AssemblyInfoPayload"/> instance for mocking. </returns>
+        public static AssemblyInfoPayload AssemblyInfoPayload(string identifier = default, string hash = default, string fileName = default, string uri = default)
+        {
+            return new AssemblyInfoPayload(identifier, hash, fileName, uri, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The solution builder extension (SBE) partner deployment info for cluster. </summary>
+        /// <param name="sbeDeploymentInfo"> SBE package and manifest information for the solution Builder Extension staged for AzureStackHCI cluster deployment. </param>
+        /// <param name="partnerProperties"> List of SBE partner properties for AzureStackHCI cluster deployment. </param>
+        /// <param name="credentialList"> SBE credentials list for AzureStackHCI cluster deployment. </param>
+        /// <returns> A new <see cref="Models.SbePartnerInfo"/> instance for mocking. </returns>
+        public static SbePartnerInfo SbePartnerInfo(SbeDeploymentInfo sbeDeploymentInfo = default, IEnumerable<SbePartnerProperties> partnerProperties = default, IEnumerable<SbeCredentials> credentialList = default)
+        {
+            partnerProperties ??= new ChangeTrackingList<SbePartnerProperties>();
+            credentialList ??= new ChangeTrackingList<SbeCredentials>();
+
+            return new SbePartnerInfo(sbeDeploymentInfo, partnerProperties.ToList(), credentialList.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The DeploymentStatus of AzureStackHCI Cluster. </summary>
         /// <param name="validationStatus"> validation status of AzureStackHCI Cluster Deployment. </param>
         /// <param name="deploymentStatus"> Deployment status of AzureStackHCI Cluster Deployment. </param>
         /// <returns> A new <see cref="Models.EceReportedProperties"/> instance for mocking. </returns>
-        public static EceReportedProperties EceReportedProperties(EceActionStatus validationStatus = null, EceActionStatus deploymentStatus = null)
+        public static EceReportedProperties EceReportedProperties(EceActionStatus validationStatus = default, EceActionStatus deploymentStatus = default)
         {
-            return new EceReportedProperties(validationStatus, deploymentStatus, serializedAdditionalRawData: null);
+            return new EceReportedProperties(validationStatus, deploymentStatus, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.EceActionStatus"/>. </summary>
+        /// <summary> The ECE action plan deployment status for AzureStackHCI Cluster. </summary>
         /// <param name="status"> Status of ECE action AzureStackHCI Cluster Deployment. </param>
         /// <param name="steps"> List of steps of AzureStackHCI Cluster Deployment. </param>
         /// <returns> A new <see cref="Models.EceActionStatus"/> instance for mocking. </returns>
-        public static EceActionStatus EceActionStatus(string status = null, IEnumerable<HciClusterDeploymentStep> steps = null)
+        public static EceActionStatus EceActionStatus(string status = default, IEnumerable<DeploymentStep> steps = default)
         {
-            steps ??= new List<HciClusterDeploymentStep>();
+            steps ??= new ChangeTrackingList<DeploymentStep>();
 
-            return new EceActionStatus(status, steps?.ToList(), serializedAdditionalRawData: null);
+            return new EceActionStatus(status, steps.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciClusterDeploymentStep"/>. </summary>
+        /// <summary> The Step of AzureStackHCI Cluster. </summary>
         /// <param name="name"> Name of step. </param>
         /// <param name="description"> Description of step. </param>
         /// <param name="fullStepIndex"> FullStepIndex of step. </param>
-        /// <param name="startOn"> Start time of step. </param>
-        /// <param name="endOn"> End time of step. </param>
+        /// <param name="startTimeUtc"> Start time of step. </param>
+        /// <param name="endTimeUtc"> End time of step. </param>
         /// <param name="status"> Status of step. Allowed values are 'Error', 'Success', 'InProgress'. </param>
         /// <param name="steps"> List of nested steps of AzureStackHCI Cluster Deployment. </param>
         /// <param name="exception"> List of exceptions in AzureStackHCI Cluster Deployment. </param>
-        /// <returns> A new <see cref="Models.HciClusterDeploymentStep"/> instance for mocking. </returns>
-        public static HciClusterDeploymentStep HciClusterDeploymentStep(string name = null, string description = null, string fullStepIndex = null, string startOn = null, string endOn = null, string status = null, IEnumerable<HciClusterDeploymentStep> steps = null, IEnumerable<string> exception = null)
+        /// <returns> A new <see cref="Models.DeploymentStep"/> instance for mocking. </returns>
+        public static DeploymentStep DeploymentStep(string name = default, string description = default, string fullStepIndex = default, string startTimeUtc = default, string endTimeUtc = default, string status = default, IEnumerable<DeploymentStep> steps = default, IEnumerable<string> exception = default)
         {
-            steps ??= new List<HciClusterDeploymentStep>();
-            exception ??= new List<string>();
+            steps ??= new ChangeTrackingList<DeploymentStep>();
+            exception ??= new ChangeTrackingList<string>();
 
-            return new HciClusterDeploymentStep(
+            return new DeploymentStep(
                 name,
                 description,
                 fullStepIndex,
-                startOn,
-                endOn,
+                startTimeUtc,
+                endTimeUtc,
                 status,
-                steps?.ToList(),
-                exception?.ToList(),
-                serializedAdditionalRawData: null);
+                steps.ToList(),
+                exception.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Hci.HciEdgeDeviceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Device kind to support polymorphic resource. </param>
-        /// <returns> A new <see cref="Hci.HciEdgeDeviceData"/> instance for mocking. </returns>
-        public static HciEdgeDeviceData HciEdgeDeviceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null)
+        /// <summary>
+        /// EdgeDevice Jobs resource
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.HciEdgeDeviceJob"/>.
+        /// </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <returns> A new <see cref="Hci.EdgeDeviceJobData"/> instance for mocking. </returns>
+        public static EdgeDeviceJobData EdgeDeviceJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default)
+        {
+            return new UnknownEdgeDeviceJob(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                new EdgeDeviceKind(kind));
+        }
+
+        /// <summary> Edge device job for Azure Stack HCI solution. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> HCI Edge device job properties. </param>
+        /// <returns> A new <see cref="Models.HciEdgeDeviceJob"/> instance for mocking. </returns>
+        public static HciEdgeDeviceJob HciEdgeDeviceJob(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciEdgeDeviceJobProperties properties = default)
+        {
+            return new HciEdgeDeviceJob(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                EdgeDeviceKind.HCI,
+                properties);
+        }
+
+        /// <summary>
+        /// HCI Edge device job properties
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.HciCollectLogJobProperties"/> and <see cref="Models.HciRemoteSupportJobProperties"/>.
+        /// </summary>
+        /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
+        /// <param name="provisioningState"> Job provisioning state. </param>
+        /// <param name="jobId"> Unique, immutable job id. </param>
+        /// <param name="startTimeUtc"> The UTC date and time at which the job started. </param>
+        /// <param name="endTimeUtc"> The UTC date and time at which the job completed. </param>
+        /// <param name="status"> Status of Edge device job. </param>
+        /// <param name="jobType"> Job Type to support polymorphic resource. </param>
+        /// <returns> A new <see cref="Models.HciEdgeDeviceJobProperties"/> instance for mocking. </returns>
+        public static HciEdgeDeviceJobProperties HciEdgeDeviceJobProperties(DeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, JobStatus? status = default, string jobType = default)
+        {
+            return new UnknownHciEdgeDeviceJobProperties(
+                deploymentMode,
+                provisioningState,
+                jobId,
+                startTimeUtc,
+                endTimeUtc,
+                status,
+                new HciEdgeDeviceJobType(jobType),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents the properties of an HCI Collect Log job. </summary>
+        /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
+        /// <param name="provisioningState"> Job provisioning state. </param>
+        /// <param name="jobId"> Unique, immutable job id. </param>
+        /// <param name="startTimeUtc"> The UTC date and time at which the job started. </param>
+        /// <param name="endTimeUtc"> The UTC date and time at which the job completed. </param>
+        /// <param name="status"> Status of Edge device job. </param>
+        /// <param name="fromDate"> From date for log collection. </param>
+        /// <param name="toDate"> To date for log collection. </param>
+        /// <param name="lastLogGenerated"> To date for log collection. </param>
+        /// <param name="reportedProperties"> log collection job reported properties. </param>
+        /// <returns> A new <see cref="Models.HciCollectLogJobProperties"/> instance for mocking. </returns>
+        public static HciCollectLogJobProperties HciCollectLogJobProperties(DeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, JobStatus? status = default, DateTimeOffset fromDate = default, DateTimeOffset toDate = default, DateTimeOffset? lastLogGenerated = default, LogCollectionReportedProperties reportedProperties = default)
+        {
+            return new HciCollectLogJobProperties(
+                deploymentMode,
+                provisioningState,
+                jobId,
+                startTimeUtc,
+                endTimeUtc,
+                status,
+                HciEdgeDeviceJobType.CollectLog,
+                additionalBinaryDataProperties: null,
+                fromDate,
+                toDate,
+                lastLogGenerated,
+                reportedProperties);
+        }
+
+        /// <summary> Represents the reported properties of a log collection job. </summary>
+        /// <param name="percentComplete"> The percentage of the job that is complete. </param>
+        /// <param name="validationStatus"> Validation status of job. </param>
+        /// <param name="deploymentStatus"> Deployment status of job. </param>
+        /// <param name="logCollectionSessionDetails"> Details of the log collection session. </param>
+        /// <returns> A new <see cref="Models.LogCollectionReportedProperties"/> instance for mocking. </returns>
+        public static LogCollectionReportedProperties LogCollectionReportedProperties(int? percentComplete = default, EceActionStatus validationStatus = default, EceActionStatus deploymentStatus = default, IEnumerable<LogCollectionJobSession> logCollectionSessionDetails = default)
+        {
+            logCollectionSessionDetails ??= new ChangeTrackingList<LogCollectionJobSession>();
+
+            return new LogCollectionReportedProperties(percentComplete, validationStatus, deploymentStatus, logCollectionSessionDetails.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents a session for collecting logs from an edge device. </summary>
+        /// <param name="startTime"> The timestamp when log collection started, in ISO 8601 format. </param>
+        /// <param name="endTime"> The timestamp when log collection ended, in ISO 8601 format. </param>
+        /// <param name="timeCollected"> The total time logs were collected for, in ISO 8601 duration format. </param>
+        /// <param name="logSize"> The size of the collected logs in bytes. </param>
+        /// <param name="status"> The status of the log collection session. </param>
+        /// <param name="correlationId"> A unique identifier for correlating this log collection session with other operations or sessions. </param>
+        /// <returns> A new <see cref="Models.LogCollectionJobSession"/> instance for mocking. </returns>
+        public static LogCollectionJobSession LogCollectionJobSession(string startTime = default, string endTime = default, string timeCollected = default, int? logSize = default, DeviceLogCollectionStatus? status = default, string correlationId = default)
+        {
+            return new LogCollectionJobSession(
+                startTime,
+                endTime,
+                timeCollected,
+                logSize,
+                status,
+                correlationId,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents the properties of a remote support job for HCI. </summary>
+        /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
+        /// <param name="provisioningState"> Job provisioning state. </param>
+        /// <param name="jobId"> Unique, immutable job id. </param>
+        /// <param name="startTimeUtc"> The UTC date and time at which the job started. </param>
+        /// <param name="endTimeUtc"> The UTC date and time at which the job completed. </param>
+        /// <param name="status"> Status of Edge device job. </param>
+        /// <param name="accessLevel"> Remote support access level. </param>
+        /// <param name="expirationTimestamp"> Remote support expiration timestamp. </param>
+        /// <param name="type"> Remote support type. </param>
+        /// <param name="reportedProperties"> log collection job reported properties. </param>
+        /// <returns> A new <see cref="Models.HciRemoteSupportJobProperties"/> instance for mocking. </returns>
+        public static HciRemoteSupportJobProperties HciRemoteSupportJobProperties(DeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, JobStatus? status = default, RemoteSupportAccessLevel accessLevel = default, DateTimeOffset expirationTimestamp = default, RemoteSupportType @type = default, RemoteSupportJobReportedProperties reportedProperties = default)
+        {
+            return new HciRemoteSupportJobProperties(
+                deploymentMode,
+                provisioningState,
+                jobId,
+                startTimeUtc,
+                endTimeUtc,
+                status,
+                HciEdgeDeviceJobType.RemoteSupport,
+                additionalBinaryDataProperties: null,
+                accessLevel,
+                expirationTimestamp,
+                @type,
+                reportedProperties);
+        }
+
+        /// <summary> Represents the reported properties of a remote support job. </summary>
+        /// <param name="percentComplete"> The percentage of the job that is complete. </param>
+        /// <param name="validationStatus"> Validation status of job. </param>
+        /// <param name="deploymentStatus"> Deployment status of job. </param>
+        /// <param name="nodeSettings"> Optional settings for configuring the node for remote support. </param>
+        /// <param name="sessionDetails"> Details of the remote support session. </param>
+        /// <returns> A new <see cref="Models.RemoteSupportJobReportedProperties"/> instance for mocking. </returns>
+        public static RemoteSupportJobReportedProperties RemoteSupportJobReportedProperties(int? percentComplete = default, EceActionStatus validationStatus = default, EceActionStatus deploymentStatus = default, RemoteSupportJobNodeSettings nodeSettings = default, IEnumerable<RemoteSupportSession> sessionDetails = default)
+        {
+            sessionDetails ??= new ChangeTrackingList<RemoteSupportSession>();
+
+            return new RemoteSupportJobReportedProperties(
+                percentComplete,
+                validationStatus,
+                deploymentStatus,
+                nodeSettings,
+                sessionDetails.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents the settings of a remote support node. </summary>
+        /// <param name="state"> The state of the remote support node. </param>
+        /// <param name="createdOn"> The timestamp when the node settings were created, in UTC. </param>
+        /// <param name="updatedOn"> The timestamp when the node settings were last updated, in UTC. </param>
+        /// <param name="connectionStatus"> The current connection status of the remote support session. </param>
+        /// <param name="connectionErrorMessage"> The error message, if any, from the last connection attempt. </param>
+        /// <returns> A new <see cref="Models.RemoteSupportJobNodeSettings"/> instance for mocking. </returns>
+        public static RemoteSupportJobNodeSettings RemoteSupportJobNodeSettings(string state = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string connectionStatus = default, string connectionErrorMessage = default)
+        {
+            return new RemoteSupportJobNodeSettings(
+                state,
+                createdOn,
+                updatedOn,
+                connectionStatus,
+                connectionErrorMessage,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents a remote support session. </summary>
+        /// <param name="sessionId"> Unique session Id. </param>
+        /// <param name="sessionStartOn"> The start time of the remote support session, in UTC. </param>
+        /// <param name="sessionEndOn"> The end time of the remote support session, in UTC. </param>
+        /// <param name="accessLevel"> The level of access granted during the remote support session. </param>
+        /// <param name="transcriptLocation"> The location where the session transcript is stored. </param>
+        /// <returns> A new <see cref="Models.RemoteSupportSession"/> instance for mocking. </returns>
+        public static RemoteSupportSession RemoteSupportSession(string sessionId = default, DateTimeOffset? sessionStartOn = default, DateTimeOffset? sessionEndOn = default, RemoteSupportAccessLevel? accessLevel = default, string transcriptLocation = default)
+        {
+            return new RemoteSupportSession(
+                sessionId,
+                sessionStartOn,
+                sessionEndOn,
+                accessLevel,
+                transcriptLocation,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Edge device resource.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.HciEdgeDevice"/>.
+        /// </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <returns> A new <see cref="Hci.EdgeDeviceData"/> instance for mocking. </returns>
+        public static EdgeDeviceData EdgeDeviceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default)
         {
             return new UnknownEdgeDevice(
                 id,
                 name,
                 resourceType,
                 systemData,
-                kind == null ? default : new HciEdgeDeviceKind(kind),
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                new DeviceKind(kind));
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciEdgeDeviceValidateResult"/>. </summary>
-        /// <param name="status"> edge device validation status. </param>
-        /// <returns> A new <see cref="Models.HciEdgeDeviceValidateResult"/> instance for mocking. </returns>
-        public static HciEdgeDeviceValidateResult HciEdgeDeviceValidateResult(string status = null)
+        /// <summary> Arc-enabled edge device with HCI OS. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> properties for Arc-enabled edge device with HCI OS. </param>
+        /// <returns> A new <see cref="Models.HciEdgeDevice"/> instance for mocking. </returns>
+        public static HciEdgeDevice HciEdgeDevice(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciEdgeDeviceProperties properties = default)
         {
-            return new HciEdgeDeviceValidateResult(status, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Hci.ArcExtensionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> Provisioning state of the Extension proxy resource. </param>
-        /// <param name="aggregateState"> Aggregate state of Arc Extensions across the nodes in this HCI cluster. </param>
-        /// <param name="perNodeExtensionDetails"> State of Arc Extension in each of the nodes. </param>
-        /// <param name="managedBy"> Indicates if the extension is managed by azure or the user. </param>
-        /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
-        /// <param name="publisher"> The name of the extension handler publisher. </param>
-        /// <param name="arcExtensionType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
-        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. Latest version would be used if not specified. </param>
-        /// <param name="shouldAutoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
-        /// <param name="settings"> Json formatted public settings for the extension. </param>
-        /// <param name="protectedSettings"> Protected settings (may contain secrets). </param>
-        /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version available. </param>
-        /// <returns> A new <see cref="Hci.ArcExtensionData"/> instance for mocking. </returns>
-        public static ArcExtensionData ArcExtensionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HciProvisioningState? provisioningState = null, ArcExtensionAggregateState? aggregateState = null, IEnumerable<PerNodeExtensionState> perNodeExtensionDetails = null, ArcExtensionManagedBy? managedBy = null, string forceUpdateTag = null, string publisher = null, string arcExtensionType = null, string typeHandlerVersion = null, bool? shouldAutoUpgradeMinorVersion = null, BinaryData settings = null, BinaryData protectedSettings = null, bool? enableAutomaticUpgrade = null)
-        {
-            perNodeExtensionDetails ??= new List<PerNodeExtensionState>();
-
-            return new ArcExtensionData(
+            return new HciEdgeDevice(
                 id,
                 name,
                 resourceType,
                 systemData,
-                provisioningState,
-                aggregateState,
-                perNodeExtensionDetails?.ToList(),
-                managedBy,
-                forceUpdateTag,
-                publisher,
-                arcExtensionType,
-                typeHandlerVersion,
-                shouldAutoUpgradeMinorVersion,
-                settings,
-                protectedSettings,
-                enableAutomaticUpgrade,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                DeviceKind.HCI,
+                properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PerNodeExtensionState"/>. </summary>
+        /// <summary> properties for Arc-enabled edge device with HCI OS. </summary>
+        /// <param name="deviceConfiguration"> Device Configuration. </param>
+        /// <param name="provisioningState"> Provisioning state of edgeDevice resource. </param>
+        /// <param name="reportedProperties"> The instance view of all current configurations on HCI device. </param>
+        /// <returns> A new <see cref="Models.HciEdgeDeviceProperties"/> instance for mocking. </returns>
+        public static HciEdgeDeviceProperties HciEdgeDeviceProperties(HciEdgeDeviceConfiguration deviceConfiguration = default, HciProvisioningState? provisioningState = default, HciReportedProperties reportedProperties = default)
+        {
+            return new HciEdgeDeviceProperties(deviceConfiguration, provisioningState, additionalBinaryDataProperties: null, reportedProperties);
+        }
+
+        /// <param name="deviceState"> edge device state. </param>
+        /// <param name="extensionProfile"> Extensions details for edge device. </param>
+        /// <param name="lastSyncTimestamp"> Most recent edge device sync timestamp in UTC. </param>
+        /// <param name="confidentialVmProfile"> CVM support details for edge device. </param>
+        /// <param name="networkProfile"> HCI device network information. </param>
+        /// <param name="osProfile"> HCI device OS specific information. </param>
+        /// <param name="sbeDeploymentPackageInfo"> Solution builder extension (SBE) deployment package information. </param>
+        /// <param name="storagePoolableDisksCount"> Number of storage disks in the device with $CanPool as true. </param>
+        /// <param name="hardwareProcessorType"> Process type of the device. </param>
+        /// <returns> A new <see cref="Models.HciReportedProperties"/> instance for mocking. </returns>
+        public static HciReportedProperties HciReportedProperties(HciEdgeDeviceState? deviceState = default, ExtensionProfile extensionProfile = default, DateTimeOffset? lastSyncTimestamp = default, ConfidentialVmProfile confidentialVmProfile = default, HciNetworkProfile networkProfile = default, HciOSProfile osProfile = default, SbeDeploymentPackageInfo sbeDeploymentPackageInfo = default, long? storagePoolableDisksCount = default, string hardwareProcessorType = default)
+        {
+            return new HciReportedProperties(
+                deviceState,
+                extensionProfile,
+                lastSyncTimestamp,
+                confidentialVmProfile,
+                additionalBinaryDataProperties: null,
+                networkProfile,
+                osProfile,
+                sbeDeploymentPackageInfo,
+                storagePoolableDisksCount is null ? default : new HciStorageProfile(storagePoolableDisksCount, null),
+                hardwareProcessorType is null ? default : new HciHardwareProfile(hardwareProcessorType, null));
+        }
+
+        /// <summary> The network profile of a device. </summary>
+        /// <param name="nicDetails"> List of NIC Details of device. </param>
+        /// <param name="switchDetails"> List of switch details for edge device. </param>
+        /// <param name="hostNetwork"> HostNetwork config to deploy AzureStackHCI Cluster. </param>
+        /// <param name="sdnProperties"> oftware Defined Networking Properties of the cluster. </param>
+        /// <returns> A new <see cref="Models.HciNetworkProfile"/> instance for mocking. </returns>
+        public static HciNetworkProfile HciNetworkProfile(IEnumerable<HciNicDetail> nicDetails = default, IEnumerable<HciEdgeDeviceSwitchDetail> switchDetails = default, HciEdgeDeviceHostNetwork hostNetwork = default, SdnProperties sdnProperties = default)
+        {
+            nicDetails ??= new ChangeTrackingList<HciNicDetail>();
+            switchDetails ??= new ChangeTrackingList<HciEdgeDeviceSwitchDetail>();
+
+            return new HciNetworkProfile(nicDetails.ToList(), switchDetails.ToList(), hostNetwork, sdnProperties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The NIC Detail of a device. </summary>
+        /// <param name="adapterName"> Adapter Name of NIC. </param>
+        /// <param name="interfaceDescription"> Interface Description of NIC. </param>
+        /// <param name="componentId"> Component Id of NIC. </param>
+        /// <param name="driverVersion"> Driver Version of NIC. </param>
+        /// <param name="ip4Address"> Subnet Mask of NIC. </param>
+        /// <param name="subnetMask"> Subnet Mask of NIC. </param>
+        /// <param name="defaultGateway"> Default Gateway of NIC. </param>
+        /// <param name="dnsServers"> DNS Servers for NIC. </param>
+        /// <param name="defaultIsolationId"> Default Isolation of Management NIC. </param>
+        /// <param name="macAddress"> MAC address information of NIC. </param>
+        /// <param name="slot"> The slot attached to the NIC. </param>
+        /// <param name="switchName"> The switch attached to the NIC, if any. </param>
+        /// <param name="nicType"> The type of NIC, physical, virtual, management. </param>
+        /// <param name="vlanId"> The VLAN ID of the physical NIC. </param>
+        /// <param name="nicStatus"> The status of NIC, up, disconnected. </param>
+        /// <param name="rdmaCapability"> Describes the RDMA capability of the network adapter. </param>
+        /// <returns> A new <see cref="Models.HciNicDetail"/> instance for mocking. </returns>
+        public static HciNicDetail HciNicDetail(string adapterName = default, string interfaceDescription = default, string componentId = default, string driverVersion = default, string ip4Address = default, string subnetMask = default, string defaultGateway = default, IEnumerable<string> dnsServers = default, string defaultIsolationId = default, string macAddress = default, string slot = default, string switchName = default, string nicType = default, string vlanId = default, string nicStatus = default, RdmaCapability? rdmaCapability = default)
+        {
+            dnsServers ??= new ChangeTrackingList<string>();
+
+            return new HciNicDetail(
+                adapterName,
+                interfaceDescription,
+                componentId,
+                driverVersion,
+                ip4Address,
+                subnetMask,
+                defaultGateway,
+                dnsServers.ToList(),
+                defaultIsolationId,
+                macAddress,
+                slot,
+                switchName,
+                nicType,
+                vlanId,
+                nicStatus,
+                rdmaCapability,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> List of switch details for edge device. </summary>
+        /// <param name="switchName"> The name of the switch. </param>
+        /// <param name="switchType"> The type of the switch. e.g. external, internal. </param>
+        /// <param name="extensions"> This represents extensions installed on virtualSwitch. </param>
+        /// <returns> A new <see cref="Models.HciEdgeDeviceSwitchDetail"/> instance for mocking. </returns>
+        public static HciEdgeDeviceSwitchDetail HciEdgeDeviceSwitchDetail(string switchName = default, string switchType = default, IEnumerable<SwitchExtension> extensions = default)
+        {
+            extensions ??= new ChangeTrackingList<SwitchExtension>();
+
+            return new HciEdgeDeviceSwitchDetail(switchName, switchType, extensions.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> This represents extensions installed on virtualSwitch. </summary>
+        /// <param name="switchId"> Unique identifier for virtualSwitch. </param>
+        /// <param name="extensionName"> This will show extension name for virtualSwitch. </param>
+        /// <param name="extensionEnabled"> This represents whether extension is enabled on virtualSwitch. </param>
+        /// <returns> A new <see cref="Models.SwitchExtension"/> instance for mocking. </returns>
+        public static SwitchExtension SwitchExtension(string switchId = default, string extensionName = default, bool? extensionEnabled = default)
+        {
+            return new SwitchExtension(switchId, extensionName, extensionEnabled, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The HostNetwork of a cluster. </summary>
+        /// <param name="intents"> The network intents assigned to the network reference pattern used for the deployment. Each intent will define its own name, traffic type, adapter names, and overrides as recommended by your OEM. </param>
+        /// <param name="storageNetworks"> List of StorageNetworks config to deploy AzureStackHCI Cluster. </param>
+        /// <param name="storageConnectivitySwitchless"> Defines how the storage adapters between nodes are connected either switch or switch less. </param>
+        /// <param name="enableStorageAutoIp"> Optional parameter required only for 3 Nodes Switchless deployments. This allows users to specify IPs and Mask for Storage NICs when Network ATC is not assigning the IPs for storage automatically. </param>
+        /// <returns> A new <see cref="Models.HciEdgeDeviceHostNetwork"/> instance for mocking. </returns>
+        public static HciEdgeDeviceHostNetwork HciEdgeDeviceHostNetwork(IEnumerable<HciEdgeDeviceIntents> intents = default, IEnumerable<HciEdgeDeviceStorageNetworks> storageNetworks = default, bool? storageConnectivitySwitchless = default, bool? enableStorageAutoIp = default)
+        {
+            intents ??= new ChangeTrackingList<HciEdgeDeviceIntents>();
+            storageNetworks ??= new ChangeTrackingList<HciEdgeDeviceStorageNetworks>();
+
+            return new HciEdgeDeviceHostNetwork(intents.ToList(), storageNetworks.ToList(), storageConnectivitySwitchless, enableStorageAutoIp, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The Intents of a cluster. </summary>
+        /// <param name="scope"> Scope for host network intent. </param>
+        /// <param name="intentType"> IntentType for host network intent. </param>
+        /// <param name="isComputeIntentSet"> IsComputeIntentSet for host network intent. </param>
+        /// <param name="isStorageIntentSet"> IsStorageIntentSet for host network intent. </param>
+        /// <param name="isOnlyStorage"> IntentType for host network intent. </param>
+        /// <param name="isManagementIntentSet"> IsManagementIntentSet for host network intent. </param>
+        /// <param name="isStretchIntentSet"> IsStretchIntentSet for host network intent. </param>
+        /// <param name="isOnlyStretch"> IsOnlyStretch for host network intent. </param>
+        /// <param name="isNetworkIntentType"> IsNetworkIntentType for host network intent. </param>
+        /// <param name="intentName"> Name of the network intent you wish to create. </param>
+        /// <param name="intentAdapters"> Array of adapters used for the network intent. </param>
+        /// <param name="overrideVirtualSwitchConfiguration"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
+        /// <param name="virtualSwitchConfigurationOverrides"> Set virtualSwitch ConfigurationOverrides for cluster. </param>
+        /// <param name="overrideQosPolicy"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
+        /// <param name="qosPolicyOverrides"> Set QoS PolicyOverrides for cluster. </param>
+        /// <param name="overrideAdapterProperty"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
+        /// <param name="adapterPropertyOverrides"> Set Adapter PropertyOverrides for cluster. </param>
+        /// <returns> A new <see cref="Models.HciEdgeDeviceIntents"/> instance for mocking. </returns>
+        public static HciEdgeDeviceIntents HciEdgeDeviceIntents(long? scope = default, long? intentType = default, bool? isComputeIntentSet = default, bool? isStorageIntentSet = default, bool? isOnlyStorage = default, bool? isManagementIntentSet = default, bool? isStretchIntentSet = default, bool? isOnlyStretch = default, bool? isNetworkIntentType = default, string intentName = default, IEnumerable<string> intentAdapters = default, bool? overrideVirtualSwitchConfiguration = default, HciEdgeDeviceVirtualSwitchConfigurationOverrides virtualSwitchConfigurationOverrides = default, bool? overrideQosPolicy = default, QosPolicyOverrides qosPolicyOverrides = default, bool? overrideAdapterProperty = default, HciEdgeDeviceAdapterPropertyOverrides adapterPropertyOverrides = default)
+        {
+            intentAdapters ??= new ChangeTrackingList<string>();
+
+            return new HciEdgeDeviceIntents(
+                scope,
+                intentType,
+                isComputeIntentSet,
+                isStorageIntentSet,
+                isOnlyStorage,
+                isManagementIntentSet,
+                isStretchIntentSet,
+                isOnlyStretch,
+                isNetworkIntentType,
+                intentName,
+                intentAdapters.ToList(),
+                overrideVirtualSwitchConfiguration,
+                virtualSwitchConfigurationOverrides,
+                overrideQosPolicy,
+                qosPolicyOverrides,
+                overrideAdapterProperty,
+                adapterPropertyOverrides,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The VirtualSwitchConfigurationOverrides of a cluster. </summary>
+        /// <param name="enableIov"> Enable IoV for Virtual Switch. </param>
+        /// <param name="loadBalancingAlgorithm"> Load Balancing Algorithm for Virtual Switch. </param>
+        /// <returns> A new <see cref="Models.HciEdgeDeviceVirtualSwitchConfigurationOverrides"/> instance for mocking. </returns>
+        public static HciEdgeDeviceVirtualSwitchConfigurationOverrides HciEdgeDeviceVirtualSwitchConfigurationOverrides(string enableIov = default, string loadBalancingAlgorithm = default)
+        {
+            return new HciEdgeDeviceVirtualSwitchConfigurationOverrides(enableIov, loadBalancingAlgorithm, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The AdapterPropertyOverrides of a cluster. </summary>
+        /// <param name="jumboPacket"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
+        /// <param name="networkDirect"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
+        /// <param name="networkDirectTechnology"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. Expected values are 'iWARP', 'RoCEv2', 'RoCE'. </param>
+        /// <returns> A new <see cref="Models.HciEdgeDeviceAdapterPropertyOverrides"/> instance for mocking. </returns>
+        public static HciEdgeDeviceAdapterPropertyOverrides HciEdgeDeviceAdapterPropertyOverrides(string jumboPacket = default, string networkDirect = default, string networkDirectTechnology = default)
+        {
+            return new HciEdgeDeviceAdapterPropertyOverrides(jumboPacket, networkDirect, networkDirectTechnology, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The StorageNetworks of a cluster. </summary>
+        /// <param name="name"> Name of the storage network. </param>
+        /// <param name="networkAdapterName"> Name of the storage network adapter. </param>
+        /// <param name="storageVlanId"> ID specified for the VLAN storage network. This setting is applied to the network interfaces that route the storage and VM migration traffic. </param>
+        /// <param name="storageAdapterIPInfo"> List of Storage adapter physical nodes config to deploy AzureStackHCI Cluster. </param>
+        /// <returns> A new <see cref="Models.HciEdgeDeviceStorageNetworks"/> instance for mocking. </returns>
+        public static HciEdgeDeviceStorageNetworks HciEdgeDeviceStorageNetworks(string name = default, string networkAdapterName = default, string storageVlanId = default, IEnumerable<HciEdgeDeviceStorageAdapterIPInfo> storageAdapterIPInfo = default)
+        {
+            storageAdapterIPInfo ??= new ChangeTrackingList<HciEdgeDeviceStorageAdapterIPInfo>();
+
+            return new HciEdgeDeviceStorageNetworks(name, networkAdapterName, storageVlanId, storageAdapterIPInfo.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The StorageAdapter physical nodes of a cluster. </summary>
+        /// <param name="physicalNode"> storage adapter physical node name. </param>
+        /// <param name="ipv4Address"> The IPv4 address assigned to each storage adapter physical node on your Azure Stack HCI cluster. </param>
+        /// <param name="subnetMask"> The SubnetMask address assigned to each storage adapter physical node on your Azure Stack HCI cluster. </param>
+        /// <returns> A new <see cref="Models.HciEdgeDeviceStorageAdapterIPInfo"/> instance for mocking. </returns>
+        public static HciEdgeDeviceStorageAdapterIPInfo HciEdgeDeviceStorageAdapterIPInfo(string physicalNode = default, string ipv4Address = default, string subnetMask = default)
+        {
+            return new HciEdgeDeviceStorageAdapterIPInfo(physicalNode, ipv4Address, subnetMask, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> OS configurations for HCI device. </summary>
+        /// <param name="bootType"> The boot type of the device. e.g. UEFI, Legacy etc. </param>
+        /// <param name="assemblyVersion"> Version of assembly present on device. </param>
+        /// <returns> A new <see cref="Models.HciOSProfile"/> instance for mocking. </returns>
+        public static HciOSProfile HciOSProfile(string bootType = default, string assemblyVersion = default)
+        {
+            return new HciOSProfile(bootType, assemblyVersion, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Solution builder extension (SBE) deployment package information. </summary>
+        /// <param name="code"> SBE deployment validation code. </param>
+        /// <param name="message"> A detailed message that explains the SBE package validation result. </param>
+        /// <param name="sbeManifest"> This represents discovered update results for matching updates and store it as SBE manifest. </param>
+        /// <returns> A new <see cref="Models.SbeDeploymentPackageInfo"/> instance for mocking. </returns>
+        public static SbeDeploymentPackageInfo SbeDeploymentPackageInfo(string code = default, string message = default, string sbeManifest = default)
+        {
+            return new SbeDeploymentPackageInfo(code, message, sbeManifest, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="deviceState"> edge device state. </param>
+        /// <param name="extensions"> List of Arc extensions installed on edge device. </param>
+        /// <param name="lastSyncTimestamp"> Most recent edge device sync timestamp in UTC. </param>
+        /// <param name="confidentialVmProfile"> CVM support details for edge device. </param>
+        /// <returns> A new <see cref="Models.ReportedProperties"/> instance for mocking. </returns>
+        public static ReportedProperties ReportedProperties(HciEdgeDeviceState? deviceState = default, IEnumerable<HciEdgeDeviceArcExtension> extensions = default, DateTimeOffset? lastSyncTimestamp = default, ConfidentialVmProfile confidentialVmProfile = default)
+        {
+            return new ReportedProperties(deviceState, extensions is null ? default : new ExtensionProfile((extensions ?? new ChangeTrackingList<HciEdgeDeviceArcExtension>()).ToList(), null), lastSyncTimestamp, confidentialVmProfile, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Arc extension installed on edge device. </summary>
+        /// <param name="extensionName"> Arc extension name installed on edge device. </param>
+        /// <param name="state"> Arc extension state from arc machine extension. </param>
+        /// <param name="errorDetails"> Error details while installing Arc extension. </param>
+        /// <param name="extensionResourceId"> Arc Extension Azure resource id. </param>
+        /// <param name="typeHandlerVersion"> Extension version installed. </param>
+        /// <param name="managedBy"> Indicates whether the extension is managed by the user or by Azure. </param>
+        /// <returns> A new <see cref="Models.HciEdgeDeviceArcExtension"/> instance for mocking. </returns>
+        public static HciEdgeDeviceArcExtension HciEdgeDeviceArcExtension(string extensionName = default, ArcExtensionState? state = default, IEnumerable<HciValidationFailureDetail> errorDetails = default, ResourceIdentifier extensionResourceId = default, string typeHandlerVersion = default, ExtensionManagedBy? managedBy = default)
+        {
+            errorDetails ??= new ChangeTrackingList<HciValidationFailureDetail>();
+
+            return new HciEdgeDeviceArcExtension(
+                extensionName,
+                state,
+                errorDetails.ToList(),
+                extensionResourceId,
+                typeHandlerVersion,
+                managedBy,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> details of validation failure. </summary>
+        /// <param name="exception"> Exception details while installing extension. </param>
+        /// <returns> A new <see cref="Models.HciValidationFailureDetail"/> instance for mocking. </returns>
+        public static HciValidationFailureDetail HciValidationFailureDetail(string exception = default)
+        {
+            return new HciValidationFailureDetail(exception, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents the Confidential Virtual Machine (CVM) configuration status for an edge device. It includes the current IGVM support state and detailed component-level status information. </summary>
+        /// <param name="igvmStatus"> Indicates whether Independent Guest Virtual Machine (IGVM) support is available on the device. This will be 'Enabled' if the device supports CVMs, 'Disabled' if not, and 'Unknown' if the status cannot be determined. </param>
+        /// <param name="statusDetails"> Provides detailed status entries for IGVM-related components, including deployment status, compatibility checks, and error diagnostics. </param>
+        /// <returns> A new <see cref="Models.ConfidentialVmProfile"/> instance for mocking. </returns>
+        public static ConfidentialVmProfile ConfidentialVmProfile(IgvmStatus? igvmStatus = default, IEnumerable<IgvmStatusDetail> statusDetails = default)
+        {
+            statusDetails ??= new ChangeTrackingList<IgvmStatusDetail>();
+
+            return new ConfidentialVmProfile(igvmStatus, statusDetails.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Provides component-level status information related to IGVM enablement on the device. </summary>
+        /// <param name="code"> A machine-readable status code indicating the result or condition of a specific IGVM-related check or operation. </param>
+        /// <param name="message"> A human-readable message providing context or explanation for the associated status code. </param>
+        /// <returns> A new <see cref="Models.IgvmStatusDetail"/> instance for mocking. </returns>
+        public static IgvmStatusDetail IgvmStatusDetail(string code = default, string message = default)
+        {
+            return new IgvmStatusDetail(code, message, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Edge Device properties. </summary>
+        /// <param name="deviceConfiguration"> Device Configuration. </param>
+        /// <param name="provisioningState"> Provisioning state of edgeDevice resource. </param>
+        /// <returns> A new <see cref="Models.EdgeDeviceProperties"/> instance for mocking. </returns>
+        public static EdgeDeviceProperties EdgeDeviceProperties(HciEdgeDeviceConfiguration deviceConfiguration = default, HciProvisioningState? provisioningState = default)
+        {
+            return new EdgeDeviceProperties(deviceConfiguration, provisioningState, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The device Configuration for edge device. </summary>
+        /// <param name="nicDetails"> NIC Details of device. </param>
+        /// <param name="deviceMetadata"> Device metadata details. </param>
+        /// <returns> A new <see cref="Models.HciEdgeDeviceConfiguration"/> instance for mocking. </returns>
+        public static HciEdgeDeviceConfiguration HciEdgeDeviceConfiguration(IEnumerable<HciEdgeDeviceNicDetail> nicDetails = default, string deviceMetadata = default)
+        {
+            nicDetails ??= new ChangeTrackingList<HciEdgeDeviceNicDetail>();
+
+            return new HciEdgeDeviceConfiguration(nicDetails.ToList(), deviceMetadata, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The NIC Detail of a device. </summary>
+        /// <param name="adapterName"> Adapter Name of NIC. </param>
+        /// <param name="interfaceDescription"> Interface Description of NIC. </param>
+        /// <param name="componentId"> Component Id of NIC. </param>
+        /// <param name="driverVersion"> Driver Version of NIC. </param>
+        /// <param name="ip4Address"> Subnet Mask of NIC. </param>
+        /// <param name="subnetMask"> Subnet Mask of NIC. </param>
+        /// <param name="defaultGateway"> Default Gateway of NIC. </param>
+        /// <param name="dnsServers"> DNS Servers for NIC. </param>
+        /// <param name="defaultIsolationId"> Default Isolation of Management NIC. </param>
+        /// <returns> A new <see cref="Models.HciEdgeDeviceNicDetail"/> instance for mocking. </returns>
+        public static HciEdgeDeviceNicDetail HciEdgeDeviceNicDetail(string adapterName = default, string interfaceDescription = default, string componentId = default, string driverVersion = default, string ip4Address = default, string subnetMask = default, string defaultGateway = default, IEnumerable<string> dnsServers = default, string defaultIsolationId = default)
+        {
+            dnsServers ??= new ChangeTrackingList<string>();
+
+            return new HciEdgeDeviceNicDetail(
+                adapterName,
+                interfaceDescription,
+                componentId,
+                driverVersion,
+                ip4Address,
+                subnetMask,
+                defaultGateway,
+                dnsServers.ToList(),
+                defaultIsolationId,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The validate request for Edge Device. </summary>
+        /// <param name="edgeDeviceIds"> Node Ids against which, current node has to be validated. </param>
+        /// <param name="additionalInfo"> Additional info required for validation. </param>
+        /// <returns> A new <see cref="Models.ValidateRequest"/> instance for mocking. </returns>
+        public static ValidateRequest ValidateRequest(IEnumerable<string> edgeDeviceIds = default, string additionalInfo = default)
+        {
+            edgeDeviceIds ??= new ChangeTrackingList<string>();
+
+            return new ValidateRequest(edgeDeviceIds.ToList(), additionalInfo, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An Accepted response with an Operation-Location header. </summary>
+        /// <param name="status"> edge device validation status. </param>
+        /// <returns> A new <see cref="Models.ValidateResponse"/> instance for mocking. </returns>
+        public static ValidateResponse ValidateResponse(string status = default)
+        {
+            return new ValidateResponse(status, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> Provisioning state of the Extension proxy resource. Indicates the current lifecycle status of the resource, such as whether it's being created, updated, deleted, or has encountered an error. </param>
+        /// <param name="aggregateState"> Aggregate state of Arc Extensions across the nodes in this HCI cluster. This reflects the overall status of the extension deployment and operation across all nodes. </param>
+        /// <param name="perNodeExtensionDetails"> State of Arc Extension in each of the nodes. </param>
+        /// <param name="managedBy"> Indicates if the extension is managed by Azure or the user. This determines who controls the deployment and lifecycle of the extension. </param>
+        /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
+        /// <param name="publisher"> The name of the extension handler publisher. </param>
+        /// <param name="type"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
+        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. Latest version would be used if not specified. </param>
+        /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
+        /// <param name="settings"> Json formatted public settings for the extension. </param>
+        /// <param name="protectedSettings"> Protected settings (may contain secrets). </param>
+        /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version available. </param>
+        /// <returns> A new <see cref="Hci.ExtensionData"/> instance for mocking. </returns>
+        public static ExtensionData ExtensionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciProvisioningState? provisioningState = default, ExtensionAggregateState? aggregateState = default, IEnumerable<PerNodeExtensionState> perNodeExtensionDetails = default, ExtensionManagedBy? managedBy = default, string forceUpdateTag = default, string publisher = default, string @type = default, string typeHandlerVersion = default, bool? autoUpgradeMinorVersion = default, BinaryData settings = default, BinaryData protectedSettings = default, bool? enableAutomaticUpgrade = default)
+        {
+            return new ExtensionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                provisioningState is null && aggregateState is null && perNodeExtensionDetails is null && managedBy is null && forceUpdateTag is null && publisher is null && @type is null && typeHandlerVersion is null && autoUpgradeMinorVersion is null && settings is null && protectedSettings is null && enableAutomaticUpgrade is null ? default : new ExtensionProperties(
+                    provisioningState,
+                    new ExtensionParameters(
+                        forceUpdateTag,
+                        publisher,
+                        @type,
+                        typeHandlerVersion,
+                        autoUpgradeMinorVersion,
+                        settings,
+                        protectedSettings,
+                        enableAutomaticUpgrade,
+                        null),
+                    aggregateState,
+                    (perNodeExtensionDetails ?? new ChangeTrackingList<PerNodeExtensionState>()).ToList(),
+                    managedBy,
+                    null));
+        }
+
+        /// <summary> Status of Arc Extension for a particular node in HCI Cluster. </summary>
         /// <param name="name"> Name of the node in HCI Cluster. </param>
         /// <param name="extension"> Fully qualified resource ID for the particular Arc Extension on this node. </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
-        /// <param name="state"> State of Arc Extension in this node. </param>
-        /// <param name="extensionInstanceView"> The extension instance view. </param>
+        /// <param name="state"> State of Arc Extension in this node. Reflects the current lifecycle status of the extension on the individual node, such as whether it's being created, updated, deleted, or has encountered an error. </param>
+        /// <param name="instanceView"> The extension instance view. </param>
         /// <returns> A new <see cref="Models.PerNodeExtensionState"/> instance for mocking. </returns>
-        public static PerNodeExtensionState PerNodeExtensionState(string name = null, string extension = null, string typeHandlerVersion = null, NodeExtensionState? state = null, ArcExtensionInstanceView extensionInstanceView = null)
+        public static PerNodeExtensionState PerNodeExtensionState(string name = default, string extension = default, string typeHandlerVersion = default, NodeExtensionState? state = default, HciExtensionInstanceView instanceView = default)
         {
             return new PerNodeExtensionState(
                 name,
                 extension,
                 typeHandlerVersion,
                 state,
-                extensionInstanceView,
-                serializedAdditionalRawData: null);
+                instanceView,
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ArcExtensionInstanceView"/>. </summary>
+        /// <summary> Describes the Extension Instance View. </summary>
         /// <param name="name"> The extension name. </param>
-        /// <param name="extensionInstanceViewType"> Specifies the type of the extension; an example is "MicrosoftMonitoringAgent". </param>
+        /// <param name="type"> Specifies the type of the extension; an example is "MicrosoftMonitoringAgent". </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
         /// <param name="status"> Instance view status. </param>
-        /// <returns> A new <see cref="Models.ArcExtensionInstanceView"/> instance for mocking. </returns>
-        public static ArcExtensionInstanceView ArcExtensionInstanceView(string name = null, string extensionInstanceViewType = null, string typeHandlerVersion = null, ArcExtensionInstanceViewStatus status = null)
+        /// <returns> A new <see cref="Models.HciExtensionInstanceView"/> instance for mocking. </returns>
+        public static HciExtensionInstanceView HciExtensionInstanceView(string name = default, string @type = default, string typeHandlerVersion = default, ExtensionInstanceViewStatus status = default)
         {
-            return new ArcExtensionInstanceView(name, extensionInstanceViewType, typeHandlerVersion, status, serializedAdditionalRawData: null);
+            return new HciExtensionInstanceView(name, @type, typeHandlerVersion, status, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ArcExtensionInstanceViewStatus"/>. </summary>
+        /// <summary> Instance view status. </summary>
         /// <param name="code"> The status code. </param>
-        /// <param name="level"> The level code. </param>
+        /// <param name="level"> The level code. Indicates the severity or importance of the status message. </param>
         /// <param name="displayStatus"> The short localizable label for the status. </param>
         /// <param name="message"> The detailed status message, including for alerts and error messages. </param>
         /// <param name="time"> The time of the status. </param>
-        /// <returns> A new <see cref="Models.ArcExtensionInstanceViewStatus"/> instance for mocking. </returns>
-        public static ArcExtensionInstanceViewStatus ArcExtensionInstanceViewStatus(string code = null, HciStatusLevelType? level = null, string displayStatus = null, string message = null, DateTimeOffset? time = null)
+        /// <returns> A new <see cref="Models.ExtensionInstanceViewStatus"/> instance for mocking. </returns>
+        public static ExtensionInstanceViewStatus ExtensionInstanceViewStatus(string code = default, StatusLevelTypes? level = default, string displayStatus = default, string message = default, DateTimeOffset? time = default)
         {
-            return new ArcExtensionInstanceViewStatus(
+            return new ExtensionInstanceViewStatus(
                 code,
                 level,
                 displayStatus,
                 message,
                 time,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Hci.HciClusterOfferData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="provisioningState"> Provisioning State. </param>
-        /// <param name="publisherId"> Identifier of the Publisher for the offer. </param>
-        /// <param name="content"> JSON serialized catalog content of the offer. </param>
-        /// <param name="contentVersion"> The API version of the catalog service used to serve the catalog content. </param>
-        /// <param name="skuMappings"> Array of SKU mappings. </param>
-        /// <returns> A new <see cref="Hci.HciClusterOfferData"/> instance for mocking. </returns>
-        public static HciClusterOfferData HciClusterOfferData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string provisioningState = null, string publisherId = null, string content = null, string contentVersion = null, IEnumerable<HciSkuMappings> skuMappings = null)
+        /// <returns> A new <see cref="Hci.PublisherData"/> instance for mocking. </returns>
+        public static PublisherData PublisherData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string provisioningState = default)
         {
-            skuMappings ??= new List<HciSkuMappings>();
-
-            return new HciClusterOfferData(
+            return new PublisherData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                provisioningState,
-                publisherId,
-                content,
-                contentVersion,
-                skuMappings?.ToList(),
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                provisioningState is null ? default : new PublisherProperties(provisioningState, null));
         }
 
-        /// <summary> Initializes a new instance of <see cref="Hci.HciClusterPublisherData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> Provisioning State. </param>
-        /// <returns> A new <see cref="Hci.HciClusterPublisherData"/> instance for mocking. </returns>
-        public static HciClusterPublisherData HciClusterPublisherData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string provisioningState = null)
-        {
-            return new HciClusterPublisherData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Hci.HciClusterSecuritySettingData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="securedCoreComplianceAssignment"> Secured Core Compliance Assignment. </param>
         /// <param name="wdacComplianceAssignment"> WDAC Compliance Assignment. </param>
         /// <param name="smbEncryptionForIntraClusterTrafficComplianceAssignment"> SMB encryption for intra-cluster traffic Compliance Assignment. </param>
         /// <param name="securityComplianceStatus"> Security Compliance Status. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <returns> A new <see cref="Hci.HciClusterSecuritySettingData"/> instance for mocking. </returns>
-        public static HciClusterSecuritySettingData HciClusterSecuritySettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HciClusterComplianceAssignmentType? securedCoreComplianceAssignment = null, HciClusterComplianceAssignmentType? wdacComplianceAssignment = null, HciClusterComplianceAssignmentType? smbEncryptionForIntraClusterTrafficComplianceAssignment = null, SecurityComplianceStatus securityComplianceStatus = null, HciProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Hci.SecuritySettingData"/> instance for mocking. </returns>
+        public static SecuritySettingData SecuritySettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ComplianceAssignmentType? securedCoreComplianceAssignment = default, ComplianceAssignmentType? wdacComplianceAssignment = default, ComplianceAssignmentType? smbEncryptionForIntraClusterTrafficComplianceAssignment = default, SecurityComplianceStatus securityComplianceStatus = default, HciProvisioningState? provisioningState = default)
         {
-            return new HciClusterSecuritySettingData(
+            return new SecuritySettingData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                securedCoreComplianceAssignment,
-                wdacComplianceAssignment,
-                smbEncryptionForIntraClusterTrafficComplianceAssignment,
-                securityComplianceStatus,
-                provisioningState,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                securedCoreComplianceAssignment is null && wdacComplianceAssignment is null && smbEncryptionForIntraClusterTrafficComplianceAssignment is null && securityComplianceStatus is null && provisioningState is null ? default : new SecurityProperties(
+                    securedCoreComplianceAssignment,
+                    wdacComplianceAssignment,
+                    smbEncryptionForIntraClusterTrafficComplianceAssignment,
+                    securityComplianceStatus,
+                    provisioningState,
+                    null));
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SecurityComplianceStatus"/>. </summary>
+        /// <summary> Security compliance properties of the resource. </summary>
         /// <param name="securedCoreCompliance"> Indicates whether HCI hosts meets secured-core server requirements. </param>
         /// <param name="wdacCompliance"> Indicates whether HCI hosts have enforced consistent Windows Defender Application Control. </param>
         /// <param name="dataAtRestEncrypted"> Indicates whether data at-rest encryption is enabled on Azure Stack HCI clustered volumes. </param>
         /// <param name="dataInTransitProtected"> Indicates whether HCI cluster has data in-transit protection. </param>
-        /// <param name="lastUpdatedOn"> Time in UTC when compliance status was last updated. </param>
+        /// <param name="lastUpdated"> Time in UTC when compliance status was last updated. </param>
         /// <returns> A new <see cref="Models.SecurityComplianceStatus"/> instance for mocking. </returns>
-        public static SecurityComplianceStatus SecurityComplianceStatus(HciClusterComplianceStatus? securedCoreCompliance = null, HciClusterComplianceStatus? wdacCompliance = null, HciClusterComplianceStatus? dataAtRestEncrypted = null, HciClusterComplianceStatus? dataInTransitProtected = null, DateTimeOffset? lastUpdatedOn = null)
+        public static SecurityComplianceStatus SecurityComplianceStatus(HciClusterComplianceStatus? securedCoreCompliance = default, HciClusterComplianceStatus? wdacCompliance = default, HciClusterComplianceStatus? dataAtRestEncrypted = default, HciClusterComplianceStatus? dataInTransitProtected = default, DateTimeOffset? lastUpdated = default)
         {
             return new SecurityComplianceStatus(
                 securedCoreCompliance,
                 wdacCompliance,
                 dataAtRestEncrypted,
                 dataInTransitProtected,
-                lastUpdatedOn,
-                serializedAdditionalRawData: null);
+                lastUpdated,
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Hci.HciSkuData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="provisioningState"> Provisioning State. </param>
         /// <param name="publisherId"> Identifier of the Publisher for the offer. </param>
         /// <param name="offerId"> Identifier of the Offer for the sku. </param>
@@ -717,25 +1702,1118 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="contentVersion"> The API version of the catalog service used to serve the catalog content. </param>
         /// <param name="skuMappings"> Array of SKU mappings. </param>
         /// <returns> A new <see cref="Hci.HciSkuData"/> instance for mocking. </returns>
-        public static HciSkuData HciSkuData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string provisioningState = null, string publisherId = null, string offerId = null, string content = null, string contentVersion = null, IEnumerable<HciSkuMappings> skuMappings = null)
+        public static HciSkuData HciSkuData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string provisioningState = default, string publisherId = default, string offerId = default, string content = default, string contentVersion = default, IEnumerable<SkuMappings> skuMappings = default)
         {
-            skuMappings ??= new List<HciSkuMappings>();
-
             return new HciSkuData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                provisioningState,
-                publisherId,
-                offerId,
-                content,
-                contentVersion,
-                skuMappings?.ToList(),
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                provisioningState is null && publisherId is null && offerId is null && content is null && contentVersion is null && skuMappings is null ? default : new SkuProperties(
+                    provisioningState,
+                    publisherId,
+                    offerId,
+                    content,
+                    contentVersion,
+                    (skuMappings ?? new ChangeTrackingList<SkuMappings>()).ToList(),
+                    null));
         }
 
-        /// <summary> Initializes a new instance of <see cref="Hci.HciClusterUpdateRunData"/>. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> Provisioning state of the UpdateRuns proxy resource. Indicates the current lifecycle status of the update operation, such as whether it has been accepted, is in progress, or has completed. </param>
+        /// <param name="timeStarted"> Timestamp of the update run was started. </param>
+        /// <param name="lastUpdatedOn"> Timestamp of the most recently completed step in the update run. </param>
+        /// <param name="duration"> Duration of the update run. </param>
+        /// <param name="state"> Represents the current state of the update run. Indicates whether the update is in progress, has completed successfully, failed, or is in an unknown state. </param>
+        /// <param name="name0"> Name of the step. </param>
+        /// <param name="description"> More detailed description of the step. </param>
+        /// <param name="errorMessage"> Error message, specified if the step is in a failed state. </param>
+        /// <param name="status"> Status of the step, bubbled up from the ECE action plan for installation attempts. Values are: 'Success', 'Error', 'InProgress', and 'Unknown status'. </param>
+        /// <param name="startTimeUtc"> When the step started, or empty if it has not started executing. </param>
+        /// <param name="endTimeUtc"> When the step reached a terminal state. </param>
+        /// <param name="lastUpdatedTimeUtc"> Completion time of this step or the last completed sub-step. </param>
+        /// <param name="expectedExecutionTime"> Expected execution time of a given step. This is optionally authored in the update action plan and can be empty. </param>
+        /// <param name="steps"> Recursive model for child steps of this step. </param>
+        /// <param name="updateRunName"> The name of the Update Run. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <returns> A new <see cref="Hci.UpdateRunData"/> instance for mocking. </returns>
+        public static UpdateRunData UpdateRunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciProvisioningState? provisioningState = default, DateTimeOffset? timeStarted = default, DateTimeOffset? lastUpdatedOn = default, string duration = default, UpdateRunPropertiesState? state = default, string name0 = default, string description = default, string errorMessage = default, string status = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, DateTimeOffset? lastUpdatedTimeUtc = default, string expectedExecutionTime = default, IEnumerable<HciUpdateStep> steps = default, string updateRunName = default, string location = default)
+        {
+            return new UpdateRunData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                provisioningState is null && timeStarted is null && lastUpdatedOn is null && duration is null && state is null && name0 is null && description is null && errorMessage is null && status is null && startTimeUtc is null && endTimeUtc is null && lastUpdatedTimeUtc is null && expectedExecutionTime is null && steps is null ? default : new UpdateRunProperties(
+                    provisioningState,
+                    timeStarted,
+                    lastUpdatedOn,
+                    duration,
+                    state,
+                    new HciUpdateStep(
+                        name0,
+                        description,
+                        errorMessage,
+                        status,
+                        startTimeUtc,
+                        endTimeUtc,
+                        lastUpdatedTimeUtc,
+                        expectedExecutionTime,
+                        (steps ?? new ChangeTrackingList<HciUpdateStep>()).ToList(),
+                        null),
+                    null),
+                updateRunName,
+                location);
+        }
+
+        /// <summary> Progress representation of the update run steps. </summary>
+        /// <param name="name"> Name of the step. </param>
+        /// <param name="description"> More detailed description of the step. </param>
+        /// <param name="errorMessage"> Error message, specified if the step is in a failed state. </param>
+        /// <param name="status"> Status of the step, bubbled up from the ECE action plan for installation attempts. Values are: 'Success', 'Error', 'InProgress', and 'Unknown status'. </param>
+        /// <param name="startTimeUtc"> When the step started, or empty if it has not started executing. </param>
+        /// <param name="endTimeUtc"> When the step reached a terminal state. </param>
+        /// <param name="lastUpdatedTimeUtc"> Completion time of this step or the last completed sub-step. </param>
+        /// <param name="expectedExecutionTime"> Expected execution time of a given step. This is optionally authored in the update action plan and can be empty. </param>
+        /// <param name="steps"> Recursive model for child steps of this step. </param>
+        /// <returns> A new <see cref="Models.HciUpdateStep"/> instance for mocking. </returns>
+        public static HciUpdateStep HciUpdateStep(string name = default, string description = default, string errorMessage = default, string status = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, DateTimeOffset? lastUpdatedTimeUtc = default, string expectedExecutionTime = default, IEnumerable<HciUpdateStep> steps = default)
+        {
+            steps ??= new ChangeTrackingList<HciUpdateStep>();
+
+            return new HciUpdateStep(
+                name,
+                description,
+                errorMessage,
+                status,
+                startTimeUtc,
+                endTimeUtc,
+                lastUpdatedTimeUtc,
+                expectedExecutionTime,
+                steps.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> Provisioning state of the Updates proxy resource. Indicates the current lifecycle status of the update operation, such as whether it has been accepted, is in progress, or has completed. </param>
+        /// <param name="installedOn"> Date that the update was installed. </param>
+        /// <param name="description"> Description of the update. </param>
+        /// <param name="minSbeVersionRequired"> Minimum Sbe Version of the update. </param>
+        /// <param name="state"> Represents the current state of the update as it relates to this stamp. This includes phases such as preparation, installation, scanning, and error handling, providing insight into the update's progress and any issues encountered. </param>
+        /// <param name="prerequisites"> If update State is HasPrerequisite, this property contains an array of objects describing prerequisite updates before installing this update. Otherwise, it is empty. </param>
+        /// <param name="componentVersions"> An array of component versions for a Solution Bundle update, and an empty array otherwise. </param>
+        /// <param name="rebootRequired"> Indicates whether a reboot is required after the update or operation. Helps determine if a system restart is necessary to complete the process. </param>
+        /// <param name="healthState"> Overall health state for update-specific health checks. </param>
+        /// <param name="healthCheckResult"> An array of PrecheckResult objects. </param>
+        /// <param name="healthCheckOn"> Last time the package-specific checks were run. </param>
+        /// <param name="packagePath"> Path where the update package is available. </param>
+        /// <param name="packageSizeInMb"> Size of the package. This value is a combination of the size from update metadata and size of the payload that results from the live scan operation for OS update content. </param>
+        /// <param name="displayName"> Display name of the Update. </param>
+        /// <param name="version"> Version of the update. </param>
+        /// <param name="publisher"> Publisher of the update package. </param>
+        /// <param name="releaseLink"> Link to release notes for the update. </param>
+        /// <param name="availabilityType"> Indicates how the update content is made available for download. This determines whether the update is sourced locally, from an online repository, or requires user notification. </param>
+        /// <param name="packageType"> Customer-visible type of the update. </param>
+        /// <param name="additionalProperties"> Extensible KV pairs serialized as a string. This is currently used to report the stamp OEM family and hardware model information when an update is flagged as Invalid for the stamp based on OEM type. </param>
+        /// <param name="progressPercentage"> Progress percentage of ongoing operation. Currently this property is only valid when the update is in the Downloading state, where it maps to how much of the update content has been downloaded. </param>
+        /// <param name="notifyMessage"> Brief message with instructions for updates of AvailabilityType Notify. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <returns> A new <see cref="Hci.UpdateData"/> instance for mocking. </returns>
+        public static UpdateData UpdateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciProvisioningState? provisioningState = default, DateTimeOffset? installedOn = default, string description = default, string minSbeVersionRequired = default, HciUpdateState? state = default, IEnumerable<UpdatePrerequisite> prerequisites = default, IEnumerable<HciPackageVersionInfo> componentVersions = default, HciNodeRebootRequirement? rebootRequired = default, HciHealthState? healthState = default, IEnumerable<HciPrecheckResult> healthCheckResult = default, DateTimeOffset? healthCheckOn = default, string packagePath = default, float? packageSizeInMb = default, string displayName = default, string version = default, string publisher = default, string releaseLink = default, HciAvailabilityType? availabilityType = default, string packageType = default, string additionalProperties = default, float? progressPercentage = default, string notifyMessage = default, string location = default)
+        {
+            return new UpdateData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                provisioningState is null && installedOn is null && description is null && minSbeVersionRequired is null && state is null && prerequisites is null && componentVersions is null && rebootRequired is null && healthState is null && healthCheckResult is null && healthCheckOn is null && packagePath is null && packageSizeInMb is null && displayName is null && version is null && publisher is null && releaseLink is null && availabilityType is null && packageType is null && additionalProperties is null && progressPercentage is null && notifyMessage is null ? default : new UpdateProperties(
+                    provisioningState,
+                    installedOn,
+                    description,
+                    minSbeVersionRequired,
+                    state,
+                    (prerequisites ?? new ChangeTrackingList<UpdatePrerequisite>()).ToList(),
+                    (componentVersions ?? new ChangeTrackingList<HciPackageVersionInfo>()).ToList(),
+                    rebootRequired,
+                    healthState,
+                    (healthCheckResult ?? new ChangeTrackingList<HciPrecheckResult>()).ToList(),
+                    healthCheckOn,
+                    packagePath,
+                    packageSizeInMb,
+                    displayName,
+                    version,
+                    publisher,
+                    releaseLink,
+                    availabilityType,
+                    packageType,
+                    additionalProperties,
+                    new UpdateStateProperties(progressPercentage, notifyMessage, null),
+                    null),
+                location);
+        }
+
+        /// <summary> Represents a validated solution recipe resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Hci.ValidatedSolutionRecipeData"/> instance for mocking. </returns>
+        public static ValidatedSolutionRecipeData ValidatedSolutionRecipeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ValidatedSolutionRecipeProperties properties = default)
+        {
+            return new ValidatedSolutionRecipeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Represents properties of a validated solution recipe resource. </summary>
+        /// <param name="recipeContent"> Represents contents of a validated solution recipe. </param>
+        /// <param name="signature"> Represents the signature of the recipe, to be used for ensuring its integrity. </param>
+        /// <returns> A new <see cref="Models.ValidatedSolutionRecipeProperties"/> instance for mocking. </returns>
+        public static ValidatedSolutionRecipeProperties ValidatedSolutionRecipeProperties(ValidatedSolutionRecipeContent recipeContent = default, string signature = default)
+        {
+            return new ValidatedSolutionRecipeProperties(recipeContent, signature, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents contents of a validated solution recipe resource. </summary>
+        /// <param name="info"> Represents information about a validated solution recipe. </param>
+        /// <param name="capabilities"> Represents capabilities available in a validated solution recipe. </param>
+        /// <param name="components"> Represents components available in a validated solution recipe. </param>
+        /// <returns> A new <see cref="Models.ValidatedSolutionRecipeContent"/> instance for mocking. </returns>
+        public static ValidatedSolutionRecipeContent ValidatedSolutionRecipeContent(ValidatedSolutionRecipeInfo info = default, ValidatedSolutionRecipeCapabilities capabilities = default, IEnumerable<ValidatedSolutionRecipeComponent> components = default)
+        {
+            components ??= new ChangeTrackingList<ValidatedSolutionRecipeComponent>();
+
+            return new ValidatedSolutionRecipeContent(info, capabilities, components.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents information about a validated solution recipe. </summary>
+        /// <param name="solutionType"> Represents the solution type for which this validated solution recipe is applicable. </param>
+        /// <param name="version"> Represents the version for which this validated solution recipe is applicable. </param>
+        /// <returns> A new <see cref="Models.ValidatedSolutionRecipeInfo"/> instance for mocking. </returns>
+        public static ValidatedSolutionRecipeInfo ValidatedSolutionRecipeInfo(string solutionType = default, string version = default)
+        {
+            return new ValidatedSolutionRecipeInfo(solutionType, version, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents capabilities available in a validated solution recipe. </summary>
+        /// <param name="clusterCapabilities"> Represents the cluster capabilities. </param>
+        /// <param name="nodeCapabilities"> Represents the node capabilities. </param>
+        /// <returns> A new <see cref="Models.ValidatedSolutionRecipeCapabilities"/> instance for mocking. </returns>
+        public static ValidatedSolutionRecipeCapabilities ValidatedSolutionRecipeCapabilities(IEnumerable<ValidatedSolutionRecipeCapability> clusterCapabilities = default, IEnumerable<ValidatedSolutionRecipeCapability> nodeCapabilities = default)
+        {
+            clusterCapabilities ??= new ChangeTrackingList<ValidatedSolutionRecipeCapability>();
+            nodeCapabilities ??= new ChangeTrackingList<ValidatedSolutionRecipeCapability>();
+
+            return new ValidatedSolutionRecipeCapabilities(clusterCapabilities.ToList(), nodeCapabilities.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents capability available in a validated solution recipe. </summary>
+        /// <param name="capabilityName"> Represents the capability name. </param>
+        /// <returns> A new <see cref="Models.ValidatedSolutionRecipeCapability"/> instance for mocking. </returns>
+        public static ValidatedSolutionRecipeCapability ValidatedSolutionRecipeCapability(string capabilityName = default)
+        {
+            return new ValidatedSolutionRecipeCapability(capabilityName, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents component available in a validated solution recipe. </summary>
+        /// <param name="name"> Represents the component's name. </param>
+        /// <param name="type"> Represents the component's type. </param>
+        /// <param name="requiredVersion"> Represents the component's required version. </param>
+        /// <param name="installOrder"> Represents the component's install order. </param>
+        /// <param name="tags"> Represents the component's tags. </param>
+        /// <param name="payloads"> Represents the component's payloads. </param>
+        /// <param name="metadata"> Represents the component's metadata. </param>
+        /// <returns> A new <see cref="Models.ValidatedSolutionRecipeComponent"/> instance for mocking. </returns>
+        public static ValidatedSolutionRecipeComponent ValidatedSolutionRecipeComponent(string name = default, string @type = default, string requiredVersion = default, long? installOrder = default, IEnumerable<string> tags = default, IEnumerable<ValidatedSolutionRecipeComponentPayload> payloads = default, ValidatedSolutionRecipeComponentMetadata metadata = default)
+        {
+            tags ??= new ChangeTrackingList<string>();
+            payloads ??= new ChangeTrackingList<ValidatedSolutionRecipeComponentPayload>();
+
+            return new ValidatedSolutionRecipeComponent(
+                name,
+                @type,
+                requiredVersion,
+                installOrder,
+                tags.ToList(),
+                payloads.ToList(),
+                metadata,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents payloads associated with a component available in a validated solution recipe. </summary>
+        /// <param name="identifier"> Represents the unique identifier of the payload used to query the URL. </param>
+        /// <param name="hash"> Represents the cryptographic hash of the payload, ensuring data integrity. </param>
+        /// <param name="fileName"> Represents the name of the file associated with the payload. </param>
+        /// <param name="uri"> Represents the URL from which the payload can be downloaded. </param>
+        /// <returns> A new <see cref="Models.ValidatedSolutionRecipeComponentPayload"/> instance for mocking. </returns>
+        public static ValidatedSolutionRecipeComponentPayload ValidatedSolutionRecipeComponentPayload(string identifier = default, string hash = default, string fileName = default, string uri = default)
+        {
+            return new ValidatedSolutionRecipeComponentPayload(identifier, hash, fileName, uri, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents metadata associated with a component available in a validated solution recipe. </summary>
+        /// <param name="extensionType"> Represents the type of extension. </param>
+        /// <param name="publisher"> Represents the publisher of the extension. </param>
+        /// <param name="enableAutomaticUpgrade"> Indicates whether automatic upgrades of the extension are enabled. </param>
+        /// <param name="lcmUpdate"> Indicates whether the LCM (Lifecycle Management) update of the extension is enabled. </param>
+        /// <param name="catalog"> Specifies the catalog to which the extension belongs. </param>
+        /// <param name="ring"> Specifies the ring to which the extension belongs, internally used by component. </param>
+        /// <param name="releaseTrain"> Specifies the release train to which given component belongs. </param>
+        /// <param name="link"> Specifies the link associated with the extension. </param>
+        /// <param name="name"> Specifies the name of the extension. </param>
+        /// <param name="expectedHash"> Specifies the expected hash of the extension. </param>
+        /// <param name="previewSource"> Specifies the preview source of the extension. </param>
+        /// <returns> A new <see cref="Models.ValidatedSolutionRecipeComponentMetadata"/> instance for mocking. </returns>
+        public static ValidatedSolutionRecipeComponentMetadata ValidatedSolutionRecipeComponentMetadata(string extensionType = default, string publisher = default, bool? enableAutomaticUpgrade = default, bool? lcmUpdate = default, string catalog = default, string ring = default, string releaseTrain = default, string link = default, string name = default, string expectedHash = default, string previewSource = default)
+        {
+            return new ValidatedSolutionRecipeComponentMetadata(
+                extensionType,
+                publisher,
+                enableAutomaticUpgrade,
+                lcmUpdate,
+                catalog,
+                ring,
+                releaseTrain,
+                link,
+                name,
+                expectedHash,
+                previewSource,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> EdgeMachine details. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="Hci.EdgeMachineData"/> instance for mocking. </returns>
+        public static EdgeMachineData EdgeMachineData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, EdgeMachineProperties properties = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new EdgeMachineData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                properties,
+                identity);
+        }
+
+        /// <summary> Properties for edge machine. </summary>
+        /// <param name="edgeMachineKind"> Edge Machine type. </param>
+        /// <param name="provisioningState"> The provisioning state of a resource. </param>
+        /// <param name="cloudId"> Unique, immutable resource id. </param>
+        /// <param name="arcMachineResourceGroupId"> Optional property to create arc machine in custom resource group. </param>
+        /// <param name="arcMachineResourceId"> Arc machine instance resource id. </param>
+        /// <param name="arcGatewayResourceId"> Link to Arc Gateway ARM resource Id. </param>
+        /// <param name="siteDetails"> Service fetches common configuration from site. </param>
+        /// <param name="ownershipVoucherDetails"> Ownership voucher details for provisioned machine. </param>
+        /// <param name="provisioningDetails"> Details for device provisioning. </param>
+        /// <param name="devicePoolResourceId"> A machine can only be assigned to single device pool. </param>
+        /// <param name="machineState"> OS configuration status details. </param>
+        /// <param name="connectivityStatus"> machine connectivity status. </param>
+        /// <param name="claimedBy"> Tracks the ID of the consuming resource, setting the machine as in-use. </param>
+        /// <param name="reportedProperties"> Reported properties for edge machine. </param>
+        /// <param name="operationDetails"> operation status details for edge machine. </param>
+        /// <param name="lastSyncTimestamp"> Last time data updated to service. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineProperties"/> instance for mocking. </returns>
+        public static EdgeMachineProperties EdgeMachineProperties(EdgeMachineKind? edgeMachineKind = default, HciProvisioningState? provisioningState = default, string cloudId = default, ResourceIdentifier arcMachineResourceGroupId = default, ResourceIdentifier arcMachineResourceId = default, ResourceIdentifier arcGatewayResourceId = default, SiteDetails siteDetails = default, OwnershipVoucherDetails ownershipVoucherDetails = default, ProvisioningDetails provisioningDetails = default, string devicePoolResourceId = default, EdgeMachineState? machineState = default, EdgeMachineConnectivityStatus? connectivityStatus = default, string claimedBy = default, EdgeMachineReportedProperties reportedProperties = default, IEnumerable<OperationDetail> operationDetails = default, DateTimeOffset? lastSyncTimestamp = default)
+        {
+            operationDetails ??= new ChangeTrackingList<OperationDetail>();
+
+            return new EdgeMachineProperties(
+                edgeMachineKind,
+                provisioningState,
+                cloudId,
+                arcMachineResourceGroupId,
+                arcMachineResourceId,
+                arcGatewayResourceId,
+                siteDetails,
+                ownershipVoucherDetails,
+                provisioningDetails,
+                devicePoolResourceId,
+                machineState,
+                connectivityStatus,
+                claimedBy,
+                reportedProperties,
+                operationDetails.ToList(),
+                lastSyncTimestamp,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Network adapter configuration. </summary>
+        /// <param name="ipAssignmentType"> Type of IP assignment. </param>
+        /// <param name="ipAddress"> IP address. </param>
+        /// <param name="adapterName"> Adapter Name. </param>
+        /// <param name="macAddress"> MAC address. </param>
+        /// <param name="ipAddressRange"> IP address range. </param>
+        /// <param name="gateway"> Gateway id. </param>
+        /// <param name="subnetMask"> Subnet mask. </param>
+        /// <param name="dnsAddressArray"> Array of DNS addresses. </param>
+        /// <param name="vlanId"> VLAN ID for the network setup. </param>
+        /// <returns> A new <see cref="Models.NetworkAdapter"/> instance for mocking. </returns>
+        public static NetworkAdapter NetworkAdapter(IpAssignmentType ipAssignmentType = default, string ipAddress = default, string adapterName = default, string macAddress = default, IpAddressRange ipAddressRange = default, string gateway = default, string subnetMask = default, IEnumerable<string> dnsAddressArray = default, string vlanId = default)
+        {
+            dnsAddressArray ??= new ChangeTrackingList<string>();
+
+            return new NetworkAdapter(
+                ipAssignmentType,
+                ipAddress,
+                adapterName,
+                macAddress,
+                ipAddressRange,
+                gateway,
+                subnetMask,
+                dnsAddressArray.ToList(),
+                vlanId,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Web proxy configuration. </summary>
+        /// <param name="connectionUri"> Connection URI of the web proxy. </param>
+        /// <param name="port"> Port of the web proxy. </param>
+        /// <param name="bypassList"> Bypass list for the web proxy. </param>
+        /// <returns> A new <see cref="Models.WebProxyConfiguration"/> instance for mocking. </returns>
+        public static WebProxyConfiguration WebProxyConfiguration(Uri connectionUri = default, string port = default, IEnumerable<Uri> bypassList = default)
+        {
+            bypassList ??= new ChangeTrackingList<Uri>();
+
+            return new WebProxyConfiguration(connectionUri, port, bypassList.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Details for device provisioning. </summary>
+        /// <param name="osProfile"> Operating system profile. </param>
+        /// <param name="userDetails"> User configuration. </param>
+        /// <returns> A new <see cref="Models.ProvisioningDetails"/> instance for mocking. </returns>
+        public static ProvisioningDetails ProvisioningDetails(OsProvisionProfile osProfile = default, IEnumerable<UserDetails> userDetails = default)
+        {
+            userDetails ??= new ChangeTrackingList<UserDetails>();
+
+            return new ProvisioningDetails(osProfile, userDetails.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> User configuration. </summary>
+        /// <param name="userName"> Name of the user. </param>
+        /// <param name="secretType"> Type of the secret used for authentication. </param>
+        /// <param name="secretLocation"> Location of the secret used for authentication. </param>
+        /// <param name="sshPubKey"> SSH Public Key for the user. </param>
+        /// <returns> A new <see cref="Models.UserDetails"/> instance for mocking. </returns>
+        public static UserDetails UserDetails(string userName = default, SecretType secretType = default, string secretLocation = default, IEnumerable<string> sshPubKey = default)
+        {
+            sshPubKey ??= new ChangeTrackingList<string>();
+
+            return new UserDetails(userName, secretType, secretLocation, sshPubKey.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="lastUpdated"> Last time data reported. </param>
+        /// <param name="networkProfile"> Network details for edge machine. </param>
+        /// <param name="osProfile"> OS Properties for edge machine. </param>
+        /// <param name="hardwareProfile"> Hardware related information for edge machine. </param>
+        /// <param name="storagePoolableDisksCount"> Number of storage disks in the device with $CanPool as true. </param>
+        /// <param name="sbeDeploymentPackageInfo"> Solution builder extension (SBE) deployment package information. </param>
+        /// <param name="extensions"> List of Arc extensions installed on edge device. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineReportedProperties"/> instance for mocking. </returns>
+        public static EdgeMachineReportedProperties EdgeMachineReportedProperties(DateTimeOffset? lastUpdated = default, EdgeMachineNetworkProfile networkProfile = default, OsProfile osProfile = default, HardwareProfile hardwareProfile = default, long? storagePoolableDisksCount = default, SbeDeploymentPackageInfo sbeDeploymentPackageInfo = default, IEnumerable<HciEdgeDeviceArcExtension> extensions = default)
+        {
+            return new EdgeMachineReportedProperties(
+                lastUpdated,
+                networkProfile,
+                osProfile,
+                hardwareProfile,
+                storagePoolableDisksCount is null ? default : new StorageProfile(storagePoolableDisksCount, null),
+                sbeDeploymentPackageInfo,
+                extensions is null ? default : new ExtensionProfile((extensions ?? new ChangeTrackingList<HciEdgeDeviceArcExtension>()).ToList(), null),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> NetworkProfile of edge machine. </summary>
+        /// <param name="nicDetails"> List of Network Interface Card (NIC) Details of edge machine. </param>
+        /// <param name="switchDetails"> List of switch Details of edge machine. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineNetworkProfile"/> instance for mocking. </returns>
+        public static EdgeMachineNetworkProfile EdgeMachineNetworkProfile(IEnumerable<EdgeMachineNicDetail> nicDetails = default, IEnumerable<HciEdgeDeviceSwitchDetail> switchDetails = default)
+        {
+            nicDetails ??= new ChangeTrackingList<EdgeMachineNicDetail>();
+            switchDetails ??= new ChangeTrackingList<HciEdgeDeviceSwitchDetail>();
+
+            return new EdgeMachineNetworkProfile(nicDetails.ToList(), switchDetails.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Network Interface Card (NIC) Details of edge machine. </summary>
+        /// <param name="adapterName"> Adapter Name of NIC. </param>
+        /// <param name="interfaceDescription"> Interface Description of NIC. </param>
+        /// <param name="componentId"> Component Id of NIC. </param>
+        /// <param name="driverVersion"> Driver Version of NIC. </param>
+        /// <param name="ip4Address"> Subnet Mask of NIC. </param>
+        /// <param name="subnetMask"> Subnet Mask of NIC. </param>
+        /// <param name="defaultGateway"> Default Gateway of NIC. </param>
+        /// <param name="dnsServers"> DNS Servers for NIC. </param>
+        /// <param name="defaultIsolationId"> Default Isolation of Management NIC. </param>
+        /// <param name="macAddress"> MAC address information of NIC. </param>
+        /// <param name="slot"> The slot attached to the NIC. </param>
+        /// <param name="switchName"> The switch attached to the NIC, if any. </param>
+        /// <param name="nicType"> The type of NIC, physical, virtual, management. </param>
+        /// <param name="vlanId"> The VLAN ID of the physical NIC. </param>
+        /// <param name="nicStatus"> The status of NIC, up, disconnected. </param>
+        /// <param name="rdmaCapability"> Describes the RDMA capability of the network adapter. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineNicDetail"/> instance for mocking. </returns>
+        public static EdgeMachineNicDetail EdgeMachineNicDetail(string adapterName = default, string interfaceDescription = default, string componentId = default, string driverVersion = default, string ip4Address = default, string subnetMask = default, string defaultGateway = default, IEnumerable<string> dnsServers = default, string defaultIsolationId = default, string macAddress = default, string slot = default, string switchName = default, string nicType = default, string vlanId = default, string nicStatus = default, RdmaCapability? rdmaCapability = default)
+        {
+            dnsServers ??= new ChangeTrackingList<string>();
+
+            return new EdgeMachineNicDetail(
+                adapterName,
+                interfaceDescription,
+                componentId,
+                driverVersion,
+                ip4Address,
+                subnetMask,
+                defaultGateway,
+                dnsServers.ToList(),
+                defaultIsolationId,
+                macAddress,
+                slot,
+                switchName,
+                nicType,
+                vlanId,
+                nicStatus,
+                rdmaCapability,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> OS configurations for HCI device. </summary>
+        /// <param name="bootType"> The boot type of the device. e.g. UEFI, Legacy etc. </param>
+        /// <param name="assemblyVersion"> Version of assembly present on device. </param>
+        /// <param name="osType"> OS type (“windows", “linux”). </param>
+        /// <param name="osSku"> OS SKU (e.g., “ Microsoft Azure Linux ROE“, “Azure Stack HCI", "Microsoft Azure Linux 3.0"). </param>
+        /// <param name="osVersion"> OS Version. </param>
+        /// <param name="buildNumber"> OS Build Number. </param>
+        /// <param name="baseImageVersion"> OS Base Image Version. </param>
+        /// <param name="imageVersion"> OS Image Version. </param>
+        /// <returns> A new <see cref="Models.OsProfile"/> instance for mocking. </returns>
+        public static OsProfile OsProfile(string bootType = default, string assemblyVersion = default, string osType = default, string osSku = default, string osVersion = default, string buildNumber = default, string baseImageVersion = default, string imageVersion = default)
+        {
+            return new OsProfile(
+                bootType,
+                assemblyVersion,
+                osType,
+                osSku,
+                osVersion,
+                buildNumber,
+                baseImageVersion,
+                imageVersion,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Hardware profile for the machine. </summary>
+        /// <param name="cpuCores"> Number of cpu cores in the machine. </param>
+        /// <param name="cpuSockets"> Number of cpu sockets in the machine. </param>
+        /// <param name="memoryCapacityInGb"> Memory capacity of the machine. </param>
+        /// <param name="model"> Model info of the machine. </param>
+        /// <param name="manufacturer"> manufacturer info of the machine. </param>
+        /// <param name="serialNumber"> Serial number of the machine. </param>
+        /// <param name="processorType"> Process type of the machine. </param>
+        /// <returns> A new <see cref="Models.HardwareProfile"/> instance for mocking. </returns>
+        public static HardwareProfile HardwareProfile(long? cpuCores = default, long? cpuSockets = default, long? memoryCapacityInGb = default, string model = default, string manufacturer = default, string serialNumber = default, string processorType = default)
+        {
+            return new HardwareProfile(
+                cpuCores,
+                cpuSockets,
+                memoryCapacityInGb,
+                model,
+                manufacturer,
+                serialNumber,
+                processorType,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> operation detail. </summary>
+        /// <param name="name"> operation name. </param>
+        /// <param name="id"> operation id. </param>
+        /// <param name="type"> operation type. </param>
+        /// <param name="resourceId"> operation resource id. </param>
+        /// <param name="description"> operation description. </param>
+        /// <param name="status"> operation status. </param>
+        /// <param name="error"> error details. </param>
+        /// <returns> A new <see cref="Models.OperationDetail"/> instance for mocking. </returns>
+        public static OperationDetail OperationDetail(string name = default, string id = default, string @type = default, ResourceIdentifier resourceId = default, string description = default, string status = default, ResponseError error = default)
+        {
+            return new OperationDetail(
+                name,
+                id,
+                @type,
+                resourceId,
+                description,
+                status,
+                error,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Model for patching edge machine. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="Models.EdgeMachinePatch"/> instance for mocking. </returns>
+        public static EdgeMachinePatch EdgeMachinePatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new EdgeMachinePatch(tags, identity, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Cluster Jobs resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Hci.EdgeMachineJobData"/> instance for mocking. </returns>
+        public static EdgeMachineJobData EdgeMachineJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EdgeMachineJobProperties properties = default)
+        {
+            return new EdgeMachineJobData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary>
+        /// EdgeMachine Job properties
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.EdgeMachineRemoteSupportJobProperties"/>, <see cref="Models.ProvisionOsJobProperties"/>, <see cref="Models.DownloadOsJobProperties"/>, and <see cref="Models.EdgeMachineCollectLogJobProperties"/>.
+        /// </summary>
+        /// <param name="jobType"> Job Type to support polymorphic resource. </param>
+        /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
+        /// <param name="provisioningState"> Job provisioning state. </param>
+        /// <param name="jobId"> Unique, immutable job id. </param>
+        /// <param name="startTimeUtc"> The UTC date and time at which the job started. </param>
+        /// <param name="endTimeUtc"> The UTC date and time at which the job completed. </param>
+        /// <param name="status"> Status of Edge device job. </param>
+        /// <param name="error"> error details. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineJobProperties"/> instance for mocking. </returns>
+        public static EdgeMachineJobProperties EdgeMachineJobProperties(string jobType = default, DeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, JobStatus? status = default, ResponseError error = default)
+        {
+            return new UnknownEdgeMachineJobProperties(
+                new EdgeMachineJobType(jobType),
+                deploymentMode,
+                provisioningState,
+                jobId,
+                startTimeUtc,
+                endTimeUtc,
+                status,
+                error,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Properties for adding a server in the cluster. </summary>
+        /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
+        /// <param name="provisioningState"> Job provisioning state. </param>
+        /// <param name="jobId"> Unique, immutable job id. </param>
+        /// <param name="startTimeUtc"> The UTC date and time at which the job started. </param>
+        /// <param name="endTimeUtc"> The UTC date and time at which the job completed. </param>
+        /// <param name="status"> Status of Edge device job. </param>
+        /// <param name="error"> error details. </param>
+        /// <param name="accessLevel"> Remote support access level. </param>
+        /// <param name="expirationTimestamp"> Remote support expiration timestamp. </param>
+        /// <param name="type"> Remote support type. </param>
+        /// <param name="reportedProperties"> log collection job reported properties. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineRemoteSupportJobProperties"/> instance for mocking. </returns>
+        public static EdgeMachineRemoteSupportJobProperties EdgeMachineRemoteSupportJobProperties(DeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, JobStatus? status = default, ResponseError error = default, RemoteSupportAccessLevel accessLevel = default, DateTimeOffset expirationTimestamp = default, RemoteSupportType @type = default, EdgeMachineRemoteSupportJobReportedProperties reportedProperties = default)
+        {
+            return new EdgeMachineRemoteSupportJobProperties(
+                EdgeMachineJobType.RemoteSupport,
+                deploymentMode,
+                provisioningState,
+                jobId,
+                startTimeUtc,
+                endTimeUtc,
+                status,
+                error,
+                additionalBinaryDataProperties: null,
+                accessLevel,
+                expirationTimestamp,
+                @type,
+                reportedProperties);
+        }
+
+        /// <summary> Represents the reported properties of a remote support job. </summary>
+        /// <param name="percentComplete"> The percentage of the job that is complete. </param>
+        /// <param name="validationStatus"> Validation status of job. </param>
+        /// <param name="deploymentStatus"> Deployment status of job. </param>
+        /// <param name="nodeSettings"> Optional settings for configuring the node for remote support. </param>
+        /// <param name="sessionDetails"> Details of the remote support session. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineRemoteSupportJobReportedProperties"/> instance for mocking. </returns>
+        public static EdgeMachineRemoteSupportJobReportedProperties EdgeMachineRemoteSupportJobReportedProperties(int? percentComplete = default, EceActionStatus validationStatus = default, EceActionStatus deploymentStatus = default, EdgeMachineRemoteSupportNodeSettings nodeSettings = default, IEnumerable<RemoteSupportSession> sessionDetails = default)
+        {
+            sessionDetails ??= new ChangeTrackingList<RemoteSupportSession>();
+
+            return new EdgeMachineRemoteSupportJobReportedProperties(
+                percentComplete,
+                validationStatus,
+                deploymentStatus,
+                nodeSettings,
+                sessionDetails.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents the settings of a remote support node. </summary>
+        /// <param name="state"> The state of the remote support node. </param>
+        /// <param name="createdOn"> The timestamp when the node settings were created, in UTC. </param>
+        /// <param name="updatedOn"> The timestamp when the node settings were last updated, in UTC. </param>
+        /// <param name="connectionStatus"> The current connection status of the remote support session. </param>
+        /// <param name="connectionErrorMessage"> The error message, if any, from the last connection attempt. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineRemoteSupportNodeSettings"/> instance for mocking. </returns>
+        public static EdgeMachineRemoteSupportNodeSettings EdgeMachineRemoteSupportNodeSettings(string state = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string connectionStatus = default, string connectionErrorMessage = default)
+        {
+            return new EdgeMachineRemoteSupportNodeSettings(
+                state,
+                createdOn,
+                updatedOn,
+                connectionStatus,
+                connectionErrorMessage,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents the properties of an Azure Linux restricted operating environment Provision Os job. </summary>
+        /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
+        /// <param name="provisioningState"> Job provisioning state. </param>
+        /// <param name="jobId"> Unique, immutable job id. </param>
+        /// <param name="startTimeUtc"> The UTC date and time at which the job started. </param>
+        /// <param name="endTimeUtc"> The UTC date and time at which the job completed. </param>
+        /// <param name="status"> Status of Edge device job. </param>
+        /// <param name="error"> error details. </param>
+        /// <param name="provisioningRequest"> Os Provisioning request. </param>
+        /// <param name="reportedProperties"> Reported Properties for Provision Os job. </param>
+        /// <returns> A new <see cref="Models.ProvisionOsJobProperties"/> instance for mocking. </returns>
+        public static ProvisionOsJobProperties ProvisionOsJobProperties(DeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, JobStatus? status = default, ResponseError error = default, ProvisioningRequest provisioningRequest = default, ProvisionOsReportedProperties reportedProperties = default)
+        {
+            return new ProvisionOsJobProperties(
+                EdgeMachineJobType.ProvisionOs,
+                deploymentMode,
+                provisioningState,
+                jobId,
+                startTimeUtc,
+                endTimeUtc,
+                status,
+                error,
+                additionalBinaryDataProperties: null,
+                provisioningRequest,
+                reportedProperties);
+        }
+
+        /// <summary> Represents a provisioning request. </summary>
+        /// <param name="target"> Target operating system to support polymorphic resource. </param>
+        /// <param name="osProfile"> Operating system profile. </param>
+        /// <param name="userDetails"> User configuration. </param>
+        /// <param name="onboardingConfiguration"> Onboarding configuration. </param>
+        /// <param name="deviceConfiguration"> Device configuration. </param>
+        /// <param name="customConfiguration"> Base64 encoded custom configuration for CAPI to use. </param>
+        /// <returns> A new <see cref="Models.ProvisioningRequest"/> instance for mocking. </returns>
+        public static ProvisioningRequest ProvisioningRequest(ProvisioningOsType target = default, OsProvisionProfile osProfile = default, IEnumerable<UserDetails> userDetails = default, OnboardingConfiguration onboardingConfiguration = default, TargetDeviceConfiguration deviceConfiguration = default, string customConfiguration = default)
+        {
+            userDetails ??= new ChangeTrackingList<UserDetails>();
+
+            return new ProvisioningRequest(
+                target,
+                osProfile,
+                userDetails.ToList(),
+                onboardingConfiguration,
+                deviceConfiguration,
+                customConfiguration,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Reported Properties for Provision Os job. </summary>
+        /// <param name="percentComplete"> The percentage of the job that is complete. </param>
+        /// <param name="validationStatus"> Validation status of job. </param>
+        /// <param name="deploymentStatus"> Deployment status of job. </param>
+        /// <returns> A new <see cref="Models.ProvisionOsReportedProperties"/> instance for mocking. </returns>
+        public static ProvisionOsReportedProperties ProvisionOsReportedProperties(int? percentComplete = default, EceActionStatus validationStatus = default, EceActionStatus deploymentStatus = default)
+        {
+            return new ProvisionOsReportedProperties(percentComplete, validationStatus, deploymentStatus, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents the properties of Download Os job. </summary>
+        /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
+        /// <param name="provisioningState"> Job provisioning state. </param>
+        /// <param name="jobId"> Unique, immutable job id. </param>
+        /// <param name="startTimeUtc"> The UTC date and time at which the job started. </param>
+        /// <param name="endTimeUtc"> The UTC date and time at which the job completed. </param>
+        /// <param name="status"> Status of Edge device job. </param>
+        /// <param name="error"> error details. </param>
+        /// <param name="downloadRequest"> Download OS request. </param>
+        /// <param name="reportedProperties"> Reported Properties for Download Os job. </param>
+        /// <returns> A new <see cref="Models.DownloadOsJobProperties"/> instance for mocking. </returns>
+        public static DownloadOsJobProperties DownloadOsJobProperties(DeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, JobStatus? status = default, ResponseError error = default, DownloadRequest downloadRequest = default, ProvisionOsReportedProperties reportedProperties = default)
+        {
+            return new DownloadOsJobProperties(
+                EdgeMachineJobType.DownloadOs,
+                deploymentMode,
+                provisioningState,
+                jobId,
+                startTimeUtc,
+                endTimeUtc,
+                status,
+                error,
+                additionalBinaryDataProperties: null,
+                downloadRequest,
+                reportedProperties);
+        }
+
+        /// <summary> Properties for pausing a server in the cluster. </summary>
+        /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
+        /// <param name="provisioningState"> Job provisioning state. </param>
+        /// <param name="jobId"> Unique, immutable job id. </param>
+        /// <param name="startTimeUtc"> The UTC date and time at which the job started. </param>
+        /// <param name="endTimeUtc"> The UTC date and time at which the job completed. </param>
+        /// <param name="status"> Status of Edge device job. </param>
+        /// <param name="error"> error details. </param>
+        /// <param name="fromDate"> From date for log collection. </param>
+        /// <param name="toDate"> To date for log collection. </param>
+        /// <param name="lastLogGenerated"> To date for log collection. </param>
+        /// <param name="reportedProperties"> log collection job reported properties. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineCollectLogJobProperties"/> instance for mocking. </returns>
+        public static EdgeMachineCollectLogJobProperties EdgeMachineCollectLogJobProperties(DeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, JobStatus? status = default, ResponseError error = default, DateTimeOffset fromDate = default, DateTimeOffset toDate = default, DateTimeOffset? lastLogGenerated = default, EdgeMachineCollectLogJobReportedProperties reportedProperties = default)
+        {
+            return new EdgeMachineCollectLogJobProperties(
+                EdgeMachineJobType.CollectLog,
+                deploymentMode,
+                provisioningState,
+                jobId,
+                startTimeUtc,
+                endTimeUtc,
+                status,
+                error,
+                additionalBinaryDataProperties: null,
+                fromDate,
+                toDate,
+                lastLogGenerated,
+                reportedProperties);
+        }
+
+        /// <summary> Represents the reported properties of a log collection job. </summary>
+        /// <param name="percentComplete"> The percentage of the job that is complete. </param>
+        /// <param name="validationStatus"> Validation status of job. </param>
+        /// <param name="deploymentStatus"> Deployment status of job. </param>
+        /// <param name="logCollectionSessionDetails"> Details of the log collection session. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineCollectLogJobReportedProperties"/> instance for mocking. </returns>
+        public static EdgeMachineCollectLogJobReportedProperties EdgeMachineCollectLogJobReportedProperties(int? percentComplete = default, EceActionStatus validationStatus = default, EceActionStatus deploymentStatus = default, IEnumerable<LogCollectionJobSession> logCollectionSessionDetails = default)
+        {
+            logCollectionSessionDetails ??= new ChangeTrackingList<LogCollectionJobSession>();
+
+            return new EdgeMachineCollectLogJobReportedProperties(percentComplete, validationStatus, deploymentStatus, logCollectionSessionDetails.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Validate Ownership Voucher Request. </summary>
+        /// <param name="ownershipVoucherDetails"> Ownership Voucher Details. </param>
+        /// <returns> A new <see cref="Models.ValidateOwnershipVouchersRequest"/> instance for mocking. </returns>
+        public static ValidateOwnershipVouchersRequest ValidateOwnershipVouchersRequest(IEnumerable<OwnershipVoucherDetails> ownershipVoucherDetails = default)
+        {
+            ownershipVoucherDetails ??= new ChangeTrackingList<OwnershipVoucherDetails>();
+
+            return new ValidateOwnershipVouchersRequest(ownershipVoucherDetails.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Validate Ownership Voucher Response. </summary>
+        /// <param name="ownershipVoucherValidationDetails"> Ownership Voucher Validation Details. </param>
+        /// <returns> A new <see cref="Models.ValidateOwnershipVouchersResponse"/> instance for mocking. </returns>
+        public static ValidateOwnershipVouchersResponse ValidateOwnershipVouchersResponse(IEnumerable<OwnershipVoucherValidationDetails> ownershipVoucherValidationDetails = default)
+        {
+            ownershipVoucherValidationDetails ??= new ChangeTrackingList<OwnershipVoucherValidationDetails>();
+
+            return new ValidateOwnershipVouchersResponse(ownershipVoucherValidationDetails.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Ownership Voucher Validation Details. </summary>
+        /// <param name="validationStatus"> The ownership voucher validation status. </param>
+        /// <param name="serialNumber"> Serial number of the device. </param>
+        /// <param name="id"> FDO guid of the Ownership Voucher. </param>
+        /// <param name="manufacturer"> Name of the manufacturer. </param>
+        /// <param name="modelName"> Name of the model. </param>
+        /// <param name="version"> Version of the Ownership Voucher format. </param>
+        /// <param name="azureMachineId"> Azure Machine Id of the Ownership voucher. </param>
+        /// <param name="error"> Error details if the validation failed. </param>
+        /// <returns> A new <see cref="Models.OwnershipVoucherValidationDetails"/> instance for mocking. </returns>
+        public static OwnershipVoucherValidationDetails OwnershipVoucherValidationDetails(OwnershipVoucherValidationStatus? validationStatus = default, string serialNumber = default, string id = default, string manufacturer = default, string modelName = default, string version = default, string azureMachineId = default, ResponseError error = default)
+        {
+            return new OwnershipVoucherValidationDetails(
+                validationStatus,
+                serialNumber,
+                id,
+                manufacturer,
+                modelName,
+                version,
+                azureMachineId,
+                error,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Cluster Jobs resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Hci.ClusterJobData"/> instance for mocking. </returns>
+        public static ClusterJobData ClusterJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ClusterJobProperties properties = default)
+        {
+            return new ClusterJobData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary>
+        /// Cluster Job properties
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.HciConfigureSdnIntegrationJobProperties"/> and <see cref="Models.HciConfigureCvmJobProperties"/>.
+        /// </summary>
+        /// <param name="jobType"> Job Type to support polymorphic resource. </param>
+        /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
+        /// <param name="provisioningState"> Job provisioning state. </param>
+        /// <param name="jobId"> Unique, immutable job id. </param>
+        /// <param name="startTimeUtc"> The UTC date and time at which the job started. </param>
+        /// <param name="endTimeUtc"> The UTC date and time at which the job completed. </param>
+        /// <param name="status"> Status of Cluster job. </param>
+        /// <param name="reportedProperties"> Reported properties for job. </param>
+        /// <returns> A new <see cref="Models.ClusterJobProperties"/> instance for mocking. </returns>
+        public static ClusterJobProperties ClusterJobProperties(string jobType = default, DeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, JobStatus? status = default, JobReportedProperties reportedProperties = default)
+        {
+            return new UnknownClusterJobProperties(
+                new HciJobType(jobType),
+                deploymentMode,
+                provisioningState,
+                jobId,
+                startTimeUtc,
+                endTimeUtc,
+                status,
+                reportedProperties,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Reported Properties for job triggered from cloud. </summary>
+        /// <param name="percentComplete"> The percentage of the job that is complete. </param>
+        /// <param name="validationStatus"> Validation status of job. </param>
+        /// <param name="deploymentStatus"> Deployment status of job. </param>
+        /// <returns> A new <see cref="Models.JobReportedProperties"/> instance for mocking. </returns>
+        public static JobReportedProperties JobReportedProperties(int? percentComplete = default, EceActionStatus validationStatus = default, EceActionStatus deploymentStatus = default)
+        {
+            return new JobReportedProperties(percentComplete, validationStatus, deploymentStatus, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Properties for configuring SDN integration intent for the cluster. </summary>
+        /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
+        /// <param name="provisioningState"> Job provisioning state. </param>
+        /// <param name="jobId"> Unique, immutable job id. </param>
+        /// <param name="startTimeUtc"> The UTC date and time at which the job started. </param>
+        /// <param name="endTimeUtc"> The UTC date and time at which the job completed. </param>
+        /// <param name="status"> Status of Cluster job. </param>
+        /// <param name="reportedProperties"> Reported properties for job. </param>
+        /// <param name="sdnIntegrationIntent"> Defines the customer's intent for configuring SDN integration. </param>
+        /// <param name="sdnPrefix"> A string identifier used to construct the Network Controller (NC) REST resource name. This prefix helps group and distinguish SDN-managed network components and must follow specific formatting rules. </param>
+        /// <returns> A new <see cref="Models.HciConfigureSdnIntegrationJobProperties"/> instance for mocking. </returns>
+        public static HciConfigureSdnIntegrationJobProperties HciConfigureSdnIntegrationJobProperties(DeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, JobStatus? status = default, JobReportedProperties reportedProperties = default, SdnIntegrationIntent sdnIntegrationIntent = default, string sdnPrefix = default)
+        {
+            return new HciConfigureSdnIntegrationJobProperties(
+                HciJobType.ConfigureSdnIntegration,
+                deploymentMode,
+                provisioningState,
+                jobId,
+                startTimeUtc,
+                endTimeUtc,
+                status,
+                reportedProperties,
+                additionalBinaryDataProperties: null,
+                sdnIntegrationIntent,
+                sdnPrefix);
+        }
+
+        /// <summary> Defines the customer's intent for updating confidential VM properties. </summary>
+        /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
+        /// <param name="provisioningState"> Job provisioning state. </param>
+        /// <param name="jobId"> Unique, immutable job id. </param>
+        /// <param name="startTimeUtc"> The UTC date and time at which the job started. </param>
+        /// <param name="endTimeUtc"> The UTC date and time at which the job completed. </param>
+        /// <param name="status"> Status of Cluster job. </param>
+        /// <param name="reportedProperties"> Reported properties for job. </param>
+        /// <param name="confidentialVmIntent"> Defines the customer's intent for updating confidential VM properties. </param>
+        /// <returns> A new <see cref="Models.HciConfigureCvmJobProperties"/> instance for mocking. </returns>
+        public static HciConfigureCvmJobProperties HciConfigureCvmJobProperties(DeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, JobStatus? status = default, JobReportedProperties reportedProperties = default, ConfidentialVmIntent confidentialVmIntent = default)
+        {
+            return new HciConfigureCvmJobProperties(
+                HciJobType.ConfigureCVM,
+                deploymentMode,
+                provisioningState,
+                jobId,
+                startTimeUtc,
+                endTimeUtc,
+                status,
+                reportedProperties,
+                additionalBinaryDataProperties: null,
+                confidentialVmIntent);
+        }
+
+        /// <summary> DevicePool details. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="Hci.DevicePoolData"/> instance for mocking. </returns>
+        public static DevicePoolData DevicePoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DevicePoolProperties properties = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DevicePoolData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                properties,
+                identity);
+        }
+
+        /// <summary> Properties for device pool. </summary>
+        /// <param name="provisioningState"> The provisioning state of a resource. </param>
+        /// <param name="cloudId"> Unique, immutable resource id. </param>
+        /// <param name="devices"> List of machines in device pool. </param>
+        /// <param name="customLocationResourceId"> Custom Location Resource Id for the pool. </param>
+        /// <param name="customLocationName"> Custom Location Name for the pool, default: &lt;DevicePoolName&gt;-CL. </param>
+        /// <param name="managedResourceGroup"> Managed resource group name for the pool. </param>
+        /// <param name="operationDetails"> operation status details for device pool. </param>
+        /// <returns> A new <see cref="Models.DevicePoolProperties"/> instance for mocking. </returns>
+        public static DevicePoolProperties DevicePoolProperties(HciProvisioningState? provisioningState = default, string cloudId = default, IEnumerable<DeviceDetail> devices = default, ResourceIdentifier customLocationResourceId = default, string customLocationName = default, string managedResourceGroup = default, IEnumerable<OperationDetail> operationDetails = default)
+        {
+            devices ??= new ChangeTrackingList<DeviceDetail>();
+            operationDetails ??= new ChangeTrackingList<OperationDetail>();
+
+            return new DevicePoolProperties(
+                provisioningState,
+                cloudId,
+                devices.ToList(),
+                customLocationResourceId,
+                customLocationName,
+                managedResourceGroup,
+                operationDetails.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Device details. </summary>
+        /// <param name="deviceResourceId"> Resource Id of the device. </param>
+        /// <param name="claimedBy"> Resource Id of group device belongs to. </param>
+        /// <returns> A new <see cref="Models.DeviceDetail"/> instance for mocking. </returns>
+        public static DeviceDetail DeviceDetail(ResourceIdentifier deviceResourceId = default, string claimedBy = default)
+        {
+            return new DeviceDetail(deviceResourceId, claimedBy, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Properties for patching Device Pool. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="Models.DevicePoolPatch"/> instance for mocking. </returns>
+        public static DevicePoolPatch DevicePoolPatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DevicePoolPatch(tags, identity, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Request for claiming devices of the pool. </summary>
+        /// <param name="devices"> List of resource ids of the devices to be modified. </param>
+        /// <param name="claimedBy"> Resource Id of group device belongs to. </param>
+        /// <returns> A new <see cref="Models.ClaimDeviceRequest"/> instance for mocking. </returns>
+        public static ClaimDeviceRequest ClaimDeviceRequest(IEnumerable<ResourceIdentifier> devices = default, string claimedBy = default)
+        {
+            devices ??= new ChangeTrackingList<ResourceIdentifier>();
+
+            return new ClaimDeviceRequest(devices.ToList(), claimedBy, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Request for releasing devices of the pool. </summary>
+        /// <param name="devices"> List of resource ids of the devices to be modified. </param>
+        /// <returns> A new <see cref="Models.ReleaseDeviceRequest"/> instance for mocking. </returns>
+        public static ReleaseDeviceRequest ReleaseDeviceRequest(IEnumerable<ResourceIdentifier> devices = default)
+        {
+            devices ??= new ChangeTrackingList<ResourceIdentifier>();
+
+            return new ReleaseDeviceRequest(devices.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> Provisioning state of the UpdateSummaries proxy resource. Indicates the current lifecycle status of the update summary operation, such as whether it has been accepted, is in progress, or has completed. </param>
+        /// <param name="oemFamily"> OEM family name. </param>
+        /// <param name="currentOemVersion"> Current OEM Version. </param>
+        /// <param name="hardwareModel"> Name of the hardware model. </param>
+        /// <param name="packageVersions"> Current version of each updatable component. </param>
+        /// <param name="currentVersion"> Current Solution Bundle version of the stamp. </param>
+        /// <param name="currentSbeVersion"> Current Sbe version of the stamp. </param>
+        /// <param name="lastUpdated"> Last time an update installation completed successfully. </param>
+        /// <param name="lastChecked"> Last time the update service successfully checked for updates. </param>
+        /// <param name="healthState"> Overall health state for update-specific health checks. </param>
+        /// <param name="healthCheckResult"> An array of pre-check result objects. </param>
+        /// <param name="healthCheckOn"> Last time the package-specific checks were run. </param>
+        /// <param name="state"> Overall update state of the stamp. Indicates the current status of update deployment across the stamp, including preparation, application, and any issues encountered. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <returns> A new <see cref="Hci.UpdateSummariesData"/> instance for mocking. </returns>
+        public static UpdateSummariesData UpdateSummariesData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciProvisioningState? provisioningState = default, string oemFamily = default, string currentOemVersion = default, string hardwareModel = default, IEnumerable<HciPackageVersionInfo> packageVersions = default, string currentVersion = default, string currentSbeVersion = default, DateTimeOffset? lastUpdated = default, DateTimeOffset? lastChecked = default, HciHealthState? healthState = default, IEnumerable<HciPrecheckResult> healthCheckResult = default, DateTimeOffset? healthCheckOn = default, UpdateSummariesPropertiesState? state = default, string location = default)
+        {
+            return new UpdateSummariesData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                provisioningState is null && oemFamily is null && currentOemVersion is null && hardwareModel is null && packageVersions is null && currentVersion is null && currentSbeVersion is null && lastUpdated is null && lastChecked is null && healthState is null && healthCheckResult is null && healthCheckOn is null && state is null ? default : new UpdateSummariesProperties(
+                    provisioningState,
+                    oemFamily,
+                    currentOemVersion,
+                    hardwareModel,
+                    (packageVersions ?? new ChangeTrackingList<HciPackageVersionInfo>()).ToList(),
+                    currentVersion,
+                    currentSbeVersion,
+                    lastUpdated,
+                    lastChecked,
+                    healthState,
+                    (healthCheckResult ?? new ChangeTrackingList<HciPrecheckResult>()).ToList(),
+                    healthCheckOn,
+                    state,
+                    null),
+                location);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Hci.UpdateRunData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -750,87 +2828,28 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="description"> More detailed description of the step. </param>
         /// <param name="errorMessage"> Error message, specified if the step is in a failed state. </param>
         /// <param name="status"> Status of the step, bubbled up from the ECE action plan for installation attempts. Values are: 'Success', 'Error', 'InProgress', and 'Unknown status'. </param>
-        /// <param name="startOn"> When the step started, or empty if it has not started executing. </param>
-        /// <param name="endOn"> When the step reached a terminal state. </param>
-        /// <param name="lastCompletedOn"> Completion time of this step or the last completed sub-step. </param>
-        /// <param name="expectedExecutionTime"> Expected execution time of a given step. This is optionally authored in the update action plan and can be empty. </param>
+        /// <param name="startTimeUtc"> When the step started, or empty if it has not started executing. </param>
+        /// <param name="endTimeUtc"> When the step reached a terminal state. </param>
+        /// <param name="lastUpdatedTimeUtc"> Completion time of this step or the last completed sub-step. </param>
         /// <param name="steps"> Recursive model for child steps of this step. </param>
-        /// <returns> A new <see cref="Hci.HciClusterUpdateRunData"/> instance for mocking. </returns>
-        public static HciClusterUpdateRunData HciClusterUpdateRunData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, HciProvisioningState? provisioningState = null, DateTimeOffset? timeStarted = null, DateTimeOffset? lastUpdatedOn = null, string duration = null, UpdateRunPropertiesState? state = null, string namePropertiesProgressName = null, string description = null, string errorMessage = null, string status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, DateTimeOffset? lastCompletedOn = null, string expectedExecutionTime = null, IEnumerable<HciUpdateStep> steps = null)
+        /// <returns> A new <see cref="Hci.UpdateRunData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static UpdateRunData UpdateRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, HciProvisioningState? provisioningState, DateTimeOffset? timeStarted, DateTimeOffset? lastUpdatedOn, string duration, UpdateRunPropertiesState? state, string namePropertiesProgressName, string description, string errorMessage, string status, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, DateTimeOffset? lastUpdatedTimeUtc, IEnumerable<HciUpdateStep> steps)
         {
-            steps ??= new List<HciUpdateStep>();
+            steps ??= new ChangeTrackingList<HciUpdateStep>();
 
-            return new HciClusterUpdateRunData(
+            return new UpdateRunData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                location,
-                provisioningState,
-                timeStarted,
-                lastUpdatedOn,
-                duration,
-                state,
-                namePropertiesProgressName,
-                description,
-                errorMessage,
-                status,
-                startOn,
-                endOn,
-                lastCompletedOn,
-                expectedExecutionTime,
-                steps?.ToList(),
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                default,
+                default,
+                location);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Hci.HciClusterUpdateSummaryData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> Provisioning state of the UpdateSummaries proxy resource. </param>
-        /// <param name="oemFamily"> OEM family name. </param>
-        /// <param name="currentOemVersion"> Current OEM Version. </param>
-        /// <param name="hardwareModel"> Name of the hardware model. </param>
-        /// <param name="packageVersions"> Current version of each updatable component. </param>
-        /// <param name="currentVersion"> Current Solution Bundle version of the stamp. </param>
-        /// <param name="currentSbeVersion"> Current Sbe version of the stamp. </param>
-        /// <param name="lastUpdatedOn"> Last time an update installation completed successfully. </param>
-        /// <param name="lastCheckedOn"> Last time the update service successfully checked for updates. </param>
-        /// <param name="healthState"> Overall health state for update-specific health checks. </param>
-        /// <param name="healthCheckResult"> An array of pre-check result objects. </param>
-        /// <param name="healthCheckOn"> Last time the package-specific checks were run. </param>
-        /// <param name="state"> Overall update state of the stamp. </param>
-        /// <returns> A new <see cref="Hci.HciClusterUpdateSummaryData"/> instance for mocking. </returns>
-        public static HciClusterUpdateSummaryData HciClusterUpdateSummaryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, HciProvisioningState? provisioningState = null, string oemFamily = null, string currentOemVersion = null, string hardwareModel = null, IEnumerable<HciPackageVersionInfo> packageVersions = null, string currentVersion = null, string currentSbeVersion = null, DateTimeOffset? lastUpdatedOn = null, DateTimeOffset? lastCheckedOn = null, HciHealthState? healthState = null, IEnumerable<HciPrecheckResult> healthCheckResult = null, DateTimeOffset? healthCheckOn = null, HciClusterUpdateState? state = null)
-        {
-            packageVersions ??= new List<HciPackageVersionInfo>();
-            healthCheckResult ??= new List<HciPrecheckResult>();
-
-            return new HciClusterUpdateSummaryData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                location,
-                provisioningState,
-                oemFamily,
-                currentOemVersion,
-                hardwareModel,
-                packageVersions?.ToList(),
-                currentVersion,
-                currentSbeVersion,
-                lastUpdatedOn,
-                lastCheckedOn,
-                healthState,
-                healthCheckResult?.ToList(),
-                healthCheckOn,
-                state,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Hci.HciClusterUpdateData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Hci.UpdateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -839,10 +2858,9 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="provisioningState"> Provisioning state of the Updates proxy resource. </param>
         /// <param name="installedOn"> Date that the update was installed. </param>
         /// <param name="description"> Description of the update. </param>
-        /// <param name="minSbeVersionRequired"> Minimum Sbe Version of the update. </param>
         /// <param name="state"> State of the update as it relates to this stamp. </param>
         /// <param name="prerequisites"> If update State is HasPrerequisite, this property contains an array of objects describing prerequisite updates before installing this update. Otherwise, it is empty. </param>
-        /// <param name="componentVersions"> An array of component versions for a Solution Bundle update, and an empty array otherwise.  </param>
+        /// <param name="componentVersions"> An array of component versions for a Solution Bundle update, and an empty array otherwise. </param>
         /// <param name="rebootRequired"></param>
         /// <param name="healthState"> Overall health state for update-specific health checks. </param>
         /// <param name="healthCheckResult"> An array of PrecheckResult objects. </param>
@@ -858,120 +2876,77 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="additionalProperties"> Extensible KV pairs serialized as a string. This is currently used to report the stamp OEM family and hardware model information when an update is flagged as Invalid for the stamp based on OEM type. </param>
         /// <param name="progressPercentage"> Progress percentage of ongoing operation. Currently this property is only valid when the update is in the Downloading state, where it maps to how much of the update content has been downloaded. </param>
         /// <param name="notifyMessage"> Brief message with instructions for updates of AvailabilityType Notify. </param>
-        /// <returns> A new <see cref="Hci.HciClusterUpdateData"/> instance for mocking. </returns>
-        public static HciClusterUpdateData HciClusterUpdateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, HciProvisioningState? provisioningState = null, DateTimeOffset? installedOn = null, string description = null, string minSbeVersionRequired = null, HciUpdateState? state = null, IEnumerable<HciClusterUpdatePrerequisite> prerequisites = null, IEnumerable<HciPackageVersionInfo> componentVersions = null, HciNodeRebootRequirement? rebootRequired = null, HciHealthState? healthState = null, IEnumerable<HciPrecheckResult> healthCheckResult = null, DateTimeOffset? healthCheckOn = null, string packagePath = null, float? packageSizeInMb = null, string displayName = null, string version = null, string publisher = null, string releaseLink = null, HciAvailabilityType? availabilityType = null, string packageType = null, string additionalProperties = null, float? progressPercentage = null, string notifyMessage = null)
+        /// <returns> A new <see cref="Hci.UpdateData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static UpdateData UpdateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, HciProvisioningState? provisioningState, DateTimeOffset? installedOn, string description, HciUpdateState? state, IEnumerable<UpdatePrerequisite> prerequisites, IEnumerable<HciPackageVersionInfo> componentVersions, HciNodeRebootRequirement? rebootRequired, HciHealthState? healthState, IEnumerable<HciPrecheckResult> healthCheckResult, DateTimeOffset? healthCheckOn, string packagePath, float? packageSizeInMb, string displayName, string version, string publisher, string releaseLink, HciAvailabilityType? availabilityType, string packageType, string additionalProperties, float? progressPercentage, string notifyMessage)
         {
-            prerequisites ??= new List<HciClusterUpdatePrerequisite>();
-            componentVersions ??= new List<HciPackageVersionInfo>();
-            healthCheckResult ??= new List<HciPrecheckResult>();
+            prerequisites ??= new ChangeTrackingList<UpdatePrerequisite>();
+            componentVersions ??= new ChangeTrackingList<HciPackageVersionInfo>();
+            healthCheckResult ??= new ChangeTrackingList<HciPrecheckResult>();
 
-            return new HciClusterUpdateData(
+            return new UpdateData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                location,
-                provisioningState,
-                installedOn,
-                description,
-                minSbeVersionRequired,
-                state,
-                prerequisites?.ToList(),
-                componentVersions?.ToList(),
-                rebootRequired,
-                healthState,
-                healthCheckResult?.ToList(),
-                healthCheckOn,
-                packagePath,
-                packageSizeInMb,
-                displayName,
-                version,
-                publisher,
-                releaseLink,
-                availabilityType,
-                packageType,
-                additionalProperties,
-                progressPercentage,
-                notifyMessage,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                default,
+                location);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciEdgeDeviceAdapterPropertyOverrides"/>. </summary>
-        /// <param name="jumboPacket"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
-        /// <param name="networkDirect"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
-        /// <param name="networkDirectTechnology"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. Expected values are 'iWARP', 'RoCEv2', 'RoCE'. </param>
-        /// <returns> A new <see cref="Models.HciEdgeDeviceAdapterPropertyOverrides"/> instance for mocking. </returns>
-        public static HciEdgeDeviceAdapterPropertyOverrides HciEdgeDeviceAdapterPropertyOverrides(string jumboPacket = null, string networkDirect = null, string networkDirectTechnology = null)
+        /// <summary> Initializes a new instance of <see cref="Models.LogCollectionSession"/>. </summary>
+        /// <param name="logStartOn"> Start Time of the logs when it was collected. </param>
+        /// <param name="logEndOn"> End Time of the logs when it was collected. </param>
+        /// <param name="timeCollected"> Duration of logs collected. </param>
+        /// <param name="logSize"> Size of the logs collected. </param>
+        /// <param name="logCollectionStatus"> LogCollection status. </param>
+        /// <param name="logCollectionJobType"> LogCollection job type. </param>
+        /// <param name="correlationId"> CorrelationId of the log collection. </param>
+        /// <param name="endTimeCollected"> End Time of the logs when it was collected. </param>
+        /// <param name="logCollectionError"> Log Collection Error details of the cluster. </param>
+        /// <returns> A new <see cref="Models.LogCollectionSession"/> instance for mocking. </returns>
+        public static LogCollectionSession LogCollectionSession(DateTimeOffset? logStartOn = default, DateTimeOffset? logEndOn = default, DateTimeOffset? timeCollected = default, long? logSize = default, LogCollectionStatus? logCollectionStatus = default, LogCollectionJobType? logCollectionJobType = default, string correlationId = default, DateTimeOffset? endTimeCollected = default, LogCollectionError logCollectionError = default)
         {
-            return new HciEdgeDeviceAdapterPropertyOverrides(jumboPacket, networkDirect, networkDirectTechnology, serializedAdditionalRawData: null);
+            return new LogCollectionSession(
+                logStartOn,
+                logEndOn,
+                timeCollected,
+                logSize,
+                logCollectionStatus,
+                correlationId,
+                logCollectionJobType,
+                endTimeCollected,
+                logCollectionError,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PerNodeExtensionState"/>. </summary>
+        /// <param name="name"> Name of the node in HCI Cluster. </param>
+        /// <param name="extension"> Fully qualified resource ID for the particular Arc Extension on this node. </param>
+        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
+        /// <param name="state"> State of Arc Extension in this node. </param>
+        /// <param name="extensionInstanceView"> The extension instance view. </param>
+        /// <returns> A new <see cref="Models.PerNodeExtensionState"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PerNodeExtensionState PerNodeExtensionState(string name, string extension, string typeHandlerVersion, NodeExtensionState? state, ArcExtensionInstanceView extensionInstanceView)
+        {
+            return new PerNodeExtensionState(
+                name,
+                extension,
+                typeHandlerVersion,
+                state,
+                default,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HciEdgeDeviceProperties"/>. </summary>
         /// <param name="deviceConfiguration"> Device Configuration. </param>
         /// <param name="provisioningState"> Provisioning state of edgeDevice resource. </param>
         /// <returns> A new <see cref="Models.HciEdgeDeviceProperties"/> instance for mocking. </returns>
-        public static HciEdgeDeviceProperties HciEdgeDeviceProperties(HciEdgeDeviceConfiguration deviceConfiguration = null, HciProvisioningState? provisioningState = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HciEdgeDeviceProperties HciEdgeDeviceProperties(HciEdgeDeviceConfiguration deviceConfiguration, HciProvisioningState? provisioningState)
         {
-            return new HciEdgeDeviceProperties(deviceConfiguration, provisioningState, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HciValidationFailureDetail"/>. </summary>
-        /// <param name="exception"> Exception details while installing extension. </param>
-        /// <returns> A new <see cref="Models.HciValidationFailureDetail"/> instance for mocking. </returns>
-        public static HciValidationFailureDetail HciValidationFailureDetail(string exception = null)
-        {
-            return new HciValidationFailureDetail(exception, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HciEdgeDeviceArcExtension"/>. </summary>
-        /// <param name="extensionName"> Arc extension name installed on edge device. </param>
-        /// <param name="state"> Arc extension state from arc machine extension. </param>
-        /// <param name="errorDetails"> Error details while installing Arc extension. </param>
-        /// <param name="extensionResourceId"> Arc Extension Azure resource id. </param>
-        /// <param name="typeHandlerVersion"> Extension version installed. </param>
-        /// <param name="managedBy"> Extension managed by user or Azure. </param>
-        /// <returns> A new <see cref="Models.HciEdgeDeviceArcExtension"/> instance for mocking. </returns>
-        public static HciEdgeDeviceArcExtension HciEdgeDeviceArcExtension(string extensionName = null, ArcExtensionState? state = null, IEnumerable<HciValidationFailureDetail> errorDetails = null, ResourceIdentifier extensionResourceId = null, string typeHandlerVersion = null, ArcExtensionManagedBy? managedBy = null)
-        {
-            errorDetails ??= new List<HciValidationFailureDetail>();
-
-            return new HciEdgeDeviceArcExtension(
-                extensionName,
-                state,
-                errorDetails?.ToList(),
-                extensionResourceId,
-                typeHandlerVersion,
-                managedBy,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HciArcEnabledEdgeDevice"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> properties for Arc-enabled edge device with HCI OS. </param>
-        /// <returns> A new <see cref="Models.HciArcEnabledEdgeDevice"/> instance for mocking. </returns>
-        public static HciArcEnabledEdgeDevice HciArcEnabledEdgeDevice(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HciArcEnabledEdgeDeviceProperties properties = null)
-        {
-            return new HciArcEnabledEdgeDevice(
-                id,
-                name,
-                resourceType,
-                systemData,
-                HciEdgeDeviceKind.Hci,
-                serializedAdditionalRawData: null,
-                properties);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HciArcEnabledEdgeDeviceProperties"/>. </summary>
-        /// <param name="deviceConfiguration"> Device Configuration. </param>
-        /// <param name="provisioningState"> Provisioning state of edgeDevice resource. </param>
-        /// <param name="reportedProperties"> The instance view of all current configurations on HCI device. </param>
-        /// <returns> A new <see cref="Models.HciArcEnabledEdgeDeviceProperties"/> instance for mocking. </returns>
-        public static HciArcEnabledEdgeDeviceProperties HciArcEnabledEdgeDeviceProperties(HciEdgeDeviceConfiguration deviceConfiguration = null, HciProvisioningState? provisioningState = null, HciReportedProperties reportedProperties = null)
-        {
-            return new HciArcEnabledEdgeDeviceProperties(deviceConfiguration, provisioningState, serializedAdditionalRawData: null, reportedProperties);
+            return HciEdgeDeviceProperties(deviceConfiguration, provisioningState, reportedProperties: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HciReportedProperties"/>. </summary>
@@ -981,17 +2956,22 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="osProfile"> HCI device OS specific information. </param>
         /// <param name="sbeDeploymentPackageInfo"> Solution builder extension (SBE) deployment package information. </param>
         /// <returns> A new <see cref="Models.HciReportedProperties"/> instance for mocking. </returns>
-        public static HciReportedProperties HciReportedProperties(HciEdgeDeviceState? deviceState = null, IEnumerable<HciEdgeDeviceArcExtension> extensions = null, HciNetworkProfile networkProfile = null, HciOSProfile osProfile = null, SbeDeploymentPackageInfo sbeDeploymentPackageInfo = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HciReportedProperties HciReportedProperties(HciEdgeDeviceState? deviceState, IEnumerable<HciEdgeDeviceArcExtension> extensions, HciNetworkProfile networkProfile, HciOSProfile osProfile, SbeDeploymentPackageInfo sbeDeploymentPackageInfo)
         {
-            extensions ??= new List<HciEdgeDeviceArcExtension>();
+            extensions ??= new ChangeTrackingList<HciEdgeDeviceArcExtension>();
 
             return new HciReportedProperties(
                 deviceState,
-                extensions != null ? new HciEdgeDeviceExtensionProfile(extensions?.ToList(), serializedAdditionalRawData: null) : null,
-                serializedAdditionalRawData: null,
+                default,
+                default,
+                default,
+                additionalBinaryDataProperties: null,
                 networkProfile,
                 osProfile,
-                sbeDeploymentPackageInfo);
+                sbeDeploymentPackageInfo,
+                default,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HciNetworkProfile"/>. </summary>
@@ -999,12 +2979,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="switchDetails"> List of switch details for edge device. </param>
         /// <param name="hostNetwork"> HostNetwork config to deploy AzureStackHCI Cluster. </param>
         /// <returns> A new <see cref="Models.HciNetworkProfile"/> instance for mocking. </returns>
-        public static HciNetworkProfile HciNetworkProfile(IEnumerable<HciNicDetail> nicDetails = null, IEnumerable<HciEdgeDeviceSwitchDetail> switchDetails = null, HciEdgeDeviceHostNetwork hostNetwork = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HciNetworkProfile HciNetworkProfile(IEnumerable<HciNicDetail> nicDetails, IEnumerable<HciEdgeDeviceSwitchDetail> switchDetails, HciEdgeDeviceHostNetwork hostNetwork)
         {
-            nicDetails ??= new List<HciNicDetail>();
-            switchDetails ??= new List<HciEdgeDeviceSwitchDetail>();
-
-            return new HciNetworkProfile(nicDetails?.ToList(), switchDetails?.ToList(), hostNetwork, serializedAdditionalRawData: null);
+            return HciNetworkProfile(nicDetails, switchDetails, hostNetwork, sdnProperties: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HciNicDetail"/>. </summary>
@@ -1024,19 +3002,20 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="vlanId"> The VLAN ID of the physical NIC. </param>
         /// <param name="nicStatus"> The status of NIC, up, disconnected. </param>
         /// <returns> A new <see cref="Models.HciNicDetail"/> instance for mocking. </returns>
-        public static HciNicDetail HciNicDetail(string adapterName = null, string interfaceDescription = null, string componentId = null, string driverVersion = null, string ipv4Address = null, string subnetMask = null, string defaultGateway = null, IEnumerable<string> dnsServers = null, string defaultIsolationId = null, string macAddress = null, string slot = null, string switchName = null, string nicType = null, string vlanId = null, string nicStatus = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HciNicDetail HciNicDetail(string adapterName, string interfaceDescription, string componentId, string driverVersion, string ipv4Address, string subnetMask, string defaultGateway, IEnumerable<string> dnsServers, string defaultIsolationId, string macAddress, string slot, string switchName, string nicType, string vlanId, string nicStatus)
         {
-            dnsServers ??= new List<string>();
+            dnsServers ??= new ChangeTrackingList<string>();
 
             return new HciNicDetail(
                 adapterName,
                 interfaceDescription,
                 componentId,
                 driverVersion,
-                ipv4Address,
+                default,
                 subnetMask,
                 defaultGateway,
-                dnsServers?.ToList(),
+                dnsServers.ToList(),
                 defaultIsolationId,
                 macAddress,
                 slot,
@@ -1044,149 +3023,8 @@ namespace Azure.ResourceManager.Hci.Models
                 nicType,
                 vlanId,
                 nicStatus,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HciEdgeDeviceSwitchDetail"/>. </summary>
-        /// <param name="switchName"> The name of the switch. </param>
-        /// <param name="switchType"> The type of the switch. e.g. external, internal. </param>
-        /// <param name="extensions"> This represents extensions installed on virtualSwitch. </param>
-        /// <returns> A new <see cref="Models.HciEdgeDeviceSwitchDetail"/> instance for mocking. </returns>
-        public static HciEdgeDeviceSwitchDetail HciEdgeDeviceSwitchDetail(string switchName = null, string switchType = null, IEnumerable<HciEdgeSwitchExtension> extensions = null)
-        {
-            extensions ??= new List<HciEdgeSwitchExtension>();
-
-            return new HciEdgeDeviceSwitchDetail(switchName, switchType, extensions?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HciEdgeSwitchExtension"/>. </summary>
-        /// <param name="switchId"> Unique identifier for virtualSwitch. </param>
-        /// <param name="extensionName"> This will show extension name for virtualSwitch. </param>
-        /// <param name="isExtensionEnabled"> This represents whether extension is enabled on virtualSwitch. </param>
-        /// <returns> A new <see cref="Models.HciEdgeSwitchExtension"/> instance for mocking. </returns>
-        public static HciEdgeSwitchExtension HciEdgeSwitchExtension(string switchId = null, string extensionName = null, bool? isExtensionEnabled = null)
-        {
-            return new HciEdgeSwitchExtension(switchId, extensionName, isExtensionEnabled, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HciEdgeDeviceHostNetwork"/>. </summary>
-        /// <param name="intents"> The network intents assigned to the network reference pattern used for the deployment. Each intent will define its own name, traffic type, adapter names, and overrides as recommended by your OEM. </param>
-        /// <param name="storageNetworks"> List of StorageNetworks config to deploy AzureStackHCI Cluster. </param>
-        /// <param name="storageConnectivitySwitchless"> Defines how the storage adapters between nodes are connected either switch or switch less. </param>
-        /// <param name="enableStorageAutoIP"> Optional parameter required only for 3 Nodes Switchless deployments. This allows users to specify IPs and Mask for Storage NICs when Network ATC is not assigning the IPs for storage automatically. </param>
-        /// <returns> A new <see cref="Models.HciEdgeDeviceHostNetwork"/> instance for mocking. </returns>
-        public static HciEdgeDeviceHostNetwork HciEdgeDeviceHostNetwork(IEnumerable<HciEdgeDeviceIntents> intents = null, IEnumerable<HciEdgeDeviceStorageNetworks> storageNetworks = null, bool? storageConnectivitySwitchless = null, bool? enableStorageAutoIP = null)
-        {
-            intents ??= new List<HciEdgeDeviceIntents>();
-            storageNetworks ??= new List<HciEdgeDeviceStorageNetworks>();
-
-            return new HciEdgeDeviceHostNetwork(intents?.ToList(), storageNetworks?.ToList(), storageConnectivitySwitchless, enableStorageAutoIP, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HciEdgeDeviceIntents"/>. </summary>
-        /// <param name="scope"> Scope for host network intent. </param>
-        /// <param name="intentType"> IntentType for host network intent. </param>
-        /// <param name="isComputeIntentSet"> IsComputeIntentSet for host network intent. </param>
-        /// <param name="isStorageIntentSet"> IsStorageIntentSet for host network intent. </param>
-        /// <param name="isOnlyStorage"> IntentType for host network intent. </param>
-        /// <param name="isManagementIntentSet"> IsManagementIntentSet for host network intent. </param>
-        /// <param name="isStretchIntentSet"> IsStretchIntentSet for host network intent. </param>
-        /// <param name="isOnlyStretch"> IsOnlyStretch for host network intent. </param>
-        /// <param name="isNetworkIntentType"> IsNetworkIntentType for host network intent. </param>
-        /// <param name="intentName"> Name of the network intent you wish to create. </param>
-        /// <param name="intentAdapters"> Array of adapters used for the network intent. </param>
-        /// <param name="overrideVirtualSwitchConfiguration"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
-        /// <param name="virtualSwitchConfigurationOverrides"> Set virtualSwitch ConfigurationOverrides for cluster. </param>
-        /// <param name="overrideQosPolicy"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
-        /// <param name="qosPolicyOverrides"> Set QoS PolicyOverrides for cluster. </param>
-        /// <param name="overrideAdapterProperty"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
-        /// <param name="adapterPropertyOverrides"> Set Adapter PropertyOverrides for cluster. </param>
-        /// <returns> A new <see cref="Models.HciEdgeDeviceIntents"/> instance for mocking. </returns>
-        public static HciEdgeDeviceIntents HciEdgeDeviceIntents(long? scope = null, long? intentType = null, bool? isComputeIntentSet = null, bool? isStorageIntentSet = null, bool? isOnlyStorage = null, bool? isManagementIntentSet = null, bool? isStretchIntentSet = null, bool? isOnlyStretch = null, bool? isNetworkIntentType = null, string intentName = null, IEnumerable<string> intentAdapters = null, bool? overrideVirtualSwitchConfiguration = null, HciEdgeDeviceVirtualSwitchConfigurationOverrides virtualSwitchConfigurationOverrides = null, bool? overrideQosPolicy = null, DeploymentSettingQosPolicyOverrides qosPolicyOverrides = null, bool? overrideAdapterProperty = null, HciEdgeDeviceAdapterPropertyOverrides adapterPropertyOverrides = null)
-        {
-            intentAdapters ??= new List<string>();
-
-            return new HciEdgeDeviceIntents(
-                scope,
-                intentType,
-                isComputeIntentSet,
-                isStorageIntentSet,
-                isOnlyStorage,
-                isManagementIntentSet,
-                isStretchIntentSet,
-                isOnlyStretch,
-                isNetworkIntentType,
-                intentName,
-                intentAdapters?.ToList(),
-                overrideVirtualSwitchConfiguration,
-                virtualSwitchConfigurationOverrides,
-                overrideQosPolicy,
-                qosPolicyOverrides,
-                overrideAdapterProperty,
-                adapterPropertyOverrides,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HciEdgeDeviceVirtualSwitchConfigurationOverrides"/>. </summary>
-        /// <param name="enableIov"> Enable IoV for Virtual Switch. </param>
-        /// <param name="loadBalancingAlgorithm"> Load Balancing Algorithm for Virtual Switch. </param>
-        /// <returns> A new <see cref="Models.HciEdgeDeviceVirtualSwitchConfigurationOverrides"/> instance for mocking. </returns>
-        public static HciEdgeDeviceVirtualSwitchConfigurationOverrides HciEdgeDeviceVirtualSwitchConfigurationOverrides(string enableIov = null, string loadBalancingAlgorithm = null)
-        {
-            return new HciEdgeDeviceVirtualSwitchConfigurationOverrides(enableIov, loadBalancingAlgorithm, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HciEdgeDeviceStorageNetworks"/>. </summary>
-        /// <param name="name"> Name of the storage network. </param>
-        /// <param name="networkAdapterName"> Name of the storage network adapter. </param>
-        /// <param name="storageVlanId"> ID specified for the VLAN storage network. This setting is applied to the network interfaces that route the storage and VM migration traffic. </param>
-        /// <param name="storageAdapterIPInfo"> List of Storage adapter physical nodes config to deploy AzureStackHCI Cluster. </param>
-        /// <returns> A new <see cref="Models.HciEdgeDeviceStorageNetworks"/> instance for mocking. </returns>
-        public static HciEdgeDeviceStorageNetworks HciEdgeDeviceStorageNetworks(string name = null, string networkAdapterName = null, string storageVlanId = null, IEnumerable<HciEdgeDeviceStorageAdapterIPInfo> storageAdapterIPInfo = null)
-        {
-            storageAdapterIPInfo ??= new List<HciEdgeDeviceStorageAdapterIPInfo>();
-
-            return new HciEdgeDeviceStorageNetworks(name, networkAdapterName, storageVlanId, storageAdapterIPInfo?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HciEdgeDeviceStorageAdapterIPInfo"/>. </summary>
-        /// <param name="physicalNode"> storage adapter physical node name. </param>
-        /// <param name="ipv4Address"> The IPv4 address assigned to each storage adapter physical node on your Azure Stack HCI cluster. </param>
-        /// <param name="subnetMask"> The SubnetMask address assigned to each storage adapter physical node on your Azure Stack HCI cluster. </param>
-        /// <returns> A new <see cref="Models.HciEdgeDeviceStorageAdapterIPInfo"/> instance for mocking. </returns>
-        public static HciEdgeDeviceStorageAdapterIPInfo HciEdgeDeviceStorageAdapterIPInfo(string physicalNode = null, string ipv4Address = null, string subnetMask = null)
-        {
-            return new HciEdgeDeviceStorageAdapterIPInfo(physicalNode, ipv4Address, subnetMask, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HciOSProfile"/>. </summary>
-        /// <param name="bootType"> The boot type of the device. e.g. UEFI, Legacy etc. </param>
-        /// <param name="assemblyVersion"> Version of assembly present on device. </param>
-        /// <returns> A new <see cref="Models.HciOSProfile"/> instance for mocking. </returns>
-        public static HciOSProfile HciOSProfile(string bootType = null, string assemblyVersion = null)
-        {
-            return new HciOSProfile(bootType, assemblyVersion, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SbeDeploymentPackageInfo"/>. </summary>
-        /// <param name="code"> SBE deployment validation code. </param>
-        /// <param name="message"> A detailed message that explains the SBE package validation result. </param>
-        /// <param name="sbeManifest"> This represents discovered update results for matching updates and store it as SBE manifest. </param>
-        /// <returns> A new <see cref="Models.SbeDeploymentPackageInfo"/> instance for mocking. </returns>
-        public static SbeDeploymentPackageInfo SbeDeploymentPackageInfo(string code = null, string message = null, string sbeManifest = null)
-        {
-            return new SbeDeploymentPackageInfo(code, message, sbeManifest, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HciEdgeDeviceReportedProperties"/>. </summary>
-        /// <param name="deviceState"> edge device state. </param>
-        /// <param name="extensions"> Extensions details for edge device. </param>
-        /// <returns> A new <see cref="Models.HciEdgeDeviceReportedProperties"/> instance for mocking. </returns>
-        public static HciEdgeDeviceReportedProperties HciEdgeDeviceReportedProperties(HciEdgeDeviceState? deviceState = null, IEnumerable<HciEdgeDeviceArcExtension> extensions = null)
-        {
-            extensions ??= new List<HciEdgeDeviceArcExtension>();
-
-            return new HciEdgeDeviceReportedProperties(deviceState, extensions != null ? new HciEdgeDeviceExtensionProfile(extensions?.ToList(), serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+                default,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of ArcSettingData. </summary>
@@ -1203,119 +3041,30 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="aggregateState"> Aggregate state of Arc agent across the nodes in this HCI cluster. </param>
         /// <param name="perNodeDetails"> State of Arc agent in each of the nodes. </param>
         /// <param name="connectivityProperties"> contains connectivity related configuration for ARC resources. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Hci.ArcSettingData" /> instance for mocking. </returns>
+        /// <returns> A new <see cref="Hci.ArcSettingData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ArcSettingData ArcSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HciProvisioningState? provisioningState, string arcInstanceResourceGroup, Guid? arcApplicationClientId, Guid? arcApplicationTenantId, Guid? arcServicePrincipalObjectId, Guid? arcApplicationObjectId, ArcSettingAggregateState? aggregateState, IEnumerable<PerNodeArcState> perNodeDetails, BinaryData connectivityProperties)
         {
-            return ArcSettingData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: provisioningState, arcInstanceResourceGroup: arcInstanceResourceGroup, arcApplicationClientId: arcApplicationClientId, arcApplicationTenantId: arcApplicationTenantId, arcServicePrincipalObjectId: arcServicePrincipalObjectId, arcApplicationObjectId: arcApplicationObjectId, aggregateState: aggregateState, perNodeDetails: perNodeDetails, connectivityProperties: connectivityProperties, defaultExtensions: default);
+            perNodeDetails ??= new ChangeTrackingList<PerNodeArcState>();
+
+            return new ArcSettingData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default);
         }
 
         /// <summary> Initializes a new instance of PerNodeArcState. </summary>
         /// <param name="name"> Name of the Node in HCI Cluster. </param>
         /// <param name="arcInstance"> Fully qualified resource ID for the Arc agent of this node. </param>
         /// <param name="state"> State of Arc agent in this node. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Hci.Models.PerNodeArcState" /> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.PerNodeArcState"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PerNodeArcState PerNodeArcState(string name, string arcInstance, NodeArcState? state)
         {
-            return PerNodeArcState(name: name, arcInstance: arcInstance, arcNodeServicePrincipalObjectId: default, state: state);
-        }
-
-        /// <summary> Initializes a new instance of HciClusterData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="provisioningState"> Provisioning state. </param>
-        /// <param name="status"> Status of the cluster agent. </param>
-        /// <param name="cloudId"> Unique, immutable resource id. </param>
-        /// <param name="cloudManagementEndpoint"> Endpoint configured for management from the Azure portal. </param>
-        /// <param name="aadClientId"> App id of cluster AAD identity. </param>
-        /// <param name="aadTenantId"> Tenant id of cluster AAD identity. </param>
-        /// <param name="aadApplicationObjectId"> Object id of cluster AAD identity. </param>
-        /// <param name="aadServicePrincipalObjectId"> Id of cluster identity service principal. </param>
-        /// <param name="softwareAssuranceProperties"> Software Assurance properties of the cluster. </param>
-        /// <param name="desiredProperties"> Desired properties of the cluster. </param>
-        /// <param name="reportedProperties"> Properties reported by cluster agent. </param>
-        /// <param name="trialDaysRemaining"> Number of days remaining in the trial period. </param>
-        /// <param name="billingModel"> Type of billing applied to the resource. </param>
-        /// <param name="registrationTimestamp"> First cluster sync timestamp. </param>
-        /// <param name="lastSyncTimestamp"> Most recent cluster sync timestamp. </param>
-        /// <param name="lastBillingTimestamp"> Most recent billing meter timestamp. </param>
-        /// <param name="serviceEndpoint"> Region specific DataPath Endpoint of the cluster. </param>
-        /// <param name="resourceProviderObjectId"> Object id of RP Service Principal. </param>
-        /// <param name="principalId"> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="tenantId"> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="typeIdentityType"> Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed). </param>
-        /// <param name="userAssignedIdentities"> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Hci.HciClusterData" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HciClusterData HciClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HciProvisioningState? provisioningState, HciClusterStatus? status, Guid? cloudId, string cloudManagementEndpoint, Guid? aadClientId, Guid? aadTenantId, Guid? aadApplicationObjectId, Guid? aadServicePrincipalObjectId, SoftwareAssuranceProperties softwareAssuranceProperties, HciClusterDesiredProperties desiredProperties, HciClusterReportedProperties reportedProperties, float? trialDaysRemaining, string billingModel, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string serviceEndpoint, string resourceProviderObjectId, Guid? principalId, Guid? tenantId, HciManagedServiceIdentityType? typeIdentityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities)
-        {
-            return HciClusterData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, provisioningState: provisioningState, status: status, connectivityStatus: default, cloudId: cloudId, cloudManagementEndpoint: cloudManagementEndpoint, aadClientId: aadClientId, aadTenantId: aadTenantId, aadApplicationObjectId: aadApplicationObjectId, aadServicePrincipalObjectId: aadServicePrincipalObjectId, softwareAssuranceProperties: softwareAssuranceProperties, logCollectionProperties: default, remoteSupportProperties: default, desiredProperties: desiredProperties, reportedProperties: reportedProperties, isolatedVmAttestationConfiguration: default, trialDaysRemaining: trialDaysRemaining, billingModel: billingModel, registrationTimestamp: registrationTimestamp, lastSyncTimestamp: lastSyncTimestamp, lastBillingTimestamp: lastBillingTimestamp, serviceEndpoint: serviceEndpoint, resourceProviderObjectId: resourceProviderObjectId, principalId: principalId, tenantId: tenantId, typeIdentityType: typeIdentityType, userAssignedIdentities: userAssignedIdentities);
-        }
-
-        /// <summary> Initializes a new instance of HciClusterReportedProperties. </summary>
-        /// <param name="clusterName"> Name of the on-prem cluster connected to this resource. </param>
-        /// <param name="clusterId"> Unique id generated by the on-prem cluster. </param>
-        /// <param name="clusterVersion"> Version of the cluster software. </param>
-        /// <param name="nodes"> List of nodes reported by the cluster. </param>
-        /// <param name="lastUpdatedOn"> Last time the cluster reported the data. </param>
-        /// <param name="imdsAttestation"> IMDS attestation status of the cluster. </param>
-        /// <param name="diagnosticLevel"> Level of diagnostic data emitted by the cluster. </param>
-        /// <param name="supportedCapabilities"> Capabilities supported by the cluster. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Hci.Models.HciClusterReportedProperties" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HciClusterReportedProperties HciClusterReportedProperties(string clusterName, Guid? clusterId, string clusterVersion, IEnumerable<HciClusterNode> nodes, DateTimeOffset? lastUpdatedOn, ImdsAttestationState? imdsAttestation, HciClusterDiagnosticLevel? diagnosticLevel, IEnumerable<string> supportedCapabilities)
-        {
-            return HciClusterReportedProperties(clusterName: clusterName, clusterId: clusterId, clusterVersion: clusterVersion, nodes: nodes, lastUpdatedOn: lastUpdatedOn, imdsAttestation: imdsAttestation, diagnosticLevel: diagnosticLevel, supportedCapabilities: supportedCapabilities, clusterType: default, manufacturer: default, oemActivation: default);
-        }
-
-        /// <summary> Initializes a new instance of HciClusterNode. </summary>
-        /// <param name="name"> Name of the cluster node. </param>
-        /// <param name="id"> Id of the node in the cluster. </param>
-        /// <param name="windowsServerSubscription"> State of Windows Server Subscription. </param>
-        /// <param name="nodeType"> Type of the cluster node hardware. </param>
-        /// <param name="ehcResourceId"> Edge Hardware Center Resource Id. </param>
-        /// <param name="manufacturer"> Manufacturer of the cluster node hardware. </param>
-        /// <param name="model"> Model name of the cluster node hardware. </param>
-        /// <param name="osName"> Operating system running on the cluster node. </param>
-        /// <param name="osVersion"> Version of the operating system running on the cluster node. </param>
-        /// <param name="osDisplayVersion"> Display version of the operating system running on the cluster node. </param>
-        /// <param name="serialNumber"> Immutable id of the cluster node. </param>
-        /// <param name="coreCount"> Number of physical cores on the cluster node. </param>
-        /// <param name="memoryInGiB"> Total available memory on the cluster node (in GiB). </param>
-        /// <param name="lastLicensingTimestamp"> Most recent licensing timestamp. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Hci.Models.HciClusterNode" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HciClusterNode HciClusterNode(string name, float? id, WindowsServerSubscription? windowsServerSubscription, ClusterNodeType? nodeType, string ehcResourceId, string manufacturer, string model, string osName, string osVersion, string osDisplayVersion, string serialNumber, float? coreCount, float? memoryInGiB, DateTimeOffset? lastLicensingTimestamp)
-        {
-            return HciClusterNode(name: name, id: id, windowsServerSubscription: windowsServerSubscription, nodeType: nodeType, ehcResourceId: ehcResourceId, manufacturer: manufacturer, model: model, osName: osName, osVersion: osVersion, osDisplayVersion: osDisplayVersion, serialNumber: serialNumber, coreCount: coreCount, memoryInGiB: memoryInGiB, lastLicensingTimestamp: lastLicensingTimestamp, oemActivation: default);
-        }
-
-        /// <summary> Initializes a new instance of ArcExtensionData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> Provisioning state of the Extension proxy resource. </param>
-        /// <param name="aggregateState"> Aggregate state of Arc Extensions across the nodes in this HCI cluster. </param>
-        /// <param name="perNodeExtensionDetails"> State of Arc Extension in each of the nodes. </param>
-        /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
-        /// <param name="publisher"> The name of the extension handler publisher. </param>
-        /// <param name="arcExtensionType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
-        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. Latest version would be used if not specified. </param>
-        /// <param name="shouldAutoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
-        /// <param name="settings"> Json formatted public settings for the extension. </param>
-        /// <param name="protectedSettings"> Protected settings (may contain secrets). </param>
-        /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version available. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Hci.ArcExtensionData" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ArcExtensionData ArcExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HciProvisioningState? provisioningState, ArcExtensionAggregateState? aggregateState, IEnumerable<PerNodeExtensionState> perNodeExtensionDetails, string forceUpdateTag, string publisher, string arcExtensionType, string typeHandlerVersion, bool? shouldAutoUpgradeMinorVersion, BinaryData settings, BinaryData protectedSettings, bool? enableAutomaticUpgrade)
-        {
-            return ArcExtensionData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: provisioningState, aggregateState: aggregateState, perNodeExtensionDetails: perNodeExtensionDetails, managedBy: default, forceUpdateTag: forceUpdateTag, publisher: publisher, arcExtensionType: arcExtensionType, typeHandlerVersion: typeHandlerVersion, shouldAutoUpgradeMinorVersion: shouldAutoUpgradeMinorVersion, settings: settings, protectedSettings: protectedSettings, enableAutomaticUpgrade: enableAutomaticUpgrade);
+            return PerNodeArcState(name, arcInstance, arcNodeServicePrincipalObjectId: default, state);
         }
     }
 }

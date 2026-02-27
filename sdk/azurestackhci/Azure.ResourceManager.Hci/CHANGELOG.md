@@ -4,9 +4,12 @@
 
 ### Features Added
 
+- Upgraded API version to `2026-02-01`
+- Migrated from Swagger/AutoRest to TypeSpec-based generation
+
 ### Breaking Changes
 
-### Bugs Fixed
+- This version is a major migration from AutoRest to TypeSpec-based code generation. Some type names, property names, and API shapes may have changed.
 
 ### Other Changes
 

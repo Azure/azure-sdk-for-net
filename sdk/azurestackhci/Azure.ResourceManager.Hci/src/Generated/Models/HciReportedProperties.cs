@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> The device Configuration for HCI device. </summary>
-    public partial class HciReportedProperties : HciEdgeDeviceReportedProperties
+    public partial class HciReportedProperties : ReportedProperties
     {
         /// <summary> Initializes a new instance of <see cref="HciReportedProperties"/>. </summary>
         internal HciReportedProperties()
@@ -21,25 +21,54 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="HciReportedProperties"/>. </summary>
         /// <param name="deviceState"> edge device state. </param>
         /// <param name="extensionProfile"> Extensions details for edge device. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="lastSyncTimestamp"> Most recent edge device sync timestamp in UTC. </param>
+        /// <param name="confidentialVmProfile"> CVM support details for edge device. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="networkProfile"> HCI device network information. </param>
         /// <param name="osProfile"> HCI device OS specific information. </param>
         /// <param name="sbeDeploymentPackageInfo"> Solution builder extension (SBE) deployment package information. </param>
-        internal HciReportedProperties(HciEdgeDeviceState? deviceState, HciEdgeDeviceExtensionProfile extensionProfile, IDictionary<string, BinaryData> serializedAdditionalRawData, HciNetworkProfile networkProfile, HciOSProfile osProfile, SbeDeploymentPackageInfo sbeDeploymentPackageInfo) : base(deviceState, extensionProfile, serializedAdditionalRawData)
+        /// <param name="storageProfile"> Hci device storage specific information. </param>
+        /// <param name="hardwareProfile"> Hci device hardware specific information. </param>
+        internal HciReportedProperties(HciEdgeDeviceState? deviceState, ExtensionProfile extensionProfile, DateTimeOffset? lastSyncTimestamp, ConfidentialVmProfile confidentialVmProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties, HciNetworkProfile networkProfile, HciOSProfile osProfile, SbeDeploymentPackageInfo sbeDeploymentPackageInfo, HciStorageProfile storageProfile, HciHardwareProfile hardwareProfile) : base(deviceState, extensionProfile, lastSyncTimestamp, confidentialVmProfile, additionalBinaryDataProperties)
         {
             NetworkProfile = networkProfile;
-            OSProfile = osProfile;
+            OsProfile = osProfile;
             SbeDeploymentPackageInfo = sbeDeploymentPackageInfo;
+            StorageProfile = storageProfile;
+            HardwareProfile = hardwareProfile;
         }
 
         /// <summary> HCI device network information. </summary>
-        [WirePath("networkProfile")]
         public HciNetworkProfile NetworkProfile { get; }
+
         /// <summary> HCI device OS specific information. </summary>
-        [WirePath("osProfile")]
-        public HciOSProfile OSProfile { get; }
+        public HciOSProfile OsProfile { get; }
+
         /// <summary> Solution builder extension (SBE) deployment package information. </summary>
-        [WirePath("sbeDeploymentPackageInfo")]
         public SbeDeploymentPackageInfo SbeDeploymentPackageInfo { get; }
+
+        /// <summary> Hci device storage specific information. </summary>
+        internal HciStorageProfile StorageProfile { get; }
+
+        /// <summary> Hci device hardware specific information. </summary>
+        internal HciHardwareProfile HardwareProfile { get; }
+
+        /// <summary> Number of storage disks in the device with $CanPool as true. </summary>
+        public long? StoragePoolableDisksCount
+        {
+            get
+            {
+                return StorageProfile.PoolableDisksCount;
+            }
+        }
+
+        /// <summary> Process type of the device. </summary>
+        public string HardwareProcessorType
+        {
+            get
+            {
+                return HardwareProfile.ProcessorType;
+            }
+        }
     }
 }

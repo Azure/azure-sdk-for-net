@@ -8,111 +8,56 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableHciArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableHciArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableHciArmClient for mocking. </summary>
         protected MockableHciArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableHciArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableHciArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableHciArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableHciArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
+        /// <summary> Gets an object representing a <see cref="PlatformUpdateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PlatformUpdateResource"/> object. </returns>
+        public virtual PlatformUpdateResource GetPlatformUpdateResource(ResourceIdentifier id)
         {
+            PlatformUpdateResource.ValidateResourceId(id);
+            return new PlatformUpdateResource(Client, id);
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
+        /// <summary> Gets an object representing a <see cref="OsImageResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="OsImageResource"/> object. </returns>
+        public virtual OsImageResource GetOsImageResource(ResourceIdentifier id)
         {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
+            OsImageResource.ValidateResourceId(id);
+            return new OsImageResource(Client, id);
         }
 
-        /// <summary> Gets a collection of HciEdgeDeviceResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of HciEdgeDeviceResources and their operations over a HciEdgeDeviceResource. </returns>
-        public virtual HciEdgeDeviceCollection GetHciEdgeDevices(ResourceIdentifier scope)
+        /// <summary> Gets an object representing a <see cref="UpdateContentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="UpdateContentResource"/> object. </returns>
+        public virtual UpdateContentResource GetUpdateContentResource(ResourceIdentifier id)
         {
-            return new HciEdgeDeviceCollection(Client, scope);
+            UpdateContentResource.ValidateResourceId(id);
+            return new UpdateContentResource(Client, id);
         }
 
-        /// <summary>
-        /// Get a EdgeDevice
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.AzureStackHCI/edgeDevices/{edgeDeviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeDevices_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciEdgeDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="edgeDeviceName"> Name of Device. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="edgeDeviceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="edgeDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<HciEdgeDeviceResource>> GetHciEdgeDeviceAsync(ResourceIdentifier scope, string edgeDeviceName, CancellationToken cancellationToken = default)
-        {
-            return await GetHciEdgeDevices(scope).GetAsync(edgeDeviceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a EdgeDevice
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.AzureStackHCI/edgeDevices/{edgeDeviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeDevices_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciEdgeDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="edgeDeviceName"> Name of Device. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="edgeDeviceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="edgeDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<HciEdgeDeviceResource> GetHciEdgeDevice(ResourceIdentifier scope, string edgeDeviceName, CancellationToken cancellationToken = default)
-        {
-            return GetHciEdgeDevices(scope).Get(edgeDeviceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="ArcSettingResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ArcSettingResource.CreateResourceIdentifier" /> to create an <see cref="ArcSettingResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ArcSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ArcSettingResource"/> object. </returns>
         public virtual ArcSettingResource GetArcSettingResource(ResourceIdentifier id)
@@ -121,136 +66,229 @@ namespace Azure.ResourceManager.Hci.Mocking
             return new ArcSettingResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="HciClusterResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HciClusterResource.CreateResourceIdentifier" /> to create a <see cref="HciClusterResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="OfferResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HciClusterResource"/> object. </returns>
-        public virtual HciClusterResource GetHciClusterResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="OfferResource"/> object. </returns>
+        public virtual OfferResource GetOfferResource(ResourceIdentifier id)
         {
-            HciClusterResource.ValidateResourceId(id);
-            return new HciClusterResource(Client, id);
+            OfferResource.ValidateResourceId(id);
+            return new OfferResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="HciClusterDeploymentSettingResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HciClusterDeploymentSettingResource.CreateResourceIdentifier" /> to create a <see cref="HciClusterDeploymentSettingResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ClusterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HciClusterDeploymentSettingResource"/> object. </returns>
-        public virtual HciClusterDeploymentSettingResource GetHciClusterDeploymentSettingResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ClusterResource"/> object. </returns>
+        public virtual ClusterResource GetClusterResource(ResourceIdentifier id)
         {
-            HciClusterDeploymentSettingResource.ValidateResourceId(id);
-            return new HciClusterDeploymentSettingResource(Client, id);
+            ClusterResource.ValidateResourceId(id);
+            return new ClusterResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="HciEdgeDeviceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HciEdgeDeviceResource.CreateResourceIdentifier" /> to create a <see cref="HciEdgeDeviceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DeploymentSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HciEdgeDeviceResource"/> object. </returns>
-        public virtual HciEdgeDeviceResource GetHciEdgeDeviceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DeploymentSettingResource"/> object. </returns>
+        public virtual DeploymentSettingResource GetDeploymentSettingResource(ResourceIdentifier id)
         {
-            HciEdgeDeviceResource.ValidateResourceId(id);
-            return new HciEdgeDeviceResource(Client, id);
+            DeploymentSettingResource.ValidateResourceId(id);
+            return new DeploymentSettingResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="ArcExtensionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ArcExtensionResource.CreateResourceIdentifier" /> to create an <see cref="ArcExtensionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="EdgeDeviceJobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ArcExtensionResource"/> object. </returns>
-        public virtual ArcExtensionResource GetArcExtensionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EdgeDeviceJobResource"/> object. </returns>
+        public virtual EdgeDeviceJobResource GetEdgeDeviceJobResource(ResourceIdentifier id)
         {
-            ArcExtensionResource.ValidateResourceId(id);
-            return new ArcExtensionResource(Client, id);
+            EdgeDeviceJobResource.ValidateResourceId(id);
+            return new EdgeDeviceJobResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="HciClusterOfferResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HciClusterOfferResource.CreateResourceIdentifier" /> to create a <see cref="HciClusterOfferResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HciClusterOfferResource"/> object. </returns>
-        public virtual HciClusterOfferResource GetHciClusterOfferResource(ResourceIdentifier id)
+        /// <summary> Gets a collection of <see cref="EdgeDeviceJobCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="EdgeDeviceJobResource"/> objects. </returns>
+        public virtual EdgeDeviceJobCollection GetEdgeDeviceJobs(ResourceIdentifier scope)
         {
-            HciClusterOfferResource.ValidateResourceId(id);
-            return new HciClusterOfferResource(Client, id);
+            return new EdgeDeviceJobCollection(Client, scope);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="HciClusterPublisherResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HciClusterPublisherResource.CreateResourceIdentifier" /> to create a <see cref="HciClusterPublisherResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HciClusterPublisherResource"/> object. </returns>
-        public virtual HciClusterPublisherResource GetHciClusterPublisherResource(ResourceIdentifier id)
+        /// <summary> Get a EdgeDeviceJob. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="jobsName"> Name of EdgeDevice Job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobsName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EdgeDeviceJobResource> GetEdgeDeviceJob(ResourceIdentifier scope, string jobsName, CancellationToken cancellationToken = default)
         {
-            HciClusterPublisherResource.ValidateResourceId(id);
-            return new HciClusterPublisherResource(Client, id);
+            Argument.AssertNotNullOrEmpty(jobsName, nameof(jobsName));
+
+            return GetEdgeDeviceJobs(scope).Get(jobsName, cancellationToken);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="HciClusterSecuritySettingResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HciClusterSecuritySettingResource.CreateResourceIdentifier" /> to create a <see cref="HciClusterSecuritySettingResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HciClusterSecuritySettingResource"/> object. </returns>
-        public virtual HciClusterSecuritySettingResource GetHciClusterSecuritySettingResource(ResourceIdentifier id)
+        /// <summary> Get a EdgeDeviceJob. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="jobsName"> Name of EdgeDevice Job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobsName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EdgeDeviceJobResource>> GetEdgeDeviceJobAsync(ResourceIdentifier scope, string jobsName, CancellationToken cancellationToken = default)
         {
-            HciClusterSecuritySettingResource.ValidateResourceId(id);
-            return new HciClusterSecuritySettingResource(Client, id);
+            Argument.AssertNotNullOrEmpty(jobsName, nameof(jobsName));
+
+            return await GetEdgeDeviceJobs(scope).GetAsync(jobsName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="HciSkuResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HciSkuResource.CreateResourceIdentifier" /> to create a <see cref="HciSkuResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="EdgeDeviceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HciSkuResource"/> object. </returns>
-        public virtual HciSkuResource GetHciSkuResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EdgeDeviceResource"/> object. </returns>
+        public virtual EdgeDeviceResource GetEdgeDeviceResource(ResourceIdentifier id)
         {
-            HciSkuResource.ValidateResourceId(id);
-            return new HciSkuResource(Client, id);
+            EdgeDeviceResource.ValidateResourceId(id);
+            return new EdgeDeviceResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="HciClusterUpdateRunResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HciClusterUpdateRunResource.CreateResourceIdentifier" /> to create a <see cref="HciClusterUpdateRunResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HciClusterUpdateRunResource"/> object. </returns>
-        public virtual HciClusterUpdateRunResource GetHciClusterUpdateRunResource(ResourceIdentifier id)
+        /// <summary> Gets a collection of <see cref="EdgeDeviceCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="EdgeDeviceResource"/> objects. </returns>
+        public virtual EdgeDeviceCollection GetEdgeDevices(ResourceIdentifier scope)
         {
-            HciClusterUpdateRunResource.ValidateResourceId(id);
-            return new HciClusterUpdateRunResource(Client, id);
+            return new EdgeDeviceCollection(Client, scope);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="HciClusterUpdateSummaryResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HciClusterUpdateSummaryResource.CreateResourceIdentifier" /> to create a <see cref="HciClusterUpdateSummaryResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HciClusterUpdateSummaryResource"/> object. </returns>
-        public virtual HciClusterUpdateSummaryResource GetHciClusterUpdateSummaryResource(ResourceIdentifier id)
+        /// <summary> Get a EdgeDevice. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="edgeDeviceName"> Name of Device. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeDeviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="edgeDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EdgeDeviceResource> GetEdgeDevice(ResourceIdentifier scope, string edgeDeviceName, CancellationToken cancellationToken = default)
         {
-            HciClusterUpdateSummaryResource.ValidateResourceId(id);
-            return new HciClusterUpdateSummaryResource(Client, id);
+            Argument.AssertNotNullOrEmpty(edgeDeviceName, nameof(edgeDeviceName));
+
+            return GetEdgeDevices(scope).Get(edgeDeviceName, cancellationToken);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="HciClusterUpdateResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HciClusterUpdateResource.CreateResourceIdentifier" /> to create a <see cref="HciClusterUpdateResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HciClusterUpdateResource"/> object. </returns>
-        public virtual HciClusterUpdateResource GetHciClusterUpdateResource(ResourceIdentifier id)
+        /// <summary> Get a EdgeDevice. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="edgeDeviceName"> Name of Device. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeDeviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="edgeDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EdgeDeviceResource>> GetEdgeDeviceAsync(ResourceIdentifier scope, string edgeDeviceName, CancellationToken cancellationToken = default)
         {
-            HciClusterUpdateResource.ValidateResourceId(id);
-            return new HciClusterUpdateResource(Client, id);
+            Argument.AssertNotNullOrEmpty(edgeDeviceName, nameof(edgeDeviceName));
+
+            return await GetEdgeDevices(scope).GetAsync(edgeDeviceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ExtensionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ExtensionResource"/> object. </returns>
+        public virtual ExtensionResource GetExtensionResource(ResourceIdentifier id)
+        {
+            ExtensionResource.ValidateResourceId(id);
+            return new ExtensionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="PublisherResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PublisherResource"/> object. </returns>
+        public virtual PublisherResource GetPublisherResource(ResourceIdentifier id)
+        {
+            PublisherResource.ValidateResourceId(id);
+            return new PublisherResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SecuritySettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SecuritySettingResource"/> object. </returns>
+        public virtual SecuritySettingResource GetSecuritySettingResource(ResourceIdentifier id)
+        {
+            SecuritySettingResource.ValidateResourceId(id);
+            return new SecuritySettingResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SkuResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SkuResource"/> object. </returns>
+        public virtual SkuResource GetSkuResource(ResourceIdentifier id)
+        {
+            SkuResource.ValidateResourceId(id);
+            return new SkuResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="UpdateRunResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="UpdateRunResource"/> object. </returns>
+        public virtual UpdateRunResource GetUpdateRunResource(ResourceIdentifier id)
+        {
+            UpdateRunResource.ValidateResourceId(id);
+            return new UpdateRunResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="UpdateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="UpdateResource"/> object. </returns>
+        public virtual UpdateResource GetUpdateResource(ResourceIdentifier id)
+        {
+            UpdateResource.ValidateResourceId(id);
+            return new UpdateResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ValidatedSolutionRecipeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ValidatedSolutionRecipeResource"/> object. </returns>
+        public virtual ValidatedSolutionRecipeResource GetValidatedSolutionRecipeResource(ResourceIdentifier id)
+        {
+            ValidatedSolutionRecipeResource.ValidateResourceId(id);
+            return new ValidatedSolutionRecipeResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="EdgeMachineResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EdgeMachineResource"/> object. </returns>
+        public virtual EdgeMachineResource GetEdgeMachineResource(ResourceIdentifier id)
+        {
+            EdgeMachineResource.ValidateResourceId(id);
+            return new EdgeMachineResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="EdgeMachineJobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EdgeMachineJobResource"/> object. </returns>
+        public virtual EdgeMachineJobResource GetEdgeMachineJobResource(ResourceIdentifier id)
+        {
+            EdgeMachineJobResource.ValidateResourceId(id);
+            return new EdgeMachineJobResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ClusterJobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ClusterJobResource"/> object. </returns>
+        public virtual ClusterJobResource GetClusterJobResource(ResourceIdentifier id)
+        {
+            ClusterJobResource.ValidateResourceId(id);
+            return new ClusterJobResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DevicePoolResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DevicePoolResource"/> object. </returns>
+        public virtual DevicePoolResource GetDevicePoolResource(ResourceIdentifier id)
+        {
+            DevicePoolResource.ValidateResourceId(id);
+            return new DevicePoolResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="UpdateSummariesResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="UpdateSummariesResource"/> object. </returns>
+        public virtual UpdateSummariesResource GetUpdateSummariesResource(ResourceIdentifier id)
+        {
+            UpdateSummariesResource.ValidateResourceId(id);
+            return new UpdateSummariesResource(Client, id);
         }
     }
 }

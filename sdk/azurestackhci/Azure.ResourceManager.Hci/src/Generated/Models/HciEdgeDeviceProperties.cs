@@ -10,41 +10,9 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Edge Device properties. </summary>
-    public partial class HciEdgeDeviceProperties
+    /// <summary> properties for Arc-enabled edge device with HCI OS. </summary>
+    public partial class HciEdgeDeviceProperties : EdgeDeviceProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="HciEdgeDeviceProperties"/>. </summary>
         public HciEdgeDeviceProperties()
         {
@@ -53,19 +21,14 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="HciEdgeDeviceProperties"/>. </summary>
         /// <param name="deviceConfiguration"> Device Configuration. </param>
         /// <param name="provisioningState"> Provisioning state of edgeDevice resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciEdgeDeviceProperties(HciEdgeDeviceConfiguration deviceConfiguration, HciProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="reportedProperties"> The instance view of all current configurations on HCI device. </param>
+        internal HciEdgeDeviceProperties(HciEdgeDeviceConfiguration deviceConfiguration, HciProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, HciReportedProperties reportedProperties) : base(deviceConfiguration, provisioningState, additionalBinaryDataProperties)
         {
-            DeviceConfiguration = deviceConfiguration;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            ReportedProperties = reportedProperties;
         }
 
-        /// <summary> Device Configuration. </summary>
-        [WirePath("deviceConfiguration")]
-        public HciEdgeDeviceConfiguration DeviceConfiguration { get; set; }
-        /// <summary> Provisioning state of edgeDevice resource. </summary>
-        [WirePath("provisioningState")]
-        public HciProvisioningState? ProvisioningState { get; }
+        /// <summary> The instance view of all current configurations on HCI device. </summary>
+        public HciReportedProperties ReportedProperties { get; }
     }
 }
