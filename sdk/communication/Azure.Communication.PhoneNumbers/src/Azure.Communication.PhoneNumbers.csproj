@@ -13,6 +13,7 @@
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <IncludeAutorestDependency>true</IncludeAutorestDependency>
     <AotCompatOptOut>true</AotCompatOptOut>
+    <HasReleaseVersion>false</HasReleaseVersion>
   </PropertyGroup>
 
   <ItemGroup>
