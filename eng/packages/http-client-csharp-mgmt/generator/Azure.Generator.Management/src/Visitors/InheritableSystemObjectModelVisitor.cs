@@ -30,8 +30,11 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         if (type is not InheritableSystemObjectModelProvider && type?.BaseModelProvider is InheritableSystemObjectModelProvider baseSystemType)
         {
             // Defer serialization update for discriminated models to avoid infinite recursion.
-            // Accessing Methods triggers building DerivedModels, which calls CreateModel for
-            // derived types whose base model is not yet cached in TypeFactory during PreVisitModel.
+            // Accessing serializationTypeDefinition.Methods triggers building DerivedModels ->
+            // CreateModel for derived types whose base model is not yet cached in TypeFactory.
+            // Non-discriminated models must NOT defer because UpdateSerialization accesses .Methods
+            // which lazily generates serialization code that depends on the model's pre-update state
+            // (before properties and fields are modified later in Update).
             Update(baseSystemType, type, deferSerialization: model.DiscriminatorProperty != null);
         }
         else if (type?.BaseModelProvider is not null && type is not InheritableSystemObjectModelProvider)
@@ -70,7 +73,8 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             UpdateRegularModelInheritance(model2);
         }
 
-        // Apply deferred serialization updates that were postponed from PreVisitModel.
+        // Apply deferred serialization updates that were postponed from PreVisitModel
+        // for discriminated models only (see comment in PreVisitModel).
         if (type is ModelProvider pendingModel && _pendingSerialization.Remove(pendingModel))
         {
             UpdateSerialization(pendingModel);
@@ -122,6 +126,9 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         }
         else
         {
+            // Non-discriminated models: update serialization immediately, before model properties
+            // and fields are modified below. The lazy serialization code generation depends on
+            // the model's current state.
             UpdateSerialization(model);
         }
 
