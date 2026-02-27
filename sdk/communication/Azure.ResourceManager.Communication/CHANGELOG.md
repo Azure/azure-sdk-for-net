@@ -1,14 +1,10 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.3.1 (2026-02-28)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed swapped `CreatedOn`/`LastUpdatedOn` property mappings in `EmailSuppressionListData`. `CreatedOn` was incorrectly bound to `lastUpdatedTimeStamp` and `LastUpdatedOn` to `createdTimeStamp`.
 
 ## 1.3.0 (2026-01-04)
 
