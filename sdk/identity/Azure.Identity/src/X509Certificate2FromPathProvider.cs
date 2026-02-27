@@ -13,8 +13,8 @@ using Azure.Core;
 namespace Azure.Identity
 {
     /// <summary>
-    /// X509Certificate2FromPathProvider provides an X509Certificate2 from a "pfx" and "pem" encoded certificates
-    /// on disk, and the platform certificate store.
+    /// X509Certificate2FromPathProvider provides an X509Certificate2 from "pfx"- and "pem"-encoded certificates
+    /// on disk and the platform certificate store.
     /// </summary>
     internal sealed class X509Certificate2FromPathProvider : IX509Certificate2Provider
     {
