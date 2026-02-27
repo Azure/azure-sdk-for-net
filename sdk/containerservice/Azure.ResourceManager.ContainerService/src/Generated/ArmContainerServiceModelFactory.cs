@@ -777,33 +777,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <param name="managedOutboundIPs"> Desired managed outbound IPs for the cluster load balancer. </param>
-        /// <param name="outboundPublicIPPrefixes"> A list of public IP prefix resources. </param>
-        /// <param name="outboundPublicIPs"> A list of public IP resources. </param>
-        /// <param name="effectiveOutboundIPs"> The effective outbound IP resources of the cluster load balancer. </param>
-        /// <param name="allocatedOutboundPorts"> The desired number of allocated SNAT ports per VM. Allowed values are in the range of 0 to 64000 (inclusive). The default value is 0 which results in Azure dynamically allocating ports. </param>
-        /// <param name="idleTimeoutInMinutes"> Desired outbound flow idle timeout in minutes. Allowed values are in the range of 4 to 120 (inclusive). The default value is 30 minutes. </param>
-        /// <param name="enableMultipleStandardLoadBalancers"> Enable multiple standard load balancers per AKS cluster or not. </param>
-        /// <param name="backendPoolType"> The type of the managed inbound Load Balancer BackendPool. </param>
-        /// <param name="clusterServiceLoadBalancerHealthProbeMode"> The health probing behavior for External Traffic Policy Cluster services. </param>
-        /// <returns> A new <see cref="Models.ManagedClusterLoadBalancerProfile"/> instance for mocking. </returns>
-        public static ManagedClusterLoadBalancerProfile ManagedClusterLoadBalancerProfile(ManagedClusterLoadBalancerProfileManagedOutboundIPs managedOutboundIPs = default, IEnumerable<WritableSubResource> outboundPublicIPPrefixes = default, IEnumerable<WritableSubResource> outboundPublicIPs = default, IEnumerable<WritableSubResource> effectiveOutboundIPs = default, int? allocatedOutboundPorts = default, int? idleTimeoutInMinutes = default, bool? enableMultipleStandardLoadBalancers = default, ManagedClusterLoadBalancerBackendPoolType? backendPoolType = default, ClusterServiceLoadBalancerHealthProbeMode? clusterServiceLoadBalancerHealthProbeMode = default)
-        {
-            effectiveOutboundIPs ??= new ChangeTrackingList<WritableSubResource>();
-
-            return new ManagedClusterLoadBalancerProfile(
-                managedOutboundIPs,
-                outboundPublicIPPrefixes is null ? default : new ManagedClusterLoadBalancerProfileOutboundIPPrefixes((outboundPublicIPPrefixes ?? new ChangeTrackingList<WritableSubResource>()).ToList(), null),
-                outboundPublicIPs is null ? default : new ManagedClusterLoadBalancerProfileOutboundIPs((outboundPublicIPs ?? new ChangeTrackingList<WritableSubResource>()).ToList(), null),
-                effectiveOutboundIPs.ToList(),
-                allocatedOutboundPorts,
-                idleTimeoutInMinutes,
-                enableMultipleStandardLoadBalancers,
-                backendPoolType,
-                clusterServiceLoadBalancerHealthProbeMode,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> AADProfile specifies attributes for Azure Active Directory integration. For more details see [managed AAD on AKS](https://docs.microsoft.com/azure/aks/managed-aad). </summary>
         /// <param name="isManagedAadEnabled"> Whether to enable managed AAD. </param>
         /// <param name="isAzureRbacEnabled"> Whether to enable Azure RBAC for Kubernetes authorization. </param>
@@ -998,11 +971,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Identity for the managed cluster. </summary>
         /// <param name="principalId"> The principal id of the system assigned identity which is used by master components. </param>
         /// <param name="tenantId"> The tenant id of the system assigned identity which is used by master components. </param>
-        /// <param name="resourceIdentityType"> The type of identity used for the managed cluster. For more information see [use managed identities in AKS](https://docs.microsoft.com/azure/aks/use-managed-identity). </param>
+        /// <param name="identityType"> The type of identity used for the managed cluster. For more information see [use managed identities in AKS](https://docs.microsoft.com/azure/aks/use-managed-identity). </param>
         /// <param name="delegatedResources"> The delegated identity resources assigned to this managed cluster. This can only be set by another Azure Resource Provider, and managed cluster only accept one delegated identity resource. Internal use only. </param>
         /// <param name="userAssignedIdentities"> The user identity associated with the managed cluster. This identity will be used in control plane. Only one user assigned identity is allowed. The keys must be ARM resource IDs in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
         /// <returns> A new <see cref="Models.ManagedClusterIdentity"/> instance for mocking. </returns>
-        public static ManagedClusterIdentity ManagedClusterIdentity(Guid? principalId = default, Guid? tenantId = default, ManagedServiceIdentityType? resourceIdentityType = default, IDictionary<string, ManagedClusterDelegatedIdentity> delegatedResources = default, IDictionary<ResourceIdentifier, UserAssignedIdentity> userAssignedIdentities = default)
+        public static ManagedClusterIdentity ManagedClusterIdentity(Guid? principalId = default, Guid? tenantId = default, ManagedServiceIdentityType? identityType = default, IDictionary<string, ManagedClusterDelegatedIdentity> delegatedResources = default, IDictionary<ResourceIdentifier, UserAssignedIdentity> userAssignedIdentities = default)
         {
             delegatedResources ??= new ChangeTrackingDictionary<string, ManagedClusterDelegatedIdentity>();
             userAssignedIdentities ??= new ChangeTrackingDictionary<ResourceIdentifier, UserAssignedIdentity>();
@@ -1010,7 +983,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new ManagedClusterIdentity(
                 principalId,
                 tenantId,
-                resourceIdentityType,
+                identityType,
                 delegatedResources,
                 userAssignedIdentities,
                 additionalBinaryDataProperties: null);

@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(ResourceIdentityType))
+            if (Optional.IsDefined(IdentityType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceIdentityType.Value.ToString());
+                writer.WriteStringValue(IdentityType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(DelegatedResources))
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             Guid? principalId = default;
             Guid? tenantId = default;
-            ManagedServiceIdentityType? resourceIdentityType = default;
+            ManagedServiceIdentityType? identityType = default;
             IDictionary<string, ManagedClusterDelegatedIdentity> delegatedResources = default;
             IDictionary<ResourceIdentifier, UserAssignedIdentity> userAssignedIdentities = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    resourceIdentityType = new ManagedServiceIdentityType(prop.Value.GetString());
+                    identityType = new ManagedServiceIdentityType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("delegatedResources"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new ManagedClusterIdentity(
                 principalId,
                 tenantId,
-                resourceIdentityType,
+                identityType,
                 delegatedResources ?? new ChangeTrackingDictionary<string, ManagedClusterDelegatedIdentity>(),
                 userAssignedIdentities ?? new ChangeTrackingDictionary<ResourceIdentifier, UserAssignedIdentity>(),
                 additionalBinaryDataProperties);

@@ -128,10 +128,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <description>ManagedClusters_UpdateTags</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
         /// </item>
@@ -223,10 +219,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_UpdateTags</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

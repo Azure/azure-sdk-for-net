@@ -48,5 +48,10 @@ namespace Azure.ResourceManager.ContainerService
         {
             get => VirtualMachinesScale is null ? default : VirtualMachinesScale.Manual;
         }
+
+        /// <summary> The type of Agent Pool. </summary>
+        [WirePath("properties.type")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public AgentPoolType? TypePropertiesType { get => AgentPoolType; set => AgentPoolType = value; }
     }
 }

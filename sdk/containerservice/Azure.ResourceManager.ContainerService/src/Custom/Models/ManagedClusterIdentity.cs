@@ -6,6 +6,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
@@ -18,6 +19,11 @@ namespace Azure.ResourceManager.ContainerService.Models
     [CodeGenSerialization(nameof(UserAssignedIdentities),DeserializationValueHook = nameof(DeserializeUserAssignedIdentities))]
     public partial class ManagedClusterIdentity
     {
+        /// <summary> The type of identity used for the managed cluster. For more information see [use managed identities in AKS](https://docs.microsoft.com/azure/aks/use-managed-identity). </summary>
+        [WirePath("type")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ManagedServiceIdentityType ResourceIdentityType { get => IdentityType.Value; set => IdentityType = value; }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static void DeserializeUserAssignedIdentities(JsonProperty property, ref IDictionary<Core.ResourceIdentifier, UserAssignedIdentity> UserAssignedIdentities)
         {

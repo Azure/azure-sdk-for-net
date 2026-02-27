@@ -29,15 +29,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of <see cref="ManagedClusterIdentity"/>. </summary>
         /// <param name="principalId"> The principal id of the system assigned identity which is used by master components. </param>
         /// <param name="tenantId"> The tenant id of the system assigned identity which is used by master components. </param>
-        /// <param name="resourceIdentityType"> The type of identity used for the managed cluster. For more information see [use managed identities in AKS](https://docs.microsoft.com/azure/aks/use-managed-identity). </param>
+        /// <param name="identityType"> The type of identity used for the managed cluster. For more information see [use managed identities in AKS](https://docs.microsoft.com/azure/aks/use-managed-identity). </param>
         /// <param name="delegatedResources"> The delegated identity resources assigned to this managed cluster. This can only be set by another Azure Resource Provider, and managed cluster only accept one delegated identity resource. Internal use only. </param>
         /// <param name="userAssignedIdentities"> The user identity associated with the managed cluster. This identity will be used in control plane. Only one user assigned identity is allowed. The keys must be ARM resource IDs in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterIdentity(Guid? principalId, Guid? tenantId, ManagedServiceIdentityType? resourceIdentityType, IDictionary<string, ManagedClusterDelegatedIdentity> delegatedResources, IDictionary<ResourceIdentifier, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterIdentity(Guid? principalId, Guid? tenantId, ManagedServiceIdentityType? identityType, IDictionary<string, ManagedClusterDelegatedIdentity> delegatedResources, IDictionary<ResourceIdentifier, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrincipalId = principalId;
             TenantId = tenantId;
-            ResourceIdentityType = resourceIdentityType;
+            IdentityType = identityType;
             DelegatedResources = delegatedResources;
             UserAssignedIdentities = userAssignedIdentities;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The type of identity used for the managed cluster. For more information see [use managed identities in AKS](https://docs.microsoft.com/azure/aks/use-managed-identity). </summary>
         [WirePath("type")]
-        public ManagedServiceIdentityType? ResourceIdentityType { get; set; }
+        public ManagedServiceIdentityType? IdentityType { get; set; }
 
         /// <summary> The delegated identity resources assigned to this managed cluster. This can only be set by another Azure Resource Provider, and managed cluster only accept one delegated identity resource. Internal use only. </summary>
         [WirePath("delegatedResources")]

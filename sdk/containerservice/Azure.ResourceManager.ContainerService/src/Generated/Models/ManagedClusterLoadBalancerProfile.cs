@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="backendPoolType"> The type of the managed inbound Load Balancer BackendPool. </param>
         /// <param name="clusterServiceLoadBalancerHealthProbeMode"> The health probing behavior for External Traffic Policy Cluster services. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterLoadBalancerProfile(ManagedClusterLoadBalancerProfileManagedOutboundIPs managedOutboundIPs, ManagedClusterLoadBalancerProfileOutboundIPPrefixes outboundIPPrefixes, ManagedClusterLoadBalancerProfileOutboundIPs outboundIPs, IReadOnlyList<WritableSubResource> effectiveOutboundIPs, int? allocatedOutboundPorts, int? idleTimeoutInMinutes, bool? enableMultipleStandardLoadBalancers, ManagedClusterLoadBalancerBackendPoolType? backendPoolType, ClusterServiceLoadBalancerHealthProbeMode? clusterServiceLoadBalancerHealthProbeMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterLoadBalancerProfile(ManagedClusterLoadBalancerProfileManagedOutboundIPs managedOutboundIPs, ManagedClusterLoadBalancerProfileOutboundIPPrefixes outboundIPPrefixes, ManagedClusterLoadBalancerProfileOutboundIPs outboundIPs, IList<WritableSubResource> effectiveOutboundIPs, int? allocatedOutboundPorts, int? idleTimeoutInMinutes, bool? enableMultipleStandardLoadBalancers, ManagedClusterLoadBalancerBackendPoolType? backendPoolType, ClusterServiceLoadBalancerHealthProbeMode? clusterServiceLoadBalancerHealthProbeMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ManagedOutboundIPs = managedOutboundIPs;
             OutboundIPPrefixes = outboundIPPrefixes;
@@ -60,10 +60,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Desired outbound IP resources for the cluster load balancer. </summary>
         [WirePath("outboundIPs")]
         internal ManagedClusterLoadBalancerProfileOutboundIPs OutboundIPs { get; set; }
-
-        /// <summary> The effective outbound IP resources of the cluster load balancer. </summary>
-        [WirePath("effectiveOutboundIPs")]
-        public IReadOnlyList<WritableSubResource> EffectiveOutboundIPs { get; }
 
         /// <summary> The desired number of allocated SNAT ports per VM. Allowed values are in the range of 0 to 64000 (inclusive). The default value is 0 which results in Azure dynamically allocating ports. </summary>
         [WirePath("allocatedOutboundPorts")]
