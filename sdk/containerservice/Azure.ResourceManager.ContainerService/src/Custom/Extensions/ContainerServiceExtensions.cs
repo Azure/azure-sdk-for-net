@@ -4,9 +4,9 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.ContainerService.Mocking;
 using Azure.ResourceManager.ContainerService.Models;
@@ -69,7 +69,9 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static async Task<Response<KubernetesVersionListResult>> GetKubernetesVersionsManagedClusterAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
-            => await GetKubernetesVersionsAsync(subscriptionResource, location, cancellationToken).ConfigureAwait(false);
+        {
+            return await GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetKubernetesVersionsManagedClusterAsync(location, cancellationToken).ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Contains extra metadata on the version, including supported patch versions, capabilities, available upgrades, and details on preview status of the version
@@ -90,6 +92,8 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Response<KubernetesVersionListResult> GetKubernetesVersionsManagedCluster(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
-            => GetKubernetesVersions(subscriptionResource, location, cancellationToken);
+        {
+            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetKubernetesVersionsManagedCluster(location, cancellationToken);
+        }
     }
 }

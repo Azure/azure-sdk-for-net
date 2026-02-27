@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -37,6 +38,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<KubernetesVersionListResult>> GetKubernetesVersionsManagedClusterAsync(AzureLocation location, CancellationToken cancellationToken = default)
             => await GetKubernetesVersionsAsync(location, cancellationToken).ConfigureAwait(false);
 
@@ -55,6 +57,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<KubernetesVersionListResult> GetKubernetesVersionsManagedCluster(AzureLocation location, CancellationToken cancellationToken = default)
             => GetKubernetesVersions(location, cancellationToken);
     }
