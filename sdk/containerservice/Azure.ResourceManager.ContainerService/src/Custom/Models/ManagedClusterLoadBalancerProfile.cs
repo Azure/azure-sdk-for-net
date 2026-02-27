@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerService.Models
     [CodeGenSerialization(nameof(EffectiveOutboundIPs), DeserializationValueHook = nameof(DeserializeEffectiveOutboundIPs))]
     public partial class ManagedClusterLoadBalancerProfile
     {
-        /// <summary> The effective outbound IP resources of the cluster NAT gateway. </summary>
+        /// <summary> The effective outbound IP resources of the cluster load balancer. </summary>
         [WirePath("effectiveOutboundIPs")]
         public IList<WritableSubResource> EffectiveOutboundIPs { get; }
 
