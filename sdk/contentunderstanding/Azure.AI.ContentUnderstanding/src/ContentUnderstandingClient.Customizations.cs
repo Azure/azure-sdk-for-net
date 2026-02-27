@@ -42,6 +42,7 @@ namespace Azure.AI.ContentUnderstanding
         //     so that the operation ID is accessible via the Id property.
         private const string DefaultStringEncoding = "utf16";
         private const string DefaultContentType = "application/octet-stream";
+        private static readonly TimeSpan DefaultLroPollingInterval = TimeSpan.FromSeconds(3);
 
         #region Convenience Methods
 
@@ -184,9 +185,9 @@ namespace Azure.AI.ContentUnderstanding
                 // Now honor the caller's original waitUntil preference.
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    // CUSTOMIZATION: SDK-CUSTOMIZATION: Default polling interval to 3 seconds for
-                    // Content Understanding operations (generated code defaults to 1 second).
-                    await operationWithId.WaitForCompletionAsync(TimeSpan.FromSeconds(3), context?.CancellationToken ?? default).ConfigureAwait(false);
+                    // CUSTOMIZATION: Use a longer polling interval than the generated default (1 second)
+                    // when waiting for completion in these protocol wrappers.
+                    await operationWithId.WaitForCompletionAsync(DefaultLroPollingInterval, context?.CancellationToken ?? default).ConfigureAwait(false);
                 }
 
                 return operationWithId;
@@ -233,9 +234,9 @@ namespace Azure.AI.ContentUnderstanding
                 // Now honor the caller's original waitUntil preference.
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    // CUSTOMIZATION: SDK-CUSTOMIZATION: Default polling interval to 3 seconds for
-                    // Content Understanding operations (generated code defaults to 1 second).
-                    operationWithId.WaitForCompletion(TimeSpan.FromSeconds(3), context?.CancellationToken ?? default);
+                    // CUSTOMIZATION: Use a longer polling interval than the generated default (1 second)
+                    // when waiting for completion in these protocol wrappers.
+                    operationWithId.WaitForCompletion(DefaultLroPollingInterval, context?.CancellationToken ?? default);
                 }
 
                 return operationWithId;
@@ -284,9 +285,9 @@ namespace Azure.AI.ContentUnderstanding
                 // Now honor the caller's original waitUntil preference.
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    // CUSTOMIZATION: SDK-CUSTOMIZATION: Default polling interval to 3 seconds for
-                    // Content Understanding operations (generated code defaults to 1 second).
-                    await operationWithId.WaitForCompletionAsync(TimeSpan.FromSeconds(3), context?.CancellationToken ?? default).ConfigureAwait(false);
+                    // CUSTOMIZATION: Use a longer polling interval than the generated default (1 second)
+                    // when waiting for completion in these protocol wrappers.
+                    await operationWithId.WaitForCompletionAsync(DefaultLroPollingInterval, context?.CancellationToken ?? default).ConfigureAwait(false);
                 }
 
                 return operationWithId;
@@ -335,9 +336,9 @@ namespace Azure.AI.ContentUnderstanding
                 // Now honor the caller's original waitUntil preference.
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    // CUSTOMIZATION: SDK-CUSTOMIZATION: Default polling interval to 3 seconds for
-                    // Content Understanding operations (generated code defaults to 1 second).
-                    operationWithId.WaitForCompletion(TimeSpan.FromSeconds(3), context?.CancellationToken ?? default);
+                    // CUSTOMIZATION: Use a longer polling interval than the generated default (1 second)
+                    // when waiting for completion in these protocol wrappers.
+                    operationWithId.WaitForCompletion(DefaultLroPollingInterval, context?.CancellationToken ?? default);
                 }
 
                 return operationWithId;
