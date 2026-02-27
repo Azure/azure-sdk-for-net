@@ -1,8 +1,10 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.1.0-beta.2 (2026-02-27)
 
 ### Features Added
+
+- Upgraded dependency on `Azure.ResourceManager.Search` to version 1.3.0.
 
 ### Breaking Changes
 
