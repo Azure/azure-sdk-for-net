@@ -14,7 +14,7 @@
 
 ### Features Added
 
-- Added experimental `Microsoft.Extensions.Configuration` and `Microsoft.Extensions.DependencyInjection` integration for Azure SDK clients. For details, see the [Configuration and Dependency Injection](https://github.com/Azure/azure-sdk-for-net/blob/release/Azure.Identity_1.18.0/sdk/core/Azure.Core/src/docs/ConfigurationAndDependencyInjection.md) documentation.
+- Added experimental `Microsoft.Extensions.Configuration` and `Microsoft.Extensions.DependencyInjection` integration for Azure SDK clients. For details, see the [Configuration and Dependency Injection](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/src/docs/ConfigurationAndDependencyInjection.md) documentation.
 
 - The `WorkloadIdentityCredentialOptions.IsAzureProxyEnabled` property, which enables Azure Kubernetes token proxy mode, is only available in beta releases of this package.
 

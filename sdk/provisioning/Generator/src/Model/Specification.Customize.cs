@@ -118,10 +118,11 @@ public abstract partial class Specification : ModelBase
     public void IncludeVersions<T>(params string[] apiVersions)
     {
         Resource resource = GetResource<T>();
+        resource.ResourceVersions ??= [];
         for (int i = apiVersions.Length - 1; i >= 0; i--)
         {
-            if (resource.ResourceVersions!.Contains(apiVersions[i])) { continue; }
-            resource.ResourceVersions!.Insert(0, apiVersions[i]);
+            if (resource.ResourceVersions.Contains(apiVersions[i])) { continue; }
+            resource.ResourceVersions.Insert(0, apiVersions[i]);
         }
     }
 
