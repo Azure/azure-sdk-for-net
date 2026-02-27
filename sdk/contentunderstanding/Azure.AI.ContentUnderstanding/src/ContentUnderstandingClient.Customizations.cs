@@ -184,7 +184,9 @@ namespace Azure.AI.ContentUnderstanding
                 // Now honor the caller's original waitUntil preference.
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    await operationWithId.WaitForCompletionAsync(context?.CancellationToken ?? default).ConfigureAwait(false);
+                    // CUSTOMIZATION: SDK-CUSTOMIZATION: Default polling interval to 3 seconds for
+                    // Content Understanding operations (generated code defaults to 1 second).
+                    await operationWithId.WaitForCompletionAsync(TimeSpan.FromSeconds(3), context?.CancellationToken ?? default).ConfigureAwait(false);
                 }
 
                 return operationWithId;
@@ -231,7 +233,9 @@ namespace Azure.AI.ContentUnderstanding
                 // Now honor the caller's original waitUntil preference.
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    operationWithId.WaitForCompletion(context?.CancellationToken ?? default);
+                    // CUSTOMIZATION: SDK-CUSTOMIZATION: Default polling interval to 3 seconds for
+                    // Content Understanding operations (generated code defaults to 1 second).
+                    operationWithId.WaitForCompletion(TimeSpan.FromSeconds(3), context?.CancellationToken ?? default);
                 }
 
                 return operationWithId;
@@ -280,7 +284,9 @@ namespace Azure.AI.ContentUnderstanding
                 // Now honor the caller's original waitUntil preference.
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    await operationWithId.WaitForCompletionAsync(context?.CancellationToken ?? default).ConfigureAwait(false);
+                    // CUSTOMIZATION: SDK-CUSTOMIZATION: Default polling interval to 3 seconds for
+                    // Content Understanding operations (generated code defaults to 1 second).
+                    await operationWithId.WaitForCompletionAsync(TimeSpan.FromSeconds(3), context?.CancellationToken ?? default).ConfigureAwait(false);
                 }
 
                 return operationWithId;
@@ -329,7 +335,9 @@ namespace Azure.AI.ContentUnderstanding
                 // Now honor the caller's original waitUntil preference.
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    operationWithId.WaitForCompletion(context?.CancellationToken ?? default);
+                    // CUSTOMIZATION: SDK-CUSTOMIZATION: Default polling interval to 3 seconds for
+                    // Content Understanding operations (generated code defaults to 1 second).
+                    operationWithId.WaitForCompletion(TimeSpan.FromSeconds(3), context?.CancellationToken ?? default);
                 }
 
                 return operationWithId;
