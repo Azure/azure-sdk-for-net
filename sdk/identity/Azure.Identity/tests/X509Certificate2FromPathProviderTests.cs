@@ -44,7 +44,7 @@ namespace Azure.Identity.Tests
             using X509Store store = new(StoreName.My, StoreLocation.CurrentUser);
             store.Open(OpenFlags.ReadWrite);
 
-            using X509Certificate2 cert = new CertificateRequest($"SN=X509Certificate2FromPathProviderTests-ValidateCertPathLoad-{Guid.NewGuid()}", RSA.Create(2048), HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1)
+            using X509Certificate2 cert = new CertificateRequest($"CN=X509Certificate2FromPathProviderTests-ValidateCertPathLoad-{Guid.NewGuid()}", RSA.Create(2048), HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1)
                 .CreateSelfSigned(DateTimeOffset.UnixEpoch, DateTimeOffset.UnixEpoch);
 
             Assert.IsNotEmpty(cert.Thumbprint, "created test certificate should have thumbprint");
