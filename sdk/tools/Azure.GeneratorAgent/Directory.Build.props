@@ -1,9 +1,6 @@
 <Project>
   <PropertyGroup>
-    <!-- Azure.GeneratorAgent is a CLI tool, not a code generator library.
-         Override auto-detection that matches the Azure.Generator* naming pattern. -->
-    <IsGeneratorLibrary>false</IsGeneratorLibrary>
-    <IsGeneratorLibraryGenerationTest>false</IsGeneratorLibraryGenerationTest>
+    <IsToolProject>true</IsToolProject>
   </PropertyGroup>
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
 </Project>
