@@ -84,12 +84,19 @@ runs:
   using: 'composite'
   steps:
     - shell: pwsh
+      env:
+        INPUT_TOKEN_OWNERS: ${{ inputs.token-owners }}
+        INPUT_VARIABLE_NAME_PREFIX: ${{ inputs.variable-name-prefix }}
+        INPUT_KEY_VAULT_NAME: ${{ inputs.key-vault-name }}
+        INPUT_KEY_NAME: ${{ inputs.key-name }}
+        INPUT_APP_ID: ${{ inputs.app-id }}
+        ACTION_PATH: ${{ github.action_path }}
       run: |
-        $scriptPath = Join-Path "${{ github.action_path }}" ".." ".." "scripts" "login-to-github.ps1"
-        $owners = '${{ inputs.token-owners }}' -split ',' | ForEach-Object { $_.Trim() }
+        $scriptPath = Join-Path $env:ACTION_PATH ".." ".." "scripts" "login-to-github.ps1"
+        $owners = $env:INPUT_TOKEN_OWNERS -split ',' | ForEach-Object { $_.Trim() }
         & $scriptPath `
-          -KeyVaultName '${{ inputs.key-vault-name }}' `
-          -KeyName '${{ inputs.key-name }}' `
-          -GitHubAppId '${{ inputs.app-id }}' `
+          -KeyVaultName $env:INPUT_KEY_VAULT_NAME `
+          -KeyName $env:INPUT_KEY_NAME `
+          -GitHubAppId $env:INPUT_APP_ID `
           -InstallationTokenOwners $owners `
-          -VariableNamePrefix '${{ inputs.variable-name-prefix }}'
+          -VariableNamePrefix $env:INPUT_VARIABLE_NAME_PREFIX
