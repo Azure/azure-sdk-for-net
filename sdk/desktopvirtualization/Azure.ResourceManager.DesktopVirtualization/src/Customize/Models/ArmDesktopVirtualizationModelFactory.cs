@@ -64,7 +64,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VirtualApplicationData VirtualApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string objectId, string description, string friendlyName, string filePath, string msixPackageFamilyName, string msixPackageApplicationId, RemoteApplicationType? applicationType, VirtualApplicationCommandLineSetting commandLineSetting, string commandLineArguments, bool? showInPortal, string iconPath, int? iconIndex, string iconHash, BinaryData iconContent)
         {
-            return VirtualApplicationData(id, name, resourceType, systemData, objectId, description, friendlyName, filePath, msixPackageFamilyName, msixPackageApplicationId, applicationType, (VirtualApplicationCommandLineSetting?)commandLineSetting, commandLineArguments, showInPortal, iconPath, iconIndex, iconHash, iconContent);
+            var properties = new ApplicationProperties(objectId, description, friendlyName, filePath, msixPackageFamilyName, msixPackageApplicationId, applicationType, commandLineSetting, commandLineArguments, showInPortal, iconPath, iconIndex, iconHash, iconContent, additionalBinaryDataProperties: null);
+            return new VirtualApplicationData(id, name, resourceType, systemData, additionalBinaryDataProperties: null, properties);
         }
     }
 }

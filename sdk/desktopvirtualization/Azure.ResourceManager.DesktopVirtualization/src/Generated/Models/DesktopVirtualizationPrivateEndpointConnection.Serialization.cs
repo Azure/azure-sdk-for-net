@@ -59,6 +59,18 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DesktopVirtualizationPrivateEndpointConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+        /// <param name="desktopVirtualizationPrivateEndpointConnection"> The <see cref="DesktopVirtualizationPrivateEndpointConnection"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DesktopVirtualizationPrivateEndpointConnection desktopVirtualizationPrivateEndpointConnection)
+        {
+            if (desktopVirtualizationPrivateEndpointConnection == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(desktopVirtualizationPrivateEndpointConnection, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DesktopVirtualizationPrivateEndpointConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
