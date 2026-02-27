@@ -5,9 +5,7 @@
 ### Features Added
 
 - Initial release of `Microsoft.Extensions.Configuration.KeyVault`.
-- Added `KeyVaultConfigurationSource` implementing `IConfigurationSource`.
-- Added `KeyVaultConfigurationProvider` implementing `ConfigurationProvider`.
-- Added `AddAzureKeyVault` extension methods for `IConfigurationBuilder`.
+- Added `AddKeyVaultSecrets` extension methods for `IConfigurationBuilder`.
 
 ### Breaking Changes
 
