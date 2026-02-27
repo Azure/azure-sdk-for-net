@@ -19,8 +19,7 @@ Management-plane SDK code is generated from TypeSpec definitions in `azure-rest-
 
 - **`@@clientName(TypeSpecName, "CSharpName", "csharp")`** — renames a TypeSpec model/union/enum/property to a different name in the generated C# SDK. This is the primary tool for resolving naming comments.
 - **`@@clientName` only works on named types** — models, unions, enums, and interfaces. If a type is defined as an `alias`, `@@clientName` cannot target it. See "Handling Unsupported Cases" below.
-- **Swagger regeneration** — if you modify anything in the TypeSpec beyond `client.tsp` or `tspconfig.yaml`, you must run `tsp compile .` to regenerate the swagger file, otherwise spec CI will fail.
-- **Do NOT modify model `.tsp` files** — all changes should be made exclusively in `client.tsp` (or `tspconfig.yaml`). If resolving a comment would require modifying any other `.tsp` file, **stop immediately and inform the user** instead of making the change.
+- **Only `client.tsp` and `tspconfig.yaml` may be changed** — do not modify any other `.tsp` files. If resolving a comment would require changes to other `.tsp` files, skip that change and inform the user with the reason after processing all other comments. Since only `client.tsp` is modified, swagger regeneration is never needed.
 
 ## Types of Review Comments
 
@@ -53,11 +52,11 @@ Properties can also be renamed using `@@clientName` on the model's property:
 Some review comments ask for property types to be changed (e.g., `string` → `ResourceIdentifier`, `string` → `TimeSpan`). Use the `@@alternateType` decorator in `client.tsp` to change the generated C# type:
 
 ```typespec
-@@alternateType(MyModel.myProperty, ResourceIdentifier, "csharp");
+@@alternateType(MyModel.myProperty, armResourceIdentifier, "csharp");
 @@alternateType(MyModel.durationProperty, duration, "csharp");
 ```
 
-This changes the property's type in the generated C# SDK without modifying the model `.tsp` file. If `@@alternateType` cannot handle the requested type change, **stop and ask the user** for guidance.
+This changes the property's type in the generated C# SDK without modifying other `.tsp` files. If `@@alternateType` cannot handle the requested type change, skip the change and inform the user with the reason after processing all other comments.
 
 ## Workflow
 
@@ -81,30 +80,26 @@ If a comment is ambiguous about what the new name should be, **ask the user** be
    - `commit`: the spec repo commit SHA
    - `repo`: the spec repo (e.g., `Azure/azure-rest-api-specs`)
 
-3. Locate the corresponding spec files. The spec repo may be:
-   - A local clone (typically at `../azure-rest-api-specs` relative to the SDK repo)
-   - Or fetched from GitHub using the commit SHA
-
-4. Key spec files:
-   - `client.tsp` — where `@@clientName` decorators go
-   - `main.tsp` / `<service>.tsp` — where models, unions, and aliases are defined
+3. Key spec files:
+   - `client.tsp` — where `@@clientName` and `@@alternateType` decorators go (this is the only `.tsp` file you should modify)
+   - Other `.tsp` files — read-only reference for understanding models, unions, and aliases
 
 ### Step 3: Apply Changes in the Spec Repo
 
-Add `@@clientName` decorators to `client.tsp`:
+Locate the spec repo. It may be:
+- A local clone (typically at `../azure-rest-api-specs` relative to the SDK repo)
+- If not available locally, clone it or ask the user for the path
+
+If there is an existing spec PR branch, check it out. If there is no spec PR or branch yet, create a new branch from the commit referenced in `tsp-location.yaml`.
+
+Add `@@clientName` decorators to `client.tsp`. Read the existing `client.tsp` to find the correct `using` statement for the service namespace (e.g., `using Microsoft.ManagedOps;`, `using Azure.ResourceManager.Compute;`, etc.), then add decorators targeting the types to rename:
 
 ```typespec
-import "./main.tsp";
-import "@azure-tools/typespec-client-generator-core";
-
-using Azure.ClientGenerator.Core;
-using Microsoft.<ServiceNamespace>;
-
 @@clientName(GenericTypeName, "MoreDescriptiveTypeName", "csharp");
 @@clientName(MyModel.genericProperty, "moreDescriptiveProperty", "csharp");
 ```
 
-Make sure to add `using Microsoft.<ServiceNamespace>;` if not already present, so that the type names resolve correctly.
+Make sure the `using` statement for the service namespace is present so that type names resolve correctly. Check the `namespace` declaration in `main.tsp` or other `.tsp` files to find the correct namespace.
 
 ### Step 4: Commit and Push Spec Changes
 
@@ -130,12 +125,8 @@ dotnet build /t:GenerateCode
 ### Step 7: Build and Verify
 
 ```powershell
-# Build the SDK library
-cd sdk/<service>/Azure.ResourceManager.<Service>/src
-dotnet build
-
-# Build tests to catch any references to old type/property names
-cd sdk/<service>/Azure.ResourceManager.<Service>/tests
+# Build the library and tests (mgmt libraries always have a solution file)
+cd sdk/<service>/Azure.ResourceManager.<Service>
 dotnet build
 
 # Export API listing
@@ -156,16 +147,16 @@ Check the API surface file (`api/*.cs`) to confirm the review comments have been
 
 ## Handling Unsupported Cases
 
-Some changes cannot be done purely through `@@clientName` or `@@alternateType` in `client.tsp`. When you encounter any of the following, **stop and ask the user** for guidance:
+Some changes cannot be done purely through `@@clientName` or `@@alternateType` in `client.tsp`. When you encounter any of the following, **skip the change** and continue processing other comments. After all processable changes are done, inform the user about the skipped changes with the reason, and let them choose how to proceed:
 
-- **Aliases** — `@@clientName` cannot target TypeSpec aliases (e.g., `alias foo = "A" | "B" | string;`). Explain to the user that the alias needs to be converted to a named type (e.g., `union`) in the model `.tsp` file, and let them decide how to proceed.
-- **Changes requiring model `.tsp` modifications** — any change that cannot be expressed via `client.tsp` decorators alone (e.g., structural changes, flattening/unflattening models, adding/removing properties, or changing inheritance) requires modifying model `.tsp` files. Do not make these changes yourself; inform the user.
+- **Aliases** — `@@clientName` cannot target TypeSpec aliases (e.g., `alias foo = "A" | "B" | string;`). Explain to the user that the alias needs to be converted to a named type (e.g., `union`) in the spec `.tsp` file first.
+- **Changes requiring other `.tsp` file modifications** — any change that cannot be expressed via `client.tsp` decorators alone (e.g., structural changes, flattening/unflattening models, adding/removing properties, or changing inheritance). Only `client.tsp` and `tspconfig.yaml` may be modified.
 - **Ambiguous naming** — if a review comment says "rename this" but doesn't specify the new name, ask the user what name they prefer.
 
 ## Common Pitfalls
 
-1. **Forgetting `using Microsoft.<Namespace>;`** in `client.tsp` — the type names won't resolve and `@@clientName` will silently fail.
-2. **Modifying model `.tsp` files** — only `client.tsp` and `tspconfig.yaml` should be modified. If model `.tsp` changes are needed, stop and inform the user.
+1. **Missing `using` statement** in `client.tsp` — the type names won't resolve and `@@clientName` will silently fail. Check the `namespace` declaration in the spec's `.tsp` files to find the correct namespace.
+2. **Modifying files other than `client.tsp`/`tspconfig.yaml`** — only these two files should be modified. If other `.tsp` changes are needed, skip and inform the user.
 3. **Stale commit SHA** — always update `tsp-location.yaml` to point to the pushed spec commit before regenerating.
 4. **Test files** — after renaming types, test and sample files may still reference old names and need manual updates.
-5. **Not building tests** — always build the test project too, not just the library, to catch stale references.
+5. **Not building tests** — always build the solution (which includes tests), not just the library, to catch stale references.
