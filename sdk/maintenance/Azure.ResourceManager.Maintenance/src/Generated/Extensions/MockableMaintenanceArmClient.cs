@@ -30,24 +30,6 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="MaintenanceConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MaintenanceConfigurationResource"/> object. </returns>
-        public virtual MaintenanceConfigurationResource GetMaintenanceConfigurationResource(ResourceIdentifier id)
-        {
-            MaintenanceConfigurationResource.ValidateResourceId(id);
-            return new MaintenanceConfigurationResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="MaintenanceConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MaintenanceConfigurationResource"/> object. </returns>
-        public virtual MaintenanceConfigurationResource GetMaintenanceConfigurationResource(ResourceIdentifier id)
-        {
-            MaintenanceConfigurationResource.ValidateResourceId(id);
-            return new MaintenanceConfigurationResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="ConfigurationAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ConfigurationAssignmentResource"/> object. </returns>
@@ -67,32 +49,30 @@ namespace Azure.ResourceManager.Maintenance.Mocking
 
         /// <summary> Get configuration assignment for resource. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="configurationAssignmentName"> The name of the ConfigurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ConfigurationAssignmentResource> GetConfigurationAssignment(ResourceIdentifier scope, Guid subscriptionId, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual Response<ConfigurationAssignmentResource> GetConfigurationAssignment(ResourceIdentifier scope, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
-            return GetConfigurationAssignments(scope).Get(subscriptionId, configurationAssignmentName, cancellationToken);
+            return GetConfigurationAssignments(scope).Get(configurationAssignmentName, cancellationToken);
         }
 
         /// <summary> Get configuration assignment for resource. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="configurationAssignmentName"> The name of the ConfigurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ConfigurationAssignmentResource>> GetConfigurationAssignmentAsync(ResourceIdentifier scope, Guid subscriptionId, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfigurationAssignmentResource>> GetConfigurationAssignmentAsync(ResourceIdentifier scope, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
-            return await GetConfigurationAssignments(scope).GetAsync(subscriptionId, configurationAssignmentName, cancellationToken).ConfigureAwait(false);
+            return await GetConfigurationAssignments(scope).GetAsync(configurationAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an object representing a <see cref="ApplyUpdateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -114,56 +94,30 @@ namespace Azure.ResourceManager.Maintenance.Mocking
 
         /// <summary> Track maintenance updates to resource with parent. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceParentType"> Resource parent type. </param>
-        /// <param name="resourceParentName"> Resource parent name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource name. </param>
         /// <param name="applyUpdateName"> The name of the ApplyUpdate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applyUpdateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ApplyUpdateResource> GetApplyUpdate(ResourceIdentifier scope, Guid subscriptionId, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string applyUpdateName, CancellationToken cancellationToken = default)
+        public virtual Response<ApplyUpdateResource> GetApplyUpdate(ResourceIdentifier scope, string applyUpdateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceParentType, nameof(resourceParentType));
-            Argument.AssertNotNullOrEmpty(resourceParentName, nameof(resourceParentName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
 
-            return GetApplyUpdates(scope).Get(subscriptionId, resourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, applyUpdateName, cancellationToken);
+            return GetApplyUpdates(scope).Get(applyUpdateName, cancellationToken);
         }
 
         /// <summary> Track maintenance updates to resource with parent. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceParentType"> Resource parent type. </param>
-        /// <param name="resourceParentName"> Resource parent name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource name. </param>
         /// <param name="applyUpdateName"> The name of the ApplyUpdate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applyUpdateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApplyUpdateResource>> GetApplyUpdateAsync(ResourceIdentifier scope, Guid subscriptionId, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string applyUpdateName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplyUpdateResource>> GetApplyUpdateAsync(ResourceIdentifier scope, string applyUpdateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceParentType, nameof(resourceParentType));
-            Argument.AssertNotNullOrEmpty(resourceParentName, nameof(resourceParentName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
 
-            return await GetApplyUpdates(scope).GetAsync(subscriptionId, resourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, applyUpdateName, cancellationToken).ConfigureAwait(false);
+            return await GetApplyUpdates(scope).GetAsync(applyUpdateName, cancellationToken).ConfigureAwait(false);
         }
     }
 }

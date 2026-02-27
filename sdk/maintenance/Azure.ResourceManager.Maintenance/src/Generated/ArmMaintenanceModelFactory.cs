@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <param name="status"> The status. </param>
         /// <param name="resourceId"> The resourceId. </param>
         /// <param name="lastUpdatedOn"> Last Update time. </param>
-        /// <returns> A new <see cref="Maintenance.MaintenanceApplyUpdateData"/> instance for mocking. </returns>
-        public static MaintenanceApplyUpdateData MaintenanceApplyUpdateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, UpdateStatus? status = default, ResourceIdentifier resourceId = default, DateTimeOffset? lastUpdatedOn = default)
+        /// <returns> A new <see cref="Maintenance.ApplyUpdateData"/> instance for mocking. </returns>
+        public static ApplyUpdateData ApplyUpdateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, UpdateStatus? status = default, ResourceIdentifier resourceId = default, DateTimeOffset? lastUpdatedOn = default)
         {
-            return new MaintenanceApplyUpdateData(
+            return new ApplyUpdateData(
                 id,
                 name,
                 resourceType,

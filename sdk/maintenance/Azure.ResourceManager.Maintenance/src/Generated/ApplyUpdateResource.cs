@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.Maintenance
     /// </summary>
     public partial class ApplyUpdateResource : ArmResource
     {
-        private readonly ClientDiagnostics _applyUpdatesClientDiagnostics;
-        private readonly ApplyUpdates _applyUpdatesRestClient;
-        private readonly MaintenanceApplyUpdateData _data;
+        private readonly ClientDiagnostics _maintenanceApplyUpdateClientDiagnostics;
+        private readonly MaintenanceApplyUpdate _maintenanceApplyUpdateRestClient;
+        private readonly ApplyUpdateData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Maintenance/applyUpdates";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <summary> Initializes a new instance of <see cref="ApplyUpdateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ApplyUpdateResource(ArmClient client, MaintenanceApplyUpdateData data) : this(client, data.Id)
+        internal ApplyUpdateResource(ArmClient client, ApplyUpdateData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Maintenance
         internal ApplyUpdateResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string applyUpdateApiVersion);
-            _applyUpdatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", ResourceType.Namespace, Diagnostics);
-            _applyUpdatesRestClient = new ApplyUpdates(_applyUpdatesClientDiagnostics, Pipeline, Endpoint, applyUpdateApiVersion ?? "2023-10-01-preview");
+            _maintenanceApplyUpdateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", ResourceType.Namespace, Diagnostics);
+            _maintenanceApplyUpdateRestClient = new MaintenanceApplyUpdate(_maintenanceApplyUpdateClientDiagnostics, Pipeline, Endpoint, applyUpdateApiVersion ?? "2023-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Maintenance
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual MaintenanceApplyUpdateData Data
+        public virtual ApplyUpdateData Data
         {
             get
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Maintenance
         {
             Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
 
-            using DiagnosticScope scope = _applyUpdatesClientDiagnostics.CreateScope("ApplyUpdateResource.Get");
+            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("ApplyUpdateResource.Get");
             scope.Start();
             try
             {
@@ -132,9 +132,9 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applyUpdatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.Name, Id.Parent.Parent.ResourceType.Type, applyUpdateName, context);
+                HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.Name, Id.Parent.Parent.ResourceType.Type, applyUpdateName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
+                Response<ApplyUpdateData> response = Response.FromValue(ApplyUpdateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Maintenance
         {
             Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
 
-            using DiagnosticScope scope = _applyUpdatesClientDiagnostics.CreateScope("ApplyUpdateResource.Get");
+            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("ApplyUpdateResource.Get");
             scope.Start();
             try
             {
@@ -185,9 +185,9 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applyUpdatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.Name, Id.Parent.Parent.ResourceType.Type, applyUpdateName, context);
+                HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.Name, Id.Parent.Parent.ResourceType.Type, applyUpdateName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
+                Response<ApplyUpdateData> response = Response.FromValue(ApplyUpdateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ApplyUpdateResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _applyUpdatesClientDiagnostics.CreateScope("ApplyUpdateResource.Get");
+            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("ApplyUpdateResource.Get");
             scope.Start();
             try
             {
@@ -233,9 +233,9 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applyUpdatesRestClient.CreateGetApplyUpdatesByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.Name, Id.Parent.Parent.ResourceType.Type, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, context);
+                HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetApplyUpdatesByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.Name, Id.Parent.Parent.ResourceType.Type, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
+                Response<ApplyUpdateData> response = Response.FromValue(ApplyUpdateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ApplyUpdateResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _applyUpdatesClientDiagnostics.CreateScope("ApplyUpdateResource.Get");
+            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("ApplyUpdateResource.Get");
             scope.Start();
             try
             {
@@ -281,9 +281,9 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applyUpdatesRestClient.CreateGetApplyUpdatesByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.Name, Id.Parent.Parent.ResourceType.Type, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, context);
+                HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetApplyUpdatesByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.Name, Id.Parent.Parent.ResourceType.Type, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
+                Response<ApplyUpdateData> response = Response.FromValue(ApplyUpdateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -324,12 +324,12 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applyUpdateName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ApplyUpdateResource>> UpdateAsync(WaitUntil waitUntil, string applyUpdateName, MaintenanceApplyUpdateData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ApplyUpdateResource>> UpdateAsync(WaitUntil waitUntil, string applyUpdateName, ApplyUpdateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _applyUpdatesClientDiagnostics.CreateScope("ApplyUpdateResource.Update");
+            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("ApplyUpdateResource.Update");
             scope.Start();
             try
             {
@@ -337,9 +337,9 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applyUpdatesRestClient.CreateCreateOrUpdateOrCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.Name, Id.Parent.Parent.ResourceType.Type, applyUpdateName, MaintenanceApplyUpdateData.ToRequestContent(data), context);
+                HttpMessage message = _maintenanceApplyUpdateRestClient.CreateCreateOrUpdateOrCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.Name, Id.Parent.Parent.ResourceType.Type, applyUpdateName, ApplyUpdateData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
+                Response<ApplyUpdateData> response = Response.FromValue(ApplyUpdateData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 MaintenanceArmOperation<ApplyUpdateResource> operation = new MaintenanceArmOperation<ApplyUpdateResource>(Response.FromValue(new ApplyUpdateResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -383,12 +383,12 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applyUpdateName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ApplyUpdateResource> Update(WaitUntil waitUntil, string applyUpdateName, MaintenanceApplyUpdateData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ApplyUpdateResource> Update(WaitUntil waitUntil, string applyUpdateName, ApplyUpdateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _applyUpdatesClientDiagnostics.CreateScope("ApplyUpdateResource.Update");
+            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("ApplyUpdateResource.Update");
             scope.Start();
             try
             {
@@ -396,9 +396,9 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applyUpdatesRestClient.CreateCreateOrUpdateOrCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.Name, Id.Parent.Parent.ResourceType.Type, applyUpdateName, MaintenanceApplyUpdateData.ToRequestContent(data), context);
+                HttpMessage message = _maintenanceApplyUpdateRestClient.CreateCreateOrUpdateOrCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.Name, Id.Parent.Parent.ResourceType.Type, applyUpdateName, ApplyUpdateData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
+                Response<ApplyUpdateData> response = Response.FromValue(ApplyUpdateData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 MaintenanceArmOperation<ApplyUpdateResource> operation = new MaintenanceArmOperation<ApplyUpdateResource>(Response.FromValue(new ApplyUpdateResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);

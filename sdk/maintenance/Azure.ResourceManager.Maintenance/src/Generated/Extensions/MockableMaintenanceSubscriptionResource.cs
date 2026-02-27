@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Maintenance.Mocking
     {
         private ClientDiagnostics _configurationAssignmentsWithinSubscriptionClientDiagnostics;
         private ConfigurationAssignmentsWithinSubscription _configurationAssignmentsWithinSubscriptionRestClient;
-        private ClientDiagnostics _applyUpdatesClientDiagnostics;
-        private ApplyUpdates _applyUpdatesRestClient;
+        private ClientDiagnostics _maintenanceApplyUpdateClientDiagnostics;
+        private MaintenanceApplyUpdate _maintenanceApplyUpdateRestClient;
         private ClientDiagnostics _scheduledEventClientDiagnostics;
         private ScheduledEvent _scheduledEventRestClient;
         private ClientDiagnostics _configurationAssignmentsClientDiagnostics;
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Maintenance.Mocking
 
         private ConfigurationAssignmentsWithinSubscription ConfigurationAssignmentsWithinSubscriptionRestClient => _configurationAssignmentsWithinSubscriptionRestClient ??= new ConfigurationAssignmentsWithinSubscription(ConfigurationAssignmentsWithinSubscriptionClientDiagnostics, Pipeline, Endpoint, "2023-10-01-preview");
 
-        private ClientDiagnostics ApplyUpdatesClientDiagnostics => _applyUpdatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics MaintenanceApplyUpdateClientDiagnostics => _maintenanceApplyUpdateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ApplyUpdates ApplyUpdatesRestClient => _applyUpdatesRestClient ??= new ApplyUpdates(ApplyUpdatesClientDiagnostics, Pipeline, Endpoint, "2023-10-01-preview");
+        private MaintenanceApplyUpdate MaintenanceApplyUpdateRestClient => _maintenanceApplyUpdateRestClient ??= new MaintenanceApplyUpdate(MaintenanceApplyUpdateClientDiagnostics, Pipeline, Endpoint, "2023-10-01-preview");
 
         private ClientDiagnostics ScheduledEventClientDiagnostics => _scheduledEventClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MaintenanceApplyUpdateData, ApplyUpdateResource>(new ApplyUpdatesGetAllAsyncCollectionResultOfT(ApplyUpdatesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ApplyUpdateResource(Client, data));
+            return new AsyncPageableWrapper<ApplyUpdateData, ApplyUpdateResource>(new MaintenanceApplyUpdateGetAllAsyncCollectionResultOfT(MaintenanceApplyUpdateRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ApplyUpdateResource(Client, data));
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MaintenanceApplyUpdateData, ApplyUpdateResource>(new ApplyUpdatesGetAllCollectionResultOfT(ApplyUpdatesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ApplyUpdateResource(Client, data));
+            return new PageableWrapper<ApplyUpdateData, ApplyUpdateResource>(new MaintenanceApplyUpdateGetAllCollectionResultOfT(MaintenanceApplyUpdateRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ApplyUpdateResource(Client, data));
         }
 
         /// <summary>
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = ApplyUpdatesClientDiagnostics.CreateScope("MockableMaintenanceSubscriptionResource.CreateOrUpdateApplyUpdateByParent");
+            using DiagnosticScope scope = MaintenanceApplyUpdateClientDiagnostics.CreateScope("MockableMaintenanceSubscriptionResource.CreateOrUpdateApplyUpdateByParent");
             scope.Start();
             try
             {
@@ -394,9 +394,9 @@ namespace Azure.ResourceManager.Maintenance.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ApplyUpdatesRestClient.CreateCreateOrUpdateApplyUpdateByParentRequest(Guid.Parse(Id.SubscriptionId), resourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, context);
+                HttpMessage message = MaintenanceApplyUpdateRestClient.CreateCreateOrUpdateApplyUpdateByParentRequest(Guid.Parse(Id.SubscriptionId), resourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
+                Response<ApplyUpdateData> response = Response.FromValue(ApplyUpdateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = ApplyUpdatesClientDiagnostics.CreateScope("MockableMaintenanceSubscriptionResource.CreateOrUpdateApplyUpdateByParent");
+            using DiagnosticScope scope = MaintenanceApplyUpdateClientDiagnostics.CreateScope("MockableMaintenanceSubscriptionResource.CreateOrUpdateApplyUpdateByParent");
             scope.Start();
             try
             {
@@ -453,9 +453,9 @@ namespace Azure.ResourceManager.Maintenance.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ApplyUpdatesRestClient.CreateCreateOrUpdateApplyUpdateByParentRequest(Guid.Parse(Id.SubscriptionId), resourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, context);
+                HttpMessage message = MaintenanceApplyUpdateRestClient.CreateCreateOrUpdateApplyUpdateByParentRequest(Guid.Parse(Id.SubscriptionId), resourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
+                Response<ApplyUpdateData> response = Response.FromValue(ApplyUpdateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = ApplyUpdatesClientDiagnostics.CreateScope("MockableMaintenanceSubscriptionResource.CreateOrUpdate");
+            using DiagnosticScope scope = MaintenanceApplyUpdateClientDiagnostics.CreateScope("MockableMaintenanceSubscriptionResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -508,9 +508,9 @@ namespace Azure.ResourceManager.Maintenance.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ApplyUpdatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), resourceGroupName, providerName, resourceType, resourceName, context);
+                HttpMessage message = MaintenanceApplyUpdateRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), resourceGroupName, providerName, resourceType, resourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
+                Response<ApplyUpdateData> response = Response.FromValue(ApplyUpdateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = ApplyUpdatesClientDiagnostics.CreateScope("MockableMaintenanceSubscriptionResource.CreateOrUpdate");
+            using DiagnosticScope scope = MaintenanceApplyUpdateClientDiagnostics.CreateScope("MockableMaintenanceSubscriptionResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -563,9 +563,9 @@ namespace Azure.ResourceManager.Maintenance.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ApplyUpdatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), resourceGroupName, providerName, resourceType, resourceName, context);
+                HttpMessage message = MaintenanceApplyUpdateRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), resourceGroupName, providerName, resourceType, resourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
+                Response<ApplyUpdateData> response = Response.FromValue(ApplyUpdateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -800,7 +800,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="Update"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Update> GetAllAsync(string resourceGroupName, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<Update> GetUpdatesAsync(string resourceGroupName, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
@@ -811,7 +811,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UpdatesGetAllAsyncCollectionResultOfT(
+            return new UpdatesGetUpdatesAsyncCollectionResultOfT(
                 UpdatesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 resourceGroupName,
@@ -846,7 +846,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="Update"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Update> GetAll(string resourceGroupName, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        public virtual Pageable<Update> GetUpdates(string resourceGroupName, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
@@ -857,7 +857,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UpdatesGetAllCollectionResultOfT(
+            return new UpdatesGetUpdatesCollectionResultOfT(
                 UpdatesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 resourceGroupName,

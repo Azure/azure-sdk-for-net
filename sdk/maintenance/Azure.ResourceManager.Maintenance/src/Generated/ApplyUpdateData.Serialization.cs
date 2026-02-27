@@ -17,71 +17,71 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Maintenance
 {
-    /// <summary> Maintenance configuration record type. </summary>
-    public partial class MaintenancePublicConfigurationData : ResourceData, IJsonModel<MaintenancePublicConfigurationData>
+    /// <summary> Apply Update request. </summary>
+    public partial class ApplyUpdateData : ResourceData, IJsonModel<ApplyUpdateData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MaintenancePublicConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplyUpdateData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMaintenancePublicConfigurationData(document.RootElement, options);
+                        return DeserializeApplyUpdateData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MaintenancePublicConfigurationData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplyUpdateData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MaintenancePublicConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplyUpdateData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMaintenanceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MaintenancePublicConfigurationData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplyUpdateData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MaintenancePublicConfigurationData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ApplyUpdateData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MaintenancePublicConfigurationData IPersistableModel<MaintenancePublicConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (MaintenancePublicConfigurationData)PersistableModelCreateCore(data, options);
+        ApplyUpdateData IPersistableModel<ApplyUpdateData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ApplyUpdateData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MaintenancePublicConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApplyUpdateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="maintenancePublicConfigurationData"> The <see cref="MaintenancePublicConfigurationData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(MaintenancePublicConfigurationData maintenancePublicConfigurationData)
+        /// <param name="applyUpdateData"> The <see cref="ApplyUpdateData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ApplyUpdateData applyUpdateData)
         {
-            if (maintenancePublicConfigurationData == null)
+            if (applyUpdateData == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(maintenancePublicConfigurationData, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(applyUpdateData, ModelSerializationExtensions.WireOptions);
             return content;
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MaintenancePublicConfigurationData"/> from. </param>
-        internal static MaintenancePublicConfigurationData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ApplyUpdateData"/> from. </param>
+        internal static ApplyUpdateData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeMaintenancePublicConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeApplyUpdateData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MaintenancePublicConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ApplyUpdateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MaintenancePublicConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplyUpdateData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenancePublicConfigurationData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplyUpdateData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -103,49 +103,28 @@ namespace Azure.ResourceManager.Maintenance
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
-            }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MaintenancePublicConfigurationData IJsonModel<MaintenancePublicConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MaintenancePublicConfigurationData)JsonModelCreateCore(ref reader, options);
+        ApplyUpdateData IJsonModel<ApplyUpdateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ApplyUpdateData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MaintenancePublicConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplyUpdateData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenancePublicConfigurationData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplyUpdateData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMaintenancePublicConfigurationData(document.RootElement, options);
+            return DeserializeApplyUpdateData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MaintenancePublicConfigurationData DeserializeMaintenancePublicConfigurationData(JsonElement element, ModelReaderWriterOptions options)
+        internal static ApplyUpdateData DeserializeApplyUpdateData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -156,9 +135,7 @@ namespace Azure.ResourceManager.Maintenance
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            MaintenanceConfigurationProperties properties = default;
-            string location = default;
-            IDictionary<string, string> tags = default;
+            ApplyUpdateProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -199,33 +176,7 @@ namespace Azure.ResourceManager.Maintenance
                     {
                         continue;
                     }
-                    properties = MaintenanceConfigurationProperties.DeserializeMaintenanceConfigurationProperties(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("location"u8))
-                {
-                    location = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("tags"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, prop0.Value.GetString());
-                        }
-                    }
-                    tags = dictionary;
+                    properties = ApplyUpdateProperties.DeserializeApplyUpdateProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -233,15 +184,13 @@ namespace Azure.ResourceManager.Maintenance
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MaintenancePublicConfigurationData(
+            return new ApplyUpdateData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
-                properties,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>());
+                properties);
         }
     }
 }

@@ -61,7 +61,10 @@ namespace Azure.ResourceManager.Maintenance
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/providers/Microsoft.Maintenance/configurationAssignments/", false);
             uri.AppendPath(configurationAssignmentName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -90,7 +93,10 @@ namespace Azure.ResourceManager.Maintenance
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/providers/Microsoft.Maintenance/configurationAssignments/", false);
             uri.AppendPath(configurationAssignmentName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -121,7 +127,10 @@ namespace Azure.ResourceManager.Maintenance
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/providers/Microsoft.Maintenance/configurationAssignments/", false);
             uri.AppendPath(configurationAssignmentName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -149,7 +158,10 @@ namespace Azure.ResourceManager.Maintenance
             uri.AppendPath("/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/providers/Microsoft.Maintenance/configurationAssignments", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -161,7 +173,18 @@ namespace Azure.ResourceManager.Maintenance
         internal HttpMessage CreateNextGetConfigurationAssignmentsByParentRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -186,7 +209,10 @@ namespace Azure.ResourceManager.Maintenance
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/providers/Microsoft.Maintenance/configurationAssignments/", false);
             uri.AppendPath(configurationAssignmentName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -211,7 +237,10 @@ namespace Azure.ResourceManager.Maintenance
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/providers/Microsoft.Maintenance/configurationAssignments/", false);
             uri.AppendPath(configurationAssignmentName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -238,7 +267,10 @@ namespace Azure.ResourceManager.Maintenance
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/providers/Microsoft.Maintenance/configurationAssignments/", false);
             uri.AppendPath(configurationAssignmentName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -262,7 +294,10 @@ namespace Azure.ResourceManager.Maintenance
             uri.AppendPath("/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/providers/Microsoft.Maintenance/configurationAssignments", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -274,7 +309,18 @@ namespace Azure.ResourceManager.Maintenance
         internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

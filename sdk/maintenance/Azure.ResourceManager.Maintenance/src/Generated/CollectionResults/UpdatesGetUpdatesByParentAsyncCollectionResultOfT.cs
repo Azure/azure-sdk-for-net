@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Maintenance
                     yield break;
                 }
                 MaintenanceUpdateListResult result = MaintenanceUpdateListResult.FromResponse(response);
-                yield return Page<Update>.FromValues((IReadOnlyList<Update>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<Update>.FromValues((IReadOnlyList<Update>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

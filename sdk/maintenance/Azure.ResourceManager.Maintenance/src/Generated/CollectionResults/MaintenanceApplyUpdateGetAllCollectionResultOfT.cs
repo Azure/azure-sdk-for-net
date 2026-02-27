@@ -14,28 +14,28 @@ using Azure.ResourceManager.Maintenance.Models;
 
 namespace Azure.ResourceManager.Maintenance
 {
-    internal partial class ApplyUpdatesGetAllCollectionResultOfT : Pageable<MaintenanceApplyUpdateData>
+    internal partial class MaintenanceApplyUpdateGetAllCollectionResultOfT : Pageable<ApplyUpdateData>
     {
-        private readonly ApplyUpdates _client;
+        private readonly MaintenanceApplyUpdate _client;
         private readonly Guid _subscriptionId;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of ApplyUpdatesGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ApplyUpdates client used to send requests. </param>
+        /// <summary> Initializes a new instance of MaintenanceApplyUpdateGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The MaintenanceApplyUpdate client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ApplyUpdatesGetAllCollectionResultOfT(ApplyUpdates client, Guid subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
+        public MaintenanceApplyUpdateGetAllCollectionResultOfT(MaintenanceApplyUpdate client, Guid subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _context = context;
         }
 
-        /// <summary> Gets the pages of ApplyUpdatesGetAllCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of MaintenanceApplyUpdateGetAllCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ApplyUpdatesGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<MaintenanceApplyUpdateData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of MaintenanceApplyUpdateGetAllCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<ApplyUpdateData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Maintenance
                     yield break;
                 }
                 MaintenanceApplyUpdateListResult result = MaintenanceApplyUpdateListResult.FromResponse(response);
-                yield return Page<MaintenanceApplyUpdateData>.FromValues((IReadOnlyList<MaintenanceApplyUpdateData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ApplyUpdateData>.FromValues((IReadOnlyList<ApplyUpdateData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

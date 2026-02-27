@@ -70,13 +70,12 @@ namespace Azure.ResourceManager.Maintenance
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="configurationAssignmentName"> The name of the ConfigurationAssignment. </param>
         /// <param name="data"> The configurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ConfigurationAssignmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, Guid subscriptionId, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ConfigurationAssignmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
             Argument.AssertNotNull(data, nameof(data));
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationAssignmentsForSubscriptionsRestClient.CreateCreateOrUpdateConfigurationAssignmentBySubscriptionRequest(subscriptionId, configurationAssignmentName, MaintenanceConfigurationAssignmentData.ToRequestContent(data), context);
+                HttpMessage message = _configurationAssignmentsForSubscriptionsRestClient.CreateCreateOrUpdateConfigurationAssignmentBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), configurationAssignmentName, MaintenanceConfigurationAssignmentData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MaintenanceConfigurationAssignmentData> response = Response.FromValue(MaintenanceConfigurationAssignmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -126,13 +125,12 @@ namespace Azure.ResourceManager.Maintenance
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="configurationAssignmentName"> The name of the ConfigurationAssignment. </param>
         /// <param name="data"> The configurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ConfigurationAssignmentResource> CreateOrUpdate(WaitUntil waitUntil, Guid subscriptionId, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ConfigurationAssignmentResource> CreateOrUpdate(WaitUntil waitUntil, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
             Argument.AssertNotNull(data, nameof(data));
@@ -145,7 +143,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationAssignmentsForSubscriptionsRestClient.CreateCreateOrUpdateConfigurationAssignmentBySubscriptionRequest(subscriptionId, configurationAssignmentName, MaintenanceConfigurationAssignmentData.ToRequestContent(data), context);
+                HttpMessage message = _configurationAssignmentsForSubscriptionsRestClient.CreateCreateOrUpdateConfigurationAssignmentBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), configurationAssignmentName, MaintenanceConfigurationAssignmentData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MaintenanceConfigurationAssignmentData> response = Response.FromValue(MaintenanceConfigurationAssignmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -181,12 +179,11 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="configurationAssignmentName"> The name of the ConfigurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ConfigurationAssignmentResource>> GetAsync(Guid subscriptionId, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfigurationAssignmentResource>> GetAsync(string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
@@ -198,7 +195,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationAssignmentsForSubscriptionsRestClient.CreateGetConfigurationAssignmentBySubscriptionRequest(subscriptionId, configurationAssignmentName, context);
+                HttpMessage message = _configurationAssignmentsForSubscriptionsRestClient.CreateGetConfigurationAssignmentBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), configurationAssignmentName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MaintenanceConfigurationAssignmentData> response = Response.FromValue(MaintenanceConfigurationAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -231,12 +228,11 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="configurationAssignmentName"> The name of the ConfigurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ConfigurationAssignmentResource> Get(Guid subscriptionId, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual Response<ConfigurationAssignmentResource> Get(string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
@@ -248,7 +244,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationAssignmentsForSubscriptionsRestClient.CreateGetConfigurationAssignmentBySubscriptionRequest(subscriptionId, configurationAssignmentName, context);
+                HttpMessage message = _configurationAssignmentsForSubscriptionsRestClient.CreateGetConfigurationAssignmentBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), configurationAssignmentName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MaintenanceConfigurationAssignmentData> response = Response.FromValue(MaintenanceConfigurationAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -281,12 +277,11 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="configurationAssignmentName"> The name of the ConfigurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(Guid subscriptionId, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
@@ -298,7 +293,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationAssignmentsForSubscriptionsRestClient.CreateGetConfigurationAssignmentBySubscriptionRequest(subscriptionId, configurationAssignmentName, context);
+                HttpMessage message = _configurationAssignmentsForSubscriptionsRestClient.CreateGetConfigurationAssignmentBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), configurationAssignmentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MaintenanceConfigurationAssignmentData> response = default;
@@ -339,12 +334,11 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="configurationAssignmentName"> The name of the ConfigurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(Guid subscriptionId, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
@@ -356,7 +350,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationAssignmentsForSubscriptionsRestClient.CreateGetConfigurationAssignmentBySubscriptionRequest(subscriptionId, configurationAssignmentName, context);
+                HttpMessage message = _configurationAssignmentsForSubscriptionsRestClient.CreateGetConfigurationAssignmentBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), configurationAssignmentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MaintenanceConfigurationAssignmentData> response = default;
@@ -397,12 +391,11 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="configurationAssignmentName"> The name of the ConfigurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<ConfigurationAssignmentResource>> GetIfExistsAsync(Guid subscriptionId, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ConfigurationAssignmentResource>> GetIfExistsAsync(string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
@@ -414,7 +407,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationAssignmentsForSubscriptionsRestClient.CreateGetConfigurationAssignmentBySubscriptionRequest(subscriptionId, configurationAssignmentName, context);
+                HttpMessage message = _configurationAssignmentsForSubscriptionsRestClient.CreateGetConfigurationAssignmentBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), configurationAssignmentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MaintenanceConfigurationAssignmentData> response = default;
@@ -459,12 +452,11 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="configurationAssignmentName"> The name of the ConfigurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<ConfigurationAssignmentResource> GetIfExists(Guid subscriptionId, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ConfigurationAssignmentResource> GetIfExists(string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
@@ -476,7 +468,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationAssignmentsForSubscriptionsRestClient.CreateGetConfigurationAssignmentBySubscriptionRequest(subscriptionId, configurationAssignmentName, context);
+                HttpMessage message = _configurationAssignmentsForSubscriptionsRestClient.CreateGetConfigurationAssignmentBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), configurationAssignmentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MaintenanceConfigurationAssignmentData> response = default;

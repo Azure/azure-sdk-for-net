@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Maintenance
     /// </summary>
     public partial class ApplyUpdateCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _applyUpdatesClientDiagnostics;
-        private readonly ApplyUpdates _applyUpdatesRestClient;
+        private readonly ClientDiagnostics _maintenanceApplyUpdateClientDiagnostics;
+        private readonly MaintenanceApplyUpdate _maintenanceApplyUpdateRestClient;
 
         /// <summary> Initializes a new instance of ApplyUpdateCollection for mocking. </summary>
         protected ApplyUpdateCollection()
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.Maintenance
         internal ApplyUpdateCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ApplyUpdateResource.ResourceType, out string applyUpdateApiVersion);
-            _applyUpdatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", ApplyUpdateResource.ResourceType.Namespace, Diagnostics);
-            _applyUpdatesRestClient = new ApplyUpdates(_applyUpdatesClientDiagnostics, Pipeline, Endpoint, applyUpdateApiVersion ?? "2023-10-01-preview");
+            _maintenanceApplyUpdateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", ApplyUpdateResource.ResourceType.Namespace, Diagnostics);
+            _maintenanceApplyUpdateRestClient = new MaintenanceApplyUpdate(_maintenanceApplyUpdateClientDiagnostics, Pipeline, Endpoint, applyUpdateApiVersion ?? "2023-10-01-preview");
         }
 
         /// <summary>
@@ -58,26 +58,17 @@ namespace Azure.ResourceManager.Maintenance
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceType"> Resource parent type. </param>
-        /// <param name="resourceName"> Resource parent name. </param>
         /// <param name="applyUpdateName"> The name of the ApplyUpdate. </param>
         /// <param name="data"> The ApplyUpdate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, <paramref name="applyUpdateName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ApplyUpdateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName, string applyUpdateName, MaintenanceApplyUpdateData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="applyUpdateName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<ApplyUpdateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string applyUpdateName, ApplyUpdateData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _applyUpdatesClientDiagnostics.CreateScope("ApplyUpdateCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("ApplyUpdateCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -85,9 +76,9 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applyUpdatesRestClient.CreateCreateOrUpdateOrCancelRequest(subscriptionId, resourceGroupName, providerName, resourceType, resourceName, applyUpdateName, MaintenanceApplyUpdateData.ToRequestContent(data), context);
+                HttpMessage message = _maintenanceApplyUpdateRestClient.CreateCreateOrUpdateOrCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, applyUpdateName, ApplyUpdateData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
+                Response<ApplyUpdateData> response = Response.FromValue(ApplyUpdateData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 MaintenanceArmOperation<ApplyUpdateResource> operation = new MaintenanceArmOperation<ApplyUpdateResource>(Response.FromValue(new ApplyUpdateResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -122,26 +113,17 @@ namespace Azure.ResourceManager.Maintenance
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceType"> Resource parent type. </param>
-        /// <param name="resourceName"> Resource parent name. </param>
         /// <param name="applyUpdateName"> The name of the ApplyUpdate. </param>
         /// <param name="data"> The ApplyUpdate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, <paramref name="applyUpdateName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ApplyUpdateResource> CreateOrUpdate(WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName, string applyUpdateName, MaintenanceApplyUpdateData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="applyUpdateName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<ApplyUpdateResource> CreateOrUpdate(WaitUntil waitUntil, string applyUpdateName, ApplyUpdateData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _applyUpdatesClientDiagnostics.CreateScope("ApplyUpdateCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("ApplyUpdateCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -149,9 +131,9 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applyUpdatesRestClient.CreateCreateOrUpdateOrCancelRequest(subscriptionId, resourceGroupName, providerName, resourceType, resourceName, applyUpdateName, MaintenanceApplyUpdateData.ToRequestContent(data), context);
+                HttpMessage message = _maintenanceApplyUpdateRestClient.CreateCreateOrUpdateOrCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, applyUpdateName, ApplyUpdateData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
+                Response<ApplyUpdateData> response = Response.FromValue(ApplyUpdateData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 MaintenanceArmOperation<ApplyUpdateResource> operation = new MaintenanceArmOperation<ApplyUpdateResource>(Response.FromValue(new ApplyUpdateResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -185,28 +167,15 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceParentType"> Resource parent type. </param>
-        /// <param name="resourceParentName"> Resource parent name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource name. </param>
         /// <param name="applyUpdateName"> The name of the ApplyUpdate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ApplyUpdateResource>> GetAsync(Guid subscriptionId, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string applyUpdateName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="applyUpdateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ApplyUpdateResource>> GetAsync(string applyUpdateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceParentType, nameof(resourceParentType));
-            Argument.AssertNotNullOrEmpty(resourceParentName, nameof(resourceParentName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
 
-            using DiagnosticScope scope = _applyUpdatesClientDiagnostics.CreateScope("ApplyUpdateCollection.Get");
+            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("ApplyUpdateCollection.Get");
             scope.Start();
             try
             {
@@ -214,9 +183,9 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applyUpdatesRestClient.CreateGetApplyUpdatesByParentRequest(subscriptionId, resourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, applyUpdateName, context);
+                HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetApplyUpdatesByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, Id.ResourceType.Type, applyUpdateName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
+                Response<ApplyUpdateData> response = Response.FromValue(ApplyUpdateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -247,28 +216,15 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceParentType"> Resource parent type. </param>
-        /// <param name="resourceParentName"> Resource parent name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource name. </param>
         /// <param name="applyUpdateName"> The name of the ApplyUpdate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ApplyUpdateResource> Get(Guid subscriptionId, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string applyUpdateName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="applyUpdateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ApplyUpdateResource> Get(string applyUpdateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceParentType, nameof(resourceParentType));
-            Argument.AssertNotNullOrEmpty(resourceParentName, nameof(resourceParentName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
 
-            using DiagnosticScope scope = _applyUpdatesClientDiagnostics.CreateScope("ApplyUpdateCollection.Get");
+            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("ApplyUpdateCollection.Get");
             scope.Start();
             try
             {
@@ -276,9 +232,9 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applyUpdatesRestClient.CreateGetApplyUpdatesByParentRequest(subscriptionId, resourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, applyUpdateName, context);
+                HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetApplyUpdatesByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, Id.ResourceType.Type, applyUpdateName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
+                Response<ApplyUpdateData> response = Response.FromValue(ApplyUpdateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -309,28 +265,15 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceParentType"> Resource parent type. </param>
-        /// <param name="resourceParentName"> Resource parent name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource name. </param>
         /// <param name="applyUpdateName"> The name of the ApplyUpdate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(Guid subscriptionId, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string applyUpdateName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="applyUpdateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string applyUpdateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceParentType, nameof(resourceParentType));
-            Argument.AssertNotNullOrEmpty(resourceParentName, nameof(resourceParentName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
 
-            using DiagnosticScope scope = _applyUpdatesClientDiagnostics.CreateScope("ApplyUpdateCollection.Exists");
+            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("ApplyUpdateCollection.Exists");
             scope.Start();
             try
             {
@@ -338,17 +281,17 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applyUpdatesRestClient.CreateGetApplyUpdatesByParentRequest(subscriptionId, resourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, applyUpdateName, context);
+                HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetApplyUpdatesByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, Id.ResourceType.Type, applyUpdateName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<MaintenanceApplyUpdateData> response = default;
+                Response<ApplyUpdateData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
+                        response = Response.FromValue(ApplyUpdateData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MaintenanceApplyUpdateData)null, result);
+                        response = Response.FromValue((ApplyUpdateData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -379,28 +322,15 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceParentType"> Resource parent type. </param>
-        /// <param name="resourceParentName"> Resource parent name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource name. </param>
         /// <param name="applyUpdateName"> The name of the ApplyUpdate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(Guid subscriptionId, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string applyUpdateName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="applyUpdateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string applyUpdateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceParentType, nameof(resourceParentType));
-            Argument.AssertNotNullOrEmpty(resourceParentName, nameof(resourceParentName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
 
-            using DiagnosticScope scope = _applyUpdatesClientDiagnostics.CreateScope("ApplyUpdateCollection.Exists");
+            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("ApplyUpdateCollection.Exists");
             scope.Start();
             try
             {
@@ -408,17 +338,17 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applyUpdatesRestClient.CreateGetApplyUpdatesByParentRequest(subscriptionId, resourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, applyUpdateName, context);
+                HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetApplyUpdatesByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, Id.ResourceType.Type, applyUpdateName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<MaintenanceApplyUpdateData> response = default;
+                Response<ApplyUpdateData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
+                        response = Response.FromValue(ApplyUpdateData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MaintenanceApplyUpdateData)null, result);
+                        response = Response.FromValue((ApplyUpdateData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -449,28 +379,15 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceParentType"> Resource parent type. </param>
-        /// <param name="resourceParentName"> Resource parent name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource name. </param>
         /// <param name="applyUpdateName"> The name of the ApplyUpdate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<ApplyUpdateResource>> GetIfExistsAsync(Guid subscriptionId, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string applyUpdateName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="applyUpdateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<ApplyUpdateResource>> GetIfExistsAsync(string applyUpdateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceParentType, nameof(resourceParentType));
-            Argument.AssertNotNullOrEmpty(resourceParentName, nameof(resourceParentName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
 
-            using DiagnosticScope scope = _applyUpdatesClientDiagnostics.CreateScope("ApplyUpdateCollection.GetIfExists");
+            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("ApplyUpdateCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -478,17 +395,17 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applyUpdatesRestClient.CreateGetApplyUpdatesByParentRequest(subscriptionId, resourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, applyUpdateName, context);
+                HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetApplyUpdatesByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, Id.ResourceType.Type, applyUpdateName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<MaintenanceApplyUpdateData> response = default;
+                Response<ApplyUpdateData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
+                        response = Response.FromValue(ApplyUpdateData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MaintenanceApplyUpdateData)null, result);
+                        response = Response.FromValue((ApplyUpdateData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -523,28 +440,15 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceParentType"> Resource parent type. </param>
-        /// <param name="resourceParentName"> Resource parent name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource name. </param>
         /// <param name="applyUpdateName"> The name of the ApplyUpdate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<ApplyUpdateResource> GetIfExists(Guid subscriptionId, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string applyUpdateName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="applyUpdateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<ApplyUpdateResource> GetIfExists(string applyUpdateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceParentType, nameof(resourceParentType));
-            Argument.AssertNotNullOrEmpty(resourceParentName, nameof(resourceParentName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
 
-            using DiagnosticScope scope = _applyUpdatesClientDiagnostics.CreateScope("ApplyUpdateCollection.GetIfExists");
+            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("ApplyUpdateCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -552,17 +456,17 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applyUpdatesRestClient.CreateGetApplyUpdatesByParentRequest(subscriptionId, resourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, applyUpdateName, context);
+                HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetApplyUpdatesByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, Id.ResourceType.Type, applyUpdateName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<MaintenanceApplyUpdateData> response = default;
+                Response<ApplyUpdateData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
+                        response = Response.FromValue(ApplyUpdateData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MaintenanceApplyUpdateData)null, result);
+                        response = Response.FromValue((ApplyUpdateData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

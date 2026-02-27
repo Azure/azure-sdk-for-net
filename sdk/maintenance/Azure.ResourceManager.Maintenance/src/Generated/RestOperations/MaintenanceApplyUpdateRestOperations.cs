@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Maintenance
 {
-    internal partial class ApplyUpdates
+    internal partial class MaintenanceApplyUpdate
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of ApplyUpdates for mocking. </summary>
-        protected ApplyUpdates()
+        /// <summary> Initializes a new instance of MaintenanceApplyUpdate for mocking. </summary>
+        protected MaintenanceApplyUpdate()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplyUpdates. </summary>
+        /// <summary> Initializes a new instance of MaintenanceApplyUpdate. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal ApplyUpdates(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal MaintenanceApplyUpdate(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -61,7 +61,10 @@ namespace Azure.ResourceManager.Maintenance
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/providers/Microsoft.Maintenance/applyUpdates/", false);
             uri.AppendPath(applyUpdateName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -86,7 +89,10 @@ namespace Azure.ResourceManager.Maintenance
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/providers/Microsoft.Maintenance/applyUpdates/", false);
             uri.AppendPath(applyUpdateName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -111,7 +117,10 @@ namespace Azure.ResourceManager.Maintenance
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/providers/Microsoft.Maintenance/applyUpdates/", false);
             uri.AppendPath(applyUpdateName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -129,7 +138,10 @@ namespace Azure.ResourceManager.Maintenance
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Maintenance/applyUpdates", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -141,7 +153,18 @@ namespace Azure.ResourceManager.Maintenance
         internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -169,7 +192,10 @@ namespace Azure.ResourceManager.Maintenance
             uri.AppendPath("/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/providers/Microsoft.Maintenance/applyUpdates/default", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -193,7 +219,10 @@ namespace Azure.ResourceManager.Maintenance
             uri.AppendPath("/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/providers/Microsoft.Maintenance/applyUpdates/default", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

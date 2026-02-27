@@ -15,7 +15,7 @@ using Azure.ResourceManager.Maintenance.Models;
 
 namespace Azure.ResourceManager.Maintenance
 {
-    internal partial class UpdatesGetAllAsyncCollectionResultOfT : AsyncPageable<Update>
+    internal partial class UpdatesGetUpdatesAsyncCollectionResultOfT : AsyncPageable<Update>
     {
         private readonly Updates _client;
         private readonly Guid _subscriptionId;
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Maintenance
         private readonly string _resourceName;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of UpdatesGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of UpdatesGetUpdatesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Updates client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public UpdatesGetAllAsyncCollectionResultOfT(Updates client, Guid subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public UpdatesGetUpdatesAsyncCollectionResultOfT(Updates client, Guid subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Maintenance
             _context = context;
         }
 
-        /// <summary> Gets the pages of UpdatesGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of UpdatesGetUpdatesAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of UpdatesGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of UpdatesGetUpdatesAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<Update>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Maintenance
                     yield break;
                 }
                 MaintenanceUpdateListResult result = MaintenanceUpdateListResult.FromResponse(response);
-                yield return Page<Update>.FromValues((IReadOnlyList<Update>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<Update>.FromValues((IReadOnlyList<Update>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -73,8 +73,8 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _providerName, _resourceType, _resourceName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _providerName, _resourceType, _resourceName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableMaintenanceSubscriptionResource.GetAll");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetUpdatesRequest(nextLink, _subscriptionId, _resourceGroupName, _providerName, _resourceType, _resourceName, _context) : _client.CreateGetUpdatesRequest(_subscriptionId, _resourceGroupName, _providerName, _resourceType, _resourceName, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableMaintenanceSubscriptionResource.GetUpdates");
             scope.Start();
             try
             {
