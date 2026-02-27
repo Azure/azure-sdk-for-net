@@ -12,11 +12,14 @@
 # Usage (single owner):
 #   jobs:
 #     my-job:
+#       # An environment is required for OIDC (federated credential) login.
+#       # Work with EngSys to configure the environment with the federated
+#       # credential for the AzureSDKEngKeyVault Secrets service connection.
+#       environment: AzureSDKEngKeyVault
 #       permissions:
 #         id-token: write  # Required for azure/login OIDC
 #       steps:
 #         # Step 1: Authenticate to Azure (required before this action)
-#         # azure-sdk-internal-AzureSDKEngKeyVault Secrets connection need to work with EngSys to add OIDC credentials
 #         - uses: azure/login@v2
 #           with:
 #             client-id: 5786d1fb-187e-4ca9-9a81-ab89ea278986
