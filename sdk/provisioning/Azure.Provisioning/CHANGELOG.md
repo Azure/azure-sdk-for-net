@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Renamed `BicepMetadata` class to `ResourceBicepMetadata` since it is specific to resources.
+
 ### Bugs Fixed
 
 ### Other Changes
