@@ -71,6 +71,14 @@ Test-Prerequisite "git" "Git"
 Test-Prerequisite "npm" "npm (Node.js)"
 Test-Prerequisite "dotnet" ".NET SDK"
 
+# Validate LocalSpecRepoPath upfront
+if ($LocalSpecRepoPath) {
+    if (-not (Test-Path $LocalSpecRepoPath)) {
+        throw "LocalSpecRepoPath not found: $LocalSpecRepoPath"
+    }
+    $LocalSpecRepoPath = (Resolve-Path $LocalSpecRepoPath).Path
+}
+
 # Resolve paths
 $mgmtPackageRoot = Resolve-Path (Join-Path $PSScriptRoot '..' '..')
 $sdkRepoRoot = Resolve-Path (Join-Path $mgmtPackageRoot '..' '..' '..')
