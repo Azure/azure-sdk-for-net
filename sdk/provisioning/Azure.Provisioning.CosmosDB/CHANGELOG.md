@@ -1,10 +1,14 @@
 # Release History
 
-## 1.1.0-beta.2 (2026-03-03)
+## 1.1.0-beta.2 (Unreleased)
 
 ### Features Added
 
-- Upgraded dependency on `Azure.ResourceManager.CosmosDB` to version 1.4.0.
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
 
 ## 1.1.0-beta.1 (2025-06-16)
 
