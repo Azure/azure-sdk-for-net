@@ -1031,6 +1031,13 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="maxConcurrentCalls">The new max concurrent calls value. This will be reflected in the <see cref="ServiceBusProcessor.MaxConcurrentCalls"/>
         /// property.</param>
+        /// <remarks>
+        /// When reducing concurrency, any in-progress message handlers that exceed the new concurrency limit will have their
+        /// <see cref="System.Threading.CancellationToken"/> signaled. Handlers should observe the cancellation token passed via
+        /// <see cref="ProcessMessageEventArgs.CancellationToken"/> and handle cancellation gracefully to avoid incomplete processing.
+        /// The cancellation is cooperative; handlers that do not observe the token will continue to run until they complete.
+        /// When increasing concurrency, the change takes effect immediately by allowing additional concurrent message handlers.
+        /// </remarks>
         public void UpdateConcurrency(int maxConcurrentCalls)
         {
             lock (_optionsLock)
