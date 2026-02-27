@@ -29,7 +29,13 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
 
         if (type is not InheritableSystemObjectModelProvider && type?.BaseModelProvider is InheritableSystemObjectModelProvider baseSystemType)
         {
-            Update(baseSystemType, type);
+            // Defer serialization update for discriminated models to avoid infinite recursion.
+            // Accessing serializationTypeDefinition.Methods triggers building DerivedModels ->
+            // CreateModel for derived types whose base model is not yet cached in TypeFactory.
+            // Non-discriminated models must NOT defer because UpdateSerialization accesses .Methods
+            // which lazily generates serialization code that depends on the model's pre-update state
+            // (before properties and fields are modified later in Update).
+            Update(baseSystemType, type, deferSerialization: model.DiscriminatorProperty != null);
         }
         else if (type?.BaseModelProvider is not null && type is not InheritableSystemObjectModelProvider)
         {
@@ -66,6 +72,13 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             // modifier would generate duplicates causing C# compilation errors.
             UpdateRegularModelInheritance(model2);
         }
+
+        // Apply deferred serialization updates that were postponed from PreVisitModel
+        // for discriminated models only (see comment in PreVisitModel).
+        if (type is ModelProvider pendingModel && _pendingSerialization.Remove(pendingModel))
+        {
+            UpdateSerialization(pendingModel);
+        }
         return type;
     }
 
@@ -92,7 +105,8 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
 
     private HashSet<ModelProvider> _updated = new();
     private HashSet<ModelProvider> _regularUpdated = new();
-    private void Update(InheritableSystemObjectModelProvider baseSystemType, ModelProvider model)
+    private HashSet<ModelProvider> _pendingSerialization = new();
+    private void Update(InheritableSystemObjectModelProvider baseSystemType, ModelProvider model, bool deferSerialization = false)
     {
         // Add cache to avoid duplicated update of PreVisitModel and VisitType
         if (_updated.Contains(model))
@@ -104,7 +118,19 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         model.Update(properties: model.Properties.Where(prop => !prop.Modifiers.HasFlag(MethodSignatureModifiers.New)).ToArray());
 
         var rawDataField = CreateRawDataField(model);
-        UpdateSerialization(model);
+        if (deferSerialization)
+        {
+            // Defer to VisitType when all models are cached in TypeFactory to avoid infinite
+            // recursion for discriminated models during PreVisitModel.
+            _pendingSerialization.Add(model);
+        }
+        else
+        {
+            // Non-discriminated models: update serialization immediately, before model properties
+            // and fields are modified below. The lazy serialization code generation depends on
+            // the model's current state.
+            UpdateSerialization(model);
+        }
 
         UpdateFullConstructor(model, rawDataField);
 
@@ -172,6 +198,9 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
     }
 
     private const string RawDataParameterName = "additionalBinaryDataProperties";
+    // Use a distinct field name to avoid collision with the base generator's local variable
+    // of the same name in deserialization methods for discriminated model hierarchies.
+    private const string RawDataFieldName = "_additionalBinaryData";
     private static FieldProvider CreateRawDataField(ModelProvider model)
     {
         var modifiers = FieldModifiers.Private;
@@ -185,7 +214,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             modifiers: modifiers,
             type: typeof(IDictionary<string, BinaryData>),
             description: FromString("Keeps track of any properties unknown to the library."),
-            name: $"_{RawDataParameterName}",
+            name: RawDataFieldName,
             enclosingType: model);
 
         return rawDataField;
