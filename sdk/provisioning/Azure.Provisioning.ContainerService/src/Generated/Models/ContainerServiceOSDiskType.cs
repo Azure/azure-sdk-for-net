@@ -6,11 +6,13 @@
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// The default is &apos;Ephemeral&apos; if the VM supports it and has a cache
-/// disk larger than the requested OSDiskSizeGB. Otherwise, defaults to
+/// The OS disk type to be used for machines in the agent pool. The default is
+/// &apos;Ephemeral&apos; if the VM supports it and has a cache disk larger
+/// than the requested OSDiskSizeGB. Otherwise, defaults to
 /// &apos;Managed&apos;. May not be changed after creation. For more
 /// information see [Ephemeral
 /// OS](https://docs.microsoft.com/azure/aks/cluster-configuration#ephemeral-os).
+/// Serialized Name: OSDiskType
 /// </summary>
 public enum ContainerServiceOSDiskType
 {
@@ -20,14 +22,15 @@ public enum ContainerServiceOSDiskType
     /// another host. Since containers aren&apos;t designed to have local
     /// state persisted, this behavior offers limited value while providing
     /// some drawbacks, including slower node provisioning and higher
-    /// read/write latency.
+    /// read/write latency.             Serialized Name: OSDiskType.Managed
     /// </summary>
     Managed,
 
     /// <summary>
     /// Ephemeral OS disks are stored only on the host machine, just like a
     /// temporary disk. This provides lower read/write latency, along with
-    /// faster node scaling and cluster upgrades.
+    /// faster node scaling and cluster upgrades.             Serialized Name:
+    /// OSDiskType.Ephemeral
     /// </summary>
     Ephemeral,
 }

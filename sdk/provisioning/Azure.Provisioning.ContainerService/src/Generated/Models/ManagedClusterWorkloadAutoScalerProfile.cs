@@ -12,11 +12,13 @@ namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
 /// Workload Auto-scaler profile for the managed cluster.
+/// Serialized Name: ManagedClusterWorkloadAutoScalerProfile
 /// </summary>
 public partial class ManagedClusterWorkloadAutoScalerProfile : ProvisionableConstruct
 {
     /// <summary>
-    /// Whether to enable KEDA.
+    /// Whether to enable KEDA.             Serialized Name:
+    /// ManagedClusterWorkloadAutoScalerProfileKeda.enabled
     /// </summary>
     public BicepValue<bool> IsKedaEnabled 
     {
@@ -26,7 +28,9 @@ public partial class ManagedClusterWorkloadAutoScalerProfile : ProvisionableCons
     private BicepValue<bool>? _isKedaEnabled;
 
     /// <summary>
-    /// Whether to enable VPA. Default value is false.
+    /// Whether to enable VPA. Default value is false.             Serialized
+    /// Name:
+    /// ManagedClusterWorkloadAutoScalerProfileVerticalPodAutoscaler.enabled
     /// </summary>
     public BicepValue<bool> IsVpaEnabled 
     {

@@ -11,12 +11,14 @@ using System;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// The OIDC issuer profile of the Managed Cluster.
+/// The OIDC issuer profile of the Managed Cluster.             Serialized
+/// Name: ManagedClusterOidcIssuerProfile
 /// </summary>
 public partial class ManagedClusterOidcIssuerProfile : ProvisionableConstruct
 {
     /// <summary>
-    /// The OIDC issuer url of the Managed Cluster.
+    /// The OIDC issuer url of the Managed Cluster.             Serialized
+    /// Name: ManagedClusterOidcIssuerProfile.issuerURL
     /// </summary>
     public BicepValue<string> IssuerUriInfo 
     {
@@ -25,7 +27,8 @@ public partial class ManagedClusterOidcIssuerProfile : ProvisionableConstruct
     private BicepValue<string>? _issuerUriInfo;
 
     /// <summary>
-    /// Whether the OIDC issuer is enabled.
+    /// Whether the OIDC issuer is enabled.             Serialized Name:
+    /// ManagedClusterOidcIssuerProfile.enabled
     /// </summary>
     public BicepValue<bool> IsEnabled 
     {

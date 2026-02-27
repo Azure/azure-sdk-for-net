@@ -7,17 +7,19 @@ namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
 /// Determines the placement of emptyDir volumes, container runtime data root,
-/// and Kubelet ephemeral storage.
+/// and Kubelet ephemeral storage.             Serialized Name: KubeletDiskType
 /// </summary>
 public enum KubeletDiskType
 {
     /// <summary>
-    /// Kubelet will use the OS disk for its data.
+    /// Kubelet will use the OS disk for its data.             Serialized Name:
+    /// KubeletDiskType.OS
     /// </summary>
     OS,
 
     /// <summary>
     /// Kubelet will use the temporary disk for its data.
+    /// Serialized Name: KubeletDiskType.Temporary
     /// </summary>
     Temporary,
 }

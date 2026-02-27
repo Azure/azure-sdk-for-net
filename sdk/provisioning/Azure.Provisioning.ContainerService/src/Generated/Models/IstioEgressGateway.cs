@@ -17,7 +17,8 @@ namespace Azure.Provisioning.ContainerService;
 public partial class IstioEgressGateway : ProvisionableConstruct
 {
     /// <summary>
-    /// Whether to enable the egress gateway.
+    /// Whether to enable the egress gateway.             Serialized Name:
+    /// IstioEgressGateway.enabled
     /// </summary>
     public BicepValue<bool> IsEnabled 
     {
@@ -27,14 +28,41 @@ public partial class IstioEgressGateway : ProvisionableConstruct
     private BicepValue<bool>? _isEnabled;
 
     /// <summary>
-    /// NodeSelector for scheduling the egress gateway.
+    /// Name of the Istio add-on egress gateway.             Serialized Name:
+    /// IstioEgressGateway.name
     /// </summary>
-    public BicepDictionary<string> NodeSelector 
+    public BicepValue<string> Name 
     {
-        get { Initialize(); return _nodeSelector!; }
-        set { Initialize(); _nodeSelector!.Assign(value); }
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
     }
-    private BicepDictionary<string>? _nodeSelector;
+    private BicepValue<string>? _name;
+
+    /// <summary>
+    /// Namespace that the Istio add-on egress gateway should be deployed in.
+    /// If unspecified, the default is aks-istio-egress.
+    /// Serialized Name: IstioEgressGateway.namespace
+    /// </summary>
+    public BicepValue<string> Namespace 
+    {
+        get { Initialize(); return _namespace!; }
+        set { Initialize(); _namespace!.Assign(value); }
+    }
+    private BicepValue<string>? _namespace;
+
+    /// <summary>
+    /// Name of the gateway configuration custom resource for the Istio add-on
+    /// egress gateway. Must be specified when enabling the Istio egress
+    /// gateway. Must be deployed in the same namespace that the Istio egress
+    /// gateway will be deployed in.             Serialized Name:
+    /// IstioEgressGateway.gatewayConfigurationName
+    /// </summary>
+    public BicepValue<string> GatewayConfigurationName 
+    {
+        get { Initialize(); return _gatewayConfigurationName!; }
+        set { Initialize(); _gatewayConfigurationName!.Assign(value); }
+    }
+    private BicepValue<string>? _gatewayConfigurationName;
 
     /// <summary>
     /// Creates a new IstioEgressGateway.
@@ -50,6 +78,8 @@ public partial class IstioEgressGateway : ProvisionableConstruct
     {
         base.DefineProvisionableProperties();
         _isEnabled = DefineProperty<bool>("IsEnabled", ["enabled"]);
-        _nodeSelector = DefineDictionaryProperty<string>("NodeSelector", ["nodeSelector"]);
+        _name = DefineProperty<string>("Name", ["name"]);
+        _namespace = DefineProperty<string>("Namespace", ["namespace"]);
+        _gatewayConfigurationName = DefineProperty<string>("GatewayConfigurationName", ["gatewayConfigurationName"]);
     }
 }

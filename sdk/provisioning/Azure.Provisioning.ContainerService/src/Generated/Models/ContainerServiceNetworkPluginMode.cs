@@ -8,7 +8,8 @@ using System.Runtime.Serialization;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// The mode the network plugin should use.
+/// The mode the network plugin should use.             Serialized Name:
+/// NetworkPluginMode
 /// </summary>
 public enum ContainerServiceNetworkPluginMode
 {
@@ -16,7 +17,8 @@ public enum ContainerServiceNetworkPluginMode
     /// Used with networkPlugin=azure, pods are given IPs from the PodCIDR
     /// address space but use Azure Routing Domains rather than Kubenet&apos;s
     /// method of route tables. For more information visit
-    /// https://aka.ms/aks/azure-cni-overlay.
+    /// https://aka.ms/aks/azure-cni-overlay.             Serialized Name:
+    /// NetworkPluginMode.overlay
     /// </summary>
     [DataMember(Name = "overlay")]
     Overlay,

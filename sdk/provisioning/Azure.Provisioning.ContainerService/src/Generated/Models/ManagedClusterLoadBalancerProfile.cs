@@ -19,36 +19,6 @@ namespace Azure.Provisioning.ContainerService;
 public partial class ManagedClusterLoadBalancerProfile : ProvisionableConstruct
 {
     /// <summary>
-    /// Desired managed outbound IPs for the cluster load balancer.
-    /// </summary>
-    public ManagedClusterLoadBalancerProfileManagedOutboundIPs ManagedOutboundIPs 
-    {
-        get { Initialize(); return _managedOutboundIPs!; }
-        set { Initialize(); AssignOrReplace(ref _managedOutboundIPs, value); }
-    }
-    private ManagedClusterLoadBalancerProfileManagedOutboundIPs? _managedOutboundIPs;
-
-    /// <summary>
-    /// A list of public IP prefix resources.
-    /// </summary>
-    public BicepList<WritableSubResource> OutboundPublicIPPrefixes 
-    {
-        get { Initialize(); return _outboundPublicIPPrefixes!; }
-        set { Initialize(); _outboundPublicIPPrefixes!.Assign(value); }
-    }
-    private BicepList<WritableSubResource>? _outboundPublicIPPrefixes;
-
-    /// <summary>
-    /// A list of public IP resources.
-    /// </summary>
-    public BicepList<WritableSubResource> OutboundPublicIPs 
-    {
-        get { Initialize(); return _outboundPublicIPs!; }
-        set { Initialize(); _outboundPublicIPs!.Assign(value); }
-    }
-    private BicepList<WritableSubResource>? _outboundPublicIPs;
-
-    /// <summary>
     /// The effective outbound IP resources of the cluster load balancer.
     /// </summary>
     public BicepList<WritableSubResource> EffectiveOutboundIPs 
@@ -59,9 +29,44 @@ public partial class ManagedClusterLoadBalancerProfile : ProvisionableConstruct
     private BicepList<WritableSubResource>? _effectiveOutboundIPs;
 
     /// <summary>
+    /// Desired managed outbound IPs for the cluster load balancer.
+    /// Serialized Name:
+    /// ManagedClusterLoadBalancerProfile.managedOutboundIPs
+    /// </summary>
+    public ManagedClusterLoadBalancerProfileManagedOutboundIPs ManagedOutboundIPs 
+    {
+        get { Initialize(); return _managedOutboundIPs!; }
+        set { Initialize(); AssignOrReplace(ref _managedOutboundIPs, value); }
+    }
+    private ManagedClusterLoadBalancerProfileManagedOutboundIPs? _managedOutboundIPs;
+
+    /// <summary>
+    /// A list of public IP prefix resources.             Serialized Name:
+    /// ManagedClusterLoadBalancerProfileOutboundIPPrefixes.publicIPPrefixes
+    /// </summary>
+    public BicepList<WritableSubResource> OutboundPublicIPPrefixes 
+    {
+        get { Initialize(); return _outboundPublicIPPrefixes!; }
+        set { Initialize(); _outboundPublicIPPrefixes!.Assign(value); }
+    }
+    private BicepList<WritableSubResource>? _outboundPublicIPPrefixes;
+
+    /// <summary>
+    /// A list of public IP resources.             Serialized Name:
+    /// ManagedClusterLoadBalancerProfileOutboundIPs.publicIPs
+    /// </summary>
+    public BicepList<WritableSubResource> OutboundPublicIPs 
+    {
+        get { Initialize(); return _outboundPublicIPs!; }
+        set { Initialize(); _outboundPublicIPs!.Assign(value); }
+    }
+    private BicepList<WritableSubResource>? _outboundPublicIPs;
+
+    /// <summary>
     /// The desired number of allocated SNAT ports per VM. Allowed values are
     /// in the range of 0 to 64000 (inclusive). The default value is 0 which
-    /// results in Azure dynamically allocating ports.
+    /// results in Azure dynamically allocating ports.             Serialized
+    /// Name: ManagedClusterLoadBalancerProfile.allocatedOutboundPorts
     /// </summary>
     public BicepValue<int> AllocatedOutboundPorts 
     {
@@ -73,6 +78,8 @@ public partial class ManagedClusterLoadBalancerProfile : ProvisionableConstruct
     /// <summary>
     /// Desired outbound flow idle timeout in minutes. Allowed values are in
     /// the range of 4 to 120 (inclusive). The default value is 30 minutes.
+    /// Serialized Name:
+    /// ManagedClusterLoadBalancerProfile.idleTimeoutInMinutes
     /// </summary>
     public BicepValue<int> IdleTimeoutInMinutes 
     {
@@ -83,6 +90,8 @@ public partial class ManagedClusterLoadBalancerProfile : ProvisionableConstruct
 
     /// <summary>
     /// Enable multiple standard load balancers per AKS cluster or not.
+    /// Serialized Name:
+    /// ManagedClusterLoadBalancerProfile.enableMultipleStandardLoadBalancers
     /// </summary>
     public BicepValue<bool> EnableMultipleStandardLoadBalancers 
     {
@@ -93,6 +102,8 @@ public partial class ManagedClusterLoadBalancerProfile : ProvisionableConstruct
 
     /// <summary>
     /// The type of the managed inbound Load Balancer BackendPool.
+    /// Serialized Name:
+    /// ManagedClusterLoadBalancerProfile.backendPoolType
     /// </summary>
     public BicepValue<ManagedClusterLoadBalancerBackendPoolType> BackendPoolType 
     {
@@ -115,10 +126,10 @@ public partial class ManagedClusterLoadBalancerProfile : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
+        _effectiveOutboundIPs = DefineListProperty<WritableSubResource>("EffectiveOutboundIPs", ["effectiveOutboundIPs"]);
         _managedOutboundIPs = DefineModelProperty<ManagedClusterLoadBalancerProfileManagedOutboundIPs>("ManagedOutboundIPs", ["managedOutboundIPs"]);
         _outboundPublicIPPrefixes = DefineListProperty<WritableSubResource>("OutboundPublicIPPrefixes", ["outboundIPPrefixes", "publicIPPrefixes"]);
         _outboundPublicIPs = DefineListProperty<WritableSubResource>("OutboundPublicIPs", ["outboundIPs", "publicIPs"]);
-        _effectiveOutboundIPs = DefineListProperty<WritableSubResource>("EffectiveOutboundIPs", ["effectiveOutboundIPs"]);
         _allocatedOutboundPorts = DefineProperty<int>("AllocatedOutboundPorts", ["allocatedOutboundPorts"]);
         _idleTimeoutInMinutes = DefineProperty<int>("IdleTimeoutInMinutes", ["idleTimeoutInMinutes"]);
         _enableMultipleStandardLoadBalancers = DefineProperty<bool>("EnableMultipleStandardLoadBalancers", ["enableMultipleStandardLoadBalancers"]);

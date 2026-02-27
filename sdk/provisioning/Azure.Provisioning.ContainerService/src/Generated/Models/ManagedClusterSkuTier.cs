@@ -22,6 +22,7 @@ public enum ManagedClusterSkuTier
     /// Cluster has premium capabilities in addition to all of the capabilities
     /// included in &apos;Standard&apos;. Premium enables selection of
     /// LongTermSupport (aka.ms/aks/lts) for certain Kubernetes versions.
+    /// Serialized Name: ManagedClusterSKUTier.Premium
     /// </summary>
     Premium,
 
@@ -31,7 +32,8 @@ public enum ManagedClusterSkuTier
     /// up to 5,000 nodes per cluster. Guarantees 99.95% availability of the
     /// Kubernetes API server endpoint for clusters that use Availability
     /// Zones and 99.9% of availability for clusters that don&apos;t use
-    /// Availability Zones.
+    /// Availability Zones.             Serialized Name:
+    /// ManagedClusterSKUTier.Standard
     /// </summary>
     Standard,
 
@@ -39,7 +41,7 @@ public enum ManagedClusterSkuTier
     /// The cluster management is free, but charged for VM, storage, and
     /// networking usage. Best for experimenting, learning, simple testing, or
     /// workloads with fewer than 10 nodes. Not recommended for production use
-    /// cases.
+    /// cases.             Serialized Name: ManagedClusterSKUTier.Free
     /// </summary>
     Free,
 }

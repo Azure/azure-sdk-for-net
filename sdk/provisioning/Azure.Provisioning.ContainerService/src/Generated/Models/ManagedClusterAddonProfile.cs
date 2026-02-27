@@ -12,12 +12,14 @@ using System;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// A Kubernetes add-on profile for a managed cluster.
+/// A Kubernetes add-on profile for a managed cluster.             Serialized
+/// Name: ManagedClusterAddonProfile
 /// </summary>
 public partial class ManagedClusterAddonProfile : ProvisionableConstruct
 {
     /// <summary>
-    /// Whether the add-on is enabled or not.
+    /// Whether the add-on is enabled or not.             Serialized Name:
+    /// ManagedClusterAddonProfile.enabled
     /// </summary>
     public BicepValue<bool> IsEnabled 
     {
@@ -27,7 +29,8 @@ public partial class ManagedClusterAddonProfile : ProvisionableConstruct
     private BicepValue<bool>? _isEnabled;
 
     /// <summary>
-    /// Key-value pairs for configuring an add-on.
+    /// Key-value pairs for configuring an add-on.             Serialized Name:
+    /// ManagedClusterAddonProfile.config
     /// </summary>
     public BicepDictionary<string> Config 
     {
@@ -38,6 +41,7 @@ public partial class ManagedClusterAddonProfile : ProvisionableConstruct
 
     /// <summary>
     /// Information of user assigned identity used by this add-on.
+    /// Serialized Name: ManagedClusterAddonProfile.identity
     /// </summary>
     public ManagedClusterAddonProfileIdentity Identity 
     {

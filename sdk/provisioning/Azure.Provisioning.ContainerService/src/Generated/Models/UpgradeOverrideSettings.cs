@@ -11,7 +11,8 @@ using System;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Settings for overrides when upgrading a cluster.
+/// Settings for overrides when upgrading a cluster.             Serialized
+/// Name: UpgradeOverrideSettings
 /// </summary>
 public partial class UpgradeOverrideSettings : ProvisionableConstruct
 {
@@ -19,6 +20,7 @@ public partial class UpgradeOverrideSettings : ProvisionableConstruct
     /// Whether to force upgrade the cluster. Note that this option instructs
     /// upgrade operation to bypass upgrade protections such as checking for
     /// deprecated API usage. Enable this option only with caution.
+    /// Serialized Name: UpgradeOverrideSettings.forceUpgrade
     /// </summary>
     public BicepValue<bool> ForceUpgrade 
     {
@@ -32,7 +34,7 @@ public partial class UpgradeOverrideSettings : ProvisionableConstruct
     /// start time of an upgrade, and the effectiveness won&apos;t change once
     /// an upgrade starts even if the `until` expires as upgrade proceeds.
     /// This field is not set by default. It must be set for the overrides to
-    /// take effect.
+    /// take effect.             Serialized Name: UpgradeOverrideSettings.until
     /// </summary>
     public BicepValue<DateTimeOffset> Until 
     {

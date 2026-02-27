@@ -6,17 +6,25 @@
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// The type of Agent Pool.
+/// The type of Agent Pool.             Serialized Name: AgentPoolType
 /// </summary>
 public enum AgentPoolType
 {
     /// <summary>
     /// Create an Agent Pool backed by a Virtual Machine Scale Set.
+    /// Serialized Name: AgentPoolType.VirtualMachineScaleSets
     /// </summary>
     VirtualMachineScaleSets,
 
     /// <summary>
-    /// Use of this is strongly discouraged.
+    /// Use of this is strongly discouraged.             Serialized Name:
+    /// AgentPoolType.AvailabilitySet
     /// </summary>
     AvailabilitySet,
+
+    /// <summary>
+    /// Create an Agent Pool backed by a Single Instance VM orchestration mode.
+    /// Serialized Name: AgentPoolType.VirtualMachines
+    /// </summary>
+    VirtualMachines,
 }

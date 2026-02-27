@@ -12,12 +12,14 @@ namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
 /// For schedules like: &apos;recur every month on the first Monday&apos; or
-/// &apos;recur every 3 months on last Friday&apos;.
+/// &apos;recur every 3 months on last Friday&apos;.             Serialized
+/// Name: RelativeMonthlySchedule
 /// </summary>
 public partial class ContainerServiceMaintenanceRelativeMonthlySchedule : ProvisionableConstruct
 {
     /// <summary>
     /// Specifies the number of months between each set of occurrences.
+    /// Serialized Name: RelativeMonthlySchedule.intervalMonths
     /// </summary>
     public BicepValue<int> IntervalMonths 
     {
@@ -27,7 +29,8 @@ public partial class ContainerServiceMaintenanceRelativeMonthlySchedule : Provis
     private BicepValue<int>? _intervalMonths;
 
     /// <summary>
-    /// Specifies on which week of the month the dayOfWeek applies.
+    /// The week index. Specifies on which week of the month the dayOfWeek
+    /// applies.             Serialized Name: RelativeMonthlySchedule.weekIndex
     /// </summary>
     public BicepValue<ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex> WeekIndex 
     {
@@ -38,6 +41,7 @@ public partial class ContainerServiceMaintenanceRelativeMonthlySchedule : Provis
 
     /// <summary>
     /// Specifies on which day of the week the maintenance occurs.
+    /// Serialized Name: RelativeMonthlySchedule.dayOfWeek
     /// </summary>
     public BicepValue<ContainerServiceWeekDay> DayOfWeek 
     {

@@ -11,12 +11,14 @@ using System;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Contains the IPTag associated with the object.
+/// Contains the IPTag associated with the object.             Serialized Name:
+/// IPTag
 /// </summary>
 public partial class ContainerServiceIPTag : ProvisionableConstruct
 {
     /// <summary>
-    /// The IP tag type. Example: RoutingPreference.
+    /// The IP tag type. Example: RoutingPreference.             Serialized
+    /// Name: IPTag.ipTagType
     /// </summary>
     public BicepValue<string> IPTagType 
     {
@@ -27,7 +29,7 @@ public partial class ContainerServiceIPTag : ProvisionableConstruct
 
     /// <summary>
     /// The value of the IP tag associated with the public IP. Example:
-    /// Internet.
+    /// Internet.             Serialized Name: IPTag.tag
     /// </summary>
     public BicepValue<string> Tag 
     {

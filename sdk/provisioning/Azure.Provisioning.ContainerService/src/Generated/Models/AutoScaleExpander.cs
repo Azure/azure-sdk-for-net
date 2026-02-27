@@ -8,9 +8,10 @@ using System.Runtime.Serialization;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// If not specified, the default is &apos;random&apos;. See
+/// The expander to use when scaling up. If not specified, the default is
+/// &apos;random&apos;. See
 /// [expanders](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/FAQ.md#what-are-expanders)
-/// for more information.
+/// for more information.             Serialized Name: Expander
 /// </summary>
 public enum AutoScaleExpander
 {
@@ -19,7 +20,7 @@ public enum AutoScaleExpander
     /// unused memory) after scale-up. This is useful when you have different
     /// classes of nodes, for example, high CPU or high memory nodes, and only
     /// want to expand those when there are pending pods that need a lot of
-    /// those resources.
+    /// those resources.             Serialized Name: Expander.least-waste
     /// </summary>
     [DataMember(Name = "least-waste")]
     LeastWaste,
@@ -29,7 +30,8 @@ public enum AutoScaleExpander
     /// when scaling up. This is useful when you are using nodeSelector to
     /// make sure certain pods land on certain nodes. Note that this
     /// won&apos;t cause the autoscaler to select bigger nodes vs. smaller, as
-    /// it can add multiple smaller nodes at once.
+    /// it can add multiple smaller nodes at once.             Serialized
+    /// Name: Expander.most-pods
     /// </summary>
     [DataMember(Name = "most-pods")]
     MostPods,
@@ -38,13 +40,14 @@ public enum AutoScaleExpander
     /// Selects the node group that has the highest priority assigned by the
     /// user. It&apos;s configuration is described in more details
     /// [here](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/expander/priority/readme.md).
+    /// Serialized Name: Expander.priority
     /// </summary>
     [DataMember(Name = "priority")]
     Priority,
 
     /// <summary>
     /// Used when you don&apos;t have a particular need for the node groups to
-    /// scale differently.
+    /// scale differently.             Serialized Name: Expander.random
     /// </summary>
     [DataMember(Name = "random")]
     Random,

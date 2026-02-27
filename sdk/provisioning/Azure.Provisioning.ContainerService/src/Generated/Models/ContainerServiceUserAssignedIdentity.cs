@@ -12,12 +12,14 @@ using System;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Details about a user assigned identity.
+/// Details about a user assigned identity.             Serialized Name:
+/// UserAssignedIdentity
 /// </summary>
 public partial class ContainerServiceUserAssignedIdentity : ProvisionableConstruct
 {
     /// <summary>
-    /// The resource ID of the user assigned identity.
+    /// The resource ID of the user assigned identity.             Serialized
+    /// Name: UserAssignedIdentity.resourceId
     /// </summary>
     public BicepValue<ResourceIdentifier> ResourceId 
     {
@@ -27,7 +29,8 @@ public partial class ContainerServiceUserAssignedIdentity : ProvisionableConstru
     private BicepValue<ResourceIdentifier>? _resourceId;
 
     /// <summary>
-    /// The client ID of the user assigned identity.
+    /// The client ID of the user assigned identity.             Serialized
+    /// Name: UserAssignedIdentity.clientId
     /// </summary>
     public BicepValue<Guid> ClientId 
     {
@@ -37,7 +40,8 @@ public partial class ContainerServiceUserAssignedIdentity : ProvisionableConstru
     private BicepValue<Guid>? _clientId;
 
     /// <summary>
-    /// The object ID of the user assigned identity.
+    /// The object ID of the user assigned identity.             Serialized
+    /// Name: UserAssignedIdentity.objectId
     /// </summary>
     public BicepValue<Guid> ObjectId 
     {

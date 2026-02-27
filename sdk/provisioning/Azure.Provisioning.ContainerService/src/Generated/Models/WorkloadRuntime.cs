@@ -8,19 +8,30 @@ using System.Runtime.Serialization;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Determines the type of workload a node can run.
+/// Determines the type of workload a node can run.             Serialized
+/// Name: WorkloadRuntime
 /// </summary>
 public enum WorkloadRuntime
 {
     /// <summary>
     /// Nodes will use Kubelet to run standard OCI container workloads.
+    /// Serialized Name: WorkloadRuntime.OCIContainer
     /// </summary>
     [DataMember(Name = "OCIContainer")]
     OciContainer,
 
     /// <summary>
     /// Nodes will use Krustlet to run WASM workloads using the WASI provider
-    /// (Preview).
+    /// (Preview).             Serialized Name: WorkloadRuntime.WasmWasi
     /// </summary>
     WasmWasi,
+
+    /// <summary>
+    /// Nodes can use (Kata + Cloud Hypervisor + Hyper-V) to enable Nested
+    /// VM-based pods. Due to the use Hyper-V, AKS node OS itself is a nested
+    /// VM (the root OS) of Hyper-V. Thus it can only be used with VM series
+    /// that support Nested Virtualization such as Dv3 series.
+    /// Serialized Name: WorkloadRuntime.KataVmIsolation
+    /// </summary>
+    KataVmIsolation,
 }

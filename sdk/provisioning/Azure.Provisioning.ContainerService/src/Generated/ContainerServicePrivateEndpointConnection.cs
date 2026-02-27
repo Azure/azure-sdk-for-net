@@ -29,7 +29,8 @@ public partial class ContainerServicePrivateEndpointConnection : ProvisionableRe
 
     /// <summary>
     /// A collection of information about the state of the connection between
-    /// service consumer and provider.
+    /// service consumer and provider.             Serialized Name:
+    /// PrivateEndpointConnection.properties.privateLinkServiceConnectionState
     /// </summary>
     public ContainerServicePrivateLinkServiceConnectionState ConnectionState 
     {
@@ -58,7 +59,8 @@ public partial class ContainerServicePrivateEndpointConnection : ProvisionableRe
     private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
-    /// The current provisioning state.
+    /// The current provisioning state.             Serialized Name:
+    /// PrivateEndpointConnection.properties.provisioningState
     /// </summary>
     public BicepValue<ContainerServicePrivateEndpointConnectionProvisioningState> ProvisioningState 
     {
@@ -97,7 +99,7 @@ public partial class ContainerServicePrivateEndpointConnection : ProvisionableRe
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerServicePrivateEndpointConnection.</param>
     public ContainerServicePrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/privateEndpointConnections", resourceVersion ?? "2025-04-01")
+        : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/privateEndpointConnections", resourceVersion ?? "2025-10-01")
     {
     }
 
@@ -107,6 +109,7 @@ public partial class ContainerServicePrivateEndpointConnection : ProvisionableRe
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _connectionState = DefineModelProperty<ContainerServicePrivateLinkServiceConnectionState>("ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
         _privateEndpointId = DefineProperty<ResourceIdentifier>("PrivateEndpointId", ["properties", "privateEndpoint", "id"]);
@@ -121,6 +124,11 @@ public partial class ContainerServicePrivateEndpointConnection : ProvisionableRe
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-10-01.
+        /// </summary>
+        public static readonly string V2025_10_01 = "2025-10-01";
+
         /// <summary>
         /// 2025-04-01.
         /// </summary>

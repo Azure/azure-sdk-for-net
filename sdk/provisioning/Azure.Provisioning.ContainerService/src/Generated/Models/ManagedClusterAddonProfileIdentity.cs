@@ -11,6 +11,7 @@ namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
 /// Information of user assigned identity used by this add-on.
+/// Serialized Name: ManagedClusterAddonProfileIdentity
 /// </summary>
 public partial class ManagedClusterAddonProfileIdentity : ContainerServiceUserAssignedIdentity
 {

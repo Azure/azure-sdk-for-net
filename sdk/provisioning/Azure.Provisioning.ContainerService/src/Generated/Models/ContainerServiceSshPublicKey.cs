@@ -12,12 +12,14 @@ namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
 /// Contains information about SSH certificate public key data.
+/// Serialized Name: ContainerServiceSshPublicKey
 /// </summary>
 public partial class ContainerServiceSshPublicKey : ProvisionableConstruct
 {
     /// <summary>
     /// Certificate public key used to authenticate with VMs through SSH. The
     /// certificate must be in PEM format with or without headers.
+    /// Serialized Name: ContainerServiceSshPublicKey.keyData
     /// </summary>
     public BicepValue<string> KeyData 
     {

@@ -9,36 +9,36 @@ namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
 /// GPUInstanceProfile to be used to specify GPU MIG instance profile for
-/// supported GPU VM SKU.
+/// supported GPU VM SKU.             Serialized Name: GPUInstanceProfile
 /// </summary>
 public enum GpuInstanceProfile
 {
     /// <summary>
-    /// MIG1g.
+    /// MIG1g             Serialized Name: GPUInstanceProfile.MIG1g
     /// </summary>
     [DataMember(Name = "MIG1g")]
     Mig1G,
 
     /// <summary>
-    /// MIG2g.
+    /// MIG2g             Serialized Name: GPUInstanceProfile.MIG2g
     /// </summary>
     [DataMember(Name = "MIG2g")]
     Mig2G,
 
     /// <summary>
-    /// MIG3g.
+    /// MIG3g             Serialized Name: GPUInstanceProfile.MIG3g
     /// </summary>
     [DataMember(Name = "MIG3g")]
     Mig3G,
 
     /// <summary>
-    /// MIG4g.
+    /// MIG4g             Serialized Name: GPUInstanceProfile.MIG4g
     /// </summary>
     [DataMember(Name = "MIG4g")]
     Mig4G,
 
     /// <summary>
-    /// MIG7g.
+    /// MIG7g             Serialized Name: GPUInstanceProfile.MIG7g
     /// </summary>
     [DataMember(Name = "MIG7g")]
     Mig7G,

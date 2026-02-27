@@ -40,7 +40,7 @@ public partial class AgentPoolSnapshot : ProvisionableResource
 
     /// <summary>
     /// This is the ARM ID of the source object to be used to create the target
-    /// object.
+    /// object.             Serialized Name: CreationData.sourceResourceId
     /// </summary>
     public BicepValue<ResourceIdentifier> CreationDataSourceResourceId 
     {
@@ -50,7 +50,8 @@ public partial class AgentPoolSnapshot : ProvisionableResource
     private BicepValue<ResourceIdentifier>? _creationDataSourceResourceId;
 
     /// <summary>
-    /// The type of a snapshot. The default is NodePool.
+    /// The type of a snapshot. The default is NodePool.             Serialized
+    /// Name: Snapshot.properties.snapshotType
     /// </summary>
     public BicepValue<SnapshotType> SnapshotType 
     {
@@ -70,7 +71,8 @@ public partial class AgentPoolSnapshot : ProvisionableResource
     private BicepDictionary<string>? _tags;
 
     /// <summary>
-    /// Whether to use a FIPS-enabled OS.
+    /// Whether to use a FIPS-enabled OS.             Serialized Name:
+    /// Snapshot.properties.enableFIPS
     /// </summary>
     public BicepValue<bool> EnableFips 
     {
@@ -88,7 +90,8 @@ public partial class AgentPoolSnapshot : ProvisionableResource
     private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
-    /// The version of Kubernetes.
+    /// The version of Kubernetes.             Serialized Name:
+    /// Snapshot.properties.kubernetesVersion
     /// </summary>
     public BicepValue<string> KubernetesVersion 
     {
@@ -97,7 +100,8 @@ public partial class AgentPoolSnapshot : ProvisionableResource
     private BicepValue<string>? _kubernetesVersion;
 
     /// <summary>
-    /// The version of node image.
+    /// The version of node image.             Serialized Name:
+    /// Snapshot.properties.nodeImageVersion
     /// </summary>
     public BicepValue<string> NodeImageVersion 
     {
@@ -109,6 +113,7 @@ public partial class AgentPoolSnapshot : ProvisionableResource
     /// Specifies the OS SKU used by the agent pool. The default is Ubuntu if
     /// OSType is Linux. The default is Windows2019 when Kubernetes &lt;= 1.24
     /// or Windows2022 when Kubernetes &gt;= 1.25 if OSType is Windows.
+    /// Serialized Name: Snapshot.properties.osSku
     /// </summary>
     public BicepValue<ContainerServiceOSSku> OSSku 
     {
@@ -117,7 +122,8 @@ public partial class AgentPoolSnapshot : ProvisionableResource
     private BicepValue<ContainerServiceOSSku>? _oSSku;
 
     /// <summary>
-    /// The operating system type. The default is Linux.
+    /// The operating system type. The default is Linux.             Serialized
+    /// Name: Snapshot.properties.osType
     /// </summary>
     public BicepValue<ContainerServiceOSType> OSType 
     {
@@ -135,7 +141,8 @@ public partial class AgentPoolSnapshot : ProvisionableResource
     private SystemData? _systemData;
 
     /// <summary>
-    /// The size of the VM.
+    /// The size of the VM.             Serialized Name:
+    /// Snapshot.properties.vmSize
     /// </summary>
     public BicepValue<string> VmSize 
     {
@@ -154,7 +161,7 @@ public partial class AgentPoolSnapshot : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the AgentPoolSnapshot.</param>
     public AgentPoolSnapshot(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.ContainerService/snapshots", resourceVersion ?? "2025-04-01")
+        : base(bicepIdentifier, "Microsoft.ContainerService/snapshots", resourceVersion ?? "2025-10-01")
     {
     }
 
@@ -163,6 +170,7 @@ public partial class AgentPoolSnapshot : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
         _creationDataSourceResourceId = DefineProperty<ResourceIdentifier>("CreationDataSourceResourceId", ["properties", "creationData", "sourceResourceId"]);
@@ -183,6 +191,11 @@ public partial class AgentPoolSnapshot : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-10-01.
+        /// </summary>
+        public static readonly string V2025_10_01 = "2025-10-01";
+
         /// <summary>
         /// 2025-04-01.
         /// </summary>

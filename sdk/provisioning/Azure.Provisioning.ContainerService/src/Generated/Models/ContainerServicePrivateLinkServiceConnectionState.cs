@@ -11,12 +11,14 @@ using System;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// The state of a private link service connection.
+/// The state of a private link service connection.             Serialized
+/// Name: PrivateLinkServiceConnectionState
 /// </summary>
 public partial class ContainerServicePrivateLinkServiceConnectionState : ProvisionableConstruct
 {
     /// <summary>
-    /// The private link service connection status.
+    /// The private link service connection status.             Serialized
+    /// Name: PrivateLinkServiceConnectionState.status
     /// </summary>
     public BicepValue<ContainerServicePrivateLinkServiceConnectionStatus> Status 
     {
@@ -26,7 +28,8 @@ public partial class ContainerServicePrivateLinkServiceConnectionState : Provisi
     private BicepValue<ContainerServicePrivateLinkServiceConnectionStatus>? _status;
 
     /// <summary>
-    /// The private link service connection description.
+    /// The private link service connection description.             Serialized
+    /// Name: PrivateLinkServiceConnectionState.description
     /// </summary>
     public BicepValue<string> Description 
     {

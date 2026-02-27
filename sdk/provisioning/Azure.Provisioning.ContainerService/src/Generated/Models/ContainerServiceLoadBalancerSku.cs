@@ -8,9 +8,11 @@ using System.Runtime.Serialization;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// The default is &apos;standard&apos;. See [Azure Load Balancer
+/// The load balancer sku for the managed cluster. The default is
+/// &apos;standard&apos;. See [Azure Load Balancer
 /// SKUs](https://docs.microsoft.com/azure/load-balancer/skus) for more
 /// information about the differences between load balancer SKUs.
+/// Serialized Name: LoadBalancerSku
 /// </summary>
 public enum ContainerServiceLoadBalancerSku
 {
@@ -19,13 +21,14 @@ public enum ContainerServiceLoadBalancerSku
     /// SKU. For more information about on working with the load balancer in
     /// the managed cluster, see the [standard Load
     /// Balancer](https://docs.microsoft.com/azure/aks/load-balancer-standard)
-    /// article.
+    /// article.             Serialized Name: LoadBalancerSku.standard
     /// </summary>
     [DataMember(Name = "standard")]
     Standard,
 
     /// <summary>
     /// Use a basic Load Balancer with limited functionality.
+    /// Serialized Name: LoadBalancerSku.basic
     /// </summary>
     [DataMember(Name = "basic")]
     Basic,

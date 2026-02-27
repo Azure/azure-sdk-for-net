@@ -12,12 +12,14 @@ namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
 /// For schedules like: &apos;recur every month on the 15th&apos; or
-/// &apos;recur every 3 months on the 20th&apos;.
+/// &apos;recur every 3 months on the 20th&apos;.             Serialized Name:
+/// AbsoluteMonthlySchedule
 /// </summary>
 public partial class ContainerServiceMaintenanceAbsoluteMonthlySchedule : ProvisionableConstruct
 {
     /// <summary>
     /// Specifies the number of months between each set of occurrences.
+    /// Serialized Name: AbsoluteMonthlySchedule.intervalMonths
     /// </summary>
     public BicepValue<int> IntervalMonths 
     {
@@ -27,7 +29,8 @@ public partial class ContainerServiceMaintenanceAbsoluteMonthlySchedule : Provis
     private BicepValue<int>? _intervalMonths;
 
     /// <summary>
-    /// The date of the month.
+    /// The date of the month.             Serialized Name:
+    /// AbsoluteMonthlySchedule.dayOfMonth
     /// </summary>
     public BicepValue<int> DayOfMonth 
     {

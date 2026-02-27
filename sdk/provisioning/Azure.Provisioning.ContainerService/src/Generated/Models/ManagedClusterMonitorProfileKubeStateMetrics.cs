@@ -14,7 +14,8 @@ namespace Azure.Provisioning.ContainerService;
 /// Kube State Metrics profile for the Azure Managed Prometheus addon. These
 /// optional settings are for the kube-state-metrics pod that is deployed with
 /// the addon. See aka.ms/AzureManagedPrometheus-optional-parameters for
-/// details.
+/// details.             Serialized Name:
+/// ManagedClusterAzureMonitorProfileKubeStateMetrics
 /// </summary>
 public partial class ManagedClusterMonitorProfileKubeStateMetrics : ProvisionableConstruct
 {
@@ -22,7 +23,9 @@ public partial class ManagedClusterMonitorProfileKubeStateMetrics : Provisionabl
     /// Comma-separated list of additional Kubernetes label keys that will be
     /// used in the resource&apos;s labels metric (Example:
     /// &apos;namespaces=[k8s-label-1,k8s-label-n,...],pods=[app],...&apos;).
-    /// By default the metric contains only resource name and namespace labels.
+    /// By default the metric contains only resource name and namespace
+    /// labels.             Serialized Name:
+    /// ManagedClusterAzureMonitorProfileKubeStateMetrics.metricLabelsAllowlist
     /// </summary>
     public BicepValue<string> MetricLabelsAllowlist 
     {
@@ -35,7 +38,9 @@ public partial class ManagedClusterMonitorProfileKubeStateMetrics : Provisionabl
     /// Comma-separated list of Kubernetes annotation keys that will be used in
     /// the resource&apos;s labels metric (Example:
     /// &apos;namespaces=[kubernetes.io/team,...],pods=[kubernetes.io/team],...&apos;).
-    /// By default the metric contains only resource name and namespace labels.
+    /// By default the metric contains only resource name and namespace
+    /// labels.             Serialized Name:
+    /// ManagedClusterAzureMonitorProfileKubeStateMetrics.metricAnnotationsAllowList
     /// </summary>
     public BicepValue<string> MetricAnnotationsAllowList 
     {

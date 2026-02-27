@@ -8,12 +8,14 @@ using System.Runtime.Serialization;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Network dataplane used in the Kubernetes cluster.
+/// Network dataplane used in the Kubernetes cluster.             Serialized
+/// Name: NetworkDataplane
 /// </summary>
 public enum NetworkDataplane
 {
     /// <summary>
-    /// Use Azure network dataplane.
+    /// Use Azure network dataplane.             Serialized Name:
+    /// NetworkDataplane.azure
     /// </summary>
     [DataMember(Name = "azure")]
     Azure,
@@ -21,7 +23,8 @@ public enum NetworkDataplane
     /// <summary>
     /// Use Cilium network dataplane. See [Azure CNI Powered by
     /// Cilium](https://learn.microsoft.com/azure/aks/azure-cni-powered-by-cilium)
-    /// for more information.
+    /// for more information.             Serialized Name:
+    /// NetworkDataplane.cilium
     /// </summary>
     [DataMember(Name = "cilium")]
     Cilium,

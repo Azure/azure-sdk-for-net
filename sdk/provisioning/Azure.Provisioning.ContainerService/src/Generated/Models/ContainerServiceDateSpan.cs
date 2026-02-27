@@ -11,12 +11,14 @@ using System;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// For example, between &apos;2022-12-23&apos; and &apos;2023-01-05&apos;.
+/// A date range. For example, between &apos;2022-12-23&apos; and
+/// &apos;2023-01-05&apos;.             Serialized Name: DateSpan
 /// </summary>
 public partial class ContainerServiceDateSpan : ProvisionableConstruct
 {
     /// <summary>
-    /// The start date of the date span.
+    /// The start date of the date span.             Serialized Name:
+    /// DateSpan.start
     /// </summary>
     public BicepValue<DateTimeOffset> Start 
     {
@@ -26,7 +28,7 @@ public partial class ContainerServiceDateSpan : ProvisionableConstruct
     private BicepValue<DateTimeOffset>? _start;
 
     /// <summary>
-    /// The end date of the date span.
+    /// The end date of the date span.             Serialized Name: DateSpan.end
     /// </summary>
     public BicepValue<DateTimeOffset> End 
     {

@@ -12,12 +12,14 @@ using System;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Cluster HTTP proxy configuration.
+/// Cluster HTTP proxy configuration.             Serialized Name:
+/// ManagedClusterHttpProxyConfig
 /// </summary>
 public partial class ManagedClusterHttpProxyConfig : ProvisionableConstruct
 {
     /// <summary>
-    /// The HTTP proxy server endpoint to use.
+    /// The HTTP proxy server endpoint to use.             Serialized Name:
+    /// ManagedClusterHttpProxyConfig.httpProxy
     /// </summary>
     public BicepValue<string> HttpProxy 
     {
@@ -27,7 +29,8 @@ public partial class ManagedClusterHttpProxyConfig : ProvisionableConstruct
     private BicepValue<string>? _httpProxy;
 
     /// <summary>
-    /// The HTTPS proxy server endpoint to use.
+    /// The HTTPS proxy server endpoint to use.             Serialized Name:
+    /// ManagedClusterHttpProxyConfig.httpsProxy
     /// </summary>
     public BicepValue<string> HttpsProxy 
     {
@@ -37,7 +40,8 @@ public partial class ManagedClusterHttpProxyConfig : ProvisionableConstruct
     private BicepValue<string>? _httpsProxy;
 
     /// <summary>
-    /// The endpoints that should not go through proxy.
+    /// The endpoints that should not go through proxy.             Serialized
+    /// Name: ManagedClusterHttpProxyConfig.noProxy
     /// </summary>
     public BicepList<string> NoProxy 
     {
@@ -48,6 +52,7 @@ public partial class ManagedClusterHttpProxyConfig : ProvisionableConstruct
 
     /// <summary>
     /// Alternative CA cert to use for connecting to proxy servers.
+    /// Serialized Name: ManagedClusterHttpProxyConfig.trustedCa
     /// </summary>
     public BicepValue<string> TrustedCA 
     {

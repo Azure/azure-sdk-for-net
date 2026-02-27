@@ -6,17 +6,18 @@
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Allow or deny public network access for AKS.
+/// PublicNetworkAccess of the managedCluster. Allow or deny public network
+/// access for AKS             Serialized Name: PublicNetworkAccess
 /// </summary>
 public enum ContainerServicePublicNetworkAccess
 {
     /// <summary>
-    /// Enabled.
+    /// Enabled             Serialized Name: PublicNetworkAccess.Enabled
     /// </summary>
     Enabled,
 
     /// <summary>
-    /// Disabled.
+    /// Disabled             Serialized Name: PublicNetworkAccess.Disabled
     /// </summary>
     Disabled,
 }

@@ -12,13 +12,16 @@ using System;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// For more details see [managed AAD on
+/// AADProfile specifies attributes for Azure Active Directory integration. For
+/// more details see [managed AAD on
 /// AKS](https://docs.microsoft.com/azure/aks/managed-aad).
+/// Serialized Name: ManagedClusterAADProfile
 /// </summary>
 public partial class ManagedClusterAadProfile : ProvisionableConstruct
 {
     /// <summary>
-    /// Whether to enable managed AAD.
+    /// Whether to enable managed AAD.             Serialized Name:
+    /// ManagedClusterAADProfile.managed
     /// </summary>
     public BicepValue<bool> IsManagedAadEnabled 
     {
@@ -29,6 +32,7 @@ public partial class ManagedClusterAadProfile : ProvisionableConstruct
 
     /// <summary>
     /// Whether to enable Azure RBAC for Kubernetes authorization.
+    /// Serialized Name: ManagedClusterAADProfile.enableAzureRBAC
     /// </summary>
     public BicepValue<bool> IsAzureRbacEnabled 
     {
@@ -39,7 +43,8 @@ public partial class ManagedClusterAadProfile : ProvisionableConstruct
 
     /// <summary>
     /// The list of AAD group object IDs that will have admin role of the
-    /// cluster.
+    /// cluster.             Serialized Name:
+    /// ManagedClusterAADProfile.adminGroupObjectIDs
     /// </summary>
     public BicepList<Guid> AdminGroupObjectIds 
     {
@@ -50,7 +55,8 @@ public partial class ManagedClusterAadProfile : ProvisionableConstruct
 
     /// <summary>
     /// (DEPRECATED) The client AAD application ID. Learn more at
-    /// https://aka.ms/aks/aad-legacy.
+    /// https://aka.ms/aks/aad-legacy.             Serialized Name:
+    /// ManagedClusterAADProfile.clientAppID
     /// </summary>
     public BicepValue<Guid> ClientAppId 
     {
@@ -61,7 +67,8 @@ public partial class ManagedClusterAadProfile : ProvisionableConstruct
 
     /// <summary>
     /// (DEPRECATED) The server AAD application ID. Learn more at
-    /// https://aka.ms/aks/aad-legacy.
+    /// https://aka.ms/aks/aad-legacy.             Serialized Name:
+    /// ManagedClusterAADProfile.serverAppID
     /// </summary>
     public BicepValue<Guid> ServerAppId 
     {
@@ -72,7 +79,8 @@ public partial class ManagedClusterAadProfile : ProvisionableConstruct
 
     /// <summary>
     /// (DEPRECATED) The server AAD application secret. Learn more at
-    /// https://aka.ms/aks/aad-legacy.
+    /// https://aka.ms/aks/aad-legacy.             Serialized Name:
+    /// ManagedClusterAADProfile.serverAppSecret
     /// </summary>
     public BicepValue<string> ServerAppSecret 
     {
@@ -83,7 +91,8 @@ public partial class ManagedClusterAadProfile : ProvisionableConstruct
 
     /// <summary>
     /// The AAD tenant ID to use for authentication. If not specified, will use
-    /// the tenant of the deployment subscription.
+    /// the tenant of the deployment subscription.             Serialized
+    /// Name: ManagedClusterAADProfile.tenantID
     /// </summary>
     public BicepValue<Guid> TenantId 
     {

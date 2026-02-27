@@ -7,31 +7,37 @@ namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
 /// The current provisioning state of trusted access role binding.
+/// Serialized Name: TrustedAccessRoleBindingProvisioningState
 /// </summary>
 public enum ContainerServiceTrustedAccessRoleBindingProvisioningState
 {
     /// <summary>
-    /// Canceled.
+    /// Canceled             Serialized Name:
+    /// TrustedAccessRoleBindingProvisioningState.Canceled
     /// </summary>
     Canceled,
 
     /// <summary>
-    /// Deleting.
+    /// Deleting             Serialized Name:
+    /// TrustedAccessRoleBindingProvisioningState.Deleting
     /// </summary>
     Deleting,
 
     /// <summary>
-    /// Failed.
+    /// Failed             Serialized Name:
+    /// TrustedAccessRoleBindingProvisioningState.Failed
     /// </summary>
     Failed,
 
     /// <summary>
-    /// Succeeded.
+    /// Succeeded             Serialized Name:
+    /// TrustedAccessRoleBindingProvisioningState.Succeeded
     /// </summary>
     Succeeded,
 
     /// <summary>
-    /// Updating.
+    /// Updating             Serialized Name:
+    /// TrustedAccessRoleBindingProvisioningState.Updating
     /// </summary>
     Updating,
 }

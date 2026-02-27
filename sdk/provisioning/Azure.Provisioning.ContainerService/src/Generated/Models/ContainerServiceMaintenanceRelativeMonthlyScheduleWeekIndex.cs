@@ -6,32 +6,33 @@
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Specifies on which week of the month the dayOfWeek applies.
+/// The week index. Specifies on which week of the month the dayOfWeek applies.
+/// Serialized Name: Type
 /// </summary>
 public enum ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex
 {
     /// <summary>
-    /// First week of the month.
+    /// First week of the month.             Serialized Name: Type.First
     /// </summary>
     First,
 
     /// <summary>
-    /// Second week of the month.
+    /// Second week of the month.             Serialized Name: Type.Second
     /// </summary>
     Second,
 
     /// <summary>
-    /// Third week of the month.
+    /// Third week of the month.             Serialized Name: Type.Third
     /// </summary>
     Third,
 
     /// <summary>
-    /// Fourth week of the month.
+    /// Fourth week of the month.             Serialized Name: Type.Fourth
     /// </summary>
     Fourth,
 
     /// <summary>
-    /// Last week of the month.
+    /// Last week of the month.             Serialized Name: Type.Last
     /// </summary>
     Last,
 }

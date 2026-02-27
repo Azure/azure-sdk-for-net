@@ -13,6 +13,7 @@ namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
 /// Microsoft Defender settings for the security profile.
+/// Serialized Name: ManagedClusterSecurityProfileDefender
 /// </summary>
 public partial class ManagedClusterSecurityProfileDefender : ProvisionableConstruct
 {
@@ -20,7 +21,9 @@ public partial class ManagedClusterSecurityProfileDefender : ProvisionableConstr
     /// Resource ID of the Log Analytics workspace to be associated with
     /// Microsoft Defender. When Microsoft Defender is enabled, this field is
     /// required and must be a valid workspace resource ID. When Microsoft
-    /// Defender is disabled, leave the field empty.
+    /// Defender is disabled, leave the field empty.             Serialized
+    /// Name:
+    /// ManagedClusterSecurityProfileDefender.logAnalyticsWorkspaceResourceId
     /// </summary>
     public BicepValue<ResourceIdentifier> LogAnalyticsWorkspaceResourceId 
     {
@@ -30,7 +33,8 @@ public partial class ManagedClusterSecurityProfileDefender : ProvisionableConstr
     private BicepValue<ResourceIdentifier>? _logAnalyticsWorkspaceResourceId;
 
     /// <summary>
-    /// Whether to enable Defender threat detection.
+    /// Whether to enable Defender threat detection             Serialized
+    /// Name: ManagedClusterSecurityProfileDefenderSecurityMonitoring.enabled
     /// </summary>
     public BicepValue<bool> IsSecurityMonitoringEnabled 
     {

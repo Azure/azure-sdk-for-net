@@ -6,13 +6,15 @@
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Manner in which the OS on your nodes is updated. The default is NodeImage.
+/// Node OS Upgrade Channel. Manner in which the OS on your nodes is updated.
+/// The default is NodeImage.             Serialized Name: NodeOSUpgradeChannel
 /// </summary>
 public enum ManagedClusterNodeOSUpgradeChannel
 {
     /// <summary>
     /// No attempt to update your machines OS will be made either by OS or by
-    /// rolling VHDs. This means you are responsible for your security updates.
+    /// rolling VHDs. This means you are responsible for your security updates
+    /// Serialized Name: NodeOSUpgradeChannel.None
     /// </summary>
     None,
 
@@ -24,7 +26,8 @@ public enum ManagedClusterNodeOSUpgradeChannel
     /// Ubuntu and Mariner apply security patches through unattended upgrade
     /// roughly once a day around 06:00 UTC. Windows does not apply security
     /// patches automatically and so for them this option is equivalent to
-    /// None till further notice.
+    /// None till further notice             Serialized Name:
+    /// NodeOSUpgradeChannel.Unmanaged
     /// </summary>
     Unmanaged,
 
@@ -33,7 +36,20 @@ public enum ManagedClusterNodeOSUpgradeChannel
     /// fixes and bugfixes on a weekly cadence. With the VHD update machines
     /// will be rolling reimaged to that VHD following maintenance windows and
     /// surge settings. No extra VHD cost is incurred when choosing this
-    /// option as AKS hosts the images.
+    /// option as AKS hosts the images.             Serialized Name:
+    /// NodeOSUpgradeChannel.NodeImage
     /// </summary>
     NodeImage,
+
+    /// <summary>
+    /// AKS downloads and updates the nodes with tested security updates. These
+    /// updates honor the maintenance window settings and produce a new VHD
+    /// that is used on new nodes. On some occasions it&apos;s not possible to
+    /// apply the updates in place, in such cases the existing nodes will also
+    /// be re-imaged to the newly produced VHD in order to apply the changes.
+    /// This option incurs an extra cost of hosting the new Security Patch
+    /// VHDs in your resource group for just in time consumption.
+    /// Serialized Name: NodeOSUpgradeChannel.SecurityPatch
+    /// </summary>
+    SecurityPatch,
 }

@@ -11,7 +11,8 @@ using System;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Profile for Windows VMs in the managed cluster.
+/// Profile for Windows VMs in the managed cluster.             Serialized
+/// Name: ManagedClusterWindowsProfile
 /// </summary>
 public partial class ManagedClusterWindowsProfile : ProvisionableConstruct
 {
@@ -30,7 +31,8 @@ public partial class ManagedClusterWindowsProfile : ProvisionableConstruct
     /// &quot;sys&quot;, &quot;test2&quot;, &quot;test3&quot;,
     /// &quot;user4&quot;, &quot;user5&quot;. &lt;br&gt;&lt;br&gt;
     /// **Minimum-length:** 1 character &lt;br&gt;&lt;br&gt; **Max-length:**
-    /// 20 characters.
+    /// 20 characters             Serialized Name:
+    /// ManagedClusterWindowsProfile.adminUsername
     /// </summary>
     public BicepValue<string> AdminUsername 
     {
@@ -50,7 +52,8 @@ public partial class ManagedClusterWindowsProfile : ProvisionableConstruct
     /// **Disallowed values:** &quot;abc@123&quot;, &quot;P@$$w0rd&quot;,
     /// &quot;P@ssw0rd&quot;, &quot;P@ssword123&quot;, &quot;Pa$$word&quot;,
     /// &quot;pass@word1&quot;, &quot;Password!&quot;, &quot;Password1&quot;,
-    /// &quot;Password22&quot;, &quot;iloveyou!&quot;.
+    /// &quot;Password22&quot;, &quot;iloveyou!&quot;             Serialized
+    /// Name: ManagedClusterWindowsProfile.adminPassword
     /// </summary>
     public BicepValue<string> AdminPassword 
     {
@@ -62,7 +65,8 @@ public partial class ManagedClusterWindowsProfile : ProvisionableConstruct
     /// <summary>
     /// The license type to use for Windows VMs. See [Azure Hybrid User
     /// Benefits](https://azure.microsoft.com/pricing/hybrid-benefit/faq/) for
-    /// more details.
+    /// more details.             Serialized Name:
+    /// ManagedClusterWindowsProfile.licenseType
     /// </summary>
     public BicepValue<WindowsVmLicenseType> LicenseType 
     {
@@ -72,8 +76,10 @@ public partial class ManagedClusterWindowsProfile : ProvisionableConstruct
     private BicepValue<WindowsVmLicenseType>? _licenseType;
 
     /// <summary>
-    /// For more details on CSI proxy, see the [CSI proxy GitHub
-    /// repo](https://github.com/kubernetes-csi/csi-proxy).
+    /// Whether to enable CSI proxy. For more details on CSI proxy, see the
+    /// [CSI proxy GitHub repo](https://github.com/kubernetes-csi/csi-proxy).
+    /// Serialized Name:
+    /// ManagedClusterWindowsProfile.enableCSIProxy
     /// </summary>
     public BicepValue<bool> IsCsiProxyEnabled 
     {
@@ -83,7 +89,8 @@ public partial class ManagedClusterWindowsProfile : ProvisionableConstruct
     private BicepValue<bool>? _isCsiProxyEnabled;
 
     /// <summary>
-    /// The Windows gMSA Profile in the Managed Cluster.
+    /// The Windows gMSA Profile in the Managed Cluster.             Serialized
+    /// Name: ManagedClusterWindowsProfile.gmsaProfile
     /// </summary>
     public WindowsGmsaProfile GmsaProfile 
     {

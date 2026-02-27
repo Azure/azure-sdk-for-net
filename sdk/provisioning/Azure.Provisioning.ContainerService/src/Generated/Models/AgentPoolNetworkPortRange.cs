@@ -11,13 +11,14 @@ using System;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// The port range.
+/// The port range.             Serialized Name: PortRange
 /// </summary>
 public partial class AgentPoolNetworkPortRange : ProvisionableConstruct
 {
     /// <summary>
     /// The minimum port that is included in the range. It should be ranged
     /// from 1 to 65535, and be less than or equal to portEnd.
+    /// Serialized Name: PortRange.portStart
     /// </summary>
     public BicepValue<int> PortStart 
     {
@@ -29,6 +30,7 @@ public partial class AgentPoolNetworkPortRange : ProvisionableConstruct
     /// <summary>
     /// The maximum port that is included in the range. It should be ranged
     /// from 1 to 65535, and be greater than or equal to portStart.
+    /// Serialized Name: PortRange.portEnd
     /// </summary>
     public BicepValue<int> PortEnd 
     {
@@ -38,7 +40,8 @@ public partial class AgentPoolNetworkPortRange : ProvisionableConstruct
     private BicepValue<int>? _portEnd;
 
     /// <summary>
-    /// The network protocol of the port.
+    /// The network protocol of the port.             Serialized Name:
+    /// PortRange.protocol
     /// </summary>
     public BicepValue<AgentPoolNetworkPortProtocol> Protocol 
     {

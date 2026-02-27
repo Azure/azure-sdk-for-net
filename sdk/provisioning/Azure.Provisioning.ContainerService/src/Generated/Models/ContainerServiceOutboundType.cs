@@ -8,9 +8,11 @@ using System.Runtime.Serialization;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// This can only be set at cluster creation time and cannot be changed later.
-/// For more information see [egress outbound
+/// The outbound (egress) routing method. This can only be set at cluster
+/// creation time and cannot be changed later. For more information see
+/// [egress outbound
 /// type](https://docs.microsoft.com/azure/aks/egress-outboundtype).
+/// Serialized Name: OutboundType
 /// </summary>
 public enum ContainerServiceOutboundType
 {
@@ -19,6 +21,7 @@ public enum ContainerServiceOutboundType
     /// This supports Kubernetes services of type &apos;loadBalancer&apos;.
     /// For more information see [outbound type
     /// loadbalancer](https://docs.microsoft.com/azure/aks/egress-outboundtype#outbound-type-of-loadbalancer).
+    /// Serialized Name: OutboundType.loadBalancer
     /// </summary>
     [DataMember(Name = "loadBalancer")]
     LoadBalancer,
@@ -28,12 +31,14 @@ public enum ContainerServiceOutboundType
     /// and requires proper network configuration. For more information see
     /// [outbound type
     /// userDefinedRouting](https://docs.microsoft.com/azure/aks/egress-outboundtype#outbound-type-of-userdefinedrouting).
+    /// Serialized Name: OutboundType.userDefinedRouting
     /// </summary>
     [DataMember(Name = "userDefinedRouting")]
     UserDefinedRouting,
 
     /// <summary>
-    /// The AKS-managed NAT gateway is used for egress.
+    /// The AKS-managed NAT gateway is used for egress.             Serialized
+    /// Name: OutboundType.managedNATGateway
     /// </summary>
     [DataMember(Name = "managedNATGateway")]
     ManagedNatGateway,
@@ -41,8 +46,18 @@ public enum ContainerServiceOutboundType
     /// <summary>
     /// The user-assigned NAT gateway associated to the cluster subnet is used
     /// for egress. This is an advanced scenario and requires proper network
-    /// configuration.
+    /// configuration.             Serialized Name:
+    /// OutboundType.userAssignedNATGateway
     /// </summary>
     [DataMember(Name = "userAssignedNATGateway")]
     UserAssignedNatGateway,
+
+    /// <summary>
+    /// The AKS cluster is not set with any outbound-type. All AKS nodes
+    /// follows Azure VM default outbound behavior. Please refer to
+    /// https://azure.microsoft.com/en-us/updates/default-outbound-access-for-vms-in-azure-will-be-retired-transition-to-a-new-method-of-internet-access/
+    /// Serialized Name: OutboundType.none
+    /// </summary>
+    [DataMember(Name = "none")]
+    None,
 }

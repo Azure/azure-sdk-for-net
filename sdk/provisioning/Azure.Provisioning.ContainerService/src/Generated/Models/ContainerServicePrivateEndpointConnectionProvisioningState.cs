@@ -6,32 +6,38 @@
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// The current provisioning state.
+/// The current provisioning state.             Serialized Name:
+/// PrivateEndpointConnectionProvisioningState
 /// </summary>
 public enum ContainerServicePrivateEndpointConnectionProvisioningState
 {
     /// <summary>
-    /// Canceled.
+    /// Canceled             Serialized Name:
+    /// PrivateEndpointConnectionProvisioningState.Canceled
     /// </summary>
     Canceled,
 
     /// <summary>
-    /// Creating.
+    /// Creating             Serialized Name:
+    /// PrivateEndpointConnectionProvisioningState.Creating
     /// </summary>
     Creating,
 
     /// <summary>
-    /// Deleting.
+    /// Deleting             Serialized Name:
+    /// PrivateEndpointConnectionProvisioningState.Deleting
     /// </summary>
     Deleting,
 
     /// <summary>
-    /// Failed.
+    /// Failed             Serialized Name:
+    /// PrivateEndpointConnectionProvisioningState.Failed
     /// </summary>
     Failed,
 
     /// <summary>
-    /// Succeeded.
+    /// Succeeded             Serialized Name:
+    /// PrivateEndpointConnectionProvisioningState.Succeeded
     /// </summary>
     Succeeded,
 }

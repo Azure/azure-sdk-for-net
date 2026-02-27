@@ -12,12 +12,14 @@ using System;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Delegated resource properties - internal use only.
+/// Delegated resource properties - internal use only.             Serialized
+/// Name: DelegatedResource
 /// </summary>
 public partial class ManagedClusterDelegatedIdentity : ProvisionableConstruct
 {
     /// <summary>
     /// The ARM resource id of the delegated resource - internal use only.
+    /// Serialized Name: DelegatedResource.resourceId
     /// </summary>
     public BicepValue<ResourceIdentifier> ResourceId 
     {
@@ -28,6 +30,7 @@ public partial class ManagedClusterDelegatedIdentity : ProvisionableConstruct
 
     /// <summary>
     /// The tenant id of the delegated resource - internal use only.
+    /// Serialized Name: DelegatedResource.tenantId
     /// </summary>
     public BicepValue<Guid> TenantId 
     {
@@ -38,7 +41,7 @@ public partial class ManagedClusterDelegatedIdentity : ProvisionableConstruct
 
     /// <summary>
     /// The delegation id of the referral delegation (optional) - internal use
-    /// only.
+    /// only.             Serialized Name: DelegatedResource.referralResource
     /// </summary>
     public BicepValue<string> ReferralResource 
     {
@@ -49,6 +52,7 @@ public partial class ManagedClusterDelegatedIdentity : ProvisionableConstruct
 
     /// <summary>
     /// The source resource location - internal use only.
+    /// Serialized Name: DelegatedResource.location
     /// </summary>
     public BicepValue<AzureLocation> Location 
     {

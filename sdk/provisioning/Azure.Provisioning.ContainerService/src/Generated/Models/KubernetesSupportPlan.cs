@@ -6,21 +6,24 @@
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Different support tiers for AKS managed clusters.
+/// Different support tiers for AKS managed clusters             Serialized
+/// Name: KubernetesSupportPlan
 /// </summary>
 public enum KubernetesSupportPlan
 {
     /// <summary>
     /// Support for the version is the same as for the open source Kubernetes
     /// offering. Official Kubernetes open source community support versions
-    /// for 1 year after release.
+    /// for 1 year after release.             Serialized Name:
+    /// KubernetesSupportPlan.KubernetesOfficial
     /// </summary>
     KubernetesOfficial,
 
     /// <summary>
     /// Support for the version extended past the KubernetesOfficial support of
     /// 1 year. AKS continues to patch CVEs for another 1 year, for a total of
-    /// 2 years of support.
+    /// 2 years of support.             Serialized Name:
+    /// KubernetesSupportPlan.AKSLongTermSupport
     /// </summary>
     AKSLongTermSupport,
 }

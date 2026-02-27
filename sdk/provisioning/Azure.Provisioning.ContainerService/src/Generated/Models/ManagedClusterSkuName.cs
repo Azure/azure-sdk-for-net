@@ -16,7 +16,17 @@ public enum ManagedClusterSkuName
     Basic,
 
     /// <summary>
-    /// Base option for the AKS control plane.
+    /// Base option for the AKS control plane.             Serialized Name:
+    /// ManagedClusterSKUName.Base
     /// </summary>
     Base,
+
+    /// <summary>
+    /// Automatic clusters are optimized to run most production workloads with
+    /// configuration that follows AKS best practices and recommendations for
+    /// cluster and workload setup, scalability, and security. For more
+    /// details about Automatic clusters see aka.ms/aks/automatic.
+    /// Serialized Name: ManagedClusterSKUName.Automatic
+    /// </summary>
+    Automatic,
 }
