@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="netIPv4TcpKeepaliveProbes"> Sysctl setting net.ipv4.tcp_keepalive_probes. </param>
         /// <param name="netIPv4TcpKeepaliveIntvl"> Sysctl setting net.ipv4.tcp_keepalive_intvl. </param>
         /// <param name="netIPv4TcpTwReuse"> Sysctl setting net.ipv4.tcp_tw_reuse. </param>
-        /// <param name="netIpv4IPLocalPortRange"> Sysctl setting net.ipv4.ip_local_port_range. </param>
+        /// <param name="netIPv4IPLocalPortRange"> Sysctl setting net.ipv4.ip_local_port_range. </param>
         /// <param name="netIPv4NeighDefaultGcThresh1"> Sysctl setting net.ipv4.neigh.default.gc_thresh1. </param>
         /// <param name="netIPv4NeighDefaultGcThresh2"> Sysctl setting net.ipv4.neigh.default.gc_thresh2. </param>
         /// <param name="netIPv4NeighDefaultGcThresh3"> Sysctl setting net.ipv4.neigh.default.gc_thresh3. </param>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="vmSwappiness"> Sysctl setting vm.swappiness. </param>
         /// <param name="vmVfsCachePressure"> Sysctl setting vm.vfs_cache_pressure. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SysctlConfig(int? netCoreSomaxconn, int? netCoreNetdevMaxBacklog, int? netCoreRmemDefault, int? netCoreRmemMax, int? netCoreWmemDefault, int? netCoreWmemMax, int? netCoreOptmemMax, int? netIPv4TcpMaxSynBacklog, int? netIPv4TcpMaxTwBuckets, int? netIPv4TcpFinTimeout, int? netIPv4TcpKeepaliveTime, int? netIPv4TcpKeepaliveProbes, int? netIPv4TcpKeepaliveIntvl, bool? netIPv4TcpTwReuse, string netIpv4IPLocalPortRange, int? netIPv4NeighDefaultGcThresh1, int? netIPv4NeighDefaultGcThresh2, int? netIPv4NeighDefaultGcThresh3, int? netNetfilterNfConntrackMax, int? netNetfilterNfConntrackBuckets, int? fsInotifyMaxUserWatches, int? fsFileMax, int? fsAioMaxNr, int? fsNrOpen, int? kernelThreadsMax, int? vmMaxMapCount, int? vmSwappiness, int? vmVfsCachePressure, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SysctlConfig(int? netCoreSomaxconn, int? netCoreNetdevMaxBacklog, int? netCoreRmemDefault, int? netCoreRmemMax, int? netCoreWmemDefault, int? netCoreWmemMax, int? netCoreOptmemMax, int? netIPv4TcpMaxSynBacklog, int? netIPv4TcpMaxTwBuckets, int? netIPv4TcpFinTimeout, int? netIPv4TcpKeepaliveTime, int? netIPv4TcpKeepaliveProbes, int? netIPv4TcpKeepaliveIntvl, bool? netIPv4TcpTwReuse, string netIPv4IPLocalPortRange, int? netIPv4NeighDefaultGcThresh1, int? netIPv4NeighDefaultGcThresh2, int? netIPv4NeighDefaultGcThresh3, int? netNetfilterNfConntrackMax, int? netNetfilterNfConntrackBuckets, int? fsInotifyMaxUserWatches, int? fsFileMax, int? fsAioMaxNr, int? fsNrOpen, int? kernelThreadsMax, int? vmMaxMapCount, int? vmSwappiness, int? vmVfsCachePressure, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NetCoreSomaxconn = netCoreSomaxconn;
             NetCoreNetdevMaxBacklog = netCoreNetdevMaxBacklog;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             NetIPv4TcpKeepaliveProbes = netIPv4TcpKeepaliveProbes;
             NetIPv4TcpKeepaliveIntvl = netIPv4TcpKeepaliveIntvl;
             NetIPv4TcpTwReuse = netIPv4TcpTwReuse;
-            NetIpv4IPLocalPortRange = netIpv4IPLocalPortRange;
+            NetIPv4IPLocalPortRange = netIPv4IPLocalPortRange;
             NetIPv4NeighDefaultGcThresh1 = netIPv4NeighDefaultGcThresh1;
             NetIPv4NeighDefaultGcThresh2 = netIPv4NeighDefaultGcThresh2;
             NetIPv4NeighDefaultGcThresh3 = netIPv4NeighDefaultGcThresh3;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Sysctl setting net.ipv4.ip_local_port_range. </summary>
         [WirePath("netIpv4IpLocalPortRange")]
-        public string NetIpv4IPLocalPortRange { get; set; }
+        public string NetIPv4IPLocalPortRange { get; set; }
 
         /// <summary> Sysctl setting net.ipv4.neigh.default.gc_thresh1. </summary>
         [WirePath("netIpv4NeighDefaultGcThresh1")]

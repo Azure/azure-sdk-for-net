@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary> Defines the upgrade strategy for the agent pool. The default is Rolling. </summary>
         [WirePath("properties.upgradeStrategy")]
-        public UpgradeStrategy? UpgradeStrategy
+        public AgentPoolUpgradeStrategy? UpgradeStrategy
         {
             get
             {

@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("netIpv4TcpTwReuse"u8);
                 writer.WriteBooleanValue(NetIPv4TcpTwReuse.Value);
             }
-            if (Optional.IsDefined(NetIpv4IPLocalPortRange))
+            if (Optional.IsDefined(NetIPv4IPLocalPortRange))
             {
                 writer.WritePropertyName("netIpv4IpLocalPortRange"u8);
-                writer.WriteStringValue(NetIpv4IPLocalPortRange);
+                writer.WriteStringValue(NetIPv4IPLocalPortRange);
             }
             if (Optional.IsDefined(NetIPv4NeighDefaultGcThresh1))
             {
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             int? netIPv4TcpKeepaliveProbes = default;
             int? netIPv4TcpKeepaliveIntvl = default;
             bool? netIPv4TcpTwReuse = default;
-            string netIpv4IPLocalPortRange = default;
+            string netIPv4IPLocalPortRange = default;
             int? netIPv4NeighDefaultGcThresh1 = default;
             int? netIPv4NeighDefaultGcThresh2 = default;
             int? netIPv4NeighDefaultGcThresh3 = default;
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (prop.NameEquals("netIpv4IpLocalPortRange"u8))
                 {
-                    netIpv4IPLocalPortRange = prop.Value.GetString();
+                    netIPv4IPLocalPortRange = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("netIpv4NeighDefaultGcThresh1"u8))
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 netIPv4TcpKeepaliveProbes,
                 netIPv4TcpKeepaliveIntvl,
                 netIPv4TcpTwReuse,
-                netIpv4IPLocalPortRange,
+                netIPv4IPLocalPortRange,
                 netIPv4NeighDefaultGcThresh1,
                 netIPv4NeighDefaultGcThresh2,
                 netIPv4NeighDefaultGcThresh3,

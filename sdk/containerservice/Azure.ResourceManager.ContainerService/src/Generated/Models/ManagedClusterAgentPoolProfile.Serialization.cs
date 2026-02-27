@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             string orchestratorVersion = default;
             string currentOrchestratorVersion = default;
             string nodeImageVersion = default;
-            UpgradeStrategy? upgradeStrategy = default;
+            AgentPoolUpgradeStrategy? upgradeStrategy = default;
             AgentPoolUpgradeSettings upgradeSettings = default;
             AgentPoolBlueGreenUpgradeSettings upgradeSettingsBlueGreen = default;
             string provisioningState = default;
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    upgradeStrategy = new UpgradeStrategy(prop.Value.GetString());
+                    upgradeStrategy = new AgentPoolUpgradeStrategy(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("upgradeSettings"u8))
