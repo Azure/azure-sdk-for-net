@@ -1,15 +1,10 @@
 # Release History
 
-## ChangeLogH2Title
-
-ChangeLogSdkDescription
+## 1.0.0-beta.1 (Unreleased)
 
 ### Features Added
 
-This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
-
-    - Support for Entra-id token authentication libraries for for Npgsql to connect to a PostgreSQL database
-
-This package is a Generally available. 
-
-> NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
+- Entra ID authentication extension for Npgsql PostgreSQL driver
+- Synchronous and asynchronous `UseEntraAuthentication` extension methods for `NpgsqlDataSourceBuilder`
+- Automatic username extraction from JWT token claims (`upn`, `xms_mirid`, `preferred_username`, `unique_name`)
+- Password provider integration with Npgsql data source builder for token-based authentication

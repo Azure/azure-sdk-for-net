@@ -1,9 +1,15 @@
-﻿// Copyright (c) Microsoft Corporation.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable enable
+
+using System;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Npgsql;
 
 namespace Microsoft.Azure.PostgreSQL.Auth;
@@ -29,10 +35,11 @@ public static class EntraIdExtension
     /// <returns>The configured NpgsqlDataSourceBuilder.</returns>
     public static NpgsqlDataSourceBuilder UseEntraAuthentication(this NpgsqlDataSourceBuilder dataSourceBuilder, TokenCredential credential, CancellationToken cancellationToken = default)
     {
+        Argument.AssertNotNull(dataSourceBuilder, nameof(dataSourceBuilder));
+        Argument.AssertNotNull(credential, nameof(credential));
 
         if (dataSourceBuilder.ConnectionStringBuilder.Username == null)
         {
-
             // Ensure to use the management scope, so the token contains user names for all managed identity types - e.g. user and service principal
             var token = credential.GetToken(s_managementTokenRequestContext, cancellationToken);
             var username = TryGetUsernameFromToken(token.Token);
@@ -63,10 +70,11 @@ public static class EntraIdExtension
     /// <returns>A task that represents the asynchronous operation. The task result contains the configured NpgsqlDataSourceBuilder.</returns>
     public static async Task<NpgsqlDataSourceBuilder> UseEntraAuthenticationAsync(this NpgsqlDataSourceBuilder dataSourceBuilder, TokenCredential credential, CancellationToken cancellationToken = default)
     {
+        Argument.AssertNotNull(dataSourceBuilder, nameof(dataSourceBuilder));
+        Argument.AssertNotNull(credential, nameof(credential));
 
         if (dataSourceBuilder.ConnectionStringBuilder.Username == null)
         {
-
             // Ensure to use the management scope, so the token contains user names for all managed identity types - e.g. user and service principal
             var token = await credential.GetTokenAsync(s_managementTokenRequestContext, cancellationToken).ConfigureAwait(false);
             var username = TryGetUsernameFromToken(token.Token);
@@ -112,7 +120,7 @@ public static class EntraIdExtension
         }
         else
         {
-            throw new Exception("Could not determine username from token claims");
+            throw new InvalidOperationException("Could not determine username from token claims");
         }
     }
 
@@ -149,8 +157,9 @@ public static class EntraIdExtension
                 return null; // nothing to parse
             }
 
-            // Parse the decoded payload as JSON
-            var payloadJson = JsonSerializer.Deserialize<JsonElement>(decodedPayload);
+            // Parse the decoded payload as JSON using JsonDocument which is AOT-compatible.
+            using var document = JsonDocument.Parse(decodedPayload);
+            var payloadJson = document.RootElement;
 
             // Try to get the username from 'xms_mirid', 'upn', 'preferred_username', or 'unique_name' claims
             if (payloadJson.TryGetProperty("xms_mirid", out var xms_mirid) &&

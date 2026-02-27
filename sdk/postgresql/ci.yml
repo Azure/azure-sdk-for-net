@@ -8,15 +8,14 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/postgresql/
-    exclude:
-    - sdk/postgresql/Azure.ResourceManager.PostgreSQL/
-
-# These comments should stay.
+    - sdk/postgresql/ci.yml
+    - sdk/postgresql/service.projects
+    - sdk/postgresql/Microsoft.Azure.PostgreSQL.Auth
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
+    SDKType: client
     ServiceDirectory: postgresql
     ArtifactName: packages
     Artifacts:

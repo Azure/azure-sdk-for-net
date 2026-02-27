@@ -1,96 +1,102 @@
-# Microsoft Azure ProviderShortName management client library for .NET
+# Microsoft Azure PostgreSQL Auth client library for .NET
 
-**[Describe the service briefly first.]**
+The `Microsoft.Azure.PostgreSQL.Auth` library provides Entra ID (formerly Azure Active Directory) authentication support for the [Npgsql](https://www.npgsql.org/) PostgreSQL driver. It enables passwordless authentication to Azure Database for PostgreSQL using Azure Identity credentials.
 
-This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
+[Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/postgresql/Microsoft.Azure.PostgreSQL.Auth/src) | [Package (NuGet)](https://www.nuget.org/packages/Microsoft.Azure.PostgreSQL.Auth) | [Product documentation](https://learn.microsoft.com/azure/postgresql/)
 
-- **Passwordless Authentication**: Uses OAuth 2.0 access tokens instead of database passwords
-- **Centralized Identity Management**: Leverages existing Entra ID users and groups  
-- **Zero Secrets**: No database credentials stored in application code
-- **Automatic Token Handling**: Manages token acquisition and renewal transparently
-
-## Getting started 
+## Getting started
 
 ### Install the package
 
-Install the Microsoft Azure ProviderShortName management library for .NET with [NuGet](https://www.nuget.org/):
+Install the client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Microsoft.Azure.PostgreSQL.Auth
+dotnet add package Microsoft.Azure.PostgreSQL.Auth --prerelease
 ```
 
 ### Prerequisites
 
-**Azure Database for PostgreSQL Setup:**
-- Azure Database for PostgreSQL server with Entra ID authentication enabled
-- Entra ID administrator configured (to set up database users)
-- Application's Entra ID identity created as a database user with appropriate permissions
+- An [Azure subscription](https://azure.microsoft.com/free/dotnet/)
+- An [Azure Database for PostgreSQL](https://learn.microsoft.com/azure/postgresql/) server with Entra ID authentication enabled
+- An Entra ID administrator configured on the PostgreSQL server
+- The application's Entra ID identity created as a database user with appropriate permissions
 
-**Application Identity (choose one):**
-- **Managed Identity**: For applications running in Azure (App Service, Functions, VMs)
-- **Service Principal**: For applications with client credentials
-- **User Identity**: For development or interactive scenarios
+### Authenticate the client
 
-**Example PostgreSQL Setup:**
-```sql
--- Connect as Entra ID administrator and create database user
-CREATE ROLE "myapp@domain.com" WITH LOGIN;
-GRANT CONNECT ON DATABASE mydb TO "myapp@domain.com";
-GRANT USAGE ON SCHEMA public TO "myapp@domain.com";
--- Grant additional permissions as needed
+This library extends the Npgsql `NpgsqlDataSourceBuilder` with Entra ID authentication. Use any `TokenCredential` from [Azure.Identity](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme):
+
+```C# Snippet:PostgreSqlAuth_ReadMe_Authenticate
+var credential = new DefaultAzureCredential();
+var builder = new NpgsqlDataSourceBuilder("Host=<< YOUR SERVER >>.postgres.database.azure.com;Database=<< YOUR DATABASE >>;SSL Mode=Require");
+builder.UseEntraAuthentication(credential);
 ```
-
-### Authenticate the Client
-
-To create an authenticated client and start interacting with Microsoft Azure resources, see the [quickstart guide here](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
 
 ## Key concepts
 
-Key concepts of the Microsoft Azure SDK for .NET can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html)
+### Entra ID authentication
 
-## Documentation
+The library configures token-based authentication by:
+1. Extracting the username from the Entra ID token claims
+2. Setting up a password provider that supplies fresh tokens for each connection
 
-Documentation is available to help you learn how to use this package:
+### Supported identity types
 
-- [Quickstart](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
-- [API References](https://docs.microsoft.com/dotnet/api/?view=azure-dotnet).
-- [Authentication](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md).
+- **User identities** — extracted from `upn`, `preferred_username`, or `unique_name` claims
+- **Managed identities** — extracted from the `xms_mirid` claim
+- **Service principals** — extracted from available token claims
+
+### Thread safety
+
+The `UseEntraAuthentication` and `UseEntraAuthenticationAsync` extension methods configure the `NpgsqlDataSourceBuilder` and are intended to be called once during setup. The resulting `NpgsqlDataSource` is thread-safe per Npgsql documentation.
+
+### Additional concepts
+<!-- CLIENT COMMON BAR -->
+[Client options](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
+[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
+[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
+[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
+[Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
+<!-- CLIENT COMMON BAR -->
 
 ## Examples
 
-Code samples for using the management library for .NET can be found in the following locations
-- [.NET Management Library Code Samples](https://aka.ms/azuresdk-net-mgmt-samples)
+### Synchronous authentication
+
+```C# Snippet:PostgreSqlAuth_ReadMe_Sync
+var credential = new DefaultAzureCredential();
+var builder = new NpgsqlDataSourceBuilder("Host=<< YOUR SERVER >>.postgres.database.azure.com;Database=<< YOUR DATABASE >>;SSL Mode=Require");
+builder.UseEntraAuthentication(credential);
+```
+
+### Asynchronous authentication
+
+```C# Snippet:PostgreSqlAuth_ReadMe_Async
+var credential = new DefaultAzureCredential();
+var builder = new NpgsqlDataSourceBuilder("Host=<< YOUR SERVER >>.postgres.database.azure.com;Database=<< YOUR DATABASE >>;SSL Mode=Require");
+await builder.UseEntraAuthenticationAsync(credential);
+```
 
 ## Troubleshooting
 
--   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
--   Check [previous questions](https://stackoverflow.com/questions/tagged/azure+.net) or ask new ones on Stack Overflow using Azure and .NET tags.
+### Common errors
+
+- **"Could not determine username from token claims"** — The token does not contain a recognized username claim. Ensure the identity has the correct permissions and the token contains one of: `upn`, `xms_mirid`, `preferred_username`, or `unique_name`.
+- **`NotSupportedException` when calling `Build()`** — A password is already set in the connection string. Remove the `Password` parameter when using Entra ID authentication.
+
+### Logging
+
+This library uses the standard Azure SDK logging mechanisms. For details on configuring logging, see [Logging with the Azure SDK for .NET](https://learn.microsoft.com/dotnet/azure/sdk/logging).
 
 ## Next steps
 
-For more information about Microsoft Azure SDK, see [this website](https://azure.github.io/azure-sdk/).
+- [Azure Database for PostgreSQL documentation](https://learn.microsoft.com/azure/postgresql/)
+- [Azure Identity documentation](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme)
+- [Npgsql documentation](https://www.npgsql.org/doc/)
 
 ## Contributing
 
-For details on contributing to this repository, see the [contributing
-guide][cg].
+This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit <https://cla.microsoft.com>.
 
-This project welcomes contributions and suggestions. Most contributions
-require you to agree to a Contributor License Agreement (CLA) declaring
-that you have the right to, and actually do, grant us the rights to use
-your contribution. For details, visit <https://cla.microsoft.com>.
+When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (for example, label, comment). Follow the instructions provided by the bot. You'll only need to do this action once across all repositories using our CLA.
 
-When you submit a pull request, a CLA-bot will automatically determine
-whether you need to provide a CLA and decorate the PR appropriately
-(for example, label, comment). Follow the instructions provided by the
-bot. You'll only need to do this action once across all repositories
-using our CLA.
-
-This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For
-more information, see the [Code of Conduct FAQ][coc_faq] or contact
-<opencode@microsoft.com> with any other questions or comments.
-
-<!-- LINKS -->
-[cg]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/CONTRIBUTING.md
-[coc]: https://opensource.microsoft.com/codeofconduct/
-[coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information, see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
