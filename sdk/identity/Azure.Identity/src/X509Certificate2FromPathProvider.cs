@@ -74,7 +74,7 @@ namespace Azure.Identity
                     }
                     return LoadCertificateFromPemFileAsync(async, CertificatePath, cancellationToken);
                 default:
-                    throw new CredentialUnavailableException("Certificate path must be in format cert:/StoreLocation/StoreName/Thumbprint, or a file path with .pfx or .pem extension. For example cert://CurrentUser/My/THUMBPRINT. Certificate path provided: " + CertificatePath);
+                    throw new CredentialUnavailableException("Certificate path must be in format cert:/StoreLocation/StoreName/Thumbprint, or a file path with .pfx or .pem extension. For example, cert:/CurrentUser/My/THUMBPRINT. Certificate path provided: " + CertificatePath);
             }
         }
 
