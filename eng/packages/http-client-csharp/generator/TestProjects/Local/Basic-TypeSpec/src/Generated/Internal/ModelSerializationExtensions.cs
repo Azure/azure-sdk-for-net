@@ -312,12 +312,12 @@ namespace BasicTypeSpec
             writer.WriteValue(TypeFormatters.ToString(value, format));
         }
 
-        public static void WriteObjectValue<T>(this XmlWriter writer, T value, ModelReaderWriterOptions options = null, string nameHint = null, string nameHint0 = null)
+        public static void WriteObjectValue<T>(this XmlWriter writer, T value, ModelReaderWriterOptions options = null, string nameHint = null)
         {
             switch (value)
             {
                 case IXmlSerializable xmlSerializable:
-                    xmlSerializable.Write(writer, nameHint0);
+                    xmlSerializable.Write(writer, nameHint);
                     break;
                 case IPersistableModel<T> persistableModel:
                     BinaryData data = ModelReaderWriter.Write(persistableModel, options ?? WireOptions, BasicTypeSpecContext.Default);
