@@ -28,5 +28,18 @@ namespace Azure.ResourceManager.ContainerService.Models
                 UpgradeSettings.MaxSurge = value;
             }
         }
+
+        /// <summary> Specifications on how to scale the VirtualMachines agent pool to a fixed size. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("virtualMachinesProfile.scale.manual")]
+        public IList<ManualScaleProfile> ScaleManual
+        {
+            get
+            {
+                if (VirtualMachinesProfile is null)
+                    VirtualMachinesProfile = new VirtualMachinesProfile();
+                return VirtualMachinesProfile.Scale.Manual;
+            }
+        }
     }
 }

@@ -97,40 +97,35 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("enableAzureRBAC"u8);
                 writer.WriteBooleanValue(IsAzureRbacEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(AdminGroupObjectIDs))
+            if (Optional.IsCollectionDefined(AdminGroupObjectIds))
             {
                 writer.WritePropertyName("adminGroupObjectIDs"u8);
                 writer.WriteStartArray();
-                foreach (string item in AdminGroupObjectIDs)
+                foreach (Guid item in AdminGroupObjectIds)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ClientAppID))
+            if (Optional.IsDefined(ClientAppId))
             {
                 writer.WritePropertyName("clientAppID"u8);
-                writer.WriteStringValue(ClientAppID.Value);
+                writer.WriteStringValue(ClientAppId.Value);
             }
-            if (Optional.IsDefined(ServerAppID))
+            if (Optional.IsDefined(ServerAppId))
             {
                 writer.WritePropertyName("serverAppID"u8);
-                writer.WriteStringValue(ServerAppID.Value);
+                writer.WriteStringValue(ServerAppId.Value);
             }
             if (Optional.IsDefined(ServerAppSecret))
             {
                 writer.WritePropertyName("serverAppSecret"u8);
                 writer.WriteStringValue(ServerAppSecret);
             }
-            if (Optional.IsDefined(TenantID))
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantID"u8);
-                writer.WriteStringValue(TenantID);
+                writer.WriteStringValue(TenantId.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -176,11 +171,11 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             bool? isManagedAadEnabled = default;
             bool? isAzureRbacEnabled = default;
-            IList<string> adminGroupObjectIDs = default;
-            Guid? clientAppID = default;
-            Guid? serverAppID = default;
+            IList<Guid> adminGroupObjectIds = default;
+            Guid? clientAppId = default;
+            Guid? serverAppId = default;
             string serverAppSecret = default;
-            string tenantID = default;
+            Guid? tenantId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -208,19 +203,12 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<Guid> array = new List<Guid>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(new Guid(item.GetString()));
                     }
-                    adminGroupObjectIDs = array;
+                    adminGroupObjectIds = array;
                     continue;
                 }
                 if (prop.NameEquals("clientAppID"u8))
@@ -229,7 +217,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    clientAppID = new Guid(prop.Value.GetString());
+                    clientAppId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("serverAppID"u8))
@@ -238,7 +226,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    serverAppID = new Guid(prop.Value.GetString());
+                    serverAppId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("serverAppSecret"u8))
@@ -248,7 +236,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (prop.NameEquals("tenantID"u8))
                 {
-                    tenantID = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -259,11 +251,11 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new ManagedClusterAadProfile(
                 isManagedAadEnabled,
                 isAzureRbacEnabled,
-                adminGroupObjectIDs ?? new ChangeTrackingList<string>(),
-                clientAppID,
-                serverAppID,
+                adminGroupObjectIds ?? new ChangeTrackingList<Guid>(),
+                clientAppId,
+                serverAppId,
                 serverAppSecret,
-                tenantID,
+                tenantId,
                 additionalBinaryDataProperties);
         }
     }

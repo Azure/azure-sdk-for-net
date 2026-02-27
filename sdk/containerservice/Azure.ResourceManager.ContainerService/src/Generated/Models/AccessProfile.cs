@@ -20,12 +20,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of <see cref="AccessProfile"/>. </summary>
         internal AccessProfile()
         {
+            KubeConfig = new ChangeTrackingList<BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AccessProfile"/>. </summary>
         /// <param name="kubeConfig"> Base64-encoded Kubernetes configuration file. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccessProfile(BinaryData kubeConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AccessProfile(IList<BinaryData> kubeConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KubeConfig = kubeConfig;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary>
         /// Base64-encoded Kubernetes configuration file.
         /// <para>
-        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// To assign a byte[] to the element of this property use <see cref="BinaryData.FromBytes(byte[])"/>.
         /// The byte[] will be serialized to a Base64 encoded string.
         /// </para>
         /// <para>
@@ -48,6 +49,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// </para>
         /// </summary>
         [WirePath("kubeConfig")]
-        public BinaryData KubeConfig { get; }
+        public IList<BinaryData> KubeConfig { get; } = new ChangeTrackingList<BinaryData>();
     }
 }

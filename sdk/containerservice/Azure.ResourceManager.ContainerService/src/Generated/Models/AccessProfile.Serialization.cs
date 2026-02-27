@@ -74,10 +74,20 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 throw new FormatException($"The model {nameof(AccessProfile)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(KubeConfig))
+            if (Optional.IsCollectionDefined(KubeConfig))
             {
                 writer.WritePropertyName("kubeConfig"u8);
-                writer.WriteBase64StringValue(KubeConfig.ToArray(), "D");
+                writer.WriteStartArray();
+                foreach (BinaryData item in KubeConfig)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteBase64StringValue(item.ToArray(), "D");
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +131,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            BinaryData kubeConfig = default;
+            IList<BinaryData> kubeConfig = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +141,19 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    kubeConfig = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
+                    List<BinaryData> array = new List<BinaryData>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BinaryData.FromBytes(item.GetBytesFromBase64("D")));
+                        }
+                    }
+                    kubeConfig = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +161,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AccessProfile(kubeConfig, additionalBinaryDataProperties);
+            return new AccessProfile(kubeConfig ?? new ChangeTrackingList<BinaryData>(), additionalBinaryDataProperties);
         }
     }
 }

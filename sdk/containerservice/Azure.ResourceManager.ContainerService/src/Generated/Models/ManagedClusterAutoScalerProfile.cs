@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="maxTotalUnreadyPercentage"> The maximum percentage of unready nodes in the cluster. After this percentage is exceeded, cluster autoscaler halts operations. The default is 45. The maximum is 100 and the minimum is 0. </param>
         /// <param name="newPodScaleUpDelay"> Ignore unscheduled pods before they're a certain age. For scenarios like burst/batch scale where you don't want CA to act before the kubernetes scheduler could schedule all the pods, you can tell CA to ignore unscheduled pods before they're a certain age. The default is '0s'. Values must be an integer followed by a unit ('s' for seconds, 'm' for minutes, 'h' for hours, etc). </param>
         /// <param name="okTotalUnreadyCount"> The number of allowed unready nodes, irrespective of max-total-unready-percentage. This must be an integer. The default is 3. </param>
-        /// <param name="scanInterval"> How often cluster is reevaluated for scale up or down. The default is '10'. Values must be an integer number of seconds. </param>
+        /// <param name="scanIntervalInSeconds"> How often cluster is reevaluated for scale up or down. The default is '10'. Values must be an integer number of seconds. </param>
         /// <param name="scaleDownDelayAfterAdd"> How long after scale up that scale down evaluation resumes. The default is '10m'. Values must be an integer followed by an 'm'. No unit of time other than minutes (m) is supported. </param>
         /// <param name="scaleDownDelayAfterDelete"> How long after node deletion that scale down evaluation resumes. The default is the scan-interval. Values must be an integer followed by an 'm'. No unit of time other than minutes (m) is supported. </param>
         /// <param name="scaleDownDelayAfterFailure"> How long after scale down failure that scale down evaluation resumes. The default is '3m'. Values must be an integer followed by an 'm'. No unit of time other than minutes (m) is supported. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="skipNodesWithLocalStorage"> If cluster autoscaler will skip deleting nodes with pods with local storage, for example, EmptyDir or HostPath. The default is true. </param>
         /// <param name="skipNodesWithSystemPods"> If cluster autoscaler will skip deleting nodes with pods from kube-system (except for DaemonSet or mirror pods). The default is true. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterAutoScalerProfile(string balanceSimilarNodeGroups, bool? daemonsetEvictionForEmptyNodes, bool? daemonsetEvictionForOccupiedNodes, bool? ignoreDaemonsetsUtilization, AutoScaleExpander? expander, string maxEmptyBulkDelete, string maxGracefulTerminationSec, string maxNodeProvisionTime, string maxTotalUnreadyPercentage, string newPodScaleUpDelay, string okTotalUnreadyCount, string scanInterval, string scaleDownDelayAfterAdd, string scaleDownDelayAfterDelete, string scaleDownDelayAfterFailure, string scaleDownUnneededTime, string scaleDownUnreadyTime, string scaleDownUtilizationThreshold, string skipNodesWithLocalStorage, string skipNodesWithSystemPods, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterAutoScalerProfile(string balanceSimilarNodeGroups, bool? daemonsetEvictionForEmptyNodes, bool? daemonsetEvictionForOccupiedNodes, bool? ignoreDaemonsetsUtilization, AutoScaleExpander? expander, string maxEmptyBulkDelete, string maxGracefulTerminationSec, string maxNodeProvisionTime, string maxTotalUnreadyPercentage, string newPodScaleUpDelay, string okTotalUnreadyCount, string scanIntervalInSeconds, string scaleDownDelayAfterAdd, string scaleDownDelayAfterDelete, string scaleDownDelayAfterFailure, string scaleDownUnneededTime, string scaleDownUnreadyTime, string scaleDownUtilizationThreshold, string skipNodesWithLocalStorage, string skipNodesWithSystemPods, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BalanceSimilarNodeGroups = balanceSimilarNodeGroups;
             DaemonsetEvictionForEmptyNodes = daemonsetEvictionForEmptyNodes;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             MaxTotalUnreadyPercentage = maxTotalUnreadyPercentage;
             NewPodScaleUpDelay = newPodScaleUpDelay;
             OkTotalUnreadyCount = okTotalUnreadyCount;
-            ScanInterval = scanInterval;
+            ScanIntervalInSeconds = scanIntervalInSeconds;
             ScaleDownDelayAfterAdd = scaleDownDelayAfterAdd;
             ScaleDownDelayAfterDelete = scaleDownDelayAfterDelete;
             ScaleDownDelayAfterFailure = scaleDownDelayAfterFailure;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> How often cluster is reevaluated for scale up or down. The default is '10'. Values must be an integer number of seconds. </summary>
         [WirePath("scan-interval")]
-        public string ScanInterval { get; set; }
+        public string ScanIntervalInSeconds { get; set; }
 
         /// <summary> How long after scale up that scale down evaluation resumes. The default is '10m'. Values must be an integer followed by an 'm'. No unit of time other than minutes (m) is supported. </summary>
         [WirePath("scale-down-delay-after-add")]

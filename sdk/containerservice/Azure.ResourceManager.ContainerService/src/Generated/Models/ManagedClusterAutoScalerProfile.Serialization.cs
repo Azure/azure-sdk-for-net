@@ -129,10 +129,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("ok-total-unready-count"u8);
                 writer.WriteStringValue(OkTotalUnreadyCount);
             }
-            if (Optional.IsDefined(ScanInterval))
+            if (Optional.IsDefined(ScanIntervalInSeconds))
             {
                 writer.WritePropertyName("scan-interval"u8);
-                writer.WriteStringValue(ScanInterval);
+                writer.WriteStringValue(ScanIntervalInSeconds);
             }
             if (Optional.IsDefined(ScaleDownDelayAfterAdd))
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             string maxTotalUnreadyPercentage = default;
             string newPodScaleUpDelay = default;
             string okTotalUnreadyCount = default;
-            string scanInterval = default;
+            string scanIntervalInSeconds = default;
             string scaleDownDelayAfterAdd = default;
             string scaleDownDelayAfterDelete = default;
             string scaleDownDelayAfterFailure = default;
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (prop.NameEquals("scan-interval"u8))
                 {
-                    scanInterval = prop.Value.GetString();
+                    scanIntervalInSeconds = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("scale-down-delay-after-add"u8))
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 maxTotalUnreadyPercentage,
                 newPodScaleUpDelay,
                 okTotalUnreadyCount,
-                scanInterval,
+                scanIntervalInSeconds,
                 scaleDownDelayAfterAdd,
                 scaleDownDelayAfterDelete,
                 scaleDownDelayAfterFailure,

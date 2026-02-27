@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of <see cref="MachineNetworkProperties"/>. </summary>
         internal MachineNetworkProperties()
         {
-            IpAddresses = new ChangeTrackingList<ContainerServiceMachineIPAddress>();
+            IPAddresses = new ChangeTrackingList<ContainerServiceMachineIPAddress>();
             NodePublicIPTags = new ChangeTrackingList<ContainerServiceIPTag>();
         }
 
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MachineNetworkProperties(IReadOnlyList<ContainerServiceMachineIPAddress> ipAddresses, ResourceIdentifier vnetSubnetId, ResourceIdentifier podSubnetId, bool? enableNodePublicIP, ResourceIdentifier nodePublicIpPrefixId, IList<ContainerServiceIPTag> nodePublicIPTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IpAddresses = ipAddresses;
+            IPAddresses = ipAddresses;
             VnetSubnetId = vnetSubnetId;
             PodSubnetId = podSubnetId;
             EnableNodePublicIP = enableNodePublicIP;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> IPv4, IPv6 addresses of the machine. </summary>
         [WirePath("ipAddresses")]
-        public IReadOnlyList<ContainerServiceMachineIPAddress> IpAddresses { get; }
+        public IReadOnlyList<ContainerServiceMachineIPAddress> IPAddresses { get; }
 
         /// <summary> The ID of the subnet which node and optionally pods will join on startup. If this is not specified, a VNET and subnet will be generated and used. If no podSubnetID is specified, this applies to nodes and pods, otherwise it applies to just nodes. This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}. </summary>
         [WirePath("vnetSubnetID")]

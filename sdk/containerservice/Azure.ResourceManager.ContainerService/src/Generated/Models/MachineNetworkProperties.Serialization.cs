@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 throw new FormatException($"The model {nameof(MachineNetworkProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(IpAddresses))
+            if (options.Format != "W" && Optional.IsCollectionDefined(IPAddresses))
             {
                 writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();
-                foreach (ContainerServiceMachineIPAddress item in IpAddresses)
+                foreach (ContainerServiceMachineIPAddress item in IPAddresses)
                 {
                     writer.WriteObjectValue(item, options);
                 }

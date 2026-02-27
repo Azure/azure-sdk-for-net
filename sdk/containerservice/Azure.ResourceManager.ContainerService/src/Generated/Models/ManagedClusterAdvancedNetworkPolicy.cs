@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Enable Layer7 network policies (FQDN, HTTP/S, Kafka). This option is a superset of the FQDN option. </summary>
         private const string L7Value = "L7";
         /// <summary> Enable FQDN based network policies. </summary>
-        private const string FQDNValue = "FQDN";
+        private const string FqdnValue = "FQDN";
         /// <summary> Disable Layer 7 network policies (FQDN, HTTP/S, Kafka). </summary>
         private const string NoneValue = "None";
 
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static ManagedClusterAdvancedNetworkPolicy L7 { get; } = new ManagedClusterAdvancedNetworkPolicy(L7Value);
 
         /// <summary> Enable FQDN based network policies. </summary>
-        public static ManagedClusterAdvancedNetworkPolicy FQDN { get; } = new ManagedClusterAdvancedNetworkPolicy(FQDNValue);
+        public static ManagedClusterAdvancedNetworkPolicy Fqdn { get; } = new ManagedClusterAdvancedNetworkPolicy(FqdnValue);
 
         /// <summary> Disable Layer 7 network policies (FQDN, HTTP/S, Kafka). </summary>
         public static ManagedClusterAdvancedNetworkPolicy None { get; } = new ManagedClusterAdvancedNetworkPolicy(NoneValue);

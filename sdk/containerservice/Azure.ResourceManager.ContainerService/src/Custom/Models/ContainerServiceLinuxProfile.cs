@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// </param>
         /// <param name="ssh">
         /// The SSH configuration for Linux-based VMs running on Azure.
-        /// Serialized Name: ContainerServiceLinuxProfile.ssh
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="adminUsername"/> or <paramref name="ssh"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]

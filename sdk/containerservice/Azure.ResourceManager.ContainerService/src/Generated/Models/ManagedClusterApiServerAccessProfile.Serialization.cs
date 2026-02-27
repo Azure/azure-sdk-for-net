@@ -95,15 +95,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("enablePrivateCluster"u8);
                 writer.WriteBooleanValue(EnablePrivateCluster.Value);
             }
-            if (Optional.IsDefined(PrivateDNSZone))
+            if (Optional.IsDefined(PrivateDnsZone))
             {
                 writer.WritePropertyName("privateDNSZone"u8);
-                writer.WriteStringValue(PrivateDNSZone);
+                writer.WriteStringValue(PrivateDnsZone);
             }
-            if (Optional.IsDefined(EnablePrivateClusterPublicFQDN))
+            if (Optional.IsDefined(EnablePrivateClusterPublicFqdn))
             {
                 writer.WritePropertyName("enablePrivateClusterPublicFQDN"u8);
-                writer.WriteBooleanValue(EnablePrivateClusterPublicFQDN.Value);
+                writer.WriteBooleanValue(EnablePrivateClusterPublicFqdn.Value);
             }
             if (Optional.IsDefined(DisableRunCommand))
             {
@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             IList<string> authorizedIPRanges = default;
             bool? enablePrivateCluster = default;
-            string privateDNSZone = default;
-            bool? enablePrivateClusterPublicFQDN = default;
+            string privateDnsZone = default;
+            bool? enablePrivateClusterPublicFqdn = default;
             bool? disableRunCommand = default;
             bool? enableVnetIntegration = default;
             ResourceIdentifier subnetId = default;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (prop.NameEquals("privateDNSZone"u8))
                 {
-                    privateDNSZone = prop.Value.GetString();
+                    privateDnsZone = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("enablePrivateClusterPublicFQDN"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    enablePrivateClusterPublicFQDN = prop.Value.GetBoolean();
+                    enablePrivateClusterPublicFqdn = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("disableRunCommand"u8))
@@ -251,8 +251,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new ManagedClusterApiServerAccessProfile(
                 authorizedIPRanges ?? new ChangeTrackingList<string>(),
                 enablePrivateCluster,
-                privateDNSZone,
-                enablePrivateClusterPublicFQDN,
+                privateDnsZone,
+                enablePrivateClusterPublicFqdn,
                 disableRunCommand,
                 enableVnetIntegration,
                 subnetId,

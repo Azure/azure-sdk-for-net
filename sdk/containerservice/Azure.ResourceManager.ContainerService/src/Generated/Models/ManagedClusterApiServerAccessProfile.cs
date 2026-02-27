@@ -27,18 +27,18 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of <see cref="ManagedClusterApiServerAccessProfile"/>. </summary>
         /// <param name="authorizedIPRanges"> The IP ranges authorized to access the Kubernetes API server. IP ranges are specified in CIDR format, e.g. 137.117.106.88/29. This feature is not compatible with clusters that use Public IP Per Node, or clusters that are using a Basic Load Balancer. For more information see [API server authorized IP ranges](https://docs.microsoft.com/azure/aks/api-server-authorized-ip-ranges). </param>
         /// <param name="enablePrivateCluster"> Whether to create the cluster as a private cluster or not. For more details, see [Creating a private AKS cluster](https://docs.microsoft.com/azure/aks/private-clusters). </param>
-        /// <param name="privateDNSZone"> The private DNS zone mode for the cluster. The default is System. For more details see [configure private DNS zone](https://docs.microsoft.com/azure/aks/private-clusters#configure-private-dns-zone). Allowed values are 'system' and 'none'. </param>
-        /// <param name="enablePrivateClusterPublicFQDN"> Whether to create additional public FQDN for private cluster or not. </param>
+        /// <param name="privateDnsZone"> The private DNS zone mode for the cluster. The default is System. For more details see [configure private DNS zone](https://docs.microsoft.com/azure/aks/private-clusters#configure-private-dns-zone). Allowed values are 'system' and 'none'. </param>
+        /// <param name="enablePrivateClusterPublicFqdn"> Whether to create additional public FQDN for private cluster or not. </param>
         /// <param name="disableRunCommand"> Whether to disable run command for the cluster or not. </param>
         /// <param name="enableVnetIntegration"> Whether to enable apiserver vnet integration for the cluster or not. See aka.ms/AksVnetIntegration for more details. </param>
         /// <param name="subnetId"> The subnet to be used when apiserver vnet integration is enabled. It is required when creating a new cluster with BYO Vnet, or when updating an existing cluster to enable apiserver vnet integration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterApiServerAccessProfile(IList<string> authorizedIPRanges, bool? enablePrivateCluster, string privateDNSZone, bool? enablePrivateClusterPublicFQDN, bool? disableRunCommand, bool? enableVnetIntegration, ResourceIdentifier subnetId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterApiServerAccessProfile(IList<string> authorizedIPRanges, bool? enablePrivateCluster, string privateDnsZone, bool? enablePrivateClusterPublicFqdn, bool? disableRunCommand, bool? enableVnetIntegration, ResourceIdentifier subnetId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AuthorizedIPRanges = authorizedIPRanges;
             EnablePrivateCluster = enablePrivateCluster;
-            PrivateDNSZone = privateDNSZone;
-            EnablePrivateClusterPublicFQDN = enablePrivateClusterPublicFQDN;
+            PrivateDnsZone = privateDnsZone;
+            EnablePrivateClusterPublicFqdn = enablePrivateClusterPublicFqdn;
             DisableRunCommand = disableRunCommand;
             EnableVnetIntegration = enableVnetIntegration;
             SubnetId = subnetId;
@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The private DNS zone mode for the cluster. The default is System. For more details see [configure private DNS zone](https://docs.microsoft.com/azure/aks/private-clusters#configure-private-dns-zone). Allowed values are 'system' and 'none'. </summary>
         [WirePath("privateDNSZone")]
-        public string PrivateDNSZone { get; set; }
+        public string PrivateDnsZone { get; set; }
 
         /// <summary> Whether to create additional public FQDN for private cluster or not. </summary>
         [WirePath("enablePrivateClusterPublicFQDN")]
-        public bool? EnablePrivateClusterPublicFQDN { get; set; }
+        public bool? EnablePrivateClusterPublicFqdn { get; set; }
 
         /// <summary> Whether to disable run command for the cluster or not. </summary>
         [WirePath("disableRunCommand")]
