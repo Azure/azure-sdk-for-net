@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Hci.Models
                 return null;
             }
             string secretName = default;
-            EceSecrets? eceSecretName = default;
+            EceSecret? eceSecretName = default;
             Uri secretLocation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    eceSecretName = new EceSecrets(prop.Value.GetString());
+                    eceSecretName = new EceSecret(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("secretLocation"u8))

@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Hci.Models
             HciHealthState? healthState = default;
             IList<HciPrecheckResult> healthCheckResult = default;
             DateTimeOffset? healthCheckOn = default;
-            UpdateSummariesPropertiesState? state = default;
+            HciClusterUpdateState? state = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    state = new UpdateSummariesPropertiesState(prop.Value.GetString());
+                    state = new HciClusterUpdateState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

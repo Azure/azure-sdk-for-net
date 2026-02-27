@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         internal PlatformUpdateProperties Properties { get; }
 
         /// <summary> Represents applicable platform updates. </summary>
+        [WirePath("properties.platformUpdateDetails")]
         public IList<PlatformUpdateDetails> PlatformUpdateDetails
         {
             get

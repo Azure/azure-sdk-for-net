@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="typeHandlerVersion"> Extension version installed. </param>
         /// <param name="managedBy"> Indicates whether the extension is managed by the user or by Azure. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciEdgeDeviceArcExtension(string extensionName, ArcExtensionState? state, IReadOnlyList<HciValidationFailureDetail> errorDetails, ResourceIdentifier extensionResourceId, string typeHandlerVersion, ExtensionManagedBy? managedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciEdgeDeviceArcExtension(string extensionName, ArcExtensionState? state, IReadOnlyList<HciValidationFailureDetail> errorDetails, ResourceIdentifier extensionResourceId, string typeHandlerVersion, ArcExtensionManagedBy? managedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExtensionName = extensionName;
             State = state;
@@ -44,21 +44,27 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Arc extension name installed on edge device. </summary>
+        [WirePath("extensionName")]
         public string ExtensionName { get; }
 
         /// <summary> Arc extension state from arc machine extension. </summary>
+        [WirePath("state")]
         public ArcExtensionState? State { get; }
 
         /// <summary> Error details while installing Arc extension. </summary>
+        [WirePath("errorDetails")]
         public IReadOnlyList<HciValidationFailureDetail> ErrorDetails { get; }
 
         /// <summary> Arc Extension Azure resource id. </summary>
+        [WirePath("extensionResourceId")]
         public ResourceIdentifier ExtensionResourceId { get; }
 
         /// <summary> Extension version installed. </summary>
+        [WirePath("typeHandlerVersion")]
         public string TypeHandlerVersion { get; }
 
         /// <summary> Indicates whether the extension is managed by the user or by Azure. </summary>
-        public ExtensionManagedBy? ManagedBy { get; }
+        [WirePath("managedBy")]
+        public ArcExtensionManagedBy? ManagedBy { get; }
     }
 }

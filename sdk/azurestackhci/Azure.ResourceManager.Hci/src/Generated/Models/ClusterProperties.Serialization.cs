@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (options.Format != "W" && Optional.IsDefined(CloudId))
             {
                 writer.WritePropertyName("cloudId"u8);
-                writer.WriteStringValue(CloudId);
+                writer.WriteStringValue(CloudId.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Ring))
             {
@@ -277,9 +277,9 @@ namespace Azure.ResourceManager.Hci.Models
                 return null;
             }
             HciProvisioningState? provisioningState = default;
-            Status? status = default;
-            ConnectivityStatus? connectivityStatus = default;
-            string cloudId = default;
+            HciClusterStatus? status = default;
+            HciClusterConnectivityStatus? connectivityStatus = default;
+            Guid? cloudId = default;
             string ring = default;
             string cloudManagementEndpoint = default;
             string aadClientId = default;
@@ -290,8 +290,8 @@ namespace Azure.ResourceManager.Hci.Models
             bool? isManagementCluster = default;
             LogCollectionProperties logCollectionProperties = default;
             RemoteSupportProperties remoteSupportProperties = default;
-            ClusterDesiredProperties desiredProperties = default;
-            ClusterReportedProperties reportedProperties = default;
+            HciClusterDesiredProperties desiredProperties = default;
+            HciClusterReportedProperties reportedProperties = default;
             IsolatedVmAttestationConfiguration isolatedVmAttestationConfiguration = default;
             float? trialDaysRemaining = default;
             string billingModel = default;
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    status = new Status(prop.Value.GetString());
+                    status = new HciClusterStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("connectivityStatus"u8))
@@ -333,12 +333,16 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    connectivityStatus = new ConnectivityStatus(prop.Value.GetString());
+                    connectivityStatus = new HciClusterConnectivityStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("cloudId"u8))
                 {
-                    cloudId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    cloudId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("ring"u8))
@@ -413,7 +417,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    desiredProperties = ClusterDesiredProperties.DeserializeClusterDesiredProperties(prop.Value, options);
+                    desiredProperties = HciClusterDesiredProperties.DeserializeHciClusterDesiredProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("reportedProperties"u8))
@@ -422,7 +426,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    reportedProperties = ClusterReportedProperties.DeserializeClusterReportedProperties(prop.Value, options);
+                    reportedProperties = HciClusterReportedProperties.DeserializeHciClusterReportedProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("isolatedVmAttestationConfiguration"u8))

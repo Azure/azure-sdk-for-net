@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> The target ring for the cluster. </summary>
+        [WirePath("targetRing")]
         public string TargetRing { get; set; }
     }
 }

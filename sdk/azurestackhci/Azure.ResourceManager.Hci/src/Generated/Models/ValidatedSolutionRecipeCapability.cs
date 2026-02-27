@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -33,6 +34,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Represents the capability name. </summary>
+        [WirePath("capabilityName")]
         public string CapabilityName { get; }
     }
 }

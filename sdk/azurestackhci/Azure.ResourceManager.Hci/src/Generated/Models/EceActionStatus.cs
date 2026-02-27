@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="EceActionStatus"/>. </summary>
         internal EceActionStatus()
         {
-            Steps = new ChangeTrackingList<DeploymentStep>();
+            Steps = new ChangeTrackingList<HciClusterDeploymentStep>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EceActionStatus"/>. </summary>
         /// <param name="status"> Status of ECE action AzureStackHCI Cluster Deployment. </param>
         /// <param name="steps"> List of steps of AzureStackHCI Cluster Deployment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EceActionStatus(string status, IReadOnlyList<DeploymentStep> steps, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EceActionStatus(string status, IReadOnlyList<HciClusterDeploymentStep> steps, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             Steps = steps;
@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Status of ECE action AzureStackHCI Cluster Deployment. </summary>
+        [WirePath("status")]
         public string Status { get; }
 
         /// <summary> List of steps of AzureStackHCI Cluster Deployment. </summary>
-        public IReadOnlyList<DeploymentStep> Steps { get; }
+        [WirePath("steps")]
+        public IReadOnlyList<HciClusterDeploymentStep> Steps { get; }
     }
 }

@@ -348,14 +348,14 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ClusterResource> GetClustersAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HciClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HciClusterResource> GetHciClustersAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ClusterData, ClusterResource>(new ClustersGetBySubscriptionAsyncCollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ClusterResource(Client, data));
+            return new AsyncPageableWrapper<HciClusterData, HciClusterResource>(new ClustersGetBySubscriptionAsyncCollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciClusterResource(Client, data));
         }
 
         /// <summary>
@@ -376,14 +376,14 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ClusterResource> GetClusters(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HciClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HciClusterResource> GetHciClusters(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ClusterData, ClusterResource>(new ClustersGetBySubscriptionCollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ClusterResource(Client, data));
+            return new PageableWrapper<HciClusterData, HciClusterResource>(new ClustersGetBySubscriptionCollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciClusterResource(Client, data));
         }
 
         /// <summary>

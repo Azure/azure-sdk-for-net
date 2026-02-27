@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Hci
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByOfferRequest(nextLink, _subscriptionId, _resourceGroupName, _clusterName, _publisherName, _offerName, _expand, _context) : _client.CreateGetByOfferRequest(_subscriptionId, _resourceGroupName, _clusterName, _publisherName, _offerName, _expand, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SkuCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HciSkuCollection.GetAll");
             scope.Start();
             try
             {

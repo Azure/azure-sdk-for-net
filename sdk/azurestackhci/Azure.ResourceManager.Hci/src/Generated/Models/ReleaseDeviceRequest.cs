@@ -39,6 +39,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> List of resource ids of the devices to be modified. </summary>
+        [WirePath("devices")]
         public IList<ResourceIdentifier> Devices { get; }
     }
 }

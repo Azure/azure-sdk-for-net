@@ -31,6 +31,7 @@ ApiCompat compares the new generated API against the existing API surface files 
 
 | ApiCompat Error | Cause | Fix |
 |----------------|-------|-----|
+| **CannotRemoveAttribute** (`WirePathAttribute`) | Old AutoRest code had `[WirePath("...")]` on properties; TypeSpec emitter doesn't emit them by default | Add `enable-wire-path-attribute: true` to the C# mgmt emitter options in `tspconfig.yaml` (see mitigate-breaking-changes skill) |
 | **MembersMustExist** (method with different return type) | Generated method has different return type than old API (e.g., `Response<ReportList>` vs `Pageable<Report>`) | Use `[CodeGenSuppress("MethodName", typeof(ParamType))]` on the partial class to suppress the generated method, then provide a custom implementation with the old return type |
 | **MembersMustExist** (missing extension method) | Old API had `GetXxx(ArmClient, ResourceIdentifier scope, string name)` but new only has `GetXxxResource(ArmClient, ResourceIdentifier id)` | Add custom extension methods that delegate to collection Get |
 | **TypesMustExist** | Old API had a type that no longer exists (e.g., base class removed) | Create the type in Custom code with matching properties and `IJsonModel<>`/`IPersistableModel<>` serialization |

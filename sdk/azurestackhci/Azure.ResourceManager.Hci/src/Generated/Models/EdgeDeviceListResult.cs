@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Initializes a new instance of <see cref="EdgeDeviceListResult"/>. </summary>
         /// <param name="value"> The EdgeDevice items on this page. </param>
-        internal EdgeDeviceListResult(IEnumerable<EdgeDeviceData> value)
+        internal EdgeDeviceListResult(IEnumerable<HciEdgeDeviceData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="value"> The EdgeDevice items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeDeviceListResult(IList<EdgeDeviceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeDeviceListResult(IList<HciEdgeDeviceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,9 +37,11 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> The EdgeDevice items on this page. </summary>
-        public IList<EdgeDeviceData> Value { get; }
+        [WirePath("value")]
+        public IList<HciEdgeDeviceData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

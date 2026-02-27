@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Name of the DNS Zone to be configured. </summary>
+        [WirePath("dnsZoneName")]
         public string DnsZoneName { get; set; }
 
         /// <summary> Forwarder details of the DNS Zone to be configured. </summary>
+        [WirePath("dnsForwarder")]
         public IList<string> DnsForwarder { get; }
     }
 }

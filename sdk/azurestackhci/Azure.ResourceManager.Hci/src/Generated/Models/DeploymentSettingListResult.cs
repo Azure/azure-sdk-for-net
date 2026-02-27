@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Initializes a new instance of <see cref="DeploymentSettingListResult"/>. </summary>
         /// <param name="value"> The DeploymentSetting items on this page. </param>
-        internal DeploymentSettingListResult(IEnumerable<DeploymentSettingData> value)
+        internal DeploymentSettingListResult(IEnumerable<HciClusterDeploymentSettingData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="value"> The DeploymentSetting items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentSettingListResult(IList<DeploymentSettingData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeploymentSettingListResult(IList<HciClusterDeploymentSettingData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,9 +37,11 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> The DeploymentSetting items on this page. </summary>
-        public IList<DeploymentSettingData> Value { get; }
+        [WirePath("value")]
+        public IList<HciClusterDeploymentSettingData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

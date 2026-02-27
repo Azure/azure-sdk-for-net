@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -38,9 +39,11 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Represents the cluster capabilities. </summary>
+        [WirePath("clusterCapabilities")]
         public IList<ValidatedSolutionRecipeCapability> ClusterCapabilities { get; }
 
         /// <summary> Represents the node capabilities. </summary>
+        [WirePath("nodeCapabilities")]
         public IList<ValidatedSolutionRecipeCapability> NodeCapabilities { get; }
     }
 }

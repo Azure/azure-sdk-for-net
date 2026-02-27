@@ -51,30 +51,39 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Type of IP assignment. </summary>
+        [WirePath("ipAssignmentType")]
         public IpAssignmentType IpAssignmentType { get; set; }
 
         /// <summary> IP address. </summary>
+        [WirePath("ipAddress")]
         public string IpAddress { get; set; }
 
         /// <summary> Adapter Name. </summary>
+        [WirePath("adapterName")]
         public string AdapterName { get; set; }
 
         /// <summary> MAC address. </summary>
+        [WirePath("macAddress")]
         public string MacAddress { get; set; }
 
         /// <summary> IP address range. </summary>
+        [WirePath("ipAddressRange")]
         public IpAddressRange IpAddressRange { get; set; }
 
         /// <summary> Gateway id. </summary>
+        [WirePath("gateway")]
         public string Gateway { get; set; }
 
         /// <summary> Subnet mask. </summary>
+        [WirePath("subnetMask")]
         public string SubnetMask { get; set; }
 
         /// <summary> Array of DNS addresses. </summary>
+        [WirePath("dnsAddressArray")]
         public IList<string> DnsAddressArray { get; }
 
         /// <summary> VLAN ID for the network setup. </summary>
+        [WirePath("vlanId")]
         public string VlanId { get; set; }
     }
 }

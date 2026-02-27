@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Initializes a new instance of <see cref="ClusterList"/>. </summary>
         /// <param name="value"> The Cluster items on this page. </param>
-        internal ClusterList(IEnumerable<ClusterData> value)
+        internal ClusterList(IEnumerable<HciClusterData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="value"> The Cluster items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterList(IList<ClusterData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterList(IList<HciClusterData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,9 +37,11 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> The Cluster items on this page. </summary>
-        public IList<ClusterData> Value { get; }
+        [WirePath("value")]
+        public IList<HciClusterData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

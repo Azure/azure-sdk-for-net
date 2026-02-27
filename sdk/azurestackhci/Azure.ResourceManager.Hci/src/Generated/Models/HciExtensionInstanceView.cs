@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
         /// <param name="status"> Instance view status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciExtensionInstanceView(string name, string @type, string typeHandlerVersion, ExtensionInstanceViewStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciExtensionInstanceView(string name, string @type, string typeHandlerVersion, ArcExtensionInstanceViewStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Type = @type;
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> The extension name. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Specifies the type of the extension; an example is "MicrosoftMonitoringAgent". </summary>
+        [WirePath("type")]
         public string Type { get; }
 
         /// <summary> Specifies the version of the script handler. </summary>
+        [WirePath("typeHandlerVersion")]
         public string TypeHandlerVersion { get; }
 
         /// <summary> Instance view status. </summary>
-        public ExtensionInstanceViewStatus Status { get; }
+        [WirePath("status")]
+        public ArcExtensionInstanceViewStatus Status { get; }
     }
 }

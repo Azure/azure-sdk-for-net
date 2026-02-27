@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> SKU properties. </summary>
+        [WirePath("properties")]
         internal SkuProperties Properties { get; }
 
         /// <summary> Provisioning State. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState
         {
             get
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> Identifier of the Publisher for the offer. </summary>
+        [WirePath("properties.publisherId")]
         public string PublisherId
         {
             get
@@ -59,6 +62,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> Identifier of the Offer for the sku. </summary>
+        [WirePath("properties.offerId")]
         public string OfferId
         {
             get
@@ -68,6 +72,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> JSON serialized catalog content of the sku offer. </summary>
+        [WirePath("properties.content")]
         public string Content
         {
             get
@@ -77,6 +82,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> The API version of the catalog service used to serve the catalog content. </summary>
+        [WirePath("properties.contentVersion")]
         public string ContentVersion
         {
             get
@@ -86,7 +92,8 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> Array of SKU mappings. </summary>
-        public IList<SkuMappings> SkuMappings
+        [WirePath("properties.skuMappings")]
+        public IList<HciSkuMappings> SkuMappings
         {
             get
             {

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="deploymentMode"> The deployment mode for cluster deployment. </param>
         /// <param name="deploymentConfiguration"> Scale units will contains list of deployment data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="arcNodeResourceIds"/> or <paramref name="deploymentConfiguration"/> is null. </exception>
-        public DeploymentSettingsProperties(IEnumerable<string> arcNodeResourceIds, DeploymentMode deploymentMode, DeploymentConfiguration deploymentConfiguration)
+        public DeploymentSettingsProperties(IEnumerable<string> arcNodeResourceIds, EceDeploymentMode deploymentMode, HciClusterDeploymentConfiguration deploymentConfiguration)
         {
             Argument.AssertNotNull(arcNodeResourceIds, nameof(arcNodeResourceIds));
             Argument.AssertNotNull(deploymentConfiguration, nameof(deploymentConfiguration));
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="deploymentConfiguration"> Scale units will contains list of deployment data. </param>
         /// <param name="reportedProperties"> Deployment Status reported from cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentSettingsProperties(HciProvisioningState? provisioningState, IList<string> arcNodeResourceIds, DeploymentMode deploymentMode, OperationType? operationType, DeploymentConfiguration deploymentConfiguration, EceReportedProperties reportedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeploymentSettingsProperties(HciProvisioningState? provisioningState, IList<string> arcNodeResourceIds, EceDeploymentMode deploymentMode, HciClusterOperationType? operationType, HciClusterDeploymentConfiguration deploymentConfiguration, EceReportedProperties reportedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ArcNodeResourceIds = arcNodeResourceIds;
@@ -53,21 +53,27 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> DeploymentSetting provisioning state. </summary>
+        [WirePath("provisioningState")]
         public HciProvisioningState? ProvisioningState { get; }
 
         /// <summary> Azure resource ids of Arc machines to be part of cluster. </summary>
+        [WirePath("arcNodeResourceIds")]
         public IList<string> ArcNodeResourceIds { get; } = new ChangeTrackingList<string>();
 
         /// <summary> The deployment mode for cluster deployment. </summary>
-        public DeploymentMode DeploymentMode { get; set; }
+        [WirePath("deploymentMode")]
+        public EceDeploymentMode DeploymentMode { get; set; }
 
         /// <summary> The intended operation for a cluster. </summary>
-        public OperationType? OperationType { get; set; }
+        [WirePath("operationType")]
+        public HciClusterOperationType? OperationType { get; set; }
 
         /// <summary> Scale units will contains list of deployment data. </summary>
-        public DeploymentConfiguration DeploymentConfiguration { get; set; }
+        [WirePath("deploymentConfiguration")]
+        public HciClusterDeploymentConfiguration DeploymentConfiguration { get; set; }
 
         /// <summary> Deployment Status reported from cluster. </summary>
+        [WirePath("reportedProperties")]
         public EceReportedProperties ReportedProperties { get; }
     }
 }

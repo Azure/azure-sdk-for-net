@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Ownership Voucher Details. </summary>
+        [WirePath("ownershipVoucherDetails")]
         public IList<OwnershipVoucherDetails> OwnershipVoucherDetails { get; }
     }
 }

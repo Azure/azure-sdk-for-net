@@ -43,6 +43,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </summary>
+        [WirePath("kind")]
         internal EdgeDeviceKind Kind { get; set; }
     }
 }

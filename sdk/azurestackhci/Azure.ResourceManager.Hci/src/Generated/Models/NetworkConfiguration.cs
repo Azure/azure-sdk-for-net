@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> List of network adapters. </summary>
+        [WirePath("networkAdapters")]
         public IList<NetworkAdapter> NetworkAdapters { get; }
     }
 }

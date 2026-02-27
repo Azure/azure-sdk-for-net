@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Process type of the device. </summary>
+        [WirePath("processorType")]
         public string ProcessorType { get; }
     }
 }

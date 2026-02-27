@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (UpdateRunData item in Value)
+            foreach (HciClusterUpdateRunData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            IList<UpdateRunData> value = default;
+            IList<HciClusterUpdateRunData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<UpdateRunData> array = new List<UpdateRunData>();
+                    List<HciClusterUpdateRunData> array = new List<HciClusterUpdateRunData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(UpdateRunData.DeserializeUpdateRunData(item, options));
+                        array.Add(HciClusterUpdateRunData.DeserializeHciClusterUpdateRunData(item, options));
                     }
                     value = array;
                     continue;

@@ -13,12 +13,12 @@ using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> properties for Arc-enabled edge device with HCI OS. </summary>
-    public partial class HciEdgeDeviceProperties : EdgeDeviceProperties, IJsonModel<HciEdgeDeviceProperties>
+    /// <summary> Edge Device properties. </summary>
+    public partial class HciEdgeDeviceProperties : IJsonModel<HciEdgeDeviceProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override EdgeDeviceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual HciEdgeDeviceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HciEdgeDeviceProperties IPersistableModel<HciEdgeDeviceProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (HciEdgeDeviceProperties)PersistableModelCreateCore(data, options);
+        HciEdgeDeviceProperties IPersistableModel<HciEdgeDeviceProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<HciEdgeDeviceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -67,28 +67,47 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HciEdgeDeviceProperties)} does not support writing '{format}' format.");
             }
-            base.JsonModelWriteCore(writer, options);
-            if (options.Format != "W" && Optional.IsDefined(ReportedProperties))
+            if (Optional.IsDefined(DeviceConfiguration))
             {
-                writer.WritePropertyName("reportedProperties"u8);
-                writer.WriteObjectValue(ReportedProperties, options);
+                writer.WritePropertyName("deviceConfiguration"u8);
+                writer.WriteObjectValue(DeviceConfiguration, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HciEdgeDeviceProperties IJsonModel<HciEdgeDeviceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HciEdgeDeviceProperties)JsonModelCreateCore(ref reader, options);
+        HciEdgeDeviceProperties IJsonModel<HciEdgeDeviceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override EdgeDeviceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual HciEdgeDeviceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -110,7 +129,6 @@ namespace Azure.ResourceManager.Hci.Models
             HciEdgeDeviceConfiguration deviceConfiguration = default;
             HciProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            HciReportedProperties reportedProperties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("deviceConfiguration"u8))
@@ -131,21 +149,12 @@ namespace Azure.ResourceManager.Hci.Models
                     provisioningState = new HciProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("reportedProperties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    reportedProperties = HciReportedProperties.DeserializeHciReportedProperties(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HciEdgeDeviceProperties(deviceConfiguration, provisioningState, additionalBinaryDataProperties, reportedProperties);
+            return new HciEdgeDeviceProperties(deviceConfiguration, provisioningState, additionalBinaryDataProperties);
         }
     }
 }

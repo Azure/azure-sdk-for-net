@@ -40,15 +40,19 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> List of NIC Details of device. </summary>
+        [WirePath("nicDetails")]
         public IReadOnlyList<HciNicDetail> NicDetails { get; }
 
         /// <summary> List of switch details for edge device. </summary>
+        [WirePath("switchDetails")]
         public IReadOnlyList<HciEdgeDeviceSwitchDetail> SwitchDetails { get; }
 
         /// <summary> HostNetwork config to deploy AzureStackHCI Cluster. </summary>
+        [WirePath("hostNetwork")]
         public HciEdgeDeviceHostNetwork HostNetwork { get; }
 
         /// <summary> oftware Defined Networking Properties of the cluster. </summary>
+        [WirePath("sdnProperties")]
         public SdnProperties SdnProperties { get; }
     }
 }

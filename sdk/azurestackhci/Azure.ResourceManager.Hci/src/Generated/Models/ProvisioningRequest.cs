@@ -50,21 +50,27 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Target operating system to support polymorphic resource. </summary>
+        [WirePath("target")]
         public ProvisioningOsType Target { get; set; }
 
         /// <summary> Operating system profile. </summary>
+        [WirePath("osProfile")]
         public OsProvisionProfile OsProfile { get; set; }
 
         /// <summary> User configuration. </summary>
+        [WirePath("userDetails")]
         public IList<UserDetails> UserDetails { get; }
 
         /// <summary> Onboarding configuration. </summary>
+        [WirePath("onboardingConfiguration")]
         public OnboardingConfiguration OnboardingConfiguration { get; set; }
 
         /// <summary> Device configuration. </summary>
+        [WirePath("deviceConfiguration")]
         public TargetDeviceConfiguration DeviceConfiguration { get; set; }
 
         /// <summary> Base64 encoded custom configuration for CAPI to use. </summary>
+        [WirePath("customConfiguration")]
         public string CustomConfiguration { get; set; }
     }
 }

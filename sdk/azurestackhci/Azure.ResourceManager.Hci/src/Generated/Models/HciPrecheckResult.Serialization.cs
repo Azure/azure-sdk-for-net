@@ -200,11 +200,11 @@ namespace Azure.ResourceManager.Hci.Models
             }
             string name = default;
             string displayName = default;
-            PrecheckResultTags tags = default;
+            HciPrecheckResultTags tags = default;
             BinaryData healthCheckTags = default;
             string title = default;
-            Status? status = default;
-            Severity? severity = default;
+            HciClusterStatus? status = default;
+            UpdateSeverity? severity = default;
             string description = default;
             string remediation = default;
             string targetResourceID = default;
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    tags = PrecheckResultTags.DeserializePrecheckResultTags(prop.Value, options);
+                    tags = HciPrecheckResultTags.DeserializeHciPrecheckResultTags(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("healthCheckTags"u8))
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    status = new Status(prop.Value.GetString());
+                    status = new HciClusterStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("severity"u8))
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    severity = new Severity(prop.Value.GetString());
+                    severity = new UpdateSeverity(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("description"u8))

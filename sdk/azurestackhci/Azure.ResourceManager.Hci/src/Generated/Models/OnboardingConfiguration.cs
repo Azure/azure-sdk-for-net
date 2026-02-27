@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -40,18 +41,23 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Type of the onboarding resource to support polymorphic resource. </summary>
+        [WirePath("type")]
         public OnboardingResourceType? Type { get; set; }
 
         /// <summary> Resource ID. </summary>
+        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
 
         /// <summary> Location of the resource. </summary>
+        [WirePath("location")]
         public string Location { get; set; }
 
         /// <summary> Tenant ID of the resource. </summary>
+        [WirePath("tenantId")]
         public string TenantId { get; set; }
 
         /// <summary> Azure Arc virtual machine ID. </summary>
+        [WirePath("arcVirtualMachineId")]
         public string ArcVirtualMachineId { get; set; }
     }
 }

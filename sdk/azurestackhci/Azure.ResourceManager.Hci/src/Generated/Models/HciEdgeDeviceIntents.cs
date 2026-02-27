@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="overrideAdapterProperty"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
         /// <param name="adapterPropertyOverrides"> Set Adapter PropertyOverrides for cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciEdgeDeviceIntents(long? scope, long? intentType, bool? isComputeIntentSet, bool? isStorageIntentSet, bool? isOnlyStorage, bool? isManagementIntentSet, bool? isStretchIntentSet, bool? isOnlyStretch, bool? isNetworkIntentType, string intentName, IReadOnlyList<string> intentAdapters, bool? overrideVirtualSwitchConfiguration, HciEdgeDeviceVirtualSwitchConfigurationOverrides virtualSwitchConfigurationOverrides, bool? overrideQosPolicy, QosPolicyOverrides qosPolicyOverrides, bool? overrideAdapterProperty, HciEdgeDeviceAdapterPropertyOverrides adapterPropertyOverrides, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciEdgeDeviceIntents(long? scope, long? intentType, bool? isComputeIntentSet, bool? isStorageIntentSet, bool? isOnlyStorage, bool? isManagementIntentSet, bool? isStretchIntentSet, bool? isOnlyStretch, bool? isNetworkIntentType, string intentName, IReadOnlyList<string> intentAdapters, bool? overrideVirtualSwitchConfiguration, HciEdgeDeviceVirtualSwitchConfigurationOverrides virtualSwitchConfigurationOverrides, bool? overrideQosPolicy, DeploymentSettingQosPolicyOverrides qosPolicyOverrides, bool? overrideAdapterProperty, HciEdgeDeviceAdapterPropertyOverrides adapterPropertyOverrides, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Scope = scope;
             IntentType = intentType;
@@ -65,54 +65,71 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Scope for host network intent. </summary>
+        [WirePath("scope")]
         public long? Scope { get; }
 
         /// <summary> IntentType for host network intent. </summary>
+        [WirePath("intentType")]
         public long? IntentType { get; }
 
         /// <summary> IsComputeIntentSet for host network intent. </summary>
+        [WirePath("isComputeIntentSet")]
         public bool? IsComputeIntentSet { get; }
 
         /// <summary> IsStorageIntentSet for host network intent. </summary>
+        [WirePath("isStorageIntentSet")]
         public bool? IsStorageIntentSet { get; }
 
         /// <summary> IntentType for host network intent. </summary>
+        [WirePath("isOnlyStorage")]
         public bool? IsOnlyStorage { get; }
 
         /// <summary> IsManagementIntentSet for host network intent. </summary>
+        [WirePath("isManagementIntentSet")]
         public bool? IsManagementIntentSet { get; }
 
         /// <summary> IsStretchIntentSet for host network intent. </summary>
+        [WirePath("isStretchIntentSet")]
         public bool? IsStretchIntentSet { get; }
 
         /// <summary> IsOnlyStretch for host network intent. </summary>
+        [WirePath("isOnlyStretch")]
         public bool? IsOnlyStretch { get; }
 
         /// <summary> IsNetworkIntentType for host network intent. </summary>
+        [WirePath("isNetworkIntentType")]
         public bool? IsNetworkIntentType { get; }
 
         /// <summary> Name of the network intent you wish to create. </summary>
+        [WirePath("intentName")]
         public string IntentName { get; }
 
         /// <summary> Array of adapters used for the network intent. </summary>
+        [WirePath("intentAdapters")]
         public IReadOnlyList<string> IntentAdapters { get; }
 
         /// <summary> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </summary>
+        [WirePath("overrideVirtualSwitchConfiguration")]
         public bool? OverrideVirtualSwitchConfiguration { get; }
 
         /// <summary> Set virtualSwitch ConfigurationOverrides for cluster. </summary>
+        [WirePath("virtualSwitchConfigurationOverrides")]
         public HciEdgeDeviceVirtualSwitchConfigurationOverrides VirtualSwitchConfigurationOverrides { get; }
 
         /// <summary> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </summary>
+        [WirePath("overrideQosPolicy")]
         public bool? OverrideQosPolicy { get; }
 
         /// <summary> Set QoS PolicyOverrides for cluster. </summary>
-        public QosPolicyOverrides QosPolicyOverrides { get; }
+        [WirePath("qosPolicyOverrides")]
+        public DeploymentSettingQosPolicyOverrides QosPolicyOverrides { get; }
 
         /// <summary> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </summary>
+        [WirePath("overrideAdapterProperty")]
         public bool? OverrideAdapterProperty { get; }
 
         /// <summary> Set Adapter PropertyOverrides for cluster. </summary>
+        [WirePath("adapterPropertyOverrides")]
         public HciEdgeDeviceAdapterPropertyOverrides AdapterPropertyOverrides { get; }
     }
 }

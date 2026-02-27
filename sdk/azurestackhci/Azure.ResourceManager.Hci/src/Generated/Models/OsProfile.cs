@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -45,27 +46,35 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> The boot type of the device. e.g. UEFI, Legacy etc. </summary>
+        [WirePath("bootType")]
         public string BootType { get; }
 
         /// <summary> Version of assembly present on device. </summary>
+        [WirePath("assemblyVersion")]
         public string AssemblyVersion { get; }
 
         /// <summary> OS type (“windows", “linux”). </summary>
+        [WirePath("osType")]
         public string OsType { get; }
 
         /// <summary> OS SKU (e.g., “ Microsoft Azure Linux ROE“, “Azure Stack HCI", "Microsoft Azure Linux 3.0"). </summary>
+        [WirePath("osSku")]
         public string OsSku { get; }
 
         /// <summary> OS Version. </summary>
+        [WirePath("osVersion")]
         public string OsVersion { get; }
 
         /// <summary> OS Build Number. </summary>
+        [WirePath("buildNumber")]
         public string BuildNumber { get; }
 
         /// <summary> OS Base Image Version. </summary>
+        [WirePath("baseImageVersion")]
         public string BaseImageVersion { get; }
 
         /// <summary> OS Image Version. </summary>
+        [WirePath("imageVersion")]
         public string ImageVersion { get; }
     }
 }

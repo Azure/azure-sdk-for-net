@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -24,13 +25,14 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="ExtensionPatchProperties"/>. </summary>
         /// <param name="extensionParameters"> Describes the properties of a Machine Extension that can be updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExtensionPatchProperties(ExtensionPatchParameters extensionParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExtensionPatchProperties(ArcExtensionPatchContent extensionParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExtensionParameters = extensionParameters;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Describes the properties of a Machine Extension that can be updated. </summary>
-        public ExtensionPatchParameters ExtensionParameters { get; set; }
+        [WirePath("extensionParameters")]
+        public ArcExtensionPatchContent ExtensionParameters { get; set; }
     }
 }

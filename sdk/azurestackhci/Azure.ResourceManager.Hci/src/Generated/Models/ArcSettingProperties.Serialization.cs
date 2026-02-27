@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 writer.WritePropertyName("defaultExtensions"u8);
                 writer.WriteStartArray();
-                foreach (DefaultExtensionDetails item in DefaultExtensions)
+                foreach (ArcDefaultExtensionDetails item in DefaultExtensions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Hci.Models
             ArcSettingAggregateState? aggregateState = default;
             IReadOnlyList<PerNodeArcState> perNodeDetails = default;
             ArcConnectivityProperties connectivityProperties = default;
-            IReadOnlyList<DefaultExtensionDetails> defaultExtensions = default;
+            IReadOnlyList<ArcDefaultExtensionDetails> defaultExtensions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -261,10 +261,10 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    List<DefaultExtensionDetails> array = new List<DefaultExtensionDetails>();
+                    List<ArcDefaultExtensionDetails> array = new List<ArcDefaultExtensionDetails>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DefaultExtensionDetails.DeserializeDefaultExtensionDetails(item, options));
+                        array.Add(ArcDefaultExtensionDetails.DeserializeArcDefaultExtensionDetails(item, options));
                     }
                     defaultExtensions = array;
                     continue;
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Hci.Models
                 aggregateState,
                 perNodeDetails ?? new ChangeTrackingList<PerNodeArcState>(),
                 connectivityProperties,
-                defaultExtensions ?? new ChangeTrackingList<DefaultExtensionDetails>(),
+                defaultExtensions ?? new ChangeTrackingList<ArcDefaultExtensionDetails>(),
                 additionalBinaryDataProperties);
         }
     }

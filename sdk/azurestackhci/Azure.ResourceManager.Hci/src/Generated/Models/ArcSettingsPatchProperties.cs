@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> contains connectivity related configuration for ARC resources. </summary>
+        [WirePath("connectivityProperties")]
         public ArcConnectivityProperties ConnectivityProperties { get; set; }
     }
 }

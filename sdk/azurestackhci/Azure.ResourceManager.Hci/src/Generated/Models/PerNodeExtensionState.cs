@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -39,18 +40,23 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Name of the node in HCI Cluster. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Fully qualified resource ID for the particular Arc Extension on this node. </summary>
+        [WirePath("extension")]
         public string Extension { get; }
 
         /// <summary> Specifies the version of the script handler. </summary>
+        [WirePath("typeHandlerVersion")]
         public string TypeHandlerVersion { get; }
 
         /// <summary> State of Arc Extension in this node. Reflects the current lifecycle status of the extension on the individual node, such as whether it's being created, updated, deleted, or has encountered an error. </summary>
+        [WirePath("state")]
         public NodeExtensionState? State { get; }
 
         /// <summary> The extension instance view. </summary>
+        [WirePath("instanceView")]
         public HciExtensionInstanceView InstanceView { get; }
     }
 }

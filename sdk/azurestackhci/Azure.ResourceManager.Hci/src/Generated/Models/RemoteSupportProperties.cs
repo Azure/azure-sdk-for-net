@@ -26,15 +26,15 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Initializes a new instance of <see cref="RemoteSupportProperties"/>. </summary>
         /// <param name="accessLevel"> Remote Support Access Level. </param>
-        /// <param name="expirationTimeStamp"> Expiration DateTimeStamp when Remote Support Access will be expired. </param>
+        /// <param name="expireOn"> Expiration DateTimeStamp when Remote Support Access will be expired. </param>
         /// <param name="remoteSupportType"> Remote Support Type for cluster. </param>
         /// <param name="remoteSupportNodeSettings"></param>
         /// <param name="remoteSupportSessionDetails"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RemoteSupportProperties(HciClusterAccessLevel? accessLevel, DateTimeOffset? expirationTimeStamp, RemoteSupportType? remoteSupportType, IReadOnlyList<RemoteSupportNodeSettings> remoteSupportNodeSettings, IReadOnlyList<PerNodeRemoteSupportSession> remoteSupportSessionDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RemoteSupportProperties(HciClusterAccessLevel? accessLevel, DateTimeOffset? expireOn, RemoteSupportType? remoteSupportType, IReadOnlyList<RemoteSupportNodeSettings> remoteSupportNodeSettings, IReadOnlyList<PerNodeRemoteSupportSession> remoteSupportSessionDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AccessLevel = accessLevel;
-            ExpirationTimeStamp = expirationTimeStamp;
+            ExpireOn = expireOn;
             RemoteSupportType = remoteSupportType;
             RemoteSupportNodeSettings = remoteSupportNodeSettings;
             RemoteSupportSessionDetails = remoteSupportSessionDetails;
@@ -42,18 +42,23 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Remote Support Access Level. </summary>
+        [WirePath("accessLevel")]
         public HciClusterAccessLevel? AccessLevel { get; }
 
         /// <summary> Expiration DateTimeStamp when Remote Support Access will be expired. </summary>
-        public DateTimeOffset? ExpirationTimeStamp { get; }
+        [WirePath("expirationTimeStamp")]
+        public DateTimeOffset? ExpireOn { get; }
 
         /// <summary> Remote Support Type for cluster. </summary>
+        [WirePath("remoteSupportType")]
         public RemoteSupportType? RemoteSupportType { get; }
 
         /// <summary> Gets the RemoteSupportNodeSettings. </summary>
+        [WirePath("remoteSupportNodeSettings")]
         public IReadOnlyList<RemoteSupportNodeSettings> RemoteSupportNodeSettings { get; }
 
         /// <summary> Gets the RemoteSupportSessionDetails. </summary>
+        [WirePath("remoteSupportSessionDetails")]
         public IReadOnlyList<PerNodeRemoteSupportSession> RemoteSupportSessionDetails { get; }
     }
 }

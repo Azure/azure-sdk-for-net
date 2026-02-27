@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Hci
     /// <summary>
     /// A class representing a ArcSetting along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ArcSettingResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ClusterResource"/> using the GetArcSettings method.
+    /// Otherwise you can get one from its parent resource <see cref="HciClusterResource"/> using the GetArcSettings method.
     /// </summary>
     public partial class ArcSettingResource : ArmResource
     {
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.Hci
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<ArcIdentityResponse>> CreateIdentityAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ArcIdentityResult>> CreateIdentityAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _arcSettingsClientDiagnostics.CreateScope("ArcSettingResource.CreateIdentity");
             scope.Start();
@@ -521,8 +521,8 @@ namespace Azure.ResourceManager.Hci
                 };
                 HttpMessage message = _arcSettingsRestClient.CreateCreateIdentityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                HciArmOperation<ArcIdentityResponse> operation = new HciArmOperation<ArcIdentityResponse>(
-                    new ArcIdentityResponseOperationSource(),
+                HciArmOperation<ArcIdentityResult> operation = new HciArmOperation<ArcIdentityResult>(
+                    new ArcIdentityResultOperationSource(),
                     _arcSettingsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.Hci
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<ArcIdentityResponse> CreateIdentity(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ArcIdentityResult> CreateIdentity(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _arcSettingsClientDiagnostics.CreateScope("ArcSettingResource.CreateIdentity");
             scope.Start();
@@ -576,8 +576,8 @@ namespace Azure.ResourceManager.Hci
                 };
                 HttpMessage message = _arcSettingsRestClient.CreateCreateIdentityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                HciArmOperation<ArcIdentityResponse> operation = new HciArmOperation<ArcIdentityResponse>(
-                    new ArcIdentityResponseOperationSource(),
+                HciArmOperation<ArcIdentityResult> operation = new HciArmOperation<ArcIdentityResult>(
+                    new ArcIdentityResultOperationSource(),
                     _arcSettingsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -618,7 +618,7 @@ namespace Azure.ResourceManager.Hci
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PasswordCredential>> GeneratePasswordAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArcPasswordCredential>> GeneratePasswordAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _arcSettingsClientDiagnostics.CreateScope("ArcSettingResource.GeneratePassword");
             scope.Start();
@@ -630,7 +630,7 @@ namespace Azure.ResourceManager.Hci
                 };
                 HttpMessage message = _arcSettingsRestClient.CreateGeneratePasswordRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PasswordCredential> response = Response.FromValue(PasswordCredential.FromResponse(result), result);
+                Response<ArcPasswordCredential> response = Response.FromValue(ArcPasswordCredential.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.Hci
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PasswordCredential> GeneratePassword(CancellationToken cancellationToken = default)
+        public virtual Response<ArcPasswordCredential> GeneratePassword(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _arcSettingsClientDiagnostics.CreateScope("ArcSettingResource.GeneratePassword");
             scope.Start();
@@ -678,7 +678,7 @@ namespace Azure.ResourceManager.Hci
                 };
                 HttpMessage message = _arcSettingsRestClient.CreateGeneratePasswordRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<PasswordCredential> response = Response.FromValue(PasswordCredential.FromResponse(result), result);
+                Response<ArcPasswordCredential> response = Response.FromValue(ArcPasswordCredential.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -908,11 +908,11 @@ namespace Azure.ResourceManager.Hci
             }
         }
 
-        /// <summary> Gets a collection of Extensions in the <see cref="ArcSettingResource"/>. </summary>
-        /// <returns> An object representing collection of Extensions and their operations over a ExtensionResource. </returns>
-        public virtual ExtensionCollection GetExtensions()
+        /// <summary> Gets a collection of ArcExtensions in the <see cref="ArcSettingResource"/>. </summary>
+        /// <returns> An object representing collection of ArcExtensions and their operations over a ArcExtensionResource. </returns>
+        public virtual ArcExtensionCollection GetArcExtensions()
         {
-            return GetCachedClient(client => new ExtensionCollection(client, Id));
+            return GetCachedClient(client => new ArcExtensionCollection(client, Id));
         }
 
         /// <summary> Get particular Arc Extension of HCI Cluster. </summary>
@@ -921,11 +921,11 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ExtensionResource>> GetExtensionAsync(string extensionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArcExtensionResource>> GetArcExtensionAsync(string extensionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
 
-            return await GetExtensions().GetAsync(extensionName, cancellationToken).ConfigureAwait(false);
+            return await GetArcExtensions().GetAsync(extensionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get particular Arc Extension of HCI Cluster. </summary>
@@ -934,11 +934,11 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ExtensionResource> GetExtension(string extensionName, CancellationToken cancellationToken = default)
+        public virtual Response<ArcExtensionResource> GetArcExtension(string extensionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
 
-            return GetExtensions().Get(extensionName, cancellationToken);
+            return GetArcExtensions().Get(extensionName, cancellationToken);
         }
     }
 }

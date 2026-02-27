@@ -37,9 +37,11 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> The EdgeDeviceJob items on this page. </summary>
+        [WirePath("value")]
         public IList<EdgeDeviceJobData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

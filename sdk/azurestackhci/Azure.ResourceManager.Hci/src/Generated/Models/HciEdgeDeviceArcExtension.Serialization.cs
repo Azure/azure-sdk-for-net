@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Hci.Models
             IReadOnlyList<HciValidationFailureDetail> errorDetails = default;
             ResourceIdentifier extensionResourceId = default;
             string typeHandlerVersion = default;
-            ExtensionManagedBy? managedBy = default;
+            ArcExtensionManagedBy? managedBy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    managedBy = new ExtensionManagedBy(prop.Value.GetString());
+                    managedBy = new ArcExtensionManagedBy(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

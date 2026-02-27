@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -43,24 +44,31 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Arc ResourceId of the Node. </summary>
+        [WirePath("arcResourceId")]
         public string ArcResourceId { get; }
 
         /// <summary> Remote Support Access Connection State on the Node. </summary>
+        [WirePath("state")]
         public string State { get; }
 
         /// <summary> Remote Support Enablement Request Created TimeStamp on the Node. </summary>
+        [WirePath("createdAt")]
         public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> Remote Support Enablement Request Updated TimeStamp on the Node. </summary>
+        [WirePath("updatedAt")]
         public DateTimeOffset? UpdatedOn { get; }
 
         /// <summary> Remote Support Access Connection Status on the Node. </summary>
+        [WirePath("connectionStatus")]
         public string ConnectionStatus { get; }
 
         /// <summary> Remote Support Access Connection Error Message on the Node. </summary>
+        [WirePath("connectionErrorMessage")]
         public string ConnectionErrorMessage { get; }
 
         /// <summary> Remote Support Transcript location on the node. </summary>
+        [WirePath("transcriptLocation")]
         public string TranscriptLocation { get; }
     }
 }

@@ -40,15 +40,19 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> The network intents assigned to the network reference pattern used for the deployment. Each intent will define its own name, traffic type, adapter names, and overrides as recommended by your OEM. </summary>
+        [WirePath("intents")]
         public IReadOnlyList<HciEdgeDeviceIntents> Intents { get; }
 
         /// <summary> List of StorageNetworks config to deploy AzureStackHCI Cluster. </summary>
+        [WirePath("storageNetworks")]
         public IReadOnlyList<HciEdgeDeviceStorageNetworks> StorageNetworks { get; }
 
         /// <summary> Defines how the storage adapters between nodes are connected either switch or switch less. </summary>
+        [WirePath("storageConnectivitySwitchless")]
         public bool? StorageConnectivitySwitchless { get; }
 
         /// <summary> Optional parameter required only for 3 Nodes Switchless deployments. This allows users to specify IPs and Mask for Storage NICs when Network ATC is not assigning the IPs for storage automatically. </summary>
+        [WirePath("enableStorageAutoIp")]
         public bool? EnableStorageAutoIp { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -41,21 +42,27 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> The timestamp when log collection started, in ISO 8601 format. </summary>
+        [WirePath("startTime")]
         public string StartTime { get; }
 
         /// <summary> The timestamp when log collection ended, in ISO 8601 format. </summary>
+        [WirePath("endTime")]
         public string EndTime { get; }
 
         /// <summary> The total time logs were collected for, in ISO 8601 duration format. </summary>
+        [WirePath("timeCollected")]
         public string TimeCollected { get; }
 
         /// <summary> The size of the collected logs in bytes. </summary>
+        [WirePath("logSize")]
         public int? LogSize { get; }
 
         /// <summary> The status of the log collection session. </summary>
+        [WirePath("status")]
         public DeviceLogCollectionStatus? Status { get; }
 
         /// <summary> A unique identifier for correlating this log collection session with other operations or sessions. </summary>
+        [WirePath("correlationId")]
         public string CorrelationId { get; }
     }
 }

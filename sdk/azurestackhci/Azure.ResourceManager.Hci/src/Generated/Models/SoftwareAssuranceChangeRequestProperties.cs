@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Customer Intent for Software Assurance Benefit. This indicates whether the customer wishes to opt in or out of the Software Assurance program, which provides licensing and support benefits. </summary>
+        [WirePath("softwareAssuranceIntent")]
         public SoftwareAssuranceIntent? SoftwareAssuranceIntent { get; set; }
     }
 }

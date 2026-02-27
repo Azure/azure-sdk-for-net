@@ -41,18 +41,23 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> The percentage of the job that is complete. </summary>
+        [WirePath("percentComplete")]
         public int? PercentComplete { get; }
 
         /// <summary> Validation status of job. </summary>
+        [WirePath("validationStatus")]
         public EceActionStatus ValidationStatus { get; }
 
         /// <summary> Deployment status of job. </summary>
+        [WirePath("deploymentStatus")]
         public EceActionStatus DeploymentStatus { get; }
 
         /// <summary> Optional settings for configuring the node for remote support. </summary>
+        [WirePath("nodeSettings")]
         public EdgeMachineRemoteSupportNodeSettings NodeSettings { get; }
 
         /// <summary> Details of the remote support session. </summary>
+        [WirePath("sessionDetails")]
         public IReadOnlyList<RemoteSupportSession> SessionDetails { get; }
     }
 }

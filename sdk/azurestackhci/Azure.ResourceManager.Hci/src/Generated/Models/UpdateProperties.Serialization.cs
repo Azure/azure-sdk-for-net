@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 writer.WritePropertyName("prerequisites"u8);
                 writer.WriteStartArray();
-                foreach (UpdatePrerequisite item in Prerequisites)
+                foreach (HciClusterUpdatePrerequisite item in Prerequisites)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Hci.Models
             string description = default;
             string minSbeVersionRequired = default;
             HciUpdateState? state = default;
-            IList<UpdatePrerequisite> prerequisites = default;
+            IList<HciClusterUpdatePrerequisite> prerequisites = default;
             IList<HciPackageVersionInfo> componentVersions = default;
             HciNodeRebootRequirement? rebootRequired = default;
             HciHealthState? healthState = default;
@@ -303,10 +303,10 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    List<UpdatePrerequisite> array = new List<UpdatePrerequisite>();
+                    List<HciClusterUpdatePrerequisite> array = new List<HciClusterUpdatePrerequisite>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(UpdatePrerequisite.DeserializeUpdatePrerequisite(item, options));
+                        array.Add(HciClusterUpdatePrerequisite.DeserializeHciClusterUpdatePrerequisite(item, options));
                     }
                     prerequisites = array;
                     continue;
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Hci.Models
                 description,
                 minSbeVersionRequired,
                 state,
-                prerequisites ?? new ChangeTrackingList<UpdatePrerequisite>(),
+                prerequisites ?? new ChangeTrackingList<HciClusterUpdatePrerequisite>(),
                 componentVersions ?? new ChangeTrackingList<HciPackageVersionInfo>(),
                 rebootRequired,
                 healthState,

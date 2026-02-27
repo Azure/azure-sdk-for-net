@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Initializes a new instance of <see cref="SecuritySettingListResult"/>. </summary>
         /// <param name="value"> The SecuritySetting items on this page. </param>
-        internal SecuritySettingListResult(IEnumerable<SecuritySettingData> value)
+        internal SecuritySettingListResult(IEnumerable<HciClusterSecuritySettingData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="value"> The SecuritySetting items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecuritySettingListResult(IList<SecuritySettingData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecuritySettingListResult(IList<HciClusterSecuritySettingData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,9 +37,11 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> The SecuritySetting items on this page. </summary>
-        public IList<SecuritySettingData> Value { get; }
+        [WirePath("value")]
+        public IList<HciClusterSecuritySettingData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("driverVersion"u8);
                 writer.WriteStringValue(DriverVersion);
             }
-            if (Optional.IsDefined(Ip4Address))
+            if (Optional.IsDefined(IPv4Address))
             {
                 writer.WritePropertyName("ip4Address"u8);
-                writer.WriteStringValue(Ip4Address);
+                writer.WriteStringValue(IPv4Address);
             }
             if (Optional.IsDefined(SubnetMask))
             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Hci.Models
             string interfaceDescription = default;
             string componentId = default;
             string driverVersion = default;
-            string ip4Address = default;
+            string iPv4Address = default;
             string subnetMask = default;
             string defaultGateway = default;
             IList<string> dnsServers = default;
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (prop.NameEquals("ip4Address"u8))
                 {
-                    ip4Address = prop.Value.GetString();
+                    iPv4Address = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("subnetMask"u8))
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Hci.Models
                 interfaceDescription,
                 componentId,
                 driverVersion,
-                ip4Address,
+                iPv4Address,
                 subnetMask,
                 defaultGateway,
                 dnsServers ?? new ChangeTrackingList<string>(),

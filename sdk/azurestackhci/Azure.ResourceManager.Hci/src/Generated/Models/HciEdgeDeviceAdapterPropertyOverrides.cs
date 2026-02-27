@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </summary>
+        [WirePath("jumboPacket")]
         public string JumboPacket { get; }
 
         /// <summary> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </summary>
+        [WirePath("networkDirect")]
         public string NetworkDirect { get; }
 
         /// <summary> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. Expected values are 'iWARP', 'RoCEv2', 'RoCE'. </summary>
+        [WirePath("networkDirectTechnology")]
         public string NetworkDirectTechnology { get; }
     }
 }

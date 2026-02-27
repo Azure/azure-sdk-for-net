@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -43,24 +44,31 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Number of cpu cores in the machine. </summary>
+        [WirePath("cpuCores")]
         public long? CpuCores { get; }
 
         /// <summary> Number of cpu sockets in the machine. </summary>
+        [WirePath("cpuSockets")]
         public long? CpuSockets { get; }
 
         /// <summary> Memory capacity of the machine. </summary>
+        [WirePath("memoryCapacityInGb")]
         public long? MemoryCapacityInGb { get; }
 
         /// <summary> Model info of the machine. </summary>
+        [WirePath("model")]
         public string Model { get; }
 
         /// <summary> manufacturer info of the machine. </summary>
+        [WirePath("manufacturer")]
         public string Manufacturer { get; }
 
         /// <summary> Serial number of the machine. </summary>
+        [WirePath("serialNumber")]
         public string SerialNumber { get; }
 
         /// <summary> Process type of the machine. </summary>
+        [WirePath("processorType")]
         public string ProcessorType { get; }
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="toDate"> To date for log collection. </param>
         /// <param name="lastLogGenerated"> To date for log collection. </param>
         /// <param name="reportedProperties"> log collection job reported properties. </param>
-        internal EdgeMachineCollectLogJobProperties(EdgeMachineJobType jobType, DeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, JobStatus? status, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset fromDate, DateTimeOffset toDate, DateTimeOffset? lastLogGenerated, EdgeMachineCollectLogJobReportedProperties reportedProperties) : base(jobType, deploymentMode, provisioningState, jobId, startTimeUtc, endTimeUtc, status, error, additionalBinaryDataProperties)
+        internal EdgeMachineCollectLogJobProperties(EdgeMachineJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, JobStatus? status, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset fromDate, DateTimeOffset toDate, DateTimeOffset? lastLogGenerated, EdgeMachineCollectLogJobReportedProperties reportedProperties) : base(jobType, deploymentMode, provisioningState, jobId, startTimeUtc, endTimeUtc, status, error, additionalBinaryDataProperties)
         {
             FromDate = fromDate;
             ToDate = toDate;
@@ -46,15 +47,19 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> From date for log collection. </summary>
+        [WirePath("fromDate")]
         public DateTimeOffset FromDate { get; set; }
 
         /// <summary> To date for log collection. </summary>
+        [WirePath("toDate")]
         public DateTimeOffset ToDate { get; set; }
 
         /// <summary> To date for log collection. </summary>
+        [WirePath("lastLogGenerated")]
         public DateTimeOffset? LastLogGenerated { get; }
 
         /// <summary> log collection job reported properties. </summary>
+        [WirePath("reportedProperties")]
         public EdgeMachineCollectLogJobReportedProperties ReportedProperties { get; }
     }
 }

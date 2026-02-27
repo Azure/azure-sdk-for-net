@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -31,9 +32,11 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Gets or sets the Properties. </summary>
+        [WirePath("properties")]
         internal ChangeRingRequestProperties Properties { get; set; }
 
         /// <summary> The target ring for the cluster. </summary>
+        [WirePath("properties.targetRing")]
         public string TargetRing
         {
             get

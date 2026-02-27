@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> The percentage of the job that is complete. </summary>
+        [WirePath("percentComplete")]
         public int? PercentComplete { get; }
 
         /// <summary> Validation status of job. </summary>
+        [WirePath("validationStatus")]
         public EceActionStatus ValidationStatus { get; }
 
         /// <summary> Deployment status of job. </summary>
+        [WirePath("deploymentStatus")]
         public EceActionStatus DeploymentStatus { get; }
     }
 }

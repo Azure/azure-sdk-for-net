@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> True indicates ARC connectivity is enabled. </summary>
+        [WirePath("enabled")]
         public bool? Enabled { get; set; }
 
         /// <summary> Service configurations associated with the connectivity resource. They are only processed by the server if 'enabled' property is set to 'true'. </summary>
+        [WirePath("serviceConfigurations")]
         public IList<ServiceConfiguration> ServiceConfigurations { get; }
     }
 }

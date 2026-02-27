@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Gets the ClusterNodes. </summary>
+        [WirePath("clusterNodes")]
         public IList<string> ClusterNodes { get; }
     }
 }

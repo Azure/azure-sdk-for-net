@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 writer.WritePropertyName("steps"u8);
                 writer.WriteStartArray();
-                foreach (DeploymentStep item in Steps)
+                foreach (HciClusterDeploymentStep item in Steps)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Hci.Models
                 return null;
             }
             string status = default;
-            IReadOnlyList<DeploymentStep> steps = default;
+            IReadOnlyList<HciClusterDeploymentStep> steps = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -147,10 +147,10 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    List<DeploymentStep> array = new List<DeploymentStep>();
+                    List<HciClusterDeploymentStep> array = new List<HciClusterDeploymentStep>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DeploymentStep.DeserializeDeploymentStep(item, options));
+                        array.Add(HciClusterDeploymentStep.DeserializeHciClusterDeploymentStep(item, options));
                     }
                     steps = array;
                     continue;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Hci.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EceActionStatus(status, steps ?? new ChangeTrackingList<DeploymentStep>(), additionalBinaryDataProperties);
+            return new EceActionStatus(status, steps ?? new ChangeTrackingList<HciClusterDeploymentStep>(), additionalBinaryDataProperties);
         }
     }
 }

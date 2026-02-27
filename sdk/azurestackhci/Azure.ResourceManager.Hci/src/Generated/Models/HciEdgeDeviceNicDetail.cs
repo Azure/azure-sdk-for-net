@@ -28,19 +28,19 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="interfaceDescription"> Interface Description of NIC. </param>
         /// <param name="componentId"> Component Id of NIC. </param>
         /// <param name="driverVersion"> Driver Version of NIC. </param>
-        /// <param name="ip4Address"> Subnet Mask of NIC. </param>
+        /// <param name="iPv4Address"> Subnet Mask of NIC. </param>
         /// <param name="subnetMask"> Subnet Mask of NIC. </param>
         /// <param name="defaultGateway"> Default Gateway of NIC. </param>
         /// <param name="dnsServers"> DNS Servers for NIC. </param>
         /// <param name="defaultIsolationId"> Default Isolation of Management NIC. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciEdgeDeviceNicDetail(string adapterName, string interfaceDescription, string componentId, string driverVersion, string ip4Address, string subnetMask, string defaultGateway, IList<string> dnsServers, string defaultIsolationId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciEdgeDeviceNicDetail(string adapterName, string interfaceDescription, string componentId, string driverVersion, string iPv4Address, string subnetMask, string defaultGateway, IList<string> dnsServers, string defaultIsolationId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdapterName = adapterName;
             InterfaceDescription = interfaceDescription;
             ComponentId = componentId;
             DriverVersion = driverVersion;
-            Ip4Address = ip4Address;
+            IPv4Address = iPv4Address;
             SubnetMask = subnetMask;
             DefaultGateway = defaultGateway;
             DnsServers = dnsServers;
@@ -49,30 +49,39 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Adapter Name of NIC. </summary>
+        [WirePath("adapterName")]
         public string AdapterName { get; set; }
 
         /// <summary> Interface Description of NIC. </summary>
+        [WirePath("interfaceDescription")]
         public string InterfaceDescription { get; set; }
 
         /// <summary> Component Id of NIC. </summary>
+        [WirePath("componentId")]
         public string ComponentId { get; set; }
 
         /// <summary> Driver Version of NIC. </summary>
+        [WirePath("driverVersion")]
         public string DriverVersion { get; set; }
 
         /// <summary> Subnet Mask of NIC. </summary>
-        public string Ip4Address { get; set; }
+        [WirePath("ip4Address")]
+        public string IPv4Address { get; set; }
 
         /// <summary> Subnet Mask of NIC. </summary>
+        [WirePath("subnetMask")]
         public string SubnetMask { get; set; }
 
         /// <summary> Default Gateway of NIC. </summary>
+        [WirePath("defaultGateway")]
         public string DefaultGateway { get; set; }
 
         /// <summary> DNS Servers for NIC. </summary>
+        [WirePath("dnsServers")]
         public IList<string> DnsServers { get; }
 
         /// <summary> Default Isolation of Management NIC. </summary>
+        [WirePath("defaultIsolationId")]
         public string DefaultIsolationId { get; set; }
     }
 }

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            NetworkController networkController = default;
+            DeploymentSettingNetworkController networkController = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    networkController = NetworkController.DeserializeNetworkController(prop.Value, options);
+                    networkController = DeploymentSettingNetworkController.DeserializeDeploymentSettingNetworkController(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

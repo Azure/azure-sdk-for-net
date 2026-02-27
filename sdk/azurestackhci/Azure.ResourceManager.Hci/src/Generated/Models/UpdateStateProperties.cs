@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Progress percentage of ongoing operation. Currently this property is only valid when the update is in the Downloading state, where it maps to how much of the update content has been downloaded. </summary>
+        [WirePath("progressPercentage")]
         public float? ProgressPercentage { get; set; }
 
         /// <summary> Brief message with instructions for updates of AvailabilityType Notify. </summary>
+        [WirePath("notifyMessage")]
         public string NotifyMessage { get; set; }
     }
 }

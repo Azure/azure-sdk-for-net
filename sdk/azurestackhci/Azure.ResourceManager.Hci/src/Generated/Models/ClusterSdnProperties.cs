@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -30,6 +31,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Indicates whether Software Defined Networking (SDN) integration should be enabled or disabled for this deployment. </summary>
+        [WirePath("sdnIntegrationIntent")]
         public SdnIntegrationIntent? SdnIntegrationIntent { get; }
     }
 }

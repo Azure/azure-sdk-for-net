@@ -6,10 +6,15 @@
 
 - Upgraded API version to `2026-02-01`
 - Migrated from Swagger/AutoRest to TypeSpec-based generation
+- Added support for new resource types: `ClusterJob`, `DevicePool`, `EdgeDeviceJob`, `EdgeMachine`, `EdgeMachineJob`, `KubernetesVersion`, `OsImage`, `OwnershipVoucher`, `PlatformUpdate`, `UpdateContent`, `ValidatedSolutionRecipe`
 
 ### Breaking Changes
 
-- This version is a major migration from AutoRest to TypeSpec-based code generation. Some type names, property names, and API shapes may have changed.
+- This version is a major migration from AutoRest to TypeSpec-based code generation.
+- Removed `ApiCompatVersion` — this is a breaking change release with significant API surface changes.
+- Removed deprecated `[Obsolete]` backward-compat type aliases (e.g., `OfferCollection`, `PublisherCollection`, `UpdateRunCollection`). Use the `HciCluster*` prefixed types instead.
+- Some property types changed (e.g., read-write properties became read-only).
+- Some model factory overloads changed signatures.
 
 ### Other Changes
 

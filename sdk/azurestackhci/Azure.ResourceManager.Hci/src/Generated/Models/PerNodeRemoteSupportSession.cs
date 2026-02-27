@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -39,18 +40,23 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Remote Support Session StartTime on the Node. </summary>
+        [WirePath("sessionStartTime")]
         public DateTimeOffset? SessionStartOn { get; }
 
         /// <summary> Remote Support Session EndTime on the Node. </summary>
+        [WirePath("sessionEndTime")]
         public DateTimeOffset? SessionEndOn { get; }
 
         /// <summary> Name of the node. </summary>
+        [WirePath("nodeName")]
         public string NodeName { get; }
 
         /// <summary> Duration of Remote Support Enablement. </summary>
+        [WirePath("duration")]
         public long? Duration { get; }
 
         /// <summary> Remote Support Access Level. </summary>
+        [WirePath("accessLevel")]
         public HciClusterAccessLevel? AccessLevel { get; }
     }
 }

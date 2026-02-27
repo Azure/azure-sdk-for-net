@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -34,6 +35,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Represents applicable platform updates. </summary>
+        [WirePath("platformUpdateDetails")]
         public IList<PlatformUpdateDetails> PlatformUpdateDetails { get; }
     }
 }

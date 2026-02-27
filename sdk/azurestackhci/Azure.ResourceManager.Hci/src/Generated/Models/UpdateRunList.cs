@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Initializes a new instance of <see cref="UpdateRunList"/>. </summary>
         /// <param name="value"> The UpdateRun items on this page. </param>
-        internal UpdateRunList(IEnumerable<UpdateRunData> value)
+        internal UpdateRunList(IEnumerable<HciClusterUpdateRunData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="value"> The UpdateRun items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateRunList(IList<UpdateRunData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UpdateRunList(IList<HciClusterUpdateRunData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,9 +37,11 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> The UpdateRun items on this page. </summary>
-        public IList<UpdateRunData> Value { get; }
+        [WirePath("value")]
+        public IList<HciClusterUpdateRunData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

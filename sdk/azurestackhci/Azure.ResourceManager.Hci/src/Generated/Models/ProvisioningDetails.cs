@@ -40,9 +40,11 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Operating system profile. </summary>
+        [WirePath("osProfile")]
         public OsProvisionProfile OsProfile { get; set; }
 
         /// <summary> User configuration. </summary>
+        [WirePath("userDetails")]
         public IList<UserDetails> UserDetails { get; }
     }
 }

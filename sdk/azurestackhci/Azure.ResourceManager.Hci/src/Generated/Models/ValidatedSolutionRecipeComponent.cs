@@ -52,24 +52,31 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Represents the component's name. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Represents the component's type. </summary>
+        [WirePath("type")]
         public string Type { get; }
 
         /// <summary> Represents the component's required version. </summary>
+        [WirePath("requiredVersion")]
         public string RequiredVersion { get; }
 
         /// <summary> Represents the component's install order. </summary>
+        [WirePath("installOrder")]
         public long? InstallOrder { get; }
 
         /// <summary> Represents the component's tags. </summary>
+        [WirePath("tags")]
         public IList<string> Tags { get; }
 
         /// <summary> Represents the component's payloads. </summary>
+        [WirePath("payloads")]
         public IList<ValidatedSolutionRecipeComponentPayload> Payloads { get; }
 
         /// <summary> Represents the component's metadata. </summary>
+        [WirePath("metadata")]
         public ValidatedSolutionRecipeComponentMetadata Metadata { get; }
     }
 }

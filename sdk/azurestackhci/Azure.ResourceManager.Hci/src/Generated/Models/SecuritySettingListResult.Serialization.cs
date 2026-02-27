@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (SecuritySettingData item in Value)
+            foreach (HciClusterSecuritySettingData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            IList<SecuritySettingData> value = default;
+            IList<HciClusterSecuritySettingData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<SecuritySettingData> array = new List<SecuritySettingData>();
+                    List<HciClusterSecuritySettingData> array = new List<HciClusterSecuritySettingData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SecuritySettingData.DeserializeSecuritySettingData(item, options));
+                        array.Add(HciClusterSecuritySettingData.DeserializeHciClusterSecuritySettingData(item, options));
                     }
                     value = array;
                     continue;

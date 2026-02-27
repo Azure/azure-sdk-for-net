@@ -46,15 +46,19 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Name of the user. </summary>
+        [WirePath("userName")]
         public string UserName { get; set; }
 
         /// <summary> Type of the secret used for authentication. </summary>
+        [WirePath("secretType")]
         public SecretType SecretType { get; set; }
 
         /// <summary> Location of the secret used for authentication. </summary>
+        [WirePath("secretLocation")]
         public string SecretLocation { get; set; }
 
         /// <summary> SSH Public Key for the user. </summary>
+        [WirePath("sshPubKey")]
         public IList<string> SshPubKey { get; }
     }
 }

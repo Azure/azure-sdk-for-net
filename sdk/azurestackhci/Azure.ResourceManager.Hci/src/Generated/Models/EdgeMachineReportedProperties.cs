@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -43,27 +44,35 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Last time data reported. </summary>
+        [WirePath("lastUpdated")]
         public DateTimeOffset? LastUpdated { get; }
 
         /// <summary> Network details for edge machine. </summary>
+        [WirePath("networkProfile")]
         public EdgeMachineNetworkProfile NetworkProfile { get; }
 
         /// <summary> OS Properties for edge machine. </summary>
+        [WirePath("osProfile")]
         public OsProfile OsProfile { get; }
 
         /// <summary> Hardware related information for edge machine. </summary>
+        [WirePath("hardwareProfile")]
         public HardwareProfile HardwareProfile { get; }
 
         /// <summary> Storage related information for edge machine. </summary>
+        [WirePath("storageProfile")]
         internal StorageProfile StorageProfile { get; }
 
         /// <summary> Solution builder extension (SBE) deployment package information. </summary>
+        [WirePath("sbeDeploymentPackageInfo")]
         public SbeDeploymentPackageInfo SbeDeploymentPackageInfo { get; }
 
         /// <summary> Extension details for edge machine. </summary>
+        [WirePath("extensionProfile")]
         internal ExtensionProfile ExtensionProfile { get; }
 
         /// <summary> Number of storage disks in the device with $CanPool as true. </summary>
+        [WirePath("storageProfile.poolableDisksCount")]
         public long? StoragePoolableDisksCount
         {
             get
@@ -73,6 +82,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> List of Arc extensions installed on edge device. </summary>
+        [WirePath("extensionProfile.extensions")]
         public IReadOnlyList<HciEdgeDeviceArcExtension> Extensions
         {
             get

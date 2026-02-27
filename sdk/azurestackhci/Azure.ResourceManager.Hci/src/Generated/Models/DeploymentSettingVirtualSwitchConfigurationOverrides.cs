@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Enable IoV for Virtual Switch. </summary>
+        [WirePath("enableIov")]
         public string EnableIov { get; set; }
 
         /// <summary> Load Balancing Algorithm for Virtual Switch. </summary>
+        [WirePath("loadBalancingAlgorithm")]
         public string LoadBalancingAlgorithm { get; set; }
     }
 }

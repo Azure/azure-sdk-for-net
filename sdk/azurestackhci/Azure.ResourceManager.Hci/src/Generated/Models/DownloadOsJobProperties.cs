@@ -37,16 +37,18 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="downloadRequest"> Download OS request. </param>
         /// <param name="reportedProperties"> Reported Properties for Download Os job. </param>
-        internal DownloadOsJobProperties(EdgeMachineJobType jobType, DeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, JobStatus? status, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties, DownloadRequest downloadRequest, ProvisionOsReportedProperties reportedProperties) : base(jobType, deploymentMode, provisioningState, jobId, startTimeUtc, endTimeUtc, status, error, additionalBinaryDataProperties)
+        internal DownloadOsJobProperties(EdgeMachineJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, JobStatus? status, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties, DownloadRequest downloadRequest, ProvisionOsReportedProperties reportedProperties) : base(jobType, deploymentMode, provisioningState, jobId, startTimeUtc, endTimeUtc, status, error, additionalBinaryDataProperties)
         {
             DownloadRequest = downloadRequest;
             ReportedProperties = reportedProperties;
         }
 
         /// <summary> Download OS request. </summary>
+        [WirePath("downloadRequest")]
         public DownloadRequest DownloadRequest { get; set; }
 
         /// <summary> Reported Properties for Download Os job. </summary>
+        [WirePath("reportedProperties")]
         public ProvisionOsReportedProperties ReportedProperties { get; set; }
     }
 }

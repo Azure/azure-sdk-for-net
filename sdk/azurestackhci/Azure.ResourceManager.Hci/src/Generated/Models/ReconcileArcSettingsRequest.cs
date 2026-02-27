@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -31,9 +32,11 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> List of Arc Nodes in the cluster. </summary>
+        [WirePath("properties")]
         internal ReconcileArcSettingsRequestProperties Properties { get; set; }
 
         /// <summary> Gets the ClusterNodes. </summary>
+        [WirePath("properties.clusterNodes")]
         public IList<string> ReconcileArcSettingsRequestClusterNodes
         {
             get

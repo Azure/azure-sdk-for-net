@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="additionalData"> Property bag of key value pairs for additional information. </param>
         /// <param name="healthCheckSource"> The name of the services called for the HealthCheck (I.E. Test-AzureStack, Test-Cluster). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciPrecheckResult(string name, string displayName, PrecheckResultTags tags, BinaryData healthCheckTags, string title, Status? status, Severity? severity, string description, string remediation, string targetResourceID, string targetResourceName, string targetResourceType, DateTimeOffset? timestamp, string additionalData, string healthCheckSource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciPrecheckResult(string name, string displayName, HciPrecheckResultTags tags, BinaryData healthCheckTags, string title, HciClusterStatus? status, UpdateSeverity? severity, string description, string remediation, string targetResourceID, string targetResourceName, string targetResourceType, DateTimeOffset? timestamp, string additionalData, string healthCheckSource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             DisplayName = displayName;
@@ -60,13 +61,16 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Name of the individual test/rule/alert that was executed. Unique, not exposed to the customer. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> The health check DisplayName localized of the individual test executed. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
 
         /// <summary> Key-value pairs that allow grouping/filtering individual tests. </summary>
-        public PrecheckResultTags Tags { get; set; }
+        [WirePath("tags")]
+        public HciPrecheckResultTags Tags { get; set; }
 
         /// <summary>
         /// Key-value pairs that allow grouping/filtering individual tests.
@@ -94,39 +98,51 @@ namespace Azure.ResourceManager.Hci.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("healthCheckTags")]
         public BinaryData HealthCheckTags { get; set; }
 
         /// <summary> User-facing name; one or more sentences indicating the direct issue. </summary>
+        [WirePath("title")]
         public string Title { get; set; }
 
         /// <summary> Represents the current status of the check being performed. Indicates whether the check has completed successfully, failed, or is still in progress. </summary>
-        public Status? Status { get; set; }
+        [WirePath("status")]
+        public HciClusterStatus? Status { get; set; }
 
         /// <summary> Indicates the importance or impact level of the result. Determines whether the result is informational, a warning, or a critical issue that may block updates. </summary>
-        public Severity? Severity { get; set; }
+        [WirePath("severity")]
+        public UpdateSeverity? Severity { get; set; }
 
         /// <summary> Detailed overview of the issue and what impact the issue has on the stamp. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> Set of steps that can be taken to resolve the issue found. </summary>
+        [WirePath("remediation")]
         public string Remediation { get; set; }
 
         /// <summary> The unique identifier for the affected resource (such as a node or drive). </summary>
+        [WirePath("targetResourceID")]
         public string TargetResourceID { get; set; }
 
         /// <summary> The name of the affected resource. </summary>
+        [WirePath("targetResourceName")]
         public string TargetResourceName { get; set; }
 
         /// <summary> The type of resource being referred to (well-known set of nouns in infrastructure, aligning with Monitoring). </summary>
+        [WirePath("targetResourceType")]
         public string TargetResourceType { get; set; }
 
         /// <summary> The time in which the HealthCheck was called. </summary>
+        [WirePath("timestamp")]
         public DateTimeOffset? Timestamp { get; set; }
 
         /// <summary> Property bag of key value pairs for additional information. </summary>
+        [WirePath("additionalData")]
         public string AdditionalData { get; set; }
 
         /// <summary> The name of the services called for the HealthCheck (I.E. Test-AzureStack, Test-Cluster). </summary>
+        [WirePath("healthCheckSource")]
         public string HealthCheckSource { get; set; }
     }
 }

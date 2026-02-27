@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="HciEdgeDeviceSwitchDetail"/>. </summary>
         internal HciEdgeDeviceSwitchDetail()
         {
-            Extensions = new ChangeTrackingList<SwitchExtension>();
+            Extensions = new ChangeTrackingList<HciEdgeSwitchExtension>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HciEdgeDeviceSwitchDetail"/>. </summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="switchType"> The type of the switch. e.g. external, internal. </param>
         /// <param name="extensions"> This represents extensions installed on virtualSwitch. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciEdgeDeviceSwitchDetail(string switchName, string switchType, IReadOnlyList<SwitchExtension> extensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciEdgeDeviceSwitchDetail(string switchName, string switchType, IReadOnlyList<HciEdgeSwitchExtension> extensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SwitchName = switchName;
             SwitchType = switchType;
@@ -37,12 +37,15 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> The name of the switch. </summary>
+        [WirePath("switchName")]
         public string SwitchName { get; }
 
         /// <summary> The type of the switch. e.g. external, internal. </summary>
+        [WirePath("switchType")]
         public string SwitchType { get; }
 
         /// <summary> This represents extensions installed on virtualSwitch. </summary>
-        public IReadOnlyList<SwitchExtension> Extensions { get; }
+        [WirePath("extensions")]
+        public IReadOnlyList<HciEdgeSwitchExtension> Extensions { get; }
     }
 }

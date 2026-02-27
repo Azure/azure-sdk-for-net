@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -39,18 +40,23 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Unique session Id. </summary>
+        [WirePath("sessionId")]
         public string SessionId { get; }
 
         /// <summary> The start time of the remote support session, in UTC. </summary>
+        [WirePath("sessionStartTime")]
         public DateTimeOffset? SessionStartOn { get; }
 
         /// <summary> The end time of the remote support session, in UTC. </summary>
+        [WirePath("sessionEndTime")]
         public DateTimeOffset? SessionEndOn { get; }
 
         /// <summary> The level of access granted during the remote support session. </summary>
+        [WirePath("accessLevel")]
         public RemoteSupportAccessLevel? AccessLevel { get; }
 
         /// <summary> The location where the session transcript is stored. </summary>
+        [WirePath("transcriptLocation")]
         public string TranscriptLocation { get; }
     }
 }

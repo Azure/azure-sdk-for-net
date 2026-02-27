@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Primary NTP server. </summary>
+        [WirePath("primaryTimeServer")]
         public string PrimaryTimeServer { get; set; }
 
         /// <summary> Secondary NTP server. </summary>
+        [WirePath("secondaryTimeServer")]
         public string SecondaryTimeServer { get; set; }
 
         /// <summary> Time zone. </summary>
+        [WirePath("timeZone")]
         public string TimeZone { get; set; }
     }
 }

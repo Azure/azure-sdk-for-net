@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -43,24 +44,31 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Name of the operating system. </summary>
+        [WirePath("osName")]
         public string OsName { get; set; }
 
         /// <summary> Type of the operating system. </summary>
+        [WirePath("osType")]
         public string OsType { get; set; }
 
         /// <summary> Version of the operating system. </summary>
+        [WirePath("osVersion")]
         public string OsVersion { get; set; }
 
         /// <summary> Location of the operating system image. </summary>
+        [WirePath("osImageLocation")]
         public string OsImageLocation { get; set; }
 
         /// <summary> Validated Solution Recipe version to be used for the job. </summary>
+        [WirePath("vsrVersion")]
         public string VsrVersion { get; set; }
 
         /// <summary> Hash of the OS package downloaded. </summary>
+        [WirePath("imageHash")]
         public string ImageHash { get; set; }
 
         /// <summary> GPG Public Key used for package verification. </summary>
+        [WirePath("gpgPubKey")]
         public string GpgPubKey { get; set; }
     }
 }

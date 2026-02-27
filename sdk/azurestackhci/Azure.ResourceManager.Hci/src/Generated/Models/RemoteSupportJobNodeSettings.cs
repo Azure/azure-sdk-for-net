@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -39,18 +40,23 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> The state of the remote support node. </summary>
+        [WirePath("state")]
         public string State { get; }
 
         /// <summary> The timestamp when the node settings were created, in UTC. </summary>
+        [WirePath("createdAt")]
         public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The timestamp when the node settings were last updated, in UTC. </summary>
+        [WirePath("updatedAt")]
         public DateTimeOffset? UpdatedOn { get; }
 
         /// <summary> The current connection status of the remote support session. </summary>
+        [WirePath("connectionStatus")]
         public string ConnectionStatus { get; }
 
         /// <summary> The error message, if any, from the last connection attempt. </summary>
+        [WirePath("connectionErrorMessage")]
         public string ConnectionErrorMessage { get; }
     }
 }

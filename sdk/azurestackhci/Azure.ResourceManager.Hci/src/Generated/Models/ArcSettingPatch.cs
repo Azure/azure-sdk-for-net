@@ -35,12 +35,15 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> ArcSettings properties. </summary>
+        [WirePath("properties")]
         internal ArcSettingsPatchProperties Properties { get; set; }
 
         /// <summary> contains connectivity related configuration for ARC resources. </summary>
+        [WirePath("properties.connectivityProperties")]
         public ArcConnectivityProperties ConnectivityProperties
         {
             get

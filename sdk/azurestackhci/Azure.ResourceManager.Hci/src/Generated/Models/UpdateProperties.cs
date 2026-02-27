@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="UpdateProperties"/>. </summary>
         public UpdateProperties()
         {
-            Prerequisites = new ChangeTrackingList<UpdatePrerequisite>();
+            Prerequisites = new ChangeTrackingList<HciClusterUpdatePrerequisite>();
             ComponentVersions = new ChangeTrackingList<HciPackageVersionInfo>();
             HealthCheckResult = new ChangeTrackingList<HciPrecheckResult>();
         }
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="additionalProperties"> Extensible KV pairs serialized as a string. This is currently used to report the stamp OEM family and hardware model information when an update is flagged as Invalid for the stamp based on OEM type. </param>
         /// <param name="updateStateProperties"> Additional information regarding the state of the update. See definition of UpdateStateProperties type below for more details on this property. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateProperties(HciProvisioningState? provisioningState, DateTimeOffset? installedOn, string description, string minSbeVersionRequired, HciUpdateState? state, IList<UpdatePrerequisite> prerequisites, IList<HciPackageVersionInfo> componentVersions, HciNodeRebootRequirement? rebootRequired, HciHealthState? healthState, IList<HciPrecheckResult> healthCheckResult, DateTimeOffset? healthCheckOn, string packagePath, float? packageSizeInMb, string displayName, string version, string publisher, string releaseLink, HciAvailabilityType? availabilityType, string packageType, string additionalProperties, UpdateStateProperties updateStateProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UpdateProperties(HciProvisioningState? provisioningState, DateTimeOffset? installedOn, string description, string minSbeVersionRequired, HciUpdateState? state, IList<HciClusterUpdatePrerequisite> prerequisites, IList<HciPackageVersionInfo> componentVersions, HciNodeRebootRequirement? rebootRequired, HciHealthState? healthState, IList<HciPrecheckResult> healthCheckResult, DateTimeOffset? healthCheckOn, string packagePath, float? packageSizeInMb, string displayName, string version, string publisher, string releaseLink, HciAvailabilityType? availabilityType, string packageType, string additionalProperties, UpdateStateProperties updateStateProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             InstalledOn = installedOn;
@@ -75,69 +75,91 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Provisioning state of the Updates proxy resource. Indicates the current lifecycle status of the update operation, such as whether it has been accepted, is in progress, or has completed. </summary>
+        [WirePath("provisioningState")]
         public HciProvisioningState? ProvisioningState { get; }
 
         /// <summary> Date that the update was installed. </summary>
+        [WirePath("installedDate")]
         public DateTimeOffset? InstalledOn { get; set; }
 
         /// <summary> Description of the update. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> Minimum Sbe Version of the update. </summary>
+        [WirePath("minSbeVersionRequired")]
         public string MinSbeVersionRequired { get; set; }
 
         /// <summary> Represents the current state of the update as it relates to this stamp. This includes phases such as preparation, installation, scanning, and error handling, providing insight into the update's progress and any issues encountered. </summary>
+        [WirePath("state")]
         public HciUpdateState? State { get; set; }
 
         /// <summary> If update State is HasPrerequisite, this property contains an array of objects describing prerequisite updates before installing this update. Otherwise, it is empty. </summary>
-        public IList<UpdatePrerequisite> Prerequisites { get; } = new ChangeTrackingList<UpdatePrerequisite>();
+        [WirePath("prerequisites")]
+        public IList<HciClusterUpdatePrerequisite> Prerequisites { get; } = new ChangeTrackingList<HciClusterUpdatePrerequisite>();
 
         /// <summary> An array of component versions for a Solution Bundle update, and an empty array otherwise. </summary>
+        [WirePath("componentVersions")]
         public IList<HciPackageVersionInfo> ComponentVersions { get; } = new ChangeTrackingList<HciPackageVersionInfo>();
 
         /// <summary> Indicates whether a reboot is required after the update or operation. Helps determine if a system restart is necessary to complete the process. </summary>
+        [WirePath("rebootRequired")]
         public HciNodeRebootRequirement? RebootRequired { get; set; }
 
         /// <summary> Overall health state for update-specific health checks. </summary>
+        [WirePath("healthState")]
         public HciHealthState? HealthState { get; set; }
 
         /// <summary> An array of PrecheckResult objects. </summary>
+        [WirePath("healthCheckResult")]
         public IList<HciPrecheckResult> HealthCheckResult { get; } = new ChangeTrackingList<HciPrecheckResult>();
 
         /// <summary> Last time the package-specific checks were run. </summary>
+        [WirePath("healthCheckDate")]
         public DateTimeOffset? HealthCheckOn { get; set; }
 
         /// <summary> Path where the update package is available. </summary>
+        [WirePath("packagePath")]
         public string PackagePath { get; set; }
 
         /// <summary> Size of the package. This value is a combination of the size from update metadata and size of the payload that results from the live scan operation for OS update content. </summary>
+        [WirePath("packageSizeInMb")]
         public float? PackageSizeInMb { get; set; }
 
         /// <summary> Display name of the Update. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
 
         /// <summary> Version of the update. </summary>
+        [WirePath("version")]
         public string Version { get; set; }
 
         /// <summary> Publisher of the update package. </summary>
+        [WirePath("publisher")]
         public string Publisher { get; set; }
 
         /// <summary> Link to release notes for the update. </summary>
+        [WirePath("releaseLink")]
         public string ReleaseLink { get; set; }
 
         /// <summary> Indicates how the update content is made available for download. This determines whether the update is sourced locally, from an online repository, or requires user notification. </summary>
+        [WirePath("availabilityType")]
         public HciAvailabilityType? AvailabilityType { get; set; }
 
         /// <summary> Customer-visible type of the update. </summary>
+        [WirePath("packageType")]
         public string PackageType { get; set; }
 
         /// <summary> Extensible KV pairs serialized as a string. This is currently used to report the stamp OEM family and hardware model information when an update is flagged as Invalid for the stamp based on OEM type. </summary>
+        [WirePath("additionalProperties")]
         public string AdditionalProperties { get; set; }
 
         /// <summary> Additional information regarding the state of the update. See definition of UpdateStateProperties type below for more details on this property. </summary>
+        [WirePath("updateStateProperties")]
         internal UpdateStateProperties UpdateStateProperties { get; set; }
 
         /// <summary> Progress percentage of ongoing operation. Currently this property is only valid when the update is in the Downloading state, where it maps to how much of the update content has been downloaded. </summary>
+        [WirePath("updateStateProperties.progressPercentage")]
         public float? ProgressPercentage
         {
             get
@@ -155,6 +177,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Brief message with instructions for updates of AvailabilityType Notify. </summary>
+        [WirePath("updateStateProperties.notifyMessage")]
         public string NotifyMessage
         {
             get

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -46,27 +47,35 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> The ownership voucher validation status. </summary>
+        [WirePath("validationStatus")]
         public OwnershipVoucherValidationStatus? ValidationStatus { get; }
 
         /// <summary> Serial number of the device. </summary>
+        [WirePath("serialNumber")]
         public string SerialNumber { get; }
 
         /// <summary> FDO guid of the Ownership Voucher. </summary>
+        [WirePath("id")]
         public string Id { get; }
 
         /// <summary> Name of the manufacturer. </summary>
+        [WirePath("manufacturer")]
         public string Manufacturer { get; }
 
         /// <summary> Name of the model. </summary>
+        [WirePath("modelName")]
         public string ModelName { get; }
 
         /// <summary> Version of the Ownership Voucher format. </summary>
+        [WirePath("version")]
         public string Version { get; }
 
         /// <summary> Azure Machine Id of the Ownership voucher. </summary>
+        [WirePath("azureMachineId")]
         public string AzureMachineId { get; }
 
         /// <summary> Error details if the validation failed. </summary>
+        [WirePath("error")]
         public ResponseError Error { get; }
     }
 }

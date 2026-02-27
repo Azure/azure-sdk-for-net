@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -39,18 +40,23 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> SBE package version. </summary>
+        [WirePath("version")]
         public string Version { get; set; }
 
         /// <summary> SBE family name. </summary>
+        [WirePath("family")]
         public string Family { get; set; }
 
         /// <summary> SBE manifest publisher. </summary>
+        [WirePath("publisher")]
         public string Publisher { get; set; }
 
         /// <summary> SBE Manifest Source. </summary>
+        [WirePath("sbeManifestSource")]
         public string SbeManifestSource { get; set; }
 
         /// <summary> SBE Manifest Creation Date. </summary>
+        [WirePath("sbeManifestCreationDate")]
         public DateTimeOffset? SbeManifestCreationOn { get; set; }
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="status"> Status of Edge device job. </param>
         /// <param name="error"> error details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeMachineJobProperties(EdgeMachineJobType jobType, DeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, JobStatus? status, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeMachineJobProperties(EdgeMachineJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, JobStatus? status, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             JobType = jobType;
             DeploymentMode = deploymentMode;
@@ -51,27 +52,35 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Job Type to support polymorphic resource. </summary>
+        [WirePath("jobType")]
         internal EdgeMachineJobType JobType { get; set; }
 
         /// <summary> Deployment mode to trigger job. </summary>
-        public DeploymentMode? DeploymentMode { get; set; }
+        [WirePath("deploymentMode")]
+        public EceDeploymentMode? DeploymentMode { get; set; }
 
         /// <summary> Job provisioning state. </summary>
+        [WirePath("provisioningState")]
         public HciProvisioningState? ProvisioningState { get; }
 
         /// <summary> Unique, immutable job id. </summary>
+        [WirePath("jobId")]
         public string JobId { get; }
 
         /// <summary> The UTC date and time at which the job started. </summary>
+        [WirePath("startTimeUtc")]
         public DateTimeOffset? StartTimeUtc { get; }
 
         /// <summary> The UTC date and time at which the job completed. </summary>
+        [WirePath("endTimeUtc")]
         public DateTimeOffset? EndTimeUtc { get; }
 
         /// <summary> Status of Edge device job. </summary>
+        [WirePath("status")]
         public JobStatus? Status { get; }
 
         /// <summary> error details. </summary>
+        [WirePath("error")]
         public ResponseError Error { get; }
     }
 }

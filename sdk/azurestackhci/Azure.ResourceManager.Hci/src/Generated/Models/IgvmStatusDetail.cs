@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> A machine-readable status code indicating the result or condition of a specific IGVM-related check or operation. </summary>
+        [WirePath("code")]
         public string Code { get; }
 
         /// <summary> A human-readable message providing context or explanation for the associated status code. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

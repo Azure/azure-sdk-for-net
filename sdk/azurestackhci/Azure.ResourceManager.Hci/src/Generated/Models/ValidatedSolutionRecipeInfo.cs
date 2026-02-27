@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -37,9 +38,11 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Represents the solution type for which this validated solution recipe is applicable. </summary>
+        [WirePath("solutionType")]
         public string SolutionType { get; }
 
         /// <summary> Represents the version for which this validated solution recipe is applicable. </summary>
+        [WirePath("version")]
         public string Version { get; }
     }
 }

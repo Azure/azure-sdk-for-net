@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="status"> Status of Cluster job. </param>
         /// <param name="reportedProperties"> Reported properties for job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterJobProperties(HciJobType jobType, DeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, JobStatus? status, JobReportedProperties reportedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterJobProperties(HciJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, JobStatus? status, JobReportedProperties reportedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             JobType = jobType;
             DeploymentMode = deploymentMode;
@@ -50,27 +51,35 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Job Type to support polymorphic resource. </summary>
+        [WirePath("jobType")]
         internal HciJobType JobType { get; set; }
 
         /// <summary> Deployment mode to trigger job. </summary>
-        public DeploymentMode? DeploymentMode { get; set; }
+        [WirePath("deploymentMode")]
+        public EceDeploymentMode? DeploymentMode { get; set; }
 
         /// <summary> Job provisioning state. </summary>
+        [WirePath("provisioningState")]
         public HciProvisioningState? ProvisioningState { get; }
 
         /// <summary> Unique, immutable job id. </summary>
+        [WirePath("jobId")]
         public string JobId { get; }
 
         /// <summary> The UTC date and time at which the job started. </summary>
+        [WirePath("startTimeUtc")]
         public DateTimeOffset? StartTimeUtc { get; }
 
         /// <summary> The UTC date and time at which the job completed. </summary>
+        [WirePath("endTimeUtc")]
         public DateTimeOffset? EndTimeUtc { get; }
 
         /// <summary> Status of Cluster job. </summary>
+        [WirePath("status")]
         public JobStatus? Status { get; }
 
         /// <summary> Reported properties for job. </summary>
+        [WirePath("reportedProperties")]
         public JobReportedProperties ReportedProperties { get; }
     }
 }

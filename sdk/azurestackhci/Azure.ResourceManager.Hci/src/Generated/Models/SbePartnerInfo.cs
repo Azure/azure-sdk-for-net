@@ -38,12 +38,15 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> SBE package and manifest information for the solution Builder Extension staged for AzureStackHCI cluster deployment. </summary>
+        [WirePath("sbeDeploymentInfo")]
         public SbeDeploymentInfo SbeDeploymentInfo { get; set; }
 
         /// <summary> List of SBE partner properties for AzureStackHCI cluster deployment. </summary>
+        [WirePath("partnerProperties")]
         public IList<SbePartnerProperties> PartnerProperties { get; }
 
         /// <summary> SBE credentials list for AzureStackHCI cluster deployment. </summary>
+        [WirePath("credentialList")]
         public IList<SbeCredentials> CredentialList { get; }
     }
 }

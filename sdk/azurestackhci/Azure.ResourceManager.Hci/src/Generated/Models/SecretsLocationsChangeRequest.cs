@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> List of secret locations. </summary>
+        [WirePath("properties")]
         public IList<SecretsLocationDetails> Properties { get; }
     }
 }

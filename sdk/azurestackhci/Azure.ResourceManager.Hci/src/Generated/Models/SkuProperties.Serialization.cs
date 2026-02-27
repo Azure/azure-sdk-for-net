@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 writer.WritePropertyName("skuMappings"u8);
                 writer.WriteStartArray();
-                foreach (SkuMappings item in SkuMappings)
+                foreach (HciSkuMappings item in SkuMappings)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Hci.Models
             string offerId = default;
             string content = default;
             string contentVersion = default;
-            IList<SkuMappings> skuMappings = default;
+            IList<HciSkuMappings> skuMappings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -191,10 +191,10 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    List<SkuMappings> array = new List<SkuMappings>();
+                    List<HciSkuMappings> array = new List<HciSkuMappings>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.SkuMappings.DeserializeSkuMappings(item, options));
+                        array.Add(HciSkuMappings.DeserializeHciSkuMappings(item, options));
                     }
                     skuMappings = array;
                     continue;
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Hci.Models
                 offerId,
                 content,
                 contentVersion,
-                skuMappings ?? new ChangeTrackingList<SkuMappings>(),
+                skuMappings ?? new ChangeTrackingList<HciSkuMappings>(),
                 additionalBinaryDataProperties);
         }
     }

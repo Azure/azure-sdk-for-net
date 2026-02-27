@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci.Models
@@ -37,9 +38,11 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         internal KubernetesVersionProperties Properties { get; }
 
         /// <summary> Represents kubernetes version. </summary>
+        [WirePath("properties.version")]
         public string KubernetesVersionValue
         {
             get

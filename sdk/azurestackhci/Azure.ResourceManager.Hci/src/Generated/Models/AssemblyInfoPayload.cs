@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> assembly identifier for Validated Solution Recipe for AzureStackHCI Cluster. </summary>
+        [WirePath("identifier")]
         public string Identifier { get; }
 
         /// <summary> Hash of assembly package for Validated Solution Recipe for AzureStackHCI Cluster. </summary>
+        [WirePath("hash")]
         public string Hash { get; }
 
         /// <summary> File name of assembly package for Validated Solution Recipe for AzureStackHCI Cluster. </summary>
+        [WirePath("fileName")]
         public string FileName { get; }
 
         /// <summary> Url of assembly package for Validated Solution Recipe for AzureStackHCI Cluster. </summary>
+        [WirePath("url")]
         public string Uri { get; }
     }
 }

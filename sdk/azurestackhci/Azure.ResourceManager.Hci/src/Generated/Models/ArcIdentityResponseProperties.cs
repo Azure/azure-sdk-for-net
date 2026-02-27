@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Gets the ArcApplicationClientId. </summary>
+        [WirePath("arcApplicationClientId")]
         public string ArcApplicationClientId { get; }
 
         /// <summary> Gets the ArcApplicationTenantId. </summary>
+        [WirePath("arcApplicationTenantId")]
         public string ArcApplicationTenantId { get; }
 
         /// <summary> Gets the ArcServicePrincipalObjectId. </summary>
+        [WirePath("arcServicePrincipalObjectId")]
         public string ArcServicePrincipalObjectId { get; }
 
         /// <summary> Gets the ArcApplicationObjectId. </summary>
+        [WirePath("arcApplicationObjectId")]
         public string ArcApplicationObjectId { get; }
     }
 }

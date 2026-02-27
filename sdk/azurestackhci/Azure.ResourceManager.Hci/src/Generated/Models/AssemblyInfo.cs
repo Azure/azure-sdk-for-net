@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Assembly Package version for Validated Solution Recipe for AzureStackHCI Cluster. </summary>
+        [WirePath("packageVersion")]
         public string PackageVersion { get; }
 
         /// <summary> Payload properties for Validated Solution Recipe for AzureStackHCI Cluster. </summary>
+        [WirePath("payload")]
         public IReadOnlyList<AssemblyInfoPayload> Payload { get; }
     }
 }

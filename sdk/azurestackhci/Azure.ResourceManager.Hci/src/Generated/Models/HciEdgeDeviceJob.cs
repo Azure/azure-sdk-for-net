@@ -40,6 +40,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> HCI Edge device job properties. </summary>
+        [WirePath("properties")]
         public HciEdgeDeviceJobProperties Properties { get; set; }
     }
 }

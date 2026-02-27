@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -39,21 +40,27 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Network configuration. </summary>
+        [WirePath("network")]
         internal NetworkConfiguration Network { get; set; }
 
         /// <summary> Hostname of the device. </summary>
+        [WirePath("hostName")]
         public string HostName { get; set; }
 
         /// <summary> Web proxy configuration. </summary>
+        [WirePath("webProxy")]
         public WebProxyConfiguration WebProxy { get; set; }
 
         /// <summary> Time configuration. </summary>
+        [WirePath("time")]
         public TimeConfiguration Time { get; set; }
 
         /// <summary> Storage configuration. </summary>
+        [WirePath("storage")]
         internal StorageConfiguration Storage { get; set; }
 
         /// <summary> List of network adapters. </summary>
+        [WirePath("network.networkAdapters")]
         public IList<NetworkAdapter> NetworkAdapters
         {
             get
@@ -67,6 +74,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Partition size. </summary>
+        [WirePath("storage.partitionSize")]
         public string StoragePartitionSize
         {
             get

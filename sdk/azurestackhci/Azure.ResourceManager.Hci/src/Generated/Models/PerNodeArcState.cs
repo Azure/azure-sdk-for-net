@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Name of the Node in HCI Cluster. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Fully qualified resource ID for the Arc agent of this node. </summary>
+        [WirePath("arcInstance")]
         public string ArcInstance { get; }
 
         /// <summary> The service principal id of the arc for server node. </summary>
+        [WirePath("arcNodeServicePrincipalObjectId")]
         public string ArcNodeServicePrincipalObjectId { get; }
 
         /// <summary> State of the Arc agent in this node. Indicates the current lifecycle status of the agent, such as whether it's being provisioned, connected, updated, or has encountered an error. </summary>
+        [WirePath("state")]
         public NodeArcState? State { get; }
     }
 }

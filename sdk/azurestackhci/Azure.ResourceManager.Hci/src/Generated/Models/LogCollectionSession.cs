@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -47,30 +48,39 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Start Time of the logs when it was collected. </summary>
+        [WirePath("logStartTime")]
         public DateTimeOffset? LogStartOn { get; }
 
         /// <summary> End Time of the logs when it was collected. </summary>
+        [WirePath("logEndTime")]
         public DateTimeOffset? LogEndOn { get; }
 
         /// <summary> Duration of logs collected. </summary>
+        [WirePath("timeCollected")]
         public DateTimeOffset? TimeCollected { get; }
 
         /// <summary> Size of the logs collected. </summary>
+        [WirePath("logSize")]
         public long? LogSize { get; }
 
         /// <summary> LogCollection status. </summary>
+        [WirePath("logCollectionStatus")]
         public LogCollectionStatus? LogCollectionStatus { get; }
 
         /// <summary> CorrelationId of the log collection. </summary>
+        [WirePath("correlationId")]
         public string CorrelationId { get; }
 
         /// <summary> Specifies the type of log collection job. Determines whether the logs are collected immediately on demand or as part of a scheduled operation. </summary>
+        [WirePath("logCollectionJobType")]
         public LogCollectionJobType? LogCollectionJobType { get; }
 
         /// <summary> End Time of the logs when it was collected. </summary>
+        [WirePath("endTimeCollected")]
         public DateTimeOffset? EndTimeCollected { get; }
 
         /// <summary> Log Collection Error details of the cluster. </summary>
+        [WirePath("logCollectionError")]
         public LogCollectionError LogCollectionError { get; }
     }
 }

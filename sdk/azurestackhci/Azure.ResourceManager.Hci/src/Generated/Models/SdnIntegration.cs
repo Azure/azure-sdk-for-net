@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -24,13 +25,14 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="SdnIntegration"/>. </summary>
         /// <param name="networkController"> network controller config for SDN Integration to deploy AzureStackHCI Cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SdnIntegration(NetworkController networkController, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SdnIntegration(DeploymentSettingNetworkController networkController, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NetworkController = networkController;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> network controller config for SDN Integration to deploy AzureStackHCI Cluster. </summary>
-        public NetworkController NetworkController { get; set; }
+        [WirePath("networkController")]
+        public DeploymentSettingNetworkController NetworkController { get; set; }
     }
 }

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -45,24 +46,31 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> operation name. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> operation id. </summary>
+        [WirePath("id")]
         public string Id { get; }
 
         /// <summary> operation type. </summary>
+        [WirePath("type")]
         public string Type { get; }
 
         /// <summary> operation resource id. </summary>
+        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; }
 
         /// <summary> operation description. </summary>
+        [WirePath("description")]
         public string Description { get; }
 
         /// <summary> operation status. </summary>
+        [WirePath("status")]
         public string Status { get; }
 
         /// <summary> error details. </summary>
+        [WirePath("error")]
         public ResponseError Error { get; }
     }
 }

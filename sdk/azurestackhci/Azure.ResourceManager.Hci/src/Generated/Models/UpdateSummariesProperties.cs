@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="healthCheckOn"> Last time the package-specific checks were run. </param>
         /// <param name="state"> Overall update state of the stamp. Indicates the current status of update deployment across the stamp, including preparation, application, and any issues encountered. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateSummariesProperties(HciProvisioningState? provisioningState, string oemFamily, string currentOemVersion, string hardwareModel, IList<HciPackageVersionInfo> packageVersions, string currentVersion, string currentSbeVersion, DateTimeOffset? lastUpdated, DateTimeOffset? lastChecked, HciHealthState? healthState, IList<HciPrecheckResult> healthCheckResult, DateTimeOffset? healthCheckOn, UpdateSummariesPropertiesState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UpdateSummariesProperties(HciProvisioningState? provisioningState, string oemFamily, string currentOemVersion, string hardwareModel, IList<HciPackageVersionInfo> packageVersions, string currentVersion, string currentSbeVersion, DateTimeOffset? lastUpdated, DateTimeOffset? lastChecked, HciHealthState? healthState, IList<HciPrecheckResult> healthCheckResult, DateTimeOffset? healthCheckOn, HciClusterUpdateState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             OemFamily = oemFamily;
@@ -58,42 +58,55 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Provisioning state of the UpdateSummaries proxy resource. Indicates the current lifecycle status of the update summary operation, such as whether it has been accepted, is in progress, or has completed. </summary>
+        [WirePath("provisioningState")]
         public HciProvisioningState? ProvisioningState { get; }
 
         /// <summary> OEM family name. </summary>
+        [WirePath("oemFamily")]
         public string OemFamily { get; set; }
 
         /// <summary> Current OEM Version. </summary>
+        [WirePath("currentOemVersion")]
         public string CurrentOemVersion { get; set; }
 
         /// <summary> Name of the hardware model. </summary>
+        [WirePath("hardwareModel")]
         public string HardwareModel { get; set; }
 
         /// <summary> Current version of each updatable component. </summary>
+        [WirePath("packageVersions")]
         public IList<HciPackageVersionInfo> PackageVersions { get; } = new ChangeTrackingList<HciPackageVersionInfo>();
 
         /// <summary> Current Solution Bundle version of the stamp. </summary>
+        [WirePath("currentVersion")]
         public string CurrentVersion { get; set; }
 
         /// <summary> Current Sbe version of the stamp. </summary>
+        [WirePath("currentSbeVersion")]
         public string CurrentSbeVersion { get; set; }
 
         /// <summary> Last time an update installation completed successfully. </summary>
+        [WirePath("lastUpdated")]
         public DateTimeOffset? LastUpdated { get; set; }
 
         /// <summary> Last time the update service successfully checked for updates. </summary>
+        [WirePath("lastChecked")]
         public DateTimeOffset? LastChecked { get; set; }
 
         /// <summary> Overall health state for update-specific health checks. </summary>
+        [WirePath("healthState")]
         public HciHealthState? HealthState { get; set; }
 
         /// <summary> An array of pre-check result objects. </summary>
+        [WirePath("healthCheckResult")]
         public IList<HciPrecheckResult> HealthCheckResult { get; } = new ChangeTrackingList<HciPrecheckResult>();
 
         /// <summary> Last time the package-specific checks were run. </summary>
+        [WirePath("healthCheckDate")]
         public DateTimeOffset? HealthCheckOn { get; set; }
 
         /// <summary> Overall update state of the stamp. Indicates the current status of update deployment across the stamp, including preparation, application, and any issues encountered. </summary>
-        public UpdateSummariesPropertiesState? State { get; set; }
+        [WirePath("state")]
+        public HciClusterUpdateState? State { get; set; }
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -38,12 +39,15 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Represents validated solution recipe version of a platform update. </summary>
+        [WirePath("validatedSolutionRecipeVersion")]
         public string ValidatedSolutionRecipeVersion { get; }
 
         /// <summary> Represents version of a platform update. </summary>
+        [WirePath("platformVersion")]
         public string PlatformVersion { get; }
 
         /// <summary> Represents the platform payloads of a platform update. </summary>
+        [WirePath("platformPayloads")]
         public IList<PlatformPayload> PlatformPayloads { get; }
     }
 }

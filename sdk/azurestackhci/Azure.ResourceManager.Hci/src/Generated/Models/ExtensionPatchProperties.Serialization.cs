@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            ExtensionPatchParameters extensionParameters = default;
+            ArcExtensionPatchContent extensionParameters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    extensionParameters = ExtensionPatchParameters.DeserializeExtensionPatchParameters(prop.Value, options);
+                    extensionParameters = ArcExtensionPatchContent.DeserializeArcExtensionPatchContent(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

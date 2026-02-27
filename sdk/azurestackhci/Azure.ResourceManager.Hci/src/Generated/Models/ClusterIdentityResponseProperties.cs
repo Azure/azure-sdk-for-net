@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Gets the AadClientId. </summary>
+        [WirePath("aadClientId")]
         public string AadClientId { get; }
 
         /// <summary> Gets the AadTenantId. </summary>
+        [WirePath("aadTenantId")]
         public string AadTenantId { get; }
 
         /// <summary> Gets the AadServicePrincipalObjectId. </summary>
+        [WirePath("aadServicePrincipalObjectId")]
         public string AadServicePrincipalObjectId { get; }
 
         /// <summary> Gets the AadApplicationObjectId. </summary>
+        [WirePath("aadApplicationObjectId")]
         public string AadApplicationObjectId { get; }
     }
 }

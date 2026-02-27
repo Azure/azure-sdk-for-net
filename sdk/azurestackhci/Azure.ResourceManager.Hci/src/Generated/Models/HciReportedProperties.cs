@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> The device Configuration for HCI device. </summary>
-    public partial class HciReportedProperties : ReportedProperties
+    public partial class HciReportedProperties : HciEdgeDeviceReportedProperties
     {
         /// <summary> Initializes a new instance of <see cref="HciReportedProperties"/>. </summary>
         internal HciReportedProperties()
@@ -39,21 +40,27 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> HCI device network information. </summary>
+        [WirePath("networkProfile")]
         public HciNetworkProfile NetworkProfile { get; }
 
         /// <summary> HCI device OS specific information. </summary>
+        [WirePath("osProfile")]
         public HciOSProfile OsProfile { get; }
 
         /// <summary> Solution builder extension (SBE) deployment package information. </summary>
+        [WirePath("sbeDeploymentPackageInfo")]
         public SbeDeploymentPackageInfo SbeDeploymentPackageInfo { get; }
 
         /// <summary> Hci device storage specific information. </summary>
+        [WirePath("storageProfile")]
         internal HciStorageProfile StorageProfile { get; }
 
         /// <summary> Hci device hardware specific information. </summary>
+        [WirePath("hardwareProfile")]
         internal HciHardwareProfile HardwareProfile { get; }
 
         /// <summary> Number of storage disks in the device with $CanPool as true. </summary>
+        [WirePath("storageProfile.poolableDisksCount")]
         public long? StoragePoolableDisksCount
         {
             get
@@ -63,6 +70,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Process type of the device. </summary>
+        [WirePath("hardwareProfile.processorType")]
         public string HardwareProcessorType
         {
             get

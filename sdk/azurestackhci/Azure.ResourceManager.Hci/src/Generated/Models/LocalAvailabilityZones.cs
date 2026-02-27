@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Local Availability Zone name for HCI cluster. </summary>
+        [WirePath("localAvailabilityZoneName")]
         public string LocalAvailabilityZoneName { get; set; }
 
         /// <summary> Nodes belonging to a particular zone. </summary>
+        [WirePath("nodes")]
         public IList<string> Nodes { get; }
     }
 }

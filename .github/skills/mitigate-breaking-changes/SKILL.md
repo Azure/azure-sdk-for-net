@@ -104,3 +104,26 @@ reportGet is Ops.Read<Resource, Response = ArmResponse<Report>, ...>;
 // CORRECT — ActionSync with @get avoids lifecycle misclassification
 @get reportGet is Ops.ActionSync<Resource, void, Response = ArmResponse<Report>, ...>;
 ```
+
+## Emitter Configuration Options (in spec repo `tspconfig.yaml`)
+
+### `enable-wire-path-attribute: true` — Preserve WirePathAttribute for ApiCompat
+
+When migrating from AutoRest to TypeSpec, the old generated code had `[WirePath("...")]` attributes on model properties. By default, the TypeSpec C# mgmt emitter does **not** emit these attributes, causing hundreds of ApiCompat `CannotRemoveAttribute` errors:
+
+```
+CannotRemoveAttribute : Attribute 'Azure.ResourceManager.Hci.WirePathAttribute' exists on '...' in the contract but not the implementation.
+```
+
+**Fix**: Add `enable-wire-path-attribute: true` to the C# mgmt emitter options in `tspconfig.yaml`:
+
+```yaml
+"@azure-typespec/http-client-csharp-mgmt":
+  namespace: "Azure.ResourceManager.<Service>"
+  emitter-output-dir: "{output-dir}/sdk/<service>/{namespace}"
+  enable-wire-path-attribute: true
+```
+
+This tells the emitter to generate `[WirePath("...")]` attributes on properties, matching the old AutoRest output and eliminating the `CannotRemoveAttribute` ApiCompat errors.
+
+**When to use**: Always use this during migration from AutoRest to TypeSpec when the existing SDK has `ApiCompatVersion` set (i.e., there is a prior GA or beta release with WirePath attributes). Check the old `api/*.cs` files for `[WirePath(...)]` attributes — if present, this option is needed.

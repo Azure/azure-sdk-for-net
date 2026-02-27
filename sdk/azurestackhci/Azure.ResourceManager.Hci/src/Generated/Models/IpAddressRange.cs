@@ -42,9 +42,11 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Start IP address. </summary>
+        [WirePath("startIp")]
         public string StartIp { get; set; }
 
         /// <summary> End IP address. </summary>
+        [WirePath("endIp")]
         public string EndIp { get; set; }
     }
 }

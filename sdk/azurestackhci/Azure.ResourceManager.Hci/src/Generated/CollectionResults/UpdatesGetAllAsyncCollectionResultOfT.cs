@@ -15,7 +15,7 @@ using Azure.ResourceManager.Hci.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    internal partial class UpdatesGetAllAsyncCollectionResultOfT : AsyncPageable<UpdateData>
+    internal partial class UpdatesGetAllAsyncCollectionResultOfT : AsyncPageable<HciClusterUpdateData>
     {
         private readonly Updates _client;
         private readonly Guid _subscriptionId;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of UpdatesGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<UpdateData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<HciClusterUpdateData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Hci
                     yield break;
                 }
                 UpdateList result = UpdateList.FromResponse(response);
-                yield return Page<UpdateData>.FromValues((IReadOnlyList<UpdateData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<HciClusterUpdateData>.FromValues((IReadOnlyList<HciClusterUpdateData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Hci
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _clusterName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _clusterName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("UpdateCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HciClusterUpdateCollection.GetAll");
             scope.Start();
             try
             {

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -34,9 +35,11 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Resource Id of the device. </summary>
+        [WirePath("deviceResourceId")]
         public ResourceIdentifier DeviceResourceId { get; set; }
 
         /// <summary> Resource Id of group device belongs to. </summary>
+        [WirePath("claimedBy")]
         public string ClaimedBy { get; }
     }
 }

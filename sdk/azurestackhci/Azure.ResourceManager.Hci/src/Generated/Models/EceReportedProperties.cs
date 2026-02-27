@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> validation status of AzureStackHCI Cluster Deployment. </summary>
+        [WirePath("validationStatus")]
         public EceActionStatus ValidationStatus { get; }
 
         /// <summary> Deployment status of AzureStackHCI Cluster Deployment. </summary>
+        [WirePath("deploymentStatus")]
         public EceActionStatus DeploymentStatus { get; }
     }
 }

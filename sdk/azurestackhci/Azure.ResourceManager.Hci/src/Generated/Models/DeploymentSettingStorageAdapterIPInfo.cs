@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> storage adapter physical node name. </summary>
+        [WirePath("physicalNode")]
         public string PhysicalNode { get; set; }
 
         /// <summary> The IPv4 address assigned to each storage adapter physical node on your Azure Stack HCI cluster. </summary>
+        [WirePath("ipv4Address")]
         public string Ipv4Address { get; set; }
 
         /// <summary> The SubnetMask address assigned to each storage adapter physical node on your Azure Stack HCI cluster. </summary>
+        [WirePath("subnetMask")]
         public string SubnetMask { get; set; }
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -40,12 +41,15 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Represents information about a validated solution recipe. </summary>
+        [WirePath("info")]
         public ValidatedSolutionRecipeInfo Info { get; }
 
         /// <summary> Represents capabilities available in a validated solution recipe. </summary>
+        [WirePath("capabilities")]
         public ValidatedSolutionRecipeCapabilities Capabilities { get; }
 
         /// <summary> Represents components available in a validated solution recipe. </summary>
+        [WirePath("components")]
         public IList<ValidatedSolutionRecipeComponent> Components { get; }
     }
 }

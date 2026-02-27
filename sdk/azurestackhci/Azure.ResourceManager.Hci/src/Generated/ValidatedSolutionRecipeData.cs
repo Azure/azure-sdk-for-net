@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         public ValidatedSolutionRecipeProperties Properties { get; }
     }
 }

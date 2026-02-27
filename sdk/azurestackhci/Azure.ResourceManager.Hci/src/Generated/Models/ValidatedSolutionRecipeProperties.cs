@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -35,9 +36,11 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Represents contents of a validated solution recipe. </summary>
+        [WirePath("recipeContent")]
         public ValidatedSolutionRecipeContent RecipeContent { get; }
 
         /// <summary> Represents the signature of the recipe, to be used for ensuring its integrity. </summary>
+        [WirePath("signature")]
         public string Signature { get; }
     }
 }

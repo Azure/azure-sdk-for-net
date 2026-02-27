@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -51,36 +52,47 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Represents the type of extension. </summary>
+        [WirePath("extensionType")]
         public string ExtensionType { get; }
 
         /// <summary> Represents the publisher of the extension. </summary>
+        [WirePath("publisher")]
         public string Publisher { get; }
 
         /// <summary> Indicates whether automatic upgrades of the extension are enabled. </summary>
+        [WirePath("enableAutomaticUpgrade")]
         public bool? EnableAutomaticUpgrade { get; }
 
         /// <summary> Indicates whether the LCM (Lifecycle Management) update of the extension is enabled. </summary>
+        [WirePath("lcmUpdate")]
         public bool? LcmUpdate { get; }
 
         /// <summary> Specifies the catalog to which the extension belongs. </summary>
+        [WirePath("catalog")]
         public string Catalog { get; }
 
         /// <summary> Specifies the ring to which the extension belongs, internally used by component. </summary>
+        [WirePath("ring")]
         public string Ring { get; }
 
         /// <summary> Specifies the release train to which given component belongs. </summary>
+        [WirePath("releaseTrain")]
         public string ReleaseTrain { get; }
 
         /// <summary> Specifies the link associated with the extension. </summary>
+        [WirePath("link")]
         public string Link { get; }
 
         /// <summary> Specifies the name of the extension. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Specifies the expected hash of the extension. </summary>
+        [WirePath("expectedHash")]
         public string ExpectedHash { get; }
 
         /// <summary> Specifies the preview source of the extension. </summary>
+        [WirePath("previewSource")]
         public string PreviewSource { get; }
     }
 }

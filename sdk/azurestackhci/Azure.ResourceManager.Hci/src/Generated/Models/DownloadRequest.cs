@@ -41,9 +41,11 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Target operating system to support polymorphic resource. </summary>
+        [WirePath("target")]
         public ProvisioningOsType Target { get; set; }
 
         /// <summary> Operating system profile. </summary>
+        [WirePath("osProfile")]
         public DownloadOsProfile OsProfile { get; set; }
     }
 }

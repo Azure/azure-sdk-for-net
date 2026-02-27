@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Error Code of the log collection. </summary>
+        [WirePath("errorCode")]
         public string ErrorCode { get; }
 
         /// <summary> Error Message of the log collection. </summary>
+        [WirePath("errorMessage")]
         public string ErrorMessage { get; }
     }
 }

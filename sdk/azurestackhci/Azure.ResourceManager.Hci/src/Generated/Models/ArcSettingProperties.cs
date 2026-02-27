@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Hci.Models
         public ArcSettingProperties()
         {
             PerNodeDetails = new ChangeTrackingList<PerNodeArcState>();
-            DefaultExtensions = new ChangeTrackingList<DefaultExtensionDetails>();
+            DefaultExtensions = new ChangeTrackingList<ArcDefaultExtensionDetails>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ArcSettingProperties"/>. </summary>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="connectivityProperties"> contains connectivity related configuration for ARC resources. </param>
         /// <param name="defaultExtensions"> Properties for each of the default extensions category. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArcSettingProperties(HciProvisioningState? provisioningState, string arcInstanceResourceGroup, string arcApplicationClientId, string arcApplicationTenantId, string arcServicePrincipalObjectId, string arcApplicationObjectId, ArcSettingAggregateState? aggregateState, IReadOnlyList<PerNodeArcState> perNodeDetails, ArcConnectivityProperties connectivityProperties, IReadOnlyList<DefaultExtensionDetails> defaultExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArcSettingProperties(HciProvisioningState? provisioningState, string arcInstanceResourceGroup, string arcApplicationClientId, string arcApplicationTenantId, string arcServicePrincipalObjectId, string arcApplicationObjectId, ArcSettingAggregateState? aggregateState, IReadOnlyList<PerNodeArcState> perNodeDetails, ArcConnectivityProperties connectivityProperties, IReadOnlyList<ArcDefaultExtensionDetails> defaultExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ArcInstanceResourceGroup = arcInstanceResourceGroup;
@@ -52,33 +52,43 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Provisioning state of the ArcSetting proxy resource. </summary>
+        [WirePath("provisioningState")]
         public HciProvisioningState? ProvisioningState { get; }
 
         /// <summary> The resource group that hosts the Arc agents, ie. Hybrid Compute Machine resources. </summary>
+        [WirePath("arcInstanceResourceGroup")]
         public string ArcInstanceResourceGroup { get; set; }
 
         /// <summary> App id of arc AAD identity. </summary>
+        [WirePath("arcApplicationClientId")]
         public string ArcApplicationClientId { get; set; }
 
         /// <summary> Tenant id of arc AAD identity. </summary>
+        [WirePath("arcApplicationTenantId")]
         public string ArcApplicationTenantId { get; set; }
 
         /// <summary> Object id of arc AAD service principal. </summary>
+        [WirePath("arcServicePrincipalObjectId")]
         public string ArcServicePrincipalObjectId { get; set; }
 
         /// <summary> Object id of arc AAD identity. </summary>
+        [WirePath("arcApplicationObjectId")]
         public string ArcApplicationObjectId { get; set; }
 
         /// <summary> Aggregate state of Arc agent across the nodes in this HCI cluster. </summary>
+        [WirePath("aggregateState")]
         public ArcSettingAggregateState? AggregateState { get; }
 
         /// <summary> State of Arc agent in each of the nodes. </summary>
+        [WirePath("perNodeDetails")]
         public IReadOnlyList<PerNodeArcState> PerNodeDetails { get; } = new ChangeTrackingList<PerNodeArcState>();
 
         /// <summary> contains connectivity related configuration for ARC resources. </summary>
+        [WirePath("connectivityProperties")]
         public ArcConnectivityProperties ConnectivityProperties { get; set; }
 
         /// <summary> Properties for each of the default extensions category. </summary>
-        public IReadOnlyList<DefaultExtensionDetails> DefaultExtensions { get; } = new ChangeTrackingList<DefaultExtensionDetails>();
+        [WirePath("defaultExtensions")]
+        public IReadOnlyList<ArcDefaultExtensionDetails> DefaultExtensions { get; } = new ChangeTrackingList<ArcDefaultExtensionDetails>();
     }
 }

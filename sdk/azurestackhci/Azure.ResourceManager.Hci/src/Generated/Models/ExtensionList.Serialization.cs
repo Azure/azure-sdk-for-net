@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ExtensionData item in Value)
+            foreach (ArcExtensionData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            IList<ExtensionData> value = default;
+            IList<ArcExtensionData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ExtensionData> array = new List<ExtensionData>();
+                    List<ArcExtensionData> array = new List<ArcExtensionData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ExtensionData.DeserializeExtensionData(item, options));
+                        array.Add(ArcExtensionData.DeserializeArcExtensionData(item, options));
                     }
                     value = array;
                     continue;

@@ -15,7 +15,7 @@ using Azure.ResourceManager.Hci.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    internal partial class OffersGetByPublisherAsyncCollectionResultOfT : AsyncPageable<OfferData>
+    internal partial class OffersGetByPublisherAsyncCollectionResultOfT : AsyncPageable<HciClusterOfferData>
     {
         private readonly Offers _client;
         private readonly Guid _subscriptionId;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of OffersGetByPublisherAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<OfferData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<HciClusterOfferData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Hci
                     yield break;
                 }
                 OfferList result = OfferList.FromResponse(response);
-                yield return Page<OfferData>.FromValues((IReadOnlyList<OfferData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<HciClusterOfferData>.FromValues((IReadOnlyList<HciClusterOfferData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Hci
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByPublisherRequest(nextLink, _subscriptionId, _resourceGroupName, _clusterName, _publisherName, _expand, _context) : _client.CreateGetByPublisherRequest(_subscriptionId, _resourceGroupName, _clusterName, _publisherName, _expand, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("OfferCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HciClusterOfferCollection.GetAll");
             scope.Start();
             try
             {

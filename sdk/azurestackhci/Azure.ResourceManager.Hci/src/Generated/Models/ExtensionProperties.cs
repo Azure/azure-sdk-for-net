@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="perNodeExtensionDetails"> State of Arc Extension in each of the nodes. </param>
         /// <param name="managedBy"> Indicates if the extension is managed by Azure or the user. This determines who controls the deployment and lifecycle of the extension. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExtensionProperties(HciProvisioningState? provisioningState, ExtensionParameters extensionParameters, ExtensionAggregateState? aggregateState, IReadOnlyList<PerNodeExtensionState> perNodeExtensionDetails, ExtensionManagedBy? managedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExtensionProperties(HciProvisioningState? provisioningState, ExtensionParameters extensionParameters, ArcExtensionAggregateState? aggregateState, IReadOnlyList<PerNodeExtensionState> perNodeExtensionDetails, ArcExtensionManagedBy? managedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ExtensionParameters = extensionParameters;
@@ -41,21 +41,27 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Provisioning state of the Extension proxy resource. Indicates the current lifecycle status of the resource, such as whether it's being created, updated, deleted, or has encountered an error. </summary>
+        [WirePath("provisioningState")]
         public HciProvisioningState? ProvisioningState { get; }
 
         /// <summary> Parameters specific to this extension type. </summary>
+        [WirePath("extensionParameters")]
         internal ExtensionParameters ExtensionParameters { get; set; }
 
         /// <summary> Aggregate state of Arc Extensions across the nodes in this HCI cluster. This reflects the overall status of the extension deployment and operation across all nodes. </summary>
-        public ExtensionAggregateState? AggregateState { get; }
+        [WirePath("aggregateState")]
+        public ArcExtensionAggregateState? AggregateState { get; }
 
         /// <summary> State of Arc Extension in each of the nodes. </summary>
+        [WirePath("perNodeExtensionDetails")]
         public IReadOnlyList<PerNodeExtensionState> PerNodeExtensionDetails { get; } = new ChangeTrackingList<PerNodeExtensionState>();
 
         /// <summary> Indicates if the extension is managed by Azure or the user. This determines who controls the deployment and lifecycle of the extension. </summary>
-        public ExtensionManagedBy? ManagedBy { get; }
+        [WirePath("managedBy")]
+        public ArcExtensionManagedBy? ManagedBy { get; }
 
         /// <summary> How the extension handler should be forced to update even if the extension configuration has not changed. </summary>
+        [WirePath("extensionParameters.forceUpdateTag")]
         public string ForceUpdateTag
         {
             get
@@ -73,6 +79,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> The name of the extension handler publisher. </summary>
+        [WirePath("extensionParameters.publisher")]
         public string Publisher
         {
             get
@@ -90,6 +97,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Specifies the type of the extension; an example is "CustomScriptExtension". </summary>
+        [WirePath("extensionParameters.type")]
         public string Type
         {
             get
@@ -107,6 +115,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Specifies the version of the script handler. Latest version would be used if not specified. </summary>
+        [WirePath("extensionParameters.typeHandlerVersion")]
         public string TypeHandlerVersion
         {
             get
@@ -124,6 +133,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </summary>
+        [WirePath("extensionParameters.autoUpgradeMinorVersion")]
         public bool? AutoUpgradeMinorVersion
         {
             get
@@ -141,6 +151,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Json formatted public settings for the extension. </summary>
+        [WirePath("extensionParameters.settings")]
         public BinaryData Settings
         {
             get
@@ -158,6 +169,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Protected settings (may contain secrets). </summary>
+        [WirePath("extensionParameters.protectedSettings")]
         public BinaryData ProtectedSettings
         {
             get
@@ -175,6 +187,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version available. </summary>
+        [WirePath("extensionParameters.enableAutomaticUpgrade")]
         public bool? EnableAutomaticUpgrade
         {
             get

@@ -37,12 +37,15 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Connection URI of the web proxy. </summary>
+        [WirePath("connectionUri")]
         public Uri ConnectionUri { get; set; }
 
         /// <summary> Port of the web proxy. </summary>
+        [WirePath("port")]
         public string Port { get; set; }
 
         /// <summary> Bypass list for the web proxy. </summary>
+        [WirePath("bypassList")]
         public IList<Uri> BypassList { get; }
     }
 }

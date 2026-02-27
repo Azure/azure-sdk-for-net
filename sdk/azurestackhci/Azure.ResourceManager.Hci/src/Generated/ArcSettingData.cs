@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> ArcSetting properties. </summary>
+        [WirePath("properties")]
         internal ArcSettingProperties Properties { get; set; }
 
         /// <summary> Provisioning state of the ArcSetting proxy resource. </summary>
+        [WirePath("properties.provisioningState")]
         public HciProvisioningState? ProvisioningState
         {
             get
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> The resource group that hosts the Arc agents, ie. Hybrid Compute Machine resources. </summary>
+        [WirePath("properties.arcInstanceResourceGroup")]
         public string ArcInstanceResourceGroup
         {
             get
@@ -67,6 +70,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> App id of arc AAD identity. </summary>
+        [WirePath("properties.arcApplicationClientId")]
         public string ArcApplicationClientId
         {
             get
@@ -84,6 +88,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> Tenant id of arc AAD identity. </summary>
+        [WirePath("properties.arcApplicationTenantId")]
         public string ArcApplicationTenantId
         {
             get
@@ -101,6 +106,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> Object id of arc AAD service principal. </summary>
+        [WirePath("properties.arcServicePrincipalObjectId")]
         public string ArcServicePrincipalObjectId
         {
             get
@@ -118,6 +124,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> Object id of arc AAD identity. </summary>
+        [WirePath("properties.arcApplicationObjectId")]
         public string ArcApplicationObjectId
         {
             get
@@ -135,6 +142,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> Aggregate state of Arc agent across the nodes in this HCI cluster. </summary>
+        [WirePath("properties.aggregateState")]
         public ArcSettingAggregateState? AggregateState
         {
             get
@@ -144,6 +152,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> State of Arc agent in each of the nodes. </summary>
+        [WirePath("properties.perNodeDetails")]
         public IReadOnlyList<PerNodeArcState> PerNodeDetails
         {
             get
@@ -157,6 +166,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> contains connectivity related configuration for ARC resources. </summary>
+        [WirePath("properties.connectivityProperties")]
         public ArcConnectivityProperties ConnectivityProperties
         {
             get
@@ -174,7 +184,8 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> Properties for each of the default extensions category. </summary>
-        public IReadOnlyList<DefaultExtensionDetails> DefaultExtensions
+        [WirePath("properties.defaultExtensions")]
+        public IReadOnlyList<ArcDefaultExtensionDetails> DefaultExtensions
         {
             get
             {

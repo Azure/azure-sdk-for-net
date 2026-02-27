@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -34,6 +35,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Ownership Voucher Validation Details. </summary>
+        [WirePath("ownershipVoucherValidationDetails")]
         public IList<OwnershipVoucherValidationDetails> OwnershipVoucherValidationDetails { get; }
     }
 }

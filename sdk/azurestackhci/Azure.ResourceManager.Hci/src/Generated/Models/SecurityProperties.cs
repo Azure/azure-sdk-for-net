@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="securityComplianceStatus"> Security Compliance Status. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityProperties(ComplianceAssignmentType? securedCoreComplianceAssignment, ComplianceAssignmentType? wdacComplianceAssignment, ComplianceAssignmentType? smbEncryptionForIntraClusterTrafficComplianceAssignment, SecurityComplianceStatus securityComplianceStatus, HciProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityProperties(HciClusterComplianceAssignmentType? securedCoreComplianceAssignment, HciClusterComplianceAssignmentType? wdacComplianceAssignment, HciClusterComplianceAssignmentType? smbEncryptionForIntraClusterTrafficComplianceAssignment, SecurityComplianceStatus securityComplianceStatus, HciProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SecuredCoreComplianceAssignment = securedCoreComplianceAssignment;
             WdacComplianceAssignment = wdacComplianceAssignment;
@@ -39,18 +40,23 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Secured Core Compliance Assignment. </summary>
-        public ComplianceAssignmentType? SecuredCoreComplianceAssignment { get; set; }
+        [WirePath("securedCoreComplianceAssignment")]
+        public HciClusterComplianceAssignmentType? SecuredCoreComplianceAssignment { get; set; }
 
         /// <summary> WDAC Compliance Assignment. </summary>
-        public ComplianceAssignmentType? WdacComplianceAssignment { get; set; }
+        [WirePath("wdacComplianceAssignment")]
+        public HciClusterComplianceAssignmentType? WdacComplianceAssignment { get; set; }
 
         /// <summary> SMB encryption for intra-cluster traffic Compliance Assignment. </summary>
-        public ComplianceAssignmentType? SmbEncryptionForIntraClusterTrafficComplianceAssignment { get; set; }
+        [WirePath("smbEncryptionForIntraClusterTrafficComplianceAssignment")]
+        public HciClusterComplianceAssignmentType? SmbEncryptionForIntraClusterTrafficComplianceAssignment { get; set; }
 
         /// <summary> Security Compliance Status. </summary>
+        [WirePath("securityComplianceStatus")]
         public SecurityComplianceStatus SecurityComplianceStatus { get; }
 
         /// <summary> The status of the last operation. </summary>
+        [WirePath("provisioningState")]
         public HciProvisioningState? ProvisioningState { get; }
     }
 }

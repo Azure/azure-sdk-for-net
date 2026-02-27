@@ -37,16 +37,18 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="provisioningRequest"> Os Provisioning request. </param>
         /// <param name="reportedProperties"> Reported Properties for Provision Os job. </param>
-        internal ProvisionOsJobProperties(EdgeMachineJobType jobType, DeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, JobStatus? status, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties, ProvisioningRequest provisioningRequest, ProvisionOsReportedProperties reportedProperties) : base(jobType, deploymentMode, provisioningState, jobId, startTimeUtc, endTimeUtc, status, error, additionalBinaryDataProperties)
+        internal ProvisionOsJobProperties(EdgeMachineJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, JobStatus? status, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties, ProvisioningRequest provisioningRequest, ProvisionOsReportedProperties reportedProperties) : base(jobType, deploymentMode, provisioningState, jobId, startTimeUtc, endTimeUtc, status, error, additionalBinaryDataProperties)
         {
             ProvisioningRequest = provisioningRequest;
             ReportedProperties = reportedProperties;
         }
 
         /// <summary> Os Provisioning request. </summary>
+        [WirePath("provisioningRequest")]
         public ProvisioningRequest ProvisioningRequest { get; set; }
 
         /// <summary> Reported Properties for Provision Os job. </summary>
+        [WirePath("reportedProperties")]
         public ProvisionOsReportedProperties ReportedProperties { get; set; }
     }
 }

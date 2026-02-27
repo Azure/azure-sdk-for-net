@@ -15,7 +15,7 @@ using Azure.ResourceManager.Hci.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    internal partial class EdgeDevicesGetAllAsyncCollectionResultOfT : AsyncPageable<EdgeDeviceData>
+    internal partial class EdgeDevicesGetAllAsyncCollectionResultOfT : AsyncPageable<HciEdgeDeviceData>
     {
         private readonly EdgeDevices _client;
         private readonly string _resourceUri;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of EdgeDevicesGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<EdgeDeviceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<HciEdgeDeviceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Hci
                     yield break;
                 }
                 EdgeDeviceListResult result = EdgeDeviceListResult.FromResponse(response);
-                yield return Page<EdgeDeviceData>.FromValues((IReadOnlyList<EdgeDeviceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<HciEdgeDeviceData>.FromValues((IReadOnlyList<HciEdgeDeviceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Hci
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _resourceUri, _context) : _client.CreateGetAllRequest(_resourceUri, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("EdgeDeviceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HciEdgeDeviceCollection.GetAll");
             scope.Start();
             try
             {

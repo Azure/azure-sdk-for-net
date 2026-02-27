@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -43,24 +44,31 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Represents url of a update payload. </summary>
+        [WirePath("url")]
         public string Uri { get; }
 
         /// <summary> Represents hash of a update payload. </summary>
+        [WirePath("hash")]
         public string Hash { get; }
 
         /// <summary> Represents hash algorithm of a update payload. </summary>
+        [WirePath("hashAlgorithm")]
         public string HashAlgorithm { get; }
 
         /// <summary> Represents identifier of a update payload. </summary>
+        [WirePath("identifier")]
         public string Identifier { get; }
 
         /// <summary> Represents size in bytes of a update payload. </summary>
+        [WirePath("packageSizeInBytes")]
         public string PackageSizeInBytes { get; }
 
         /// <summary> Represents the group of a update payload. </summary>
+        [WirePath("group")]
         public string Group { get; }
 
         /// <summary> Represents the file name of a update payload. </summary>
+        [WirePath("fileName")]
         public string FileName { get; }
     }
 }

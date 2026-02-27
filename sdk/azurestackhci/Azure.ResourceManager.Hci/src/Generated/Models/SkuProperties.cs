@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="SkuProperties"/>. </summary>
         internal SkuProperties()
         {
-            SkuMappings = new ChangeTrackingList<SkuMappings>();
+            SkuMappings = new ChangeTrackingList<HciSkuMappings>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SkuProperties"/>. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="contentVersion"> The API version of the catalog service used to serve the catalog content. </param>
         /// <param name="skuMappings"> Array of SKU mappings. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SkuProperties(string provisioningState, string publisherId, string offerId, string content, string contentVersion, IList<SkuMappings> skuMappings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SkuProperties(string provisioningState, string publisherId, string offerId, string content, string contentVersion, IList<HciSkuMappings> skuMappings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             PublisherId = publisherId;
@@ -43,21 +43,27 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Provisioning State. </summary>
+        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
 
         /// <summary> Identifier of the Publisher for the offer. </summary>
+        [WirePath("publisherId")]
         public string PublisherId { get; }
 
         /// <summary> Identifier of the Offer for the sku. </summary>
+        [WirePath("offerId")]
         public string OfferId { get; }
 
         /// <summary> JSON serialized catalog content of the sku offer. </summary>
+        [WirePath("content")]
         public string Content { get; }
 
         /// <summary> The API version of the catalog service used to serve the catalog content. </summary>
+        [WirePath("contentVersion")]
         public string ContentVersion { get; }
 
         /// <summary> Array of SKU mappings. </summary>
-        public IList<SkuMappings> SkuMappings { get; } = new ChangeTrackingList<SkuMappings>();
+        [WirePath("skuMappings")]
+        public IList<HciSkuMappings> SkuMappings { get; } = new ChangeTrackingList<HciSkuMappings>();
     }
 }

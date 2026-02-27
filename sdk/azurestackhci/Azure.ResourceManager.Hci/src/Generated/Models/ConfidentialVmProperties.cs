@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Captures the customer's intent to enable or disable CVM support on the cluster, either during initial deployment (Day-0) or at a later stage (Day-N). </summary>
+        [WirePath("confidentialVmIntent")]
         public ConfidentialVmIntent? ConfidentialVmIntent { get; }
 
         /// <summary> Captures the current status of CVM support on the cluster. </summary>
+        [WirePath("confidentialVmStatus")]
         public ConfidentialVmStatus? ConfidentialVmStatus { get; }
 
         /// <summary> Additional context about CVM support on the cluster, such as reasons for partial enablement or hardware constraints. </summary>
+        [WirePath("confidentialVmStatusSummary")]
         public string ConfidentialVmStatusSummary { get; }
     }
 }

@@ -39,15 +39,19 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> From DateTimeStamp from when logs need to be connected. </summary>
+        [WirePath("fromDate")]
         public DateTimeOffset? FromDate { get; }
 
         /// <summary> To DateTimeStamp till when logs need to be connected. </summary>
+        [WirePath("toDate")]
         public DateTimeOffset? ToDate { get; }
 
         /// <summary> Recent DateTimeStamp where logs are successfully generated. </summary>
+        [WirePath("lastLogGenerated")]
         public DateTimeOffset? LastLogGenerated { get; }
 
         /// <summary> Gets the LogCollectionSessionDetails. </summary>
+        [WirePath("logCollectionSessionDetails")]
         public IReadOnlyList<LogCollectionSession> LogCollectionSessionDetails { get; }
     }
 }

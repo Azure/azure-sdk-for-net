@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -45,15 +46,19 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Represents the unique identifier of the payload used to query the URL. </summary>
+        [WirePath("identifier")]
         public string Identifier { get; }
 
         /// <summary> Represents the cryptographic hash of the payload, ensuring data integrity. </summary>
+        [WirePath("hash")]
         public string Hash { get; }
 
         /// <summary> Represents the name of the file associated with the payload. </summary>
+        [WirePath("fileName")]
         public string FileName { get; }
 
         /// <summary> Represents the URL from which the payload can be downloaded. </summary>
+        [WirePath("url")]
         public string Uri { get; }
     }
 }

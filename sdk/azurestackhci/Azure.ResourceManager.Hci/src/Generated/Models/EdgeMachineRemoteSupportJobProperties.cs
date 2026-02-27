@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="expirationTimestamp"> Remote support expiration timestamp. </param>
         /// <param name="type"> Remote support type. </param>
         /// <param name="reportedProperties"> log collection job reported properties. </param>
-        internal EdgeMachineRemoteSupportJobProperties(EdgeMachineJobType jobType, DeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, JobStatus? status, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties, RemoteSupportAccessLevel accessLevel, DateTimeOffset expirationTimestamp, RemoteSupportType @type, EdgeMachineRemoteSupportJobReportedProperties reportedProperties) : base(jobType, deploymentMode, provisioningState, jobId, startTimeUtc, endTimeUtc, status, error, additionalBinaryDataProperties)
+        internal EdgeMachineRemoteSupportJobProperties(EdgeMachineJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, JobStatus? status, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties, RemoteSupportAccessLevel accessLevel, DateTimeOffset expirationTimestamp, RemoteSupportType @type, EdgeMachineRemoteSupportJobReportedProperties reportedProperties) : base(jobType, deploymentMode, provisioningState, jobId, startTimeUtc, endTimeUtc, status, error, additionalBinaryDataProperties)
         {
             AccessLevel = accessLevel;
             ExpirationTimestamp = expirationTimestamp;
@@ -48,15 +49,19 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Remote support access level. </summary>
+        [WirePath("accessLevel")]
         public RemoteSupportAccessLevel AccessLevel { get; set; }
 
         /// <summary> Remote support expiration timestamp. </summary>
+        [WirePath("expirationTimestamp")]
         public DateTimeOffset ExpirationTimestamp { get; set; }
 
         /// <summary> Remote support type. </summary>
+        [WirePath("type")]
         public RemoteSupportType Type { get; set; }
 
         /// <summary> log collection job reported properties. </summary>
+        [WirePath("reportedProperties")]
         public EdgeMachineRemoteSupportJobReportedProperties ReportedProperties { get; }
     }
 }

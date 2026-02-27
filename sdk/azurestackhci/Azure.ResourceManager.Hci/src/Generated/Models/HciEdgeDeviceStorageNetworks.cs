@@ -39,15 +39,19 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Name of the storage network. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Name of the storage network adapter. </summary>
+        [WirePath("networkAdapterName")]
         public string NetworkAdapterName { get; }
 
         /// <summary> ID specified for the VLAN storage network. This setting is applied to the network interfaces that route the storage and VM migration traffic. </summary>
+        [WirePath("storageVlanId")]
         public string StorageVlanId { get; }
 
         /// <summary> List of Storage adapter physical nodes config to deploy AzureStackHCI Cluster. </summary>
+        [WirePath("storageAdapterIPInfo")]
         public IReadOnlyList<HciEdgeDeviceStorageAdapterIPInfo> StorageAdapterIPInfo { get; }
     }
 }

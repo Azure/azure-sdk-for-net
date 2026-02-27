@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> secret name stored in keyvault. </summary>
+        [WirePath("secretName")]
         public string SecretName { get; set; }
 
         /// <summary> secret name expected for Enterprise Cloud Engine (ECE). </summary>
+        [WirePath("eceSecretName")]
         public string EceSecretName { get; set; }
 
         /// <summary> secret URI stored in keyvault. </summary>
+        [WirePath("secretLocation")]
         public Uri SecretLocation { get; set; }
     }
 }

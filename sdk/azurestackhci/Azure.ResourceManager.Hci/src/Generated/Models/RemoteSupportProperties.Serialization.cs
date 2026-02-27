@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("accessLevel"u8);
                 writer.WriteStringValue(AccessLevel.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpirationTimeStamp))
+            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationTimeStamp"u8);
-                writer.WriteStringValue(ExpirationTimeStamp.Value, "O");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(RemoteSupportType))
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Hci.Models
                 return null;
             }
             HciClusterAccessLevel? accessLevel = default;
-            DateTimeOffset? expirationTimeStamp = default;
+            DateTimeOffset? expireOn = default;
             RemoteSupportType? remoteSupportType = default;
             IReadOnlyList<RemoteSupportNodeSettings> remoteSupportNodeSettings = default;
             IReadOnlyList<PerNodeRemoteSupportSession> remoteSupportSessionDetails = default;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    expirationTimeStamp = prop.Value.GetDateTimeOffset("O");
+                    expireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("remoteSupportType"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
             return new RemoteSupportProperties(
                 accessLevel,
-                expirationTimeStamp,
+                expireOn,
                 remoteSupportType,
                 remoteSupportNodeSettings ?? new ChangeTrackingList<RemoteSupportNodeSettings>(),
                 remoteSupportSessionDetails ?? new ChangeTrackingList<PerNodeRemoteSupportSession>(),

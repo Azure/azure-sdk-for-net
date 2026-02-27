@@ -148,9 +148,9 @@ namespace Azure.ResourceManager.Hci.Models
             }
             HciProvisioningState? provisioningState = default;
             ExtensionParameters extensionParameters = default;
-            ExtensionAggregateState? aggregateState = default;
+            ArcExtensionAggregateState? aggregateState = default;
             IReadOnlyList<PerNodeExtensionState> perNodeExtensionDetails = default;
-            ExtensionManagedBy? managedBy = default;
+            ArcExtensionManagedBy? managedBy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    aggregateState = new ExtensionAggregateState(prop.Value.GetString());
+                    aggregateState = new ArcExtensionAggregateState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("perNodeExtensionDetails"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    managedBy = new ExtensionManagedBy(prop.Value.GetString());
+                    managedBy = new ArcExtensionManagedBy(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

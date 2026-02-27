@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="localAvailabilityZones"> Local Availability Zone information for HCI cluster. </param>
         /// <param name="identityProvider"> Identity Provider for the cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterProperties(HciProvisioningState? provisioningState, Status? status, ConnectivityStatus? connectivityStatus, string cloudId, string ring, string cloudManagementEndpoint, string aadClientId, string aadTenantId, string aadApplicationObjectId, string aadServicePrincipalObjectId, SoftwareAssuranceProperties softwareAssuranceProperties, bool? isManagementCluster, LogCollectionProperties logCollectionProperties, RemoteSupportProperties remoteSupportProperties, ClusterDesiredProperties desiredProperties, ClusterReportedProperties reportedProperties, IsolatedVmAttestationConfiguration isolatedVmAttestationConfiguration, float? trialDaysRemaining, string billingModel, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string serviceEndpoint, string resourceProviderObjectId, IList<SecretsLocationDetails> secretsLocations, ClusterPattern? clusterPattern, ConfidentialVmProperties confidentialVmProperties, ClusterSdnProperties sdnProperties, IList<LocalAvailabilityZones> localAvailabilityZones, IdentityProvider? identityProvider, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterProperties(HciProvisioningState? provisioningState, HciClusterStatus? status, HciClusterConnectivityStatus? connectivityStatus, Guid? cloudId, string ring, string cloudManagementEndpoint, string aadClientId, string aadTenantId, string aadApplicationObjectId, string aadServicePrincipalObjectId, SoftwareAssuranceProperties softwareAssuranceProperties, bool? isManagementCluster, LogCollectionProperties logCollectionProperties, RemoteSupportProperties remoteSupportProperties, HciClusterDesiredProperties desiredProperties, HciClusterReportedProperties reportedProperties, IsolatedVmAttestationConfiguration isolatedVmAttestationConfiguration, float? trialDaysRemaining, string billingModel, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string serviceEndpoint, string resourceProviderObjectId, IList<SecretsLocationDetails> secretsLocations, ClusterPattern? clusterPattern, ConfidentialVmProperties confidentialVmProperties, ClusterSdnProperties sdnProperties, IList<LocalAvailabilityZones> localAvailabilityZones, IdentityProvider? identityProvider, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Status = status;
@@ -92,93 +92,123 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Provisioning state. Indicates the current lifecycle status of the resource, including creation, update, deletion, connectivity, and error states. </summary>
+        [WirePath("provisioningState")]
         public HciProvisioningState? ProvisioningState { get; }
 
         /// <summary> Status of the cluster agent. Indicates the current connectivity, validation, and deployment state of the agent within the cluster. </summary>
-        public Status? Status { get; }
+        [WirePath("status")]
+        public HciClusterStatus? Status { get; }
 
         /// <summary> Overall connectivity status for the cluster resource. Indicates whether the cluster is connected to Azure, partially connected, or has not recently communicated. </summary>
-        public ConnectivityStatus? ConnectivityStatus { get; }
+        [WirePath("connectivityStatus")]
+        public HciClusterConnectivityStatus? ConnectivityStatus { get; }
 
         /// <summary> Unique, immutable resource id. </summary>
-        public string CloudId { get; }
+        [WirePath("cloudId")]
+        public Guid? CloudId { get; }
 
         /// <summary> The ring to which this cluster belongs to. </summary>
+        [WirePath("ring")]
         public string Ring { get; }
 
         /// <summary> Endpoint configured for management from the Azure portal. </summary>
+        [WirePath("cloudManagementEndpoint")]
         public string CloudManagementEndpoint { get; set; }
 
         /// <summary> App id of cluster AAD identity. </summary>
+        [WirePath("aadClientId")]
         public string AadClientId { get; set; }
 
         /// <summary> Tenant id of cluster AAD identity. </summary>
+        [WirePath("aadTenantId")]
         public string AadTenantId { get; set; }
 
         /// <summary> Object id of cluster AAD identity. </summary>
+        [WirePath("aadApplicationObjectId")]
         public string AadApplicationObjectId { get; set; }
 
         /// <summary> Id of cluster identity service principal. </summary>
+        [WirePath("aadServicePrincipalObjectId")]
         public string AadServicePrincipalObjectId { get; set; }
 
         /// <summary> Software Assurance properties of the cluster. </summary>
+        [WirePath("softwareAssuranceProperties")]
         public SoftwareAssuranceProperties SoftwareAssuranceProperties { get; set; }
 
         /// <summary> Is Management Cluster, when true indicates that the cluster is used for managing other clusters. </summary>
+        [WirePath("isManagementCluster")]
         public bool? IsManagementCluster { get; }
 
         /// <summary> Log Collection properties of the cluster. </summary>
+        [WirePath("logCollectionProperties")]
         public LogCollectionProperties LogCollectionProperties { get; set; }
 
         /// <summary> RemoteSupport properties of the cluster. </summary>
+        [WirePath("remoteSupportProperties")]
         public RemoteSupportProperties RemoteSupportProperties { get; set; }
 
         /// <summary> Desired properties of the cluster. </summary>
-        public ClusterDesiredProperties DesiredProperties { get; set; }
+        [WirePath("desiredProperties")]
+        public HciClusterDesiredProperties DesiredProperties { get; set; }
 
         /// <summary> Properties reported by cluster agent. </summary>
-        public ClusterReportedProperties ReportedProperties { get; }
+        [WirePath("reportedProperties")]
+        public HciClusterReportedProperties ReportedProperties { get; }
 
         /// <summary> Attestation configurations for isolated VM (e.g. TVM, CVM) of the cluster. </summary>
+        [WirePath("isolatedVmAttestationConfiguration")]
         public IsolatedVmAttestationConfiguration IsolatedVmAttestationConfiguration { get; }
 
         /// <summary> Number of days remaining in the trial period. </summary>
+        [WirePath("trialDaysRemaining")]
         public float? TrialDaysRemaining { get; }
 
         /// <summary> Type of billing applied to the resource. </summary>
+        [WirePath("billingModel")]
         public string BillingModel { get; }
 
         /// <summary> First cluster sync timestamp. </summary>
+        [WirePath("registrationTimestamp")]
         public DateTimeOffset? RegistrationTimestamp { get; }
 
         /// <summary> Most recent cluster sync timestamp. </summary>
+        [WirePath("lastSyncTimestamp")]
         public DateTimeOffset? LastSyncTimestamp { get; }
 
         /// <summary> Most recent billing meter timestamp. </summary>
+        [WirePath("lastBillingTimestamp")]
         public DateTimeOffset? LastBillingTimestamp { get; }
 
         /// <summary> Region specific DataPath Endpoint of the cluster. </summary>
+        [WirePath("serviceEndpoint")]
         public string ServiceEndpoint { get; }
 
         /// <summary> Object id of RP Service Principal. </summary>
+        [WirePath("resourceProviderObjectId")]
         public string ResourceProviderObjectId { get; }
 
         /// <summary> List of secret locations. </summary>
+        [WirePath("secretsLocations")]
         public IList<SecretsLocationDetails> SecretsLocations { get; } = new ChangeTrackingList<SecretsLocationDetails>();
 
         /// <summary> Supported Storage Type for HCI Cluster. </summary>
+        [WirePath("clusterPattern")]
         public ClusterPattern? ClusterPattern { get; }
 
         /// <summary> Represents the Confidential Virtual Machine (CVM) support intent and current status for the cluster resource. </summary>
+        [WirePath("confidentialVmProperties")]
         public ConfidentialVmProperties ConfidentialVmProperties { get; }
 
         /// <summary> Software Defined Networking Properties of the cluster. </summary>
+        [WirePath("sdnProperties")]
         public ClusterSdnProperties SdnProperties { get; }
 
         /// <summary> Local Availability Zone information for HCI cluster. </summary>
+        [WirePath("localAvailabilityZones")]
         public IList<LocalAvailabilityZones> LocalAvailabilityZones { get; } = new ChangeTrackingList<LocalAvailabilityZones>();
 
         /// <summary> Identity Provider for the cluster. </summary>
+        [WirePath("identityProvider")]
         public IdentityProvider? IdentityProvider { get; }
     }
 }

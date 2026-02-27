@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Represents url of a platform update payload. </summary>
+        [WirePath("payloadUrl")]
         public string PayloadUri { get; }
 
         /// <summary> Represents hash of a platform update payload. </summary>
+        [WirePath("payloadHash")]
         public string PayloadHash { get; }
 
         /// <summary> Represents size in bytes of a platform update payload. </summary>
+        [WirePath("payloadPackageSizeInBytes")]
         public string PayloadPackageSizeInBytes { get; }
 
         /// <summary> Represents identifier of a platform update payload. </summary>
+        [WirePath("payloadIdentifier")]
         public string PayloadIdentifier { get; }
     }
 }

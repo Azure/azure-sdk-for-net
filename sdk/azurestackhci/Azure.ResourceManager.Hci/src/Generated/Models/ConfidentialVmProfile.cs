@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Indicates whether Independent Guest Virtual Machine (IGVM) support is available on the device. This will be 'Enabled' if the device supports CVMs, 'Disabled' if not, and 'Unknown' if the status cannot be determined. </summary>
+        [WirePath("igvmStatus")]
         public IgvmStatus? IgvmStatus { get; }
 
         /// <summary> Provides detailed status entries for IGVM-related components, including deployment status, compatibility checks, and error diagnostics. </summary>
+        [WirePath("statusDetails")]
         public IList<IgvmStatusDetail> StatusDetails { get; }
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -36,12 +37,15 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Fully qualified Azure resource id of the Microsoft Azure attestation resource associated with this cluster. </summary>
+        [WirePath("attestationResourceId")]
         public ResourceIdentifier AttestationResourceId { get; }
 
         /// <summary> Region specific endpoint for relying party service. </summary>
+        [WirePath("relyingPartyServiceEndpoint")]
         public string RelyingPartyServiceEndpoint { get; }
 
         /// <summary> Region specific endpoint for Microsoft Azure Attestation service for the cluster. </summary>
+        [WirePath("attestationServiceEndpoint")]
         public string AttestationServiceEndpoint { get; }
     }
 }

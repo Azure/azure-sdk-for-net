@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Hci
     /// <summary>
     /// A class representing a ClusterJob along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ClusterJobResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ClusterResource"/> using the GetClusterJobs method.
+    /// Otherwise you can get one from its parent resource <see cref="HciClusterResource"/> using the GetClusterJobs method.
     /// </summary>
     public partial class ClusterJobResource : ArmResource
     {

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -46,18 +47,23 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> How the extension handler should be forced to update even if the extension configuration has not changed. </summary>
+        [WirePath("forceUpdateTag")]
         public string ForceUpdateTag { get; set; }
 
         /// <summary> The name of the extension handler publisher. </summary>
+        [WirePath("publisher")]
         public string Publisher { get; set; }
 
         /// <summary> Specifies the type of the extension; an example is "CustomScriptExtension". </summary>
+        [WirePath("type")]
         public string Type { get; set; }
 
         /// <summary> Specifies the version of the script handler. Latest version would be used if not specified. </summary>
+        [WirePath("typeHandlerVersion")]
         public string TypeHandlerVersion { get; set; }
 
         /// <summary> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </summary>
+        [WirePath("autoUpgradeMinorVersion")]
         public bool? AutoUpgradeMinorVersion { get; set; }
 
         /// <summary>
@@ -86,6 +92,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("settings")]
         public BinaryData Settings { get; set; }
 
         /// <summary>
@@ -114,9 +121,11 @@ namespace Azure.ResourceManager.Hci.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("protectedSettings")]
         public BinaryData ProtectedSettings { get; set; }
 
         /// <summary> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version available. </summary>
+        [WirePath("enableAutomaticUpgrade")]
         public bool? EnableAutomaticUpgrade { get; set; }
     }
 }

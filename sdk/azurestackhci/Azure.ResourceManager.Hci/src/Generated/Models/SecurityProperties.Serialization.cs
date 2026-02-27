@@ -141,9 +141,9 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            ComplianceAssignmentType? securedCoreComplianceAssignment = default;
-            ComplianceAssignmentType? wdacComplianceAssignment = default;
-            ComplianceAssignmentType? smbEncryptionForIntraClusterTrafficComplianceAssignment = default;
+            HciClusterComplianceAssignmentType? securedCoreComplianceAssignment = default;
+            HciClusterComplianceAssignmentType? wdacComplianceAssignment = default;
+            HciClusterComplianceAssignmentType? smbEncryptionForIntraClusterTrafficComplianceAssignment = default;
             SecurityComplianceStatus securityComplianceStatus = default;
             HciProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    securedCoreComplianceAssignment = new ComplianceAssignmentType(prop.Value.GetString());
+                    securedCoreComplianceAssignment = new HciClusterComplianceAssignmentType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("wdacComplianceAssignment"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    wdacComplianceAssignment = new ComplianceAssignmentType(prop.Value.GetString());
+                    wdacComplianceAssignment = new HciClusterComplianceAssignmentType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("smbEncryptionForIntraClusterTrafficComplianceAssignment"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    smbEncryptionForIntraClusterTrafficComplianceAssignment = new ComplianceAssignmentType(prop.Value.GetString());
+                    smbEncryptionForIntraClusterTrafficComplianceAssignment = new HciClusterComplianceAssignmentType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("securityComplianceStatus"u8))

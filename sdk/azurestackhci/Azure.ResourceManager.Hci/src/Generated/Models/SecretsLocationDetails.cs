@@ -41,9 +41,11 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Type of secrets to store. </summary>
+        [WirePath("secretsType")]
         public SecretsType SecretsType { get; set; }
 
         /// <summary> secrets location. </summary>
+        [WirePath("secretsLocation")]
         public string SecretsLocation { get; set; }
     }
 }

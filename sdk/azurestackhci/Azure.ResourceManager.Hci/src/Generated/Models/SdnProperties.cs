@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Indicates the current Software Defined Networking (SDN) status of the resource, which may be an individual device or a cluster. </summary>
+        [WirePath("sdnStatus")]
         public SdnStatus? SdnStatus { get; }
 
         /// <summary> The fully qualified domain name (FQDN) associated with the SDN deployment. This value is propagated from the Device Management Extension to the cluster resource. It is typically in the format `&lt;sdnPrefix&gt;-nc.&lt;domain&gt;` when SDN is enabled. May be null or absent in unsupported or disabled states. </summary>
+        [WirePath("sdnDomainName")]
         public string SdnDomainName { get; }
 
         /// <summary> Represents the API address for the SDN deployment. </summary>
+        [WirePath("sdnApiAddress")]
         public string SdnApiAddress { get; }
     }
 }

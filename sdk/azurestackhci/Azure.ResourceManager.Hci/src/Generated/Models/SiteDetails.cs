@@ -40,9 +40,11 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Site resource Id to be set during Edge Machine resource creation. </summary>
+        [WirePath("siteResourceId")]
         public ResourceIdentifier SiteResourceId { get; set; }
 
         /// <summary> Edge Device configuration received from site common configuration. </summary>
+        [WirePath("deviceConfiguration")]
         public TargetDeviceConfiguration DeviceConfiguration { get; set; }
     }
 }

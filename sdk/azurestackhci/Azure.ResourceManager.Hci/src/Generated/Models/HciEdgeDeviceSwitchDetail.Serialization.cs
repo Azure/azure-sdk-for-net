@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
-                foreach (SwitchExtension item in Extensions)
+                foreach (HciEdgeSwitchExtension item in Extensions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
             string switchName = default;
             string switchType = default;
-            IReadOnlyList<SwitchExtension> extensions = default;
+            IReadOnlyList<HciEdgeSwitchExtension> extensions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -158,10 +158,10 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    List<SwitchExtension> array = new List<SwitchExtension>();
+                    List<HciEdgeSwitchExtension> array = new List<HciEdgeSwitchExtension>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SwitchExtension.DeserializeSwitchExtension(item, options));
+                        array.Add(HciEdgeSwitchExtension.DeserializeHciEdgeSwitchExtension(item, options));
                     }
                     extensions = array;
                     continue;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Hci.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HciEdgeDeviceSwitchDetail(switchName, switchType, extensions ?? new ChangeTrackingList<SwitchExtension>(), additionalBinaryDataProperties);
+            return new HciEdgeDeviceSwitchDetail(switchName, switchType, extensions ?? new ChangeTrackingList<HciEdgeSwitchExtension>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Hci.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    internal partial class DeploymentSettingsGetByClustersCollectionResultOfT : Pageable<DeploymentSettingData>
+    internal partial class DeploymentSettingsGetByClustersCollectionResultOfT : Pageable<HciClusterDeploymentSettingData>
     {
         private readonly DeploymentSettings _client;
         private readonly Guid _subscriptionId;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of DeploymentSettingsGetByClustersCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<DeploymentSettingData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<HciClusterDeploymentSettingData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci
                     yield break;
                 }
                 DeploymentSettingListResult result = DeploymentSettingListResult.FromResponse(response);
-                yield return Page<DeploymentSettingData>.FromValues((IReadOnlyList<DeploymentSettingData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<HciClusterDeploymentSettingData>.FromValues((IReadOnlyList<HciClusterDeploymentSettingData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Hci
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByClustersRequest(nextLink, _subscriptionId, _resourceGroupName, _clusterName, _context) : _client.CreateGetByClustersRequest(_subscriptionId, _resourceGroupName, _clusterName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DeploymentSettingCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HciClusterDeploymentSettingCollection.GetAll");
             scope.Start();
             try
             {

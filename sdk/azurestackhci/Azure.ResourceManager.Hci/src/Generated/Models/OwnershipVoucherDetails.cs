@@ -41,9 +41,11 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Ownership voucher in base64 encoded format. </summary>
+        [WirePath("ownershipVoucher")]
         public string OwnershipVoucher { get; set; }
 
         /// <summary> Owner key type. </summary>
+        [WirePath("ownerKeyType")]
         public OwnerKeyType OwnerKeyType { get; set; }
     }
 }

@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Hci.Models
             bool? overrideVirtualSwitchConfiguration = default;
             HciEdgeDeviceVirtualSwitchConfigurationOverrides virtualSwitchConfigurationOverrides = default;
             bool? overrideQosPolicy = default;
-            QosPolicyOverrides qosPolicyOverrides = default;
+            DeploymentSettingQosPolicyOverrides qosPolicyOverrides = default;
             bool? overrideAdapterProperty = default;
             HciEdgeDeviceAdapterPropertyOverrides adapterPropertyOverrides = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    qosPolicyOverrides = QosPolicyOverrides.DeserializeQosPolicyOverrides(prop.Value, options);
+                    qosPolicyOverrides = DeploymentSettingQosPolicyOverrides.DeserializeDeploymentSettingQosPolicyOverrides(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("overrideAdapterProperty"u8))

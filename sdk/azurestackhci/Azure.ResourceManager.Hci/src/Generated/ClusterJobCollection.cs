@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Hci
 {
     /// <summary>
     /// A class representing a collection of <see cref="ClusterJobResource"/> and their operations.
-    /// Each <see cref="ClusterJobResource"/> in the collection will belong to the same instance of <see cref="ClusterResource"/>.
-    /// To get a <see cref="ClusterJobCollection"/> instance call the GetClusterJobs method from an instance of <see cref="ClusterResource"/>.
+    /// Each <see cref="ClusterJobResource"/> in the collection will belong to the same instance of <see cref="HciClusterResource"/>.
+    /// To get a <see cref="ClusterJobCollection"/> instance call the GetClusterJobs method from an instance of <see cref="HciClusterResource"/>.
     /// </summary>
     public partial class ClusterJobCollection : ArmCollection, IEnumerable<ClusterJobResource>, IAsyncEnumerable<ClusterJobResource>
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Hci
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ClusterResource.ResourceType)
+            if (id.ResourceType != HciClusterResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ClusterResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HciClusterResource.ResourceType), id);
             }
         }
 

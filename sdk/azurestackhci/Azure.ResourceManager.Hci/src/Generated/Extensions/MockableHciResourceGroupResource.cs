@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.Hci.Mocking
 
         private OwnershipVouchers OwnershipVouchersRestClient => _ownershipVouchersRestClient ??= new OwnershipVouchers(OwnershipVouchersClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
 
-        /// <summary> Gets a collection of Clusters in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of Clusters and their operations over a ClusterResource. </returns>
-        public virtual ClusterCollection GetClusters()
+        /// <summary> Gets a collection of HciClusters in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of HciClusters and their operations over a HciClusterResource. </returns>
+        public virtual HciClusterCollection GetHciClusters()
         {
-            return GetCachedClient(client => new ClusterCollection(client, Id));
+            return GetCachedClient(client => new HciClusterCollection(client, Id));
         }
 
         /// <summary>
@@ -69,11 +69,11 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ClusterResource>> GetClusterAsync(string clusterName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HciClusterResource>> GetHciClusterAsync(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            return await GetClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            return await GetHciClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -98,11 +98,11 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ClusterResource> GetCluster(string clusterName, CancellationToken cancellationToken = default)
+        public virtual Response<HciClusterResource> GetHciCluster(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            return GetClusters().Get(clusterName, cancellationToken);
+            return GetHciClusters().Get(clusterName, cancellationToken);
         }
 
         /// <summary> Gets a collection of EdgeMachines in the <see cref="ResourceGroupResource"/>. </summary>

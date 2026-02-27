@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="eceSecretName"> Secret name expected for Enterprise Cloud Engine (ECE) deployment. </param>
         /// <param name="secretLocation"> Secret URI stored in keyvault. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EceDeploymentSecrets(string secretName, EceSecrets? eceSecretName, Uri secretLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EceDeploymentSecrets(string secretName, EceSecret? eceSecretName, Uri secretLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SecretName = secretName;
             EceSecretName = eceSecretName;
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Secret name stored in keyvault. </summary>
+        [WirePath("secretName")]
         public string SecretName { get; set; }
 
         /// <summary> Secret name expected for Enterprise Cloud Engine (ECE) deployment. </summary>
-        public EceSecrets? EceSecretName { get; set; }
+        [WirePath("eceSecretName")]
+        public EceSecret? EceSecretName { get; set; }
 
         /// <summary> Secret URI stored in keyvault. </summary>
+        [WirePath("secretLocation")]
         public Uri SecretLocation { get; set; }
     }
 }

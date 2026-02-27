@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> The boot type of the device. e.g. UEFI, Legacy etc. </summary>
+        [WirePath("bootType")]
         public string BootType { get; }
 
         /// <summary> Version of assembly present on device. </summary>
+        [WirePath("assemblyVersion")]
         public string AssemblyVersion { get; }
     }
 }

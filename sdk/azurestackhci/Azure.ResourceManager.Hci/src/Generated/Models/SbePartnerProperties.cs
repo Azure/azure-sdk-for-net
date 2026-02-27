@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> SBE partner property name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> SBE partner property value. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
     }
 }

@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Hci.Models
             string name = default;
             string @type = default;
             string typeHandlerVersion = default;
-            ExtensionInstanceViewStatus status = default;
+            ArcExtensionInstanceViewStatus status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    status = ExtensionInstanceViewStatus.DeserializeExtensionInstanceViewStatus(prop.Value, options);
+                    status = ArcExtensionInstanceViewStatus.DeserializeArcExtensionInstanceViewStatus(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

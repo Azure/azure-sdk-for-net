@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> SBE deployment validation code. </summary>
+        [WirePath("code")]
         public string Code { get; }
 
         /// <summary> A detailed message that explains the SBE package validation result. </summary>
+        [WirePath("message")]
         public string Message { get; }
 
         /// <summary> This represents discovered update results for matching updates and store it as SBE manifest. </summary>
+        [WirePath("sbeManifest")]
         public string SbeManifest { get; }
     }
 }

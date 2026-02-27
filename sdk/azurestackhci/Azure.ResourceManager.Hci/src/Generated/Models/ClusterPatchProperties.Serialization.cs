@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Hci.Models
             string cloudManagementEndpoint = default;
             string aadClientId = default;
             string aadTenantId = default;
-            ClusterDesiredProperties desiredProperties = default;
+            HciClusterDesiredProperties desiredProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    desiredProperties = ClusterDesiredProperties.DeserializeClusterDesiredProperties(prop.Value, options);
+                    desiredProperties = HciClusterDesiredProperties.DeserializeHciClusterDesiredProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

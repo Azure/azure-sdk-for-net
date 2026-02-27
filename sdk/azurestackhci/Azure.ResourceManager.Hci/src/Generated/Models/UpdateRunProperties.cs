@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -41,24 +42,31 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Provisioning state of the UpdateRuns proxy resource. Indicates the current lifecycle status of the update operation, such as whether it has been accepted, is in progress, or has completed. </summary>
+        [WirePath("provisioningState")]
         public HciProvisioningState? ProvisioningState { get; }
 
         /// <summary> Timestamp of the update run was started. </summary>
+        [WirePath("timeStarted")]
         public DateTimeOffset? TimeStarted { get; set; }
 
         /// <summary> Timestamp of the most recently completed step in the update run. </summary>
+        [WirePath("lastUpdatedTime")]
         public DateTimeOffset? LastUpdatedOn { get; set; }
 
         /// <summary> Duration of the update run. </summary>
+        [WirePath("duration")]
         public string Duration { get; set; }
 
         /// <summary> Represents the current state of the update run. Indicates whether the update is in progress, has completed successfully, failed, or is in an unknown state. </summary>
+        [WirePath("state")]
         public UpdateRunPropertiesState? State { get; set; }
 
         /// <summary> Progress representation of the update run steps. </summary>
+        [WirePath("progress")]
         internal HciUpdateStep Progress { get; set; }
 
         /// <summary> Name of the step. </summary>
+        [WirePath("progress.name")]
         public string Name
         {
             get
@@ -76,6 +84,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> More detailed description of the step. </summary>
+        [WirePath("progress.description")]
         public string Description
         {
             get
@@ -93,6 +102,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Error message, specified if the step is in a failed state. </summary>
+        [WirePath("progress.errorMessage")]
         public string ErrorMessage
         {
             get
@@ -110,6 +120,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Status of the step, bubbled up from the ECE action plan for installation attempts. Values are: 'Success', 'Error', 'InProgress', and 'Unknown status'. </summary>
+        [WirePath("progress.status")]
         public string Status
         {
             get
@@ -127,6 +138,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> When the step started, or empty if it has not started executing. </summary>
+        [WirePath("progress.startTimeUtc")]
         public DateTimeOffset? StartTimeUtc
         {
             get
@@ -144,6 +156,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> When the step reached a terminal state. </summary>
+        [WirePath("progress.endTimeUtc")]
         public DateTimeOffset? EndTimeUtc
         {
             get
@@ -161,6 +174,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Completion time of this step or the last completed sub-step. </summary>
+        [WirePath("progress.lastUpdatedTimeUtc")]
         public DateTimeOffset? LastUpdatedTimeUtc
         {
             get
@@ -178,6 +192,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Expected execution time of a given step. This is optionally authored in the update action plan and can be empty. </summary>
+        [WirePath("progress.expectedExecutionTime")]
         public string ExpectedExecutionTime
         {
             get
@@ -195,6 +210,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Recursive model for child steps of this step. </summary>
+        [WirePath("progress.steps")]
         public IList<HciUpdateStep> Steps
         {
             get

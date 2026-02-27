@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> NIC Details of device. </summary>
+        [WirePath("nicDetails")]
         public IList<HciEdgeDeviceNicDetail> NicDetails { get; }
 
         /// <summary> Device metadata details. </summary>
+        [WirePath("deviceMetadata")]
         public string DeviceMetadata { get; set; }
     }
 }

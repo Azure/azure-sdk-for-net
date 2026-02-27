@@ -64,51 +64,67 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Edge Machine type. </summary>
+        [WirePath("edgeMachineKind")]
         public EdgeMachineKind? EdgeMachineKind { get; set; }
 
         /// <summary> The provisioning state of a resource. </summary>
+        [WirePath("provisioningState")]
         public HciProvisioningState? ProvisioningState { get; }
 
         /// <summary> Unique, immutable resource id. </summary>
+        [WirePath("cloudId")]
         public string CloudId { get; }
 
         /// <summary> Optional property to create arc machine in custom resource group. </summary>
+        [WirePath("arcMachineResourceGroupId")]
         public ResourceIdentifier ArcMachineResourceGroupId { get; set; }
 
         /// <summary> Arc machine instance resource id. </summary>
+        [WirePath("arcMachineResourceId")]
         public ResourceIdentifier ArcMachineResourceId { get; set; }
 
         /// <summary> Link to Arc Gateway ARM resource Id. </summary>
+        [WirePath("arcGatewayResourceId")]
         public ResourceIdentifier ArcGatewayResourceId { get; set; }
 
         /// <summary> Service fetches common configuration from site. </summary>
+        [WirePath("siteDetails")]
         public SiteDetails SiteDetails { get; set; }
 
         /// <summary> Ownership voucher details for provisioned machine. </summary>
+        [WirePath("ownershipVoucherDetails")]
         public OwnershipVoucherDetails OwnershipVoucherDetails { get; set; }
 
         /// <summary> Details for device provisioning. </summary>
+        [WirePath("provisioningDetails")]
         public ProvisioningDetails ProvisioningDetails { get; set; }
 
         /// <summary> A machine can only be assigned to single device pool. </summary>
+        [WirePath("devicePoolResourceId")]
         public string DevicePoolResourceId { get; }
 
         /// <summary> OS configuration status details. </summary>
+        [WirePath("machineState")]
         public EdgeMachineState? MachineState { get; }
 
         /// <summary> machine connectivity status. </summary>
+        [WirePath("connectivityStatus")]
         public EdgeMachineConnectivityStatus? ConnectivityStatus { get; }
 
         /// <summary> Tracks the ID of the consuming resource, setting the machine as in-use. </summary>
+        [WirePath("claimedBy")]
         public string ClaimedBy { get; }
 
         /// <summary> Reported properties for edge machine. </summary>
+        [WirePath("reportedProperties")]
         public EdgeMachineReportedProperties ReportedProperties { get; }
 
         /// <summary> operation status details for edge machine. </summary>
+        [WirePath("operationDetails")]
         public IReadOnlyList<OperationDetail> OperationDetails { get; }
 
         /// <summary> Last time data updated to service. </summary>
+        [WirePath("lastSyncTimestamp")]
         public DateTimeOffset? LastSyncTimestamp { get; }
     }
 }

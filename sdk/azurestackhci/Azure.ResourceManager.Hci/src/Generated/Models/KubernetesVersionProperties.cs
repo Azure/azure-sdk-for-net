@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -33,6 +34,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Represents kubernetes version. </summary>
+        [WirePath("version")]
         public string KubernetesVersionValue { get; }
     }
 }

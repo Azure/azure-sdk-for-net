@@ -7,12 +7,16 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> properties for Arc-enabled edge device with HCI OS. </summary>
-    public partial class HciEdgeDeviceProperties : EdgeDeviceProperties
+    /// <summary> Edge Device properties. </summary>
+    public partial class HciEdgeDeviceProperties
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="HciEdgeDeviceProperties"/>. </summary>
         public HciEdgeDeviceProperties()
         {
@@ -22,13 +26,19 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="deviceConfiguration"> Device Configuration. </param>
         /// <param name="provisioningState"> Provisioning state of edgeDevice resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="reportedProperties"> The instance view of all current configurations on HCI device. </param>
-        internal HciEdgeDeviceProperties(HciEdgeDeviceConfiguration deviceConfiguration, HciProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, HciReportedProperties reportedProperties) : base(deviceConfiguration, provisioningState, additionalBinaryDataProperties)
+        internal HciEdgeDeviceProperties(HciEdgeDeviceConfiguration deviceConfiguration, HciProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ReportedProperties = reportedProperties;
+            DeviceConfiguration = deviceConfiguration;
+            ProvisioningState = provisioningState;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The instance view of all current configurations on HCI device. </summary>
-        public HciReportedProperties ReportedProperties { get; }
+        /// <summary> Device Configuration. </summary>
+        [WirePath("deviceConfiguration")]
+        public HciEdgeDeviceConfiguration DeviceConfiguration { get; set; }
+
+        /// <summary> Provisioning state of edgeDevice resource. </summary>
+        [WirePath("provisioningState")]
+        public HciProvisioningState? ProvisioningState { get; }
     }
 }

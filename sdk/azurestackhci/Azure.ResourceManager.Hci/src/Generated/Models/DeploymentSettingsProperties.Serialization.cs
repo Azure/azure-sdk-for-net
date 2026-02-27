@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.Hci.Models
             }
             HciProvisioningState? provisioningState = default;
             IList<string> arcNodeResourceIds = default;
-            DeploymentMode deploymentMode = default;
-            OperationType? operationType = default;
-            DeploymentConfiguration deploymentConfiguration = default;
+            EceDeploymentMode deploymentMode = default;
+            HciClusterOperationType? operationType = default;
+            HciClusterDeploymentConfiguration deploymentConfiguration = default;
             EceReportedProperties reportedProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (prop.NameEquals("deploymentMode"u8))
                 {
-                    deploymentMode = new DeploymentMode(prop.Value.GetString());
+                    deploymentMode = new EceDeploymentMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("operationType"u8))
@@ -198,12 +198,12 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    operationType = new OperationType(prop.Value.GetString());
+                    operationType = new HciClusterOperationType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("deploymentConfiguration"u8))
                 {
-                    deploymentConfiguration = DeploymentConfiguration.DeserializeDeploymentConfiguration(prop.Value, options);
+                    deploymentConfiguration = HciClusterDeploymentConfiguration.DeserializeHciClusterDeploymentConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("reportedProperties"u8))

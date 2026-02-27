@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Hci.Models
                 return null;
             }
             EdgeMachineJobType jobType = default;
-            DeploymentMode? deploymentMode = default;
+            EceDeploymentMode? deploymentMode = default;
             HciProvisioningState? provisioningState = default;
             string jobId = default;
             DateTimeOffset? startTimeUtc = default;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    deploymentMode = new DeploymentMode(prop.Value.GetString());
+                    deploymentMode = new EceDeploymentMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

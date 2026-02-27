@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -37,9 +38,11 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Specifies the name of the service associated with the update or operation. This helps identify which system component or tool is involved. </summary>
+        [WirePath("serviceName")]
         public ServiceName ServiceName { get; set; }
 
         /// <summary> The port on which service is enabled. </summary>
+        [WirePath("port")]
         public long Port { get; set; }
     }
 }

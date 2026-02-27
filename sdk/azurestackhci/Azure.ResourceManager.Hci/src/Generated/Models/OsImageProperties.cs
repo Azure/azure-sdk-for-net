@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Represents validated solution recipe version of a os image. </summary>
+        [WirePath("validatedSolutionRecipeVersion")]
         public string ValidatedSolutionRecipeVersion { get; }
 
         /// <summary> Represents composed image version of a os image. </summary>
+        [WirePath("composedImageVersion")]
         public string ComposedImageVersion { get; }
 
         /// <summary> Represents composed image iso download url of a os image. </summary>
+        [WirePath("composedImageIsoUrl")]
         public string ComposedImageIsoUri { get; }
 
         /// <summary> Represents composed image iso hash of a os image. </summary>
+        [WirePath("composedImageIsoHash")]
         public string ComposedImageIsoHash { get; }
     }
 }

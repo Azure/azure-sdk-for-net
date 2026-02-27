@@ -36,9 +36,11 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> List of Network Interface Card (NIC) Details of edge machine. </summary>
+        [WirePath("nicDetails")]
         public IReadOnlyList<EdgeMachineNicDetail> NicDetails { get; }
 
         /// <summary> List of switch Details of edge machine. </summary>
+        [WirePath("switchDetails")]
         public IReadOnlyList<HciEdgeDeviceSwitchDetail> SwitchDetails { get; }
     }
 }

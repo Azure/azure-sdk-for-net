@@ -14,7 +14,7 @@ using Azure.ResourceManager.Hci.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    internal partial class ClustersGetBySubscriptionCollectionResultOfT : Pageable<ClusterData>
+    internal partial class ClustersGetBySubscriptionCollectionResultOfT : Pageable<HciClusterData>
     {
         private readonly Clusters _client;
         private readonly Guid _subscriptionId;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ClustersGetBySubscriptionCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ClusterData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<HciClusterData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Hci
                     yield break;
                 }
                 ClusterList result = ClusterList.FromResponse(response);
-                yield return Page<ClusterData>.FromValues((IReadOnlyList<ClusterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<HciClusterData>.FromValues((IReadOnlyList<HciClusterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Hci
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableHciSubscriptionResource.GetClusters");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableHciSubscriptionResource.GetHciClusters");
             scope.Start();
             try
             {

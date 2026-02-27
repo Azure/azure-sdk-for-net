@@ -47,24 +47,31 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> The provisioning state of a resource. </summary>
+        [WirePath("provisioningState")]
         public HciProvisioningState? ProvisioningState { get; }
 
         /// <summary> Unique, immutable resource id. </summary>
+        [WirePath("cloudId")]
         public string CloudId { get; }
 
         /// <summary> List of machines in device pool. </summary>
+        [WirePath("devices")]
         public IList<DeviceDetail> Devices { get; }
 
         /// <summary> Custom Location Resource Id for the pool. </summary>
+        [WirePath("customLocationResourceId")]
         public ResourceIdentifier CustomLocationResourceId { get; }
 
         /// <summary> Custom Location Name for the pool, default: &lt;DevicePoolName&gt;-CL. </summary>
+        [WirePath("customLocationName")]
         public string CustomLocationName { get; set; }
 
         /// <summary> Managed resource group name for the pool. </summary>
+        [WirePath("managedResourceGroup")]
         public string ManagedResourceGroup { get; set; }
 
         /// <summary> operation status details for device pool. </summary>
+        [WirePath("operationDetails")]
         public IReadOnlyList<OperationDetail> OperationDetails { get; }
     }
 }

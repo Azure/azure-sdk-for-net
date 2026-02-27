@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="overrideAdapterProperty"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
         /// <param name="adapterPropertyOverrides"> Set Adapter PropertyOverrides for cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentSettingIntents(string name, IList<string> trafficType, IList<string> adapter, bool? overrideVirtualSwitchConfiguration, DeploymentSettingVirtualSwitchConfigurationOverrides virtualSwitchConfigurationOverrides, bool? overrideQosPolicy, QosPolicyOverrides qosPolicyOverrides, bool? overrideAdapterProperty, DeploymentSettingAdapterPropertyOverrides adapterPropertyOverrides, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeploymentSettingIntents(string name, IList<string> trafficType, IList<string> adapter, bool? overrideVirtualSwitchConfiguration, DeploymentSettingVirtualSwitchConfigurationOverrides virtualSwitchConfigurationOverrides, bool? overrideQosPolicy, DeploymentSettingQosPolicyOverrides qosPolicyOverrides, bool? overrideAdapterProperty, DeploymentSettingAdapterPropertyOverrides adapterPropertyOverrides, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             TrafficType = trafficType;
@@ -50,30 +50,39 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Name of the network intent you wish to create. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> List of network traffic types. Only allowed values are 'Compute', 'Storage', 'Management'. </summary>
+        [WirePath("trafficType")]
         public IList<string> TrafficType { get; }
 
         /// <summary> Array of network interfaces used for the network intent. </summary>
+        [WirePath("adapter")]
         public IList<string> Adapter { get; }
 
         /// <summary> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </summary>
+        [WirePath("overrideVirtualSwitchConfiguration")]
         public bool? OverrideVirtualSwitchConfiguration { get; set; }
 
         /// <summary> Set virtualSwitch ConfigurationOverrides for cluster. </summary>
+        [WirePath("virtualSwitchConfigurationOverrides")]
         public DeploymentSettingVirtualSwitchConfigurationOverrides VirtualSwitchConfigurationOverrides { get; set; }
 
         /// <summary> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </summary>
+        [WirePath("overrideQosPolicy")]
         public bool? OverrideQosPolicy { get; set; }
 
         /// <summary> Set QoS PolicyOverrides for cluster. </summary>
-        public QosPolicyOverrides QosPolicyOverrides { get; set; }
+        [WirePath("qosPolicyOverrides")]
+        public DeploymentSettingQosPolicyOverrides QosPolicyOverrides { get; set; }
 
         /// <summary> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </summary>
+        [WirePath("overrideAdapterProperty")]
         public bool? OverrideAdapterProperty { get; set; }
 
         /// <summary> Set Adapter PropertyOverrides for cluster. </summary>
+        [WirePath("adapterPropertyOverrides")]
         public DeploymentSettingAdapterPropertyOverrides AdapterPropertyOverrides { get; set; }
     }
 }

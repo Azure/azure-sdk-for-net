@@ -15,7 +15,7 @@ using Azure.ResourceManager.Hci.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    internal partial class SecuritySettingsGetByClustersAsyncCollectionResultOfT : AsyncPageable<SecuritySettingData>
+    internal partial class SecuritySettingsGetByClustersAsyncCollectionResultOfT : AsyncPageable<HciClusterSecuritySettingData>
     {
         private readonly SecuritySettings _client;
         private readonly Guid _subscriptionId;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of SecuritySettingsGetByClustersAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<SecuritySettingData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<HciClusterSecuritySettingData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Hci
                     yield break;
                 }
                 SecuritySettingListResult result = SecuritySettingListResult.FromResponse(response);
-                yield return Page<SecuritySettingData>.FromValues((IReadOnlyList<SecuritySettingData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<HciClusterSecuritySettingData>.FromValues((IReadOnlyList<HciClusterSecuritySettingData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Hci
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByClustersRequest(nextLink, _subscriptionId, _resourceGroupName, _clusterName, _context) : _client.CreateGetByClustersRequest(_subscriptionId, _resourceGroupName, _clusterName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SecuritySettingCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HciClusterSecuritySettingCollection.GetAll");
             scope.Start();
             try
             {
