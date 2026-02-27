@@ -13,11 +13,10 @@ using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Breaks text following the Unicode Text Segmentation rules. This tokenizer is implemented using Apache Lucene. </summary>
-    public partial class LuceneStandardTokenizerV2 : LexicalTokenizer, IJsonModel<LuceneStandardTokenizerV2>
+    internal partial class DeprecatedLuceneStandardTokenizer : LexicalTokenizer, IJsonModel<DeprecatedLuceneStandardTokenizer>
     {
-        /// <summary> Initializes a new instance of <see cref="LuceneStandardTokenizerV2"/> for deserialization. </summary>
-        internal LuceneStandardTokenizerV2()
+        /// <summary> Initializes a new instance of <see cref="DeprecatedLuceneStandardTokenizer"/> for deserialization. </summary>
+        internal DeprecatedLuceneStandardTokenizer()
         {
         }
 
@@ -25,45 +24,45 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override LexicalTokenizer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LuceneStandardTokenizerV2>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeprecatedLuceneStandardTokenizer>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeLuceneStandardTokenizerV2(document.RootElement, options);
+                        return DeserializeDeprecatedLuceneStandardTokenizer(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LuceneStandardTokenizerV2)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeprecatedLuceneStandardTokenizer)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LuceneStandardTokenizerV2>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeprecatedLuceneStandardTokenizer>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LuceneStandardTokenizerV2)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeprecatedLuceneStandardTokenizer)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LuceneStandardTokenizerV2>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DeprecatedLuceneStandardTokenizer>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LuceneStandardTokenizerV2 IPersistableModel<LuceneStandardTokenizerV2>.Create(BinaryData data, ModelReaderWriterOptions options) => (LuceneStandardTokenizerV2)PersistableModelCreateCore(data, options);
+        DeprecatedLuceneStandardTokenizer IPersistableModel<DeprecatedLuceneStandardTokenizer>.Create(BinaryData data, ModelReaderWriterOptions options) => (DeprecatedLuceneStandardTokenizer)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LuceneStandardTokenizerV2>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DeprecatedLuceneStandardTokenizer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LuceneStandardTokenizerV2>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DeprecatedLuceneStandardTokenizer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +73,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LuceneStandardTokenizerV2>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeprecatedLuceneStandardTokenizer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LuceneStandardTokenizerV2)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DeprecatedLuceneStandardTokenizer)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(MaxTokenLength))
@@ -89,30 +88,30 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LuceneStandardTokenizerV2 IJsonModel<LuceneStandardTokenizerV2>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (LuceneStandardTokenizerV2)JsonModelCreateCore(ref reader, options);
+        DeprecatedLuceneStandardTokenizer IJsonModel<DeprecatedLuceneStandardTokenizer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DeprecatedLuceneStandardTokenizer)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override LexicalTokenizer JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LuceneStandardTokenizerV2>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeprecatedLuceneStandardTokenizer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LuceneStandardTokenizerV2)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DeprecatedLuceneStandardTokenizer)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLuceneStandardTokenizerV2(document.RootElement, options);
+            return DeserializeDeprecatedLuceneStandardTokenizer(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static LuceneStandardTokenizerV2 DeserializeLuceneStandardTokenizerV2(JsonElement element, ModelReaderWriterOptions options)
+        internal static DeprecatedLuceneStandardTokenizer DeserializeDeprecatedLuceneStandardTokenizer(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string odataType = "#Microsoft.Azure.Search.StandardTokenizerV2";
+            string odataType = "#Microsoft.Azure.Search.StandardTokenizer";
             string name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             int? maxTokenLength = default;
@@ -142,7 +141,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LuceneStandardTokenizerV2(odataType, name, additionalBinaryDataProperties, maxTokenLength);
+            return new DeprecatedLuceneStandardTokenizer(odataType, name, additionalBinaryDataProperties, maxTokenLength);
         }
     }
 }

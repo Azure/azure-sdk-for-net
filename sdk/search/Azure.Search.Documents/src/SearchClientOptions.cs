@@ -67,7 +67,7 @@ namespace Azure.Search.Documents
         /// </summary>
         internal const ServiceVersion ContinuationTokenVersion = ServiceVersion.V2020_06_30;
 
-        [CodeGenMember("Version")]
+        [Typespec.CodeGenMember("Version")]
         internal string RawVersion { get; }
 
         /// <summary>

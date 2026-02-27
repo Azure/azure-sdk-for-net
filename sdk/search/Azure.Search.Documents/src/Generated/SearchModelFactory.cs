@@ -1032,20 +1032,11 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Breaks text following the Unicode Text Segmentation rules. This tokenizer is implemented using Apache Lucene. </summary>
         /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        /// <param name="maxTokenLength"> The maximum token length. Default is 255. Tokens longer than the maximum length are split. </param>
+        /// <param name="maxTokenLength"> The maximum token length. Default is 255. Tokens longer than the maximum length are split. The maximum token length that can be used is 300 characters. </param>
         /// <returns> A new <see cref="Indexes.Models.LuceneStandardTokenizer"/> instance for mocking. </returns>
         public static LuceneStandardTokenizer LuceneStandardTokenizer(string name = default, int? maxTokenLength = default)
         {
-            return new LuceneStandardTokenizer("#Microsoft.Azure.Search.StandardTokenizer", name, additionalBinaryDataProperties: null, maxTokenLength);
-        }
-
-        /// <summary> Breaks text following the Unicode Text Segmentation rules. This tokenizer is implemented using Apache Lucene. </summary>
-        /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        /// <param name="maxTokenLength"> The maximum token length. Default is 255. Tokens longer than the maximum length are split. The maximum token length that can be used is 300 characters. </param>
-        /// <returns> A new <see cref="Indexes.Models.LuceneStandardTokenizerV2"/> instance for mocking. </returns>
-        public static LuceneStandardTokenizerV2 LuceneStandardTokenizerV2(string name = default, int? maxTokenLength = default)
-        {
-            return new LuceneStandardTokenizerV2("#Microsoft.Azure.Search.StandardTokenizerV2", name, additionalBinaryDataProperties: null, maxTokenLength);
+            return new LuceneStandardTokenizer("#Microsoft.Azure.Search.StandardTokenizerV2", name, additionalBinaryDataProperties: null, maxTokenLength);
         }
 
         /// <summary> Tokenizes urls and emails as one token. This tokenizer is implemented using Apache Lucene. </summary>

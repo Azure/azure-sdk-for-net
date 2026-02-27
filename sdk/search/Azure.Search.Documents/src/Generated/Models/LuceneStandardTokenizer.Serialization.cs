@@ -112,7 +112,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            string odataType = "#Microsoft.Azure.Search.StandardTokenizer";
+            string odataType = "#Microsoft.Azure.Search.StandardTokenizerV2";
             string name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             int? maxTokenLength = default;

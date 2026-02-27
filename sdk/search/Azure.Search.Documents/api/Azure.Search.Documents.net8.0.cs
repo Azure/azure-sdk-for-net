@@ -3164,20 +3164,6 @@ namespace Azure.Search.Documents.Indexes.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.LuceneStandardTokenizer>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.LuceneStandardTokenizer>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LuceneStandardTokenizerV2 : Azure.Search.Documents.Indexes.Models.LexicalTokenizer, System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.LuceneStandardTokenizerV2>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.LuceneStandardTokenizerV2>
-    {
-        public LuceneStandardTokenizerV2(string name) : base (default(string), default(string)) { }
-        public int? MaxTokenLength { get { throw null; } set { } }
-        protected override Azure.Search.Documents.Indexes.Models.LexicalTokenizer JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.Search.Documents.Indexes.Models.LexicalTokenizer PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.Search.Documents.Indexes.Models.LuceneStandardTokenizerV2 System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.LuceneStandardTokenizerV2>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.LuceneStandardTokenizerV2>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Search.Documents.Indexes.Models.LuceneStandardTokenizerV2 System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.LuceneStandardTokenizerV2>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.LuceneStandardTokenizerV2>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.LuceneStandardTokenizerV2>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class MagnitudeScoringFunction : Azure.Search.Documents.Indexes.Models.ScoringFunction, System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.MagnitudeScoringFunction>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.MagnitudeScoringFunction>
     {
         public MagnitudeScoringFunction(string fieldName, double boost, Azure.Search.Documents.Indexes.Models.MagnitudeScoringParameters parameters) : base (default(string), default(double), default(string)) { }
@@ -7427,7 +7413,6 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Models.LookupDocument LookupDocument(System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.LuceneStandardAnalyzer LuceneStandardAnalyzer(string name = null, int? maxTokenLength = default(int?), System.Collections.Generic.IEnumerable<string> stopwords = null) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.LuceneStandardTokenizer LuceneStandardTokenizer(string name = null, int? maxTokenLength = default(int?)) { throw null; }
-        public static Azure.Search.Documents.Indexes.Models.LuceneStandardTokenizerV2 LuceneStandardTokenizerV2(string name = null, int? maxTokenLength = default(int?)) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.MagnitudeScoringFunction MagnitudeScoringFunction(string fieldName = null, double boost = 0, Azure.Search.Documents.Indexes.Models.ScoringFunctionInterpolation? interpolation = default(Azure.Search.Documents.Indexes.Models.ScoringFunctionInterpolation?), Azure.Search.Documents.Indexes.Models.MagnitudeScoringParameters parameters = null) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.MagnitudeScoringParameters MagnitudeScoringParameters(double boostingRangeStart = 0, double boostingRangeEnd = 0, bool? shouldBoostBeyondRangeByConstant = default(bool?)) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.MappingCharFilter MappingCharFilter(string name = null, System.Collections.Generic.IEnumerable<string> mappings = null) { throw null; }
