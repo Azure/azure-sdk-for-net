@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the configuration assignment. </param>
         /// <param name="location"> Location of the resource. </param>
-        internal MaintenanceConfigurationAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ConfigurationAssignmentProperties properties, string location) : base(id, name, resourceType, systemData)
+        internal MaintenanceConfigurationAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ConfigurationAssignmentProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         internal ConfigurationAssignmentProperties Properties { get; set; }
 
         /// <summary> Location of the resource. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
 
         /// <summary> The maintenance configuration Id. </summary>
         public ResourceIdentifier MaintenanceConfigurationId

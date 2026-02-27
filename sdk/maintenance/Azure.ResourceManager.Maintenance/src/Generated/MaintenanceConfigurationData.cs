@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary> Duration of the maintenance window in HH:mm format. If not provided, default value will be used based on maintenance scope provided. Example: 05:00. </summary>
-        public string Duration
+        public TimeSpan? Duration
         {
             get
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     Properties = new MaintenanceConfigurationProperties();
                 }
-                Properties.Duration = value;
+                Properties.Duration = value.Value;
             }
         }
 
