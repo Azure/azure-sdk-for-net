@@ -20,6 +20,7 @@ Management-plane SDK code is generated from TypeSpec definitions in `azure-rest-
 - **`@@clientName(TypeSpecName, "CSharpName", "csharp")`** — renames a TypeSpec model/union/enum/property to a different name in the generated C# SDK. This is the primary tool for resolving naming comments.
 - **`@@clientName` only works on named types** — models, unions, enums, and interfaces. If a type is defined as an `alias`, `@@clientName` cannot target it. See "Handling Unsupported Cases" below.
 - **Swagger regeneration** — if you modify anything in the TypeSpec beyond `client.tsp` or `tspconfig.yaml`, you must run `tsp compile .` to regenerate the swagger file, otherwise spec CI will fail.
+- **Do NOT modify model `.tsp` files** — all changes should be made exclusively in `client.tsp` (or `tspconfig.yaml`). If resolving a comment would require modifying any other `.tsp` file, **stop immediately and inform the user** instead of making the change.
 
 ## Types of Review Comments
 
@@ -49,7 +50,14 @@ Properties can also be renamed using `@@clientName` on the model's property:
 
 ### 3. Property Type Changes
 
-Some review comments ask for property types to be changed (e.g., `string` → `ResourceIdentifier`, `string` → `TimeSpan`). These typically require changes in the model `.tsp` file itself or custom code in the SDK, not just `client.tsp`. If a type change is requested, **ask the user** for guidance since this may require deeper TypeSpec or custom code changes.
+Some review comments ask for property types to be changed (e.g., `string` → `ResourceIdentifier`, `string` → `TimeSpan`). Use the `@@alternateType` decorator in `client.tsp` to change the generated C# type:
+
+```typespec
+@@alternateType(MyModel.myProperty, ResourceIdentifier, "csharp");
+@@alternateType(MyModel.durationProperty, duration, "csharp");
+```
+
+This changes the property's type in the generated C# SDK without modifying the model `.tsp` file. If `@@alternateType` cannot handle the requested type change, **stop and ask the user** for guidance.
 
 ## Workflow
 
@@ -98,22 +106,11 @@ using Microsoft.<ServiceNamespace>;
 
 Make sure to add `using Microsoft.<ServiceNamespace>;` if not already present, so that the type names resolve correctly.
 
-### Step 4: Regenerate Swagger (if model .tsp files changed)
+### Step 4: Commit and Push Spec Changes
 
-If you modified any `.tsp` file other than `client.tsp` or `tspconfig.yaml`, you **must** regenerate the swagger:
+Commit `client.tsp` changes and push to the spec PR branch.
 
-```powershell
-cd <spec-repo>/specification/<service>/<ServiceName>.Management
-npx tsp compile .
-```
-
-This updates the swagger JSON file under `resource-manager/`. Commit the regenerated swagger along with your TypeSpec changes.
-
-### Step 5: Commit and Push Spec Changes
-
-Commit all spec changes (client.tsp and any regenerated swagger) and push to the spec PR branch.
-
-### Step 6: Update SDK tsp-location.yaml
+### Step 5: Update SDK tsp-location.yaml
 
 Update the `commit` field in `tsp-location.yaml` to point to the new spec commit SHA:
 
@@ -123,14 +120,14 @@ commit: <new-commit-sha>
 repo: Azure/azure-rest-api-specs
 ```
 
-### Step 7: Regenerate the SDK
+### Step 6: Regenerate the SDK
 
 ```powershell
 cd sdk/<service>/Azure.ResourceManager.<Service>/src
 dotnet build /t:GenerateCode
 ```
 
-### Step 8: Build and Verify
+### Step 7: Build and Verify
 
 ```powershell
 # Build the SDK library
@@ -148,28 +145,27 @@ pwsh eng/scripts/Export-API.ps1 <service-directory>
 
 If tests fail to build due to old type/property names, update the test files to use the new names.
 
-### Step 9: Verify the Changes
+### Step 8: Verify the Changes
 
 Check the API surface file (`api/*.cs`) to confirm the review comments have been addressed — old names are gone and new names are present.
 
-### Step 10: Commit, Push, and Resolve Comments
+### Step 9: Commit, Push, and Resolve Comments
 
 1. Commit and push the regenerated SDK to the SDK PR branch
 2. Resolve the corresponding review comments on the SDK PR using GitHub GraphQL API
 
 ## Handling Unsupported Cases
 
-Some changes cannot be done purely through `@@clientName` in `client.tsp`. When you encounter any of the following, **stop and ask the user** for guidance:
+Some changes cannot be done purely through `@@clientName` or `@@alternateType` in `client.tsp`. When you encounter any of the following, **stop and ask the user** for guidance:
 
 - **Aliases** — `@@clientName` cannot target TypeSpec aliases (e.g., `alias foo = "A" | "B" | string;`). Explain to the user that the alias needs to be converted to a named type (e.g., `union`) in the model `.tsp` file, and let them decide how to proceed.
-- **Property type changes** — changing a property's type (e.g., `string` → `ResourceIdentifier`) requires model `.tsp` changes or custom SDK code.
-- **Structural changes** — flattening/unflattening models, adding/removing properties, or changing inheritance.
+- **Changes requiring model `.tsp` modifications** — any change that cannot be expressed via `client.tsp` decorators alone (e.g., structural changes, flattening/unflattening models, adding/removing properties, or changing inheritance) requires modifying model `.tsp` files. Do not make these changes yourself; inform the user.
 - **Ambiguous naming** — if a review comment says "rename this" but doesn't specify the new name, ask the user what name they prefer.
 
 ## Common Pitfalls
 
 1. **Forgetting `using Microsoft.<Namespace>;`** in `client.tsp` — the type names won't resolve and `@@clientName` will silently fail.
-2. **Not regenerating swagger** after modifying model `.tsp` files — spec CI will fail.
+2. **Modifying model `.tsp` files** — only `client.tsp` and `tspconfig.yaml` should be modified. If model `.tsp` changes are needed, stop and inform the user.
 3. **Stale commit SHA** — always update `tsp-location.yaml` to point to the pushed spec commit before regenerating.
 4. **Test files** — after renaming types, test and sample files may still reference old names and need manual updates.
 5. **Not building tests** — always build the test project too, not just the library, to catch stale references.
