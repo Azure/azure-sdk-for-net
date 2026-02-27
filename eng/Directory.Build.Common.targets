@@ -441,7 +441,7 @@
       <_ProjectName Condition="'$(TestDependsIncludePackageRootDirectoryOnly)' == 'true'">$(PackageRootDirectory)</_ProjectName>
     </PropertyGroup>
 
-    <ItemGroup Condition="'@(_DependsOnGiven)' != '@(_TestDependsOnDendencies)' and '$(IsClientLibrary)' == 'true'" >
+    <ItemGroup Condition="'@(_DependsOnGiven)' != '@(_TestDependsOnDendencies)' and '$(IsClientLibrary)' == 'true' and '$(IsGeneratorLibrary)' != 'true'" >
       <ProjectsToInclude Include="$(_ProjectName)" />
     </ItemGroup>
   </Target>
