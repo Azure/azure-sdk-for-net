@@ -1,16 +1,10 @@
 # Release History
 
-## 1.2.0-beta.1 (2026-02-27)
+## 1.2.0-beta.1 (2026-03-03)
 
 ### Features Added
 
 - Upgraded dependency on `Azure.ResourceManager.Storage` to version 1.6.0.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.1.2 (2025-07-15)
 
