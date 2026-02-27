@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath(resourceGuardsName, true);
             uri.AppendPath("/disableSoftDeleteRequests/", false);
             uri.AppendPath(requestName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -73,7 +76,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
             uri.AppendPath(resourceGuardsName, true);
             uri.AppendPath("/disableSoftDeleteRequests", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -85,8 +91,18 @@ namespace Azure.ResourceManager.DataProtectionBackup
         internal HttpMessage CreateNextGetDisableSoftDeleteRequestsObjectsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string resourceGuardsName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -107,7 +123,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath(resourceGuardsName, true);
             uri.AppendPath("/updateProtectedItemRequests/", false);
             uri.AppendPath(requestName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -127,7 +146,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
             uri.AppendPath(resourceGuardsName, true);
             uri.AppendPath("/updateProtectedItemRequests", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -139,8 +161,18 @@ namespace Azure.ResourceManager.DataProtectionBackup
         internal HttpMessage CreateNextGetUpdateProtectedItemRequestsObjectsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string resourceGuardsName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -161,7 +193,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath(resourceGuardsName, true);
             uri.AppendPath("/updateProtectionPolicyRequests/", false);
             uri.AppendPath(requestName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -181,7 +216,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
             uri.AppendPath(resourceGuardsName, true);
             uri.AppendPath("/updateProtectionPolicyRequests", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -193,8 +231,18 @@ namespace Azure.ResourceManager.DataProtectionBackup
         internal HttpMessage CreateNextGetUpdateProtectionPolicyRequestsObjectsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string resourceGuardsName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -215,7 +263,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath(resourceGuardsName, true);
             uri.AppendPath("/deleteProtectedItemRequests/", false);
             uri.AppendPath(requestName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -235,7 +286,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
             uri.AppendPath(resourceGuardsName, true);
             uri.AppendPath("/deleteProtectedItemRequests", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -247,8 +301,18 @@ namespace Azure.ResourceManager.DataProtectionBackup
         internal HttpMessage CreateNextGetDeleteProtectedItemRequestsObjectsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string resourceGuardsName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -269,7 +333,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath(resourceGuardsName, true);
             uri.AppendPath("/getBackupSecurityPINRequests/", false);
             uri.AppendPath(requestName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -289,7 +356,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
             uri.AppendPath(resourceGuardsName, true);
             uri.AppendPath("/getBackupSecurityPINRequests", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -301,8 +371,18 @@ namespace Azure.ResourceManager.DataProtectionBackup
         internal HttpMessage CreateNextGetBackupSecurityPinRequestsObjectsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string resourceGuardsName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

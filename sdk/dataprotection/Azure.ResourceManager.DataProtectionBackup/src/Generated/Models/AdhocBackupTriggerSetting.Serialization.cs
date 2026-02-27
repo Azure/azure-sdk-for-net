@@ -33,6 +33,29 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AdhocBackupTriggerSetting>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AdhocBackupTriggerSetting)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AdhocBackupTriggerSetting>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AdhocBackupTriggerSetting IPersistableModel<AdhocBackupTriggerSetting>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AdhocBackupTriggerSetting>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AdhocBackupTriggerSetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -114,28 +137,5 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             return new AdhocBackupTriggerSetting(retentionTagOverride, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AdhocBackupTriggerSetting>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AdhocBackupTriggerSetting>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AdhocBackupTriggerSetting)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AdhocBackupTriggerSetting IPersistableModel<AdhocBackupTriggerSetting>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AdhocBackupTriggerSetting>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     yield break;
                 }
                 ResourceGuardProxyBaseResourceList result = ResourceGuardProxyBaseResourceList.FromResponse(response);
-                yield return Page<ResourceGuardProxyBaseResourceData>.FromValues((IReadOnlyList<ResourceGuardProxyBaseResourceData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ResourceGuardProxyBaseResourceData>.FromValues((IReadOnlyList<ResourceGuardProxyBaseResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
                     yield break;
                 }
-                nextPage = new Uri(nextPageString);
+                nextPage = new Uri(nextPageString, UriKind.RelativeOrAbsolute);
             }
         }
 

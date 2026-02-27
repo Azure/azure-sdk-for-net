@@ -33,6 +33,29 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RestoreJobRecoveryPointDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RestoreJobRecoveryPointDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RestoreJobRecoveryPointDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RestoreJobRecoveryPointDetails IPersistableModel<RestoreJobRecoveryPointDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RestoreJobRecoveryPointDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RestoreJobRecoveryPointDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -129,28 +152,5 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             return new RestoreJobRecoveryPointDetails(recoveryPointID, recoverOn, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RestoreJobRecoveryPointDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RestoreJobRecoveryPointDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(RestoreJobRecoveryPointDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        RestoreJobRecoveryPointDetails IPersistableModel<RestoreJobRecoveryPointDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RestoreJobRecoveryPointDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

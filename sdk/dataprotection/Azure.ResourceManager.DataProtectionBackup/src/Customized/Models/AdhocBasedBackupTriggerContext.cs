@@ -4,8 +4,9 @@
 #nullable disable
 
 using System;
-using Azure.Core;
-/*
+using Microsoft.TypeSpec.Generator.Customizations;
+
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Adhoc trigger context. </summary>
@@ -30,4 +31,3 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
     }
 }
-*/

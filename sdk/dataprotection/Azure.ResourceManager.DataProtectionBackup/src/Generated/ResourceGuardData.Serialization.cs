@@ -42,6 +42,41 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceGuardData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ResourceGuardData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ResourceGuardData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ResourceGuardData IPersistableModel<ResourceGuardData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ResourceGuardData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ResourceGuardData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="resourceGuardData"> The <see cref="ResourceGuardData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ResourceGuardData resourceGuardData)
+        {
+            if (resourceGuardData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(resourceGuardData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ResourceGuardData"/> from. </param>
         internal static ResourceGuardData FromResponse(Response response)
         {
@@ -207,41 +242,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 location,
                 properties,
                 eTag);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResourceGuardData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceGuardData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ResourceGuardData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceGuardData IPersistableModel<ResourceGuardData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ResourceGuardData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResourceGuardData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="resourceGuardData"> The <see cref="ResourceGuardData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ResourceGuardData resourceGuardData)
-        {
-            if (resourceGuardData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(resourceGuardData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

@@ -34,6 +34,29 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BackupVaultResourceList>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BackupVaultResourceList)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BackupVaultResourceList>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BackupVaultResourceList IPersistableModel<BackupVaultResourceList>.Create(BinaryData data, ModelReaderWriterOptions options) => (BackupVaultResourceList)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BackupVaultResourceList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BackupVaultResourceList"/> from. </param>
         internal static BackupVaultResourceList FromResponse(Response response)
         {
@@ -128,28 +151,5 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             return new BackupVaultResourceList(nextLink, additionalBinaryDataProperties, value ?? new ChangeTrackingList<DataProtectionBackupVaultData>());
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BackupVaultResourceList>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupVaultResourceList>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BackupVaultResourceList)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BackupVaultResourceList IPersistableModel<BackupVaultResourceList>.Create(BinaryData data, ModelReaderWriterOptions options) => (BackupVaultResourceList)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BackupVaultResourceList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

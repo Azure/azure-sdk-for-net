@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionIdentityDetails"/>. </summary>
         /// <param name="useSystemAssignedIdentity"> Specifies if the BI is protected by System Identity. </param>
-        /// <param name="userAssignedIdentityArmUri"> ARM URL for User Assigned Identity. </param>
+        /// <param name="userAssignedIdentityId"> ARM URL for User Assigned Identity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataProtectionIdentityDetails(bool? useSystemAssignedIdentity, ResourceIdentifier userAssignedIdentityArmUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataProtectionIdentityDetails(bool? useSystemAssignedIdentity, ResourceIdentifier userAssignedIdentityId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UseSystemAssignedIdentity = useSystemAssignedIdentity;
-            UserAssignedIdentityArmUri = userAssignedIdentityArmUri;
+            UserAssignedIdentityId = userAssignedIdentityId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -37,6 +37,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public bool? UseSystemAssignedIdentity { get; set; }
 
         /// <summary> ARM URL for User Assigned Identity. </summary>
-        public ResourceIdentifier UserAssignedIdentityArmUri { get; set; }
+        public ResourceIdentifier UserAssignedIdentityId { get; set; }
     }
 }

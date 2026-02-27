@@ -34,6 +34,29 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeletedBackupInstanceResourceList>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DeletedBackupInstanceResourceList)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DeletedBackupInstanceResourceList>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeletedBackupInstanceResourceList IPersistableModel<DeletedBackupInstanceResourceList>.Create(BinaryData data, ModelReaderWriterOptions options) => (DeletedBackupInstanceResourceList)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DeletedBackupInstanceResourceList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DeletedBackupInstanceResourceList"/> from. </param>
         internal static DeletedBackupInstanceResourceList FromResponse(Response response)
         {
@@ -128,28 +151,5 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             return new DeletedBackupInstanceResourceList(nextLink, additionalBinaryDataProperties, value ?? new ChangeTrackingList<DeletedDataProtectionBackupInstanceData>());
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DeletedBackupInstanceResourceList>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DeletedBackupInstanceResourceList>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DeletedBackupInstanceResourceList)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DeletedBackupInstanceResourceList IPersistableModel<DeletedBackupInstanceResourceList>.Create(BinaryData data, ModelReaderWriterOptions options) => (DeletedBackupInstanceResourceList)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DeletedBackupInstanceResourceList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath(vaultName, true);
             uri.AppendPath("/backupInstances/", false);
             uri.AppendPath(backupInstanceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +77,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath(vaultName, true);
             uri.AppendPath("/backupInstances/", false);
             uri.AppendPath(backupInstanceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -101,7 +107,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath(vaultName, true);
             uri.AppendPath("/backupInstances/", false);
             uri.AppendPath(backupInstanceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -126,7 +135,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath("/backupInstances/", false);
             uri.AppendPath(backupInstanceName, true);
             uri.AppendPath("/backup", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -150,7 +162,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath("/backupInstances/", false);
             uri.AppendPath(backupInstanceName, true);
             uri.AppendPath("/validateForModifyBackup", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -173,7 +188,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath("/backupInstances/", false);
             uri.AppendPath(backupInstanceName, true);
             uri.AppendPath("/rehydrate", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -196,7 +214,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath("/backupInstances/", false);
             uri.AppendPath(backupInstanceName, true);
             uri.AppendPath("/restore", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -224,7 +245,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath("/backupInstances/", false);
             uri.AppendPath(backupInstanceName, true);
             uri.AppendPath("/resumeBackups", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -245,7 +269,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath("/backupInstances/", false);
             uri.AppendPath(backupInstanceName, true);
             uri.AppendPath("/resumeProtection", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -266,7 +293,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath("/backupInstances/", false);
             uri.AppendPath(backupInstanceName, true);
             uri.AppendPath("/stopProtection", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -296,7 +326,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath("/backupInstances/", false);
             uri.AppendPath(backupInstanceName, true);
             uri.AppendPath("/suspendBackups", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -326,7 +359,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath("/backupInstances/", false);
             uri.AppendPath(backupInstanceName, true);
             uri.AppendPath("/sync", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -349,7 +385,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath("/backupInstances/", false);
             uri.AppendPath(backupInstanceName, true);
             uri.AppendPath("/validateRestore", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -373,7 +412,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath("/backupInstances/", false);
             uri.AppendPath(backupInstanceName, true);
             uri.AppendPath("/findRestorableTimeRanges", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

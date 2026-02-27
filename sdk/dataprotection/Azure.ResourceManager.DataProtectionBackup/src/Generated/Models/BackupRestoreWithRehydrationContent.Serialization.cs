@@ -39,6 +39,29 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BackupRestoreWithRehydrationContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BackupRestoreWithRehydrationContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BackupRestoreWithRehydrationContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BackupRestoreWithRehydrationContent IPersistableModel<BackupRestoreWithRehydrationContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (BackupRestoreWithRehydrationContent)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BackupRestoreWithRehydrationContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BackupRestoreWithRehydrationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -187,28 +210,5 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 rehydrationPriority,
                 rehydrationRetentionDuration);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BackupRestoreWithRehydrationContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupRestoreWithRehydrationContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BackupRestoreWithRehydrationContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BackupRestoreWithRehydrationContent IPersistableModel<BackupRestoreWithRehydrationContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (BackupRestoreWithRehydrationContent)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BackupRestoreWithRehydrationContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

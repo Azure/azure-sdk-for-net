@@ -34,6 +34,29 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceGuardProxyBaseResourceList>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ResourceGuardProxyBaseResourceList)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ResourceGuardProxyBaseResourceList>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ResourceGuardProxyBaseResourceList IPersistableModel<ResourceGuardProxyBaseResourceList>.Create(BinaryData data, ModelReaderWriterOptions options) => (ResourceGuardProxyBaseResourceList)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ResourceGuardProxyBaseResourceList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ResourceGuardProxyBaseResourceList"/> from. </param>
         internal static ResourceGuardProxyBaseResourceList FromResponse(Response response)
         {
@@ -128,28 +151,5 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             return new ResourceGuardProxyBaseResourceList(nextLink, additionalBinaryDataProperties, value ?? new ChangeTrackingList<ResourceGuardProxyBaseResourceData>());
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResourceGuardProxyBaseResourceList>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceGuardProxyBaseResourceList>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ResourceGuardProxyBaseResourceList)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceGuardProxyBaseResourceList IPersistableModel<ResourceGuardProxyBaseResourceList>.Create(BinaryData data, ModelReaderWriterOptions options) => (ResourceGuardProxyBaseResourceList)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResourceGuardProxyBaseResourceList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

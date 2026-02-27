@@ -37,6 +37,29 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupRecoveryPointData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataProtectionBackupRecoveryPointData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataProtectionBackupRecoveryPointData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataProtectionBackupRecoveryPointData IPersistableModel<DataProtectionBackupRecoveryPointData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataProtectionBackupRecoveryPointData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataProtectionBackupRecoveryPointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DataProtectionBackupRecoveryPointData"/> from. </param>
         internal static DataProtectionBackupRecoveryPointData FromResponse(Response response)
         {
@@ -157,28 +180,5 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 additionalBinaryDataProperties,
                 properties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DataProtectionBackupRecoveryPointData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupRecoveryPointData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataProtectionBackupRecoveryPointData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DataProtectionBackupRecoveryPointData IPersistableModel<DataProtectionBackupRecoveryPointData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataProtectionBackupRecoveryPointData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DataProtectionBackupRecoveryPointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

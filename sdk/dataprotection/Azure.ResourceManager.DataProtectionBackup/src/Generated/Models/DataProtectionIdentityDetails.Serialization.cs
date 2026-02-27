@@ -34,6 +34,29 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataProtectionIdentityDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataProtectionIdentityDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataProtectionIdentityDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataProtectionIdentityDetails IPersistableModel<DataProtectionIdentityDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataProtectionIdentityDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataProtectionIdentityDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -57,10 +80,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("useSystemAssignedIdentity"u8);
                 writer.WriteBooleanValue(UseSystemAssignedIdentity.Value);
             }
-            if (Optional.IsDefined(UserAssignedIdentityArmUri))
+            if (Optional.IsDefined(UserAssignedIdentityId))
             {
                 writer.WritePropertyName("userAssignedIdentityArmUrl"u8);
-                writer.WriteStringValue(UserAssignedIdentityArmUri);
+                writer.WriteStringValue(UserAssignedIdentityId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -105,7 +128,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 return null;
             }
             bool? useSystemAssignedIdentity = default;
-            ResourceIdentifier userAssignedIdentityArmUri = default;
+            ResourceIdentifier userAssignedIdentityId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -124,7 +147,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    userAssignedIdentityArmUri = new ResourceIdentifier(prop.Value.GetString());
+                    userAssignedIdentityId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -132,30 +155,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DataProtectionIdentityDetails(useSystemAssignedIdentity, userAssignedIdentityArmUri, additionalBinaryDataProperties);
+            return new DataProtectionIdentityDetails(useSystemAssignedIdentity, userAssignedIdentityId, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DataProtectionIdentityDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataProtectionIdentityDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataProtectionIdentityDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DataProtectionIdentityDetails IPersistableModel<DataProtectionIdentityDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DataProtectionIdentityDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

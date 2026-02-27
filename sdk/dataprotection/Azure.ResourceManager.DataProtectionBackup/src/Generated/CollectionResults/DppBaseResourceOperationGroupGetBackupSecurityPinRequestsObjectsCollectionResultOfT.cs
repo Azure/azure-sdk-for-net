@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     yield break;
                 }
                 DppBaseResourceList result = DppBaseResourceList.FromResponse(response);
-                yield return Page<ResourceGuardProtectedObjectData>.FromValues((IReadOnlyList<ResourceGuardProtectedObjectData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ResourceGuardProtectedObjectData>.FromValues((IReadOnlyList<ResourceGuardProtectedObjectData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

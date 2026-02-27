@@ -9,7 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.DataProtectionBackup.Models;
-using Azure.ResourceManager.Resources;
+
 // NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.DataProtectionBackup
 {

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     yield break;
                 }
                 DeletedBackupVaultResourceListResult result = DeletedBackupVaultResourceListResult.FromResponse(response);
-                yield return Page<DeletedBackupVaultResourceData>.FromValues((IReadOnlyList<DeletedBackupVaultResourceData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DeletedBackupVaultResourceData>.FromValues((IReadOnlyList<DeletedBackupVaultResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

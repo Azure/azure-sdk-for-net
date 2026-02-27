@@ -34,6 +34,41 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataProtectionBackupNameAvailabilityContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataProtectionBackupNameAvailabilityContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataProtectionBackupNameAvailabilityContent IPersistableModel<DataProtectionBackupNameAvailabilityContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataProtectionBackupNameAvailabilityContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="dataProtectionBackupNameAvailabilityContent"> The <see cref="DataProtectionBackupNameAvailabilityContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DataProtectionBackupNameAvailabilityContent dataProtectionBackupNameAvailabilityContent)
+        {
+            if (dataProtectionBackupNameAvailabilityContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(dataProtectionBackupNameAvailabilityContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataProtectionBackupNameAvailabilityContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -129,41 +164,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             return new DataProtectionBackupNameAvailabilityContent(name, @type, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DataProtectionBackupNameAvailabilityContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataProtectionBackupNameAvailabilityContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DataProtectionBackupNameAvailabilityContent IPersistableModel<DataProtectionBackupNameAvailabilityContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DataProtectionBackupNameAvailabilityContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="dataProtectionBackupNameAvailabilityContent"> The <see cref="DataProtectionBackupNameAvailabilityContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DataProtectionBackupNameAvailabilityContent dataProtectionBackupNameAvailabilityContent)
-        {
-            if (dataProtectionBackupNameAvailabilityContent == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(dataProtectionBackupNameAvailabilityContent, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

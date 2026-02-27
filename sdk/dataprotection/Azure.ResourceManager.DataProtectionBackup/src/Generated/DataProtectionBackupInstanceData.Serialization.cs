@@ -37,6 +37,41 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupInstanceData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataProtectionBackupInstanceData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataProtectionBackupInstanceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataProtectionBackupInstanceData IPersistableModel<DataProtectionBackupInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataProtectionBackupInstanceData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataProtectionBackupInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="dataProtectionBackupInstanceData"> The <see cref="DataProtectionBackupInstanceData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DataProtectionBackupInstanceData dataProtectionBackupInstanceData)
+        {
+            if (dataProtectionBackupInstanceData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(dataProtectionBackupInstanceData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DataProtectionBackupInstanceData"/> from. </param>
         internal static DataProtectionBackupInstanceData FromResponse(Response response)
         {
@@ -195,41 +230,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 additionalBinaryDataProperties,
                 properties,
                 tags ?? new ChangeTrackingDictionary<string, string>());
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DataProtectionBackupInstanceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupInstanceData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataProtectionBackupInstanceData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DataProtectionBackupInstanceData IPersistableModel<DataProtectionBackupInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataProtectionBackupInstanceData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DataProtectionBackupInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="dataProtectionBackupInstanceData"> The <see cref="DataProtectionBackupInstanceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DataProtectionBackupInstanceData dataProtectionBackupInstanceData)
-        {
-            if (dataProtectionBackupInstanceData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(dataProtectionBackupInstanceData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

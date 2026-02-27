@@ -34,6 +34,29 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataProtectionOperationJobExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataProtectionOperationJobExtendedInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataProtectionOperationJobExtendedInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataProtectionOperationJobExtendedInfo IPersistableModel<DataProtectionOperationJobExtendedInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataProtectionOperationJobExtendedInfo)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataProtectionOperationJobExtendedInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DataProtectionOperationJobExtendedInfo"/> from. </param>
         internal static DataProtectionOperationJobExtendedInfo FromResponse(Response response)
         {
@@ -114,28 +137,5 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             return new DataProtectionOperationJobExtendedInfo(objectType, additionalBinaryDataProperties, jobIdentifier);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DataProtectionOperationJobExtendedInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataProtectionOperationJobExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataProtectionOperationJobExtendedInfo)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DataProtectionOperationJobExtendedInfo IPersistableModel<DataProtectionOperationJobExtendedInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataProtectionOperationJobExtendedInfo)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DataProtectionOperationJobExtendedInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -39,6 +39,41 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CrossRegionRestoreJobsContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CrossRegionRestoreJobsContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CrossRegionRestoreJobsContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CrossRegionRestoreJobsContent IPersistableModel<CrossRegionRestoreJobsContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CrossRegionRestoreJobsContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="crossRegionRestoreJobsContent"> The <see cref="CrossRegionRestoreJobsContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(CrossRegionRestoreJobsContent crossRegionRestoreJobsContent)
+        {
+            if (crossRegionRestoreJobsContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(crossRegionRestoreJobsContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CrossRegionRestoreJobsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -124,41 +159,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             return new CrossRegionRestoreJobsContent(sourceRegion, sourceBackupVaultId, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CrossRegionRestoreJobsContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CrossRegionRestoreJobsContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(CrossRegionRestoreJobsContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CrossRegionRestoreJobsContent IPersistableModel<CrossRegionRestoreJobsContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CrossRegionRestoreJobsContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="crossRegionRestoreJobsContent"> The <see cref="CrossRegionRestoreJobsContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(CrossRegionRestoreJobsContent crossRegionRestoreJobsContent)
-        {
-            if (crossRegionRestoreJobsContent == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(crossRegionRestoreJobsContent, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

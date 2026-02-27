@@ -39,6 +39,29 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterVaultTierRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(KubernetesClusterVaultTierRestoreCriteria)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<KubernetesClusterVaultTierRestoreCriteria>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KubernetesClusterVaultTierRestoreCriteria IPersistableModel<KubernetesClusterVaultTierRestoreCriteria>.Create(BinaryData data, ModelReaderWriterOptions options) => (KubernetesClusterVaultTierRestoreCriteria)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<KubernetesClusterVaultTierRestoreCriteria>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KubernetesClusterVaultTierRestoreCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -447,28 +470,5 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 stagingStorageAccountId,
                 resourceModifierReference);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<KubernetesClusterVaultTierRestoreCriteria>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterVaultTierRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(KubernetesClusterVaultTierRestoreCriteria)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        KubernetesClusterVaultTierRestoreCriteria IPersistableModel<KubernetesClusterVaultTierRestoreCriteria>.Create(BinaryData data, ModelReaderWriterOptions options) => (KubernetesClusterVaultTierRestoreCriteria)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<KubernetesClusterVaultTierRestoreCriteria>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

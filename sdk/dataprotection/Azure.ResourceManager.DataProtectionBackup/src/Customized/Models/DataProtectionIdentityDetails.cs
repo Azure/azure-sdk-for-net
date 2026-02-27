@@ -5,7 +5,8 @@
 
 using System;
 using System.ComponentModel;
-/*
+
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class DataProtectionIdentityDetails
@@ -17,9 +18,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         [Obsolete("This property has been replaced by UserAssignedIdentityId", false)]
         public Uri UserAssignedIdentityArmUri
         {
-            get => string.IsNullOrEmpty(UserAssignedIdentityId) ? null : new Uri(UserAssignedIdentityId);
-            set => UserAssignedIdentityId = new(value?.AbsoluteUri);
+            get => throw new NotSupportedException("UserAssignedIdentityArmUri is deprecated, please use UserAssignedIdentityId instead.");
+            set => throw new NotSupportedException("UserAssignedIdentityArmUri is deprecated, please use UserAssignedIdentityId instead.");
         }
     }
 }
-*/

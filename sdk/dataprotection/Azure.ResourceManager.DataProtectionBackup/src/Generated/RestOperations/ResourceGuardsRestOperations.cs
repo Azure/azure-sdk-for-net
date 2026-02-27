@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath(resourceGuardsName, true);
             uri.AppendPath("/deleteResourceGuardProxyRequests/", false);
             uri.AppendPath(requestName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -73,7 +76,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
             uri.AppendPath(resourceGuardsName, true);
             uri.AppendPath("/deleteResourceGuardProxyRequests", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -85,8 +91,18 @@ namespace Azure.ResourceManager.DataProtectionBackup
         internal HttpMessage CreateNextGetDeleteResourceGuardProxyRequestsObjectsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string resourceGuardsName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
