@@ -2241,9 +2241,6 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.AppService.SiteAuthSettingsV2 FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-        }
     }
     public partial class SiteCertificate : Azure.Provisioning.Primitives.ProvisionableResource
     {
