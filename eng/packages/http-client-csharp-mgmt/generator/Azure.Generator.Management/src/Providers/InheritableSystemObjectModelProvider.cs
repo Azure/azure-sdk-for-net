@@ -18,11 +18,13 @@ namespace Azure.Generator.Management.Providers
 
         internal string CrossLanguageDefinitionId { get; }
 
-        protected override string BuildName() => _type.Name;
+        protected override string BuildName() => _type?.Name ?? string.Empty;
 
         protected override string BuildRelativeFilePath()
             => throw new InvalidOperationException("This type should not be writing in generation");
 
-        protected override string BuildNamespace() => _type.Namespace!;
+        // _type may be null when called from base constructor before field assignment.
+        // The visitor's UpdateNamespace corrects this to _type.Namespace after construction.
+        protected override string BuildNamespace() => _type?.Namespace ?? string.Empty;
     }
 }
