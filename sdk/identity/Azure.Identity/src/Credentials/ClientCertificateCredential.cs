@@ -70,9 +70,11 @@ namespace Azure.Identity
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientCertificatePath">The file system or certificate store path to the client certificate and private key.
         /// For example:
-        /// * c:\data\certificate.pfx
-        /// * /etc/app/cert.pem
-        /// * cert:/CurrentUser/My/E661583E8FABEF4C0BEF694CBC41C28FB81CD870
+        /// <list type="bullet">
+        ///   <item><description><c>c:\data\certificate.pfx</c></description></item>
+        ///   <item><description><c>/etc/app/cert.pem</c></description></item>
+        ///   <item><description><c>cert:/CurrentUser/My/E661583E8FABEF4C0BEF694CBC41C28FB81CD870</c></description></item>
+        /// </list>
         /// </param>
         /// <param name="options">Options that allow to configure the management of the requests sent to Microsoft Entra ID.</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -87,9 +89,11 @@ namespace Azure.Identity
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientCertificatePath">The file system or certificate store path to the client certificate and private key.
         /// For example:
-        /// * c:\data\certificate.pfx
-        /// * /etc/app/cert.pem
-        /// * cert:/CurrentUser/My/E661583E8FABEF4C0BEF694CBC41C28FB81CD870
+        /// <list type="bullet">
+        ///   <item><description><c>c:\data\certificate.pfx</c></description></item>
+        ///   <item><description><c>/etc/app/cert.pem</c></description></item>
+        ///   <item><description><c>cert:/CurrentUser/My/E661583E8FABEF4C0BEF694CBC41C28FB81CD870</c></description></item>
+        /// </list>
         /// </param>
         /// <param name="options">Options that allow to configure the management of the requests sent to Microsoft Entra ID.</param>
         public ClientCertificateCredential(string tenantId, string clientId, string clientCertificatePath, ClientCertificateCredentialOptions options)
