@@ -25,7 +25,7 @@
 .OUTPUTS
   Sets environment variables in the current process and exports them to the CI system:
   - Azure DevOps: sets secret pipeline variables via ##vso logging commands
-  - GitHub Actions: writes to GITHUB_ENV / GITHUB_OUTPUT and masks the token
+  - GitHub Actions: writes to GITHUB_ENV and masks the token
 #>
 
 [CmdletBinding()]
