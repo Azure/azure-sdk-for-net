@@ -142,12 +142,6 @@ public partial class SiteAuthSettingsV2 : ProvisionableResource
     }
 
     /// <summary>
-    /// Supported SiteAuthSettingsV2 resource versions.
-    /// </summary>
-    public static class ResourceVersions
-    {
-    }
-    /// <summary>
     /// Creates a reference to an existing SiteAuthSettingsV2.
     /// </summary>
     /// <param name="bicepIdentifier">
