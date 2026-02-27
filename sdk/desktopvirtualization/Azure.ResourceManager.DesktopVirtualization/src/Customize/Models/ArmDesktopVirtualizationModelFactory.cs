@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DesktopVirtualizationPrivateEndpointConnection DesktopVirtualizationPrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier privateEndpointId, DesktopVirtualizationPrivateLinkServiceConnectionState connectionState, DesktopVirtualizationPrivateEndpointConnectionProvisioningState? provisioningState)
         {
-            return DesktopVirtualizationPrivateEndpointConnection(id, name, resourceType, systemData, groupIds: default, privateEndpointId, connectionState, provisioningState);
+            return DesktopVirtualizationPrivateEndpointConnection(id, name, resourceType, systemData, null, privateEndpointId, connectionState, provisioningState);
         }
 
         /// <param name="id"></param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DesktopVirtualizationPrivateEndpointConnectionDataData DesktopVirtualizationPrivateEndpointConnectionDataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier privateEndpointId, DesktopVirtualizationPrivateLinkServiceConnectionState connectionState, DesktopVirtualizationPrivateEndpointConnectionProvisioningState? provisioningState)
         {
-            return DesktopVirtualizationPrivateEndpointConnectionDataData(id, name, resourceType, systemData, groupIds: default, privateEndpointId, connectionState, provisioningState);
+            return DesktopVirtualizationPrivateEndpointConnectionDataData(id, name, resourceType, systemData, null, privateEndpointId, connectionState, provisioningState);
         }
 
         /// <param name="id"></param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VirtualApplicationData VirtualApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string objectId, string description, string friendlyName, string filePath, string msixPackageFamilyName, string msixPackageApplicationId, RemoteApplicationType? applicationType, VirtualApplicationCommandLineSetting commandLineSetting, string commandLineArguments, bool? showInPortal, string iconPath, int? iconIndex, string iconHash, BinaryData iconContent)
         {
-            var properties = new ApplicationProperties(objectId, description, friendlyName, filePath, msixPackageFamilyName, msixPackageApplicationId, applicationType, commandLineSetting, commandLineArguments, showInPortal, iconPath, iconIndex, iconHash, iconContent, additionalBinaryDataProperties: null);
+            var properties = new ApplicationProperties(objectId, description, friendlyName, filePath, msixPackageFamilyName, msixPackageApplicationId, applicationType, commandLineSetting, commandLineArguments, showInPortal, iconPath, iconIndex, iconHash, iconContent, null);
             return new VirtualApplicationData(id, name, resourceType, systemData, additionalBinaryDataProperties: null, properties);
         }
     }

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An async collection of <see cref="SessionHostResource" /> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<SessionHostResource> GetAllAsync(int? pageSize, bool? isDescending, int? initialSkip, CancellationToken cancellationToken)
-            => GetAllAsync(pageSize, isDescending, initialSkip, vmPath: null, cancellationToken);
+            => GetAllAsync(pageSize, isDescending, initialSkip, null, cancellationToken);
 
         /// <summary> List sessionHosts. </summary>
         /// <param name="pageSize"> Number of items per page. </param>
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> A collection of <see cref="SessionHostResource" /> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<SessionHostResource> GetAll(int? pageSize, bool? isDescending, int? initialSkip, CancellationToken cancellationToken)
-            => GetAll(pageSize, isDescending, initialSkip, vmPath: null, cancellationToken);
+            => GetAll(pageSize, isDescending, initialSkip, null, cancellationToken);
     }
 }
