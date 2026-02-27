@@ -11,7 +11,7 @@ permissions:
 jobs:
   post-apiview:
     name: After APIView
-    runs-on: ["self-hosted", "1ES.Pool=azsdk-pool-github"]
+    runs-on: ["self-hosted", "1ES.Pool=azsdk-pool-github-runners"]
     if: |
       toJson(github.event.check_run.pull_requests) != '[]' &&
       github.event.check_run.check_suite.app.name == 'Azure Pipelines' && (

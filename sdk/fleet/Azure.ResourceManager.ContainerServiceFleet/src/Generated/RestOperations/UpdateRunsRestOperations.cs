@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             uri.AppendPath(fleetName, true);
             uri.AppendPath("/updateRuns/", false);
             uri.AppendPath(updateRunName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +77,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             uri.AppendPath(fleetName, true);
             uri.AppendPath("/updateRuns/", false);
             uri.AppendPath(updateRunName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -101,7 +107,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             uri.AppendPath(fleetName, true);
             uri.AppendPath("/updateRuns/", false);
             uri.AppendPath(updateRunName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -124,7 +133,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             uri.AppendPath("/providers/Microsoft.ContainerService/fleets/", false);
             uri.AppendPath(fleetName, true);
             uri.AppendPath("/updateRuns", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (maxCount != null)
             {
                 uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
@@ -144,8 +156,18 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         internal HttpMessage CreateNextGetByFleetRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string fleetName, int? maxCount, string skipToken, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -167,7 +189,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             uri.AppendPath("/updateRuns/", false);
             uri.AppendPath(updateRunName, true);
             uri.AppendPath("/start", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -193,7 +218,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             uri.AppendPath("/updateRuns/", false);
             uri.AppendPath(updateRunName, true);
             uri.AppendPath("/stop", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -219,7 +247,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             uri.AppendPath("/updateRuns/", false);
             uri.AppendPath(updateRunName, true);
             uri.AppendPath("/skip", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

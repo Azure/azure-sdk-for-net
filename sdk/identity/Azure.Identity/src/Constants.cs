@@ -56,6 +56,6 @@ namespace Azure.Identity
         public const string AzurePipelinesCredential = "azurepipelinescredential";
         public const string ManagedIdentityAsFederatedIdentityCredential = "managedidentityasfederatedidentitycredential";
         public const string MacBrokerRedirectUri = "msauth.com.msauth.unsignedapp://auth";
-        public const string ApiKeyCredential = "ApiKey";
+        public const string ApiKeyCredential = "apikeycredential";
     }
 }

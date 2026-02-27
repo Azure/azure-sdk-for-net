@@ -7,13 +7,12 @@
 
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.GuestConfiguration.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.GuestConfiguration
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AssignmentReportResourceComplianceReason))]
     [ModelReaderWriterBuildable(typeof(AssignmentReportResourceInfo))]
@@ -37,7 +36,6 @@ namespace Azure.ResourceManager.GuestConfiguration
     [ModelReaderWriterBuildable(typeof(GuestConfigurationVmssVmInfo))]
     [ModelReaderWriterBuildable(typeof(GuestConfigurationVMwarevSphereAssignmentResource))]
     [ModelReaderWriterBuildable(typeof(LcmConfigurationSetting))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerGuestConfigurationContext : ModelReaderWriterContext
     {
     }

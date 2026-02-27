@@ -10,8 +10,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Threading;
 
 namespace Azure.Provisioning.Generator.Model;
@@ -20,6 +22,10 @@ public abstract partial class Specification
 {
     private void Analyze()
     {
+        // Cache all existing generated files upfront so version data is preserved
+        // even if a previous spec's Build() cleans the shared output directory.
+        CacheGenerationDirectory();
+
         ContextualException.WithContext(
             $"Analyzing resources of specification {Name}",
             () =>
@@ -92,36 +98,22 @@ public abstract partial class Specification
                 }
 
                 /**/
-                // Get the list of valid api-versions via ARM
-                // (it's specific to the subscription, but our dev playground is opted into everything good)
-                string subId = Arm.GetDefaultSubscription().Id.SubscriptionId ??
-                    throw new InvalidOperationException("Failed to find default subscription ID!");
-                foreach (string resourceNamespace in Resources.Select(r => r.ResourceNamespace).Where(ns => ns is not null).Distinct())
+                // Extract api-versions from the CreateOrUpdate method's XML doc comments,
+                // falling back to the Get method if CreateOrUpdate has no version
+                foreach (Resource resource in Resources)
                 {
-                    ResourceProviderResource rp = Arm.GetResourceProviderResource(
-                        ResourceProviderResource.CreateResourceIdentifier(subId, resourceNamespace));
-                    foreach (ProviderResourceType data in rp.Get().Value.Data.ResourceTypes)
+                    if (resource.ResourceType is null) { continue; }
+                    MethodInfo creator = resources[resource.ArmType!];
+                    resource.DefaultResourceVersion = ExtractApiVersionFromXmlDoc(creator);
+
+                    if (resource.DefaultResourceVersion is null)
                     {
-                        ResourceType type = new($"{resourceNamespace}/{data.ResourceType}");
-                        Resource? resource = Resources.FirstOrDefault(r => string.Compare(r.ResourceType?.ToString(), type.ToString(), StringComparison.OrdinalIgnoreCase) == 0);
-                        if (resource is null) { continue; }
-
-                        // Filter out preview releases
-                        resource.ResourceVersions =
-                            [.. data.ApiVersions.OrderDescending().Where((v, i) =>
-                                !v.EndsWith("preview", StringComparison.OrdinalIgnoreCase)
-#if EXPERIMENTAL_PROVISIONING
-                                // Only keep the very latest preview if it's the most
-                                // recent release - otherwise people should use a GAed version
-                                || i == 0
-#endif
-                                )];
-
-                        resource.DefaultResourceVersion =
-                            // The latest versions are first - so let's take the first non-preview as the default
-                            resource.ResourceVersions.FirstOrDefault(v => !v.EndsWith("preview", StringComparison.OrdinalIgnoreCase)) ??
-                            // Otherwise we'll take the latest preview
-                            resource.ResourceVersions.FirstOrDefault();
+                        // Try the Get method on the resource type itself
+                        MethodInfo? getter = resource.ArmType!.GetMethod("Get", BindingFlags.Public | BindingFlags.Instance, null, [typeof(CancellationToken)], null);
+                        if (getter is not null)
+                        {
+                            resource.DefaultResourceVersion = ExtractApiVersionFromXmlDoc(getter);
+                        }
                     }
                 }
 
@@ -541,5 +533,226 @@ public abstract partial class Specification
 
             return model;
         }
+    }
+
+    /// <summary>
+    /// Resolve resource versions by combining existing versions from generated code
+    /// with the api-version extracted from the mgmt library.
+    /// Must be called after Customize() so resource names match generated file names.
+    /// </summary>
+    private void ResolveVersions()
+    {
+        ContextualException.WithContext(
+            $"Resolving versions for {Name}",
+            () =>
+            {
+                foreach (Resource resource in Resources)
+                {
+                    if (resource.ResourceType is null) { continue; }
+
+                    string? mgmtApiVersion = resource.DefaultResourceVersion;
+
+                    // Read existing versions from the generated provisioning code
+                    (List<string> existingVersions, List<string> existingHiddenVersions) = ReadExistingResourceVersions(resource);
+
+                    // Add the mgmt library version to the combined set
+                    if (mgmtApiVersion is not null &&
+                        !existingVersions.Contains(mgmtApiVersion) &&
+                        !existingHiddenVersions.Contains(mgmtApiVersion))
+                    {
+                        existingVersions.Add(mgmtApiVersion);
+                    }
+
+                    // Merge versions added by Customize() via IncludeVersions
+                    if (resource.ResourceVersions is not null)
+                    {
+                        foreach (string v in resource.ResourceVersions)
+                        {
+                            if (!existingVersions.Contains(v))
+                            {
+                                existingVersions.Add(v);
+                            }
+                        }
+                    }
+
+                    // Sort versions descending and prefer non-preview releases
+                    List<string> orderedVersions = [.. existingVersions.OrderDescending()];
+                    List<string> nonPreviewVersions =
+                        [.. orderedVersions.Where(v => !v.EndsWith("preview", StringComparison.OrdinalIgnoreCase))];
+
+                    // If there are any GA (non-preview) versions, use them; otherwise keep all (preview-only) versions
+                    resource.ResourceVersions = nonPreviewVersions.Count > 0 ? nonPreviewVersions : orderedVersions;
+
+                    // Choose default version: use the latest (first after descending sort) available version
+                    string? defaultVersion = resource.ResourceVersions.FirstOrDefault();
+
+                    resource.DefaultResourceVersion = defaultVersion;
+
+                    // Merge existing hidden versions with any added by Customize()
+                    if (existingHiddenVersions.Count > 0)
+                    {
+                        if (resource.HiddenResourceVersions is null)
+                        {
+                            resource.HiddenResourceVersions = existingHiddenVersions;
+                        }
+                        else
+                        {
+                            foreach (string v in existingHiddenVersions)
+                            {
+                                if (!resource.HiddenResourceVersions.Contains(v))
+                                {
+                                    resource.HiddenResourceVersions.Add(v);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+    }
+
+    /// <summary>
+    /// Extract the default api-version from a CreateOrUpdate method's XML doc comment.
+    /// The generated mgmt libraries include a "Default Api Version" item in the
+    /// method's summary XML doc list, e.g.:
+    /// <code>
+    ///   &lt;item&gt;
+    ///     &lt;term&gt;Default Api Version&lt;/term&gt;
+    ///     &lt;description&gt;2025-06-01&lt;/description&gt;
+    ///   &lt;/item&gt;
+    /// </code>
+    /// </summary>
+    private string? ExtractApiVersionFromXmlDoc(MethodInfo method)
+    {
+        // Use the Specification's existing DocComments reader which has
+        // already loaded the XML doc file for the mgmt assembly
+        string? summary = DocComments.GetSummary(method);
+        if (summary is null) { return null; }
+
+        // The summary text contains the flattened content including
+        // "Default Api Version" followed by the version string.
+        const string marker = "Default Api Version";
+        int idx = summary.IndexOf(marker, StringComparison.OrdinalIgnoreCase);
+        if (idx < 0) { return null; }
+
+        // Extract the version after the marker - it follows after some whitespace/punctuation
+        string rest = summary[(idx + marker.Length)..].Trim().TrimStart('.').Trim();
+
+        // Match YYYY-MM-DD, optionally followed by hyphenated suffix (e.g., "-preview", "-PREVIEW")
+        // The suffix must start with a hyphen to avoid greedily matching into subsequent text.
+        Match match = Regex.Match(rest, @"(\d{4}-\d{2}-\d{2}(?:-[a-zA-Z][\w.]*)*)");
+        return match.Success ? match.Groups[1].Value.TrimEnd('.') : null;
+    }
+
+    /// <summary>
+    /// Static cache of file contents indexed by file path.
+    /// This ensures that when multiple specs share the same output directory,
+    /// version data is preserved even after the directory is cleaned by one spec's Build().
+    /// </summary>
+    private static readonly Dictionary<string, string[]> s_fileContentCache = [];
+    private static readonly HashSet<string> s_cachedDirectories = [];
+
+    /// <summary>
+    /// Cache all .cs files in the generation path directory.
+    /// Called once per directory to ensure shared directories have all files cached
+    /// before any spec cleans the directory.
+    /// </summary>
+    private void CacheGenerationDirectory()
+    {
+        string? generationPath = GetGenerationPath();
+        if (generationPath is null || s_cachedDirectories.Contains(generationPath)) { return; }
+        s_cachedDirectories.Add(generationPath);
+
+        if (!Directory.Exists(generationPath)) { return; }
+        foreach (string file in Directory.GetFiles(generationPath, "*.cs"))
+        {
+            if (!s_fileContentCache.ContainsKey(file))
+            {
+                s_fileContentCache[file] = File.ReadAllLines(file);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Read existing api-versions from the generated provisioning resource file.
+    /// Returns separate lists for regular and hidden versions.
+    /// Uses a static cache to handle shared output directories across specs.
+    /// </summary>
+    private (List<string> versions, List<string> hiddenVersions) ReadExistingResourceVersions(Resource resource)
+    {
+        List<string> versions = [];
+        List<string> hiddenVersions = [];
+
+        string? generationPath = GetGenerationPath();
+        if (generationPath is null) { return (versions, hiddenVersions); }
+
+        string filePath = Path.Combine(generationPath, $"{resource.Name}.cs");
+
+        // Use cached file contents
+        if (!s_fileContentCache.TryGetValue(filePath, out string[]? lines))
+        {
+            return (versions, hiddenVersions);
+        }
+
+        // Find the ResourceVersions class block
+        bool inResourceVersions = false;
+        int braceDepth = 0;
+        bool nextVersionIsHidden = false;
+
+        for (int i = 0; i < lines.Length; i++)
+        {
+            string line = lines[i].Trim();
+
+            if (!inResourceVersions)
+            {
+                if (line.Contains("class ResourceVersions"))
+                {
+                    inResourceVersions = true;
+                    braceDepth = 0;
+                }
+                continue;
+            }
+
+            // Track brace depth
+            foreach (char c in line)
+            {
+                if (c == '{') braceDepth++;
+                else if (c == '}') braceDepth--;
+            }
+
+            if (braceDepth <= 0 && line.Contains('}'))
+            {
+                break; // End of ResourceVersions class
+            }
+
+            // Check for EditorBrowsable attribute
+            if (line.Contains("[EditorBrowsable(EditorBrowsableState.Never)]"))
+            {
+                nextVersionIsHidden = true;
+                continue;
+            }
+
+            // Match version field declarations
+            Match match = Regex.Match(line, @"public static readonly string \w+ = ""([^""]+)"";");
+            if (match.Success)
+            {
+                string version = match.Groups[1].Value;
+                if (nextVersionIsHidden)
+                {
+                    hiddenVersions.Add(version);
+                }
+                else
+                {
+                    versions.Add(version);
+                }
+                nextVersionIsHidden = false;
+            }
+            else if (!line.StartsWith("///") && !string.IsNullOrEmpty(line) && !line.StartsWith("{"))
+            {
+                // Reset hidden flag if we hit a non-comment, non-version line
+                nextVersionIsHidden = false;
+            }
+        }
+
+        return (versions, hiddenVersions);
     }
 }

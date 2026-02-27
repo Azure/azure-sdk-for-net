@@ -8,46 +8,46 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.AppConfiguration;
 using Azure.ResourceManager.AppConfiguration.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppConfiguration.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableAppConfigurationSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _appConfigurationStoreConfigurationStoresClientDiagnostics;
-        private ConfigurationStoresRestOperations _appConfigurationStoreConfigurationStoresRestClient;
-        private ClientDiagnostics _defaultClientDiagnostics;
-        private AppConfigurationManagementRestOperations _defaultRestClient;
+        private ClientDiagnostics _configurationStoresClientDiagnostics;
+        private ConfigurationStores _configurationStoresRestClient;
+        private ClientDiagnostics _operationsClientDiagnostics;
+        private Operations _operationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableAppConfigurationSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableAppConfigurationSubscriptionResource for mocking. </summary>
         protected MockableAppConfigurationSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableAppConfigurationSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableAppConfigurationSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableAppConfigurationSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics AppConfigurationStoreConfigurationStoresClientDiagnostics => _appConfigurationStoreConfigurationStoresClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", AppConfigurationStoreResource.ResourceType.Namespace, Diagnostics);
-        private ConfigurationStoresRestOperations AppConfigurationStoreConfigurationStoresRestClient => _appConfigurationStoreConfigurationStoresRestClient ??= new ConfigurationStoresRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AppConfigurationStoreResource.ResourceType));
-        private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private AppConfigurationManagementRestOperations DefaultRestClient => _defaultRestClient ??= new AppConfigurationManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ConfigurationStoresClientDiagnostics => _configurationStoresClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppConfiguration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private ConfigurationStores ConfigurationStoresRestClient => _configurationStoresRestClient ??= new ConfigurationStores(ConfigurationStoresClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
 
-        /// <summary> Gets a collection of DeletedAppConfigurationStoreResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of DeletedAppConfigurationStoreResources and their operations over a DeletedAppConfigurationStoreResource. </returns>
+        private ClientDiagnostics OperationsClientDiagnostics => _operationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppConfiguration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Operations OperationsRestClient => _operationsRestClient ??= new Operations(OperationsClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
+
+        /// <summary> Gets a collection of DeletedAppConfigurationStores in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of DeletedAppConfigurationStores and their operations over a DeletedAppConfigurationStoreResource. </returns>
         public virtual DeletedAppConfigurationStoreCollection GetDeletedAppConfigurationStores()
         {
             return GetCachedClient(client => new DeletedAppConfigurationStoreCollection(client, Id));
@@ -57,24 +57,20 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// Gets a deleted Azure app configuration store.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/locations/{location}/deletedConfigurationStores/{configStoreName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/locations/{location}/deletedConfigurationStores/{configStoreName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationStores_GetDeleted</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeletedConfigurationStores_GetDeleted. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeletedAppConfigurationStoreResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location in which uniqueness will be verified. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
@@ -82,6 +78,8 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<DeletedAppConfigurationStoreResource>> GetDeletedAppConfigurationStoreAsync(AzureLocation location, string configStoreName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
+
             return await GetDeletedAppConfigurationStores().GetAsync(location, configStoreName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -89,24 +87,20 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// Gets a deleted Azure app configuration store.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/locations/{location}/deletedConfigurationStores/{configStoreName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/locations/{location}/deletedConfigurationStores/{configStoreName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationStores_GetDeleted</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeletedConfigurationStores_GetDeleted. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeletedAppConfigurationStoreResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location in which uniqueness will be verified. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
@@ -114,6 +108,8 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         [ForwardsClientCalls]
         public virtual Response<DeletedAppConfigurationStoreResource> GetDeletedAppConfigurationStore(AzureLocation location, string configStoreName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
+
             return GetDeletedAppConfigurationStores().Get(location, configStoreName, cancellationToken);
         }
 
@@ -121,93 +117,99 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// Lists the configuration stores for a given subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/configurationStores</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/configurationStores. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationStores_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConfigurationStores_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppConfigurationStoreResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppConfigurationStoreResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AppConfigurationStoreResource> GetAppConfigurationStoresAsync(string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AppConfigurationStoreConfigurationStoresRestClient.CreateListRequest(Id.SubscriptionId, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AppConfigurationStoreConfigurationStoresRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppConfigurationStoreResource(Client, AppConfigurationStoreData.DeserializeAppConfigurationStoreData(e)), AppConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, "MockableAppConfigurationSubscriptionResource.GetAppConfigurationStores", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the configuration stores for a given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/configurationStores</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationStores_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppConfigurationStoreResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppConfigurationStoreResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AppConfigurationStoreResource> GetAppConfigurationStores(string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AppConfigurationStoreResource> GetAppConfigurationStoresAsync(string skipToken = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AppConfigurationStoreConfigurationStoresRestClient.CreateListRequest(Id.SubscriptionId, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AppConfigurationStoreConfigurationStoresRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppConfigurationStoreResource(Client, AppConfigurationStoreData.DeserializeAppConfigurationStoreData(e)), AppConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, "MockableAppConfigurationSubscriptionResource.GetAppConfigurationStores", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<AppConfigurationStoreData, AppConfigurationStoreResource>(new ConfigurationStoresGetAllAsyncCollectionResultOfT(ConfigurationStoresRestClient, Guid.Parse(Id.SubscriptionId), skipToken, context), data => new AppConfigurationStoreResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists the configuration stores for a given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/configurationStores. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConfigurationStores_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AppConfigurationStoreResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppConfigurationStoreResource> GetAppConfigurationStores(string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<AppConfigurationStoreData, AppConfigurationStoreResource>(new ConfigurationStoresGetAllCollectionResultOfT(ConfigurationStoresRestClient, Guid.Parse(Id.SubscriptionId), skipToken, context), data => new AppConfigurationStoreResource(Client, data));
         }
 
         /// <summary>
         /// Checks whether the configuration store name is available for use.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/checkNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/checkNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CheckAppConfigurationNameAvailability</description>
+        /// <term> Operation Id. </term>
+        /// <description> OperationsOperationGroup_CheckNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The object containing information for the availability request. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<AppConfigurationNameAvailabilityResult>> CheckAppConfigurationNameAvailabilityAsync(AppConfigurationNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = DefaultClientDiagnostics.CreateScope("MockableAppConfigurationSubscriptionResource.CheckAppConfigurationNameAvailability");
+            using DiagnosticScope scope = OperationsClientDiagnostics.CreateScope("MockableAppConfigurationSubscriptionResource.CheckAppConfigurationNameAvailability");
             scope.Start();
             try
             {
-                var response = await DefaultRestClient.CheckAppConfigurationNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OperationsRestClient.CreateCheckAppConfigurationNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), AppConfigurationNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AppConfigurationNameAvailabilityResult> response = Response.FromValue(AppConfigurationNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -221,31 +223,143 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// Checks whether the configuration store name is available for use.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/checkNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/checkNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CheckAppConfigurationNameAvailability</description>
+        /// <term> Operation Id. </term>
+        /// <description> OperationsOperationGroup_CheckNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The object containing information for the availability request. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<AppConfigurationNameAvailabilityResult> CheckAppConfigurationNameAvailability(AppConfigurationNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = DefaultClientDiagnostics.CreateScope("MockableAppConfigurationSubscriptionResource.CheckAppConfigurationNameAvailability");
+            using DiagnosticScope scope = OperationsClientDiagnostics.CreateScope("MockableAppConfigurationSubscriptionResource.CheckAppConfigurationNameAvailability");
             scope.Start();
             try
             {
-                var response = DefaultRestClient.CheckAppConfigurationNameAvailability(Id.SubscriptionId, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OperationsRestClient.CreateCheckAppConfigurationNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), AppConfigurationNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AppConfigurationNameAvailabilityResult> response = Response.FromValue(AppConfigurationNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks whether the configuration store name is available for use.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/locations/{location}/checkNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OperationsOperationGroup_RegionalCheckNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<AppConfigurationNameAvailabilityResult>> CheckAppConfigurationRegionalNameAvailabilityAsync(string location, AppConfigurationNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = OperationsClientDiagnostics.CreateScope("MockableAppConfigurationSubscriptionResource.CheckAppConfigurationRegionalNameAvailability");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OperationsRestClient.CreateCheckAppConfigurationRegionalNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, AppConfigurationNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AppConfigurationNameAvailabilityResult> response = Response.FromValue(AppConfigurationNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks whether the configuration store name is available for use.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/locations/{location}/checkNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OperationsOperationGroup_RegionalCheckNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<AppConfigurationNameAvailabilityResult> CheckAppConfigurationRegionalNameAvailability(string location, AppConfigurationNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = OperationsClientDiagnostics.CreateScope("MockableAppConfigurationSubscriptionResource.CheckAppConfigurationRegionalNameAvailability");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OperationsRestClient.CreateCheckAppConfigurationRegionalNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, AppConfigurationNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AppConfigurationNameAvailabilityResult> response = Response.FromValue(AppConfigurationNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)

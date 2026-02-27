@@ -38,6 +38,7 @@ public static class GeneratorAgentProgram
 
             builder.Logging.ClearProviders();
             builder.Logging.AddConsole();
+            builder.Logging.AddFilter("System.Net.Http", LogLevel.Debug);
 
             builder.Services.AddApplicationServices(builder.Configuration, projectPath);
 
@@ -45,7 +46,7 @@ public static class GeneratorAgentProgram
             var loggerFactory = host.Services.GetRequiredService<ILoggerFactory>();
             logger = loggerFactory.CreateLogger(typeof(GeneratorAgentProgram).FullName!);
 
-            logger.LogInformation("Starting Azure SDK Code Generation CLI");
+            logger.LogInformation("Starting Azure Generator Agent...");
 
             var commandFactory = host.Services.GetRequiredService<RootCommandFactory>();
             var rootCommand = commandFactory.CreateRootCommand(appCts.Token);
@@ -59,7 +60,15 @@ public static class GeneratorAgentProgram
                 await copilotTask.Result.DisposeAsync().ConfigureAwait(false);
             }
 
-            logger.LogInformation("Azure SDK Code Generation CLI completed with exit code: {ExitCode}", exitCode);
+            if (exitCode == 0)
+            {
+                logger.LogInformation("Completed successfully");
+            }
+            else
+            {
+                logger.LogWarning("Completed with exit code: {ExitCode}", exitCode);
+            }
+
             return exitCode;
         }
         catch (OperationCanceledException) when (args.Contains("--help") || args.Contains("-h"))
@@ -78,7 +87,8 @@ public static class GeneratorAgentProgram
             }
             else
             {
-                Console.Error.WriteLine($"Fatal error during startup: {ex.Message}");
+                Console.Error.WriteLine("Fatal error during application startup:");
+                Console.Error.WriteLine(ex.ToString());
             }
         }
 

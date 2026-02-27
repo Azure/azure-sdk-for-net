@@ -1,5 +1,15 @@
 # Release History
 
+## 4.10.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 4.9.0 (2026-02-25)
 
 ### Features Added
@@ -7,6 +17,10 @@
 - Added `SecretClientSettings` to support creating a `SecretClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
 - Added the `outContentType` query parameter to the `SecretClient.GetSecret` and `SecretClient.GetSecretAsync` to specify the format in which the certificate will be returned.
 - Added the `previousVersion` property to `SecretProperties`.
+
+### Bugs Fixed
+
+- Fixed challenge-based authentication to correctly parse tenant ID from DSTSv2 authority URIs.
 
 ### Other Changes
 

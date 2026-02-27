@@ -54,7 +54,10 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/policysets/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/evaluatePolicies", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

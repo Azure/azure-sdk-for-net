@@ -1,14 +1,10 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (2026-02-27)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Regenerated from updated `Azure.ResourceManager.PostgreSql` 1.4.1 package, adding PostgreSQL versions 17 and 18 to `PostgreSqlFlexibleServerVersion`.
 
 ## 1.1.1 (2025-06-25)
 

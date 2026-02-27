@@ -42,6 +42,41 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceFleetContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerServiceFleetData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ContainerServiceFleetData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerServiceFleetData IPersistableModel<ContainerServiceFleetData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ContainerServiceFleetData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ContainerServiceFleetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="containerServiceFleetData"> The <see cref="ContainerServiceFleetData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ContainerServiceFleetData containerServiceFleetData)
+        {
+            if (containerServiceFleetData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(containerServiceFleetData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ContainerServiceFleetData"/> from. </param>
         internal static ContainerServiceFleetData FromResponse(Response response)
         {
@@ -223,41 +258,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 properties,
                 eTag,
                 identity);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ContainerServiceFleetData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceFleetContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ContainerServiceFleetData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerServiceFleetData IPersistableModel<ContainerServiceFleetData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ContainerServiceFleetData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ContainerServiceFleetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="containerServiceFleetData"> The <see cref="ContainerServiceFleetData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ContainerServiceFleetData containerServiceFleetData)
-        {
-            if (containerServiceFleetData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(containerServiceFleetData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

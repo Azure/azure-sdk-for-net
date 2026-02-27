@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
@@ -13,6 +15,14 @@ namespace Azure.GeneratorAgent.Tests;
 
 public class CopilotServiceTests
 {
+    private static readonly string s_repoRoot = Path.GetFullPath(
+        Path.Combine(TestContext.CurrentContext.TestDirectory, "..", "..", "..", "..", "..", "..")) + Path.DirectorySeparatorChar;
+
+    private static readonly string s_projectPath = Path.Combine(s_repoRoot, "sdk", "vision", "Azure.AI.Vision.ImageAnalysis");
+
+    private static readonly string s_normalizedProjectPath =
+        s_projectPath.EndsWith(Path.DirectorySeparatorChar) ? s_projectPath : s_projectPath + Path.DirectorySeparatorChar;
+
     private static AppSettings CreateMockSettings()
     {
         var mockConfig = new Mock<IConfiguration>();
@@ -283,5 +293,297 @@ public class CopilotServiceTests
         Assert.That(settings.LogLevel, Is.EqualTo("warning"));
         Assert.That(settings.DefaultTimeout, Is.EqualTo(TimeSpan.FromMinutes(2)));
         Assert.That(settings.GitHubApiUrl, Is.EqualTo("https://api.github.com"));
+    }
+
+    [Test]
+    public void ResolveToolPath_Edit_ExtractsAbsolutePath()
+    {
+        var filePath = Path.Combine(s_projectPath, "src", "Generated", "Models", "Foo.cs");
+        var args = JsonSerializer.Serialize(new { path = filePath });
+
+        var result = CopilotService.ResolveToolPath("edit", args, s_projectPath);
+
+        Assert.That(result, Is.EqualTo(Path.GetFullPath(filePath)));
+    }
+
+    [Test]
+    public void ResolveToolPath_Edit_ResolvesRelativePath()
+    {
+        var args = JsonSerializer.Serialize(new { path = "src/Foo.cs" });
+
+        var result = CopilotService.ResolveToolPath("edit", args, s_projectPath);
+
+        Assert.That(result, Is.EqualTo(Path.GetFullPath(Path.Combine(s_projectPath, "src", "Foo.cs"))));
+    }
+
+    [Test]
+    public void ResolveToolPath_Edit_NullArgs_ReturnsNull()
+    {
+        var result = CopilotService.ResolveToolPath("edit", null, s_projectPath);
+        Assert.That(result, Is.Null);
+    }
+
+    [Test]
+    public void ResolveToolPath_Edit_MissingPathProperty_ReturnsNull()
+    {
+        var args = JsonSerializer.Serialize(new { notPath = "foo" });
+        var result = CopilotService.ResolveToolPath("edit", args, s_projectPath);
+        Assert.That(result, Is.Null);
+    }
+
+    [Test]
+    public void ResolveToolPath_Powershell_ExtractsFirstAbsolutePath()
+    {
+        var command = $"cd {s_repoRoot.TrimEnd(Path.DirectorySeparatorChar)}; .\\eng\\scripts\\Export-API.ps1 -ServiceDirectory vision";
+        var args = JsonSerializer.Serialize(new { command });
+
+        var result = CopilotService.ResolveToolPath("powershell", args, s_projectPath);
+
+        Assert.That(result, Is.Not.Null);
+        Assert.That(Path.IsPathFullyQualified(result!), Is.True);
+    }
+
+    [Test]
+    public void ResolveToolPath_Powershell_NoAbsolutePath_ReturnsNull()
+    {
+        var args = JsonSerializer.Serialize(new { command = "dotnet build" });
+
+        var result = CopilotService.ResolveToolPath("powershell", args, s_projectPath);
+
+        Assert.That(result, Is.Null);
+    }
+
+    [Test]
+    public void ResolveToolPath_ReadPowershell_ReturnsNull()
+    {
+        var args = JsonSerializer.Serialize(new { shellId = "abc", delay = 100 });
+
+        var result = CopilotService.ResolveToolPath("read_powershell", args, s_projectPath);
+
+        Assert.That(result, Is.Null);
+    }
+
+    [Test]
+    public void ValidateToolAccess_Edit_InsideProject_ReturnsNull()
+    {
+        var filePath = Path.Combine(s_projectPath, "src", "Foo.cs");
+        var args = JsonSerializer.Serialize(new { path = filePath });
+
+        var result = CopilotService.ValidateToolAccess("edit", args, s_projectPath, s_normalizedProjectPath, s_repoRoot);
+
+        Assert.That(result, Is.Null, "edit inside project directory should be allowed");
+    }
+
+    [Test]
+    public void ValidateToolAccess_Edit_OutsideProject_ReturnsDenial()
+    {
+        var outsidePath = Path.Combine(s_repoRoot, "sdk", "storage", "SomeFile.cs");
+        var args = JsonSerializer.Serialize(new { path = outsidePath });
+
+        var result = CopilotService.ValidateToolAccess("edit", args, s_projectPath, s_normalizedProjectPath, s_repoRoot);
+
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result, Does.Contain("outside the project directory"));
+    }
+
+    [Test]
+    public void ValidateToolAccess_Create_NoPath_ReturnsDenial()
+    {
+        var args = JsonSerializer.Serialize(new { notPath = "foo" });
+
+        var result = CopilotService.ValidateToolAccess("create", args, s_projectPath, s_normalizedProjectPath, s_repoRoot);
+
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result, Does.Contain("No file path found"));
+    }
+
+    [Test]
+    public void ValidateToolAccess_View_InsideRepo_ReturnsNull()
+    {
+        var filePath = Path.Combine(s_repoRoot, "eng", "Packages.Data.props");
+        var args = JsonSerializer.Serialize(new { path = filePath });
+
+        var result = CopilotService.ValidateToolAccess("view", args, s_projectPath, s_normalizedProjectPath, s_repoRoot);
+
+        Assert.That(result, Is.Null, "view inside repo root should be allowed");
+    }
+
+    [Test]
+    public void ValidateToolAccess_View_OutsideRepo_ReturnsDenial()
+    {
+        var outsidePath = Path.GetFullPath(Path.Combine(s_repoRoot, "..", "some-other-repo", "file.txt"));
+        var args = JsonSerializer.Serialize(new { path = outsidePath });
+
+        var result = CopilotService.ValidateToolAccess("view", args, s_projectPath, s_normalizedProjectPath, s_repoRoot);
+
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result, Does.Contain("outside the repository directory"));
+    }
+
+    [Test]
+    public void ValidateToolAccess_View_TempDirectory_ReturnsNull()
+    {
+        var tempFile = Path.Combine(Path.GetTempPath(), "copilot-tool-output-12345.txt");
+        var args = JsonSerializer.Serialize(new { path = tempFile });
+
+        var result = CopilotService.ValidateToolAccess("view", args, s_projectPath, s_normalizedProjectPath, s_repoRoot);
+
+        Assert.That(result, Is.Null, "view inside temp directory should be allowed");
+    }
+
+    [Test]
+    public void ValidateToolAccess_Powershell_CdToRepoRoot_ReturnsNull()
+    {
+        var command = $"cd {s_repoRoot.TrimEnd(Path.DirectorySeparatorChar)}; .\\eng\\scripts\\Export-API.ps1";
+        var args = JsonSerializer.Serialize(new { command });
+
+        var result = CopilotService.ValidateToolAccess("powershell", args, s_projectPath, s_normalizedProjectPath, s_repoRoot);
+
+        Assert.That(result, Is.Null, "powershell cd to repo root should be allowed");
+    }
+
+    [Test]
+    public void ValidateToolAccess_Powershell_CdOutsideRepo_ReturnsDenial()
+    {
+        var outsideDir = Path.GetFullPath(Path.Combine(s_repoRoot, "..", "some-other-repo"));
+        var command = $"cd {outsideDir}; ls";
+        var args = JsonSerializer.Serialize(new { command });
+
+        var result = CopilotService.ValidateToolAccess("powershell", args, s_projectPath, s_normalizedProjectPath, s_repoRoot);
+
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result, Does.Contain("outside the repository directory"));
+    }
+
+    [Test]
+    public void ValidateToolAccess_Powershell_NoAbsolutePath_ReturnsNull()
+    {
+        var args = JsonSerializer.Serialize(new { command = "dotnet build" });
+
+        var result = CopilotService.ValidateToolAccess("powershell", args, s_projectPath, s_normalizedProjectPath, s_repoRoot);
+
+        Assert.That(result, Is.Null, "powershell with no absolute paths should be allowed");
+    }
+
+    [Test]
+    public void ValidateToolAccess_ReadPowershell_AlwaysReturnsNull()
+    {
+        var args = JsonSerializer.Serialize(new { shellId = "abc", delay = 100 });
+
+        var result = CopilotService.ValidateToolAccess("read_powershell", args, s_projectPath, s_normalizedProjectPath, s_repoRoot);
+
+        Assert.That(result, Is.Null, "read_powershell should always be allowed");
+    }
+
+    [Test]
+    public void ValidateToolAccess_UnknownTool_ReturnsNull()
+    {
+        var result = CopilotService.ValidateToolAccess("some_future_tool", null, s_projectPath, s_normalizedProjectPath, s_repoRoot);
+
+        Assert.That(result, Is.Null, "unknown tools should pass through (no path to validate)");
+    }
+
+    [Test]
+    public void AccessDenied_CancelsLinkedToken_And_ThrowsUnauthorizedAccessException()
+    {
+        var accessDeniedCts = new CancellationTokenSource();
+        var userCts = new CancellationTokenSource();
+        var timeoutCts = new CancellationTokenSource(TimeSpan.FromMinutes(5));
+        using var combinedCts = CancellationTokenSource.CreateLinkedTokenSource(
+            userCts.Token, timeoutCts.Token, accessDeniedCts.Token);
+
+        var completionTcs = new TaskCompletionSource();
+
+        // Simulate the hook denying access
+        accessDeniedCts.Cancel();
+
+        var ex = Assert.ThrowsAsync<UnauthorizedAccessException>(async () =>
+        {
+            try
+            {
+                await completionTcs.Task.WaitAsync(combinedCts.Token).ConfigureAwait(false);
+            }
+            catch (OperationCanceledException) when (accessDeniedCts.IsCancellationRequested)
+            {
+                throw new UnauthorizedAccessException(
+                    "Permission denied: a tool attempted to access a path outside the allowed directories. Aborting execution.");
+            }
+        });
+
+        Assert.That(ex!.Message, Does.Contain("Permission denied"));
+        Assert.That(accessDeniedCts.IsCancellationRequested, Is.True);
+        Assert.That(userCts.IsCancellationRequested, Is.False, "User CTS should not be cancelled");
+    }
+
+    [Test]
+    public void AccessDenied_DoesNotConfuseWithUserCancellation()
+    {
+        var accessDeniedCts = new CancellationTokenSource();
+        var userCts = new CancellationTokenSource();
+        var timeoutCts = new CancellationTokenSource(TimeSpan.FromMinutes(5));
+        using var combinedCts = CancellationTokenSource.CreateLinkedTokenSource(
+            userCts.Token, timeoutCts.Token, accessDeniedCts.Token);
+
+        var completionTcs = new TaskCompletionSource();
+
+        // Simulate user cancellation (not access denied)
+        userCts.Cancel();
+
+        string? result = null;
+        Assert.DoesNotThrowAsync(async () =>
+        {
+            try
+            {
+                await completionTcs.Task.WaitAsync(combinedCts.Token).ConfigureAwait(false);
+            }
+            catch (OperationCanceledException) when (accessDeniedCts.IsCancellationRequested)
+            {
+                throw new UnauthorizedAccessException("Should not reach here");
+            }
+            catch (OperationCanceledException) when (userCts.IsCancellationRequested)
+            {
+                result = "user_cancelled";
+            }
+        });
+
+        Assert.That(result, Is.EqualTo("user_cancelled"));
+        Assert.That(accessDeniedCts.IsCancellationRequested, Is.False);
+    }
+
+    [Test]
+    public void AccessDenied_DoesNotConfuseWithTimeout()
+    {
+        var accessDeniedCts = new CancellationTokenSource();
+        var userCts = new CancellationTokenSource();
+        var timeoutCts = new CancellationTokenSource();
+        timeoutCts.Cancel();
+        using var combinedCts = CancellationTokenSource.CreateLinkedTokenSource(
+            userCts.Token, timeoutCts.Token, accessDeniedCts.Token);
+
+        var completionTcs = new TaskCompletionSource();
+
+        string? result = null;
+        Assert.DoesNotThrowAsync(async () =>
+        {
+            try
+            {
+                await completionTcs.Task.WaitAsync(combinedCts.Token).ConfigureAwait(false);
+            }
+            catch (OperationCanceledException) when (accessDeniedCts.IsCancellationRequested)
+            {
+                throw new UnauthorizedAccessException("Should not reach here");
+            }
+            catch (OperationCanceledException) when (userCts.IsCancellationRequested)
+            {
+                result = "user_cancelled";
+            }
+            catch (OperationCanceledException)
+            {
+                result = "timeout";
+            }
+        });
+
+        Assert.That(result, Is.EqualTo("timeout"));
+        Assert.That(accessDeniedCts.IsCancellationRequested, Is.False);
     }
 }

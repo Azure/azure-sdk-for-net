@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -20,7 +20,7 @@ namespace Azure.AI.Projects.Tests.Samples.Evaluation;
 
 public class Sample_EvaluationsCatalogCodeBased : SamplesBase
 {
-    #region Snippet:Sampple_GetError_EvaluationsCatalogCodeBased
+    #region Snippet:Sample_GetError_EvaluationsCatalogCodeBased
     private static string GetErrorMessageOrEmpty(ClientResult result)
     {
         string error = "";
@@ -55,7 +55,7 @@ public class Sample_EvaluationsCatalogCodeBased : SamplesBase
         return error;
     }
     #endregion
-    #region Snippet:Sampple_GetResultCounts_EvaluationsCatalogCodeBased
+    #region Snippet:Sample_GetResultCounts_EvaluationsCatalogCodeBased
     private static string GetResultsCounts(ClientResult result)
     {
         Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
@@ -82,7 +82,7 @@ public class Sample_EvaluationsCatalogCodeBased : SamplesBase
         return sbFormattedCounts.ToString();
     }
     #endregion
-    #region Snippet:Sampple_GetStringValues_EvaluationsCatalogCodeBased
+    #region Snippet:Sample_GetStringValues_EvaluationsCatalogCodeBased
     private static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
     {
         Dictionary<string, string> results = [];
@@ -115,7 +115,7 @@ public class Sample_EvaluationsCatalogCodeBased : SamplesBase
         return results;
     }
     #endregion
-    #region Snippet:Sampple_GetResultsList_EvaluationsCatalogCodeBased_Async
+    #region Snippet:Sample_GetResultsList_EvaluationsCatalogCodeBased_Async
     private static async Task<List<string>> GetResultsListAsync(EvaluationClient client, string evaluationId, string evaluationRunId)
     {
         List<string> resultJsons = [];
@@ -147,7 +147,7 @@ public class Sample_EvaluationsCatalogCodeBased : SamplesBase
         return resultJsons;
     }
     #endregion
-    #region Snippet:Sampple_GetResultsList_EvaluationsCatalogCodeBased_Sync
+    #region Snippet:Sample_GetResultsList_EvaluationsCatalogCodeBased_Sync
     private static List<string> GetResultsList(EvaluationClient client, string evaluationId, string evaluationRunId)
     {
         List<string> resultJsons = [];
@@ -181,7 +181,7 @@ public class Sample_EvaluationsCatalogCodeBased : SamplesBase
     }
     #endregion
 
-    #region Snippet:Sampple_CodeEvaluator_EvaluationsCatalogCodeBased
+    #region Snippet:Sample_CodeEvaluator_EvaluationsCatalogCodeBased
     private EvaluatorVersion GetCodeEvaluatorVersion()
     {
         EvaluatorMetric resultMetric = new()
@@ -245,7 +245,7 @@ public class Sample_EvaluationsCatalogCodeBased : SamplesBase
     [AsyncOnly]
     public async Task Sample_EvaluationsCatalogCodeBasedExampleAsync()
     {
-        #region Snippet:Sampple_CreateClients_EvaluationsCatalogCodeBased
+        #region Snippet:Sample_CreateClients_EvaluationsCatalogCodeBased
 #if SNIPPET
         var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");

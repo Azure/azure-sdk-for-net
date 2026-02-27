@@ -84,9 +84,9 @@ namespace Azure.AI.ContentUnderstanding
                 writer.WriteStringValue(Speaker);
             }
             writer.WritePropertyName("startTimeMs"u8);
-            writer.WriteNumberValue(StartTimeMs);
+            writer.WriteNumberValue(StartTimeMsValue);
             writer.WritePropertyName("endTimeMs"u8);
-            writer.WriteNumberValue(EndTimeMs);
+            writer.WriteNumberValue(EndTimeMsValue);
             if (Optional.IsDefined(Locale))
             {
                 writer.WritePropertyName("locale"u8);
@@ -154,8 +154,8 @@ namespace Azure.AI.ContentUnderstanding
                 return null;
             }
             string speaker = default;
-            long startTimeMs = default;
-            long endTimeMs = default;
+            long startTimeMsValue = default;
+            long endTimeMsValue = default;
             string locale = default;
             string text = default;
             float? confidence = default;
@@ -171,12 +171,12 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("startTimeMs"u8))
                 {
-                    startTimeMs = prop.Value.GetInt64();
+                    startTimeMsValue = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("endTimeMs"u8))
                 {
-                    endTimeMs = prop.Value.GetInt64();
+                    endTimeMsValue = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("locale"u8))
@@ -224,8 +224,8 @@ namespace Azure.AI.ContentUnderstanding
             }
             return new TranscriptPhrase(
                 speaker,
-                startTimeMs,
-                endTimeMs,
+                startTimeMsValue,
+                endTimeMsValue,
                 locale,
                 text,
                 confidence,

@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Azure.AI.Projects.OpenAI;
+using Azure.AI.Projects.Telemetry;
+using Azure.Core;
 
 #pragma warning disable AZC0007
 

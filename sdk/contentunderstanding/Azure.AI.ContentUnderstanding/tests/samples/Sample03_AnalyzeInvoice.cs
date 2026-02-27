@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure;
@@ -28,12 +29,12 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #region Snippet:ContentUnderstandingAnalyzeInvoice
             // You can replace this URL with your own invoice file URL
             Uri invoiceUrl = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-dotnet/main/ContentUnderstanding.Common/data/invoice.pdf");
-            Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
+            Operation<AnalysisResult> operation = await client.AnalyzeAsync(
                 WaitUntil.Completed,
                 "prebuilt-invoice",
-                inputs: new[] { new AnalyzeInput { Url = invoiceUrl } });
+                inputs: new[] { new AnalysisInput { Uri = invoiceUrl } });
 
-            AnalyzeResult result = operation.Value;
+            AnalysisResult result = operation.Value;
             #endregion
 
             #region Assertion:ContentUnderstandingAnalyzeInvoice
@@ -71,7 +72,26 @@ namespace Azure.AI.ContentUnderstanding.Samples
             var customerNameField = documentContent.Fields["CustomerName"];
             Console.WriteLine($"Customer Name: {customerNameField.Value ?? "(None)"}");
             Console.WriteLine($"  Confidence: {customerNameField.Confidence?.ToString("F2") ?? "N/A"}");
-            Console.WriteLine($"  Source: {customerNameField.Source ?? "N/A"}");
+
+            // Access parsed sources to find where the field value appears in the original document.
+            // Polygon: the precise region (rotated quadrilateral) around the extracted text.
+            // BoundingBox: an axis-aligned rectangle computed from the polygon — useful for
+            //              drawing highlight overlays without handling rotation.
+            if (customerNameField.Sources != null)
+            {
+                foreach (var source in customerNameField.Sources)
+                {
+                    if (source is DocumentSource docSource)
+                    {
+                        Console.WriteLine($"  Page {docSource.PageNumber}");
+                        Console.WriteLine($"  Polygon: [{string.Join(", ", docSource.Polygon!.Select(p => $"({p.X:F4},{p.Y:F4})"))}]");
+
+                        RectangleF bbox = docSource.BoundingBox!.Value;
+                        Console.WriteLine($"  BoundingBox: x={bbox.X:F4}, y={bbox.Y:F4}, w={bbox.Width:F4}, h={bbox.Height:F4}");
+                    }
+                }
+            }
+
             if (customerNameField.Spans?.Count > 0)
             {
                 var span = customerNameField.Spans[0];
@@ -82,7 +102,20 @@ namespace Azure.AI.ContentUnderstanding.Samples
             var invoiceDateField = documentContent.Fields.GetFieldOrDefault("InvoiceDate");
             Console.WriteLine($"Invoice Date: {invoiceDateField?.Value ?? "(None)"}");
             Console.WriteLine($"  Confidence: {invoiceDateField?.Confidence?.ToString("F2") ?? "N/A"}");
-            Console.WriteLine($"  Source: {invoiceDateField?.Source ?? "N/A"}");
+
+            // Access parsed sources for date field
+            if (invoiceDateField?.Sources != null)
+            {
+                foreach (var source in invoiceDateField.Sources)
+                {
+                    if (source is DocumentSource docSource)
+                    {
+                        Console.WriteLine($"  Page {docSource.PageNumber}");
+                        Console.WriteLine($"  BoundingBox: {docSource.BoundingBox}");
+                    }
+                }
+            }
+
             if (invoiceDateField?.Spans?.Count > 0)
             {
                 var span = invoiceDateField.Spans[0];
@@ -90,25 +123,37 @@ namespace Azure.AI.ContentUnderstanding.Samples
             }
 
             // Extract object fields (nested structures)
-            if (documentContent.Fields.GetFieldOrDefault("TotalAmount") is ObjectField totalAmountObj)
+            if (documentContent.Fields.GetFieldOrDefault("TotalAmount") is ContentObjectField totalAmountObj)
             {
-                var amount = totalAmountObj.ValueObject?.GetFieldOrDefault("Amount")?.Value as double?;
-                var currency = totalAmountObj.ValueObject?.GetFieldOrDefault("CurrencyCode")?.Value;
+                var amount = totalAmountObj.Value?.GetFieldOrDefault("Amount")?.Value as double?;
+                var currency = totalAmountObj.Value?.GetFieldOrDefault("CurrencyCode")?.Value;
                 Console.WriteLine($"Total: {currency ?? "$"}{amount?.ToString("F2") ?? "(None)"}");
                 Console.WriteLine($"  Confidence: {totalAmountObj.Confidence?.ToString("F2") ?? "N/A"}");
-                Console.WriteLine($"  Source: {totalAmountObj.Source ?? "N/A"}");
+
+                // Access parsed sources for object field
+                if (totalAmountObj.Sources != null)
+                {
+                    foreach (var source in totalAmountObj.Sources)
+                    {
+                        if (source is DocumentSource docSource)
+                        {
+                            Console.WriteLine($"  Page {docSource.PageNumber}");
+                            Console.WriteLine($"  BoundingBox: {docSource.BoundingBox}");
+                        }
+                    }
+                }
             }
 
             // Extract array fields (collections like line items)
-            if (documentContent.Fields.GetFieldOrDefault("LineItems") is ArrayField lineItems)
+            if (documentContent.Fields.GetFieldOrDefault("LineItems") is ContentArrayField lineItems)
             {
                 Console.WriteLine($"Line Items ({lineItems.Count}):");
                 for (int i = 0; i < lineItems.Count; i++)
                 {
-                    if (lineItems[i] is ObjectField item)
+                    if (lineItems[i] is ContentObjectField item)
                     {
-                        var description = item.ValueObject?.GetFieldOrDefault("Description")?.Value;
-                        var quantity = item.ValueObject?.GetFieldOrDefault("Quantity")?.Value as double?;
+                        var description = item.Value?.GetFieldOrDefault("Description")?.Value;
+                        var quantity = item.Value?.GetFieldOrDefault("Quantity")?.Value as double?;
                         Console.WriteLine($"  Item {i + 1}: {description ?? "N/A"} (Qty: {quantity?.ToString() ?? "N/A"})");
                         Console.WriteLine($"    Confidence: {item.Confidence?.ToString("F2") ?? "N/A"}");
                     }
@@ -147,10 +192,16 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     $"CustomerName confidence should be between 0 and 1, but was {customerNameFieldAssert.Confidence.Value}");
             }
 
-            if (!string.IsNullOrWhiteSpace(customerNameFieldAssert.Source))
+            // Verify grounding sources are parsed as DocumentSource
+            if (customerNameFieldAssert.Sources != null)
             {
-                Assert.IsTrue(customerNameFieldAssert.Source.StartsWith("D("),
-                    "Source should start with 'D(' for document fields");
+                Assert.IsTrue(customerNameFieldAssert.Sources.Length > 0,
+                    "Sources should have at least one element");
+                Assert.IsInstanceOf<DocumentSource>(customerNameFieldAssert.Sources[0],
+                    "Grounding source should be DocumentSource for document fields");
+                var docSource = (DocumentSource)customerNameFieldAssert.Sources[0];
+                Assert.IsTrue(docSource.PageNumber >= 1, "PageNumber should be >= 1");
+                Assert.AreEqual(4, docSource.Polygon!.Count, "Polygon should have 4 points");
             }
 
             // Spans are expected to exist and have at least one span
@@ -178,10 +229,14 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     $"InvoiceDate confidence should be between 0 and 1, but was {invoiceDateFieldAssert.Confidence.Value}");
             }
 
-            if (!string.IsNullOrWhiteSpace(invoiceDateFieldAssert.Source))
+            // Verify grounding sources are parsed as DocumentSource
+            if (invoiceDateFieldAssert.Sources != null)
             {
-                Assert.IsTrue(invoiceDateFieldAssert.Source.StartsWith("D("),
-                    "Source should start with 'D(' for document fields");
+                Assert.IsInstanceOf<DocumentSource>(invoiceDateFieldAssert.Sources[0],
+                    "Grounding source should be DocumentSource for document fields");
+                var docSource = (DocumentSource)invoiceDateFieldAssert.Sources[0];
+                Assert.IsTrue(docSource.PageNumber >= 1, "PageNumber should be >= 1");
+                Assert.AreEqual(4, docSource.Polygon!.Count, "Polygon should have 4 points");
             }
 
             // Spans are expected to exist and have at least one span
@@ -195,8 +250,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             // Verify TotalAmount object field - expected to exist
             var totalAmountFieldAssert = docContent.Fields["TotalAmount"];
-            Assert.IsInstanceOf<ObjectField>(totalAmountFieldAssert, "TotalAmount should be an ObjectField");
-            var totalAmountObjAssert = (ObjectField)totalAmountFieldAssert;
+            Assert.IsInstanceOf<ContentObjectField>(totalAmountFieldAssert, "TotalAmount should be a ContentObjectField");
+            var totalAmountObjAssert = (ContentObjectField)totalAmountFieldAssert;
 
             if (totalAmountObjAssert.Confidence.HasValue)
             {
@@ -205,17 +260,17 @@ namespace Azure.AI.ContentUnderstanding.Samples
             }
 
             // Verify Amount sub-field - expected to exist
-            Assert.IsNotNull(totalAmountObjAssert.ValueObject, "TotalAmount.ValueObject should not be null");
-            var amountFieldAssert = totalAmountObjAssert.ValueObject["Amount"];
+            Assert.IsNotNull(totalAmountObjAssert.Value, "TotalAmount.Value should not be null");
+            var amountFieldAssert = totalAmountObjAssert.Value!["Amount"];
             Assert.IsNotNull(amountFieldAssert, "Amount field should exist");
-            Assert.IsInstanceOf<NumberField>(amountFieldAssert, "Amount should be a NumberField");
+            Assert.IsInstanceOf<ContentNumberField>(amountFieldAssert, "Amount should be a ContentNumberField");
             if (amountFieldAssert.Value is double amountValue)
             {
                 Assert.IsTrue(amountValue >= 0, $"Amount should be >= 0, but was {amountValue}");
             }
 
             // Verify CurrencyCode sub-field - expected to exist
-            var currencyFieldAssert = totalAmountObjAssert.ValueObject["CurrencyCode"];
+            var currencyFieldAssert = totalAmountObjAssert.Value["CurrencyCode"];
             Assert.IsNotNull(currencyFieldAssert, "CurrencyCode field should exist");
             if (currencyFieldAssert.Value != null)
             {
@@ -229,14 +284,14 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             // Verify LineItems array field - expected to exist
             var lineItemsFieldAssert = docContent.Fields["LineItems"];
-            Assert.IsInstanceOf<ArrayField>(lineItemsFieldAssert, "LineItems should be an ArrayField");
-            var lineItemsAssert = (ArrayField)lineItemsFieldAssert;
+            Assert.IsInstanceOf<ContentArrayField>(lineItemsFieldAssert, "LineItems should be a ContentArrayField");
+            var lineItemsAssert = (ContentArrayField)lineItemsFieldAssert;
             Assert.IsTrue(lineItemsAssert.Count >= 0, "LineItems count should be >= 0");
 
             for (int i = 0; i < lineItemsAssert.Count; i++)
             {
-                Assert.IsInstanceOf<ObjectField>(lineItemsAssert[i], $"Line item {i + 1} should be an ObjectField");
-                var item = (ObjectField)lineItemsAssert[i];
+                Assert.IsInstanceOf<ContentObjectField>(lineItemsAssert[i], $"Line item {i + 1} should be a ContentObjectField");
+                var item = (ContentObjectField)lineItemsAssert[i];
 
                 if (item.Confidence.HasValue)
                 {
@@ -245,8 +300,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 }
 
                 // Verify Description field - expected to exist
-                Assert.IsNotNull(item.ValueObject, $"Line item {i + 1} ValueObject should not be null");
-                var descriptionField = item.ValueObject["Description"];
+                Assert.IsNotNull(item.Value, $"Line item {i + 1} Value should not be null");
+                var descriptionField = item.Value!["Description"];
                 Assert.IsNotNull(descriptionField, $"Line item {i + 1} Description field should exist");
                 if (descriptionField.Value != null)
                 {
@@ -255,23 +310,23 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 }
 
                 // Verify Quantity field - expected to exist
-                var quantityField = item.ValueObject["Quantity"];
+                var quantityField = item.Value["Quantity"];
                 Assert.IsNotNull(quantityField, $"Line item {i + 1} Quantity field should exist");
-                Assert.IsInstanceOf<NumberField>(quantityField, $"Line item {i + 1} Quantity should be a NumberField");
+                Assert.IsInstanceOf<ContentNumberField>(quantityField, $"Line item {i + 1} Quantity should be a ContentNumberField");
                 if (quantityField.Value is double quantity)
                 {
                     Assert.IsTrue(quantity >= 0, $"Line item {i + 1} quantity should be >= 0, but was {quantity}");
                 }
 
                 // Verify UnitPrice field if exists (optional)
-                var unitPriceField = item.ValueObject?.GetFieldOrDefault("UnitPrice");
+                var unitPriceField = item.Value?.GetFieldOrDefault("UnitPrice");
                 if (unitPriceField?.Value is double unitPrice)
                 {
                     Assert.IsTrue(unitPrice >= 0, $"Line item {i + 1} unit price should be >= 0, but was {unitPrice}");
                 }
 
                 // Verify Amount field if exists (optional)
-                var itemAmountField = item.ValueObject?.GetFieldOrDefault("Amount");
+                var itemAmountField = item.Value?.GetFieldOrDefault("Amount");
                 if (itemAmountField?.Value is double itemAmount)
                 {
                     Assert.IsTrue(itemAmount >= 0, $"Line item {i + 1} amount should be >= 0, but was {itemAmount}");

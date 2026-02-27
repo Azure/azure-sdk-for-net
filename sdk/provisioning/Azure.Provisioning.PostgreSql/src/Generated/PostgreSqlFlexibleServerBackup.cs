@@ -18,7 +18,7 @@ namespace Azure.Provisioning.PostgreSql;
 public partial class PostgreSqlFlexibleServerBackup : ProvisionableResource
 {
     /// <summary>
-    /// The name of the backup.
+    /// Name of the backup.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -28,7 +28,7 @@ public partial class PostgreSqlFlexibleServerBackup : ProvisionableResource
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// Backup type.
+    /// Type of backup.
     /// </summary>
     public BicepValue<PostgreSqlFlexibleServerBackupOrigin> BackupType 
     {
@@ -37,7 +37,7 @@ public partial class PostgreSqlFlexibleServerBackup : ProvisionableResource
     private BicepValue<PostgreSqlFlexibleServerBackupOrigin>? _backupType;
 
     /// <summary>
-    /// Backup completed time (ISO8601 format).
+    /// Time(ISO8601 format) at which the backup was completed.
     /// </summary>
     public BicepValue<DateTimeOffset> CompletedOn 
     {
@@ -55,7 +55,7 @@ public partial class PostgreSqlFlexibleServerBackup : ProvisionableResource
     private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
-    /// Backup source.
+    /// Source of the backup.
     /// </summary>
     public BicepValue<string> Source 
     {
@@ -93,7 +93,7 @@ public partial class PostgreSqlFlexibleServerBackup : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlFlexibleServerBackup.</param>
     public PostgreSqlFlexibleServerBackup(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/flexibleServers/backups", resourceVersion ?? "2024-08-01")
+        : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/flexibleServers/backups", resourceVersion ?? "2025-08-01")
     {
     }
 
@@ -103,6 +103,7 @@ public partial class PostgreSqlFlexibleServerBackup : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _backupType = DefineProperty<PostgreSqlFlexibleServerBackupOrigin>("BackupType", ["properties", "backupType"], isOutput: true);
         _completedOn = DefineProperty<DateTimeOffset>("CompletedOn", ["properties", "completedTime"], isOutput: true);
@@ -117,6 +118,11 @@ public partial class PostgreSqlFlexibleServerBackup : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-08-01.
+        /// </summary>
+        public static readonly string V2025_08_01 = "2025-08-01";
+
         /// <summary>
         /// 2024-08-01.
         /// </summary>

@@ -26,7 +26,7 @@ public partial class PostgreSqlFlexibleServersValidationDetails : ProvisionableC
     private BicepValue<PostgreSqlFlexibleServersValidationState>? _status;
 
     /// <summary>
-    /// Validation Start date-time in UTC.
+    /// Start time (UTC) for validation.
     /// </summary>
     public BicepValue<DateTimeOffset> ValidationStartTimeInUtc 
     {
@@ -35,7 +35,7 @@ public partial class PostgreSqlFlexibleServersValidationDetails : ProvisionableC
     private BicepValue<DateTimeOffset>? _validationStartTimeInUtc;
 
     /// <summary>
-    /// Validation End date-time in UTC.
+    /// End time (UTC) for validation.
     /// </summary>
     public BicepValue<DateTimeOffset> ValidationEndTimeInUtc 
     {

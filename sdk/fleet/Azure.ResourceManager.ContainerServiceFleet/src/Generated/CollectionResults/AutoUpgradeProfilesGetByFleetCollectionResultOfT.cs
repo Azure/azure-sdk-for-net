@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                     yield break;
                 }
                 AutoUpgradeProfileListResult result = AutoUpgradeProfileListResult.FromResponse(response);
-                yield return Page<AutoUpgradeProfileData>.FromValues((IReadOnlyList<AutoUpgradeProfileData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<AutoUpgradeProfileData>.FromValues((IReadOnlyList<AutoUpgradeProfileData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

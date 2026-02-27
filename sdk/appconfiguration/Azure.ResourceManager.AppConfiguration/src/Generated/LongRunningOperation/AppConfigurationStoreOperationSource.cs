@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
-    internal class AppConfigurationStoreOperationSource : IOperationSource<AppConfigurationStoreResource>
+    /// <summary></summary>
+    internal partial class AppConfigurationStoreOperationSource : IOperationSource<AppConfigurationStoreResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal AppConfigurationStoreOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         AppConfigurationStoreResource IOperationSource<AppConfigurationStoreResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AppConfigurationStoreData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppConfigurationContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            AppConfigurationStoreData data = AppConfigurationStoreData.DeserializeAppConfigurationStoreData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new AppConfigurationStoreResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<AppConfigurationStoreResource> IOperationSource<AppConfigurationStoreResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AppConfigurationStoreData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppConfigurationContext.Default);
-            return await Task.FromResult(new AppConfigurationStoreResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            AppConfigurationStoreData data = AppConfigurationStoreData.DeserializeAppConfigurationStoreData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new AppConfigurationStoreResource(_client, data);
         }
     }
 }
