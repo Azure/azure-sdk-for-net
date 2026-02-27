@@ -44,15 +44,15 @@ namespace Azure.ResourceManager.Communication
                 writer.WritePropertyName("listName"u8);
                 writer.WriteStringValue(ListName);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
-            {
-                writer.WritePropertyName("createdTimeStamp"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
-            }
             if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTimeStamp"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("createdTimeStamp"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(DataLocation))
             {
@@ -170,8 +170,8 @@ namespace Azure.ResourceManager.Communication
                 type,
                 systemData,
                 listName,
-                createdTimeStamp,
                 lastUpdatedTimeStamp,
+                createdTimeStamp,
                 dataLocation,
                 serializedAdditionalRawData);
         }
@@ -265,22 +265,6 @@ namespace Azure.ResourceManager.Communication
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    createdTimeStamp: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CreatedOn))
-                {
-                    builder.Append("    createdTimeStamp: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastUpdatedOn), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -293,6 +277,22 @@ namespace Azure.ResourceManager.Communication
                 {
                     builder.Append("    lastUpdatedTimeStamp: ");
                     var formattedDateTimeString = TypeFormatters.ToString(LastUpdatedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    createdTimeStamp: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    builder.Append("    createdTimeStamp: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
