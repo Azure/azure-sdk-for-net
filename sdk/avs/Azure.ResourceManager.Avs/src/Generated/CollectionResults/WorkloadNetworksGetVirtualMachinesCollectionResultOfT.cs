@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs
                     yield break;
                 }
                 WorkloadNetworkVirtualMachinesList result = WorkloadNetworkVirtualMachinesList.FromResponse(response);
-                yield return Page<WorkloadNetworkVirtualMachineData>.FromValues((IReadOnlyList<WorkloadNetworkVirtualMachineData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<WorkloadNetworkVirtualMachineData>.FromValues((IReadOnlyList<WorkloadNetworkVirtualMachineData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

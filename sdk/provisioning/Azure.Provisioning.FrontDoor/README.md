@@ -161,7 +161,7 @@ FrontDoorResource frontDoor =
     };
 infra.Add(frontDoor);
 
-infra.Add(new ProvisioningOutput("name", typeof(string)) { Value = new MemberExpression(new IdentifierExpression( frontDoor.BicepIdentifier), "name") }); // TODO -- update this to use the expression conversion
+infra.Add(new ProvisioningOutput("name", typeof(string)) { Value = new MemberExpression(new IdentifierExpression(frontDoor.BicepIdentifier), "name") }); // TODO -- update this to use the expression conversion
 infra.Add(new ProvisioningOutput("resourceGroupName", typeof(string)) { Value = BicepFunction.GetResourceGroup().Name });
 infra.Add(new ProvisioningOutput("resourceId", typeof(string)) { Value = frontDoor.Id });
 ```

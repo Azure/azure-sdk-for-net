@@ -29,7 +29,7 @@ public class SearchSpecification() :
         RemoveProperty<SharedSearchServicePrivateLinkResourceProperties>("SharedPrivateLinkResourceProvisioningState");
         CustomizeProperty<SharedSearchServicePrivateLinkResourceProperties>("Status", p => p.HideLevel = PropertyHideLevel.DoNotHide);
         CustomizeProperty<SharedSearchServicePrivateLinkResourceProperties>("ProvisioningState", p => p.HideLevel = PropertyHideLevel.DoNotHide);
-        
+
         // Patch models
         CustomizeEnum<SearchServicePrivateLinkServiceConnectionStatus>(e => { foreach (EnumValue member in e.Values) { member.Value = member.Name; } });
         CustomizeEnum<SearchServiceHostingMode>(e => { foreach (EnumValue member in e.Values) { member.Value = member.Name.ToCamelCase(); } });

@@ -14,8 +14,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 {
     public partial class KubernetesClustersTests : NetworkCloudManagementTestBase
     {
-        public KubernetesClustersTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) {}
-        public KubernetesClustersTests(bool isAsync) : base(isAsync) {}
+        public KubernetesClustersTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) { }
+        public KubernetesClustersTests(bool isAsync) : base(isAsync) { }
 
         [Test]
         [RecordedTest]

@@ -73,5 +73,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.VisualStudio
 
         protected override TokenCredential CreateCredentialWithChainedOption(IProcessService processService, IFileSystemService fileSystem, bool isChained)
             => CreateConfiguredCredential(processService, fileSystem);
+
+        protected override bool IsChainedCredentialSupported => false;
     }
 }

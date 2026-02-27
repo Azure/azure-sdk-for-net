@@ -10,7 +10,7 @@ internal class McpClient
     private McpSession _session;
     private ClientPipeline _pipeline = ClientPipeline.Create();
 
-    public Uri ServerEndpoint {get;}
+    public Uri ServerEndpoint { get; }
 
     public McpClient(Uri endpoint)
     {

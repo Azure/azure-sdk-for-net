@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using NUnit.Framework;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using NUnit.Framework;
 
 namespace Azure.Communication.CallingServer.Tests
 {
@@ -407,10 +407,10 @@ namespace Azure.Communication.CallingServer.Tests
         private void verifyAddParticipantsResult(AddParticipantsResult result)
         {
             Assert.AreEqual(2, result.Participants.Count);
-            var identifier = (CommunicationUserIdentifier) result.Participants[0].Identifier;
+            var identifier = (CommunicationUserIdentifier)result.Participants[0].Identifier;
             Assert.AreEqual(ParticipantUserId, identifier.Id);
             Assert.IsFalse(result.Participants[0].IsMuted);
-            var identifier2 = (PhoneNumberIdentifier) result.Participants[1].Identifier;
+            var identifier2 = (PhoneNumberIdentifier)result.Participants[1].Identifier;
             Assert.AreEqual(PhoneNumber, identifier2.PhoneNumber);
             Assert.IsTrue(result.Participants[1].IsMuted);
 

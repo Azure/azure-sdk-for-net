@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.FileShares
                     yield break;
                 }
                 FileShareSnapshotListResult result = FileShareSnapshotListResult.FromResponse(response);
-                yield return Page<FileShareSnapshotData>.FromValues((IReadOnlyList<FileShareSnapshotData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<FileShareSnapshotData>.FromValues((IReadOnlyList<FileShareSnapshotData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

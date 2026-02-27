@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="keyIdentifier">
         /// Full path to the secret with or without version. Example https://mykeyvault.vault.azure.net/keys/testkey/6e34a81fef704045975661e297a4c053. or https://mykeyvault.vault.azure.net/keys/testkey. To be usable the following prerequisites must be met:
         ///
-        ///  The Batch Account has a System Assigned identity
-        ///  The account identity has been granted Key/Get, Key/Unwrap and Key/Wrap permissions
-        ///  The KeyVault has soft-delete and purge protection enabled
+        /// The Batch Account has a System Assigned identity
+        /// The account identity has been granted Key/Get, Key/Unwrap and Key/Wrap permissions
+        /// The KeyVault has soft-delete and purge protection enabled
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal KeyVaultProperties(Uri keyIdentifier, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -68,9 +68,9 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary>
         /// Full path to the secret with or without version. Example https://mykeyvault.vault.azure.net/keys/testkey/6e34a81fef704045975661e297a4c053. or https://mykeyvault.vault.azure.net/keys/testkey. To be usable the following prerequisites must be met:
         ///
-        ///  The Batch Account has a System Assigned identity
-        ///  The account identity has been granted Key/Get, Key/Unwrap and Key/Wrap permissions
-        ///  The KeyVault has soft-delete and purge protection enabled
+        /// The Batch Account has a System Assigned identity
+        /// The account identity has been granted Key/Get, Key/Unwrap and Key/Wrap permissions
+        /// The KeyVault has soft-delete and purge protection enabled
         /// </summary>
         public Uri KeyIdentifier { get; set; }
     }

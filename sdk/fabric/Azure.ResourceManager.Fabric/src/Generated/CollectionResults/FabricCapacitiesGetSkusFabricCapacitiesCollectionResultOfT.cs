@@ -46,13 +46,13 @@ namespace Azure.ResourceManager.Fabric
                     yield break;
                 }
                 RpSkuEnumerationForNewResourceResult result = RpSkuEnumerationForNewResourceResult.FromResponse(response);
-                yield return Page<FabricSkuDetailsForNewCapacity>.FromValues((IReadOnlyList<FabricSkuDetailsForNewCapacity>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<FabricSkuDetailsForNewCapacity>.FromValues((IReadOnlyList<FabricSkuDetailsForNewCapacity>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
                     yield break;
                 }
-                nextPage = new Uri(nextPageString);
+                nextPage = new Uri(nextPageString, UriKind.RelativeOrAbsolute);
             }
         }
 

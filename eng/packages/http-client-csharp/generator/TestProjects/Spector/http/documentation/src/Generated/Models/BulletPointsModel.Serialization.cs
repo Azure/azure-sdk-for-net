@@ -17,6 +17,14 @@ namespace Documentation._Lists
 
         protected virtual BulletPointsModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        BinaryData IPersistableModel<BulletPointsModel>.Write(ModelReaderWriterOptions options) => throw null;
+
+        BulletPointsModel IPersistableModel<BulletPointsModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        string IPersistableModel<BulletPointsModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
         void IJsonModel<BulletPointsModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -24,13 +32,5 @@ namespace Documentation._Lists
         BulletPointsModel IJsonModel<BulletPointsModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual BulletPointsModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<BulletPointsModel>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
-        BulletPointsModel IPersistableModel<BulletPointsModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        string IPersistableModel<BulletPointsModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
     }
 }

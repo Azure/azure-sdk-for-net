@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Azure.Analytics.Synapse.Spark;
 using Azure.Analytics.Synapse.Spark.Models;
 using Azure.Analytics.Synapse.Tests;
@@ -79,7 +79,7 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             SparkBatchJob jobCreateResponse = await createOperation.WaitForCompletionAsync();
 
             // Verify the Spark batch job exuecution completes successfully
-            Assert.True(LivyStates.Success == jobCreateResponse.State  && jobCreateResponse.Result == SparkBatchJobResultType.Succeeded,
+            Assert.True(LivyStates.Success == jobCreateResponse.State && jobCreateResponse.Result == SparkBatchJobResultType.Succeeded,
                 string.Format(
                     "Job: {0} did not return success. Current job state: {1}. Actual result: {2}. Error (if any): {3}",
                     jobCreateResponse.Id,
@@ -144,8 +144,8 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             }
         }
 
-       internal void ValidateSparkBatchJob(SparkBatchJob expectedSparkJob, SparkBatchJob actualSparkJob)
-       {
+        internal void ValidateSparkBatchJob(SparkBatchJob expectedSparkJob, SparkBatchJob actualSparkJob)
+        {
             Assert.AreEqual(expectedSparkJob.Name, actualSparkJob.Name);
             Assert.AreEqual(expectedSparkJob.Id, actualSparkJob.Id);
             Assert.AreEqual(expectedSparkJob.AppId, actualSparkJob.AppId);

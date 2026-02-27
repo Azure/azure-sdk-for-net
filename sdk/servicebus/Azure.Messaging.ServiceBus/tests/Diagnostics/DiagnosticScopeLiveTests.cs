@@ -185,7 +185,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 await receiver.PurgeMessagesAsync();
                 var purgeScope = _listener.AssertAndRemoveScope(DiagnosticProperty.PurgeActivityName);
                 AssertCommonTags(purgeScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
-            };
+            }
+            ;
         }
 
         [Test]
@@ -244,7 +245,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     AssertCommonTags(processScope.Activity, processor.EntityPath, processor.FullyQualifiedNamespace);
                 }
                 Assert.IsTrue(callbackExecuted);
-            };
+            }
+            ;
         }
 
         [Test]

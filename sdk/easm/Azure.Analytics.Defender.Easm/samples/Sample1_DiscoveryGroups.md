@@ -9,7 +9,7 @@ This code sample demonstrates how to create and manage discovery groups in an EA
 To create an EasmClient, you need your subscription ID, region, and some sort of credential.
 
 ```C# Snippet:Sample2_DiscoveryGroups_Create_Client
-            string endpoint = "https://<region>.easm.defender.microsoft.com/subscriptions/<Your_Subscription_Id>/resourceGroups/<Your_Resource_Group_Name>/workspaces/<Your_Workspace_Name>";
+string endpoint = "https://<region>.easm.defender.microsoft.com/subscriptions/<Your_Subscription_Id>/resourceGroups/<Your_Resource_Group_Name>/workspaces/<Your_Workspace_Name>";
 EasmClient client = new EasmClient(new System.Uri(endpoint),
                 new DefaultAzureCredential());
 ```
@@ -21,13 +21,13 @@ In order to start discovery runs, we must first create a discovery group, which 
 ```C# Snippet:Sample2_DiscoveryGroups_Create_Discovery_Group
 string discoveryGroupName = "Sample Disco From C#";
 string discoveryGroupDescription = "This is a sample discovery group generated from C#";
-            string[] hosts = new string[2];
+string[] hosts = new string[2];
 hosts[0] = "<host1>.com";
 hosts[1] = "<host2>.com";
 string[] domains = new string[2];
 domains[0] = "<domain1>.com";
 domains[1] = "<domain2>.com";
-                        DiscoveryGroupPayload request = new DiscoveryGroupPayload();
+DiscoveryGroupPayload request = new DiscoveryGroupPayload();
 foreach (var host in hosts)
 {
     DiscoverySource seed = new DiscoverySource();
@@ -62,7 +62,8 @@ foreach (DiscoveryGroup discoGroup in response)
     foreach (DiscoveryRunResult discoRun in discoRunPageResponse)
     {
         Console.WriteLine($" - started: {discoRun.StartedDate}, finished: {discoRun.CompletedDate}, assets found: {discoRun.TotalAssetsFoundCount}, status: {discoRun.State}");
-        if (++index == 5){
+        if (++index == 5)
+        {
             break;
         }
     }

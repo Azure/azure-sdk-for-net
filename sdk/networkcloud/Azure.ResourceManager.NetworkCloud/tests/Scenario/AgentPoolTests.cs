@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 {
     public class AgentPoolTests : NetworkCloudManagementTestBase
     {
-        public AgentPoolTests  (bool isAsync, RecordedTestMode mode) : base(isAsync, mode) {}
-        public AgentPoolTests (bool isAsync) : base(isAsync) {}
+        public AgentPoolTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) { }
+        public AgentPoolTests(bool isAsync) : base(isAsync) { }
 
         [Test, MaxTime(1800000)]
         [RecordedTest]

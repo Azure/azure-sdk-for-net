@@ -689,7 +689,7 @@ public class PauseResumeTransferMockedTests
         await Task.Delay(50);
         int pausedJobsCount = GetJobsStateCount(transfers, checkpointer)[TransferState.Paused];
         int queuedPartsCount = GetJobPartsStateCount(transfers, checkpointer)[TransferState.Queued];
-        int expectedPartsCreatedCount = Enumerable.Range(1, numJobs/2).Select(GetItemCountFromContainerIndex).Sum();
+        int expectedPartsCreatedCount = Enumerable.Range(1, numJobs / 2).Select(GetItemCountFromContainerIndex).Sum();
         int jobPartsCreatedCount = transfers.Sum(transfer => checkpointer.Jobs[transfer.Id].Parts.Count);
         int enumerationCompleteCount = GetEnumerationCompleteCount(transfers, checkpointer);
 

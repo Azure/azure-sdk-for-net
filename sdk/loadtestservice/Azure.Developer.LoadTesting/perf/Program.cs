@@ -4,4 +4,4 @@
 using System.Reflection;
 using Azure.Test.Perf;
 
- await PerfProgram.Main(Assembly.GetEntryAssembly(), args);
+await PerfProgram.Main(Assembly.GetEntryAssembly(), args);

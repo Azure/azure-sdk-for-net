@@ -7,7 +7,7 @@ namespace Azure.AI.Agents.Persistent
 {
     public partial class BingCustomSearchToolParameters
     {
-        public BingCustomSearchToolParameters( string connectionId, string instanceName )
+        public BingCustomSearchToolParameters(string connectionId, string instanceName)
         {
             // Additional initialization logic if needed
             var bingCustomSearchConfiguration = new BingCustomSearchConfiguration

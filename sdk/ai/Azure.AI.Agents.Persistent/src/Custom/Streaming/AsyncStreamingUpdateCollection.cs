@@ -123,7 +123,7 @@ internal class AsyncStreamingUpdateCollection : AsyncCollectionResult<StreamingU
                 if (streamRun != null && _currRetry > _maxRetry)
                 {
                     // Cancel the run if the max retry is reached
-                    var cancelRunResponse =  await _cancelRunAsync(streamRun.Id).ConfigureAwait(false);
+                    var cancelRunResponse = await _cancelRunAsync(streamRun.Id).ConfigureAwait(false);
                     yield return new StreamingUpdate<ThreadRun>(cancelRunResponse.Value, StreamingUpdateReason.RunCancelled);
                     yield break;
                 }
@@ -188,31 +188,31 @@ internal class AsyncStreamingUpdateCollection : AsyncCollectionResult<StreamingU
             _cancellationToken.ThrowIfCancellationRequested();
             try
             {
-	            _events ??= CreateEventEnumeratorAsync();
-	            _started = true;
+                _events ??= CreateEventEnumeratorAsync();
+                _started = true;
 
-	            if (_updates is not null && _updates.MoveNext())
-	            {
-	                _current = _updates.Current;
+                if (_updates is not null && _updates.MoveNext())
+                {
+                    _current = _updates.Current;
                     _hasYieldedUpdate = true;
-	                return true;
-	            }
+                    return true;
+                }
 
-	            if (await _events.MoveNextAsync().ConfigureAwait(false))
-	            {
-	                if (_events.Current.Data.AsSpan().SequenceEqual(TerminalData))
-	                {
-	                    _current = default;
+                if (await _events.MoveNextAsync().ConfigureAwait(false))
+                {
+                    if (_events.Current.Data.AsSpan().SequenceEqual(TerminalData))
+                    {
+                        _current = default;
                         if (_scope != null && _started && !_hasYieldedUpdate)
                         {
                             _scope.RecordError(new InvalidOperationException("No events were received from the stream."));
                             _scope.Dispose();
                             _scope = null;
                         }
-	                    return false;
-	                }
+                        return false;
+                    }
 
-	                IEnumerable<StreamingUpdate> updates = StreamingUpdate.FromEvent(_events.Current);
+                    IEnumerable<StreamingUpdate> updates = StreamingUpdate.FromEvent(_events.Current);
                     if (updates is null)
                     {
                         StreamingUpdateReason updateKind = StreamingUpdateReasonExtensions.FromSseEventLabel(_events.Current.EventType);
@@ -220,22 +220,22 @@ internal class AsyncStreamingUpdateCollection : AsyncCollectionResult<StreamingU
                     }
                     _updates = updates.GetEnumerator();
 
-	                if (_updates.MoveNext())
-	                {
-	                    _current = _updates.Current;
+                    if (_updates.MoveNext())
+                    {
+                        _current = _updates.Current;
                         _hasYieldedUpdate = true;
-	                    return true;
-	                }
-	            }
+                        return true;
+                    }
+                }
 
-	            _current = default;
+                _current = default;
                 if (_scope != null && _started && !_hasYieldedUpdate)
                 {
                     _scope.RecordError(new InvalidOperationException("No events were received from the stream."));
                     _scope.Dispose();
                     _scope = null;
                 }
-	            return false;
+                return false;
             }
             catch (Exception ex)
             {

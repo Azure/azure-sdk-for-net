@@ -8,10 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.NetApp.Tests.Helpers;
 using Azure.ResourceManager.NetApp.Models;
-using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.NetApp.Tests.Helpers;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetApp.Tests

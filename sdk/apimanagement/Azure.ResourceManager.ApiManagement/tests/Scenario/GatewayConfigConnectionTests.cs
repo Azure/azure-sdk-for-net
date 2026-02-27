@@ -7,15 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.ResourceManager.ApiManagement.Models;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.EventHubs;
 using Azure.ResourceManager.EventHubs.Models;
-using NUnit.Framework;
-using Azure.Core.TestFramework;
 using Azure.ResourceManager.Models;
-using Azure.Core.TestFramework.Models;
+using Azure.ResourceManager.Resources;
 using Microsoft.Extensions.DependencyInjection;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ApiManagement.Tests
 {

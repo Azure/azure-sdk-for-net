@@ -36,7 +36,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 valueCountryRegion: default,
                 text: "25.00%",
                 boundingBox: default,
-                confidence:  default,
+                confidence: default,
                 elements: default,
                 page: default);
 

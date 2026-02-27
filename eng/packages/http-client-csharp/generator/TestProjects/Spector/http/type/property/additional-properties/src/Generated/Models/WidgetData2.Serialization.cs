@@ -17,6 +17,14 @@ namespace _Type.Property.AdditionalProperties
 
         protected virtual WidgetData2 PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        BinaryData IPersistableModel<WidgetData2>.Write(ModelReaderWriterOptions options) => throw null;
+
+        WidgetData2 IPersistableModel<WidgetData2>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        string IPersistableModel<WidgetData2>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
         void IJsonModel<WidgetData2>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -24,13 +32,5 @@ namespace _Type.Property.AdditionalProperties
         WidgetData2 IJsonModel<WidgetData2>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual WidgetData2 JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<WidgetData2>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
-        WidgetData2 IPersistableModel<WidgetData2>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        string IPersistableModel<WidgetData2>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
     }
 }

@@ -1269,7 +1269,7 @@ namespace Azure.Data.AppConfiguration
             Argument.AssertNotNull(selector, nameof(selector));
             var name = selector.NameFilter;
             IList<SnapshotFields> fields = selector.Fields?.Count > 0
-                ? [ .. selector.Fields]
+                ? [.. selector.Fields]
                 : null;
             var status = selector.Status;
 

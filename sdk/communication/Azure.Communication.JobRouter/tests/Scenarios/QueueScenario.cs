@@ -27,7 +27,8 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             var channelResponse = GenerateUniqueId($"Channel-SQ-{IdPrefix}-{ScenarioPrefix}");
             var distributionPolicyResponse = await administrationClient.CreateDistributionPolicyAsync(
                 new CreateDistributionPolicyOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"), TimeSpan.FromMinutes(10),
-                    new LongestIdleMode()) { Name = "Simple-Queue-Distribution" });
+                    new LongestIdleMode())
+                { Name = "Simple-Queue-Distribution" });
             var queueResponse = await administrationClient.CreateQueueAsync(
                 new CreateQueueOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"),
                     distributionPolicyResponse.Value.Id)
@@ -56,7 +57,8 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             var channelResponse = GenerateUniqueId($"Channel-StaticLabel-{IdPrefix}-{ScenarioPrefix}");
             var distributionPolicyResponse = await administrationClient.CreateDistributionPolicyAsync(
                 new CreateDistributionPolicyOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"), TimeSpan.FromMinutes(10),
-                    new LongestIdleMode()) { Name = "Simple-Queue-Distribution" });
+                    new LongestIdleMode())
+                { Name = "Simple-Queue-Distribution" });
             var queueResponse = await administrationClient.CreateQueueAsync(
                 new CreateQueueOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"),
                     distributionPolicyResponse.Value.Id)
@@ -92,7 +94,8 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             var channelResponse = GenerateUniqueId($"Channel-FQ-{IdPrefix}-{ScenarioPrefix}");
             var distributionPolicyResponse = await administrationClient.CreateDistributionPolicyAsync(
                 new CreateDistributionPolicyOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"), TimeSpan.FromMinutes(10),
-                    new LongestIdleMode()) { Name = "Simple-Queue-Distribution", });
+                    new LongestIdleMode())
+                { Name = "Simple-Queue-Distribution", });
             var fallbackQueueResponse = await administrationClient.CreateQueueAsync(
                 new CreateQueueOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}-default_Q"),
                     distributionPolicyResponse.Value.Id)
@@ -128,7 +131,8 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             var channelResponse = GenerateUniqueId($"Channel-CPWithConditionalLabels-{IdPrefix}-{ScenarioPrefix}");
             var distributionPolicyResponse = await administrationClient.CreateDistributionPolicyAsync(
                 new CreateDistributionPolicyOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"), TimeSpan.FromMinutes(10),
-                    new LongestIdleMode()) { Name = "Simple-Queue-Distribution" });
+                    new LongestIdleMode())
+                { Name = "Simple-Queue-Distribution" });
             var queueResponse = await administrationClient.CreateQueueAsync(
                 new CreateQueueOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"),
                     distributionPolicyResponse.Value.Id)
@@ -180,7 +184,8 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             var distributionPolicyResponse = await administrationClient.CreateDistributionPolicyAsync(
                 new CreateDistributionPolicyOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"),
                     TimeSpan.FromMinutes(10),
-                    new LongestIdleMode()) { Name = "Simple-Queue-Distribution", });
+                    new LongestIdleMode())
+                { Name = "Simple-Queue-Distribution", });
 
             var uniquePrefix = GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}-3");
 
@@ -243,7 +248,8 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             var distributionPolicyResponse = await administrationClient.CreateDistributionPolicyAsync(
                 new CreateDistributionPolicyOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"),
                     TimeSpan.FromMinutes(10),
-                    new LongestIdleMode()) { Name = "Simple-Queue-Distribution" });
+                    new LongestIdleMode())
+                { Name = "Simple-Queue-Distribution" });
 
             var uniquePrefix = GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}");
 

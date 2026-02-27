@@ -17,6 +17,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
             APPLICATIONINSIGHTS_STATSBEAT_DISABLED,
             APPLICATIONINSIGHTS_SDKSTATS_DISABLED,
             APPLICATIONINSIGHTS_SDKSTATS_EXPORT_INTERVAL,
+            APPLICATIONINSIGHTS_CLOUD_ROLE_NAME,
+            APPLICATIONINSIGHTS_CLOUD_ROLE_INSTANCE,
             FUNCTIONS_WORKER_RUNTIME,
             LOCALAPPDATA,
             TEMP,
@@ -140,5 +142,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
         /// For microsoft.fixed_percentage sampler: sampling ratio (double from 0 to 1).
         /// </summary>
         public const string OTEL_TRACES_SAMPLER_ARG = "OTEL_TRACES_SAMPLER_ARG";
+
+        /// <summary>
+        /// Set by the Application Insights shim (TelemetryClient.Context.Cloud.RoleName) to override
+        /// the cloud role name after the OTel Resource has been built and is immutable.
+        /// </summary>
+        public const string APPLICATIONINSIGHTS_CLOUD_ROLE_NAME = "APPLICATIONINSIGHTS_CLOUD_ROLE_NAME";
+
+        /// <summary>
+        /// Set by the Application Insights shim (TelemetryClient.Context.Cloud.RoleInstance) to override
+        /// the cloud role instance after the OTel Resource has been built and is immutable.
+        /// </summary>
+        public const string APPLICATIONINSIGHTS_CLOUD_ROLE_INSTANCE = "APPLICATIONINSIGHTS_CLOUD_ROLE_INSTANCE";
     }
 }

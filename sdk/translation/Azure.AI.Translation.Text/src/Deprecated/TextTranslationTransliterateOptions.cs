@@ -53,7 +53,7 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="content"> Array of the text to be transliterated. </param>
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
-        public TextTranslationTransliterateOptions(string language, string fromScript, string toScript, IEnumerable<string> content, Guid clientTraceId = default): base()
+        public TextTranslationTransliterateOptions(string language, string fromScript, string toScript, IEnumerable<string> content, Guid clientTraceId = default) : base()
         {
             throw new NotSupportedException("This class is deprecated and will be removed in a future release.");
         }

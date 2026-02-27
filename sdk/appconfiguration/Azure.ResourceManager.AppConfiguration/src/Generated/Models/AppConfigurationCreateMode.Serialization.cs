@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 {
     internal static partial class AppConfigurationCreateModeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this AppConfigurationCreateMode value) => value switch
         {
             AppConfigurationCreateMode.Recover => "Recover",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AppConfigurationCreateMode value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static AppConfigurationCreateMode ToAppConfigurationCreateMode(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Recover")) return AppConfigurationCreateMode.Recover;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Default")) return AppConfigurationCreateMode.Default;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Recover"))
+            {
+                return AppConfigurationCreateMode.Recover;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Default"))
+            {
+                return AppConfigurationCreateMode.Default;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AppConfigurationCreateMode value.");
         }
     }

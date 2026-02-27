@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0-beta.6 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.5 (2026-02-01)
+
+### Breaking Changes
+
+- Removed `DataDisk.StorageAccountType`.  Use `DataDisk.ManagedDisk.StorageAccountType` instead
 
 ## 1.0.0-beta.4 (2025-09-01)
 

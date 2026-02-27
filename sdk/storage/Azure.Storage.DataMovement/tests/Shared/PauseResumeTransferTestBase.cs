@@ -3,19 +3,19 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Azure.Core.TestFramework;
-using Azure.Core;
-using Azure.Storage.Test.Shared;
-using System.Threading.Tasks;
 using System.IO;
-using NUnit.Framework;
+using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.Storage.Common;
 using Azure.Storage.DataMovement.JobPlan;
 using Azure.Storage.Test;
+using Azure.Storage.Test.Shared;
 using Moq;
+using NUnit.Framework;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
-using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement.Tests
 {

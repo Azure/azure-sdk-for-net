@@ -10,7 +10,7 @@ namespace Azure.Core.TestFramework
     /// Attribute on test assemblies, classes, or methods that defines parallelization behavior when tests are run in <see cref="RecordedTestMode.Live"/> mode.
     /// In other modes it will enforce no parallelization.
     /// </summary>
-    [AttributeUsage( AttributeTargets.Assembly | AttributeTargets.Class | AttributeTargets.Method, AllowMultiple=false, Inherited=true )]
+    [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public class LiveParallelizableAttribute : ParallelizableAttribute
     {
         public LiveParallelizableAttribute(ParallelScope scope) : base(ApplyModeToParallelScope(scope))

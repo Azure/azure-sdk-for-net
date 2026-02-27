@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                     yield break;
                 }
                 ReservationListResult result = ReservationListResult.FromResponse(response);
-                yield return Page<PureStorageReservationData>.FromValues((IReadOnlyList<PureStorageReservationData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<PureStorageReservationData>.FromValues((IReadOnlyList<PureStorageReservationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

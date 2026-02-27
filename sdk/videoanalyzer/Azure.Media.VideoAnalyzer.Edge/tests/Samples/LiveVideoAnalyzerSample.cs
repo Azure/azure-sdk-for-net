@@ -3,18 +3,18 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Media.VideoAnalyzer.Edge.Models;
 using Microsoft.Azure.Devices;
-using NUnit.Framework;
-using System.Text.Json;
 using Newtonsoft.Json.Linq;
-using System.Threading.Tasks;
-using System.IO;
-using System.Text;
-using Azure.Core;
-using System.Linq;
+using NUnit.Framework;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Samples
 {
