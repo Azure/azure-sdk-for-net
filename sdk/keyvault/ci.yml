@@ -34,3 +34,5 @@ extends:
       safeName: AzureSecurityKeyVaultSecrets
       triggeringPaths:
       - Azure.Security.Keyvault.Shared
+    - name: Microsoft.Extensions.Configuration.KeyVault
+      safeName: MicrosoftExtensionsConfigurationKeyVault
