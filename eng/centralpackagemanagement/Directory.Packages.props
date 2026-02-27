@@ -119,7 +119,7 @@
     <PackageVersion Include="Azure.Messaging.WebPubSub" Version="1.6.0" />
     <PackageVersion Include="Azure.Monitor.OpenTelemetry.Exporter" Version="1.5.0" />
     <PackageVersion Include="Azure.Monitor.Query.Logs" Version="1.0.0" />
-    <PackageVersion Include="Azure.ResourceManager" Version="1.13.2" />
+    <PackageVersion Include="Azure.ResourceManager" Version="1.14.0" />
     <PackageVersion Include="Azure.ResourceManager.AppConfiguration" Version="1.4.0" />
     <PackageVersion Include="Azure.ResourceManager.AppContainers" Version="1.5.0" />
     <PackageVersion Include="Azure.ResourceManager.ApplicationInsights" Version="1.0.1" />

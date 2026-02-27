@@ -1300,6 +1300,7 @@ namespace Azure.Provisioning.Resources
             public static readonly string V2021_04_01;
             public static readonly string V2022_09_01;
             public static readonly string V2023_07_01;
+            public static readonly string V2025_04_01;
         }
     }
     public partial class ArmDeploymentContent : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -2572,6 +2573,7 @@ namespace Azure.Provisioning.Resources
             public static readonly string V2019_05_01;
             public static readonly string V2019_09_01;
             public static readonly string V2019_10_01;
+            public static readonly string V2022_12_01;
         }
     }
     public partial class SubscriptionPolicies : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -2598,6 +2600,10 @@ namespace Azure.Provisioning.Resources
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Resources.SubscriptionPolicyDefinition FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2021_06_01;
+        }
     }
     public partial class SubscriptionPolicySetDefinition : Azure.Provisioning.Primitives.ProvisionableResource
     {
@@ -2615,6 +2621,10 @@ namespace Azure.Provisioning.Resources
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Resources.SubscriptionPolicySetDefinition FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2021_06_01;
+        }
     }
     public enum SubscriptionState
     {
@@ -2835,11 +2845,17 @@ namespace Azure.Provisioning.Roles
             public static readonly string V2025_01_31_PREVIEW;
         }
     }
+    public enum IsolationScope
+    {
+        None = 0,
+        Regional = 1,
+    }
     public partial class UserAssignedIdentity : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public UserAssignedIdentity(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.Guid> ClientId { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Roles.IsolationScope> IsolationScope { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Guid> PrincipalId { get { throw null; } }
