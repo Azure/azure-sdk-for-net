@@ -6,7 +6,7 @@
     <PackageId>Azure.ResourceManager.Hci</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.AzureStackHCI.</Description>
     <PackageTags>azure;management;arm;resource manager;azurestackhci</PackageTags>
-    <NoWarn>$(NoWarn);AZC0032;AZC0030;CS0108;CS1503</NoWarn>
+    <NoWarn>$(NoWarn);AZC0032;AZC0030;CS0108;CS1503;CS0612;CS0618</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <!-- Exclude generated internal ExtensionProfile; replaced by public version in Custom/ folder.

@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary>
     /// Backward-compat type alias. Old name was UpdateSummariesPropertiesState, renamed to HciClusterUpdateState.
     /// </summary>
+    [Obsolete("This class is now deprecated. Please use the new class `HciClusterUpdateState` moving forward.")]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public readonly struct UpdateSummariesPropertiesState : IEquatable<UpdateSummariesPropertiesState>
     {
