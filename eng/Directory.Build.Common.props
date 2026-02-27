@@ -15,6 +15,7 @@
     <IsGeneratorLibrary Condition="'$(IsToolProject)' == 'true'">false</IsGeneratorLibrary>
     <IsGeneratorLibraryGenerationTest Condition="'$(IsToolProject)' == 'true'">false</IsGeneratorLibraryGenerationTest>
     <IsClientLibrary Condition="'$(IsToolProject)' == 'true'">false</IsClientLibrary>
+    <IsShippingLibrary Condition="'$(IsToolProject)' == 'true'">false</IsShippingLibrary>
 
     <!-- Client in this context is any library that is following the new Azure SDK guidelines -->
     <IsGeneratorLibrary Condition="'$(IsGeneratorLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.Generator'))">true</IsGeneratorLibrary>
