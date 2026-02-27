@@ -831,10 +831,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public virtual System.Threading.Tasks.Task<Azure.Response> DisconnectAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.UserSessionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.UserSessionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response SendMessage(Azure.ResourceManager.DesktopVirtualization.Models.SendMessageParameterBody body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response SendMessage(Azure.ResourceManager.DesktopVirtualization.Models.UserSessionMessage sendMessage, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> SendMessageAsync(Azure.ResourceManager.DesktopVirtualization.Models.SendMessageParameterBody body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> SendMessageAsync(Azure.ResourceManager.DesktopVirtualization.Models.UserSessionMessage sendMessage, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response SendMessage(Azure.ResourceManager.DesktopVirtualization.Models.UserSessionMessage body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SendMessageAsync(Azure.ResourceManager.DesktopVirtualization.Models.UserSessionMessage body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.DesktopVirtualization.UserSessionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.UserSessionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.UserSessionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DesktopVirtualization.UserSessionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.UserSessionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2990,20 +2988,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.SecurityInfoProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.SecurityInfoProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SendMessageParameterBody : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.SendMessageParameterBody>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.SendMessageParameterBody>
-    {
-        public SendMessageParameterBody() { }
-        public Azure.ResourceManager.DesktopVirtualization.Models.UserSessionMessage SendMessage { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.DesktopVirtualization.Models.SendMessageParameterBody JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.DesktopVirtualization.Models.SendMessageParameterBody PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.DesktopVirtualization.Models.SendMessageParameterBody System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.SendMessageParameterBody>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.SendMessageParameterBody>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DesktopVirtualization.Models.SendMessageParameterBody System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.SendMessageParameterBody>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.SendMessageParameterBody>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.SendMessageParameterBody>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SessionHandlingOperation : System.IEquatable<Azure.ResourceManager.DesktopVirtualization.Models.SessionHandlingOperation>
     {
@@ -3726,6 +3710,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public string MsixPackageApplicationId { get { throw null; } set { } }
         public string MsixPackageFamilyName { get { throw null; } set { } }
         public bool? ShowInPortal { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is no longer supported by the service and will be removed in a future version.")]
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.DesktopVirtualization.Models.VirtualApplicationPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3759,6 +3744,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public VirtualDesktopPatch() { }
         public string Description { get { throw null; } set { } }
         public string FriendlyName { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is no longer supported by the service and will be removed in a future version.")]
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.DesktopVirtualization.Models.VirtualDesktopPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
