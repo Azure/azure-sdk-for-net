@@ -50,7 +50,7 @@ namespace Azure.Data.SchemaRegistry
                     yield break;
                 }
                 SchemaVersions result = (SchemaVersions)response;
-                yield return Page<int>.FromValues((IReadOnlyList<int>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<int>.FromValues((IReadOnlyList<int>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

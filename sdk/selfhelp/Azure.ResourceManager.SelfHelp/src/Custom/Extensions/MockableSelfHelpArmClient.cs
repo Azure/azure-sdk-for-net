@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
-using Azure.ResourceManager.SelfHelp.Models;
+using System;
 using System.ComponentModel;
 using System.Threading;
-using System;
 using Autorest.CSharp.Core;
+using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.SelfHelp.Models;
 
 namespace Azure.ResourceManager.SelfHelp.Mocking
 {

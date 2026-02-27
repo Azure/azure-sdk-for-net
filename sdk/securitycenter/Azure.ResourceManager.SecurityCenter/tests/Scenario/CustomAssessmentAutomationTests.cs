@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
                 CompressedQuery = _compressedQuery,
                 SupportedCloud = CustomAssessmentAutomationSupportedCloud.Aws,
                 Severity = CustomAssessmentSeverity.Medium,
-                DisplayName  = "Password Policy",
+                DisplayName = "Password Policy",
                 Description = "Data should be encrypted",
                 RemediationDescription = "Encrypt store by...",
             };
-            var customAssessmentAutomation = await _customAssessmentAutomationCollection.CreateOrUpdateAsync(WaitUntil.Completed, customAssessmentAutomationName,data);
+            var customAssessmentAutomation = await _customAssessmentAutomationCollection.CreateOrUpdateAsync(WaitUntil.Completed, customAssessmentAutomationName, data);
             Assert.IsNotNull(customAssessmentAutomation);
         }
 

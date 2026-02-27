@@ -4,8 +4,8 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using NUnit.Framework;
 using Azure.Communication.CallAutomation.Tests.Infrastructure;
+using NUnit.Framework;
 
 namespace Azure.Communication.CallAutomation.Tests.CallRecordings
 {

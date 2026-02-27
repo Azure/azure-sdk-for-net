@@ -76,9 +76,11 @@ internal class NameVisitor : ScmLibraryVisitor
             type.Update(name: newName);
         }
 
-        if (inputLibrary.TryFindEnclosingResourceNameForResourceUpdateModel(model, out var enclosingResourceName))
+        if (inputLibrary.TryFindEnclosingResourceNameForResourceUpdateModel(model, out var enclosingResourceName, out var isAlsoUsedInCreate))
         {
-            newName = $"{enclosingResourceName}Patch";
+            newName = isAlsoUsedInCreate
+                ? $"{enclosingResourceName}CreateOrUpdateContent"
+                : $"{enclosingResourceName}Patch";
             type.Update(name: newName);
         }
         return base.PreVisitModel(model, type);

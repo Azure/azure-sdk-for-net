@@ -6,7 +6,7 @@
 namespace Azure.Provisioning.PostgreSql;
 
 /// <summary>
-/// Name of storage tier for IOPS.
+/// Storage tier of a server.
 /// </summary>
 public enum PostgreSqlManagedDiskPerformanceTier
 {

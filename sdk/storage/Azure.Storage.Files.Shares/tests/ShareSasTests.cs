@@ -140,8 +140,8 @@ namespace Azure.Storage.Files.Shares.Tests
             await file.CreateAsync(Constants.MB).ConfigureAwait(false);
 
             string sasQueryParams = GetCustomAccountSas(
-                permissions:permissions,
-                services:services,
+                permissions: permissions,
+                services: services,
                 resourceType: resourceType);
             UriBuilder uriBuilder = new UriBuilder(file.Uri)
             {

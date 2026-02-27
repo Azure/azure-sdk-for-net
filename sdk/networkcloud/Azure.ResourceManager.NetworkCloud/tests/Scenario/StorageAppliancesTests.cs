@@ -13,8 +13,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 {
     public class StorageAppliancesTests : NetworkCloudManagementTestBase
     {
-        public StorageAppliancesTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) {}
-        public StorageAppliancesTests(bool isAsync) : base(isAsync) {}
+        public StorageAppliancesTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) { }
+        public StorageAppliancesTests(bool isAsync) : base(isAsync) { }
 
         [Test]
         [RecordedTest]
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             NetworkCloudStorageApplianceResource storageAppliance = Client.GetNetworkCloudStorageApplianceResource(new ResourceIdentifier(firstStorageAppliance.Id));
             getResult = await storageAppliance.GetAsync();
             var originalTags = getResult.Value.Data.Tags;
-            NetworkCloudStorageAppliancePatch patch = new NetworkCloudStorageAppliancePatch(){};
+            NetworkCloudStorageAppliancePatch patch = new NetworkCloudStorageAppliancePatch() { };
             var testKey = "test-key";
             var testValue = "test-value";
             patch.Tags.Add(testKey, testValue);

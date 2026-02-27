@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs
                     yield break;
                 }
                 PureStoragePolicyListResult result = PureStoragePolicyListResult.FromResponse(response);
-                yield return Page<AvsPureStoragePolicyData>.FromValues((IReadOnlyList<AvsPureStoragePolicyData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<AvsPureStoragePolicyData>.FromValues((IReadOnlyList<AvsPureStoragePolicyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

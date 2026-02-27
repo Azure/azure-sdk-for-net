@@ -46,16 +46,16 @@ namespace Azure.Storage.Files.Shares
 
                 HttpRange httpRange = new HttpRange(_writeIndex, _buffer.Length);
 
-               await _fileClient.UploadRangeInternal(
-                    range: httpRange,
-                    content: _buffer,
-                    validationOptions,
-                    _progressHandler,
-                    _conditions,
-                    fileLastWrittenMode: null,
-                    async: async,
-                    cancellationToken: cancellationToken)
-                    .ConfigureAwait(false);
+                await _fileClient.UploadRangeInternal(
+                     range: httpRange,
+                     content: _buffer,
+                     validationOptions,
+                     _progressHandler,
+                     _conditions,
+                     fileLastWrittenMode: null,
+                     async: async,
+                     cancellationToken: cancellationToken)
+                     .ConfigureAwait(false);
 
                 _writeIndex += _buffer.Length;
             }

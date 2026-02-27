@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             data.ScaleUpProperties = new Models.ElasticSanScaleUpProperties
             {
                 AutoScalePolicyEnforcement = Models.AutoScalePolicyEnforcement.Disabled,
-                CapacityUnitScaleUpLimitTiB  = 24,
+                CapacityUnitScaleUpLimitTiB = 24,
                 IncreaseCapacityUnitByTiB = 1,
                 UnusedSizeTiB = 5
             };

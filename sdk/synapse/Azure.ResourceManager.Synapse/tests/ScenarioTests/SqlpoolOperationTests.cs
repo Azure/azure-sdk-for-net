@@ -1,17 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.ResourceManager.Synapse.Models;
 using Azure.ResourceManager.Synapse.Tests;
-using System.Collections.Generic;
-using NUnit;
-using System.Threading;
-using Azure.Core.TestFramework;
-using NUnit.Framework;
-using System.Threading.Tasks;
 using Azure.ResourceManager.Synapse.Tests.Helpers;
-using System;
-using System.Linq;
+using NUnit;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Synapse.Tests
 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Synapse.Tests
             string sqlpoolName = Recording.GenerateAssetName("sqlpool");
             var createSqlpoolParams = CommonData.PrepareSqlpoolCreateParams();
             SynapseSqlPoolCollection sqlPoolCollection = WorkspaceResource.GetSynapseSqlPools();
-            var sqlpoolCreate =(await sqlPoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, sqlpoolName, createSqlpoolParams)).Value;
+            var sqlpoolCreate = (await sqlPoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, sqlpoolName, createSqlpoolParams)).Value;
             Assert.AreEqual(CommonTestFixture.SqlpoolType, sqlpoolCreate.Data.ResourceType);
             Assert.AreEqual(sqlpoolName, sqlpoolCreate.Data.Name);
             Assert.AreEqual(CommonData.Location, sqlpoolCreate.Data.Location);

@@ -78,9 +78,9 @@ public partial class ProjectInfrastructure
 
     public ProjectInfrastructure(string? projectId = default)
         : this(new AppConfigConnectionStore(), projectId)
-    {}
+    { }
 
-    public T AddFeature<T>(T feature) where T: AzureProjectFeature
+    public T AddFeature<T>(T feature) where T : AzureProjectFeature
     {
         feature.EmitFeatures(this);
         return feature;

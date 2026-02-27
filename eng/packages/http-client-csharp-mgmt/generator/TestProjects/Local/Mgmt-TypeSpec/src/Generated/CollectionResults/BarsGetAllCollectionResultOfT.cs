@@ -52,7 +52,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     yield break;
                 }
                 BarListResult result = BarListResult.FromResponse(response);
-                yield return Page<BarData>.FromValues((IReadOnlyList<BarData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<BarData>.FromValues((IReadOnlyList<BarData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

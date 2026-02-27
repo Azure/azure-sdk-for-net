@@ -14,7 +14,7 @@ using NUnit.Framework.Internal;
 
 namespace Azure.Developer.LoadTesting.Tests
 {
-    public class LoadTestAdministrationClientTest: LoadTestTestsBase
+    public class LoadTestAdministrationClientTest : LoadTestTestsBase
     {
         public LoadTestAdministrationClientTest(bool isAsync) : base(isAsync) { }
 
@@ -110,12 +110,12 @@ namespace Azure.Developer.LoadTesting.Tests
             {
                 count++;
 
-               foreach (var value in page.Values)
-               {
+                foreach (var value in page.Values)
+                {
                     Assert.NotNull(value.TestId);
 
                     Console.WriteLine(value.ToString());
-               }
+                }
             }
 
             int i = 0;
@@ -123,7 +123,7 @@ namespace Azure.Developer.LoadTesting.Tests
             {
                 i++;
 
-                if (i<count)
+                if (i < count)
                 {
                     Assert.AreEqual(pageSizeHint, page.Values.Count);
                 }

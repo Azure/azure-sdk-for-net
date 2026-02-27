@@ -16,7 +16,7 @@ namespace Azure.Provisioning.PostgreSql;
 public partial class PostgreSqlFlexibleServerStorage : ProvisionableConstruct
 {
     /// <summary>
-    /// Max storage allowed for a server.
+    /// Size of storage assigned to a server.
     /// </summary>
     public BicepValue<int> StorageSizeInGB 
     {
@@ -26,7 +26,9 @@ public partial class PostgreSqlFlexibleServerStorage : ProvisionableConstruct
     private BicepValue<int>? _storageSizeInGB;
 
     /// <summary>
-    /// Flag to enable / disable Storage Auto grow for flexible server.
+    /// Flag to enable or disable the automatic growth of storage size of a
+    /// server when available space is nearing zero and conditions allow for
+    /// automatically growing storage size.
     /// </summary>
     public BicepValue<StorageAutoGrow> AutoGrow 
     {
@@ -36,7 +38,7 @@ public partial class PostgreSqlFlexibleServerStorage : ProvisionableConstruct
     private BicepValue<StorageAutoGrow>? _autoGrow;
 
     /// <summary>
-    /// Name of storage tier for IOPS.
+    /// Storage tier of a server.
     /// </summary>
     public BicepValue<PostgreSqlManagedDiskPerformanceTier> Tier 
     {
@@ -46,8 +48,8 @@ public partial class PostgreSqlFlexibleServerStorage : ProvisionableConstruct
     private BicepValue<PostgreSqlManagedDiskPerformanceTier>? _tier;
 
     /// <summary>
-    /// Storage tier IOPS quantity. This property is required to be set for
-    /// storage Type PremiumV2_LRS.
+    /// Maximum IOPS supported for storage. Required when type of storage is
+    /// PremiumV2_LRS or UltraSSD_LRS.
     /// </summary>
     public BicepValue<int> Iops 
     {
@@ -57,8 +59,8 @@ public partial class PostgreSqlFlexibleServerStorage : ProvisionableConstruct
     private BicepValue<int>? _iops;
 
     /// <summary>
-    /// Storage throughput for the server. This is required to be set for
-    /// storage Type PremiumV2_LRS.
+    /// Maximum throughput supported for storage. Required when type of storage
+    /// is PremiumV2_LRS or UltraSSD_LRS.
     /// </summary>
     public BicepValue<int> Throughput 
     {
@@ -68,8 +70,9 @@ public partial class PostgreSqlFlexibleServerStorage : ProvisionableConstruct
     private BicepValue<int>? _throughput;
 
     /// <summary>
-    /// Storage type for the server. Allowed values are Premium_LRS and
-    /// PremiumV2_LRS, and default is Premium_LRS if not specified.
+    /// Type of storage assigned to a server. Allowed values are Premium_LRS,
+    /// PremiumV2_LRS, or UltraSSD_LRS. If not specified, it defaults to
+    /// Premium_LRS.
     /// </summary>
     public BicepValue<PostgreSqlFlexibleServersStorageType> StorageType 
     {

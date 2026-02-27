@@ -1,0 +1,5 @@
+<Project>
+  <ItemGroup>
+    <PackageVersion Include="Microsoft.Agents.AI" Version="1.0.0-rc1" />
+  </ItemGroup>
+</Project>

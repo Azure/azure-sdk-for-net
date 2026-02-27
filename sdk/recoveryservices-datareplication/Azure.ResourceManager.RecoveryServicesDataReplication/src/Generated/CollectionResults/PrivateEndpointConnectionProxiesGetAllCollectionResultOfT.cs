@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                     yield break;
                 }
                 PrivateEndpointConnectionProxyListResult result = PrivateEndpointConnectionProxyListResult.FromResponse(response);
-                yield return Page<DataReplicationPrivateEndpointConnectionProxyData>.FromValues((IReadOnlyList<DataReplicationPrivateEndpointConnectionProxyData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DataReplicationPrivateEndpointConnectionProxyData>.FromValues((IReadOnlyList<DataReplicationPrivateEndpointConnectionProxyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

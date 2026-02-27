@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Avs
                     yield break;
                 }
                 VirtualMachinesList result = VirtualMachinesList.FromResponse(response);
-                yield return Page<AvsPrivateCloudClusterVirtualMachineData>.FromValues((IReadOnlyList<AvsPrivateCloudClusterVirtualMachineData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<AvsPrivateCloudClusterVirtualMachineData>.FromValues((IReadOnlyList<AvsPrivateCloudClusterVirtualMachineData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

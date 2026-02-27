@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                     yield break;
                 }
                 NamespaceAssetListResult result = NamespaceAssetListResult.FromResponse(response);
-                yield return Page<DeviceRegistryNamespaceAssetData>.FromValues((IReadOnlyList<DeviceRegistryNamespaceAssetData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DeviceRegistryNamespaceAssetData>.FromValues((IReadOnlyList<DeviceRegistryNamespaceAssetData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

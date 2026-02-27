@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.TrustedSigning
                     yield break;
                 }
                 CertificateProfileListResult result = CertificateProfileListResult.FromResponse(response);
-                yield return Page<TrustedSigningCertificateProfileData>.FromValues((IReadOnlyList<TrustedSigningCertificateProfileData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<TrustedSigningCertificateProfileData>.FromValues((IReadOnlyList<TrustedSigningCertificateProfileData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

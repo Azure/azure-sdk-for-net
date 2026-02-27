@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs
                     yield break;
                 }
                 ScriptPackagesList result = ScriptPackagesList.FromResponse(response);
-                yield return Page<ScriptPackageData>.FromValues((IReadOnlyList<ScriptPackageData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ScriptPackageData>.FromValues((IReadOnlyList<ScriptPackageData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

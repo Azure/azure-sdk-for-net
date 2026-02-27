@@ -16,6 +16,58 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> A request body used to update an asset. </summary>
     public partial class AssetUpdatePayload : IJsonModel<AssetUpdatePayload>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AssetUpdatePayload PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AssetUpdatePayload>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAssetUpdatePayload(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AssetUpdatePayload)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AssetUpdatePayload>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAnalyticsDefenderEasmContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AssetUpdatePayload)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AssetUpdatePayload>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AssetUpdatePayload IPersistableModel<AssetUpdatePayload>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AssetUpdatePayload>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="assetUpdatePayload"> The <see cref="AssetUpdatePayload"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(AssetUpdatePayload assetUpdatePayload)
+        {
+            if (assetUpdatePayload == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(assetUpdatePayload, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AssetUpdatePayload>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -183,58 +235,6 @@ namespace Azure.Analytics.Defender.Easm
                 transfers,
                 remediations ?? new ChangeTrackingList<ObservationRemediationItem>(),
                 additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AssetUpdatePayload>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AssetUpdatePayload>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsDefenderEasmContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AssetUpdatePayload)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AssetUpdatePayload IPersistableModel<AssetUpdatePayload>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AssetUpdatePayload PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AssetUpdatePayload>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAssetUpdatePayload(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AssetUpdatePayload)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AssetUpdatePayload>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="assetUpdatePayload"> The <see cref="AssetUpdatePayload"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(AssetUpdatePayload assetUpdatePayload)
-        {
-            if (assetUpdatePayload == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(assetUpdatePayload, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

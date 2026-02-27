@@ -1823,7 +1823,7 @@ namespace Azure.Storage.Blobs.Specialized
             Response<BlobDownloadStreamingResult> result = Response.FromValue(
                 response.ToBlobDownloadStreamingResult(),
                 response.GetRawResponse());
-                result.Value.ExpectTrailingDetails = structuredBodyType != null;
+            result.Value.ExpectTrailingDetails = structuredBodyType != null;
             return result;
         }
         #endregion

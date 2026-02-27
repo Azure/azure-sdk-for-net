@@ -104,6 +104,7 @@ public partial class AppConfigurationReplica : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
         _endpoint = DefineProperty<string>("Endpoint", ["properties", "endpoint"], isOutput: true);

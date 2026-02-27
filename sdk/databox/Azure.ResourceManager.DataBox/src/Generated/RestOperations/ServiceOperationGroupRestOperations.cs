@@ -50,7 +50,10 @@ namespace Azure.ResourceManager.DataBox
             uri.AppendPath("/providers/Microsoft.DataBox/locations/", false);
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/regionConfiguration", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -70,7 +73,10 @@ namespace Azure.ResourceManager.DataBox
             uri.AppendPath("/providers/Microsoft.DataBox/locations/", false);
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/validateAddress", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -90,7 +96,10 @@ namespace Azure.ResourceManager.DataBox
             uri.AppendPath("/providers/Microsoft.DataBox/locations/", false);
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/validateInputs", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -112,7 +121,10 @@ namespace Azure.ResourceManager.DataBox
             uri.AppendPath("/providers/Microsoft.DataBox/locations/", false);
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/availableSkus", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -126,11 +138,23 @@ namespace Azure.ResourceManager.DataBox
         internal HttpMessage CreateNextGetAvailableSkusRequest(Uri nextPage, string subscriptionId, string resourceGroupName, AzureLocation location, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -146,7 +170,10 @@ namespace Azure.ResourceManager.DataBox
             uri.AppendPath("/providers/Microsoft.DataBox/locations/", false);
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/regionConfiguration", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -168,7 +195,10 @@ namespace Azure.ResourceManager.DataBox
             uri.AppendPath("/providers/Microsoft.DataBox/locations/", false);
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/validateInputs", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

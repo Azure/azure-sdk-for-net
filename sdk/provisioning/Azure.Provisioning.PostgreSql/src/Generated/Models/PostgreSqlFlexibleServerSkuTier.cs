@@ -6,7 +6,7 @@
 namespace Azure.Provisioning.PostgreSql;
 
 /// <summary>
-/// The tier of the particular SKU, e.g. Burstable.
+/// Tier of the compute assigned to a server.
 /// </summary>
 public enum PostgreSqlFlexibleServerSkuTier
 {

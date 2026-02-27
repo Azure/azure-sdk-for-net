@@ -100,6 +100,27 @@ public partial class ContainerAppDaprConfiguration : ProvisionableConstruct
     private BicepValue<bool>? _isApiLoggingEnabled;
 
     /// <summary>
+    /// Dapr application health check configuration.
+    /// </summary>
+    public DaprAppHealth AppHealth 
+    {
+        get { Initialize(); return _appHealth!; }
+        set { Initialize(); AssignOrReplace(ref _appHealth, value); }
+    }
+    private DaprAppHealth? _appHealth;
+
+    /// <summary>
+    /// Maximum number of concurrent requests, events handled by the Dapr
+    /// sidecar.
+    /// </summary>
+    public BicepValue<int> MaxConcurrency 
+    {
+        get { Initialize(); return _maxConcurrency!; }
+        set { Initialize(); _maxConcurrency!.Assign(value); }
+    }
+    private BicepValue<int>? _maxConcurrency;
+
+    /// <summary>
     /// Creates a new ContainerAppDaprConfiguration.
     /// </summary>
     public ContainerAppDaprConfiguration()
@@ -121,5 +142,7 @@ public partial class ContainerAppDaprConfiguration : ProvisionableConstruct
         _httpMaxRequestSize = DefineProperty<int>("HttpMaxRequestSize", ["httpMaxRequestSize"]);
         _logLevel = DefineProperty<ContainerAppDaprLogLevel>("LogLevel", ["logLevel"]);
         _isApiLoggingEnabled = DefineProperty<bool>("IsApiLoggingEnabled", ["enableApiLogging"]);
+        _appHealth = DefineModelProperty<DaprAppHealth>("AppHealth", ["appHealth"]);
+        _maxConcurrency = DefineProperty<int>("MaxConcurrency", ["maxConcurrency"]);
     }
 }

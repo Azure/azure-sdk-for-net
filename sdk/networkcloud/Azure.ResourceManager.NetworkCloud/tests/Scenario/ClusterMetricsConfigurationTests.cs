@@ -14,8 +14,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 {
     public class ClusterMetricsConfigurationTests : NetworkCloudManagementTestBase
     {
-        public ClusterMetricsConfigurationTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) {}
-        public ClusterMetricsConfigurationTests(bool isAsync) : base(isAsync) {}
+        public ClusterMetricsConfigurationTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) { }
+        public ClusterMetricsConfigurationTests(bool isAsync) : base(isAsync) { }
 
         [Test]
         [RecordedTest]
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 15
             )
             {
-                EnabledMetrics = {},
+                EnabledMetrics = { },
                 Tags =
                 {
                     ["key1"] = "myvalue1",

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                     yield break;
                 }
                 ReplicationExtensionModelListResult result = ReplicationExtensionModelListResult.FromResponse(response);
-                yield return Page<DataReplicationExtensionData>.FromValues((IReadOnlyList<DataReplicationExtensionData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DataReplicationExtensionData>.FromValues((IReadOnlyList<DataReplicationExtensionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Samples
 {
-    public partial class ConfigurationSamples: SamplesBase<AppConfigurationTestEnvironment>
+    public partial class ConfigurationSamples : SamplesBase<AppConfigurationTestEnvironment>
     {
         [Test]
         public async Task CreateSecretReference()

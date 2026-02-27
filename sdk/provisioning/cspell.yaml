@@ -15,8 +15,11 @@ overrides:
       - tsve
   - filename: '**/sdk/provisioning/Azure.Provisioning.PostgreSql/**/*.cs'
     words:
+      - apsara
       - awsec
+      - dbrds
       - postgre
+      - ssdlrs
   - filename: '**/sdk/provisioning/Azure.Provisioning.Sql/**/*.cs'
     words:
       - freemium

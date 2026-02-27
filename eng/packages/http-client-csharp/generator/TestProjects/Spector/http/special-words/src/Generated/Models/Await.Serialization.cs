@@ -16,6 +16,19 @@ namespace SpecialWords._Models
     {
         internal Await() => throw null;
 
+        protected virtual Await PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        BinaryData IPersistableModel<Await>.Write(ModelReaderWriterOptions options) => throw null;
+
+        Await IPersistableModel<Await>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        string IPersistableModel<Await>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
+        /// <param name="await"> The <see cref="Await"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(Await @await) => throw null;
+
         void IJsonModel<Await>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -23,18 +36,5 @@ namespace SpecialWords._Models
         Await IJsonModel<Await>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual Await JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<Await>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
-        Await IPersistableModel<Await>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual Await PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        string IPersistableModel<Await>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        /// <param name="await"> The <see cref="Await"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(Await @await) => throw null;
     }
 }

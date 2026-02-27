@@ -12,7 +12,7 @@ namespace Azure.AI.ContentUnderstanding
 {
     /// <summary>
     /// Field extracted from the content.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StringField"/>, <see cref="DateField"/>, <see cref="TimeField"/>, <see cref="NumberField"/>, <see cref="IntegerField"/>, <see cref="BooleanField"/>, <see cref="ArrayField"/>, <see cref="ObjectField"/>, and <see cref="JsonField"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContentStringField"/>, <see cref="ContentDateTimeOffsetField"/>, <see cref="ContentTimeField"/>, <see cref="ContentNumberField"/>, <see cref="ContentIntegerField"/>, <see cref="ContentBooleanField"/>, <see cref="ContentArrayField"/>, <see cref="ContentObjectField"/>, and <see cref="ContentJsonField"/>.
     /// </summary>
     public abstract partial class ContentField
     {
@@ -31,14 +31,14 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="type"> Semantic data type of the field value. </param>
         /// <param name="spans"> Span(s) associated with the field value in the markdown content. </param>
         /// <param name="confidence"> Confidence of predicting the field value. </param>
-        /// <param name="source"> Encoded source that identifies the position of the field value in the content. </param>
+        /// <param name="sourceValue"> Encoded source that identifies the position of the field value in the content. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContentField(ContentFieldType @type, IList<ContentSpan> spans, float? confidence, string source, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContentField(ContentFieldType @type, IList<ContentSpan> spans, float? confidence, string sourceValue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Spans = spans;
             Confidence = confidence;
-            Source = source;
+            SourceValue = sourceValue;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -50,8 +50,5 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary> Confidence of predicting the field value. </summary>
         public float? Confidence { get; }
-
-        /// <summary> Encoded source that identifies the position of the field value in the content. </summary>
-        public string Source { get; }
     }
 }

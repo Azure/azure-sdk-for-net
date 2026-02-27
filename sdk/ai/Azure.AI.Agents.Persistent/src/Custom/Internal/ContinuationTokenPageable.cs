@@ -5,13 +5,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading;
-using Azure.Core.Pipeline;
-using Azure.Core;
-using System.Threading.Tasks;
-using System.Text.Json;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.AI.Agents.Persistent.Telemetry;
+using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.AI.Agents.Persistent
 {
@@ -23,7 +23,7 @@ namespace Azure.AI.Agents.Persistent
         RunStep
     }
 
-    internal class ContinuationTokenPageable<T>: Pageable<T>
+    internal class ContinuationTokenPageable<T> : Pageable<T>
     {
         private readonly ContinuationTokenPageableImpl<T> _impl;
         private readonly ContinuationItemType _itemType;

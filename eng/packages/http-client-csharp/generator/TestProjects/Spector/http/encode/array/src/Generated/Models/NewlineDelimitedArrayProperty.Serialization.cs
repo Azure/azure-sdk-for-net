@@ -17,21 +17,13 @@ namespace Encode._Array
     {
         internal NewlineDelimitedArrayProperty() => throw null;
 
-        void IJsonModel<NewlineDelimitedArrayProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        NewlineDelimitedArrayProperty IJsonModel<NewlineDelimitedArrayProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual NewlineDelimitedArrayProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<NewlineDelimitedArrayProperty>.Write(ModelReaderWriterOptions options) => throw null;
+        protected virtual NewlineDelimitedArrayProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        NewlineDelimitedArrayProperty IPersistableModel<NewlineDelimitedArrayProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<NewlineDelimitedArrayProperty>.Write(ModelReaderWriterOptions options) => throw null;
 
-        protected virtual NewlineDelimitedArrayProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        NewlineDelimitedArrayProperty IPersistableModel<NewlineDelimitedArrayProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<NewlineDelimitedArrayProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
@@ -39,5 +31,13 @@ namespace Encode._Array
         public static implicit operator RequestContent(NewlineDelimitedArrayProperty newlineDelimitedArrayProperty) => throw null;
 
         public static explicit operator NewlineDelimitedArrayProperty(Response response) => throw null;
+
+        void IJsonModel<NewlineDelimitedArrayProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        NewlineDelimitedArrayProperty IJsonModel<NewlineDelimitedArrayProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual NewlineDelimitedArrayProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }
 }

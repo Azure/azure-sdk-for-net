@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <!--Ignore XML doc comments on test types and members-->
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <!-- OPENAI001 - Ignore experimental warnings-->
+    <NoWarn>$(NoWarn);OPENAI001;SCME0001;</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Assets\favorite_foods.pdf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Azure.AI.Projects\src\Azure.AI.Projects.csproj" />
+    <ProjectReference Include="..\..\Azure.AI.Projects.OpenAI\src\Azure.AI.Projects.OpenAI.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.Identity" />
+    <PackageReference Include="Azure.Monitor.OpenTelemetry.Exporter" />
+    <PackageReference Include="Microsoft.ClientModel.TestFramework" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="OpenTelemetry.Exporter.Console" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+			<_Parameter1>SourcePath</_Parameter1>
+			<_Parameter2>$(MSBuildProjectDirectory)</_Parameter2>
+		</AssemblyAttribute>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="Assets\favorite_foods.pdf">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+</Project>

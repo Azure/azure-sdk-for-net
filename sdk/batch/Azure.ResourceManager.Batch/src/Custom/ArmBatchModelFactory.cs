@@ -3,11 +3,15 @@
 
 #nullable disable
 
+#pragma warning disable CS0618 // Type or member is obsolete
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -57,6 +61,7 @@ namespace Azure.ResourceManager.Batch.Models
         public static BatchAccountPoolData BatchAccountPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string displayName, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, BatchAccountPoolProvisioningState? provisioningState, DateTimeOffset? provisioningStateTransitOn, BatchAccountPoolAllocationState? allocationState, DateTimeOffset? allocationStateTransitionOn, string vmSize, BatchDeploymentConfiguration deploymentConfiguration, int? currentDedicatedNodes, int? currentLowPriorityNodes, BatchAccountPoolScaleSettings scaleSettings, BatchAccountPoolAutoScaleRun autoScaleRun, InterNodeCommunicationState? interNodeCommunication, BatchNetworkConfiguration networkConfiguration, int? taskSlotsPerNode, BatchNodeFillType? taskSchedulingNodeFillType, IEnumerable<BatchUserAccount> userAccounts, IEnumerable<BatchAccountPoolMetadataItem> metadata, BatchAccountPoolStartTask startTask, IEnumerable<BatchCertificateReference> certificates, IEnumerable<BatchApplicationPackageReference> applicationPackages, IEnumerable<string> applicationLicenses, BatchResizeOperationStatus resizeOperationStatus, IEnumerable<BatchMountConfiguration> mountConfiguration, NodeCommunicationMode? targetNodeCommunicationMode, NodeCommunicationMode? currentNodeCommunicationMode, ETag? etag)
         {
             BatchVmConfiguration deploymentVmConfiguration = deploymentConfiguration == null ? null : deploymentConfiguration.VmConfiguration;
+            // Call the new generated overload using taskSchedulingPolicy to disambiguate
             return BatchAccountPoolData(
                 id: id,
                 name: name,
@@ -79,19 +84,137 @@ namespace Azure.ResourceManager.Batch.Models
                 interNodeCommunication: interNodeCommunication,
                 networkConfiguration: networkConfiguration,
                 taskSlotsPerNode: taskSlotsPerNode,
-                taskSchedulingNodeFillType: taskSchedulingNodeFillType,
+                taskSchedulingPolicy: null,
                 userAccounts: userAccounts,
                 metadata: metadata,
                 startTask: startTask,
-                certificates: certificates,
                 applicationPackages: applicationPackages,
-                applicationLicenses: applicationLicenses,
                 resizeOperationStatus: resizeOperationStatus,
                 mountConfiguration: mountConfiguration,
-                targetNodeCommunicationMode: targetNodeCommunicationMode,
-                currentNodeCommunicationMode: currentNodeCommunicationMode,
                 etag: etag
             );
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Batch.BatchAccountPoolData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BatchAccountPoolData BatchAccountPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServiceIdentity identity = null, string displayName = null, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? createdOn = default, BatchAccountPoolProvisioningState? provisioningState = default, DateTimeOffset? provisioningStateTransitOn = default, BatchAccountPoolAllocationState? allocationState = default, DateTimeOffset? allocationStateTransitionOn = default, string vmSize = null, BatchVmConfiguration deploymentVmConfiguration = null, int? currentDedicatedNodes = default, int? currentLowPriorityNodes = default, BatchAccountPoolScaleSettings scaleSettings = null, BatchAccountPoolAutoScaleRun autoScaleRun = null, InterNodeCommunicationState? interNodeCommunication = default, BatchNetworkConfiguration networkConfiguration = null, int? taskSlotsPerNode = default, BatchNodeFillType? taskSchedulingNodeFillType = default, IEnumerable<BatchUserAccount> userAccounts = null, IEnumerable<BatchAccountPoolMetadataItem> metadata = null, BatchAccountPoolStartTask startTask = null, IEnumerable<BatchCertificateReference> certificates = null, IEnumerable<BatchApplicationPackageReference> applicationPackages = null, IEnumerable<string> applicationLicenses = null, BatchResizeOperationStatus resizeOperationStatus = null, IEnumerable<BatchMountConfiguration> mountConfiguration = null, NodeCommunicationMode? targetNodeCommunicationMode = default, NodeCommunicationMode? currentNodeCommunicationMode = default, UpgradePolicy upgradePolicy = null, IDictionary<string, string> resourceTags = null, ETag? etag = default, IDictionary<string, string> tags = null)
+        {
+            // Call the new generated overload using taskSchedulingPolicy to disambiguate
+            return BatchAccountPoolData(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                identity: identity,
+                etag: etag,
+                tags: tags,
+                displayName: displayName,
+                lastModifiedOn: lastModifiedOn,
+                createdOn: createdOn,
+                provisioningState: provisioningState,
+                provisioningStateTransitOn: provisioningStateTransitOn,
+                allocationState: allocationState,
+                allocationStateTransitionOn: allocationStateTransitionOn,
+                vmSize: vmSize,
+                deploymentVmConfiguration: deploymentVmConfiguration,
+                currentDedicatedNodes: currentDedicatedNodes,
+                currentLowPriorityNodes: currentLowPriorityNodes,
+                scaleSettings: scaleSettings,
+                autoScaleRun: autoScaleRun,
+                interNodeCommunication: interNodeCommunication,
+                networkConfiguration: networkConfiguration,
+                taskSlotsPerNode: taskSlotsPerNode,
+                taskSchedulingPolicy: null,
+                userAccounts: userAccounts,
+                metadata: metadata,
+                startTask: startTask,
+                applicationPackages: applicationPackages,
+                resizeOperationStatus: resizeOperationStatus,
+                mountConfiguration: mountConfiguration,
+                upgradePolicy: upgradePolicy
+            );
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Batch.BatchAccountCertificateData"/>. </summary>
+        [Obsolete("This method is obsolete and will be removed in a future release.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BatchAccountCertificateData BatchAccountCertificateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string thumbprintAlgorithm = null, string thumbprintString = null, BatchAccountCertificateFormat? format = default, BatchAccountCertificateProvisioningState? provisioningState = default, DateTimeOffset? provisioningStateTransitOn = default, BatchAccountCertificateProvisioningState? previousProvisioningState = default, DateTimeOffset? previousProvisioningStateTransitOn = default, string publicData = null, ResponseError deleteCertificateError = null, ETag? etag = default, IDictionary<string, string> tags = null)
+        {
+            return new BatchAccountCertificateData();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BatchAccountCertificateCreateOrUpdateContent"/>. </summary>
+        [Obsolete("This method is obsolete and will be removed in a future release.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BatchAccountCertificateCreateOrUpdateContent BatchAccountCertificateCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string thumbprintAlgorithm = null, string thumbprintString = null, BatchAccountCertificateFormat? format = default, BinaryData data = null, string password = null, ETag? etag = default, IDictionary<string, string> tags = null)
+        {
+            return new BatchAccountCertificateCreateOrUpdateContent();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Batch.BatchAccountDetectorData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BatchAccountDetectorData BatchAccountDetectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string value, ETag? etag, IDictionary<string, string> tags)
+        {
+            tags ??= new Dictionary<string, string>();
+            return new BatchAccountDetectorData(id, name, resourceType, systemData, etag, tags, value, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Batch.BatchApplicationData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BatchApplicationData BatchApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, bool? allowUpdates, string defaultVersion, ETag? etag, IDictionary<string, string> tags)
+        {
+            tags ??= new Dictionary<string, string>();
+            return new BatchApplicationData(id, name, resourceType, systemData, etag, tags, displayName, allowUpdates, defaultVersion, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Batch.BatchApplicationPackageData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BatchApplicationPackageData BatchApplicationPackageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BatchApplicationPackageState? state, string format, Uri storageUri, DateTimeOffset? storageUriExpireOn, DateTimeOffset? lastActivatedOn, ETag? etag, IDictionary<string, string> tags)
+        {
+            tags ??= new Dictionary<string, string>();
+            return new BatchApplicationPackageData(id, name, resourceType, systemData, etag, tags, state, format, storageUri, storageUriExpireOn, lastActivatedOn, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Batch.BatchPrivateEndpointConnectionData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BatchPrivateEndpointConnectionData BatchPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BatchPrivateEndpointConnectionProvisioningState? provisioningState, ResourceIdentifier privateEndpointId, IEnumerable<string> groupIds, BatchPrivateLinkServiceConnectionState connectionState, ETag? etag, IDictionary<string, string> tags)
+        {
+            tags ??= new Dictionary<string, string>();
+            groupIds ??= new List<string>();
+            return new BatchPrivateEndpointConnectionData(id, name, resourceType, systemData, etag, tags, provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, groupIds?.ToList(), connectionState, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Batch.BatchPrivateLinkResourceData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BatchPrivateLinkResourceData BatchPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IEnumerable<string> requiredMembers, IEnumerable<string> requiredZoneNames, ETag? etag, IDictionary<string, string> tags)
+        {
+            tags ??= new Dictionary<string, string>();
+            requiredMembers ??= new List<string>();
+            requiredZoneNames ??= new List<string>();
+            return new BatchPrivateLinkResourceData(id, name, resourceType, systemData, etag, tags, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BatchResourceAssociation"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BatchResourceAssociation BatchResourceAssociation(string name, ResourceAssociationAccessMode? accessMode)
+        {
+            return new BatchResourceAssociation
+            {
+                Name = name,
+                AccessMode = accessMode,
+            };
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkSecurityPerimeter"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkSecurityPerimeter NetworkSecurityPerimeter(ResourceIdentifier id, Guid? perimeterGuid, AzureLocation? location)
+        {
+            return new NetworkSecurityPerimeter
+            {
+                Id = id,
+                PerimeterGuid = perimeterGuid,
+                Location = location,
+            };
         }
     }
 }

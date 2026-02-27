@@ -6,7 +6,7 @@
 namespace Azure.Provisioning.PostgreSql;
 
 /// <summary>
-/// To trigger cutover for entire migration we need to send this flag as True.
+/// Indicates if cutover must be triggered for the entire migration.
 /// </summary>
 public enum PostgreSqlMigrationTriggerCutover
 {

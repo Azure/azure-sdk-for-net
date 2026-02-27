@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
                     yield break;
                 }
                 SecretSyncListResult result = SecretSyncListResult.FromResponse(response);
-                yield return Page<SecretSyncData>.FromValues((IReadOnlyList<SecretSyncData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<SecretSyncData>.FromValues((IReadOnlyList<SecretSyncData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
