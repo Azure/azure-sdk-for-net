@@ -152,6 +152,7 @@ public partial class ApplicationInsightsWorkbookTemplate : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
         _author = DefineProperty<string>("Author", ["properties", "author"]);

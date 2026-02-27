@@ -326,14 +326,27 @@ namespace BasicTypeSpec
                         using (XmlReader reader = XmlReader.Create(stream, XmlReaderSettings))
                         {
                             reader.MoveToContent();
-                            reader.ReadStartElement();
-                            while (reader.NodeType != XmlNodeType.EndElement)
+                            if (nameHint != null)
                             {
-                                writer.WriteNode(reader, true);
+                                writer.WriteStartElement(nameHint);
+                                reader.ReadStartElement();
+                                while (reader.NodeType != XmlNodeType.EndElement)
+                                {
+                                    writer.WriteNode(reader, true);
+                                }
+                                writer.WriteEndElement();
+                            }
+                            else
+                            {
+                                reader.ReadStartElement();
+                                while (reader.NodeType != XmlNodeType.EndElement)
+                                {
+                                    writer.WriteNode(reader, true);
+                                }
                             }
                         }
                     }
-                    break;
+                    return;
                 default:
                     throw new NotSupportedException($"Not supported type {typeof(T)}");
             }

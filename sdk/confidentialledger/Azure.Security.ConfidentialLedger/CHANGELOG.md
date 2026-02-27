@@ -1,14 +1,10 @@
 # Release History
 
-## 1.4.1-beta.4 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.4.1-beta.4 (2026-02-27)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed `VerifyConnection` in `ConfidentialLedgerClientOptions` defaulting to `false`, which caused TLS certificate verification to be skipped unless explicitly enabled. It now defaults to `true`.
 
 ## 1.4.1-beta.3 (2026-02-17)
 

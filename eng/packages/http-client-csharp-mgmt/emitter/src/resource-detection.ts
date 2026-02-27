@@ -554,7 +554,14 @@ function parseResourceOperation(
         };
       case armResourceCreateOrUpdateName:
         return {
-          kind: ResourceOperationKind.Create,
+          // When the decorator is @armResourceCreateOrUpdate but the HTTP verb is PATCH,
+          // classify as Update. This handles cases like Legacy.CreateOrReplaceAsync used
+          // with @patch override, where the template still produces @armResourceCreateOrUpdate
+          // but the operation is semantically an update.
+          kind:
+            serviceMethod?.operation?.verb === "patch"
+              ? ResourceOperationKind.Update
+              : ResourceOperationKind.Create,
           modelId: getResourceModelId(sdkContext, decorator),
           explicitResourceName: undefined
         };

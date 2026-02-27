@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Remove VersionOverrides for IotHub and Logic in SecurityCenter tests
+
 ## 1.2.0-beta.6 (2025-03-11)
 
 ### Features Added

@@ -2,7 +2,9 @@
   <PropertyGroup>
     <Description>This is the Azure.AI.ContentUnderstanding client library for Azure Content Understanding in Foundry Tools, a multimodal AI service that extracts semantic content from documents, audio, and video files.</Description>
     <AssemblyTitle>Microsoft Azure.AI.ContentUnderstanding client library</AssemblyTitle>
-    <Version>1.0.0</Version>
+    <Version>1.1.0-beta.1</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageTags>Azure.AI.ContentUnderstanding</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
