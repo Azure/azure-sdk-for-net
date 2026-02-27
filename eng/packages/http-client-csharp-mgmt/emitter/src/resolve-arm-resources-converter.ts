@@ -354,9 +354,7 @@ function convertResolvedResourceToMetadata(
   }
 
   // Convert resource scope
-  const resourceScopeValue = convertScopeToResourceScope(
-    resolvedResource.scope
-  );
+  const resourceScopeValue = convertScopeToResourceScope(resolvedResource.scope);
 
   // Build resource type string
   const resourceType = formatResourceType(resolvedResource.resourceType);
@@ -441,7 +439,9 @@ function convertScopeToResourceScope(
 export function getOperationScopeFromPath(path: string): ResourceScope {
   if (path.startsWith("/{resourceUri}") || path.startsWith("/{scope}")) {
     return ResourceScope.Extension;
-  } else if (
+  }
+
+  if (
     /^\/subscriptions\/\{[^}]+\}\/resourceGroups\/\{[^}]+\}\//.test(path)
   ) {
     return ResourceScope.ResourceGroup;
@@ -458,6 +458,7 @@ export function getOperationScopeFromPath(path: string): ResourceScope {
     // e.g., /providers/Microsoft.Management/serviceGroups/{name}/providers/Microsoft.Edge/sites/{siteName}
     return ResourceScope.Extension;
   }
+
   return ResourceScope.Tenant; // all the templates work as if there is a tenant decorator when there is no such decorator
 }
 

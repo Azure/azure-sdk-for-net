@@ -110,8 +110,17 @@ describe("Operation Scope Detection", () => {
   });
 
   it("management group scope", async () => {
+    // ManagementGroup-scoped resources naturally have 2 /providers/ segments
+    // (one for MG scope, one for resource RP) — this is NOT an extension.
     const path =
       "/providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Edge/sites/{siteName}";
+    const scope = getOperationScopeFromPath(path);
+    strictEqual(scope, ResourceScope.ManagementGroup);
+  });
+
+  it("management group scope for single provider", async () => {
+    const path =
+      "/providers/Microsoft.Management/managementGroups/{groupId}/subscriptions/{subscriptionId}";
     const scope = getOperationScopeFromPath(path);
     strictEqual(scope, ResourceScope.ManagementGroup);
   });
@@ -123,16 +132,44 @@ describe("Operation Scope Detection", () => {
   });
 
   it("extension scope for multiple provider segments (serviceGroups)", async () => {
+    // Multi-provider path that doesn't match RG/Sub/MG → Extension
     const path =
       "/providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.Edge/sites/{siteName}";
     const scope = getOperationScopeFromPath(path);
     strictEqual(scope, ResourceScope.Extension);
   });
 
-  it("resource group scope takes priority over nested extension resources", async () => {
+  it("resource group scope for nested providers under resource group", async () => {
+    // Path starts with /subscriptions/.../resourceGroups/... → ResourceGroup
+    // (RG regex matches before multi-provider check)
     const path =
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Something/parentResource/{parentName}/providers/Microsoft.Edge/sites/{siteName}";
     const scope = getOperationScopeFromPath(path);
     strictEqual(scope, ResourceScope.ResourceGroup);
+  });
+
+  it("resource group scope for variable provider name with RG prefix (Maintenance pattern)", async () => {
+    // RG regex matches before multi-provider check. The actual Extension scope
+    // for Maintenance RP is determined by the ARM library, not path analysis.
+    const path =
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}";
+    const scope = getOperationScopeFromPath(path);
+    strictEqual(scope, ResourceScope.ResourceGroup);
+  });
+
+  it("resource group scope for variable provider name with RG prefix and parent resource", async () => {
+    const path =
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}";
+    const scope = getOperationScopeFromPath(path);
+    strictEqual(scope, ResourceScope.ResourceGroup);
+  });
+
+  it("subscription scope for variable provider without multiple providers", async () => {
+    // A single-provider path with a variable provider name still follows
+    // normal scope detection since it's not a multi-provider extension pattern.
+    const path =
+      "/subscriptions/{subscriptionId}/providers/{providerName}/{resourceType}/{resourceName}";
+    const scope = getOperationScopeFromPath(path);
+    strictEqual(scope, ResourceScope.Subscription);
   });
 });

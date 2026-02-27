@@ -1856,6 +1856,169 @@ interface SitesByServiceGroup extends SiteOps<ServiceGroup> {}
     );
   });
 
+  it("extension resource at multiple scopes with variable provider paths (Maintenance RP pattern)", async () => {
+    // This test validates the Maintenance RP ConfigurationAssignment pattern where
+    // the same extension resource is accessed through paths with variable provider names:
+    // - /subscriptions/{id}/resourcegroups/{rg}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{name}
+    // - /subscriptions/{id}/resourcegroups/{rg}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{name}
+    const program = await typeSpecCompile(
+      `
+using Azure.ResourceManager.Legacy;
+
+/** ConfigurationAssignment properties */
+model ConfigurationAssignmentProperties {
+  /** The maintenance configuration ID */
+  maintenanceConfigurationId?: string;
+}
+
+/** A configuration assignment resource */
+model ConfigurationAssignment is ProxyResource<ConfigurationAssignmentProperties> {
+  ...ResourceNameParameter<
+    Resource = ConfigurationAssignment,
+    KeyName = "configurationAssignmentName",
+    SegmentName = "configurationAssignments",
+    NamePattern = ""
+  >;
+}
+
+/** Operations for configuration assignments on a resource (flat path) */
+@armResourceOperations
+interface ConfigurationAssignmentOperationGroupOps
+  extends Azure.ResourceManager.Legacy.ExtensionOperations<
+      {
+        ...ApiVersionParameter,
+        ...SubscriptionIdParameter,
+        ...ResourceGroupParameter,
+        @path @key @segment("providers") providerName: string,
+        @path @key resourceType: string,
+        @path @key resourceName: string,
+      },
+      {
+        ...Azure.ResourceManager.Extension.ExtensionProviderNamespace<ConfigurationAssignment>,
+        ...ParentKeysOf<ConfigurationAssignment>,
+      },
+      {
+        ...Azure.ResourceManager.Extension.ExtensionProviderNamespace<ConfigurationAssignment>,
+        ...KeysOf<ResourceNameParameter<
+          Resource = ConfigurationAssignment,
+          KeyName = "configurationAssignmentName",
+          SegmentName = "configurationAssignments",
+          NamePattern = ""
+        >>,
+      }
+    > {}
+
+/** Operations for configuration assignments on a nested resource (parent path) */
+@armResourceOperations
+interface ConfigurationAssignmentOps
+  extends Azure.ResourceManager.Legacy.ExtensionOperations<
+      {
+        ...ApiVersionParameter,
+        ...SubscriptionIdParameter,
+        ...ResourceGroupParameter,
+        @path @key @segment("providers") providerName: string,
+        @path @key resourceParentType: string,
+        @path @key resourceParentName: string,
+        @path @key resourceType: string,
+        @path @key resourceName: string,
+      },
+      {
+        ...Azure.ResourceManager.Extension.ExtensionProviderNamespace<ConfigurationAssignment>,
+        ...ParentKeysOf<ConfigurationAssignment>,
+      },
+      {
+        ...Azure.ResourceManager.Extension.ExtensionProviderNamespace<ConfigurationAssignment>,
+        ...KeysOf<ResourceNameParameter<
+          Resource = ConfigurationAssignment,
+          KeyName = "configurationAssignmentName",
+          SegmentName = "configurationAssignments",
+          NamePattern = ""
+        >>,
+      }
+    > {}
+
+@armResourceOperations
+interface ConfigurationAssignmentOperationGroup {
+  get is ConfigurationAssignmentOperationGroupOps.Read<ConfigurationAssignment>;
+  createOrUpdate is ConfigurationAssignmentOperationGroupOps.CreateOrUpdateSync<ConfigurationAssignment>;
+  delete is ConfigurationAssignmentOperationGroupOps.DeleteSync<ConfigurationAssignment>;
+}
+
+@armResourceOperations
+interface ConfigurationAssignments {
+  getParent is ConfigurationAssignmentOps.Read<ConfigurationAssignment>;
+  createOrUpdateParent is ConfigurationAssignmentOps.CreateOrUpdateSync<ConfigurationAssignment>;
+  deleteParent is ConfigurationAssignmentOps.DeleteSync<ConfigurationAssignment>;
+  listParent is ConfigurationAssignmentOps.List<ConfigurationAssignment>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+
+    // Build ARM provider schema using legacy detection
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    ok(armProviderSchema.resources);
+
+    // Find the ConfigurationAssignment model
+    const caModel = root.models.find(
+      (m) => m.name === "ConfigurationAssignment"
+    );
+    ok(caModel, "ConfigurationAssignment model should exist");
+    const caModelId = caModel.crossLanguageDefinitionId;
+
+    const caResources = armProviderSchema.resources.filter(
+      (r) => r.resourceModelId === caModelId
+    );
+
+    // Should have 2 resources: one for flat path, one for nested parent path
+    strictEqual(caResources.length, 2,
+      `Should have 2 ConfigurationAssignment resources, got ${caResources.length}`);
+
+    // Validate using resolveArmResources API - schemas should match
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    // The two APIs have known differences for multi-interface extension resources:
+    // 1. buildArmProviderSchema creates separate resources per interface/path,
+    //    resolveArmResources merges operations sharing the same model into one resource.
+    // 2. Scope detection may differ (path-based vs ARM library resolution).
+    // Normalize by merging resources and normalizing scope before comparing.
+    const mergeByModelId = (schema: typeof armProviderSchema) => {
+      const copy = JSON.parse(JSON.stringify(schema)) as typeof armProviderSchema;
+      const byModelId = new Map<string, (typeof copy.resources)[0]>();
+      for (const resource of copy.resources) {
+        const existing = byModelId.get(resource.resourceModelId);
+        if (existing) {
+          existing.metadata.methods.push(...resource.metadata.methods);
+          if (resource.metadata.resourceIdPattern.length < existing.metadata.resourceIdPattern.length) {
+            existing.metadata.resourceIdPattern = resource.metadata.resourceIdPattern;
+          }
+        } else {
+          byModelId.set(resource.resourceModelId, resource);
+        }
+      }
+      copy.resources = [...byModelId.values()];
+      return copy;
+    };
+    const normalizeScopesAndMethodResourceScope = (resource: ArmResourceSchema) => {
+      // Normalize resource-level scope (may differ between APIs)
+      (resource.metadata as { resourceScope: unknown }).resourceScope = "<normalized>";
+      for (const method of resource.metadata.methods) {
+        (method as { resourceScope: unknown }).resourceScope = "<normalized>";
+        (method as { operationScope: unknown }).operationScope = "<normalized>";
+      }
+    };
+
+    deepStrictEqual(
+      normalizeSchemaForComparison(mergeByModelId(resolvedSchema), normalizeScopesAndMethodResourceScope),
+      normalizeSchemaForComparison(mergeByModelId(armProviderSchema), normalizeScopesAndMethodResourceScope)
+    );
+  });
+
   it("custom Azure resource with @customAzureResource decorator (TrafficManager pattern)", async () => {
     const program = await typeSpecCompile(
       `
